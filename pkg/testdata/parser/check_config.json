@@ -1,0 +1,173 @@
+[
+  {
+    "name": "defaults",
+    "loaded": {},
+    "options": {
+      "maxSteps": 10
+    },
+    "output": {
+      "source": {
+        "kind": "string",
+        "format": "qnt",
+        "content": "<IR>"
+      },
+      "checker": {
+        "length": 10,
+        "init": "q::init",
+        "next": "q::step",
+        "inv": [
+          "q::inv"
+        ],
+        "tuning": {
+          "search.simulation": "false"
+        }
+      }
+    }
+  },
+  {
+    "name": "merge",
+    "loaded": {
+      "source": {
+        "kind": "file",
+        "file": "old"
+      },
+      "checker": {
+        "length": 99,
+        "init": "old",
+        "next": "old",
+        "inv": [
+          "old"
+        ],
+        "temporal": [
+          "old"
+        ],
+        "tuning": {
+          "search.simulation": "true",
+          "search.invariant.mode": "before"
+        },
+        "max-error": 2,
+        "no-deadlock": true
+      }
+    },
+    "options": {
+      "maxSteps": 3
+    },
+    "output": {
+      "source": {
+        "kind": "string",
+        "format": "qnt",
+        "content": "<IR>"
+      },
+      "checker": {
+        "length": 3,
+        "init": "q::init",
+        "next": "q::step",
+        "inv": [
+          "q::inv"
+        ],
+        "tuning": {
+          "search.simulation": "false",
+          "search.invariant.mode": "before"
+        },
+        "max-error": 2,
+        "no-deadlock": true
+      }
+    }
+  },
+  {
+    "name": "selection",
+    "loaded": {
+      "checker": {
+        "tuning": {
+          "a": "b"
+        }
+      }
+    },
+    "options": {
+      "maxSteps": 0,
+      "init": "Start",
+      "next": "Next",
+      "invariants": []
+    },
+    "output": {
+      "checker": {
+        "tuning": {
+          "a": "b",
+          "search.simulation": "false"
+        },
+        "length": 0,
+        "init": "Start",
+        "next": "Next",
+        "inv": []
+      },
+      "source": {
+        "kind": "string",
+        "format": "qnt",
+        "content": "<IR>"
+      }
+    }
+  },
+  {
+    "name": "temporal",
+    "loaded": {},
+    "options": {
+      "maxSteps": 2,
+      "temporal": [
+        "q::temporalProps"
+      ]
+    },
+    "output": {
+      "source": {
+        "kind": "string",
+        "format": "qnt",
+        "content": "<IR>"
+      },
+      "checker": {
+        "length": 2,
+        "init": "q::init",
+        "next": "q::step",
+        "inv": [
+          "q::inv"
+        ],
+        "temporal": [
+          "q::temporalProps"
+        ],
+        "tuning": {
+          "search.simulation": "false"
+        }
+      }
+    }
+  },
+  {
+    "name": "random",
+    "loaded": {
+      "checker": {
+        "tuning": {
+          "search.simulation": "false"
+        }
+      }
+    },
+    "options": {
+      "maxSteps": 1,
+      "randomTransitions": true
+    },
+    "output": {
+      "checker": {
+        "tuning": {
+          "search.simulation": "true"
+        },
+        "length": 1,
+        "init": "q::init",
+        "next": "q::step",
+        "inv": [
+          "q::inv"
+        ]
+      },
+      "source": {
+        "kind": "string",
+        "format": "qnt",
+        "content": "<IR>"
+      }
+    }
+  }
+]

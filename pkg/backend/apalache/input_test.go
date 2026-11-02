@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	checker "github.com/glycerine/apalache-go"
-	cmd "github.com/glycerine/apalache-go/shai/cmdexecutor"
 	quint "github.com/glycerine/quint-go/pkg"
 )
 
@@ -55,21 +54,20 @@ func TestSourceToGoApalache(t *testing.T) {
 			if _, err := checker.ParseQuintJSON(data); err != nil {
 				t.Fatal(err)
 			}
-			config, err := json.Marshal(map[string]any{"source": map[string]any{"kind": "string", "format": "qnt", "content": string(data)}, "checker": map[string]any{"init": "q::init", "next": "q::step", "inv": []string{"q::inv"}, "length": 1}})
-			if err != nil {
-				t.Fatal(err)
-			}
-			response, err := New().Run(context.Background(), cmd.Cmd_CHECK, config)
+			result, err := New().Check(context.Background(), compiled, nil, CheckOptions{MaxSteps: 1})
 			if err != nil {
 				t.Fatal(err)
 			}
 			if tc.safe {
-				if response.GetSuccess() == "" {
-					t.Fatalf("safe check: %v", response)
+				if result.Outcome != CheckSafe {
+					t.Fatal(result)
 				}
 			} else {
-				if response.GetFailure() == nil || !strings.Contains(response.GetFailure().GetData(), `"checking_result":"Error"`) {
-					t.Fatalf("violation: %v", response)
+				if result.Outcome != CheckViolation || len(result.Counterexamples) == 0 {
+					t.Fatal(result)
+				}
+				if !json.Valid(result.Counterexamples[0]) {
+					t.Fatal("invalid ITF trace")
 				}
 			}
 			if tc.name == "safe" {

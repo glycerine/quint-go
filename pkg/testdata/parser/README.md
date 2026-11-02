@@ -196,3 +196,9 @@ It invokes the upstream CLI compile function on analyzed inputs and captures
 selected-module output or argument/name errors for nine compilation paths.
 Like full_flatten.json, nextID is consumed by both fixture implementations.
 Default Go tests require neither Node nor the upstream CLI dependencies.
+
+`check_config.json` is regenerated with
+`node pkg/grammar/check_config_fixtures.cjs`. Five upstream createConfig fixtures
+cover merge precedence and default/explicit checker selections without a solver.
+The adapter test replaces only source.content with `<IR>` for comparison because
+source compilation and transport are validated separately.

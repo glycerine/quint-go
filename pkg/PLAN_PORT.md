@@ -382,12 +382,21 @@ TypeScript or Rust evaluator process.
   initialization. Keep dependency-specific types out of unrelated CLI code.
   - [x] In-process CHECK/TLA executor and typed compilation input adaptation,
     exercised with source-generated safe, violating, and instanced models.
-  - [ ] Complete public verification/TLA orchestration and configuration APIs.
+  - [x] Public bounded-check and TLA APIs with configuration merging and
+    structured responses.
+  - [ ] Complete higher-level verification orchestration and CLI integration.
 - [ ] P9.2 Port config-file/CLI precedence, init/next/invariant selection,
   maximum steps, random-transition simulation, and supported tuning options.
   Report unsupported options explicitly.
+  - [x] Library configuration precedence, explicit bounds/init/next/invariants,
+    temporal selection, tuning merge, and simulation overrides; five upstream
+    createConfig fixtures match. Unknown options reach strict service validation.
+  - [ ] Add config-file loading and CLI flag/default wiring.
 - [ ] P9.3 Implement bounded safety checking, no-invariant deadlock checking,
   and ordinary/multiple-invariant handling with equivalent result categories.
+  - [x] Bounded-check API, explicit no-invariant selection, lossless violation/
+    deadlock responses, and source-generated safe/violating/instance checks.
+  - [ ] Complete ordinary/multiple-invariant user-facing orchestration tests.
 - [ ] P9.4 Port inductive-invariant orchestration: initialization at bound 0,
   one-step preservation from the inductive predicate, and optional implication
   of ordinary invariants at bound 0.
@@ -1934,3 +1943,20 @@ word "retained" in the commit message.
   responses, and failure payload preservation. Full default tests pass
   (combined execution 0.993s). CLI output, TLC preparation wiring, and broader
   generated-TLA semantic comparisons remain open under P6.5/P9.7.
+
+- 2026-11-02: Added CheckConfig and Executor.Check, merging loaded configuration
+  with compiled source, explicit bound/init/next/invariant/temporal selection,
+  and simulation tuning. Insertion-ordered JSON objects use insdict.Dict and raw
+  values; unknown settings are preserved for strict backend rejection. Five
+  fixtures match upstream createConfig precedence, including nested tuning,
+  overrides, absent temporal flags, and explicit no-invariant checking. Existing
+  source-generated safe/violating/instance tests now exercise the public Check
+  API. CheckResult distinguishes bounded safe, violation, and deadlock outcomes,
+  preserving raw ITF traces and large integers/loop fields. Unit tests cover
+  malformed configuration/responses, negative bounds, unknown-option rejection,
+  cancellation, and inconclusive-result rejection. Inspection found the reused
+  Go Shai service reported SafetyUnknown/ExecutionsTooShort as success; fixed
+  and committed that dependency as apalache 4e8d22641, with focused regression
+  and existing command tests green (0.231s). Quint's full default suite passes
+  (combined execution 0.980s). Config-file/CLI wiring, inductive phases, detailed
+  diagnostics/ITF reporting, and remaining backend compatibility audits stay open.
