@@ -224,6 +224,9 @@ analysis, with reproducible errors for invalid module structures.
   function/operator, tuple, record, row-polymorphic, and sum types.
 - [ ] P4.3 Port type aliases, abstract types, type applications, parameter
   substitution, alias inlining, and recursive-alias rejection.
+  - [x] Resolve outer aliases and recursively inline type-tree aliases by lookup ID.
+  - [x] Preserve abstract types and reject cyclic alias expansion.
+  - [ ] Resolve parameterized type applications and transform module/type tables.
 - [ ] P4.4 Port every builtin type signature and special constraint; maintain
   an opcode-to-signature coverage table to catch omissions.
 - [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
@@ -1177,3 +1180,12 @@ word "retained" in the commit message.
   and let scopes at explicit surrounding depths. Default tests pass under one
   second. Upstream reparses modules for declaration changes; REPL declaration
   reanalysis and expression-session integration remain pending.
+
+- 2026-11-02: Added ResolveTypeAlias and InlineTypeAliasesInType as prerequisites
+  for type application and inference. They expand lookup-ID-based aliases, retain
+  abstract/unresolved types and application constructors, copy returned trees,
+  and reject cyclic expansions. Tests cover chains, direct/indirect/structural
+  cycles, imported aliases, tuple/record rows, functions/operators, collections,
+  type application arguments, shared aliases, and input immutability. Default
+  tests pass (combined execution 0.521s). Full module/table alias transformations,
+  parameterized applications, and inference integration remain pending.
