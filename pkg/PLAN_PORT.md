@@ -542,3 +542,11 @@ word "retained" in the commit message.
   type names, independent namespaces with identical names, constant constructor
   exclusion, open/closed tails, field ordering, and invalid type kinds. Default
   tests pass (core 0.006s); P4.1 remains open for schemes and substitution logic.
+
+- 2026-11-02: Added per-prefix fresh-name counters and upstream-style row/type
+  scheme simplification. Nested rows flatten in order and empty concrete rows
+  collapse to their tails; copied trees do not share mutable type/row slices or
+  pointers with inputs. Tests cover idempotence, terminal/open/empty rows,
+  nested collection/function/application types, input mutation isolation, and
+  independent name counters. Default tests pass (core 0.009s). P4.1 still needs
+  substitution/generalization; P1.2 still needs parser coordinate integration.
