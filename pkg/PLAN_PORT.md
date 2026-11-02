@@ -558,6 +558,12 @@ TypeScript or Rust evaluator process.
 - [ ] P9.5 Integrate temporal-property handling and document the actual Go
   checker's supported scope. Test lasso traces and bounded interpretations;
   never turn an unsupported temporal query into a successful safety result.
+  - [x] Actual source-to-checker bounded always/eventually/leadsTo and stuttering
+    lasso checks; independently validate transition/property witnesses.
+  - [x] Actual weak/strong fairness and quantified-temporal queries fail rather
+    than reporting safety success.
+  - [ ] Loop-index metadata and dedicated quantified-temporal diagnostics;
+    broader temporal scope/corpus and bounded interpretation audit.
 - [ ] P9.6 Map checker failures and counterexamples to Quint diagnostics and
   ITF, preserving variable names, integer values, loop information, and source
   references where available. Port individual-invariant violation reporting
@@ -2883,3 +2889,14 @@ word "retained" in the commit message.
   (89.6% helper statement coverage), as does vet. Source-language dispatch and
   shared evaluator identity ownership remain open; the older 19-case pending
   process-history corpus has not been relabeled as passing end-to-end coverage.
+
+- 2026-11-02: Added nine actual source-to-Go-Apalache temporal scenarios.
+  Violating/satisfied eventually and leadsTo, violated always, and a Boolean
+  stuttering lasso pass with independent initial/transition/property checks.
+  These six slower solver cases use QUINT_CORPUS_TESTS=1; all nine scenarios
+  passed manually in 3.096s. Three actual weak/strong fairness and quantified-
+  temporal rejection cases remain in the fast default suite. Current Shai ITF
+  lacks loop indices; provided future indices are checked rather than rejected.
+  Quantified temporal formulas currently fail assignment rewriting instead of
+  producing a dedicated unsupported diagnostic. Full default tests/vet pass;
+  no Scala or external reference checker was invoked.

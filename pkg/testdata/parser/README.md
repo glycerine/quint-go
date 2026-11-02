@@ -688,3 +688,12 @@ payload history, and malformed-pair errors/counters. Tests check copied results,
 callable value identity, cancellation, and invalid inputs. This covers the
 explicit-state library helper; source evaluator dispatch/shared state is still
 pending, and the historical `runtime_set_to_map_pending.json` stays pending.
+
+The source-to-checker temporal tests in `backend/apalache/temporal_test.go`
+exercise nine actual Go-checker scenarios. Six slower bounded-property/lasso
+cases use `QUINT_CORPUS_TESTS=1` and are run explicitly; three rejection cases
+stay in the default suite. Tests independently validate initial states,
+transitions, temporal failures and any supplied loop index rather than requiring
+an exact solver witness. Current missing loop metadata and unclear quantified-
+temporal errors remain documented limitations. These tests use Go Apalache,
+not Scala, Node, or the upstream evaluator.
