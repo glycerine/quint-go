@@ -1032,3 +1032,13 @@ word "retained" in the commit message.
   metadata, conflict ordering, and independent module scopes. Default tests pass
   within the sub-second target. P3.1/P3.2 remain open for lexical traversal,
   lookup-table construction, references, and imported definition visibility.
+
+- 2026-11-02: Added lexical expression resolution into an insertion-ordered
+  lookup table, covering names/calls, builtin bypass, lambda parameters, local
+  definitions, annotation aliases, QNT404 diagnostics, and restoration of shadowed
+  bindings. Depth follows upstream's separate let/definition/lambda increments.
+  Tests verify recursive references, parameter/local identities, shadow restoration,
+  undefined/type-as-value errors, and alias references. Default tests pass within
+  the sub-second target. P3.1 remains open for module traversal, unified collector
+  diagnostics, unused definitions, and differential resolution fixtures; imported
+  visibility remains P3.2 work.
