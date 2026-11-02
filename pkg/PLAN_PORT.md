@@ -167,6 +167,10 @@ without losing semantic information, and diagnostic locations remain stable.
   locations; preserve intentionally accepted deprecated syntax.
 - [ ] P2.6 Implement expression/declaration entry points for the REPL and CLI
   expressions, plus the type/effect parsers used by builtin signatures.
+  - [x] Syntax-only expression, expanding declaration, type, and effect entry points.
+  - [x] Combined declaration-or-expression selection, empty/comment input, and
+    shared REPL-session ID allocation.
+  - [ ] Source-map/diagnostic integration and differential entry-point fixtures.
 - [ ] P2.7 Port source resolution, relative imports, file caching, duplicate
   loading behavior, import-cycle errors, and missing-file diagnostics.
 - [ ] P2.8 Match syntax-error recovery and useful partial results; test Unicode,
@@ -751,3 +755,12 @@ word "retained" in the commit message.
   Default tests pass with combined package execution under one second. P2.6
   remains open for the combined declaration-or-expression REPL entry point,
   including blank/comment-only input and diagnostic/source-location integration.
+
+- 2026-11-02: Added ParseExpressionOrDeclaration using the upstream combined
+  grammar rule, distinguishing declarations, expressions, and empty/comment input.
+  A caller-owned ID generator preserves unique IDs between REPL commands. Tests
+  verify selection of local bindings versus declarations, expansion, equivalence
+  with dedicated entry points, session IDs, and error rejection without partial
+  IR. Default tests pass (core 0.322s; combined package execution 0.382s). P2.6
+  sub-checklists now identify completed entry-point behavior and remaining
+  source-map/diagnostic and differential-fixture work.
