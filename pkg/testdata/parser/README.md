@@ -650,3 +650,9 @@ LSP tests run framed JSON-RPC and semantic requests in process, covering UTF-16
 edits/ranges, buffered imports, diagnostics, stale/cancelled jobs, lifecycle,
 large request IDs, navigation, completion, symbols and conservative rename.
 The complete upstream CLI/editor transcript audit remains open.
+
+The fixed builtin effect cache tests compare all 26 cached templates with the
+parser and verify complete result ownership, no concrete occurrence tokens,
+concurrent mutation isolation, finite bounds, dynamic exclusions, and errors.
+Benchmarks retain uncached parsing as an explicit baseline; ordinary repeated
+signature lookup only clones the finite templates.

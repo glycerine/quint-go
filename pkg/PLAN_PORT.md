@@ -690,6 +690,8 @@ any remaining TypeScript client code is distinguished from language-server logic
     retained uncached variable arities and recorded warm signature benchmarks.
   - [x] Replaced variable-arity signature reparsing with fresh direct trees;
     verified 52 upstream signatures and recorded parser/direct benchmarks.
+  - [x] Cache the finite fixed builtin effect strings with owned clones; verify
+    parser agreement, bounded storage, absent state occurrences, and concurrency.
 - [ ] P12.6 Add CI jobs that build and test the `pkg/` module with pinned
   dependencies, reproducible grammar generation, and supported OS/architecture
   targets. Keep reference-tool jobs separate from Go-only validation.
@@ -2811,3 +2813,15 @@ word "retained" in the commit message.
   native Go TLC integration. The checker supports bounded always/eventually/
   leadsTo, rejects fairness/temporal quantifiers, and currently drops ITF loop
   indices at its Shai boundary; full Quint temporal coverage remains open.
+
+- 2026-11-02: Added a finite sync.Once cache for 26 fixed builtin effect
+  strings, returning deep caller-owned copies. Tests verify every template
+  against parsing, assert these templates contain no concrete state occurrences,
+  mutate nested results/quantifiers, run concurrent mutation callers, and check
+  dynamic-signature exclusion/cache bounds/errors. Focused tests and race checks
+  pass; full default tests pass. Warm assign lookup improves 46188ns/15718B/214
+  allocations to 1350ns/960B/6, ite 98985ns/34998B/428 to 3004ns/2432B/9, and
+  setBy 49642ns/18322B/232 to 1905ns/1472B/11. The expanded core/backend/CLI/LSP
+  suite remains near the one-second target; the latest isolated full run totals
+  1.082s of package execution, so profiling/optimization continues without
+  reducing coverage.

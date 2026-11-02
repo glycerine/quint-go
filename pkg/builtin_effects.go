@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 // StandardEffectPropagation promotes argument updates into temporal references.
@@ -63,6 +64,32 @@ func parseEffectScheme(text string) (EffectScheme, error) {
 	return EffectScheme{Effect: e, EffectVariables: es, EntityVariables: vs}, nil
 }
 
+type builtinEffectCacheEntry struct {
+	once   sync.Once
+	scheme EffectScheme
+	err    error
+}
+
+// The fixed inventory bounds the cache. Signatures with caller-selected arity
+// continue to be constructed on demand and never add cache entries.
+var fixedBuiltinEffectCache = func() map[string]*builtinEffectCacheEntry {
+	entries := make(map[string]*builtinEffectCacheEntry, len(fixedEffectSignatures))
+	for name := range fixedEffectSignatures {
+		entries[name] = &builtinEffectCacheEntry{}
+	}
+	return entries
+}()
+
+func cloneBuiltinEffectScheme(scheme EffectScheme) EffectScheme {
+	// The fixed strings contain only entity variables and unions, with no
+	// concrete state-variable occurrences. Cloning therefore preserves each
+	// parse's occurrence semantics while owning every mutable slice and pointer.
+	scheme.Effect = cloneEffectSubstitutionValue(scheme.Effect)
+	scheme.EffectVariables = append([]string{}, scheme.EffectVariables...)
+	scheme.EntityVariables = append([]string{}, scheme.EntityVariables...)
+	return scheme
+}
+
 // BuiltinEffectSignature returns the upstream signature at the requested arity.
 // Fixed signatures ignore arity; type checking diagnoses invalid calls.
 func BuiltinEffectSignature(name string, arity int) (EffectScheme, error) {
@@ -72,8 +99,12 @@ func BuiltinEffectSignature(name string, arity int) (EffectScheme, error) {
 	if p, ok := fixedEffectPropagation[name]; ok {
 		return propagateEffectComponents(p.kinds, p.arity, p.updates, p.lambda), nil
 	}
-	if text, ok := fixedEffectSignatures[name]; ok {
-		return parseEffectScheme(text)
+	if cached, ok := fixedBuiltinEffectCache[name]; ok {
+		cached.once.Do(func() { cached.scheme, cached.err = parseEffectScheme(fixedEffectSignatures[name]) })
+		if cached.err != nil {
+			return EffectScheme{}, cached.err
+		}
+		return cloneBuiltinEffectScheme(cached.scheme), nil
 	}
 	switch name {
 	case "List", "Set", "Map", "Rec", "Tup", "tuples", "and", "or":
