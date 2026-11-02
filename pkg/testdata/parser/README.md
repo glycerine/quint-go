@@ -165,3 +165,6 @@ modules, inferred mode suggestions, and shared-action diagnostics.
 
 The init-conversion corpus now has eight cases, including nested q::init and
 local action dependencies.
+
+`namespace.json` compares six complete namespaced definitions with upstream,
+including nested operators, preserved names, and type annotations.

@@ -469,3 +469,19 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/convert_init.json'),JSONbig
  const result=convertInit(parsed.modules[0],linked.table,output.modes)
  return {name,input:parsed.modules[0],modes:[...output.modes].map(([id,qualifier])=>({id:String(id),qualifier})),...(result.isLeft()?{errors:result.value}:{output:result.value})}
 }),null,2)+'\n')
+
+const {addNamespaceToDefinition}=require(path.join(root,'quint/src/ir/namespacer'))
+const namespaceCases=[
+ ['nested',"module M { def f(x:T):T=def local(y)=y; iadd(local(x),g(x)) }",'I',['iadd','g','f']],
+ ['existing',"module M { def I::f(x)=I::g(x) }",'I',[]],
+ ['underscore',"module M { def f(_)=1 }",'I',[]],
+ ['empty',"module M { def f(x)=x }",'',[]],
+ ['type',"module M { type T = {x:int} }",'I',[]],
+ ['constant',"module M { const c:T }",'I',['T']],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/namespace.json'),JSONbig.stringify(namespaceCases.map(([name,source,namespace,preserve])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ if(parsed.errors.length)throw Error(JSONbig.stringify(parsed.errors))
+ const input=parsed.modules[0].declarations[0]
+ return {name,input,namespace,preserve,output:addNamespaceToDefinition(input,namespace,new Set(preserve))}
+}),null,2)+'\n')

@@ -1,0 +1,440 @@
+[
+  {
+    "name": "nested",
+    "input": {
+      "id": 15,
+      "kind": "def",
+      "name": "f",
+      "qualifier": "def",
+      "expr": {
+        "id": 14,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 2,
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "const",
+              "name": "T"
+            }
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 13,
+          "kind": "let",
+          "opdef": {
+            "id": 7,
+            "kind": "def",
+            "name": "local",
+            "qualifier": "def",
+            "expr": {
+              "id": 6,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 4,
+                  "name": "y"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 5,
+                "kind": "name",
+                "name": "y"
+              }
+            }
+          },
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "local",
+                "args": [
+                  {
+                    "id": 8,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                ]
+              },
+              {
+                "id": 11,
+                "kind": "app",
+                "opcode": "g",
+                "args": [
+                  {
+                    "id": 10,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "typeAnnotation": {
+        "kind": "oper",
+        "args": [
+          {
+            "id": 1,
+            "kind": "const",
+            "name": "T"
+          }
+        ],
+        "res": {
+          "id": 3,
+          "kind": "const",
+          "name": "T"
+        }
+      }
+    },
+    "namespace": "I",
+    "preserve": [
+      "iadd",
+      "g",
+      "f"
+    ],
+    "output": {
+      "id": 15,
+      "kind": "def",
+      "name": "I::f",
+      "qualifier": "def",
+      "expr": {
+        "id": 14,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 2,
+            "name": "I::x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "const",
+              "name": "I::T"
+            }
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 13,
+          "kind": "let",
+          "opdef": {
+            "id": 7,
+            "kind": "def",
+            "name": "I::local",
+            "qualifier": "def",
+            "expr": {
+              "id": 6,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 4,
+                  "name": "I::y"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 5,
+                "kind": "name",
+                "name": "I::y"
+              }
+            }
+          },
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "I::local",
+                "args": [
+                  {
+                    "id": 8,
+                    "kind": "name",
+                    "name": "I::x"
+                  }
+                ]
+              },
+              {
+                "id": 11,
+                "kind": "app",
+                "opcode": "g",
+                "args": [
+                  {
+                    "id": 10,
+                    "kind": "name",
+                    "name": "I::x"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "typeAnnotation": {
+        "kind": "oper",
+        "args": [
+          {
+            "id": 1,
+            "kind": "const",
+            "name": "I::T"
+          }
+        ],
+        "res": {
+          "id": 3,
+          "kind": "const",
+          "name": "I::T"
+        }
+      }
+    }
+  },
+  {
+    "name": "existing",
+    "input": {
+      "id": 5,
+      "kind": "def",
+      "name": "I::f",
+      "qualifier": "def",
+      "expr": {
+        "id": 4,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 1,
+            "name": "x"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 3,
+          "kind": "app",
+          "opcode": "I::g",
+          "args": [
+            {
+              "id": 2,
+              "kind": "name",
+              "name": "x"
+            }
+          ]
+        }
+      }
+    },
+    "namespace": "I",
+    "preserve": [],
+    "output": {
+      "id": 5,
+      "kind": "def",
+      "name": "I::f",
+      "qualifier": "def",
+      "expr": {
+        "id": 4,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 1,
+            "name": "I::x"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 3,
+          "kind": "app",
+          "opcode": "I::g",
+          "args": [
+            {
+              "id": 2,
+              "kind": "name",
+              "name": "I::x"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "name": "underscore",
+    "input": {
+      "id": 4,
+      "kind": "def",
+      "name": "f",
+      "qualifier": "def",
+      "expr": {
+        "id": 3,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 1,
+            "name": "_"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 2,
+          "kind": "int",
+          "value": 1
+        }
+      }
+    },
+    "namespace": "I",
+    "preserve": [],
+    "output": {
+      "id": 4,
+      "kind": "def",
+      "name": "I::f",
+      "qualifier": "def",
+      "expr": {
+        "id": 3,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 1,
+            "name": "_"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 2,
+          "kind": "int",
+          "value": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "empty",
+    "input": {
+      "id": 4,
+      "kind": "def",
+      "name": "f",
+      "qualifier": "def",
+      "expr": {
+        "id": 3,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 1,
+            "name": "x"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 2,
+          "kind": "name",
+          "name": "x"
+        }
+      }
+    },
+    "namespace": "",
+    "preserve": [],
+    "output": {
+      "id": 4,
+      "kind": "def",
+      "name": "f",
+      "qualifier": "def",
+      "expr": {
+        "id": 3,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 1,
+            "name": "x"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 2,
+          "kind": "name",
+          "name": "x"
+        }
+      }
+    }
+  },
+  {
+    "name": "type",
+    "input": {
+      "id": 3,
+      "kind": "typedef",
+      "name": "T",
+      "type": {
+        "id": 2,
+        "kind": "rec",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "id": 1,
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    },
+    "namespace": "I",
+    "preserve": [],
+    "output": {
+      "id": 3,
+      "kind": "typedef",
+      "name": "I::T",
+      "type": {
+        "id": 2,
+        "kind": "rec",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "id": 1,
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "constant",
+    "input": {
+      "kind": "const",
+      "name": "c",
+      "typeAnnotation": {
+        "id": 1,
+        "kind": "const",
+        "name": "T"
+      },
+      "id": 2
+    },
+    "namespace": "I",
+    "preserve": [
+      "T"
+    ],
+    "output": {
+      "kind": "const",
+      "name": "I::c",
+      "typeAnnotation": {
+        "id": 1,
+        "kind": "const",
+        "name": "T"
+      },
+      "id": 2
+    }
+  }
+]

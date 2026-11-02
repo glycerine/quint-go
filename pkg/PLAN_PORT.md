@@ -1728,3 +1728,10 @@ word "retained" in the commit message.
   intentionally ignore the preserve set, matching the current upstream flattener.
   Default tests pass under one second. Exact namespace differential fixtures and
   module/instance expansion remain open under P6.1.
+
+- 2026-11-02: Added six exact upstream definition-namespacing fixtures covering
+  nested operators, preserved builtins/user references, existing prefixes,
+  underscore parameters, empty namespaces, type aliases, and constant types.
+  Entire transformed declarations match upstream without changes. Default tests
+  pass (combined execution 0.728s). Module/instance flattening and annotation
+  remapping remain open under P6.1/P6.2.
