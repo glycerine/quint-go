@@ -23,6 +23,9 @@ func dependentDefinitionsInNamespace(expression Expr, table *insdict.Dict[ID, Lo
 			return nil
 		}
 		d := *def.Declaration
+		// Resolution can clear provenance on an already flattened declaration.
+		// Use the current lookup metadata rather than a previous module's import.
+		d.ImportedFrom = nil
 		if def.ImportedFrom != nil {
 			hidden := def.Hidden
 			d.Hidden = &hidden

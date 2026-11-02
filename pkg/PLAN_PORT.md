@@ -294,8 +294,11 @@ the baseline corpus, including state-transition legality.
   export expansion, namespacing, and capture-avoiding substitutions.
   - [x] Expose combined export/import expansion through FlattenModule; validate
     against six upstream module fixtures and preserve input modules.
-  - [ ] Integrate the full module queue with unshadowing, alias inlining,
-    instance expansion, and repeated name resolution.
+  - [x] Integrate the full module queue with unshadowing, alias inlining,
+    instance expansion, and repeated name resolution; nine exact upstream
+    fixtures cover ordinary, imported/exported, shadowed, and nested instances.
+  - [ ] Complete the flattening compatibility audit for remaining upstream
+    fixtures, recursive export aliases, and capture-avoiding substitutions.
 - [ ] P6.2 Refresh IDs and remap source locations, references, type/effect
   schemes, and modes together during transformations.
 - [ ] P6.3 Port main-module selection and synthesis of `q::init`, `q::step`,
@@ -1851,3 +1854,19 @@ word "retained" in the commit message.
   transitive and star imports, retained instances, and star/qualified exports.
   Tests also verify input isolation and missing-export error propagation. Full
   module-queue orchestration remains open under P6.1.
+
+- 2026-11-02: Added project-wide alias inlining across module annotations,
+  lookup declarations/parameters, and inferred type schemes, preserving ordered
+  dictionaries and input type trees. Added FlattenModules with unshadowing,
+  alias inlining, module registration, instance expansion, and repeated name
+  resolution over processed and queued modules. Nine exact upstream fixtures
+  cover plain definitions, aliases, imports, exports, unused imports, shadowing,
+  single/two instances, and a nested constant-override instance chain. The
+  fixtures exposed and corrected extra dependency namespace prefixes and stale
+  import provenance. The upstream full flattener only resolves names despite
+  its sorting comment; this API preserves that declaration order. Unit tests
+  also cover copied annotations, parameter lookup payloads, inferred type
+  schemes, cyclic aliases, refreshed source/type/effect/mode entries, input
+  isolation, and unresolved-name failures. Full default tests pass (combined
+  execution 0.746s). P6.1/P6.2 remain open pending broader compatibility and
+  metadata audits; compilation entry integration and backend wiring remain.

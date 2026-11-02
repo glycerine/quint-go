@@ -183,3 +183,10 @@ including exact ID allocation order through annotations and nested expressions.
 
 `flatten_instances.json` compares three upstream instance-flattening runs,
 including exact fresh IDs, generated module order, overrides, and references.
+
+`full_flatten.json` captures the complete upstream flattenModules pipeline for
+nine projects, including nested instances, shadowing, aliases, exports, and
+unused imports. `nextID` records one consumed generator value after parsing;
+the Go test advances through it before flattening, matching the upstream
+fixture generator. Module output is compared structurally with no ID or
+metadata normalization.

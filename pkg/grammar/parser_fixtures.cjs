@@ -546,3 +546,23 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/flatten_instances.json'),JS
  const output=flattenInstances(parsed.modules[1],new Map(parsed.modules.map(m=>[m.name,m])),linked.table,newIdGenerator(),new Map(),{types:new Map(),effects:new Map(),modes:new Map()})
  return {name,input:parsed.modules,output}
 }),null,2)+'\n')
+
+const {flattenModules}=require(path.join(root,'quint/src/flattening/fullFlattener'))
+const fullFlattenCases=[
+ ['two','module A { const c:int val a=c } module B { import A(c=1) as I import A(c=2) as J val b=I::a+J::a }'],
+ ['unused','module A { val a=1 val unused=2 } module B { import A.* val b=a }'],
+ ['shadow','module M { def f(x)=val x=1; x val b=f(2) }'],
+ ['plain','module M { val a=1 def f(x)=x+a val b=f(2) }'],
+ ['aliases','module M { type T=int const c:T def f(x:T):T=x }'],
+ ['import','module A { val a=1 def f(x)=x+a } module B { import A as I val b=I::f(2) }'],
+ ['export','module A { val a=1 } module B { import A as I export I } module C { import B.* val c=I::a }'],
+ ['instance','module A { const c:int val a=c def f(x)=x+c } module B { import A(c=1) as I val b=I::f(2) }'],
+ ['nested','module A { const c:int val a=c } module B { const d:int import A(c=d) as I val b=I::a } module C { import B(d=2) as J val c=J::b }'],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/full_flatten.json'),JSONbig.stringify(fullFlattenCases.map(([name,source])=>{
+ const ids=newIdGenerator(),parsed=parsePhase1fromText(ids,source,name),linked=resolveNames(parsed.modules)
+ if(parsed.errors.length||linked.errors.length)throw Error(JSONbig.stringify([parsed.errors,linked.errors]))
+ const input=JSONbig.parse(JSONbig.stringify(parsed.modules)), nextID=String(ids.nextId())
+ const output=flattenModules(parsed.modules,linked.table,ids,new Map(),{types:new Map(),effects:new Map(),modes:new Map()})
+ return {name,input,nextID,output:output.flattenedModules}
+}),null,2)+'\n')
