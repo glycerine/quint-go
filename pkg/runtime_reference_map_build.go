@@ -91,7 +91,7 @@ func (b *referenceMapBuilder) insert(node *runtimeReferenceMapNode, shift uint, 
 			return b.merge(node, shift, hash, entry), 1, nil
 		}
 		for index, existing := range node.entries {
-			if existing.Key.Equal(entry.Key) {
+			if runtimeCollectionEqual(existing.Key, entry.Key) {
 				if sameRuntimeObject(existing.Value, entry.Value) {
 					return node, 0, nil
 				}
@@ -119,7 +119,7 @@ func (b *referenceMapBuilder) insert(node *runtimeReferenceMapNode, shift uint, 
 		copy.entries = append(copy.entries, entry)
 		return copy, 1, nil
 	case referenceValueNode:
-		if node.entries[0].Key.Equal(entry.Key) {
+		if runtimeCollectionEqual(node.entries[0].Key, entry.Key) {
 			if sameRuntimeObject(node.entries[0].Value, entry.Value) {
 				return node, 0, nil
 			}

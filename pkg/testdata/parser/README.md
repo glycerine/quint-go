@@ -593,3 +593,49 @@ constructors, annotations, ordering, and Markdown. The same oracle verifies all
 78 builtin documentation entries against generated embedded JSON; loading docs
 requires no runtime parser, Node, or repository-relative assets. CLI docs tests
 exercise Markdown, stage JSON, write errors, and source errors.
+
+`runtime_closure_payload.json` is regenerated with
+`node pkg/grammar/runtime_closure_payload_fixtures.cjs`. Forty-eight cases cover
+callable children in lists, tuples, records, variants, maps and sets; identity
+shortcuts versus direct lambda equality; closure keys, higher-order returns, and
+full-hash collisions. Direct tests check immutable payloads, normal forms,
+closure hashes, and retained key objects. Compilation-lifetime factory closure
+reuse/shared captured parameter cells remain a separate parity gap.
+
+`runtime_pick.json` is regenerated with
+`node pkg/grammar/runtime_pick_fixtures.cjs`. Sixteen sources cover 112 positional
+and 240 RNG-driven picks, insertion/HAMT/collision order, nested values, mutation
+histories, exact counters, malformed positions, and empty sets. Unit tests check
+copied bounds, actual child identity, invalid arguments, and cancellation.
+
+`runtime_nondet.json` is regenerated with
+`node pkg/grammar/runtime_nondet_fixtures.cjs`. Twenty-three direct retry
+scenarios and twelve parsed expressions compare attempts, results/errors,
+metadata, pending assignments and RNG. Cases pin empty-choice body skipping,
+threshold boundaries, cyclic retries without extra draws, exhaustion, nested
+bindings, errors, and per-attempt cache refresh. Unit tests cover environment
+syntax, explicit options, cancellation, and object identity. Symbolic bounds and
+compilation-time pick discovery in lazy branches remain open.
+
+`runtime_all_lists.json` and `runtime_object_hash.json` are regenerated with
+`node pkg/grammar/runtime_all_lists_fixtures.cjs`. Twenty-five allListsUpTo
+scenarios (28 calls) and eight raw-object scenarios (154 operations) compare
+retained order and explicit initial/final UID counters, including repeated calls,
+prehashed/reused objects, collision behavior and counter rollover. Unit tests
+cover child normalization/ownership, validation and cancellation. The library
+helper takes explicit identity state; evaluator dispatch/ownership is pending.
+
+`runtime_serialize.json` is regenerated with
+`node pkg/grammar/runtime_serialize_fixtures.cjs`. Thirty-five sources and 95
+exact serialized expressions compare recursive retained payloads and explicit
+UID counters, including Unicode collation ties, repeated serialization, nested
+maps/sets, and distinct closures with identical mock IR. Tests check output and
+state ownership. SerializeRuntimeValue uses caller-owned identity history;
+public Expression/String keep the deterministic canonical Go representation.
+
+`runtime_symbolic_pending.json` is regenerated with
+`node pkg/grammar/runtime_symbolic_pending_fixtures.cjs`. Twenty-two domain
+scenarios and 43 expression outcomes capture Int/Nat, intervals, products,
+powersets and map sets, including hashes/cardinality/bounds/picks, thrown versus
+returned errors, huge non-enumerated intervals and upstream edge cases. This is
+pending parity evidence and is not counted as passing implementation coverage.

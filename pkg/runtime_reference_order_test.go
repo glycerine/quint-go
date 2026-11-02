@@ -57,9 +57,9 @@ func TestReferenceOrderValidationAndOwnership(t *testing.T) {
 	if _, err := runtimeReferenceOrder([]RuntimeValue{{}}); err == nil {
 		t.Fatal("invalid value accepted")
 	}
-	closure := newRuntimeClosure(0, nil)
-	if _, err := runtimeReferenceOrder([]RuntimeValue{closure}); err == nil {
-		t.Fatal("closure accepted")
+	unsupported := RuntimeValue{identity: "unsupported", expression: Expr{Kind: "name", Name: "x"}}
+	if _, err := runtimeReferenceOrder([]RuntimeValue{unsupported}); err == nil {
+		t.Fatal("unsupported value accepted")
 	}
 	value, _ := NewRuntimeValue(Expr{Kind: "bool", Bool: true})
 	values := []RuntimeValue{value}

@@ -342,12 +342,14 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     Go hashing, canonical IR printing, and upstream equal-type comparisons.
   - [x] Retained concrete child objects and persistent collection traversal
     through constructors, normalization, accessors, state records, and traces.
-  - [ ] Closures inside collections, symbolic collections, remaining iteration
-    behavior, and cross-type equality audit (TypeScript's set-like fallback
-    equates unlike constructors).
-  - [ ] Map display parity for Unicode collation ties: upstream serializes
-    through a transient tuple set before stable sorting; canonical IR sorting
-    alone can retain a different tie order and affect key diagnostics.
+  - [x] Callable closures inside all concrete collection constructors, including
+    Set elements and Map keys, with reference object identity and hash behavior.
+  - [ ] Symbolic collections, remaining iteration behavior, and cross-type
+    equality audit (TypeScript's set-like fallback equates unlike constructors).
+  - [x] Explicit-state TypeScript-compatible serialization, including transient
+    tuple sets, fresh-object hashing, Unicode ties, and repeated-call UID history.
+  - [ ] Wire shared object-hash state through all evaluator operations and
+    diagnostics; public Expression/String intentionally remain canonical.
 - [ ] P7.2 Port evaluation/compilation of IR, lexical closures, operator values,
   local bindings, lazy branches, definition caches, and runtime error traces.
   - [x] Pure IR expression evaluation: literals, concrete constructors, explicit
@@ -363,8 +365,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     dependency ordering, forward references, cycles, and lazy module bindings.
   - [x] Parsed-project pure evaluation through module sorting, resolution,
     static analysis, and full import/export/instance flattening with overrides.
-  - [ ] Filesystem/CLI evaluation wiring, closures inside concrete collections,
-    remaining caches, and complete runtime stack traces.
+  - [ ] Filesystem/CLI evaluation wiring, remaining definition caches, and
+    complete runtime stack traces.
+  - [ ] Repeated factory-lambda object reuse and shared captured parameter cells;
+    TypeScript compiles one closure per AST, while Go currently captures per call.
 - [ ] P7.3 Port arithmetic, Boolean, comparison, string, and conversion
   builtins; test negative division/modulo and integer boundary behavior.
   - [x] Strict integer arithmetic/comparison builtins, arbitrary precision,
@@ -407,6 +411,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     selection, nested matches, closure branches, and missing-case diagnostics.
   - [x] Exclusive-end ascending/descending list range with Number-rounded
     endpoints and iterative steps, and finite list indices.
+  - [x] Explicit-state allListsUpTo materialization with raw-object identity
+    sets, repeated-call traversal, normalization, and exact UID rollover.
+  - [ ] Evaluator ownership/dispatch for allListsUpTo and shared identity state.
   - [ ] Remaining collections/higher-order/symbolic operations, including
     unbounded range materialization/error behavior.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
@@ -439,6 +446,12 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     recorder callbacks.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
   empty choices, and bounded sampling of infinite domains.
+  - [x] Finite Set positional/RNG sampling with retained child objects and
+    reference traversal, bounds, empty-set errors, and exact counter advancement.
+  - [x] Bound nondet/oneOf evaluation, cyclic retries, configurable thresholds,
+    nested bindings, cache refresh, metadata, and no extra random retry draws.
+  - [ ] Compiler-time discovery of picks in lazy branches, symbolic/infinite
+    bounds, and import-time versus per-call retry environment semantics.
 - [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
   model-based-testing metadata. Explicitly reject non-executable temporal
   constructs where the reference runtime does.
@@ -454,8 +467,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     constructor/reset semantics, state restoration, and 120 upstream vectors.
   - [x] CLI-compatible explicit seed parsing with JavaScript BigInt syntax,
     ECMAScript whitespace, exact error messages, and reference fixtures.
-  - [ ] Default initialization and CLI wiring, collection sampling/traversal,
-    and comparison with the Rust runtime's seeded behavior.
+  - [x] Finite-set sampling/traversal with exact bounded RNG consumption.
+  - [ ] Default initialization/CLI wiring and comparison with the Rust
+    runtime's seeded behavior.
 - [ ] P7.9 Complete an opcode coverage matrix for evaluation, typing, effects,
   and symbolic conversion, distinguishing supported operations and deliberate
   context restrictions.
@@ -2735,3 +2749,19 @@ word "retained" in the commit message.
   P1-P6 implementations against their fixture families and checked completed
   items; schema losslessness, syntax recovery, full corpus/cycle order, and
   broader cyclic-effect shape audits remain open.
+
+- 2026-11-02: Added callable closures inside every concrete collection kind,
+  including identity-based Set elements/Map keys and reference hash collisions;
+  48 upstream cases and direct ownership/hash tests pass. Added finite Set
+  sampling (16 sources, 112 positional and 240 seeded picks) and bound nondet
+  evaluation with cyclic retries, cache refresh, metadata, pending updates, and
+  exact RNG behavior (23 helper scenarios plus 12 expression cases). Added shared
+  explicit object-hash state and raw-object traversal (154 operations), finite
+  allListsUpTo (25 scenarios/28 calls), and TypeScript-compatible serialization
+  (35 sources/95 exact outputs including repeated Unicode-tie changes). Full
+  default tests and focused runtime race checks pass. Public canonical display
+  stays separate from explicit compatibility serialization; shared evaluator
+  state/dispatch, factory-lambda allocation/shared-cell semantics, compiler-time
+  pick discovery, and symbolic domains remain open. A separate symbolic oracle
+  has 22 domain scenarios and 43 expression outcomes; these are pending evidence,
+  not passing Go coverage.

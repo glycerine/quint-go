@@ -145,7 +145,42 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 				return fail(e, "Malformed local definition")
 			}
 			if e.Opdef.Qualifier == Nondet {
-				return fail(e, "Local nondeterministic definitions require the full evaluator")
+				if e.Opdef.Expr.Kind != "app" || e.Opdef.Expr.Opcode != "oneOf" || len(e.Opdef.Expr.Args) != 1 {
+					return fail(e, "Nondeterministic definitions require a oneOf application")
+				}
+				value, err := EvalNondet(ctx, e.Opdef.Name, storage, rng,
+					func(callContext context.Context) (RuntimeValue, error) {
+						saved := ctx
+						ctx = callContext
+						value, err := eval(e.Opdef.Expr.Args[0])
+						ctx = saved
+						return value, err
+					},
+					func(callContext context.Context, picked RuntimeValue, pickErr error) (RuntimeValue, error) {
+						scope := insdict.NewDict[string, localValue]()
+						scope.Set(e.Opdef.Name, func(arguments []RuntimeValue) (RuntimeValue, error) {
+							if pickErr != nil {
+								return RuntimeValue{}, pickErr
+							}
+							if arguments != nil {
+								return picked.Apply(ctx, arguments)
+							}
+							return picked, nil
+						})
+						saved := ctx
+						ctx = callContext
+						scopes = append(scopes, scope)
+						value, err := eval(*e.Body)
+						scopes = scopes[:len(scopes)-1]
+						ctx = saved
+						return value, err
+					})
+				if d, ok := err.(Diagnostic); ok && d.Reference == nil {
+					id := e.ID
+					d.Reference = &id
+					err = d
+				}
+				return value, err
 			}
 			captured := append([]*insdict.Dict[string, localValue](nil), scopes...)
 			var cached RuntimeValue

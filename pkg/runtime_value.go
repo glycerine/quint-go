@@ -11,9 +11,10 @@ import (
 // The non-zero-sized token prevents Go from coalescing allocation addresses.
 type runtimeValueAllocation struct{ marker byte }
 
-// RuntimeValue owns a concrete language value or a lexical closure. Its expression form is
-// canonical for display; set/map identity does not depend on display collation.
-// Closures are created by the evaluator; symbolic collections remain separate.
+// RuntimeValue owns a language value, a lexical closure, or a collection retaining
+// such values. Its expression form is canonical for display; set/map identity
+// does not depend on display collation. Closures are created by the evaluator;
+// symbolic collections remain separate.
 // The zero value is invalid, rather than an implicit language value.
 type RuntimeValue struct {
 	expression Expr
@@ -22,6 +23,9 @@ type RuntimeValue struct {
 	closure    *runtimeClosure
 	allocation *runtimeValueAllocation
 	payload    *runtimePayload
+	// containsClosure separates executable payload identity from the mock lambda
+	// expressions that the reference emits solely for display.
+	containsClosure bool
 }
 
 // NewRuntimeValue validates and copies a concrete expression, removing source IDs
@@ -46,12 +50,62 @@ func NewRuntimeValue(e Expr) (RuntimeValue, error) {
 
 func (v RuntimeValue) Valid() bool { return v.identity != "" || v.closure != nil }
 func (v RuntimeValue) Equal(other RuntimeValue) bool {
-	return v.Valid() && other.Valid() && v.closure == nil && other.closure == nil && v.identity == other.identity
+	if !v.Valid() || !other.Valid() || v.closure != nil || other.closure != nil {
+		return false
+	}
+	if !v.containsClosure && !other.containsClosure {
+		return v.identity == other.identity
+	}
+	if v.expression.Kind != other.expression.Kind || v.expression.Opcode != other.expression.Opcode {
+		return false
+	}
+	if v.payload == nil || other.payload == nil {
+		return v.identity == other.identity
+	}
+	switch v.expression.Opcode {
+	case "variant":
+		left, right := v.payload.children, other.payload.children
+		// Variant.equals calls its payload's equals directly, without Immutable's
+		// object-identity short circuit. In particular, variant(f) != variant(f).
+		return len(left) == 2 && len(right) == 2 && left[0].Equal(right[0]) && left[1].Equal(right[1])
+	case "List", "Tup", "Rec":
+		left, right := v.payload.children, other.payload.children
+		if len(left) != len(right) {
+			return false
+		}
+		for i, child := range left {
+			if !runtimeCollectionEqual(child, right[i]) {
+				return false
+			}
+		}
+		return true
+	case "Set", "Map":
+		left, right := v.payload.entries, other.payload.entries
+		if left.Len() != right.Len() {
+			return false
+		}
+		for _, entry := range left.Entries() {
+			value, found, err := right.Lookup(entry.Key)
+			if err != nil || !found || !runtimeCollectionEqual(entry.Value, value) {
+				return false
+			}
+		}
+		return true
+	}
+	return false
+}
+
+// Immutable collections compare object identity before invoking equals. Lambdas
+// cannot compare directly, but a collection can retain and recognize one object.
+func runtimeCollectionEqual(left, right RuntimeValue) bool {
+	return sameRuntimeObject(left, right) || left.Equal(right)
 }
 
 // Hash is a deterministic structural hash for Go runtime collections. Its bytes
 // need not equal either upstream runtime's implementation-specific hash. Equal
 // values always hash equally, even when display strings have collation ties.
+// Mock lambda expressions may collide; executable closure identity is compared
+// separately when collections contain closures.
 func (v RuntimeValue) Hash() [32]byte { return sha256.Sum256([]byte(v.identity)) }
 
 // Expression returns a deep copy, so changing its argument slices cannot mutate
@@ -117,7 +171,7 @@ func newRuntimeClosure(arity int, apply func(context.Context, []RuntimeValue) (R
 	for i := 0; i < arity; i++ {
 		expression.Params = append(expression.Params, Parameter{Name: fmt.Sprintf("_a%d", i)})
 	}
-	return RuntimeValue{expression: expression, source: expression, closure: &runtimeClosure{apply: apply}, allocation: &runtimeValueAllocation{}}
+	return RuntimeValue{expression: expression, source: expression, closure: &runtimeClosure{apply: apply}, allocation: &runtimeValueAllocation{}, containsClosure: true}
 }
 
 // sameRuntimeObject follows reference object identity without changing language

@@ -148,7 +148,7 @@ func TestReferenceMapBuildValidationAndOwnership(t *testing.T) {
 	if err != nil || empty.Len() != 0 || empty.root != nil {
 		t.Fatal("empty constructor", err)
 	}
-	for _, entry := range []runtimeReferenceEntry{{RuntimeValue{}, other}, {newRuntimeClosure(0, nil), other}, {key, RuntimeValue{}}} {
+	for _, entry := range []runtimeReferenceEntry{{RuntimeValue{}, other}, {RuntimeValue{identity: "unsupported", expression: Expr{Kind: "name", Name: "x"}}, other}, {key, RuntimeValue{}}} {
 		if _, err := runtimeReferenceMapFromEntries([]runtimeReferenceEntry{entry}); err == nil {
 			t.Fatal("invalid constructor input")
 		}

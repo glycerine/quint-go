@@ -130,7 +130,7 @@ func TestUpstreamReferenceMapHistory(t *testing.T) {
 func TestReferenceMapValidationOwnershipAndMissingDeletion(t *testing.T) {
 	value, _ := NewRuntimeValue(Expr{Kind: "bool", Bool: true})
 	var empty runtimeReferenceMap
-	for _, key := range []RuntimeValue{{}, newRuntimeClosure(0, nil)} {
+	for _, key := range []RuntimeValue{{}, {identity: "unsupported", expression: Expr{Kind: "name", Name: "x"}}} {
 		if _, err := empty.Set(key, value); err == nil {
 			t.Fatal("invalid key set")
 		}

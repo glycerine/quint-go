@@ -101,7 +101,7 @@ func (n *runtimeReferenceMapNode) lookup(shift uint, hash uint32, key RuntimeVal
 	switch n.kind {
 	case referenceArrayNode, referenceCollisionNode, referenceValueNode:
 		for _, entry := range n.entries {
-			if entry.Key.Equal(key) {
+			if runtimeCollectionEqual(entry.Key, key) {
 				return entry.Value, true
 			}
 		}
@@ -154,7 +154,7 @@ func (n *runtimeReferenceMapNode) update(shift uint, hash uint32, entry runtimeR
 		}
 		index := -1
 		for i, current := range n.entries {
-			if current.Key.Equal(entry.Key) {
+			if runtimeCollectionEqual(current.Key, entry.Key) {
 				index = i
 				break
 			}
@@ -202,7 +202,7 @@ func (n *runtimeReferenceMapNode) update(shift uint, hash uint32, entry runtimeR
 		}
 		return &runtimeReferenceMapNode{kind: n.kind, hash: n.hash, entries: copied}, delta, nil
 	case referenceValueNode:
-		matches := n.entries[0].Key.Equal(entry.Key)
+		matches := runtimeCollectionEqual(n.entries[0].Key, entry.Key)
 		if remove {
 			if matches {
 				return nil, -1, nil

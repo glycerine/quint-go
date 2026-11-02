@@ -12,11 +12,13 @@ import (
 // Runtime constructors normalize set elements and map keys; concrete normalForm
 // calls also normalize nested values but do not change their hashes. Records are
 // sorted by UTF-16 field names on construction, lists/tuples retain their order,
-// and sets/maps have unordered collection hashes. The canonical concrete IR
+// and sets/maps have unordered collection hashes. Lambdas inherit hashCode zero;
+// their mock display trees therefore suffice for hashing but never equality.
+// The canonical runtime display IR
 // therefore retains all information needed for these hashes, though it cannot
 // reproduce collection traversal or mutation history.
 func runtimeReferenceHash(value RuntimeValue) (int32, error) {
-	if !value.Valid() || value.closure != nil {
+	if !value.Valid() {
 		return 0, fmt.Errorf("reference hashing requires a concrete runtime value")
 	}
 	code, err := runtimeReferenceHashCode(value.expression)
@@ -28,6 +30,10 @@ func runtimeReferenceHash(value RuntimeValue) (int32, error) {
 // hashCodes are unsigned low 32 bits; variants can exceed signed 32 bits.
 func runtimeReferenceHashCode(e Expr) (int64, error) {
 	switch e.Kind {
+	case "lambda":
+		// RuntimeValueLambda inherits the base class's zero hashCode. Its mock
+		// display expression does not identify the executable closure object.
+		return 0, nil
 	case "bool":
 		if e.Bool {
 			return 1, nil

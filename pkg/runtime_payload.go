@@ -5,14 +5,17 @@ import (
 	"sort"
 
 	"github.com/glycerine/insdict"
+	"golang.org/x/text/collate"
+	"golang.org/x/text/language"
 )
 
 // A payload retains actual immutable children and collection node history.
-// expression is a canonical display/identity cache; source is a copied view,
+// expression is a canonical display/concrete-identity cache; source is a copied view,
 // never the storage used to perform runtime access or mutation.
 type runtimePayload struct {
-	children []RuntimeValue
-	entries  runtimeReferenceMap
+	children        []RuntimeValue
+	entries         runtimeReferenceMap
+	containsClosure bool
 }
 
 func runtimeChildren(value RuntimeValue) ([]RuntimeValue, error) {
@@ -40,6 +43,36 @@ func runtimeEntries(value RuntimeValue) ([]runtimeReferenceEntry, error) {
 }
 
 func runtimeAssemble(source Expr, payload *runtimePayload) (RuntimeValue, error) {
+	containsClosure := payload != nil && payload.containsClosure
+	if containsClosure {
+		// A lambda's mock expression is display-only. NormalizeValue deliberately
+		// accepts concrete input only, so build this view from validated retained
+		// children and keep comparison on their executable payloads instead.
+		display := Expr{Kind: "app", Opcode: source.Opcode, Args: []Expr{}}
+		switch source.Opcode {
+		case "List", "Tup", "Rec", "variant":
+			for _, child := range payload.children {
+				display.Args = append(display.Args, child.expression)
+			}
+		case "Set", "Map":
+			for _, entry := range payload.entries.Entries() {
+				if source.Opcode == "Set" {
+					display.Args = append(display.Args, entry.Value.expression)
+				} else {
+					display.Args = append(display.Args, Expr{Kind: "app", Opcode: "Tup", Args: []Expr{entry.Key.expression, entry.Value.expression}})
+				}
+			}
+			if len(display.Args) > 1 {
+				comparison := collate.New(language.AmericanEnglish)
+				sort.SliceStable(display.Args, func(i, j int) bool {
+					return comparison.CompareString(ExpressionString(display.Args[i]), ExpressionString(display.Args[j])) < 0
+				})
+			}
+		default:
+			return RuntimeValue{}, fmt.Errorf("invalid closure collection %s", source.Opcode)
+		}
+		return RuntimeValue{expression: copyRuntimeExpression(display), source: copyRuntimeExpression(source), identity: normalizedValueKey(display), allocation: &runtimeValueAllocation{}, payload: payload, containsClosure: true}, nil
+	}
 	normalized, err := NormalizeValue(source)
 	if err != nil {
 		return RuntimeValue{}, err
@@ -50,7 +83,9 @@ func runtimeAssemble(source Expr, payload *runtimePayload) (RuntimeValue, error)
 // runtimeWithEntries wraps a retained tree without reconstructing its history.
 func runtimeWithEntries(op string, m runtimeReferenceMap) (RuntimeValue, error) {
 	source := Expr{Kind: "app", Opcode: op, Args: []Expr{}}
+	containsClosure := false
 	for _, entry := range m.Entries() {
+		containsClosure = containsClosure || entry.Key.containsClosure || entry.Value.containsClosure
 		switch op {
 		case "Set":
 			source.Args = append(source.Args, entry.Value.source)
@@ -63,22 +98,24 @@ func runtimeWithEntries(op string, m runtimeReferenceMap) (RuntimeValue, error) 
 	if op != "Set" && op != "Map" {
 		return RuntimeValue{}, fmt.Errorf("invalid retained collection %s", op)
 	}
-	return runtimeAssemble(source, &runtimePayload{entries: m})
+	return runtimeAssemble(source, &runtimePayload{entries: m, containsClosure: containsClosure})
 }
 
 // newRuntimeComposite implements runtime constructors on evaluated children.
 // Child objects remain immutable and can be returned directly by accessors.
 func newRuntimeComposite(op string, args []RuntimeValue) (RuntimeValue, error) {
 	source := Expr{Kind: "app", Opcode: op, Args: make([]Expr, len(args))}
+	containsClosure := false
 	for i, arg := range args {
 		if !arg.Valid() {
 			return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Invalid runtime value"}
 		}
 		source.Args[i] = arg.source
+		containsClosure = containsClosure || arg.containsClosure
 	}
 	switch op {
 	case "List", "Tup":
-		return runtimeAssemble(source, &runtimePayload{children: append([]RuntimeValue{}, args...)})
+		return runtimeAssemble(source, &runtimePayload{children: append([]RuntimeValue{}, args...), containsClosure: containsClosure})
 	case "Rec":
 		if len(args)%2 != 0 {
 			return RuntimeValue{}, fmt.Errorf("record requires field/value pairs")
@@ -96,18 +133,20 @@ func newRuntimeComposite(op string, args []RuntimeValue) (RuntimeValue, error) {
 		}
 		sort.Slice(names, func(i, j int) bool { return utf16Less(names[i], names[j]) })
 		children := make([]RuntimeValue, 0, len(names)*2)
+		containsClosure = false
 		source.Args = []Expr{}
 		for _, name := range names {
 			pair := fields.Get(name)
 			children = append(children, pair[0], pair[1])
+			containsClosure = containsClosure || pair[1].containsClosure
 			source.Args = append(source.Args, pair[0].source, pair[1].source)
 		}
-		return runtimeAssemble(source, &runtimePayload{children: children})
+		return runtimeAssemble(source, &runtimePayload{children: children, containsClosure: containsClosure})
 	case "variant":
 		if len(args) != 2 || args[0].expression.Kind != "str" {
 			return RuntimeValue{}, fmt.Errorf("variant requires a string label and value")
 		}
-		return runtimeAssemble(source, &runtimePayload{children: append([]RuntimeValue{}, args...)})
+		return runtimeAssemble(source, &runtimePayload{children: append([]RuntimeValue{}, args...), containsClosure: containsClosure})
 	case "Set":
 		var m runtimeReferenceMap
 		for _, value := range args {
