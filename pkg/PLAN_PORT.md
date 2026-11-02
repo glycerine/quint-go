@@ -1635,3 +1635,11 @@ word "retained" in the commit message.
   completes type analysis before effect/static passes; upstream interleaves
   modules, so cross-module lifecycle parity and unified error-tree diagnostics
   remain explicit open work under P5.5.
+
+- 2026-11-02: Corrected combined analysis to interleave application expansion,
+  types, effects, and static checks per module. Type/effect/application error
+  trees now produce ordered QNT000 diagnostics with source references and trace
+  data, preceding mode/update/nondeterminism diagnostics as upstream does.
+  Tests cover error traces and retained-error repetition across module batches.
+  Default tests pass under one second. Full upstream analyzer differential
+  fixtures and incremental previous-output handling remain open under P5.5.

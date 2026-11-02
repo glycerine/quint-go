@@ -40,3 +40,26 @@ func TestCombinedAnalysis(t *testing.T) {
 		}
 	}
 }
+
+func TestAnalysisErrorTreesAndModuleOrder(t *testing.T) {
+	ms, err := ParseModules("module A { val bad=1+true } module B { val later=2 }")
+	if err != nil {
+		t.Fatal(err)
+	}
+	linked, _ := ResolveLinkedModules(ms)
+	result, err := AnalyzeModules(ms, linked.Table)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(result.Modules) != 2 || len(result.Diagnostics) != 2 {
+		t.Fatalf("%+v", result.Diagnostics)
+	}
+	for _, d := range result.Diagnostics {
+		if d.Code != "QNT000" || d.Data == nil || d.Data.Trace == nil || d.Message != d.Data.Trace.String() {
+			t.Fatal(d)
+		}
+	}
+	if *result.Diagnostics[0].Reference != *result.Diagnostics[1].Reference {
+		t.Fatal("retained upstream error repetition changed")
+	}
+}
