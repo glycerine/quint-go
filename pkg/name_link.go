@@ -1,7 +1,6 @@
 package quint
 
 import (
-	"fmt"
 	"github.com/glycerine/insdict"
 )
 
@@ -14,15 +13,8 @@ type LinkedNameResolution struct {
 
 // ResolveLinkedModules expects dependency-ordered modules (see SortModules).
 // Imports and exports are processed in declaration order, then all references
-// are resolved against the completed scope. Instances are not yet supported.
+// are resolved against the completed scope, including instance overrides.
 func ResolveLinkedModules(modules []Module) (LinkedNameResolution, error) {
-	for _, m := range modules {
-		for _, d := range m.Declarations {
-			if d.Kind == "instance" {
-				return LinkedNameResolution{}, fmt.Errorf("module %s requires instance linking", m.Name)
-			}
-		}
-	}
 	resolver := NewExpressionNameResolver(nil)
 	result := LinkedNameResolution{Table: resolver.Table, Modules: insdict.NewDict[string, *NameScope](), Errors: []Diagnostic{}}
 	for _, m := range modules {
@@ -43,6 +35,11 @@ func ResolveLinkedModules(modules []Module) (LinkedNameResolution, error) {
 					result.Modules.Set(*d.QualifiedName, alias)
 				}
 				scope.ImportDefinitions(source, d)
+			case "instance":
+				instance := scope.InstanceDefinitions(result.Modules.Get(d.ProtoName), d)
+				if instance != nil && d.QualifiedName != nil {
+					result.Modules.Set(*d.QualifiedName, instance)
+				}
 			case "export":
 				scope.ExportDefinitions(result.Modules.Get(d.ProtoName), d)
 			case "def", "const", "var", "typedef", "assume":

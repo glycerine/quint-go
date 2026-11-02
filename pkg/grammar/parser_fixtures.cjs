@@ -105,6 +105,12 @@ if(process.argv.includes('--corpus')){
 }
 const {resolveNames}=require(path.join(root,'quint/src/names/resolver'))
 const resolutionCases=[
+ ['instance-alias','module A { const N: int val x=N } module B { val outside=3 import A(N=outside) as I export I.* val y=I::x }'],
+ ['instance-open','module A { const N: int val x=N } module B { import A(N=1).* val y=x }'],
+ ['instance-errors','module A { val x=1 } module B { import A(x=missing, N=1) as I }'],
+ ['instance-self','module A { import A(N=1).* }'],
+ ['instance-hidden','module A { const N: int val x=N } module P { import A.* } module B { import P(N=1) as I export I.* } module C { import B.* val y=N }'],
+
  ['forward','module M { val x = f(c) def f(a) = a const c: int }'],
  ['shadow','module M { val x = 1 def f(a) = val x = a; x + f(a) }'],
  ['types','module M { type T = int const c: T val x: T = c }'],

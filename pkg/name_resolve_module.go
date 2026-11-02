@@ -28,6 +28,17 @@ func (resolver *ExpressionNameResolver) resolveModuleBody(module Module) {
 		case "def":
 			resolver.Table.Set(d.ID, LookupDefinition{ID: d.ID, Name: d.Name, Depth: 0, Declaration: &d})
 			resolver.Resolve(d.Expr, 0)
+		case "instance":
+			for _, override := range d.Overrides {
+				name := override.Parameter.Name
+				if d.QualifiedName != nil {
+					name = *d.QualifiedName + "::" + name
+				}
+				resolver.resolve(name, override.Parameter.ID, false)
+			}
+			for _, override := range d.Overrides {
+				resolver.Resolve(&override.Expr, 0)
+			}
 		case "assume":
 			resolver.Resolve(d.Assumption, 0)
 		}

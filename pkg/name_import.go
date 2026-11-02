@@ -20,7 +20,11 @@ func (s *NameScope) copyModuleDefinitions(source *NameScope, decl Declaration, h
 		s.Errors = append(s.Errors, Diagnostic{Code: code, Message: message, Reference: &id, Data: &DiagnosticData{}})
 	}
 	if decl.ProtoName == s.Module {
-		report(QNT407, "Cannot "+decl.Kind+" '"+decl.ProtoName+"' inside '"+decl.ProtoName+"'")
+		verb := decl.Kind
+		if verb == "instance" {
+			verb = "instantiate"
+		}
+		report(QNT407, "Cannot "+verb+" '"+decl.ProtoName+"' inside '"+decl.ProtoName+"'")
 		return
 	}
 	if source == nil {
@@ -33,6 +37,9 @@ func (s *NameScope) copyModuleDefinitions(source *NameScope, decl Declaration, h
 		if decl.QualifiedName != nil {
 			namespace = *decl.QualifiedName
 		}
+	}
+	if decl.Kind == "instance" && decl.QualifiedName == nil {
+		namespace = ""
 	}
 	selective := decl.DefName != nil && *decl.DefName != "*"
 	found := false
@@ -63,8 +70,18 @@ func (s *NameScope) copyModuleDefinitions(source *NameScope, decl Declaration, h
 		}
 		def.ImportedFrom = &decl
 		def.Namespaces = append([]string(nil), def.Namespaces...)
-		if namespace != "" && !strings.HasPrefix(def.Name, namespace+"::") && (len(def.Namespaces) == 0 || def.Namespaces[len(def.Namespaces)-1] != namespace) {
-			def.Namespaces = append(def.Namespaces, namespace)
+		namespaces := []string{namespace}
+		if decl.Kind == "instance" {
+			instanceName := decl.ProtoName
+			if decl.QualifiedName != nil {
+				instanceName = *decl.QualifiedName
+			}
+			namespaces = []string{instanceName, s.Module}
+		}
+		for _, ns := range namespaces {
+			if ns != "" && !strings.HasPrefix(def.Name, ns+"::") && (len(def.Namespaces) == 0 || def.Namespaces[len(def.Namespaces)-1] != ns) {
+				def.Namespaces = append(def.Namespaces, ns)
+			}
 		}
 		existing := s.Definitions.Get(identifier)
 		if selective && builtinResolutionNames[identifier] {

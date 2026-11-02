@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func TestUpstreamLocalResolution(t *testing.T) {
+func TestUpstreamNameResolution(t *testing.T) {
 	type binding struct {
 		Reference, Definition string
 		Depth                 int
@@ -66,7 +66,7 @@ func TestUpstreamLocalResolution(t *testing.T) {
 				}
 			}
 			visit(tree, "")
-			r, err := ResolveLocalModule(ms[0])
+			r, err := ResolveLinkedModules(ms)
 			if err != nil {
 				t.Fatal(err)
 			}

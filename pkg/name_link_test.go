@@ -41,8 +41,5 @@ func TestLinkVisibilityAndSourceOrder(t *testing.T) {
 	if err != nil || len(r.Errors) != 2 || r.Errors[0].Code != QNT405 || r.Errors[1].Code != QNT404 {
 		t.Fatal("collection/reference diagnostics")
 	}
-	ms, _ = ParseModules(`module M { import A(N=1) as B }`)
-	if _, err = ResolveLinkedModules(ms); err == nil {
-		t.Fatal("unsupported instance silently linked")
-	}
+
 }

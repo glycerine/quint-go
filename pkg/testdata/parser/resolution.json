@@ -1,5 +1,166 @@
 [
   {
+    "name": "instance-alias",
+    "source": "module A { const N: int val x=N } module B { val outside=3 import A(N=outside) as I export I.* val y=I::x }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/1",
+        "definition": "/0/declarations/1",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/1/expr",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/1/declarations/0",
+        "definition": "/1/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/1/declarations/1/overrides/0/0",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/1/declarations/1/overrides/0/1",
+        "definition": "/1/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/1/declarations/3",
+        "definition": "/1/declarations/3",
+        "depth": 0
+      },
+      {
+        "reference": "/1/declarations/3/expr",
+        "definition": "/0/declarations/1",
+        "depth": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "instance-open",
+    "source": "module A { const N: int val x=N } module B { import A(N=1).* val y=x }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/1",
+        "definition": "/0/declarations/1",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/1/expr",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/1/declarations/0/overrides/0/0",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/1/declarations/1",
+        "definition": "/1/declarations/1",
+        "depth": 0
+      },
+      {
+        "reference": "/1/declarations/1/expr",
+        "definition": "/0/declarations/1",
+        "depth": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "instance-errors",
+    "source": "module A { val x=1 } module B { import A(x=missing, N=1) as I }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/0",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/1/declarations/0/overrides/0/0",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT406",
+        "message": "Instantiation error: 'x' is not a constant in 'A'",
+        "reference": "/1/declarations/0"
+      },
+      {
+        "code": "QNT406",
+        "message": "Instantiation error: 'N' not found in 'A'",
+        "reference": "/1/declarations/0"
+      },
+      {
+        "code": "QNT404",
+        "message": "Name 'I::N' not found",
+        "reference": "/1/declarations/0/overrides/1/0"
+      },
+      {
+        "code": "QNT404",
+        "message": "Name 'missing' not found",
+        "reference": "/1/declarations/0/overrides/0/1"
+      }
+    ]
+  },
+  {
+    "name": "instance-self",
+    "source": "module A { import A(N=1).* }",
+    "bindings": [],
+    "errors": [
+      {
+        "code": "QNT407",
+        "message": "Cannot instantiate 'A' inside 'A'",
+        "reference": "/0/declarations/0"
+      },
+      {
+        "code": "QNT404",
+        "message": "Name 'N' not found",
+        "reference": "/0/declarations/0/overrides/0/0"
+      }
+    ]
+  },
+  {
+    "name": "instance-hidden",
+    "source": "module A { const N: int val x=N } module P { import A.* } module B { import P(N=1) as I export I.* } module C { import B.* val y=N }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/1",
+        "definition": "/0/declarations/1",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/1/expr",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/2/declarations/0/overrides/0/0",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/3/declarations/1",
+        "definition": "/3/declarations/1",
+        "depth": 0
+      },
+      {
+        "reference": "/3/declarations/1/expr",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      }
+    ],
+    "errors": []
+  },
+  {
     "name": "forward",
     "source": "module M { val x = f(c) def f(a) = a const c: int }",
     "bindings": [

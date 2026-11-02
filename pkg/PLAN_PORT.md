@@ -187,6 +187,9 @@ errors without panics or losing subsequent declarations after recoverable errors
   lookup, duplicate/undefined-name checks, and shadowing rules.
 - [ ] P3.2 Resolve selective/wildcard imports, aliases, qualified references,
   exports/re-exports, and parameterized module instances with overrides.
+  - [x] Link ordered module imports, aliases, exports, and instance overrides.
+  - [x] Compare instance reference targets and diagnostics with TypeScript fixtures.
+  - [ ] Validate nested instance provenance, collisions, and broader linking fixtures.
 - [ ] P3.3 Port unshadowing and fresh-name handling without capturing variables.
 - [ ] P3.4 Port call graphs, stable topological sorting, module ordering, and
   recursion/dependency-cycle diagnostics.
@@ -1084,3 +1087,13 @@ word "retained" in the commit message.
   rejection. Default tests pass (combined execution 0.479s). P3.2 remains open for
   instances and differential linked visibility/provenance validation; callers
   currently supply dependency-ordered modules.
+
+
+- 2026-11-02: Added parameterized instance linking, override constant validation,
+  qualified/unqualified references, alias exports, and namespace provenance.
+  Copies preserve prototype identity without mutating prototype visibility.
+  Unit tests cover override RHS scope, hidden constants, copy isolation, and
+  missing/self/nonconstant diagnostics; five new TypeScript differential cases
+  compare ordered bindings and error references. Default tests pass (combined
+  execution 0.508s). P3.2 remains open for broader nested-instance/provenance
+  validation; dependency-ordered input remains required.
