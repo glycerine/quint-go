@@ -1534,3 +1534,10 @@ word "retained" in the commit message.
   Missing retained results currently produce structured errors rather than
   upstream internal exceptions; traversal and effect-inference integration remain
   pending.
+
+- 2026-11-02: Added effect free-name dependency expansion and generalization
+  helpers for lambda scopes. Tests cover ordered substitution dependencies,
+  separate effect/entity namespaces, repeated names, unrelated bindings,
+  non-topological input order, quantified exclusions, and output isolation.
+  Default tests pass under one second. Lambda-stack and traversal integration
+  remain open under P5.2.
