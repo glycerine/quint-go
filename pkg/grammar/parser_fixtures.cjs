@@ -393,3 +393,25 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/effect_inference.json'),JSO
  const [errors,effects]=new EffectInferrer(linked.table).inferEffects(parsed.modules[0].declarations)
  return {name,input:parsed.modules,effects:[...effects].map(([id,s])=>({id:String(id),scheme:{effect:s.effect,effectVariables:[...s.effectVariables],entityVariables:[...s.entityVariables]}})),errors:[...errors].map(([id,error])=>({id:String(id),error}))}
 }),null,2)+'\n')
+
+const {ModeChecker}=require(path.join(root,'quint/src/effects/modeChecker'))
+const modeCases=[
+ ['pure',"module M { val x=1 def f(x)=x }"],
+ ['read',"module M { var x:int pure val y=x }"],
+ ['update',"module M { var x:int val y=x'=1 }"],
+ ['temporal',"module M { var x:int action y=always(x>0) }"],
+ ['parameters',"module M { pure val f(x)=x }"],
+ ['action-and',"module M { var x:int action step=x'=1 action bad=step and step }"],
+ ['action-or',"module M { var x:int action step=x'=1 action bad=step or step }"],
+ ['action-exists',"module M { var x:int action bad=Set(1).exists(i=>x'=i) }"],
+ ['nested',"module M { var x:int pure val bad=pure val inner=x; inner }"],
+ ['temporal-allowed',"module M { var x:int action step=x'=1 temporal good=step and step }"],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/modes.json'),JSONbig.stringify(modeCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ if(parsed.errors.length)throw Error(JSONbig.stringify(parsed.errors))
+ const linked=resolveNames(parsed.modules)
+ const [,effects]=new EffectInferrer(linked.table).inferEffects(parsed.modules[0].declarations)
+ const [errors,suggestions]=new ModeChecker().checkModes(parsed.modules[0].declarations,effects)
+ return {name,input:parsed.modules,effects:[...effects].map(([id,s])=>({id:String(id),scheme:{effect:s.effect,effectVariables:[...s.effectVariables],entityVariables:[...s.entityVariables]}})),errors:[...errors].map(([id,error])=>({id:String(id),error})),suggestions:[...suggestions].map(([id,qualifier])=>({id:String(id),qualifier}))}
+}),null,2)+'\n')

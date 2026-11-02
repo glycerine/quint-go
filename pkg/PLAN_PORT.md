@@ -1617,3 +1617,11 @@ word "retained" in the commit message.
   checks exact action-combination wording and permits the temporal counterpart.
   Full default tests pass under one second. Broader nested/lambda diagnostic
   differential coverage and combined analyzer integration remain open.
+
+- 2026-11-02: Added ten exact upstream mode-check fixtures using upstream effect
+  tables to isolate validation. Comparisons cover ordered diagnostics, references,
+  replacement fixes, suggestions, nested definitions, parameter violations, and
+  and/or/exists action hints plus permitted temporal definitions. All match
+  without implementation changes. Default tests pass (combined execution 0.699s).
+  Broader instance/higher-order parity and combined analyzer integration remain
+  open; P5.3 is not yet marked complete.

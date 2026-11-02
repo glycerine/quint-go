@@ -146,3 +146,6 @@ Complete effect trees and ordered quantifiers are compared without normalization
 `effect_inference.json` records nine upstream effect-inference runs. Comparisons
 include ordered effect tables, quantifiers, source references, and error trees
 without normalization.
+
+`modes.json` contains ten upstream mode-check runs with upstream effect tables.
+Tests compare full ordered diagnostics, fixes, references, and suggestions.
