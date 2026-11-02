@@ -369,6 +369,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     and updates, including duplicate-record-field replacement.
   - [x] Higher-order list select/foldl/foldr with lexical callbacks, traversal
     and argument ordering, empty folds, cancellation, and error propagation.
+  - [x] Lazy variant matching with payload binding, wildcard/source-order
+    selection, nested matches, closure branches, and missing-case diagnostics.
   - [ ] Remaining collections/higher-order/symbolic operations.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
   updates, action composition, enabled/disabled actions, rollback, and commit.
@@ -2316,3 +2318,16 @@ word "retained" in the commit message.
   type errors, and empty-fold closure identity. Full default tests pass
   (combined package execution 0.977s). Set/map higher-order operators, reference
   traversal ordering, symbolic collections, and module integration remain open.
+
+- 2026-11-02: Added lazy matchVariant evaluation, supporting source pattern
+  syntax through existing parser lowering. Matching evaluates the scrutinee
+  once, scans labels in source order, takes the first equal label or wildcard,
+  and evaluates/applies only the selected closure to the owned payload. Missing
+  cases return upstream QNT505 No match for variant text with a source reference.
+  Fourteen full TypeScript evaluator cases match, including skipped failing
+  branches/later labels, wildcard precedence, nested patterns, lexical captures,
+  local operators, and retained nested-map diagnostics. Unit tests cover invalid
+  scrutinees/labels/arity/branch values, earlier-label error propagation, and
+  immutable payloads. Full default tests pass (combined package execution 1.028s,
+  near the one-second target). Module integration, symbolic values, higher-order
+  set/map operations, and stateful evaluation remain open.

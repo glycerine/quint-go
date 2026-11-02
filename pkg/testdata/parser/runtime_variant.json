@@ -1,0 +1,1167 @@
+[
+  {
+    "source": "match variant(\"Some\",42) { Some(x) => x+1 | None => 0 }",
+    "input": {
+      "id": 8,
+      "kind": "app",
+      "opcode": "matchVariant",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "Some"
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 42
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 10,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 6,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 5,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          },
+          "params": [
+            {
+              "name": "x",
+              "id": 11
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "kind": "str",
+          "value": "None"
+        },
+        {
+          "id": 13,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 7,
+            "kind": "int",
+            "value": 0
+          },
+          "params": [
+            {
+              "name": "_",
+              "id": 14
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 43
+    }
+  },
+  {
+    "source": "match variant(\"None\",()) { Some(x) => x | None => 0 }",
+    "input": {
+      "id": 6,
+      "kind": "app",
+      "opcode": "matchVariant",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "None"
+            },
+            {
+              "id": 2,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": []
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 8,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 4,
+            "kind": "name",
+            "name": "x"
+          },
+          "params": [
+            {
+              "name": "x",
+              "id": 9
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "kind": "str",
+          "value": "None"
+        },
+        {
+          "id": 11,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 5,
+            "kind": "int",
+            "value": 0
+          },
+          "params": [
+            {
+              "name": "_",
+              "id": 12
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "source": "match variant(\"Other\",7) { Some(x) => x | _ => 3 }",
+    "input": {
+      "id": 6,
+      "kind": "app",
+      "opcode": "matchVariant",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "Other"
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 7
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 8,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 4,
+            "kind": "name",
+            "name": "x"
+          },
+          "params": [
+            {
+              "name": "x",
+              "id": 9
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "kind": "str",
+          "value": "_"
+        },
+        {
+          "id": 11,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 5,
+            "kind": "int",
+            "value": 3
+          },
+          "params": [
+            {
+              "name": "_",
+              "id": 12
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 3
+    }
+  },
+  {
+    "source": "match variant(\"Some\",42) { Some(x) => x | _ => 1/0 }",
+    "input": {
+      "id": 8,
+      "kind": "app",
+      "opcode": "matchVariant",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "Some"
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 42
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 10,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 4,
+            "kind": "name",
+            "name": "x"
+          },
+          "params": [
+            {
+              "name": "x",
+              "id": 11
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "kind": "str",
+          "value": "_"
+        },
+        {
+          "id": 13,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 7,
+            "kind": "app",
+            "opcode": "idiv",
+            "args": [
+              {
+                "id": 5,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 6,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          },
+          "params": [
+            {
+              "name": "_",
+              "id": 14
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 42
+    }
+  },
+  {
+    "source": "match variant(\"Some\",42) { Other(x) => 1/0 | Some(x) => x }",
+    "input": {
+      "id": 8,
+      "kind": "app",
+      "opcode": "matchVariant",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "Some"
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 42
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "kind": "str",
+          "value": "Other"
+        },
+        {
+          "id": 10,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 6,
+            "kind": "app",
+            "opcode": "idiv",
+            "args": [
+              {
+                "id": 4,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 5,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          },
+          "params": [
+            {
+              "name": "x",
+              "id": 11
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 13,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 7,
+            "kind": "name",
+            "name": "x"
+          },
+          "params": [
+            {
+              "name": "x",
+              "id": 14
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 42
+    }
+  },
+  {
+    "source": "match variant(\"Other\",42) { Some(x) => x }",
+    "input": {
+      "id": 5,
+      "kind": "app",
+      "opcode": "matchVariant",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "Other"
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 42
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 7,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 4,
+            "kind": "name",
+            "name": "x"
+          },
+          "params": [
+            {
+              "name": "x",
+              "id": 8
+            }
+          ]
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT505",
+      "message": "No match for variant Other",
+      "reference": 5
+    }
+  },
+  {
+    "source": "match variant(\"Some\",42) { Some(x) => 1/0 | _ => 7 }",
+    "input": {
+      "id": 8,
+      "kind": "app",
+      "opcode": "matchVariant",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "Some"
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 42
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 10,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 6,
+            "kind": "app",
+            "opcode": "idiv",
+            "args": [
+              {
+                "id": 4,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 5,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          },
+          "params": [
+            {
+              "name": "x",
+              "id": 11
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "kind": "str",
+          "value": "_"
+        },
+        {
+          "id": 13,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 7,
+            "kind": "int",
+            "value": 7
+          },
+          "params": [
+            {
+              "name": "_",
+              "id": 14
+            }
+          ]
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero",
+      "reference": 6
+    }
+  },
+  {
+    "source": "{ val y=2; match variant(\"Some\",40) { Some(x)=>x+y } }",
+    "input": {
+      "id": 13,
+      "kind": "let",
+      "opdef": {
+        "id": 2,
+        "kind": "def",
+        "name": "y",
+        "qualifier": "val",
+        "expr": {
+          "id": 1,
+          "kind": "int",
+          "value": 2
+        }
+      },
+      "expr": {
+        "id": 9,
+        "kind": "app",
+        "opcode": "matchVariant",
+        "args": [
+          {
+            "id": 5,
+            "kind": "app",
+            "opcode": "variant",
+            "args": [
+              {
+                "id": 3,
+                "kind": "str",
+                "value": "Some"
+              },
+              {
+                "id": 4,
+                "kind": "int",
+                "value": 40
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "kind": "str",
+            "value": "Some"
+          },
+          {
+            "id": 11,
+            "kind": "lambda",
+            "qualifier": "def",
+            "expr": {
+              "id": 8,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "y"
+                }
+              ]
+            },
+            "params": [
+              {
+                "name": "x",
+                "id": 12
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 42
+    }
+  },
+  {
+    "source": "match variant(\"Some\",Map((2,20),(1,10))) { Some(x)=>x.get(3) }",
+    "input": {
+      "id": 13,
+      "kind": "app",
+      "opcode": "matchVariant",
+      "args": [
+        {
+          "id": 9,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "Some"
+            },
+            {
+              "id": 8,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 2
+                    },
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 20
+                    }
+                  ]
+                },
+                {
+                  "id": 7,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 5,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 6,
+                      "kind": "int",
+                      "value": 10
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 15,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "get",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 11,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          },
+          "params": [
+            {
+              "name": "x",
+              "id": 16
+            }
+          ]
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT507",
+      "message": "Called 'get' with a non-existing key. Key is 3. Map has keys: 2, 1",
+      "reference": 12
+    }
+  },
+  {
+    "source": "matchVariant(variant(\"Some\",7),\"_\",x=>1,\"Some\",x=>2)",
+    "input": {
+      "id": 12,
+      "kind": "app",
+      "opcode": "matchVariant",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "Some"
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 7
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "kind": "str",
+          "value": "_"
+        },
+        {
+          "id": 7,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 5,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 6,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "id": 8,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 11,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 9,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 10,
+            "kind": "int",
+            "value": 2
+          }
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 1
+    }
+  },
+  {
+    "source": "matchVariant(variant(\"Some\",7),\"Other\",1/0,\"Some\",x=>x)",
+    "input": {
+      "id": 12,
+      "kind": "app",
+      "opcode": "matchVariant",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "Some"
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 7
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "kind": "str",
+          "value": "Other"
+        },
+        {
+          "id": 7,
+          "kind": "app",
+          "opcode": "idiv",
+          "args": [
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 6,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 11,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 9,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 10,
+            "kind": "name",
+            "name": "x"
+          }
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 7
+    }
+  },
+  {
+    "source": "matchVariant(variant(\"Some\",7),\"Some\",x=>x,1/0,x=>0)",
+    "input": {
+      "id": 14,
+      "kind": "app",
+      "opcode": "matchVariant",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "Some"
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 7
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 7,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 5,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 6,
+            "kind": "name",
+            "name": "x"
+          }
+        },
+        {
+          "id": 10,
+          "kind": "app",
+          "opcode": "idiv",
+          "args": [
+            {
+              "id": 8,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 9,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 11,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 12,
+            "kind": "int",
+            "value": 0
+          }
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 7
+    }
+  },
+  {
+    "source": "match variant(\"Outer\",variant(\"Inner\",7)) { Outer(x)=>match x { Inner(y)=>y+1 } }",
+    "input": {
+      "id": 14,
+      "kind": "app",
+      "opcode": "matchVariant",
+      "args": [
+        {
+          "id": 5,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "Outer"
+            },
+            {
+              "id": 4,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "Inner"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 7
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "kind": "str",
+          "value": "Outer"
+        },
+        {
+          "id": 16,
+          "kind": "lambda",
+          "qualifier": "def",
+          "expr": {
+            "id": 10,
+            "kind": "app",
+            "opcode": "matchVariant",
+            "args": [
+              {
+                "id": 6,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 11,
+                "kind": "str",
+                "value": "Inner"
+              },
+              {
+                "id": 12,
+                "kind": "lambda",
+                "qualifier": "def",
+                "expr": {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "y"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                "params": [
+                  {
+                    "name": "y",
+                    "id": 13
+                  }
+                ]
+              }
+            ]
+          },
+          "params": [
+            {
+              "name": "x",
+              "id": 17
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 8
+    }
+  },
+  {
+    "source": "{ def f(x)=x*2; match variant(\"Some\",7) { Some(x)=>f(x) } }",
+    "input": {
+      "id": 16,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "f",
+        "qualifier": "def",
+        "expr": {
+          "id": 5,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "imul",
+            "args": [
+              {
+                "id": 2,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 12,
+        "kind": "app",
+        "opcode": "matchVariant",
+        "args": [
+          {
+            "id": 9,
+            "kind": "app",
+            "opcode": "variant",
+            "args": [
+              {
+                "id": 7,
+                "kind": "str",
+                "value": "Some"
+              },
+              {
+                "id": 8,
+                "kind": "int",
+                "value": 7
+              }
+            ]
+          },
+          {
+            "id": 13,
+            "kind": "str",
+            "value": "Some"
+          },
+          {
+            "id": 14,
+            "kind": "lambda",
+            "qualifier": "def",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "f",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                }
+              ]
+            },
+            "params": [
+              {
+                "name": "x",
+                "id": 15
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 14
+    }
+  }
+]

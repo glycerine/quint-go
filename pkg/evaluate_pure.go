@@ -148,6 +148,47 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 			return v.expression.Bool, nil
 		}
 		switch e.Opcode {
+		case "matchVariant":
+			if len(e.Args) < 1 || len(e.Args)%2 != 1 {
+				return fail(e, "matchVariant requires a value and label/branch pairs")
+			}
+			matched, err := eval(e.Args[0])
+			if err != nil {
+				return RuntimeValue{}, err
+			}
+			if matched.expression.Kind != "app" || matched.expression.Opcode != "variant" {
+				return fail(e, "Expected a variant value")
+			}
+			label := matched.expression.Args[0].Str
+			for i := 1; i < len(e.Args); i += 2 {
+				candidate, err := eval(e.Args[i])
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+				if candidate.expression.Kind != "str" {
+					return fail(e.Args[i], "Expected a string variant label")
+				}
+				if candidate.expression.Str != "_" && candidate.expression.Str != label {
+					continue
+				}
+				branch, err := eval(e.Args[i+1])
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+				payload, err := NewRuntimeValue(matched.source.Args[1])
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+				result, err := branch.Apply(ctx, []RuntimeValue{payload})
+				if d, ok := err.(Diagnostic); ok && d.Reference == nil {
+					id := e.ID
+					d.Reference = &id
+					err = d
+				}
+				return result, err
+			}
+			id := e.ID
+			return RuntimeValue{}, Diagnostic{Code: "QNT505", Message: "No match for variant " + label, Reference: &id}
 		case "and", "or":
 			for _, child := range e.Args {
 				b, err := boolean(child)

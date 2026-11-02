@@ -321,3 +321,11 @@ captured/local operator callbacks, empty folds, callback errors, collection
 accumulators, and nested map order. Unit tests also check cancellation between
 callbacks, first-error stopping, immutable inputs, malformed calls, and identity
 preservation of an empty fold's initial closure value.
+
+`runtime_variant.json` is regenerated with
+`node pkg/grammar/runtime_variant_fixtures.cjs`. Fourteen full TypeScript
+evaluator cases cover pattern syntax and matchVariant IR, payload binding,
+wildcards, source-order selection, unselected failing branches, skipped later
+labels, missing cases, nested variants, and retained map payload order. Unit
+tests add malformed labels/arity/branches, earlier-label errors, and immutable
+payload ownership.
