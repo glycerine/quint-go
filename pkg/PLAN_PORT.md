@@ -392,8 +392,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     rollback, metadata reset, nested choices, and explicit caller-owned RNG.
   - [x] then/reps state transitions, intermediate shifts and metadata clearing,
     local-value scope preservation, failure diagnostics, and loop cancellation.
-  - [ ] Stateful module/instance binding, primed-read support, action composition,
-    transactional rollback/commit, and simulation integration.
+  - [x] Stateful standalone/flattened module definitions with persistent
+    registers/RNG, named/parameterized actions, action metadata, and val refresh.
+  - [ ] Stateful project/instance orchestration, primed-read support,
+    simulation-level transaction handling, and trace integration.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
   empty choices, and bounded sampling of infinite domains.
 - [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
@@ -2484,3 +2486,18 @@ word "retained" in the commit message.
   Full default tests pass (combined package execution 0.999s). Intermediate
   trace recording, stateful module orchestration, primed reads, and simulation
   integration remain open.
+
+- 2026-11-02: Added ModuleEvaluator for standalone/flattened stateful modules.
+  It owns copied definition IR, resolves/orders definitions, registers variables,
+  and retains caller-owned RNG and storage across named evaluations. Named and
+  parameterized actions set action metadata at execution time; non-lambda action
+  bodies are reevaluated on each reference rather than cached as values. Top-level
+  state-dependent vals refresh after storage generations change, while scoped
+  vals retain their lexical lifetime. Three upstream modules compare 37 named
+  operations, current records, action metadata, and RNG counters, including
+  initialization, steps, disabled/choice actions, parameterized sequencing,
+  repetition, and val refresh on internal shifts. Unit tests cover owned module
+  IR, direct invocation, callable arguments, invalid modules, missing entries,
+  and cancellation. Full default tests pass (combined package execution 1.005s,
+  near the one-second target). Stateful project flattening, trace recording,
+  simulation-level transactions, and remaining runtime builtins stay open.

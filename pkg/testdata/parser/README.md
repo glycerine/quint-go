@@ -400,3 +400,11 @@ Cases cover chaining, zero/negative repetition, iteration indices, errors before
 and after shifts, failed repetitions, and local values retained across internal
 shifts. Unit tests also check metadata clearing and cancellation between
 iterations. Simulation trace recording remains separate unfinished integration.
+
+`runtime_state_module.json` is regenerated with
+`node pkg/grammar/runtime_state_module_fixtures.cjs`. Three stateful modules
+compare 37 operations against the full TypeScript evaluator, including action
+names in metadata, current-state records, and RNG counters. They cover init/
+step calls, choices, disabled actions, parameterized actions, sequencing,
+repetition, and state-dependent module values across internal shifts. Unit tests
+also verify owned module IR, direct operator invocation, errors, and cancellation.

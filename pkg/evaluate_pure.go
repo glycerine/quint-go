@@ -135,10 +135,22 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 				if storage != nil && e.Opdef.Qualifier == Val && e.Opdef.Depth != nil && *e.Opdef.Depth == 0 && generation != storage.generation {
 					evaluated = false
 				}
-				if !evaluated {
+				if !evaluated || (e.Opdef.Qualifier == Action && e.Opdef.Expr.Kind != "lambda") {
+					if storage != nil && e.Opdef.Qualifier == Action && e.Opdef.Expr.Kind != "lambda" && storage.ActionTaken == "" {
+						storage.ActionTaken = e.Opdef.Name
+					}
 					saved := scopes
 					scopes = captured
 					cached, cachedErr = eval(*e.Opdef.Expr)
+					if cachedErr == nil && storage != nil && e.Opdef.Qualifier == Action && cached.closure != nil {
+						original := cached
+						cached = newRuntimeClosure(len(e.Opdef.Expr.Params), func(callContext context.Context, values []RuntimeValue) (RuntimeValue, error) {
+							if storage.ActionTaken == "" {
+								storage.ActionTaken = e.Opdef.Name
+							}
+							return original.Apply(callContext, values)
+						})
+					}
 					scopes = saved
 					evaluated = true
 					if storage != nil {
