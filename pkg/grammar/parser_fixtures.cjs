@@ -415,3 +415,20 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/modes.json'),JSONbig.string
  const [errors,suggestions]=new ModeChecker().checkModes(parsed.modules[0].declarations,effects)
  return {name,input:parsed.modules,effects:[...effects].map(([id,s])=>({id:String(id),scheme:{effect:s.effect,effectVariables:[...s.effectVariables],entityVariables:[...s.entityVariables]}})),errors:[...errors].map(([id,error])=>({id:String(id),error})),suggestions:[...suggestions].map(([id,qualifier])=>({id:String(id),qualifier}))}
 }),null,2)+'\n')
+
+const {analyzeModules}=require(path.join(root,'quint/src/quintAnalyzer'))
+const analyzerCases=[
+ ['valid',"module M { var x:int action step=x'=x+1 }"],
+ ['mode',"module M { var x:int pure val bad=x }"],
+ ['nondet',"module M { val bad=Set(1).oneOf() }"],
+ ['type-error',"module M { val bad=1+true }"],
+ ['action-mode',"module M { var x:int action step=x'=1 action bad=step and step }"],
+ ['multiple-updates',"module M { var x:int action bad=all { x'=1, x'=2 } }"],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/analyzer.json'),JSONbig.stringify(analyzerCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ if(parsed.errors.length)throw Error(JSONbig.stringify(parsed.errors))
+ const linked=resolveNames(parsed.modules)
+ const [errors,output]=analyzeModules(linked.table,parsed.modules)
+ return {name,input:parsed.modules,errors,effects:[...output.effects].map(([id,s])=>({id:String(id),scheme:{effect:s.effect,effectVariables:[...s.effectVariables],entityVariables:[...s.entityVariables]}})),modes:[...output.modes].map(([id,qualifier])=>({id:String(id),qualifier}))}
+}),null,2)+'\n')

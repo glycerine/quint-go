@@ -1643,3 +1643,12 @@ word "retained" in the commit message.
   Tests cover error traces and retained-error repetition across module batches.
   Default tests pass under one second. Full upstream analyzer differential
   fixtures and incremental previous-output handling remain open under P5.5.
+
+- 2026-11-02: Added six full upstream analyzer fixtures covering valid actions,
+  mode errors, nondeterminism, type errors, action-to-temporal diagnostics, and
+  multiple updates. Tests compare complete ordered unified diagnostics, effect
+  tables, and mode suggestions without normalization; all match without changes.
+  Type tables remain separately differential-tested with documented builtin
+  type-ID normalization. Default tests pass (combined execution 0.724s).
+  Cross-module/instance analyzer parity and incremental previous-output handling
+  remain open under P5.5.
