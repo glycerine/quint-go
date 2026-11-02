@@ -109,16 +109,21 @@ func guardStateFunctor(ctx context.Context, functor *native.StateFunctor) native
 func isolateGlobals() func() {
 	native.Globals.Lock()
 	continuation, probabilistic := native.Globals.Continuation, native.Globals.Probabilistic
+	liveness := native.Globals.LNCheck
 	workers, dfid := native.Globals.NumWorkers, native.Globals.DFIDMax
 	metadata, tool, start := native.Globals.MetaDir, native.Globals.Tool, native.Globals.StartTime
 	checker := native.Globals.MainChecker
 	native.Globals.Continuation = false
 	native.Globals.Probabilistic = false
+	// Native LNCheck=off makes FinalCheck return NoError without checking any
+	// temporal property. Every adapter call owns an enabled liveness policy.
+	native.Globals.LNCheck = "default"
 	native.Globals.Unlock()
 	return func() {
 		native.Globals.Lock()
 		native.Globals.Continuation = continuation
 		native.Globals.Probabilistic = probabilistic
+		native.Globals.LNCheck = liveness
 		native.Globals.NumWorkers = workers
 		native.Globals.DFIDMax = dfid
 		native.Globals.MetaDir = metadata

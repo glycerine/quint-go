@@ -635,7 +635,9 @@ TypeScript or Rust evaluator process.
   deferred TLC support must be explicitly identified in the compatibility matrix.
   - [x] Native Go TLC finite-state safety adapter, Go TLA generation, embedded
     Variants module, configuration, exhaustive outcomes and concrete TLA traces.
-  - [ ] Temporal/ITF output, full native semantic parity and hard preemption.
+  - [x] Temporal PROPERTY selection and CLI --temporal, always/eventually/
+    leadsTo, weak/strong fairness, finite quantifiers and checked lasso traces.
+  - [ ] ITF export, full native semantic parity and hard preemption.
 - [ ] P9.9 Replace Scala version/download/launch behavior. Define Go backend
   selection/version reporting and the treatment of legacy endpoint/version
   flags; test Go gRPC compatibility if endpoint mode is retained.
@@ -3207,3 +3209,14 @@ word "retained" in the commit message.
   reanalysis are tested. Full LSP suite passes0.129s with91.4% coverage; signature
   helpers have100% coverage, and focused races/vet pass. Imported diagnostics and
   broader recovery/workspace compatibility remain open.
+
+- 2026-11-02: Added native TLC temporal PROPERTY selection and CLI --temporal.
+  Always/eventually/leadsTo, weak/strong fairness and fixed finite quantifiers
+  are checked with actual native models. Counterexamples preserve validated
+  zero-based loop targets, including stuttering and interior loops. Independent
+  review and34 actual checks validate transitions/property/fairness witnesses;
+  default coverage includes five real checks and26 decoder cases. Inherited
+  liveness disabling is overridden and restored, preventing false safety. Missing
+  properties, unsupported quantifiers and absent loop metadata fail explicitly.
+  Default backend tests pass0.151s and CLI0.417s; optional corpus/races/vet pass.
+  ITF export, hard preemption and broader native parity remain open.

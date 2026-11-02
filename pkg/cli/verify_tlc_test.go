@@ -29,22 +29,25 @@ func TestVerifyTLCOptionsAndOutput(t *testing.T) {
 		called := false
 		checker := verifyTLCBackend(func(_ context.Context, compiled quint.CompilationResult, opts gotlc.Options) (gotlc.Result, error) {
 			called = true
-			if compiled.Main != "M" || opts.Workers != 2 || !opts.CheckDeadlock || opts.MaxDuration != 15*time.Millisecond || opts.Invariants != nil {
+			if compiled.Main != "M" || opts.Workers != 2 || !opts.CheckDeadlock || opts.MaxDuration != 15*time.Millisecond || opts.Invariants != nil || len(opts.Temporal) != 1 || opts.Temporal[0] != "q_temporalProps" {
 				t.Fatal(compiled.Main, opts)
 			}
-			wrapper := false
+			wrapper, temporalWrapper := false, false
 			for _, d := range compiled.MainModule.Declarations {
 				if d.Name == "q::inv" {
 					wrapper = true
 				}
+				if d.Name == "q::temporalProps" {
+					temporalWrapper = true
+				}
 			}
-			if !wrapper {
-				t.Fatal("invariant was not compiled")
+			if !wrapper || !temporalWrapper {
+				t.Fatal("invariant and temporal property must both be compiled")
 			}
 			return gotlc.Result{Complete: true, Outcome: gotlc.Safe, DistinctStates: 2}, nil
 		})
 		var stdout, stderr bytes.Buffer
-		args := []string{input, "--backend=" + backend, "--invariant=safe", "--tlc-config", config}
+		args := []string{input, "--backend=" + backend, "--invariant=safe", "--temporal=live", "--tlc-config", config}
 		code := verifyWithCheckers(context.Background(), args, &stdout, &stderr, nil, checker)
 		if code != 0 || !called || stderr.Len() != 0 || !strings.Contains(stdout.String(), "all 2 distinct states") || strings.Contains(stdout.String(), "steps") {
 			t.Fatal(code, called, stdout.String(), stderr.String())
@@ -82,7 +85,7 @@ func TestVerifyTLCResultsAndFailures(t *testing.T) {
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			checker := verifyTLCBackend(func(_ context.Context, _ quint.CompilationResult, opts gotlc.Options) (gotlc.Result, error) {
-				if opts.Invariants == nil || len(opts.Invariants) != 0 {
+				if opts.Invariants == nil || len(opts.Invariants) != 0 || opts.Temporal != nil {
 					t.Fatal(opts)
 				}
 				return tc.result, tc.err
@@ -130,7 +133,6 @@ func TestVerifyTLCExplicitUnsupportedOptions(t *testing.T) {
 		{[]string{"--apalache-config=x"}, "apalache-config"},
 		{[]string{"--random-transitions"}, "random-transitions"},
 		{[]string{"--inductive-invariant=safe"}, "inductive-invariant"},
-		{[]string{"--temporal=live"}, "temporal"},
 		{[]string{"--out-itf=trace.json"}, "out-itf"},
 	} {
 		var stdout, stderr bytes.Buffer
@@ -189,5 +191,74 @@ func TestVerifyTLCActualGoChecker(t *testing.T) {
 		if tc.wantCode == 1 && (len(stage.TLC.Trace) != 2 || stage.TLC.Trace[0].Values[0].Value != "0" || stage.TLC.Trace[1].Values[0].Value != "1") {
 			t.Fatal(string(data))
 		}
+	}
+}
+
+// One small real source check stays in the fast suite. The larger property and
+// fairness combinations below are an explicitly run solver integration corpus.
+func TestVerifyTLCActualTemporalSource(t *testing.T) {
+	input := verifyTestSource(t, `module M { var x:bool action init=x'=false action step=x'=not(x) temporal live=eventually(x) }`)
+	dir := t.TempDir()
+	config, output := filepath.Join(dir, "tlc.json"), filepath.Join(dir, "result.json")
+	if err := os.WriteFile(config, []byte(`{"workers":2}`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	var stdout, stderr bytes.Buffer
+	code := commandVerify(ctx, []string{input, "--backend=tlc", "--temporal=live", "--tlc-config", config, "--out", output}, &stdout, &stderr)
+	data, err := os.ReadFile(output)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var stage verifyStage
+	if err := json.Unmarshal(data, &stage); err != nil {
+		t.Fatal(err)
+	}
+	if code != 1 || stdout.Len() != 0 || stderr.Len() != 0 || stage.Status != "violation" || stage.MaxSteps != nil || stage.TLC == nil || !stage.TLC.Complete || stage.TLC.Outcome != gotlc.Violation {
+		t.Fatalf("code=%d stdout=%s stderr=%s result=%s", code, stdout.String(), stderr.String(), data)
+	}
+	// Eventual x is false only if the entire concrete prefix and repeated cycle
+	// omit TRUE. The native INIT/NEXT semantics allow the final FALSE stutter.
+	if stage.TLC.Loop == nil || *stage.TLC.Loop < 0 || *stage.TLC.Loop >= len(stage.TLC.Trace) {
+		t.Fatal(string(data))
+	}
+	for i, state := range stage.TLC.Trace {
+		if state.Index != i || len(state.Values) != 1 || state.Values[0].Name != "x" || state.Values[0].Value != "FALSE" {
+			t.Fatal(string(data))
+		}
+	}
+}
+
+func TestVerifyTLCActualTemporalCorpus(t *testing.T) {
+	if os.Getenv("QUINT_CORPUS_TESTS") == "" {
+		t.Skip("native TLC temporal source CLI corpus; set QUINT_CORPUS_TESTS=1")
+	}
+	for _, tc := range []struct {
+		name, declarations, selected string
+		wantCode                     int
+	}{
+		{"eventually satisfied", `temporal live=eventually(not(x))`, "live", 0},
+		{"leadsTo violated", `temporal live=not(x) leadsTo x`, "live", 1},
+		{"fair progress", `temporal live=weakFair(step,x) implies eventually(x)`, "live", 0},
+		{"all selected properties", `temporal good=always(x or not(x)) temporal bad=eventually(x)`, "good,bad", 1},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			input := verifyTestSource(t, `module M { var x:bool action init=x'=false action step=x'=not(x) `+tc.declarations+` }`)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+			var stdout, stderr bytes.Buffer
+			code := commandVerify(ctx, []string{input, "--backend=tlc-go", "--temporal=" + tc.selected}, &stdout, &stderr)
+			if code != tc.wantCode {
+				t.Fatal(code, stdout.String(), stderr.String())
+			}
+			if code == 0 {
+				if stderr.Len() != 0 || !strings.Contains(stdout.String(), "all 2 distinct states") {
+					t.Fatal(stdout.String(), stderr.String())
+				}
+			} else if stdout.Len() != 0 || !strings.Contains(stderr.String(), "TLC found a violation") {
+				t.Fatal(stdout.String(), stderr.String())
+			}
+		})
 	}
 }

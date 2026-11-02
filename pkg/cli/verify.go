@@ -157,6 +157,9 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		if len(invariants) == 0 {
 			tlcOptions.Invariants = []string{}
 		}
+		if options.temporal != "" {
+			tlcOptions.Temporal = []string{"q_temporalProps"}
+		}
 		result, checkErr := tlcBackend(ctx, compiled, tlcOptions)
 		stage.TLC = &result
 		if checkErr != nil {
@@ -275,9 +278,6 @@ func verifyParseOptions(args []string, stdout, stderr io.Writer) (verifyOptions,
 		}
 		if options.inductive != "" {
 			return options, false, fmt.Errorf("--inductive-invariant is unsupported by Go TLC")
-		}
-		if options.temporal != "" {
-			return options, false, fmt.Errorf("--temporal is not yet supported by the Go TLC adapter")
 		}
 		if options.outITF != "" {
 			return options, false, fmt.Errorf("--out-itf is not yet supported by Go TLC; --out retains concrete TLC counterexample states")

@@ -86,7 +86,7 @@ func TestConfigurationAndValidation(t *testing.T) {
 	if options, err := ParseConfig([]byte(`{}`)); err != nil || options.Workers != 0 {
 		t.Fatal(options, err)
 	}
-	for _, options := range []Options{{Workers: -1}, {MaxDuration: -1}, {Temporal: []string{"live"}}, {Init: "Init\nNEXT Other"}, {Next: "a-b"}, {Invariants: []string{"bad::name"}}, {Invariants: []string{""}}} {
+	for _, options := range []Options{{Workers: -1}, {MaxDuration: -1}, {Temporal: []string{"bad::name"}}, {Temporal: []string{""}}, {Init: "Init\nNEXT Other"}, {Next: "a-b"}, {Invariants: []string{"bad::name"}}, {Invariants: []string{""}}} {
 		if result, err := CheckTLA(context.Background(), "M.tla", booleanTLA, options); err == nil || result.Complete || result.Outcome != "" {
 			t.Fatal(result, err)
 		}
@@ -317,7 +317,7 @@ func TestNativeTLCExpiredDeadlineCannotSucceed(t *testing.T) {
 	}
 }
 
-func compileSource(t *testing.T, source string) quint.CompilationResult {
+func compileSource(t *testing.T, source string, temporal ...string) quint.CompilationResult {
 	t.Helper()
 	parsed, err := quint.ParseModulesWithLocations("M.qnt", source)
 	if err != nil {
@@ -331,7 +331,11 @@ func compileSource(t *testing.T, source string) quint.CompilationResult {
 	if err != nil || len(analyzed.Diagnostics) > 0 {
 		t.Fatal(err, analyzed.Diagnostics)
 	}
-	compiled, err := quint.CompileModules(analyzed.Modules, quint.AnalysisOutput{Types: analyzed.Types, Effects: analyzed.Effects, Modes: analyzed.Modes}, parsed.IDs, parsed.Sources, quint.CompilationOptions{Main: "M", CompilationEntries: quint.CompilationEntries{Target: "json", Flatten: true, Invariants: []string{"safe"}}})
+	property := ""
+	if len(temporal) > 0 {
+		property = temporal[0]
+	}
+	compiled, err := quint.CompileModules(analyzed.Modules, quint.AnalysisOutput{Types: analyzed.Types, Effects: analyzed.Effects, Modes: analyzed.Modes}, parsed.IDs, parsed.Sources, quint.CompilationOptions{Main: "M", CompilationEntries: quint.CompilationEntries{Target: "json", Flatten: true, Invariants: []string{"safe"}, Temporal: property}})
 	if err != nil || len(compiled.Diagnostics) > 0 || len(compiled.AnalysisDiagnostics) > 0 {
 		t.Fatal(err, compiled.Diagnostics, compiled.AnalysisDiagnostics)
 	}

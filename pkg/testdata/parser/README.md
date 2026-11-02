@@ -929,3 +929,13 @@ lives in the same directory. `grammar/lsp_code_actions_fixtures.cjs` generates
 to verified qualifier tokens because the reference edits operator names/bodies;
 reanalysis proves valid fixes. Protocol tests cover overlays, pending analysis,
 cancellation, malformed/stale/nonlocal fixes and closed documents.
+
+Native TLC temporal tests now cover34 actual checks across raw TLA, generated
+Quint, finite quantifiers and intermittent weak/strong fairness. Default tests
+include five real temporal/error checks and26 loop-decoder cases; the larger
+optional corpus independently validates init, every transition, closing edge,
+property falsity and fairness cycles. Regressions force and restore liveness
+checking when inherited settings disable it, validate interior loops, and reject
+missing/parameterized properties. CLI --temporal has real Boolean lasso and
+optional generated-model checks. No successful result is reported for unsupported
+temporal quantifiers or absent lasso metadata. Hard preemption and ITF remain open.

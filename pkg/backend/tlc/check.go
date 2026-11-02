@@ -22,11 +22,13 @@ import (
 	native "github.com/glycerine/tlago/tlc"
 )
 
-// Options selects exhaustive finite-state safety checking. Zero Workers uses
+// Options selects exhaustive finite-state checking. Zero Workers uses
 // GOMAXPROCS workers, matching Quint's automatic worker selection. Deadlock
 // checking is opt-in, matching Quint's TLC command. Unlike
 // bounded Apalache checking, TLC has no maximum-transition bound. Temporal
-// properties are explicitly rejected until trace and liveness parity is tested.
+// names select TLA operators, including the compiled q_temporalProps wrapper.
+// INIT/NEXT permits implicit infinite stuttering; fairness must be explicit in
+// the requested properties when progress requires it.
 type Options struct {
 	Init, Next           string
 	Invariants, Temporal []string
@@ -34,7 +36,8 @@ type Options struct {
 	CheckDeadlock        bool
 	// MaxDuration starts a cooperative cancellation deadline, including TLA
 	// generation. Native parsing, tool construction (which may expand constant
-	// next-state quantifiers), and individual builtins cannot be preempted.
+	// next-state quantifiers), liveness graph analysis, and individual builtins
+	// cannot be preempted.
 	// They may exceed this duration; expiry always returns incomplete + error.
 	MaxDuration time.Duration
 }
@@ -47,7 +50,7 @@ const (
 	Deadlock  Outcome = "deadlock"
 )
 
-// Result reports a definitive safety outcome only when Complete is true. Safe
+// Result reports a definitive check outcome only when Complete is true. Safe
 // means exhaustive exploration; violations may stop the search early. Log retains
 // the native TLC diagnostic text; Messages retains stable machine-readable codes.
 type Result struct {
@@ -62,7 +65,10 @@ type Result struct {
 	SearchDepth     int64     `json:"searchDepth"`
 	Messages        []Message `json:"messages"`
 	Trace           []State   `json:"trace,omitempty"`
-	Log             string    `json:"log,omitempty"`
+	// Loop is the zero-based target of the final transition in a temporal
+	// counterexample. A last-state target represents infinite stuttering.
+	Loop *int   `json:"loop,omitempty"`
+	Log  string `json:"log,omitempty"`
 }
 
 // State retains the native counterexample's concrete TLA values. Values are
@@ -220,6 +226,10 @@ func CheckTLA(ctx context.Context, filename, source string, options Options) (re
 			}
 		}
 		result.Trace = counterexample(checked.Messages, vars)
+		result.Loop, err = temporalLoop(checked.Messages, len(result.Trace))
+		if err != nil {
+			return result, fmt.Errorf("TLC counterexample: %w", err)
+		}
 		// TLC reports an initial invariant violation as an error message rather
 		// than a state-print event, but retains the actual state on its checker.
 		if checked.ErrorCode == native.ECTLCInvariantViolatedInitial && len(result.Trace) == 0 {
@@ -260,6 +270,11 @@ func CheckTLA(ctx context.Context, filename, source string, options Options) (re
 		result.Outcome = Deadlock
 	case native.ExitStatusViolationSafety, native.ExitStatusViolationAssumption, native.ExitStatusViolationAssert:
 		result.Outcome = Violation
+	case native.ExitStatusViolationLiveness:
+		if result.Loop == nil || len(result.Trace) == 0 {
+			return result, fmt.Errorf("TLC temporal counterexample is missing loop metadata")
+		}
+		result.Outcome = Violation
 	default:
 		return result, fmt.Errorf("TLC failed with exit status %d (error %d)", checked.ExitStatus, checked.ErrorCode)
 	}
@@ -298,10 +313,9 @@ func validateOptions(options Options) error {
 	if options.MaxDuration < 0 {
 		return fmt.Errorf("TLC maximum duration cannot be negative")
 	}
-	if len(options.Temporal) > 0 {
-		return fmt.Errorf("Go TLC temporal properties are not yet supported by this adapter")
-	}
-	for _, name := range append([]string{options.Init, options.Next}, options.Invariants...) {
+	names := append([]string{options.Init, options.Next}, options.Invariants...)
+	names = append(names, options.Temporal...)
+	for _, name := range names {
 		if name != "" && !validName(name) {
 			return fmt.Errorf("invalid TLC operator name %q", name)
 		}
@@ -309,6 +323,11 @@ func validateOptions(options Options) error {
 	for _, name := range options.Invariants {
 		if name == "" {
 			return fmt.Errorf("TLC invariant name cannot be empty")
+		}
+	}
+	for _, name := range options.Temporal {
+		if name == "" {
+			return fmt.Errorf("TLC temporal property name cannot be empty")
 		}
 	}
 	return nil
@@ -335,6 +354,9 @@ func modelConfig(options Options) (*native.ModelConfig, error) {
 	fmt.Fprintf(&cfg, "INIT %s\nNEXT %s\n", init, next)
 	for _, name := range options.Invariants {
 		fmt.Fprintf(&cfg, "INVARIANT %s\n", name)
+	}
+	for _, name := range options.Temporal {
+		fmt.Fprintf(&cfg, "PROPERTY %s\n", name)
 	}
 	return native.ParseModelConfigSource("quint.cfg", cfg.String())
 }
