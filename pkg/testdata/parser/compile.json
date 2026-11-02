@@ -1,0 +1,1147 @@
+[
+  {
+    "name": "tlaplus",
+    "input": [
+      {
+        "id": 13,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "nextID": "14",
+    "args": {
+      "target": "tlaplus",
+      "flatten": false
+    },
+    "output": {
+      "id": 13,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 18,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 17,
+            "kind": "name",
+            "name": "init"
+          }
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "q::step",
+          "qualifier": "action",
+          "expr": {
+            "id": 19,
+            "kind": "name",
+            "name": "step"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "explicit",
+    "input": [
+      {
+        "id": 20,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "start",
+            "qualifier": "action",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "safe",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "igte",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": 19,
+            "kind": "def",
+            "name": "live",
+            "qualifier": "temporal",
+            "expr": {
+              "id": 18,
+              "kind": "app",
+              "opcode": "always",
+              "args": [
+                {
+                  "id": 17,
+                  "kind": "name",
+                  "name": "safe"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "nextID": "21",
+    "args": {
+      "target": "json",
+      "flatten": false,
+      "init": "start",
+      "step": "next",
+      "invariant": "safe",
+      "inductiveInvariant": "safe",
+      "temporal": "live"
+    },
+    "errors": [
+      {
+        "explanation": "[QNT101] Built-in name 'next' is redefined in module 'M'",
+        "locs": []
+      }
+    ]
+  },
+  {
+    "name": "expression",
+    "input": [
+      {
+        "id": 13,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "nextID": "14",
+    "args": {
+      "target": "json",
+      "flatten": true,
+      "init": "x'=1",
+      "step": "step and true"
+    },
+    "output": {
+      "id": 13,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 24,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 23,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 22,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 21,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 28,
+          "kind": "def",
+          "name": "q::step",
+          "qualifier": "action",
+          "expr": {
+            "id": 27,
+            "kind": "app",
+            "opcode": "and",
+            "args": [
+              {
+                "id": 25,
+                "kind": "name",
+                "name": "step"
+              },
+              {
+                "id": 26,
+                "kind": "bool",
+                "value": true
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "missing-invariant",
+    "input": [
+      {
+        "id": 5,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 1,
+              "kind": "bool",
+              "value": true
+            }
+          },
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 3,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "nextID": "6",
+    "args": {
+      "target": "json",
+      "flatten": true,
+      "invariants": [
+        "missing"
+      ]
+    },
+    "errors": [
+      {
+        "explanation": "[QNT404] Name 'missing' not found",
+        "locs": []
+      }
+    ]
+  },
+  {
+    "name": "plain",
+    "input": [
+      {
+        "id": 3,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "nextID": "4",
+    "args": {
+      "target": "json",
+      "flatten": false
+    },
+    "output": {
+      "id": 3,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "a",
+          "qualifier": "val",
+          "expr": {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "wrappers",
+    "input": [
+      {
+        "id": 17,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "safe",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "igte",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "nextID": "18",
+    "args": {
+      "target": "json",
+      "flatten": true,
+      "invariants": [
+        "safe"
+      ]
+    },
+    "output": {
+      "id": 17,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 16,
+          "kind": "def",
+          "name": "safe",
+          "qualifier": "val",
+          "expr": {
+            "id": 15,
+            "kind": "app",
+            "opcode": "igte",
+            "args": [
+              {
+                "id": 13,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 14,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 22,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 21,
+            "kind": "name",
+            "name": "init"
+          }
+        },
+        {
+          "id": 24,
+          "kind": "def",
+          "name": "q::step",
+          "qualifier": "action",
+          "expr": {
+            "id": 23,
+            "kind": "name",
+            "name": "step"
+          }
+        },
+        {
+          "id": 27,
+          "kind": "def",
+          "name": "q::inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 26,
+            "kind": "app",
+            "opcode": "and",
+            "args": [
+              {
+                "id": 25,
+                "kind": "name",
+                "name": "safe"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "import",
+    "input": [
+      {
+        "id": 13,
+        "name": "A",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 14,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "A"
+          }
+        ]
+      }
+    ],
+    "nextID": "16",
+    "args": {
+      "target": "json",
+      "flatten": true
+    },
+    "output": {
+      "id": 15,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 14,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "A"
+          },
+          "hidden": true
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 19,
+            "kind": "name",
+            "name": "init"
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 14,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "A"
+          },
+          "hidden": true
+        },
+        {
+          "id": 22,
+          "kind": "def",
+          "name": "q::step",
+          "qualifier": "action",
+          "expr": {
+            "id": 21,
+            "kind": "name",
+            "name": "step"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "nonaction",
+    "input": [
+      {
+        "id": 5,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "bool",
+              "value": true
+            }
+          },
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 3,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "nextID": "6",
+    "args": {
+      "target": "json",
+      "flatten": true
+    },
+    "errors": [
+      {
+        "explanation": "[QNT501] default --init action name 'init' is used by a val declaration",
+        "locs": []
+      }
+    ]
+  },
+  {
+    "name": "missing",
+    "input": [
+      {
+        "id": 3,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 1,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "nextID": "4",
+    "args": {
+      "target": "json",
+      "flatten": true
+    },
+    "errors": [
+      {
+        "explanation": "[QNT404] Name 'init' not found",
+        "locs": []
+      }
+    ]
+  }
+]

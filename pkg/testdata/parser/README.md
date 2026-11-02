@@ -190,3 +190,9 @@ unused imports. `nextID` records one consumed generator value after parsing;
 the Go test advances through it before flattening, matching the upstream
 fixture generator. Module output is compared structurally with no ID or
 metadata normalization.
+
+`compile.json` is regenerated with `node pkg/grammar/compile_fixtures.cjs`.
+It invokes the upstream CLI compile function on analyzed inputs and captures
+selected-module output or argument/name errors for nine compilation paths.
+Like full_flatten.json, nextID is consumed by both fixture implementations.
+Default Go tests require neither Node nor the upstream CLI dependencies.

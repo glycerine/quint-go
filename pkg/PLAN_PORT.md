@@ -301,10 +301,15 @@ the baseline corpus, including state-transition legality.
     fixtures, recursive export aliases, and capture-avoiding substitutions.
 - [ ] P6.2 Refresh IDs and remap source locations, references, type/effect
   schemes, and modes together during transformations.
-- [ ] P6.3 Port main-module selection and synthesis of `q::init`, `q::step`,
+- [x] P6.3 Port main-module selection and synthesis of `q::init`, `q::step`,
   `q::inv`, `q::inductiveInv`, and `q::temporalProps`; analyze added definitions.
+  Verified by compilation option/entry tests and nine upstream compile fixtures.
 - [ ] P6.4 Match `compile --target=json`, flattened/unflattened behavior, and
   the conditions under which init/step are required or optional.
+  - [x] Library compilation orchestration, default/action validation, explicit
+    flatten selection, and forced TLA+ flattening with upstream fixtures.
+  - [ ] Wire the CLI command, JSON serialization, output/error reporting,
+    and default flag handling end to end.
 - [ ] P6.5 Port `initToPredicate` and removal of run definitions for the paths
   that require them; preserve the different contracts of checking and TLA output.
 - [ ] P6.6 Produce the single-module typed JSON envelope accepted by Go Apalache,
@@ -1870,3 +1875,19 @@ word "retained" in the commit message.
   isolation, and unresolved-name failures. Full default tests pass (combined
   execution 0.746s). P6.1/P6.2 remain open pending broader compatibility and
   metadata audits; compilation entry integration and backend wiring remain.
+
+- 2026-11-02: Added CompileModules to connect main selection, action-expression
+  validation, wrapper synthesis, name resolution, incremental analysis, and
+  optional full flattening. Wrapper parsing now uses individual declarations
+  rather than a synthetic module, matching upstream ID allocation. Nine
+  fixtures generated directly from upstream compile cover JSON unflattened,
+  flattened stateful/imported modules, TLA+ forced flattening, custom init/step
+  expressions, legacy/repeated invariants, inductive/temporal wrappers, missing
+  names, and non-action init declarations. Entire selected modules match
+  structurally with exact IDs. Unit tests cover variable/constant/non-action
+  step rejection, malformed/declaration arguments, absent main, input isolation,
+  and inferred wrapper type/effect entries. Upstream ignores incremental-analysis
+  diagnostics during compile; AnalysisDiagnostics retains them separately while
+  preserving successful output. Full default tests pass (combined execution
+  0.830s). P6.3 is complete at the library level; CLI wiring, typed JSON output,
+  and the Go Apalache end-to-end exit gate remain open.

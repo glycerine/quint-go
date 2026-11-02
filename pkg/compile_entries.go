@@ -45,9 +45,13 @@ func SynthesizeCompilationEntries(options CompilationEntries, ids *IDGenerator) 
 	if len(texts) == 0 {
 		return []Declaration{}, nil
 	}
-	modules, err := parseModulesWithIDs("module __compile { "+strings.Join(texts, "\n")+" }", ids)
-	if err != nil {
-		return nil, err
+	declarations := []Declaration{}
+	for _, text := range texts {
+		parsed, err := ParseExpressionOrDeclaration(text, ids)
+		if err != nil {
+			return nil, err
+		}
+		declarations = append(declarations, parsed.Declarations...)
 	}
-	return modules[0].Declarations, nil
+	return declarations, nil
 }
