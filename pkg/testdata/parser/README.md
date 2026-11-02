@@ -329,3 +329,10 @@ wildcards, source-order selection, unselected failing branches, skipped later
 labels, missing cases, nested variants, and retained map payload order. Unit
 tests add malformed labels/arity/branches, earlier-label errors, and immutable
 payload ownership.
+
+`runtime_map_higher.json` is regenerated with
+`node pkg/grammar/runtime_map_higher_fixtures.cjs`. Twelve full TypeScript
+evaluator cases cover map setBy, structural keys, captured/local callbacks,
+missing-key precedence, callback failures, duplicate keys, nested maps, and
+chained updates. The reference's unusual missing-key text, including the space
+in "non- existing" and object interpolation, is retained exactly.

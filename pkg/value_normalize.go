@@ -17,9 +17,15 @@ import (
 // expressions using en-US collation. Lists and tuples retain element order.
 // This does not evaluate operators or expand symbolic runtime collections.
 func NormalizeValue(input Expr) (Expr, error) {
-	comparison := collate.New(language.AmericanEnglish)
+	var comparison *collate.Collator
 	var normalize func(Expr) (Expr, error)
 	sortValues := func(values []Expr) {
+		if len(values) < 2 {
+			return
+		}
+		if comparison == nil {
+			comparison = collate.New(language.AmericanEnglish)
+		}
 		type entry struct {
 			value Expr
 			text  string

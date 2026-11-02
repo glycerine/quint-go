@@ -10,6 +10,9 @@ import (
 )
 
 func TestUpstreamPureEvaluation(t *testing.T) { testPureEvaluationFixtures(t, "evaluate_pure.json") }
+func TestUpstreamMapHigherEvaluation(t *testing.T) {
+	testPureEvaluationFixtures(t, "runtime_map_higher.json")
+}
 func TestUpstreamVariantEvaluation(t *testing.T) {
 	testPureEvaluationFixtures(t, "runtime_variant.json")
 }

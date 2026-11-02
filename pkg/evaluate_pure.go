@@ -274,7 +274,9 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 		}
 		var value RuntimeValue
 		var err error
-		if listHigherBuiltinArity(e.Opcode) != 0 {
+		if e.Opcode == "setBy" {
+			value, err = EvalMapSetBy(ctx, args)
+		} else if listHigherBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalListHigherBuiltin(ctx, e.Opcode, args)
 		} else if sequenceBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalSequenceBuiltin(e.Opcode, args)

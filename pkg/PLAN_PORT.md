@@ -369,6 +369,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     and updates, including duplicate-record-field replacement.
   - [x] Higher-order list select/foldl/foldr with lexical callbacks, traversal
     and argument ordering, empty folds, cancellation, and error propagation.
+  - [x] Map setBy with lexical callbacks, structural key lookup, missing-key
+    precedence, immutable updates, and upstream evaluator cases.
   - [x] Lazy variant matching with payload binding, wildcard/source-order
     selection, nested matches, closure branches, and missing-case diagnostics.
   - [ ] Remaining collections/higher-order/symbolic operations.
@@ -2331,3 +2333,19 @@ word "retained" in the commit message.
   immutable payloads. Full default tests pass (combined package execution 1.028s,
   near the one-second target). Module integration, symbolic values, higher-order
   set/map operations, and stateful evaluation remain open.
+
+- 2026-11-02: Added EvalMapSetBy and evaluator dispatch for closure-based
+  updates of existing map keys. Lookup precedes invocation, missing keys retain
+  upstream's exact QNT507 text/object interpolation, callback errors propagate,
+  and updates preserve the original map. Twelve full TypeScript evaluator cases
+  match, including structural set keys, captured/local operators, duplicate
+  keys, chained updates, nested collections, and diagnostic ordering. Unit tests
+  cover invocation counts, missing-key callback suppression, cancellation,
+  malformed calls, input ownership, and callback error propagation. Profiling a
+  scalar normalization benchmark identified unnecessary per-call collator
+  allocation; collators are now created lazily only when sorting at least two
+  values. BenchmarkNormalizeScalar improved from 2951 ns/5056 B/2 allocations
+  to 36.78 ns/0 B/0 allocations on this host, preserving all normalization
+  fixtures. Full default tests pass (combined package execution 1.014s, near the
+  one-second target). Higher-order set operations and traversal compatibility
+  remain open.
