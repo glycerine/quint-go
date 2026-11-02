@@ -107,3 +107,9 @@ alias arguments/bodies, and too few/many arguments.
 type IDs. Tests compare substitution order and replacement trees exactly, plus
 complete structured diagnostics. These cases use an empty alias lookup context;
 resolved-alias behavior is currently covered by Go unit tests.
+
+
+`constraint_solver.json` contains ten solver cases with original constraint
+order retained before the upstream solver sorts conjunctions. Tests compare
+ordered substitutions and source-keyed error trees, including nested and
+post-failure behavior. These fixtures use an empty lookup table.

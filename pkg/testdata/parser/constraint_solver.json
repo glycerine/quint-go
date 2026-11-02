@@ -1,0 +1,661 @@
+[
+  {
+    "name": "empty",
+    "input": {
+      "kind": "empty"
+    },
+    "substitutions": [],
+    "errors": []
+  },
+  {
+    "name": "equality",
+    "input": {
+      "kind": "eq",
+      "sourceId": 1,
+      "types": [
+        {
+          "id": 1,
+          "kind": "var",
+          "name": "a"
+        },
+        {
+          "id": 1,
+          "kind": "int"
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "chain",
+    "input": {
+      "kind": "conjunction",
+      "sourceId": 100,
+      "constraints": [
+        {
+          "kind": "eq",
+          "sourceId": 1,
+          "types": [
+            {
+              "id": 1,
+              "kind": "var",
+              "name": "a"
+            },
+            {
+              "id": 1,
+              "kind": "int"
+            }
+          ]
+        },
+        {
+          "kind": "eq",
+          "sourceId": 2,
+          "types": [
+            {
+              "id": 1,
+              "kind": "var",
+              "name": "b"
+            },
+            {
+              "id": 2,
+              "kind": "list",
+              "elem": {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "failure-continuation",
+    "input": {
+      "kind": "conjunction",
+      "sourceId": 100,
+      "constraints": [
+        {
+          "kind": "eq",
+          "sourceId": 1,
+          "types": [
+            {
+              "id": 1,
+              "kind": "var",
+              "name": "a"
+            },
+            {
+              "id": 1,
+              "kind": "int"
+            }
+          ]
+        },
+        {
+          "kind": "eq",
+          "sourceId": 2,
+          "types": [
+            {
+              "id": 1,
+              "kind": "int"
+            },
+            {
+              "id": 1,
+              "kind": "str"
+            }
+          ]
+        },
+        {
+          "kind": "eq",
+          "sourceId": 3,
+          "types": [
+            {
+              "id": 1,
+              "kind": "var",
+              "name": "a"
+            },
+            {
+              "id": 1,
+              "kind": "str"
+            }
+          ]
+        },
+        {
+          "kind": "eq",
+          "sourceId": 4,
+          "types": [
+            {
+              "id": 1,
+              "kind": "int"
+            },
+            {
+              "id": 1,
+              "kind": "bool"
+            }
+          ]
+        }
+      ]
+    },
+    "substitutions": null,
+    "errors": [
+      {
+        "id": "2",
+        "error": {
+          "location": "Trying to unify int and str",
+          "message": "Couldn't unify int and str",
+          "children": []
+        }
+      },
+      {
+        "id": "4",
+        "error": {
+          "location": "Trying to unify int and bool",
+          "message": "Couldn't unify int and bool",
+          "children": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "nested",
+    "input": {
+      "kind": "conjunction",
+      "sourceId": 100,
+      "constraints": [
+        {
+          "kind": "conjunction",
+          "sourceId": 100,
+          "constraints": [
+            {
+              "kind": "eq",
+              "sourceId": 1,
+              "types": [
+                {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                },
+                {
+                  "id": 1,
+                  "kind": "int"
+                }
+              ]
+            },
+            {
+              "kind": "eq",
+              "sourceId": 2,
+              "types": [
+                {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "b"
+                },
+                {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "eq",
+          "sourceId": 3,
+          "types": [
+            {
+              "id": 1,
+              "kind": "var",
+              "name": "c"
+            },
+            {
+              "id": 2,
+              "kind": "list",
+              "elem": {
+                "id": 1,
+                "kind": "var",
+                "name": "b"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "c",
+        "value": {
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2
+        }
+      },
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "duplicate-errors",
+    "input": {
+      "kind": "conjunction",
+      "sourceId": 100,
+      "constraints": [
+        {
+          "kind": "eq",
+          "sourceId": 1,
+          "types": [
+            {
+              "id": 1,
+              "kind": "int"
+            },
+            {
+              "id": 1,
+              "kind": "str"
+            }
+          ]
+        },
+        {
+          "kind": "eq",
+          "sourceId": 1,
+          "types": [
+            {
+              "id": 1,
+              "kind": "int"
+            },
+            {
+              "id": 1,
+              "kind": "bool"
+            }
+          ]
+        }
+      ]
+    },
+    "substitutions": null,
+    "errors": [
+      {
+        "id": "1",
+        "error": {
+          "location": "Trying to unify int and bool",
+          "message": "Couldn't unify int and bool",
+          "children": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "defined-missing",
+    "input": {
+      "kind": "isDefined",
+      "sourceId": 1,
+      "type": {
+        "id": 1,
+        "kind": "bool"
+      }
+    },
+    "substitutions": null,
+    "errors": [
+      {
+        "id": "1",
+        "error": {
+          "location": "Looking for defined type unifying with bool",
+          "message": "Expected type is not defined",
+          "children": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "kind-order",
+    "input": {
+      "kind": "conjunction",
+      "sourceId": 100,
+      "constraints": [
+        {
+          "kind": "isDefined",
+          "sourceId": 1,
+          "type": {
+            "id": 1,
+            "kind": "bool"
+          }
+        },
+        {
+          "kind": "eq",
+          "sourceId": 1,
+          "types": [
+            {
+              "id": 1,
+              "kind": "int"
+            },
+            {
+              "id": 1,
+              "kind": "str"
+            }
+          ]
+        },
+        {
+          "kind": "empty"
+        }
+      ]
+    },
+    "substitutions": null,
+    "errors": [
+      {
+        "id": "1",
+        "error": {
+          "location": "Looking for defined type unifying with bool",
+          "message": "Expected type is not defined",
+          "children": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "row-chain",
+    "input": {
+      "kind": "conjunction",
+      "sourceId": 100,
+      "constraints": [
+        {
+          "kind": "eq",
+          "sourceId": 1,
+          "types": [
+            {
+              "id": 2,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "x",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "r"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "x",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "int"
+                    }
+                  },
+                  {
+                    "fieldName": "y",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "str"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "eq",
+          "sourceId": 2,
+          "types": [
+            {
+              "id": 2,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "z",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "bool"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "s"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "z",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "bool"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "r"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "id": 2,
+                "kind": "str"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      },
+      {
+        "kind": "row",
+        "name": "s",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "id": 2,
+                "kind": "str"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "nested-errors",
+    "input": {
+      "kind": "conjunction",
+      "sourceId": 100,
+      "constraints": [
+        {
+          "kind": "eq",
+          "sourceId": 1,
+          "types": [
+            {
+              "id": 1,
+              "kind": "int"
+            },
+            {
+              "id": 1,
+              "kind": "str"
+            }
+          ]
+        },
+        {
+          "kind": "conjunction",
+          "sourceId": 100,
+          "constraints": [
+            {
+              "kind": "eq",
+              "sourceId": 2,
+              "types": [
+                {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                },
+                {
+                  "id": 1,
+                  "kind": "int"
+                }
+              ]
+            },
+            {
+              "kind": "eq",
+              "sourceId": 3,
+              "types": [
+                {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                },
+                {
+                  "id": 1,
+                  "kind": "bool"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "eq",
+          "sourceId": 4,
+          "types": [
+            {
+              "id": 1,
+              "kind": "bool"
+            },
+            {
+              "id": 1,
+              "kind": "str"
+            }
+          ]
+        }
+      ]
+    },
+    "substitutions": null,
+    "errors": [
+      {
+        "id": "1",
+        "error": {
+          "location": "Trying to unify int and str",
+          "message": "Couldn't unify int and str",
+          "children": []
+        }
+      },
+      {
+        "id": "4",
+        "error": {
+          "location": "Trying to unify bool and str",
+          "message": "Couldn't unify bool and str",
+          "children": []
+        }
+      },
+      {
+        "id": "3",
+        "error": {
+          "location": "Trying to unify int and bool",
+          "message": "Couldn't unify int and bool",
+          "children": []
+        }
+      }
+    ]
+  }
+]

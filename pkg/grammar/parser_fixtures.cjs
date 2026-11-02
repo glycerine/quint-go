@@ -228,3 +228,26 @@ const unifyFixtures=unifyCases.map(([left,right])=>{
  return {left:a.value,right:b.value,substitutions:result.isRight()?result.value:null,error:result.isLeft()?result.value:null}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/unify.json'),JSONbig.stringify(unifyFixtures,null,2)+'\n')
+
+const {solveConstraint}=require(path.join(root,'quint/src/types/constraintSolver'))
+const eq=(id,a,b)=>({kind:'eq',sourceId:BigInt(id),types:[parseType(a).value,parseType(b).value]})
+const conj=(...constraints)=>({kind:'conjunction',sourceId:100n,constraints})
+const defined=(id,type)=>({kind:'isDefined',sourceId:BigInt(id),type:parseType(type).value})
+const solverCases=[
+ ['empty',{kind:'empty'}],
+ ['equality',eq(1,'a','int')],
+ ['chain',conj(eq(1,'a','int'),eq(2,'b','List[a]'))],
+ ['failure-continuation',conj(eq(1,'a','int'),eq(2,'int','str'),eq(3,'a','str'),eq(4,'int','bool'))],
+ ['nested',conj(conj(eq(1,'a','int'),eq(2,'b','a')),eq(3,'c','List[b]'))],
+ ['duplicate-errors',conj(eq(1,'int','str'),eq(1,'int','bool'))],
+ ['defined-missing',defined(1,'bool')],
+ ['kind-order',conj(defined(1,'bool'),eq(1,'int','str'),{kind:'empty'})],
+ ['row-chain',conj(eq(1,'{x:a|r}','{x:int,y:str}'),eq(2,'{z:bool|s}','{z:bool|r}'))],
+ ['nested-errors',conj(eq(1,'int','str'),conj(eq(2,'a','int'),eq(3,'a','bool')),eq(4,'bool','str'))],
+]
+const solverFixtures=solverCases.map(([name,constraint])=>{
+ const input=JSONbig.parse(JSONbig.stringify(constraint))
+ const result=solveConstraint(new Map(),constraint)
+ return {name,input,substitutions:result.isRight()?result.value:null,errors:result.isLeft()?[...result.value].map(([id,error])=>({id:String(id),error})):[]}
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/constraint_solver.json'),JSONbig.stringify(solverFixtures,null,2)+'\n')
