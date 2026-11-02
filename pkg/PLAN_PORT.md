@@ -659,3 +659,11 @@ word "retained" in the commit message.
   exercise variable arities, missing signatures, and invalid arities. Default
   tests pass (core 0.207s). P4.4 remains open for product/variant special constraints;
   builtin effect signatures remain to be ported under P5.2.
+
+- 2026-11-02: Added the expression parsing entry point and conversion for literals,
+  names, arithmetic/comparison/Boolean operators, action conjunction/disjunction,
+  tuples/pairs/unit/lists, conditionals, and grouping. Tests cover precedence,
+  right-associative exponentiation, unique IDs, operator forms, large integers,
+  and syntax failures. Default tests pass (core 0.230s). P2.4/P2.6 remain open:
+  calls, lambdas, records, assignments, local bindings, matches, literal edge
+  semantics, and source-map integration still require conversion work.
