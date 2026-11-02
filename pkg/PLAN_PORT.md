@@ -602,3 +602,11 @@ word "retained" in the commit message.
   in effect names, all component kinds, empty/pure effects, and arrow formatting.
   Default tests pass (core 0.008s). P5.1 remains open for effect substitution,
   simplification, unification, and canonical scheme printing.
+
+- 2026-11-02: Ported multiple-update checking with accumulated QNT202 diagnostics,
+  separate arrow scopes, and nested entity traversal. Obtained insdict@latest
+  (v0.14.6) and used Dict for insertion-ordered grouping and diagnostics, with
+  an explicit hash for arbitrary-precision ID keys. Tests cover duplicates,
+  nonduplicate variables, read exclusion, symbolic entities, diagnostic ordering,
+  and accumulation. Default tests pass (core 0.009s). P5.4 remains open for
+  nondeterministic-choice checks and integrated analyzer validation.
