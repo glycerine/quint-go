@@ -226,7 +226,8 @@ analysis, with reproducible errors for invalid module structures.
   function/operator, tuple, record, row-polymorphic, and sum types.
   - [x] Implement structural type/row unification and ordered substitution composition.
   - [x] Compare initial type/row unification substitutions and errors exactly with upstream.
-  - [ ] Expand composition-failure coverage and connect constraint solving.
+  - [x] Solve equality/conjunction/defined-type constraints and collect source-keyed errors.
+  - [ ] Expand composition-failure coverage and compare constraint solving with upstream.
 - [ ] P4.3 Port type aliases, abstract types, type applications, parameter
   substitution, alias inlining, and recursive-alias rejection.
   - [x] Resolve outer aliases and recursively inline type-tree aliases by lookup ID.
@@ -1260,3 +1261,12 @@ word "retained" in the commit message.
   unresolved aliases. All match without implementation changes. Default tests
   pass (combined execution 0.554s). Composition exception behavior, broader
   alias/sum coverage, and constraint solving remain open.
+
+- 2026-11-02: Added constraint solving for empty, equality, conjunction, and
+  defined-type checks. Conjunctions use stable kind order, accumulate errors by
+  source ID, and stop applying prior substitutions after failure while checking
+  remaining constraints. Tests cover chained substitutions, failure continuation,
+  defined-type matching, missing definitions, duplicate error replacement,
+  nonmutating sorting, and invalid kinds. Default tests pass (combined execution
+  0.569s). Exact upstream solver fixtures, composition exceptional behavior, and
+  constraint generation/inference integration remain pending.
