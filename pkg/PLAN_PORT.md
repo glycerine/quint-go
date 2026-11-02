@@ -245,7 +245,8 @@ analysis, with reproducible errors for invalid module structures.
   an opcode-to-signature coverage table to catch omissions.
   - [x] Generate structural constraints for Rec, field, fieldNames, and with.
   - [x] Generate tuple construction and item-access constraints.
-  - [ ] Resolve tuple-prefix resource-limit parity, port sum/match constraints,
+  - [x] Generate variant constraints with declared-sum membership checks.
+  - [ ] Resolve tuple-prefix resource-limit parity, port match constraints,
     and connect generator dispatch.
 - [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
   and incremental inference used by the REPL and editor.
@@ -1321,3 +1322,11 @@ word "retained" in the commit message.
   an explicit diagnostic; this differs from upstream allocation behavior and
   remains an open compatibility item. Default tests pass under one second.
   Differential tuple fixtures and sum/match generation remain pending.
+
+- 2026-11-02: Added variant-construction constraints with literal-label validation,
+  open sum rows, payload propagation, and defined-type requirements. End-to-end
+  tests resolve both variants of a declared sum and reject unknown labels,
+  mismatched payloads, absent definitions, nonliteral labels, and invalid arity.
+  Tests also verify constraint order/source IDs and fully resolved sum results.
+  Default tests pass (combined execution 0.571s). Match constraints, differential
+  special-constraint coverage, and expression-generator integration remain open.
