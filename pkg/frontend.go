@@ -7,6 +7,7 @@ import "github.com/glycerine/insdict"
 // retained modules are valid for evaluation or compilation.
 type FrontendResult struct {
 	Modules         []Module
+	IDs             *IDGenerator
 	Sources         SourceMap
 	UpstreamSources UpstreamSourceMap
 	Table           *insdict.Dict[ID, LookupDefinition]
@@ -21,7 +22,7 @@ type FrontendResult struct {
 // This entry point does not perform type/effect inference or unshadowing.
 func ParseProject(resolver SourceResolver, main SourceLookupPath) (FrontendResult, error) {
 	loaded, err := LoadModulesWithLocations(resolver, main)
-	result := FrontendResult{Modules: loaded.Modules, Sources: loaded.Sources, UpstreamSources: loaded.UpstreamSources, Diagnostics: []Diagnostic{}}
+	result := FrontendResult{Modules: loaded.Modules, IDs: loaded.IDs, Sources: loaded.Sources, UpstreamSources: loaded.UpstreamSources, Diagnostics: []Diagnostic{}}
 	if err != nil {
 		return result, err
 	}

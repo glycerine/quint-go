@@ -36,6 +36,8 @@ type ModuleParseLocations struct {
 	Modules         []Module
 	Sources         SourceMap
 	UpstreamSources UpstreamSourceMap
+	// IDs continues this parse's sequence for compilation and instantiation.
+	IDs *IDGenerator
 }
 
 func ParseModulesWithLocations(name, text string) (ModuleParseLocations, error) {
@@ -45,7 +47,7 @@ func ParseModulesWithLocations(name, text string) (ModuleParseLocations, error) 
 	}
 	ids := &locatedParserIDs{generator: NewIDGenerator(), file: file, sources: SourceMap{}, upstreamSources: UpstreamSourceMap{}}
 	modules, err := parseModulesWithIDs(text, ids)
-	result := ModuleParseLocations{Modules: modules, Sources: ids.sources, UpstreamSources: ids.upstreamSources}
+	result := ModuleParseLocations{Modules: modules, Sources: ids.sources, UpstreamSources: ids.upstreamSources, IDs: ids.generator}
 	if err != nil {
 		return result, withSyntaxSource(err, name)
 	}

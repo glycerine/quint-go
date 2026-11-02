@@ -312,8 +312,10 @@ the baseline corpus, including state-transition legality.
     and default flag handling end to end.
 - [ ] P6.5 Port `initToPredicate` and removal of run definitions for the paths
   that require them; preserve the different contracts of checking and TLA output.
-- [ ] P6.6 Produce the single-module typed JSON envelope accepted by Go Apalache,
+- [x] P6.6 Produce the single-module typed JSON envelope accepted by Go Apalache,
   with explicit schema adaptation rather than dropping unknown fields blindly.
+  MarshalInput validates its projected envelope with the production importer;
+  source-to-CHECK safe/violating/instance tests and source-to-TLA tests pass.
 - [ ] P6.7 Differential-test nested instances, overrides, unused imports,
   source maps, and reference/type consistency after every transformation.
 
@@ -375,6 +377,9 @@ TypeScript or Rust evaluator process.
 - [ ] P9.1 Implement the adapter chosen in P0 for both checking and TLA output;
   use the existing Go production pipeline, including configuration and solver
   initialization. Keep dependency-specific types out of unrelated CLI code.
+  - [x] In-process CHECK/TLA executor and typed compilation input adaptation,
+    exercised with source-generated safe, violating, and instanced models.
+  - [ ] Complete public verification/TLA orchestration and configuration APIs.
 - [ ] P9.2 Port config-file/CLI precedence, init/next/invariant selection,
   maximum steps, random-transition simulation, and supported tuning options.
   Report unsupported options explicitly.
@@ -1891,3 +1896,20 @@ word "retained" in the commit message.
   preserving successful output. Full default tests pass (combined execution
   0.830s). P6.3 is complete at the library level; CLI wiring, typed JSON output,
   and the Go Apalache end-to-end exit gate remain open.
+
+- 2026-11-02: Added backend/apalache.MarshalInput with an explicit single-module
+  compiling-stage envelope for the Go checker's strict importer. It removes
+  lookup provenance/shadowing metadata and module docs, omits already-inlined
+  typedef declarations (as the importer itself does), writes inferred type
+  schemes in insertion order, and validates with ParseQuintJSON. It rejects
+  compilation diagnostics, unflattened directives, missing analysis, and
+  unresolved type applications. Frontend/located-parser results now expose the
+  live ID generator so compilation can continue without collisions across
+  imported files. Source-to-production CHECK tests cover a safe counter, a
+  one-step invariant violation, and a constant-overridden stateful instance;
+  source-to-TLA also passes through the Go command executor. Tests cover exact
+  large integer preservation, nested metadata projection, source isolation,
+  insertion order, malformed input rejection, and generator continuation. Full
+  default tests pass (combined execution 0.949s). P6.6 is complete; full JSON CLI
+  output, TLA init conversion wiring, backend configuration/result APIs, and
+  broader checker language compatibility remain open.

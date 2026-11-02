@@ -23,6 +23,7 @@ func loadModulesWithLocations(resolver SourceResolver, main SourceLookupPath, up
 	}
 	result := ModuleParseLocations{Sources: sources, UpstreamSources: raw}
 	generator := NewIDGenerator()
+	result.IDs = generator
 	parse := func(text string, source SourceLookupPath) ([]Module, error) {
 		file, err := NewSourceFile(source.SourceName, text)
 		if err != nil {

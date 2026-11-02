@@ -36,6 +36,13 @@ func TestProjectFrontend(t *testing.T) {
 	if result.Sources[ref].Source != "main.qnt" || result.UpstreamSources[ref].Source != "main.qnt" {
 		t.Fatal("source maps")
 	}
+	if result.IDs == nil {
+		t.Fatal("missing continuation ID generator")
+	}
+	next := result.IDs.Next()
+	if _, exists := result.Sources[next]; exists {
+		t.Fatal("continued generator reused a parsed ID")
+	}
 }
 
 func TestProjectFrontendAccumulatedDiagnostics(t *testing.T) {
