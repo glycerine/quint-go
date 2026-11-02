@@ -43,8 +43,9 @@ possible leading byte with EOF/ASCII/continuation suffixes. Regenerate with
 Unicode range boundaries, BOM preservation, and valid multi-byte characters.
 
 `spans.json` compares source intervals by structural IR path, independently of
-numeric IDs. The generator converts upstream's inclusive end index to a half-open
-end index. Initial cases cover operators/parameters, records, matches, and types.
-Only absolute start/end indexes are compared here; line/column quirks, Unicode,
-generated-name normalization, and missing upstream source entries need broader
-fixtures before claiming complete source-map compatibility.
+numeric IDs. The generator converts upstream's inclusive code-point indexes to half-open
+UTF-16 indexes, matching the Go location API. Cases cover operators/parameters,
+records, matches, types, sum constructors, tuple lambdas, import overrides, and
+multiline supplementary Unicode. Only absolute start/end indexes are compared;
+upstream line/column quirks and missing source entries need broader fixtures
+before claiming complete source-map compatibility.

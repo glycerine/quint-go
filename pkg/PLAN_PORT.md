@@ -978,3 +978,12 @@ word "retained" in the commit message.
   parameters, records, matches, and types. Updated the earlier exact-span test.
   Default tests pass within the sub-second target. P2.5/P2.9 remain open for
   multiline/Unicode coordinates, generated names, and full source-map parity.
+
+- 2026-11-02: Expanded differential source spans to sum constructors, tuple
+  lambdas, import overrides, and multiline supplementary Unicode. Verified that
+  antlr4ts absolute indexes count Unicode code points, whereas the Go public
+  Location API counts UTF-16 units; fixture generation now explicitly converts
+  code-point/inclusive bounds to UTF-16/half-open bounds. All nine span fixtures
+  match. Default tests pass within the sub-second target. Raw upstream coordinate
+  export and line/column quirks remain open; normalized interval parity does not
+  establish byte-for-byte source-map compatibility.

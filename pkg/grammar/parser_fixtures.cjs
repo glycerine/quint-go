@@ -64,6 +64,11 @@ const importFixtures=importCases.map(([name,sources])=>{
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/imports.json'),JSONbig.stringify(importFixtures,null,2)+'\n')
 // Match nodes by their structural IR path, independent of ID allocation order.
 const spanCases = [
+ ['sum-spans','module M { type T[a] = Some(List[a]) | None }'],
+ ['tuple-lambda-spans','module M { val f = ((a,b)) => a+b }'],
+ ['import-spans','module M { import A(N=1) as B from "a" }'],
+ ['unicode-spans','module M {\n val s = "😀" +\n "é"\n}'],
+
  ['simple','module M { val x = 1 + 2 }'],
  ['parameters','module M { def f(x: int): int = x + 1 }'],
  ['records','module M { val r = { a: 1, b: true } }'],
@@ -76,7 +81,11 @@ const spanFixtures=spanCases.map(([name,source])=>{
  const spans={}
  function visit(value,key){
   if(!value||typeof value!=='object')return
-  if(value.id!==undefined){const loc=parsed.sourceMap.get(value.id);if(loc)spans[key]={start:loc.start.index,end:loc.end.index+1}}
+  if(value.id!==undefined){const loc=parsed.sourceMap.get(value.id);if(loc){
+    // antlr4ts indexes Unicode code points; Go's public locations use UTF-16.
+    const utf16=index=>Array.from(source).slice(0,index).join('').length
+    spans[key]={start:utf16(loc.start.index),end:utf16(loc.end.index+1)}
+   }}
   for(const [field,child] of Object.entries(value))if(field!=='id')visit(child,key+'/'+field)
  }
  visit(parsed.modules,'')
