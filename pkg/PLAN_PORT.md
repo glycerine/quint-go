@@ -550,3 +550,10 @@ word "retained" in the commit message.
   nested collection/function/application types, input mutation isolation, and
   independent name counters. Default tests pass (core 0.009s). P4.1 still needs
   substitution/generalization; P1.2 still needs parser coordinate integration.
+
+- 2026-11-02: Implemented ordered type/row substitution application, replacement
+  chain resolution, and explicit cyclic-replacement errors. Tests cover nested
+  collection/record replacements, input isolation, empty/identity substitutions,
+  first-name lookup semantics, and type/row cycles. Default tests pass (core
+  0.007s). P4.1 remains open: constraint substitution, composition with unification,
+  generalization, and instantiation are not yet implemented.
