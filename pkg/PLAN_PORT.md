@@ -627,3 +627,11 @@ word "retained" in the commit message.
   Grammar tests exercise concrete, arrow, temporal, nullary, malformed, illegal
   token, and trailing-input cases. P2.1 remains open for full Quint grammar
   adaptation and reproducible generator setup; P2.6 needs effect-to-IR conversion.
+
+- 2026-11-02: Added ParseEffect, converting the generated parse tree to effect IR
+  with complete-input validation, collected syntax errors, upstream entity
+  grouping, and per-parse state occurrence IDs. Tests cover nested/nullary arrows,
+  pure/variable/all component forms, mixed entities, malformed/trailing input,
+  reference order, and parsed effects feeding multiple-update checking. Default
+  tests pass (core 0.009s). P2.6 remains open for Quint/type entry points; effect
+  signature parsing is now usable by later builtin-signature work.
