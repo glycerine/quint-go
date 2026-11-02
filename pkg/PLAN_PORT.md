@@ -1593,3 +1593,11 @@ word "retained" in the commit message.
   Entity-versus-StateVariable comparison behavior is preserved explicitly.
   Default tests pass under one second; mode-checker traversal and diagnostics
   remain open under P5.3.
+
+- 2026-11-02: Added retained ModeChecker diagnostic/suggestion tables and
+  definition-level qualifier validation. Invalid annotations produce QNT200 with
+  replacement fixes; overly general annotations receive narrower suggestions.
+  Tests cover pure/state/temporal/parameter violations, source IDs, fixes,
+  agreement, and suggestions. Default tests pass under one second. Recursive
+  checker traversal, action-as-temporal explanations, and instance override
+  purity validation remain open under P5.3.
