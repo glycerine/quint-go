@@ -23,3 +23,17 @@ const fixtures = cases.map(([name,source])=>{
  return {name,source,modules:result.modules}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/phase1.json'),JSONbig.stringify(fixtures,null,2)+'\n')
+const errorCases = [
+ ['lowercase', 'module M { type ns::lower = int }'],
+ ['unbound', 'module M { type T = { x: a | r } }'],
+ ['map', 'module M { var m: Map[int,str] }'],
+ ['duplicate', 'module M { val r = { a: 1, a: 2 } }'],
+ ['duplicates', 'module M { val r = { a: 1, b: 2, b: 3, a: 4, b: 5 } }'],
+ ['spreads', 'module M { val r = { ...a, ...b } }'],
+]
+const errorFixtures = errorCases.map(([name,source])=>{
+ const result=parsePhase1fromText(newIdGenerator(),source,name)
+ if(!result.errors.length)throw Error('Expected diagnostic for '+name)
+ return {name,source,errors:result.errors.map(({code,message,data})=>({code,message,data}))}
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/errors.json'),JSONbig.stringify(errorFixtures,null,2)+'\n')

@@ -21,3 +21,10 @@ must match. Source maps are not compared yet. Fixtures with generated identifier
 containing IDs (destructuring and tuple lambdas) need explicit identifier
 normalization before they can join this comparison; they remain covered by
 separate conversion tests.
+
+`errors.json` uses the same upstream generator for semantic parser diagnostics.
+It compares codes, full messages, and structured fix data for lowercase types,
+unbound variables, deprecated maps, duplicate fields, and multiple record spreads.
+Reference IDs are omitted because source-map parity is pending. Cases currently
+contain one diagnostic each; they do not establish semantic-error accumulation
+or partial-IR recovery parity.

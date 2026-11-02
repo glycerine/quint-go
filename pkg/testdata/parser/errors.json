@@ -1,0 +1,80 @@
+[
+  {
+    "name": "lowercase",
+    "source": "module M { type ns::lower = int }",
+    "errors": [
+      {
+        "code": "QNT007",
+        "message": "type names must start with an uppercase letter",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "type ns::lower",
+            "replacement": "type ns::Lower"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "unbound",
+    "source": "module M { type T = { x: a | r } }",
+    "errors": [
+      {
+        "code": "QNT014",
+        "message": "the type variables a, r are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "name": "map",
+    "source": "module M { var m: Map[int,str] }",
+    "errors": [
+      {
+        "code": "QNT015",
+        "message": "Use 'int -> str' instead of 'Map[int, str]' for map types",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[int, str]",
+            "replacement": "int -> str"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "duplicate",
+    "source": "module M { val r = { a: 1, a: 2 } }",
+    "errors": [
+      {
+        "code": "QNT016",
+        "message": "Field a cannot be defined more than once",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "name": "duplicates",
+    "source": "module M { val r = { a: 1, b: 2, b: 3, a: 4, b: 5 } }",
+    "errors": [
+      {
+        "code": "QNT016",
+        "message": "Fields b, a cannot be defined more than once",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "name": "spreads",
+    "source": "module M { val r = { ...a, ...b } }",
+    "errors": [
+      {
+        "code": "QNT012",
+        "message": "... may be used once in { ...record, <fields> }",
+        "data": {}
+      }
+    ]
+  }
+]

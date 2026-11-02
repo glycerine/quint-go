@@ -3,6 +3,7 @@ package quint
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"os"
 	"reflect"
 	"testing"
@@ -61,6 +62,36 @@ func TestUpstreamPhaseOneFixtures(t *testing.T) {
 				g, _ := json.Marshal(got)
 				w, _ := json.Marshal(want)
 				t.Fatalf("Go: %s\nTS: %s", g, w)
+			}
+		})
+	}
+}
+
+func TestUpstreamParserDiagnostics(t *testing.T) {
+	data, err := os.ReadFile("testdata/parser/errors.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var fixtures []struct {
+		Name, Source string
+		Errors       []Diagnostic
+	}
+	if err = json.Unmarshal(data, &fixtures); err != nil {
+		t.Fatal(err)
+	}
+	for _, f := range fixtures {
+		t.Run(f.Name, func(t *testing.T) {
+			_, err := ParseModules(f.Source)
+			var got Diagnostic
+			if !errors.As(err, &got) {
+				t.Fatalf("expected diagnostic: %v", err)
+			}
+			if len(f.Errors) != 1 {
+				t.Fatal("fixture requires accumulated semantic errors, not yet supported")
+			}
+			want := f.Errors[0]
+			if got.Code != want.Code || got.Message != want.Message || !reflect.DeepEqual(got.Data, want.Data) {
+				t.Fatalf("Go: %+v\nTS: %+v", got, want)
 			}
 		})
 	}

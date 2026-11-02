@@ -833,3 +833,11 @@ word "retained" in the commit message.
   documented gaps). All cases match. Full default tests pass (core 0.343s;
   combined package execution under one second). P2.9 remains open for the broader
   corpus, generated-name normalization, error codes, and source maps.
+
+- 2026-11-02: Added six upstream-generated diagnostic fixtures comparing codes,
+  full messages, and structured data. Corrected record diagnostics to match QNT012
+  wording and QNT016 singular/plural wording, collect all duplicate names once in
+  second-occurrence order, and include reference IDs/data. All differential
+  fixtures and default tests pass (core 0.346s; combined execution 0.403s).
+  P2.9 remains open for broader/error-recovery coverage; semantic diagnostics
+  still stop at the first error rather than returning accumulated partial IR.

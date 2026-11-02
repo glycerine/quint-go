@@ -123,24 +123,38 @@ func expressionFromContext(ctx p.IExprContext, ids *IDGenerator) (Expr, error) {
 		pairs := []Expr{}
 		var spread *Expr
 		seen := map[string]bool{}
+		duplicateSet := map[string]bool{}
+		duplicates := []string{}
+		spreadCount := 0
 		for _, elem := range c.AllRecElem() {
 			value, err := expressionFromContext(elem.Expr(), ids)
 			if err != nil {
 				return Expr{}, err
 			}
 			if elem.SimpleId() == nil {
-				if spread != nil {
-					return Expr{}, Diagnostic{Code: QNT012, Message: "'...' may be used once in a record"}
-				}
+				spreadCount++
 				spread = &value
 				continue
 			}
 			name := elem.SimpleId().GetText()
-			if seen[name] {
-				return Expr{}, Diagnostic{Code: QNT016, Message: "Duplicated field on record: " + name}
+			if seen[name] && !duplicateSet[name] {
+				duplicates = append(duplicates, name)
+				duplicateSet[name] = true
 			}
 			seen[name] = true
 			pairs = append(pairs, Expr{ID: ids.Next(), Kind: "str", Str: name}, value)
+		}
+		if len(duplicates) > 0 {
+			plural := "Field"
+			if len(duplicates) > 1 {
+				plural = "Fields"
+			}
+			id := ids.Next()
+			return Expr{}, Diagnostic{Code: QNT016, Message: plural + " " + strings.Join(duplicates, ", ") + " cannot be defined more than once", Reference: &id, Data: &DiagnosticData{}}
+		}
+		if spreadCount > 1 {
+			id := ids.Next()
+			return Expr{}, Diagnostic{Code: QNT012, Message: "... may be used once in { ...record, <fields> }", Reference: &id, Data: &DiagnosticData{}}
 		}
 		if spread == nil {
 			return Expr{ID: ids.Next(), Kind: "app", Opcode: "Rec", Args: pairs}, nil
