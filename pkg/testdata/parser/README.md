@@ -514,3 +514,13 @@ and same-object no-op updates preserving key source. Private allocation tokens
 track object reuse without changing public structural equality/hash. This is
 the persistent ownerless primitive; transient ownerID constructor batches and
 propagating retained children/history through runtime operations remain open.
+
+`builtin_types_dynamic.json` is regenerated with
+`node pkg/grammar/builtin_types_dynamic_fixtures.cjs`. Fifty-two upstream
+getSignatures results cover variable arities 0/1/2/3/9/33 across constructors,
+Boolean/action combinations, matchVariant, and tuples. Source IDs are stripped
+like the Go builtin-signature API. Tests compare full type trees and quantified
+variable order, validate shapes, mutate arguments/results to catch sharing,
+and check exact invalid-arity/unknown-name errors. The saved oracle avoids
+reparsing signatures in the default suite; the prior parsed construction is
+retained only for explicit benchmarks and cheap validation-error comparisons.

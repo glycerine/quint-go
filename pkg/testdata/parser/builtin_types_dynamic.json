@@ -1,0 +1,4264 @@
+[
+  {
+    "name": "List",
+    "arity": 0,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "List",
+    "arity": 1,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "List",
+    "arity": 2,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "List",
+    "arity": 3,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "List",
+    "arity": 9,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "List",
+    "arity": 33,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Set",
+    "arity": 0,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Set",
+    "arity": 1,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Set",
+    "arity": 2,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Set",
+    "arity": 3,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Set",
+    "arity": 9,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Set",
+    "arity": 33,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Map",
+    "arity": 0,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [],
+        "res": {
+          "kind": "fun",
+          "arg": {
+            "kind": "var",
+            "name": "a"
+          },
+          "res": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Map",
+    "arity": 1,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        ],
+        "res": {
+          "kind": "fun",
+          "arg": {
+            "kind": "var",
+            "name": "a"
+          },
+          "res": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Map",
+    "arity": 2,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        ],
+        "res": {
+          "kind": "fun",
+          "arg": {
+            "kind": "var",
+            "name": "a"
+          },
+          "res": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Map",
+    "arity": 3,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        ],
+        "res": {
+          "kind": "fun",
+          "arg": {
+            "kind": "var",
+            "name": "a"
+          },
+          "res": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Map",
+    "arity": 9,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        ],
+        "res": {
+          "kind": "fun",
+          "arg": {
+            "kind": "var",
+            "name": "a"
+          },
+          "res": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Map",
+    "arity": 33,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "b"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        ],
+        "res": {
+          "kind": "fun",
+          "arg": {
+            "kind": "var",
+            "name": "a"
+          },
+          "res": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "and",
+    "arity": 0,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "and",
+    "arity": 1,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "and",
+    "arity": 2,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "and",
+    "arity": 3,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "and",
+    "arity": 9,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "and",
+    "arity": 33,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "or",
+    "arity": 0,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "or",
+    "arity": 1,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "or",
+    "arity": 2,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "or",
+    "arity": 3,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "or",
+    "arity": 9,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "or",
+    "arity": 33,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "actionAll",
+    "arity": 0,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "actionAll",
+    "arity": 1,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "actionAll",
+    "arity": 2,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "actionAll",
+    "arity": 3,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "actionAll",
+    "arity": 9,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "actionAll",
+    "arity": 33,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "actionAny",
+    "arity": 0,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "actionAny",
+    "arity": 1,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "actionAny",
+    "arity": 2,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "actionAny",
+    "arity": 3,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "actionAny",
+    "arity": 9,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "actionAny",
+    "arity": 33,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "matchVariant",
+    "arity": 1,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "b"
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "matchVariant",
+    "arity": 3,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "b"
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "matchVariant",
+    "arity": 9,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "b"
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "matchVariant",
+    "arity": 33,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "b"
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "tuples",
+    "arity": 0,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "tup",
+            "fields": {
+              "kind": "empty"
+            }
+          }
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "tuples",
+    "arity": 1,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t0"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "t0"
+          }
+        }
+      },
+      "typeVariables": [
+        "t0"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "tuples",
+    "arity": 2,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t0"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t1"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t0"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t1"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      },
+      "typeVariables": [
+        "t0",
+        "t1"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "tuples",
+    "arity": 3,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t0"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t1"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t2"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t0"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t1"
+                  }
+                },
+                {
+                  "fieldName": "2",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t2"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      },
+      "typeVariables": [
+        "t0",
+        "t1",
+        "t2"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "tuples",
+    "arity": 9,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t0"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t1"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t2"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t3"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t4"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t5"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t6"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t7"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t8"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t0"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t1"
+                  }
+                },
+                {
+                  "fieldName": "2",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t2"
+                  }
+                },
+                {
+                  "fieldName": "3",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t3"
+                  }
+                },
+                {
+                  "fieldName": "4",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t4"
+                  }
+                },
+                {
+                  "fieldName": "5",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t5"
+                  }
+                },
+                {
+                  "fieldName": "6",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t6"
+                  }
+                },
+                {
+                  "fieldName": "7",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t7"
+                  }
+                },
+                {
+                  "fieldName": "8",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t8"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      },
+      "typeVariables": [
+        "t0",
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "tuples",
+    "arity": 33,
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t0"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t1"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t2"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t3"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t4"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t5"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t6"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t7"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t8"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t9"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t10"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t11"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t12"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t13"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t14"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t15"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t16"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t17"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t18"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t19"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t20"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t21"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t22"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t23"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t24"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t25"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t26"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t27"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t28"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t29"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t30"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t31"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "t32"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t0"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t1"
+                  }
+                },
+                {
+                  "fieldName": "2",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t2"
+                  }
+                },
+                {
+                  "fieldName": "3",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t3"
+                  }
+                },
+                {
+                  "fieldName": "4",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t4"
+                  }
+                },
+                {
+                  "fieldName": "5",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t5"
+                  }
+                },
+                {
+                  "fieldName": "6",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t6"
+                  }
+                },
+                {
+                  "fieldName": "7",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t7"
+                  }
+                },
+                {
+                  "fieldName": "8",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t8"
+                  }
+                },
+                {
+                  "fieldName": "9",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t9"
+                  }
+                },
+                {
+                  "fieldName": "10",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t10"
+                  }
+                },
+                {
+                  "fieldName": "11",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t11"
+                  }
+                },
+                {
+                  "fieldName": "12",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t12"
+                  }
+                },
+                {
+                  "fieldName": "13",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t13"
+                  }
+                },
+                {
+                  "fieldName": "14",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t14"
+                  }
+                },
+                {
+                  "fieldName": "15",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t15"
+                  }
+                },
+                {
+                  "fieldName": "16",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t16"
+                  }
+                },
+                {
+                  "fieldName": "17",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t17"
+                  }
+                },
+                {
+                  "fieldName": "18",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t18"
+                  }
+                },
+                {
+                  "fieldName": "19",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t19"
+                  }
+                },
+                {
+                  "fieldName": "20",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t20"
+                  }
+                },
+                {
+                  "fieldName": "21",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t21"
+                  }
+                },
+                {
+                  "fieldName": "22",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t22"
+                  }
+                },
+                {
+                  "fieldName": "23",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t23"
+                  }
+                },
+                {
+                  "fieldName": "24",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t24"
+                  }
+                },
+                {
+                  "fieldName": "25",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t25"
+                  }
+                },
+                {
+                  "fieldName": "26",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t26"
+                  }
+                },
+                {
+                  "fieldName": "27",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t27"
+                  }
+                },
+                {
+                  "fieldName": "28",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t28"
+                  }
+                },
+                {
+                  "fieldName": "29",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t29"
+                  }
+                },
+                {
+                  "fieldName": "30",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t30"
+                  }
+                },
+                {
+                  "fieldName": "31",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t31"
+                  }
+                },
+                {
+                  "fieldName": "32",
+                  "fieldType": {
+                    "kind": "var",
+                    "name": "t32"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      },
+      "typeVariables": [
+        "t0",
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10",
+        "t11",
+        "t12",
+        "t13",
+        "t14",
+        "t15",
+        "t16",
+        "t17",
+        "t18",
+        "t19",
+        "t20",
+        "t21",
+        "t22",
+        "t23",
+        "t24",
+        "t25",
+        "t26",
+        "t27",
+        "t28",
+        "t29",
+        "t30",
+        "t31",
+        "t32"
+      ],
+      "rowVariables": []
+    }
+  }
+]

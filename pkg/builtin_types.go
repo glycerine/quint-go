@@ -2,7 +2,6 @@ package quint
 
 import (
 	"fmt"
-	"strings"
 	"sync"
 )
 
@@ -133,45 +132,7 @@ func BuiltinTypeSignature(name string, arity int) (TypeScheme, error) {
 		}
 		return cloneBuiltinTypeScheme(cached.scheme)
 	}
-	text := ""
-	arg, result := "", ""
-	switch name {
-	case "List":
-		arg, result = "a", "List[a]"
-	case "Set":
-		arg, result = "a", "Set[a]"
-	case "Map":
-		arg, result = "(a, b)", "a -> b"
-	case "and", "or", "actionAll", "actionAny":
-		arg, result = "bool", "bool"
-	case "matchVariant":
-		if arity < 1 || arity%2 == 0 {
-			return TypeScheme{}, fmt.Errorf("matchVariant requires a value and pattern/function pairs")
-		}
-		args := []string{"a"}
-		for i := 1; i < arity; i += 2 {
-			args = append(args, "str", "(a) => b")
-		}
-		text = "(" + strings.Join(args, ", ") + ") => b"
-	case "tuples":
-		names, args := []string{}, []string{}
-		for i := 0; i < arity; i++ {
-			n := fmt.Sprintf("t%d", i)
-			names = append(names, n)
-			args = append(args, "Set["+n+"]")
-		}
-		text = "(" + strings.Join(args, ", ") + ") => Set[(" + strings.Join(names, ", ") + ")]"
-	default:
-		return TypeScheme{}, fmt.Errorf("no ordinary builtin signature for %q", name)
-	}
-	if arg != "" {
-		args := make([]string, arity)
-		for i := range args {
-			args[i] = arg
-		}
-		text = "(" + strings.Join(args, ", ") + ") => " + result
-	}
-	return parseBuiltinTypeScheme(text)
+	return dynamicBuiltinTypeScheme(name, arity)
 }
 
 func parseBuiltinTypeScheme(text string) (TypeScheme, error) {

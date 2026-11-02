@@ -332,8 +332,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   ownership without relying on Go map iteration order.
   - [x] Immutable concrete-value ownership, typed structural identity, stable
     Go hashing, canonical IR printing, and upstream equal-type comparisons.
-  - [ ] Closures inside collections, symbolic collections, iteration order, and cross-type
-    equality audit (TypeScript's set-like fallback equates unlike constructors).
+  - [ ] Closures inside collections, symbolic collections, iteration order,
+    and cross-type equality audit (TypeScript's set-like fallback equates unlike
+    constructors).
 - [ ] P7.2 Port evaluation/compilation of IR, lexical closures, operator values,
   local bindings, lazy branches, definition caches, and runtime error traces.
   - [x] Pure IR expression evaluation: literals, concrete constructors, explicit
@@ -623,6 +624,8 @@ any remaining TypeScript client code is distinguished from language-server logic
   - [x] Profiled the default suite and removed repeated fixed-builtin type
     parsing with bounded, concurrency-safe templates and caller-owned copies;
     retained uncached variable arities and recorded warm signature benchmarks.
+  - [x] Replaced variable-arity signature reparsing with fresh direct trees;
+    verified 52 upstream signatures and recorded parser/direct benchmarks.
 - [ ] P12.6 Add CI jobs that build and test the `pkg/` module with pinned
   dependencies, reproducible grammar generation, and supported OS/architecture
   targets. Keep reference-tool jobs separate from Go-only validation.
@@ -2669,3 +2672,13 @@ word "retained" in the commit message.
   them from source IR: Map normalForm rebuilds its traversal, Set normalForm
   retains its tree, and Variant normalForm retains its payload. Map serialization
   also passes through a tuple set and cannot stand in for stored traversal.
+
+- 2026-11-02: Replaced variable-arity builtin signature reparsing with direct,
+  fresh type-tree construction; fixed-signature caching is unchanged. Fifty-two
+  saved upstream signatures verify complete shapes and quantifier order at
+  arities 0/1/2/3/9/33, with ownership and exact-error tests. The default suite
+  does not execute the parser oracle. Nine-argument benchmarks (100ms samples)
+  improve List from 2893038ns/1099906B/14561 allocations to
+  985.5ns/1264B/4 allocations, Map from 8053930ns to 4212ns, matchVariant from
+  5652360ns to 1765ns, and tuples from 11242913ns to 3481ns. Full default tests
+  pass with all current batches integrated (combined package execution 0.946s).
