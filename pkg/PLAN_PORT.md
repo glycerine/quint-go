@@ -1437,3 +1437,12 @@ word "retained" in the commit message.
   and last-visited qualifier changes/retention across nested definitions.
   All cases match without implementation changes. Default tests pass (combined
   execution 0.606s). Combined-analysis integration and effects/modes remain open.
+
+- 2026-11-02: Added effect/entity substitution application with copied values,
+  transitive effect-level resolution, empty-component removal, simplification,
+  first-match kind semantics, and explicit cycle rejection. Entity-only application
+  remains single-pass as upstream requires. Tests cover arrow effects, mixed
+  effect/entity chains, empty updates, source immutability, namespace mismatches,
+  and cyclic replacements. Default tests pass (combined execution 0.640s).
+  Effect substitution composition, exact differential parity, unification, and
+  inference integration remain pending.
