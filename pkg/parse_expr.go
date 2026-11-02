@@ -268,7 +268,14 @@ func expressionFromContext(ctx p.IExprContext, ids *IDGenerator) (Expr, error) {
 	default:
 		return Expr{}, fmt.Errorf("expression conversion not implemented for %T", ctx)
 	}
-	return Expr{ID: ids.Next(), Kind: "app", Opcode: opcode, Args: args}, nil
+	id := ids.Next()
+	if opcode == "q::debug" && len(args) == 1 {
+		// Upstream uses parse-tree text, which excludes skipped whitespace and
+		// comments while retaining the original token spelling.
+		label := Expr{ID: ids.Next(), Kind: "str", Str: ctx.GetText()}
+		args = append([]Expr{label}, args...)
+	}
+	return Expr{ID: id, Kind: "app", Opcode: opcode, Args: args}, nil
 }
 
 var tupleFieldPattern = regexp.MustCompile(`^_([1-9][0-9]?)$`)

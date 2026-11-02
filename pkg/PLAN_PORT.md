@@ -816,3 +816,11 @@ word "retained" in the commit message.
   missing prefix spaces, expanded declarations, and orphan docs between modules.
   Default tests pass within the sub-second execution target. P2.5 remains open
   for source-map integration and full Unicode/source-coordinate parity.
+
+- 2026-11-02: Added upstream's single-argument q::debug desugaring: prepend the
+  original parse-tree text as a string argument, including for receiver-style
+  calls. Tests cover whitespace/comments, original hexadecimal spelling, spaces
+  inside string tokens, nested calls, synthesized IDs, explicit arities, unrelated
+  names, and module integration. Default tests pass within the sub-second package
+  execution target. P2.4 remains open pending differential fixtures and source-map
+  integration rather than treating grammar-alternative coverage as full parity.
