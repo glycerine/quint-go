@@ -7,12 +7,16 @@ import "strings"
 // matching upstream's worklist). Dependency sorting/name resolution are separate.
 // Errors are fail-fast; no partial module list is returned.
 func LoadSourceModules(resolver SourceResolver, main SourceLookupPath) ([]Module, error) {
+	ids := NewIDGenerator()
+	return loadSourceModules(resolver, main, func(text string, _ SourceLookupPath) ([]Module, error) { return parseModulesWithIDs(text, ids) })
+}
+
+func loadSourceModules(resolver SourceResolver, main SourceLookupPath, parse func(string, SourceLookupPath) ([]Module, error)) ([]Module, error) {
 	text, err := resolver.Load(main)
 	if err != nil {
 		return nil, err
 	}
-	ids := NewIDGenerator()
-	modules, err := parseModulesWithIDs(text, ids)
+	modules, err := parse(text, main)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +47,7 @@ func LoadSourceModules(resolver SourceResolver, main SourceLookupPath) ([]Module
 			if err != nil {
 				return nil, Diagnostic{Code: QNT013, Message: "import ... from '" + *decl.FromSource + "': could not load", Reference: &decl.ID}
 			}
-			imported, err := parseModulesWithIDs(source, ids)
+			imported, err := parse(source, target)
 			if err != nil {
 				return nil, err
 			}

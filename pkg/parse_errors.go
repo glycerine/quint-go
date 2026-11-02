@@ -17,6 +17,7 @@ type SyntaxIssue struct {
 // SyntaxErrors preserves all errors reported during syntax recognition.
 // Semantic conversion errors remain Diagnostic values.
 type SyntaxErrors struct {
+	Source  string // Optional source name supplied by source-aware entry points.
 	Context string
 	Issues  []SyntaxIssue
 }

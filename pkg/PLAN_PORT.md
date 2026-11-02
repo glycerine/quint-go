@@ -910,3 +910,12 @@ word "retained" in the commit message.
   without partial maps. Default tests pass within the sub-second target. P2.5
   remains open for type IDs, finer generated/parameter spans, import source-map
   merging, and upstream inclusive-location compatibility.
+
+- 2026-11-02: Added LoadModulesWithSource to merge source maps across transitive
+  imports using shared IDs, then sort modules. Maps remain available on failure
+  for reference-based diagnostics; imported syntax errors identify their source
+  file. Tests verify IR/order equality, nested relative-import file attribution,
+  and resolved locations for load, unknown-module, cycle, and type-name errors.
+  Default tests pass within the sub-second target. P2.5/P2.7 remain open for type
+  IDs, fine-grained spans, inclusive upstream representation, and accumulated
+  partial-module results; source-map merging itself is now implemented.
