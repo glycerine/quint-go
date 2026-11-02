@@ -61,7 +61,7 @@ func (r *ExpressionNameResolver) Resolve(expr *Expr, depth int) {
 	case "lambda":
 		for i := range expr.Params {
 			p := expr.Params[i]
-			r.Scope.Add(LookupDefinition{ID: p.ID, Name: p.Name, Depth: depth + 1, Parameter: &p})
+			r.addDefinition(LookupDefinition{ID: p.ID, Name: p.Name, Depth: depth + 1, Parameter: &p})
 		}
 		for i := range expr.Params {
 			r.resolveType(expr.Params[i].TypeAnnotation)
@@ -73,11 +73,18 @@ func (r *ExpressionNameResolver) Resolve(expr *Expr, depth int) {
 	case "let":
 		op := expr.Opdef
 		declaration := Declaration{ID: op.ID, Kind: "def", Name: op.Name, Qualifier: op.Qualifier, Expr: op.Expr, TypeAnnotation: op.TypeAnnotation}
-		def := r.Scope.Add(LookupDefinition{ID: op.ID, Name: op.Name, Depth: depth + 2, Declaration: &declaration})
-		r.Table.Set(op.ID, def)
 		r.resolveType(op.TypeAnnotation)
+		def := r.addDefinition(LookupDefinition{ID: op.ID, Name: op.Name, Depth: depth + 2, Declaration: &declaration})
+		r.Table.Set(op.ID, def)
 		r.Resolve(op.Expr, depth+2)
 		r.Resolve(expr.Body, depth+1)
 		r.Scope.Pop(op.Name)
 	}
+}
+
+func (r *ExpressionNameResolver) addDefinition(def LookupDefinition) LookupDefinition {
+	before := len(r.Scope.Errors)
+	added := r.Scope.Add(def)
+	r.Errors = append(r.Errors, r.Scope.Errors[before:]...)
+	return added
 }

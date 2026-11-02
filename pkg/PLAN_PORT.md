@@ -1042,3 +1042,12 @@ word "retained" in the commit message.
   the sub-second target. P3.1 remains open for module traversal, unified collector
   diagnostics, unused definitions, and differential resolution fixtures; imported
   visibility remains P3.2 work.
+
+- 2026-11-02: Connected lexical resolution to local modules, including forward
+  references, definition self-entries, assumptions, and named type annotations.
+  Scoped collection conflicts now join resolver diagnostics in traversal order;
+  local annotations resolve before introducing their definition, matching upstream.
+  Tests cover definition/parameter/type identities, retained self annotations,
+  duplicate parameters, undefined types/names, and explicit rejection of unlinked
+  module directives. Default tests pass within the sub-second target. P3.1/P3.2
+  remain open for linking, unused definitions, and differential validation.
