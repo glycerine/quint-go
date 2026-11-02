@@ -1558,3 +1558,12 @@ word "retained" in the commit message.
   body diagnostics, and upstream frame retention after prior errors. Default
   tests pass under one second. Recursive traversal, declaration lifecycle, and
   exact upstream inference-table differential tests remain open under P5.2.
+
+- 2026-11-02: Added EffectInferrer recursive traversal connecting literals,
+  names, applications, lambdas, local definitions, top-level generalization,
+  declaration seeding, assumptions, and instance override expressions. Tests
+  parse and resolve modules before inferring arithmetic reads, assignment,
+  polymorphic identity, local identity capturing state, and temporal formulas;
+  they verify substitution/frame cleanup. Default tests pass under one second.
+  Exact upstream inference-table parity, broader declaration/error lifecycle
+  coverage, and combined analyzer integration remain open under P5.2/P5.5.
