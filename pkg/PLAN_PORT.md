@@ -433,6 +433,13 @@ including failed actions that must not leak partially updated state.
 
 - [ ] P8.1 Implement `run` with init/step selection, sample/step limits,
   invariants, witnesses, deadlocks, stopping conditions, and trace selection.
+  - [x] Sequential library simulation of prepared modules/projects with named
+    init/step/invariant/witness definitions, explicit sample/step/error limits,
+    state resets without RNG rewind, and disabled-action sample termination.
+  - [x] TypeScript-compatible invariant/witness timing, cumulative violation
+    results, trace ranking/seeds, statistics, and runtime-error outcomes.
+  - [ ] Source expression selectors, run CLI defaults/flags/output, and
+    individual invariant reporting.
 - [ ] P8.2 Implement `test` discovery/filtering, randomized repetitions,
   pass/fail/ignore results, assertion reports, and replayable failing seeds.
 - [ ] P8.3 Preserve trace hooks, action names, nondeterministic picks, debug
@@ -442,6 +449,9 @@ including failed actions that must not leak partially updated state.
 - [ ] P8.5 Add cancellation and bounded resource controls. Where concurrent
   simulation is exposed, isolate RNG/state/cache ownership and define result
   ordering and reproducibility across worker counts.
+  - [x] Sequential simulation context cancellation before and during execution,
+    nonnegative explicit limits, and private execution state per evaluator.
+  - [ ] Additional resource bounds and any concurrent worker policy.
 - [ ] P8.6 Run both runtime integration transcript suites with declared backend
   differences, plus stateful and model-based-testing evaluator fixtures.
 
@@ -2552,3 +2562,17 @@ word "retained" in the commit message.
   structured rejection of non-finite Number endpoints. Unbounded materialization
   and reference uncaught-error behavior remain explicitly open. Full default
   tests pass (combined package execution 1.044s, near the one-second target).
+
+- 2026-11-02: Added sequential ModuleEvaluator.Simulate and Reset for prepared
+  modules/projects. Named init/step/invariant/witness definitions run with
+  explicit sample/step/error-trace limits; resets retain RNG advancement.
+  Disabled actions end a sample without claiming a deadlock. Invariants run at
+  initial and successor states, while witnesses run only after successful
+  steps and count once per sample. Trace selection, cumulative violation
+  results, seeds, statistics, and runtime-error outcomes match twenty upstream
+  scenarios (43 samples and 54 selected states). Unit tests cover option errors,
+  pre/mid-execution cancellation, reset semantics, and result ownership. Full
+  default tests pass (combined package execution 1.046s, near the one-second
+  target). CLI expression selection/output, execution-recorder callbacks,
+  individual invariants, additional resource bounds, and Rust comparison remain
+  open.

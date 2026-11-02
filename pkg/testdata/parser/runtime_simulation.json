@@ -1,0 +1,5774 @@
+[
+  {
+    "name": "basic",
+    "module": {
+      "id": 35,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 14,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 13,
+            "kind": "bool",
+            "value": true
+          }
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "even",
+          "qualifier": "val",
+          "expr": {
+            "id": 19,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 17,
+                "kind": "app",
+                "opcode": "imod",
+                "args": [
+                  {
+                    "id": 15,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 16,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "id": 18,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 24,
+          "kind": "def",
+          "name": "later",
+          "qualifier": "val",
+          "expr": {
+            "id": 23,
+            "kind": "app",
+            "opcode": "igte",
+            "args": [
+              {
+                "id": 21,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 22,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        {
+          "id": 28,
+          "kind": "def",
+          "name": "initial",
+          "qualifier": "val",
+          "expr": {
+            "id": 27,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 25,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 26,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 34,
+          "kind": "def",
+          "name": "badWitness",
+          "qualifier": "val",
+          "expr": {
+            "id": 33,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 31,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 29,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 30,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 32,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [
+        "even",
+        "later",
+        "initial",
+        "badWitness"
+      ],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 1
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "ok",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            }
+          ],
+          "result": true,
+          "seed": 0
+        }
+      ],
+      "witnessingTraces": [
+        3,
+        3,
+        0,
+        0
+      ],
+      "samples": 3,
+      "traceStatistics": {
+        "maxTraceLength": 4,
+        "minTraceLength": 4,
+        "averageTraceLength": 4
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "zero_steps",
+    "module": {
+      "id": 35,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 14,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 13,
+            "kind": "bool",
+            "value": true
+          }
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "even",
+          "qualifier": "val",
+          "expr": {
+            "id": 19,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 17,
+                "kind": "app",
+                "opcode": "imod",
+                "args": [
+                  {
+                    "id": 15,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 16,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "id": 18,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 24,
+          "kind": "def",
+          "name": "later",
+          "qualifier": "val",
+          "expr": {
+            "id": 23,
+            "kind": "app",
+            "opcode": "igte",
+            "args": [
+              {
+                "id": 21,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 22,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        {
+          "id": 28,
+          "kind": "def",
+          "name": "initial",
+          "qualifier": "val",
+          "expr": {
+            "id": 27,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 25,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 26,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 34,
+          "kind": "def",
+          "name": "badWitness",
+          "qualifier": "val",
+          "expr": {
+            "id": 33,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 31,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 29,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 30,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 32,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [
+        "initial"
+      ],
+      "maxSamples": 3,
+      "maxSteps": 0,
+      "numberOfTraces": 1
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "ok",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "result": true,
+          "seed": 0
+        }
+      ],
+      "witnessingTraces": [
+        0
+      ],
+      "samples": 3,
+      "traceStatistics": {
+        "maxTraceLength": 1,
+        "minTraceLength": 1,
+        "averageTraceLength": 1
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 0
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "zero_samples",
+    "module": {
+      "id": 35,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 14,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 13,
+            "kind": "bool",
+            "value": true
+          }
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "even",
+          "qualifier": "val",
+          "expr": {
+            "id": 19,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 17,
+                "kind": "app",
+                "opcode": "imod",
+                "args": [
+                  {
+                    "id": 15,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 16,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "id": 18,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 24,
+          "kind": "def",
+          "name": "later",
+          "qualifier": "val",
+          "expr": {
+            "id": 23,
+            "kind": "app",
+            "opcode": "igte",
+            "args": [
+              {
+                "id": 21,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 22,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        {
+          "id": 28,
+          "kind": "def",
+          "name": "initial",
+          "qualifier": "val",
+          "expr": {
+            "id": 27,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 25,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 26,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 34,
+          "kind": "def",
+          "name": "badWitness",
+          "qualifier": "val",
+          "expr": {
+            "id": 33,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 31,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 29,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 30,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 32,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 0,
+      "maxSteps": 3,
+      "numberOfTraces": 1
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "ok",
+      "errors": [],
+      "bestTraces": [],
+      "witnessingTraces": [],
+      "samples": 0,
+      "traceStatistics": {
+        "maxTraceLength": 0,
+        "minTraceLength": null,
+        "averageTraceLength": null
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "trace": []
+  },
+  {
+    "name": "zero_traces",
+    "module": {
+      "id": 35,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 14,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 13,
+            "kind": "bool",
+            "value": true
+          }
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "even",
+          "qualifier": "val",
+          "expr": {
+            "id": 19,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 17,
+                "kind": "app",
+                "opcode": "imod",
+                "args": [
+                  {
+                    "id": 15,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 16,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "id": 18,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 24,
+          "kind": "def",
+          "name": "later",
+          "qualifier": "val",
+          "expr": {
+            "id": 23,
+            "kind": "app",
+            "opcode": "igte",
+            "args": [
+              {
+                "id": 21,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 22,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        {
+          "id": 28,
+          "kind": "def",
+          "name": "initial",
+          "qualifier": "val",
+          "expr": {
+            "id": 27,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 25,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 26,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 34,
+          "kind": "def",
+          "name": "badWitness",
+          "qualifier": "val",
+          "expr": {
+            "id": 33,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 31,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 29,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 30,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 32,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 0
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "ok",
+      "errors": [],
+      "bestTraces": [],
+      "witnessingTraces": [],
+      "samples": 0,
+      "traceStatistics": {
+        "maxTraceLength": 0,
+        "minTraceLength": null,
+        "averageTraceLength": null
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "trace": []
+  },
+  {
+    "name": "initial_false",
+    "module": {
+      "id": 11,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 4,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 3,
+            "kind": "bool",
+            "value": false
+          }
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 6,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 5,
+                "kind": "int",
+                "value": 99
+              }
+            ]
+          }
+        },
+        {
+          "id": 10,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 9,
+            "kind": "bool",
+            "value": true
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 1
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "ok",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [],
+          "result": true,
+          "seed": 0
+        }
+      ],
+      "witnessingTraces": [],
+      "samples": 3,
+      "traceStatistics": {
+        "maxTraceLength": 0,
+        "minTraceLength": 0,
+        "averageTraceLength": 0
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "trace": []
+  },
+  {
+    "name": "disabled_step",
+    "module": {
+      "id": 11,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "bool",
+            "value": false
+          }
+        },
+        {
+          "id": 10,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 9,
+            "kind": "bool",
+            "value": true
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 1
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "ok",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "result": true,
+          "seed": 0
+        }
+      ],
+      "witnessingTraces": [],
+      "samples": 3,
+      "traceStatistics": {
+        "maxTraceLength": 1,
+        "minTraceLength": 1,
+        "averageTraceLength": 1
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 0
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "initial_violation",
+    "module": {
+      "id": 17,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 16,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 15,
+            "kind": "app",
+            "opcode": "neq",
+            "args": [
+              {
+                "id": 13,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 14,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 2
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "violation",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "result": false,
+          "seed": 0
+        },
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "result": false,
+          "seed": 0
+        }
+      ],
+      "witnessingTraces": [],
+      "samples": 2,
+      "traceStatistics": {
+        "maxTraceLength": 1,
+        "minTraceLength": 1,
+        "averageTraceLength": 1
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 0
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "later_violation",
+    "module": {
+      "id": 17,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 16,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 15,
+            "kind": "app",
+            "opcode": "ilt",
+            "args": [
+              {
+                "id": 13,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 14,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 5,
+      "maxSteps": 5,
+      "numberOfTraces": 2
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "violation",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            }
+          ],
+          "result": false,
+          "seed": 0
+        }
+      ],
+      "witnessingTraces": [],
+      "samples": 1,
+      "traceStatistics": {
+        "maxTraceLength": 4,
+        "minTraceLength": 4,
+        "averageTraceLength": 4
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "init_error",
+    "module": {
+      "id": 17,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 6,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 5,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 4,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 14,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 13,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 12,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 11,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 10,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 16,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 15,
+            "kind": "bool",
+            "value": true
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 1
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "error",
+      "errors": [
+        {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 5
+        },
+        {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 5
+        }
+      ],
+      "bestTraces": [],
+      "witnessingTraces": [],
+      "samples": 1,
+      "traceStatistics": {
+        "maxTraceLength": 0,
+        "minTraceLength": 0,
+        "averageTraceLength": 0
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "trace": []
+  },
+  {
+    "name": "step_error",
+    "module": {
+      "id": 15,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 14,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 13,
+            "kind": "bool",
+            "value": true
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 1
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "error",
+      "errors": [
+        {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 9
+        },
+        {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 9
+        }
+      ],
+      "bestTraces": [],
+      "witnessingTraces": [],
+      "samples": 1,
+      "traceStatistics": {
+        "maxTraceLength": 1,
+        "minTraceLength": 1,
+        "averageTraceLength": 1
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 0
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "initial_invariant_error",
+    "module": {
+      "id": 19,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 18,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 17,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 15,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 13,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 14,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 16,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 1
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "error",
+      "errors": [
+        {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 15
+        },
+        {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 15
+        }
+      ],
+      "bestTraces": [],
+      "witnessingTraces": [],
+      "samples": 1,
+      "traceStatistics": {
+        "maxTraceLength": 1,
+        "minTraceLength": 1,
+        "averageTraceLength": 1
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 0
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "later_invariant_error",
+    "module": {
+      "id": 24,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 23,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 22,
+            "kind": "app",
+            "opcode": "ite",
+            "args": [
+              {
+                "id": 15,
+                "kind": "app",
+                "opcode": "eq",
+                "args": [
+                  {
+                    "id": 13,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 14,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 16,
+                "kind": "bool",
+                "value": true
+              },
+              {
+                "id": 21,
+                "kind": "app",
+                "opcode": "eq",
+                "args": [
+                  {
+                    "id": 19,
+                    "kind": "app",
+                    "opcode": "idiv",
+                    "args": [
+                      {
+                        "id": 17,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 18,
+                        "kind": "int",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "id": 20,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 1
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "error",
+      "errors": [
+        {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 19
+        },
+        {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 19
+        }
+      ],
+      "bestTraces": [],
+      "witnessingTraces": [],
+      "samples": 1,
+      "traceStatistics": {
+        "maxTraceLength": 2,
+        "minTraceLength": 2,
+        "averageTraceLength": 2
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "sequence",
+    "module": {
+      "id": 29,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "then",
+            "args": [
+              {
+                "id": 5,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 10,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 6,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 7,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 24,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 23,
+            "kind": "app",
+            "opcode": "then",
+            "args": [
+              {
+                "id": 17,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 16,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 15,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 13,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 14,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 22,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 21,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 20,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 18,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 19,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 28,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 27,
+            "kind": "app",
+            "opcode": "ilt",
+            "args": [
+              {
+                "id": 25,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 26,
+                "kind": "int",
+                "value": 6
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 3,
+      "maxSteps": 5,
+      "numberOfTraces": 2
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "violation",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 4
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 5
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 6
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 7
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 8
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            }
+          ],
+          "result": false,
+          "seed": 0
+        }
+      ],
+      "witnessingTraces": [],
+      "samples": 1,
+      "traceStatistics": {
+        "maxTraceLength": 10,
+        "minTraceLength": 10,
+        "averageTraceLength": 10
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 5
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 6
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 7
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 8
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 9
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "expect",
+    "module": {
+      "id": 19,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 16,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 15,
+            "kind": "app",
+            "opcode": "expect",
+            "args": [
+              {
+                "id": 11,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 10,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 9,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 7,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 8,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 14,
+                "kind": "app",
+                "opcode": "ilt",
+                "args": [
+                  {
+                    "id": 12,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 13,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 18,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 17,
+            "kind": "bool",
+            "value": true
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 1
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "error",
+      "errors": [
+        {
+          "code": "QNT508",
+          "message": "Expect condition does not hold true",
+          "reference": 15
+        },
+        {
+          "code": "QNT508",
+          "message": "Expect condition does not hold true",
+          "reference": 15
+        }
+      ],
+      "bestTraces": [],
+      "witnessingTraces": [],
+      "samples": 1,
+      "traceStatistics": {
+        "maxTraceLength": 2,
+        "minTraceLength": 2,
+        "averageTraceLength": 2
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "choice",
+    "module": {
+      "id": 38,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 10,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 9,
+            "kind": "app",
+            "opcode": "actionAny",
+            "args": [
+              {
+                "id": 5,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 6,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 31,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 30,
+            "kind": "app",
+            "opcode": "actionAny",
+            "args": [
+              {
+                "id": 19,
+                "kind": "app",
+                "opcode": "actionAll",
+                "args": [
+                  {
+                    "id": 13,
+                    "kind": "app",
+                    "opcode": "ilt",
+                    "args": [
+                      {
+                        "id": 11,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 12,
+                        "kind": "int",
+                        "value": 4
+                      }
+                    ]
+                  },
+                  {
+                    "id": 18,
+                    "kind": "app",
+                    "opcode": "assign",
+                    "args": [
+                      {
+                        "id": 17,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 16,
+                        "kind": "app",
+                        "opcode": "iadd",
+                        "args": [
+                          {
+                            "id": 14,
+                            "kind": "name",
+                            "name": "x"
+                          },
+                          {
+                            "id": 15,
+                            "kind": "int",
+                            "value": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 28,
+                "kind": "app",
+                "opcode": "actionAll",
+                "args": [
+                  {
+                    "id": 22,
+                    "kind": "app",
+                    "opcode": "ilt",
+                    "args": [
+                      {
+                        "id": 20,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 21,
+                        "kind": "int",
+                        "value": 4
+                      }
+                    ]
+                  },
+                  {
+                    "id": 27,
+                    "kind": "app",
+                    "opcode": "assign",
+                    "args": [
+                      {
+                        "id": 26,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 25,
+                        "kind": "app",
+                        "opcode": "iadd",
+                        "args": [
+                          {
+                            "id": 23,
+                            "kind": "name",
+                            "name": "x"
+                          },
+                          {
+                            "id": 24,
+                            "kind": "int",
+                            "value": 2
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 29,
+                "kind": "bool",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "id": 33,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 32,
+            "kind": "bool",
+            "value": true
+          }
+        },
+        {
+          "id": 37,
+          "kind": "def",
+          "name": "witness",
+          "qualifier": "val",
+          "expr": {
+            "id": 36,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 34,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 35,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [
+        "witness"
+      ],
+      "maxSamples": 6,
+      "maxSteps": 5,
+      "numberOfTraces": 3
+    },
+    "seed": "37",
+    "metadata": false,
+    "outcome": {
+      "status": "ok",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 4
+                }
+              ]
+            }
+          ],
+          "result": true,
+          "seed": 37
+        },
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 4
+                }
+              ]
+            }
+          ],
+          "result": true,
+          "seed": 53
+        },
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 5
+                }
+              ]
+            }
+          ],
+          "result": true,
+          "seed": 76
+        }
+      ],
+      "witnessingTraces": [
+        5
+      ],
+      "samples": 6,
+      "traceStatistics": {
+        "maxTraceLength": 4,
+        "minTraceLength": 3,
+        "averageTraceLength": 3.5
+      },
+      "violatedInvariants": []
+    },
+    "rng": "85",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 5
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "choice_violation",
+    "module": {
+      "id": 27,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 10,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 9,
+            "kind": "app",
+            "opcode": "actionAny",
+            "args": [
+              {
+                "id": 5,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 6,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 22,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 21,
+            "kind": "app",
+            "opcode": "actionAny",
+            "args": [
+              {
+                "id": 15,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 14,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 13,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 11,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 12,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 20,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 19,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 18,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 16,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 17,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 26,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 25,
+            "kind": "app",
+            "opcode": "ilt",
+            "args": [
+              {
+                "id": 23,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 24,
+                "kind": "int",
+                "value": 4
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 6,
+      "maxSteps": 5,
+      "numberOfTraces": 3
+    },
+    "seed": "9007199254740993",
+    "metadata": false,
+    "outcome": {
+      "status": "violation",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 4
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 6
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 8
+                }
+              ]
+            }
+          ],
+          "result": false,
+          "seed": 9007199254740993
+        }
+      ],
+      "witnessingTraces": [],
+      "samples": 1,
+      "traceStatistics": {
+        "maxTraceLength": 6,
+        "minTraceLength": 6,
+        "averageTraceLength": 6
+      },
+      "violatedInvariants": []
+    },
+    "rng": "9007199254740999",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 8
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 6
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 8
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "multiple_samples",
+    "module": {
+      "id": 21,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 10,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 9,
+            "kind": "app",
+            "opcode": "actionAny",
+            "args": [
+              {
+                "id": 5,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 6,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 16,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 15,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 14,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 13,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 11,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 12,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 19,
+            "kind": "app",
+            "opcode": "ilt",
+            "args": [
+              {
+                "id": 17,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 18,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 6,
+      "maxSteps": 0,
+      "numberOfTraces": 3
+    },
+    "seed": "37",
+    "metadata": false,
+    "outcome": {
+      "status": "violation",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          ],
+          "result": false,
+          "seed": 39
+        },
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          ],
+          "result": false,
+          "seed": 40
+        },
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "result": false,
+          "seed": 41
+        }
+      ],
+      "witnessingTraces": [],
+      "samples": 6,
+      "traceStatistics": {
+        "maxTraceLength": 1,
+        "minTraceLength": 1,
+        "averageTraceLength": 1
+      },
+      "violatedInvariants": []
+    },
+    "rng": "43",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "metadata",
+    "module": {
+      "id": 35,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 14,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 13,
+            "kind": "bool",
+            "value": true
+          }
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "even",
+          "qualifier": "val",
+          "expr": {
+            "id": 19,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 17,
+                "kind": "app",
+                "opcode": "imod",
+                "args": [
+                  {
+                    "id": 15,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 16,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "id": 18,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 24,
+          "kind": "def",
+          "name": "later",
+          "qualifier": "val",
+          "expr": {
+            "id": 23,
+            "kind": "app",
+            "opcode": "igte",
+            "args": [
+              {
+                "id": 21,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 22,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        {
+          "id": 28,
+          "kind": "def",
+          "name": "initial",
+          "qualifier": "val",
+          "expr": {
+            "id": 27,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 25,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 26,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 34,
+          "kind": "def",
+          "name": "badWitness",
+          "qualifier": "val",
+          "expr": {
+            "id": 33,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 31,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 29,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 30,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 32,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [
+        "later"
+      ],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 2
+    },
+    "seed": "5",
+    "metadata": true,
+    "outcome": {
+      "status": "ok",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::actionTaken"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "init"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::nondetPicks"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": []
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::actionTaken"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "step"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::nondetPicks"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": []
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::actionTaken"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "step"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::nondetPicks"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": []
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::actionTaken"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "step"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::nondetPicks"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": []
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            }
+          ],
+          "result": true,
+          "seed": 5
+        },
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::actionTaken"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "init"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::nondetPicks"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": []
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::actionTaken"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "step"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::nondetPicks"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": []
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::actionTaken"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "step"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::nondetPicks"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": []
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::actionTaken"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "step"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "mbt::nondetPicks"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": []
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            }
+          ],
+          "result": true,
+          "seed": 5
+        }
+      ],
+      "witnessingTraces": [
+        3
+      ],
+      "samples": 3,
+      "traceStatistics": {
+        "maxTraceLength": 4,
+        "minTraceLength": 4,
+        "averageTraceLength": 4
+      },
+      "violatedInvariants": []
+    },
+    "rng": "5",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": ""
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": []
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "init"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "step"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "step"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "step"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "initial_internal_false",
+    "module": {
+      "id": 17,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "app",
+            "opcode": "then",
+            "args": [
+              {
+                "id": 5,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "kind": "bool",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "id": 14,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 13,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 12,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 11,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 10,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 16,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 15,
+            "kind": "bool",
+            "value": true
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 1
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "ok",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "result": true,
+          "seed": 0
+        }
+      ],
+      "witnessingTraces": [],
+      "samples": 3,
+      "traceStatistics": {
+        "maxTraceLength": 0,
+        "minTraceLength": 0,
+        "averageTraceLength": 0
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 0
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "disabled_after_internal_shift",
+    "module": {
+      "id": 17,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 14,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 13,
+            "kind": "app",
+            "opcode": "then",
+            "args": [
+              {
+                "id": 11,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 10,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 9,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 7,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 8,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 12,
+                "kind": "bool",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "id": 16,
+          "kind": "def",
+          "name": "inv",
+          "qualifier": "val",
+          "expr": {
+            "id": 15,
+            "kind": "bool",
+            "value": true
+          }
+        }
+      ]
+    },
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariant": "inv",
+      "witnesses": [],
+      "maxSamples": 3,
+      "maxSteps": 3,
+      "numberOfTraces": 1
+    },
+    "seed": "0",
+    "metadata": false,
+    "outcome": {
+      "status": "ok",
+      "errors": [],
+      "bestTraces": [
+        {
+          "states": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          ],
+          "result": true,
+          "seed": 0
+        }
+      ],
+      "witnessingTraces": [],
+      "samples": 3,
+      "traceStatistics": {
+        "maxTraceLength": 2,
+        "minTraceLength": 2,
+        "averageTraceLength": 2
+      },
+      "violatedInvariants": []
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    "trace": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  }
+]

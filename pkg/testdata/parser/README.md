@@ -438,3 +438,12 @@ and iterative addition above exact integer precision, empty/nonempty list
 indices, and composition with list folds and indexing. Unit tests validate
 arity/types, cancellation, and reportable non-finite endpoint rejection.
 Unbounded materialization and the reference's uncaught errors remain an audit.
+
+`runtime_simulation.json` is regenerated with
+`node pkg/grammar/runtime_simulation_fixtures.cjs`. Twenty TypeScript simulation
+scenarios compare outcomes, all selected trace states/results/seeds, witness
+counts, sample counts, statistics, errors, and the final state/trace/RNG. Cases
+include zero limits, disabled init/steps, invariant violations, cumulative
+failure results, runtime errors at each stage, choices, metadata, internal
+shifts, and expect. Unit tests add API validation, cancellation during execution,
+reset without RNG rewind, and result ownership. Node is not used by Go tests.
