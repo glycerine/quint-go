@@ -244,7 +244,9 @@ analysis, with reproducible errors for invalid module structures.
 - [ ] P4.4 Port every builtin type signature and special constraint; maintain
   an opcode-to-signature coverage table to catch omissions.
   - [x] Generate structural constraints for Rec, field, fieldNames, and with.
-  - [ ] Port tuple/item and sum/match constraints and connect generator dispatch.
+  - [x] Generate tuple construction and item-access constraints.
+  - [ ] Resolve tuple-prefix resource-limit parity, port sum/match constraints,
+    and connect generator dispatch.
 - [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
   and incremental inference used by the REPL and editor.
 - [ ] P4.6 Compare inferred schemes modulo type-variable renaming and compare
@@ -1311,3 +1313,11 @@ word "retained" in the commit message.
   calls, lambdas, and annotated local definitions. Default tests pass (combined
   execution 0.561s). Tuple/sum constraints, upstream differential special-constraint
   fixtures, and generator integration remain pending.
+
+- 2026-11-02: Added tuple constructor and literal item-access constraints with
+  zero-based row labels, inferred prefix variables, and open tails. Tests solve
+  concrete projections, check empty tuples and invalid/nonliteral indices, and
+  exercise oversized literals. A temporary one-million-prefix-field limit emits
+  an explicit diagnostic; this differs from upstream allocation behavior and
+  remains an open compatibility item. Default tests pass under one second.
+  Differential tuple fixtures and sum/match generation remain pending.
