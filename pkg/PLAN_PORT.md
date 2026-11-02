@@ -722,8 +722,10 @@ This follows the core CLI milestone but remains tracked for tooling parity.
     work, cancellation, navigation, semantic requests, and large JSON-RPC IDs.
   - [x] VSCode Go/TypeScript choice, executable selection, stdio startup, native
     build/development tasks, and watched import refresh preserving unsaved buffers.
-  - [ ] Full extension typecheck/VSIX/real-host and cross-platform validation;
-    local VSCode client dependencies were unavailable without installation.
+  - [x] Full locked extension typecheck/lint/tests, Linux native VSIX packaging,
+    archive/runtime verification and extracted Go/TypeScript lifecycle smoke.
+  - [ ] Real VSCode host and macOS/Windows execution; reduce legacy TS dependency
+    bloat in the dual-backend archive.
 
 Exit gate: the editor can analyze and navigate files through the Go frontend;
 any remaining TypeScript client code is distinguished from language-server logic.
@@ -3130,3 +3132,14 @@ word "retained" in the commit message.
   Full CLI tests pass 0.207s. Remaining differences include unadvertised string
   negation flags, help/OS-error prose, terminal colors/width, full JS regex and
   static REPL diagnostic stream formatting.
+
+- 2026-11-02: Installed locked editor development dependencies without changing
+  dependency versions. Full TypeScript compilation/lint, client tests and 36
+  server tests pass, including lazy/error-safe logger regressions. Raised the
+  VSCode engine minimum to 1.61 for native platform packages. Actual pinned VSCE
+  4.1.0 prepublish builds the Go server and produces a Linux VSIX; archive layout,
+  executable mode and extracted Go/TypeScript lifecycle checks pass. Added manual
+  Linux/macOS native packaging CI with explicit checker SHA and artifact smoke;
+  automatic CI keeps TypeScript checks until a fetchable checker is pinned.
+  Real host and other-platform execution remain unrun; legacy TS development
+  dependencies still account for substantial archive bloat.

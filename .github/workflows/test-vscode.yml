@@ -71,8 +71,12 @@ jobs:
         run: nix develop -c make local
       - name: Run vscode unit tests
         run: cd ./vscode/quint-vscode && nix develop -c npm test
-      - name: Check that we can create the vsix package
-        run: cd ./vscode/quint-vscode && nix develop -c vsce package
+      # Native packaging needs an explicitly selected compatible Go checker.
+      # package-go-vscode.yml builds and verifies each platform-specific VSIX.
+      - name: Check compiled TypeScript entry points
+        run: |
+          test -f vscode/quint-vscode/client/out/extension.js
+          test -f vscode/quint-vscode/server/out/src/server.js
 
   unit-tests-aggregator:
     name: Unit Tests

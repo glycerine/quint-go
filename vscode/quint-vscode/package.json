@@ -6,7 +6,7 @@
 	"version": "0.20.0",
 	"publisher": "informal",
 	"engines": {
-		"vscode": "^1.52.0"
+		"vscode": "^1.61.0"
 	},
 	"categories": [
 		"Programming Languages"

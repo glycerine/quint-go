@@ -44,9 +44,28 @@ const logFile = path.join(
 )
 
 /**
- * Writable stream to append log messages.
+ * Open the log only when a message is enabled. Disabled logging must work in
+ * read-only environments without creating a file or emitting an async error.
  */
-const logStream = fs.createWriteStream(logFile, { flags: 'a' })
+let logStream: fs.WriteStream | undefined
+let logUnavailable = false
+
+function getLogStream(): fs.WriteStream | undefined {
+  if (logUnavailable) return undefined
+  if (!logStream) {
+    try {
+      logStream = fs.createWriteStream(logFile, { flags: 'a' })
+      logStream.on('error', () => {
+        logUnavailable = true
+        logStream = undefined
+      })
+    } catch (_) {
+      logUnavailable = true
+      return undefined
+    }
+  }
+  return logStream
+}
 
 /**
  * Generates an ISO timestamp formatted for logging.
@@ -71,7 +90,7 @@ export function isEnabled(level: LogLevel) {
 function writeLog(level: LogLevel, ...args: any[]) {
   if (isEnabled(level)) {
     const message = `[${getTimestamp()}] [${level}] ${util.format(...args)}`
-    logStream.write(message + '\n')
+    getLogStream()?.write(message + '\n')
   }
 }
 

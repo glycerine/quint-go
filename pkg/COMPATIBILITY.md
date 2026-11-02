@@ -192,7 +192,7 @@ Do not infer complete exit-status parity from the command dispatcher comment.
 | Signature help and code actions/quick fixes | Pending; present in upstream server, absent from Go advertised capabilities. |
 | Workspace symbols | Not advertised by either inspected server; future capability, not a proven upstream regression. |
 | VSCode Go launch/configuration | Configured: Go stdio is default, TypeScript IPC is explicit; path setting selects command/bundled binary/PATH. Go startup errors do not switch backends. Native build script and development launches exist. |
-| Editor release packaging and other clients | Platform-specific VSIX, real VSCode-host installation and cross-platform validation pending. Vim/Emacs Go launch integration remains unaudited; TypeScript logging is not ported. |
+| Editor release packaging and other clients | Linux native VSIX passes full prepublish and extracted Go/TypeScript lifecycle checks. Manual Linux/macOS packaging CI exists; real host and other-platform execution remain unrun. Vim/Emacs Go launch integration remains unaudited; Go logging parity remains open. |
 
 Existing tests exercise frontend/type/effect fixtures, concrete runtime values
 and operation trees, explicit-state helpers, command I/O, actual Go checker/TLA

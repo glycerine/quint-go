@@ -860,3 +860,12 @@ debug side effects, repeated samples, source carets, writer failures and REPL
 wrapping/history. Native verify CLI source cases use the actual backend; expensive
 cases remain optional. This is a saved corpus, not a claim of all terminal/help
 or unadvertised yargs behavior.
+
+The editor's separate locked TypeScript suite now includes four logger ownership
+regressions (36 server tests total), alongside client selection/activation checks.
+Full compile/lint/test and actual VSCE4.1.0 Linux prepublish packaging pass;
+archive verification checks target metadata, runtime dependencies, executable
+mode and sequential lifecycle smoke for extracted Go and TypeScript servers.
+The manual native packaging workflow validates SHA/architecture guards and uses
+an isolated workspace. Real VSCode host and macOS/Windows execution remain open;
+these checks are separate from the fast default Go suite.

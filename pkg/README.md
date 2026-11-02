@@ -61,8 +61,9 @@ updates and diagnostics, hover, definitions, references, symbols, scoped
 completion, and conservative rename with UTF-16 ranges. The VSCode extension defaults to Go and selects a configured machine-scope
 executable path, its bundled native binary, or `quint-lsp` on PATH. TypeScript is
 an explicit alternative. Its native build/development tasks and client selector
-regressions pass; full extension compilation and host/VSIX packaging remain
-unverified because the extension dependencies are absent locally. Type-directed
+regressions pass. Full extension compilation/lint/tests and Linux native VSIX
+packaging pass, including extracted Go and TypeScript lifecycle checks; real host
+and other-platform execution remain open. Type-directed
 field completion and selective-import rename have regression coverage; signature
 help and code actions remain open.
 
