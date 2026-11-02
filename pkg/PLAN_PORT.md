@@ -248,7 +248,8 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Generate variant constraints with declared-sum membership checks.
   - [x] Generate match constraints with wildcard and eliminator validation.
   - [x] Dispatch application constraints with upstream special-builtin arity checks.
-  - [ ] Resolve tuple-prefix resource-limit parity and connect expression traversal.
+  - [x] Connect builtin dispatch to expression constraint traversal.
+  - [ ] Resolve tuple-prefix resource-limit parity and validate full generator parity.
 - [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
   and incremental inference used by the REPL and editor.
 - [ ] P4.6 Compare inferred schemes modulo type-variable renaming and compare
@@ -1358,3 +1359,13 @@ word "retained" in the commit message.
   tests pass (combined execution 0.554s). Missing saved results currently return
   structured errors rather than upstream internal exceptions; traversal and
   inference result lifecycle remain pending.
+
+- 2026-11-02: Added TypeConstraintGenerator expression traversal and solving,
+  connecting literal/name types, builtin and user signatures, application rules,
+  lambda parameter constraints, and local-definition generalization. End-to-end
+  tests infer arithmetic, lists, records, tuple projections, lambdas, local
+  values, and a polymorphic identity used at two types; rejection tests cover
+  mixed operands/elements and incompatible annotations. Default tests pass
+  (combined execution 0.575s). Module/declaration lifecycle, source-accurate
+  annotation diagnostics, full upstream generator comparison, and public inference
+  integration remain incomplete.
