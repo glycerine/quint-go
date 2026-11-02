@@ -21,35 +21,44 @@ func sumDeclarations(ctx *p.TypeSumDefContext, ids parserIDAllocator) ([]Declara
 		}
 		fields = append(fields, RowField{Name: variant.GetSumLabel().GetText(), Type: typ})
 	}
-	d.Type = &Type{Kind: "sum", Fields: &Row{Kind: "row", Fields: fields, Other: &Row{Kind: "empty"}}}
+	d.Type = &Type{ID: &d.ID, Kind: "sum", Fields: &Row{Kind: "row", Fields: fields, Other: &Row{Kind: "empty"}}}
 	// Upstream checks sum parameters, but applies its uppercase-name check only
 	// to abstract and alias declarations.
 	if err := checkTypeDeclaration(d, false); err != nil {
 		return nil, err
 	}
 	if len(fields) == 1 && isUnitType(fields[0].Type) && sum.GetSeparator() == nil {
-		d.Type = &Type{Kind: "const", Name: sum.TypeSumVariant(0).GetText()}
+		id := parserIDAt(ids, sum.TypeSumVariant(0))
+		d.Type = &Type{ID: &id, Kind: "const", Name: sum.TypeSumVariant(0).GetText()}
 		d.Params = nil // Match upstream's alias disambiguation.
 		return []Declaration{d}, nil
 	}
-	result := Type{Kind: "const", Name: d.Name}
+	for i := range fields {
+		if fields[i].Type.ID == nil {
+			id := parserIDAt(ids, sum.TypeSumVariant(i))
+			fields[i].Type.ID = &id
+		}
+	}
+	resultID := parserIDAt(ids, ctx)
+	result := Type{ID: &resultID, Kind: "const", Name: d.Name}
 	if len(d.Params) > 0 {
 		ctor := result
-		result = Type{Kind: "app", Ctor: &ctor, Args: []Type{}}
+		result = Type{ID: &d.ID, Kind: "app", Ctor: &ctor, Args: []Type{}}
 		for _, param := range d.Params {
-			result.Args = append(result.Args, Type{Kind: "var", Name: param})
+			id := parserIDAt(ids, ctx)
+			result.Args = append(result.Args, Type{ID: &id, Kind: "var", Name: param})
 		}
 	}
 	decls := []Declaration{d}
 	for i, field := range fields {
 		restore := parserScope(ids, sum.TypeSumVariant(i))
 		label := Expr{ID: ids.Next(), Kind: "str", Str: field.Name}
-		payload := Expr{ID: ids.Next(), Kind: "app", Opcode: "Tup", Args: []Expr{}}
+		payload := Expr{ID: parserIDAt(ids, sum.TypeSumVariant(i).GetSumLabel()), Kind: "app", Opcode: "Tup", Args: []Expr{}}
 		annotation, qualifier := result, Val
 		var parameter Parameter
 		if !isUnitType(field.Type) {
 			qualifier = Def
-			parameter = Parameter{ID: ids.Next(), Name: "__" + field.Name + "Param"}
+			parameter = Parameter{ID: parserIDAt(ids, sum.TypeSumVariant(i).Type_()), Name: "__" + field.Name + "Param"}
 			payload.Kind, payload.Name, payload.Opcode, payload.Args = "name", parameter.Name, "", nil
 			annotation = Type{Kind: "oper", Args: []Type{field.Type}, Res: &result}
 		}

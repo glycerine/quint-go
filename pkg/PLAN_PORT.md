@@ -945,3 +945,12 @@ word "retained" in the commit message.
   annotation subtrees may occur more than once in JSON). Default tests pass within
   the sub-second target. Synthesized sum/annotation type IDs and upstream location
   compatibility remain open in P2.5.
+
+- 2026-11-02: Added synthesized sum type identities/spans: declaration-shared sum
+  and generic-result IDs, constructor constants/type variables, nullary unit
+  payloads, and disambiguated alias targets. Refined constructor parameter and
+  payload-reference spans to their type/label syntax. Tests verify identity
+  sharing, exact generic/monomorphic spans, alias/unit cases, and upstream's
+  intentionally ID-free generated operator-type wrappers. Default tests pass
+  within the sub-second target. P2.5 still needs inclusive-location compatibility
+  and differential source-map verification before completion.
