@@ -175,6 +175,22 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 			return v.expression.Bool, nil
 		}
 		switch e.Opcode {
+		case "actionAll":
+			if storage == nil {
+				return fail(e, "Action conjunction requires variable storage")
+			}
+			snapshot := storage.Snapshot()
+			for _, action := range e.Args {
+				enabled, err := boolean(action)
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+				if !enabled {
+					storage.Recover(snapshot)
+					return boolValue(false)
+				}
+			}
+			return boolValue(true)
 		case "assign":
 			if storage == nil {
 				return fail(e, "Assignment requires variable storage")

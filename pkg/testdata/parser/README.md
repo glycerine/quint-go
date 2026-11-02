@@ -376,3 +376,11 @@ variable reads, primed assignments, shifts, simultaneous swaps, repeated writes,
 lazy branches, local RHS bindings, and failed RHS evaluation. Unit tests check
 source references, stable registers on RHS failure, invalid targets, local-name
 shadowing, cancellation, and rejection by the pure evaluator.
+
+`runtime_action_all.json` is regenerated with
+`node pkg/grammar/runtime_action_all_fixtures.cjs`. Twenty-six full TypeScript
+runtime transitions compare action conjunction results and state after shifts:
+enabled actions, false-branch rollback, baseline preservation, nested failures,
+empty conjunction, skipped later writes, and runtime-error propagation. Upstream
+retains tentative writes on an error; false results restore the snapshot. Unit
+tests also check metadata baseline preservation and pure-context rejection.

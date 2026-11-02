@@ -8,7 +8,10 @@ import (
 	"testing"
 )
 
-func TestUpstreamAssignments(t *testing.T) {
+func TestUpstreamAssignments(t *testing.T)       { testStateTransitions(t, "runtime_assignment.json") }
+func TestUpstreamActionConjunction(t *testing.T) { testStateTransitions(t, "runtime_action_all.json") }
+func testStateTransitions(t *testing.T, filename string) {
+	t.Helper()
 	t.Parallel()
 	var fixtures []struct {
 		Operation string
@@ -17,7 +20,7 @@ func TestUpstreamAssignments(t *testing.T) {
 		Error     *Diagnostic
 		Record    Expr
 	}
-	data, err := os.ReadFile("testdata/parser/runtime_assignment.json")
+	data, err := os.ReadFile("testdata/parser/" + filename)
 	if err != nil {
 		t.Fatal(err)
 	}

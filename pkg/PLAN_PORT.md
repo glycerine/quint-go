@@ -386,6 +386,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     from-record restoration with cache clearing and variable-name precedence.
   - [x] Registered current-state reads and primed assignments through expression
     evaluation, including lazy branches and simultaneous next-state updates.
+  - [x] actionAll conjunction with snapshot restoration on disabled branches,
+    nested rollback, baseline preservation, and upstream error behavior.
   - [ ] Stateful module/instance binding, primed-read support, action composition,
     transactional rollback/commit, and simulation integration.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
@@ -2434,3 +2436,16 @@ word "retained" in the commit message.
   pass (combined package execution 1.015s, near the one-second target). Stateful
   module/instance binding, primed reads, action composition, transactional
   rollback/commit, and simulation remain open.
+
+- 2026-11-02: Added lazy actionAll conjunction to state expression evaluation.
+  It snapshots next-state values and metadata, evaluates actions in order,
+  restores the baseline on false, and skips remaining actions. Nested failures
+  recover through each conjunction's snapshot. Runtime errors propagate without
+  restoring tentative writes, matching upstream's distinct error behavior.
+  Twenty-six full TypeScript runtime transitions match outputs/errors and current
+  records after shifts, including enabled conjunctions, prior tentative writes,
+  nested rollback, empty conjunction, skipped writes, and error-retained writes.
+  Unit tests verify metadata/current-state baseline preservation, stable cells,
+  and pure-context rejection. Full default tests pass (combined package execution
+  0.976s). Randomized actionAny, then/repetition, stateful module binding, primed
+  reads, simulation-level transaction handling, and trace integration remain open.
