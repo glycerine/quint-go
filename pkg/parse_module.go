@@ -13,8 +13,11 @@ func ParseModules(text string) ([]Module, error) {
 	return parseModulesWithIDs(text, NewIDGenerator())
 }
 
-func parseModulesWithIDs(text string, ids parserIDAllocator) ([]Module, error) {
+func parseModulesWithIDs(text string, ids parserIDAllocator) (modules []Module, err error) {
 	listener := newSyntaxErrors(text)
+	if recovery, ok := ids.(*recoveringParserIDs); ok {
+		listener.onIssue = recovery.syntaxIssue
+	}
 	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
 	lexer.AddErrorListener(listener)
@@ -22,10 +25,17 @@ func parseModulesWithIDs(text string, ids parserIDAllocator) ([]Module, error) {
 	parser.RemoveErrorListeners()
 	parser.AddErrorListener(listener)
 	tree := parser.Modules()
-	if len(listener.issues) > 0 {
+	if recoveringSyntax(ids) {
+		defer func() {
+			if failure := recover(); failure != nil {
+				err = syntaxRecoveryFailure(ids, fmt.Errorf("malformed parse tree: %v", failure))
+			}
+		}()
+	}
+	if len(listener.issues) > 0 && !recoveringSyntax(ids) {
 		return nil, listener.err("module")
 	}
-	modules := []Module{}
+	modules = []Module{}
 	for _, ctx := range tree.AllModule() {
 		module := Module{Name: ctx.QualId().GetText(), Declarations: []Declaration{}}
 		docs := []string{}
@@ -41,7 +51,14 @@ func parseModulesWithIDs(text string, ids parserIDAllocator) ([]Module, error) {
 			}
 			decls, err := declarationsFromContext(item.Declaration(), ids)
 			if err != nil {
+				if recoveringSyntax(ids) {
+					return modules, syntaxRecoveryFailure(ids, err)
+				}
 				return nil, err
+			}
+			if len(decls) == 0 {
+				docs = nil
+				continue
 			}
 			decls[len(decls)-1].Doc = joinedDocs(docs)
 			docs = nil

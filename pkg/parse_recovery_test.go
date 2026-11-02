@@ -89,15 +89,19 @@ func TestUpstreamSemanticParserRecovery(t *testing.T) {
 
 func TestSemanticParserRecoveryFailuresAndIsolation(t *testing.T) {
 	t.Parallel()
-	for _, source := range []string{"module M {", "module M { val x = @ }", string([]byte{0xff})} {
+	for _, source := range []string{"module M {", "module M { val x = @ }"} {
 		result, err := ParseModulesRecovering("broken.qnt", source)
-		if err == nil || len(result.Modules) != 0 {
-			t.Fatal("accepted invalid syntax", source, result, err)
+		if err != nil || len(result.Diagnostics) == 0 {
+			t.Fatal("missing recovered syntax diagnostics", source, result, err)
 		}
-		var syntax *SyntaxErrors
-		if errors.As(err, &syntax) && syntax.Source != "broken.qnt" {
-			t.Fatal("missing source name", syntax)
+		for _, diagnostic := range result.Diagnostics {
+			if diagnostic.Reference == nil || result.Sources[*diagnostic.Reference].Source != "broken.qnt" {
+				t.Fatal("missing source name", diagnostic)
+			}
 		}
+	}
+	if _, err := ParseModulesRecovering("broken.qnt", string([]byte{0xff})); err == nil {
+		t.Fatal("invalid UTF-8 accepted")
 	}
 	const source = "module M { type lower = List[a] val x={a:1,a:2} }"
 	first, err := ParseModulesRecovering("a.qnt", source)

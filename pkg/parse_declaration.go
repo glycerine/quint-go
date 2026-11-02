@@ -41,6 +41,16 @@ func parseDeclarationWithIDs(text string, ids parserIDAllocator) ([]Declaration,
 }
 
 func declarationsFromContext(ctx p.IDeclarationContext, ids parserIDAllocator) ([]Declaration, error) {
+	if recoveringSyntax(ids) {
+		if _, generic := ctx.(*p.DeclarationContext); generic {
+			return nil, nil
+		}
+		if oper, ok := ctx.(*p.OperContext); ok {
+			if _, generic := oper.OperDef().(*p.OperDefContext); generic {
+				return nil, nil
+			}
+		}
+	}
 	defer parserScope(ids, ctx)()
 	if oper, ok := ctx.(*p.OperContext); ok {
 		defs, err := destructuredOperators(oper.OperDef(), ids)

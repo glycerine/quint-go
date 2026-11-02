@@ -33,6 +33,20 @@ func parseExpressionWithIDs(text string, ids parserIDAllocator) (Expr, error) {
 	return expressionFromContext(tree, ids)
 }
 func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, error) {
+	if recoveringSyntax(ids) {
+		if _, missing := ctx.(*p.ExprContext); missing {
+			if !recoveryMissingExpressionAllowed(ctx) {
+				return Expr{}, unexpectedRecoveryNode(ctx)
+			}
+			return parserUndefinedExpression(ids), nil
+		}
+		// The reference's listener can consume preceding operands while filling
+		// a hole in a later operand. Recursive conversion cannot safely model
+		// that stack behavior yet, so report this boundary explicitly.
+		if unsupportedRecoveryOperands(ctx, ids) {
+			return Expr{}, unexpectedRecoveryNode(ctx)
+		}
+	}
 	defer parserScope(ids, ctx)()
 	if c, ok := ctx.(*p.LiteralOrIdContext); ok {
 		e := Expr{ID: ids.Next()}
@@ -270,6 +284,8 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 		opcode = map[string]string{"*": "imul", "/": "idiv", "%": "imod"}[c.GetOp().GetText()]
 	case *p.RelationsContext:
 		opcode = map[string]string{"==": "eq", "!=": "neq", ">": "igt", ">=": "igte", "<": "ilt", "<=": "ilte"}[c.GetOp().GetText()]
+	case *p.ErrorEqContext:
+		opcode = "eq"
 	case *p.AndContext, *p.AndExprContext:
 		opcode = "and"
 	case *p.OrContext, *p.OrExprContext:

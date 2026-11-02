@@ -44,9 +44,12 @@ func operatorFromContext(ctx p.IOperDefContext, ids parserIDAllocator) (Operator
 		if c.Type_() != nil {
 			t, err := typeFromContextWithIDs(c.Type_(), ids)
 			if err != nil {
-				return OperatorDef{}, err
+				if _, missing := c.Type_().(*p.TypeContext); !missing || !recoveringSyntax(ids) {
+					return OperatorDef{}, err
+				}
+			} else {
+				annotation = &t
 			}
-			annotation = &t
 		}
 	case *p.AnnotatedOperDefContext:
 		nameContext = c.NormalCallName()

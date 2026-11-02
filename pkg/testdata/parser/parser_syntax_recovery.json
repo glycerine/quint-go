@@ -1,0 +1,1603 @@
+[
+  {
+    "name": "missing-module-brace",
+    "source": "module M { val x=1",
+    "modules": [
+      {
+        "id": 4,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input '<EOF>' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "location": {
+          "source": "missing-module-brace.qnt",
+          "start": {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          "end": {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-call-paren",
+    "source": "module M { val x=f(1 val y=2 }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "f"
+            }
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input '(' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "location": {
+          "source": "missing-call-paren.qnt",
+          "start": {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          "end": {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "extra-comma",
+    "source": "module M { val x=f(1,,2) val y=3 }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "f"
+            }
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 3
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input '(' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "location": {
+          "source": "extra-comma.qnt",
+          "start": {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          "end": {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-record-close",
+    "source": "module M { val x={a:1 val y=2 }",
+    "modules": [
+      {
+        "id": 8,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input 'val' expecting {'}', ','}",
+        "location": {
+          "source": "missing-record-close.qnt",
+          "start": {
+            "line": 0,
+            "col": 22,
+            "index": 22
+          },
+          "end": {
+            "line": 0,
+            "col": 24,
+            "index": 24
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-list-close",
+    "source": "module M { val x=[1,2 val y=3 }",
+    "modules": [
+      {
+        "id": 8,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "int",
+              "value": 3
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input 'val' expecting {',', ']'}",
+        "location": {
+          "source": "missing-list-close.qnt",
+          "start": {
+            "line": 0,
+            "col": 22,
+            "index": 22
+          },
+          "end": {
+            "line": 0,
+            "col": 24,
+            "index": 24
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "invalid-character",
+    "source": "module M { val x=1 @ val y=2 }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "token recognition error at: '@'",
+        "location": {
+          "source": "invalid-character.qnt",
+          "start": {
+            "line": 0,
+            "col": 19,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 19,
+            "index": 0
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "multiple-invalid-characters",
+    "source": "module M { val x=1 @ # val y=2 }",
+    "modules": [
+      {
+        "id": 7,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "int",
+              "value": 1
+            }
+          },
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "token recognition error at: '@'",
+        "location": {
+          "source": "multiple-invalid-characters.qnt",
+          "start": {
+            "line": 0,
+            "col": 19,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 19,
+            "index": 0
+          }
+        }
+      },
+      {
+        "code": "QNT000",
+        "message": "token recognition error at: '# '",
+        "location": {
+          "source": "multiple-invalid-characters.qnt",
+          "start": {
+            "line": 0,
+            "col": 21,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 21,
+            "index": 0
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "unicode-invalid-character",
+    "source": "module M { val s=\"😀\"\n @ val y=2 }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "s",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "str",
+              "value": "😀"
+            }
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "token recognition error at: '@'",
+        "location": {
+          "source": "unicode-invalid-character.qnt",
+          "start": {
+            "line": 1,
+            "col": 1,
+            "index": 0
+          },
+          "end": {
+            "line": 1,
+            "col": 1,
+            "index": 0
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-definition-body",
+    "source": "module M { val x= val y=2 }",
+    "modules": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "let",
+              "opdef": {
+                "id": 3,
+                "kind": "def",
+                "name": "y",
+                "qualifier": "val",
+                "expr": {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 2
+                }
+              },
+              "expr": {
+                "id": 4,
+                "kind": "let",
+                "opdef": {
+                  "id": 5,
+                  "kind": "def",
+                  "qualifier": "val",
+                  "name": "__undefinedExprGenerated",
+                  "expr": {
+                    "id": 6,
+                    "kind": "bool",
+                    "value": true
+                  }
+                },
+                "expr": {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "__undefinedExprGenerated"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "location": {
+          "source": "missing-definition-body.qnt",
+          "start": {
+            "line": 0,
+            "col": 26,
+            "index": 26
+          },
+          "end": {
+            "line": 0,
+            "col": 26,
+            "index": 26
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-definition-name",
+    "source": "module M { val = 1 val y=2 }",
+    "modules": [
+      {
+        "id": 4,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input 'val='",
+        "location": {
+          "source": "missing-definition-name.qnt",
+          "start": {
+            "line": 0,
+            "col": 15,
+            "index": 15
+          },
+          "end": {
+            "line": 0,
+            "col": 15,
+            "index": 15
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-variable-colon",
+    "source": "module M { var x int val y=2 }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 2,
+              "kind": "int"
+            },
+            "id": 3
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "missing ':' at 'int'",
+        "location": {
+          "source": "missing-variable-colon.qnt",
+          "start": {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          },
+          "end": {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "equality-grammar-diagnostic",
+    "source": "module M { val x=1 = 2 val y=3 }",
+    "modules": [
+      {
+        "id": 8,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "int",
+              "value": 3
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT006",
+        "message": "unexpected '=', did you mean '=='?",
+        "location": {
+          "source": "equality-grammar-diagnostic.qnt",
+          "start": {
+            "line": 0,
+            "col": 23,
+            "index": 23
+          },
+          "end": {
+            "line": 0,
+            "col": 25,
+            "index": 25
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "reserved-name",
+    "source": "module M { val if=1 val y=2 }",
+    "modules": [
+      {
+        "id": 4,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input 'valif'",
+        "location": {
+          "source": "reserved-name.qnt",
+          "start": {
+            "line": 0,
+            "col": 15,
+            "index": 15
+          },
+          "end": {
+            "line": 0,
+            "col": 16,
+            "index": 16
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "wrong-type-application",
+    "source": "module M { var x: bool[int] val y=2 }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 2,
+              "kind": "bool"
+            },
+            "id": 3
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input '[' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "location": {
+          "source": "wrong-type-application.qnt",
+          "start": {
+            "line": 0,
+            "col": 22,
+            "index": 22
+          },
+          "end": {
+            "line": 0,
+            "col": 22,
+            "index": 22
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "extra-semicolon",
+    "source": "module M { val x=1;; val y=2 }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input ';' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "location": {
+          "source": "extra-semicolon.qnt",
+          "start": {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          },
+          "end": {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-annotation-type",
+    "source": "module M { val x: = 1 val y=2 }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '=' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "location": {
+          "source": "missing-annotation-type.qnt",
+          "start": {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          "end": {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "incomplete-first-module",
+    "source": "module A { val x=1 module B { val y=2 }",
+    "modules": [
+      {
+        "id": 4,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input 'module' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "location": {
+          "source": "incomplete-first-module.qnt",
+          "start": {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          },
+          "end": {
+            "line": 0,
+            "col": 24,
+            "index": 24
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "incomplete-last-module",
+    "source": "module A { val x=1 } module B { val y=2",
+    "modules": [
+      {
+        "id": 4,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input '<EOF>' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "location": {
+          "source": "incomplete-last-module.qnt",
+          "start": {
+            "line": 0,
+            "col": 39,
+            "index": 39
+          },
+          "end": {
+            "line": 0,
+            "col": 38,
+            "index": 38
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-module-name",
+    "source": "module { val x=1 } module B { val y=2 }",
+    "modules": [
+      {
+        "id": 4,
+        "name": "",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '{' expecting {'and', 'or', 'iff', 'implies', 'leadsTo', 'match', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "location": {
+          "source": "missing-module-name.qnt",
+          "start": {
+            "line": 0,
+            "col": 7,
+            "index": 7
+          },
+          "end": {
+            "line": 0,
+            "col": 7,
+            "index": 7
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "lexical-and-semantic",
+    "source": "module M { val x=1 @ type lower = List[a] val y={a:1,a:2} }",
+    "modules": [
+      {
+        "id": 14,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          },
+          {
+            "id": 6,
+            "kind": "typedef",
+            "name": "lower",
+            "type": {
+              "id": 5,
+              "kind": "list",
+              "elem": {
+                "id": 4,
+                "kind": "var",
+                "name": "a"
+              }
+            }
+          },
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 7,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 10,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "token recognition error at: '@'",
+        "location": {
+          "source": "lexical-and-semantic.qnt",
+          "start": {
+            "line": 0,
+            "col": 19,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 19,
+            "index": 0
+          }
+        }
+      },
+      {
+        "code": "QNT007",
+        "message": "type names must start with an uppercase letter",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "type lower",
+            "replacement": "type Lower"
+          }
+        },
+        "location": {
+          "source": "lexical-and-semantic.qnt",
+          "start": {
+            "line": 0,
+            "col": 21,
+            "index": 21
+          },
+          "end": {
+            "line": 0,
+            "col": 40,
+            "index": 40
+          }
+        }
+      },
+      {
+        "code": "QNT014",
+        "message": "the type variables a are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+        "data": {},
+        "location": {
+          "source": "lexical-and-semantic.qnt",
+          "start": {
+            "line": 0,
+            "col": 21,
+            "index": 21
+          },
+          "end": {
+            "line": 0,
+            "col": 40,
+            "index": 40
+          }
+        }
+      },
+      {
+        "code": "QNT016",
+        "message": "Field a cannot be defined more than once",
+        "data": {},
+        "location": {
+          "source": "lexical-and-semantic.qnt",
+          "start": {
+            "line": 0,
+            "col": 48,
+            "index": 48
+          },
+          "end": {
+            "line": 0,
+            "col": 56,
+            "index": 56
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "unterminated-string",
+    "source": "module M { val x=\"bad\n val y=2 }",
+    "modules": [
+      {
+        "id": 8,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "let",
+              "opdef": {
+                "id": 4,
+                "kind": "def",
+                "qualifier": "val",
+                "name": "__undefinedExprGenerated",
+                "expr": {
+                  "id": 5,
+                  "kind": "bool",
+                  "value": true
+                }
+              },
+              "expr": {
+                "id": 6,
+                "kind": "name",
+                "name": "__undefinedExprGenerated"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "token recognition error at: '\"bad\\n val y=2 }'",
+        "location": {
+          "source": "unterminated-string.qnt",
+          "start": {
+            "line": 0,
+            "col": 17,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 17,
+            "index": 0
+          }
+        }
+      },
+      {
+        "code": "QNT000",
+        "message": "mismatched input '<EOF>' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "location": {
+          "source": "unterminated-string.qnt",
+          "start": {
+            "line": 1,
+            "col": 10,
+            "index": 32
+          },
+          "end": {
+            "line": 1,
+            "col": 9,
+            "index": 31
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "empty",
+    "source": "",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '<EOF>' expecting {'module', HASHBANG_LINE, DOCCOMMENT}",
+        "location": {
+          "source": "empty.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": -1,
+            "index": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "comment-only",
+    "source": "// comment\n",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '<EOF>' expecting {'module', HASHBANG_LINE, DOCCOMMENT}",
+        "location": {
+          "source": "comment-only.qnt",
+          "start": {
+            "line": 1,
+            "col": 0,
+            "index": 11
+          },
+          "end": {
+            "line": 1,
+            "col": -1,
+            "index": 10
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "unrecognized-input",
+    "source": "@ #",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "token recognition error at: '@'",
+        "location": {
+          "source": "unrecognized-input.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          }
+        }
+      },
+      {
+        "code": "QNT000",
+        "message": "token recognition error at: '#'",
+        "location": {
+          "source": "unrecognized-input.qnt",
+          "start": {
+            "line": 0,
+            "col": 2,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 2,
+            "index": 0
+          }
+        }
+      },
+      {
+        "code": "QNT000",
+        "message": "mismatched input '<EOF>' expecting {'module', HASHBANG_LINE, DOCCOMMENT}",
+        "location": {
+          "source": "unrecognized-input.qnt",
+          "start": {
+            "line": 0,
+            "col": 3,
+            "index": 3
+          },
+          "end": {
+            "line": 0,
+            "col": 2,
+            "index": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "stray-before-module",
+    "source": "bogus module M { val x=1 }",
+    "modules": [
+      {
+        "id": 4,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input 'bogus' expecting {'module', HASHBANG_LINE, DOCCOMMENT}",
+        "location": {
+          "source": "stray-before-module.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 4,
+            "index": 4
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "incomplete-field",
+    "source": "module M { val r={x:} val y=1 }",
+    "modules": [
+      {
+        "id": 14,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 11,
+                  "kind": "str",
+                  "value": "x"
+                },
+                {
+                  "id": 10,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 5,
+                    "kind": "def",
+                    "name": "y",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  },
+                  "expr": {
+                    "id": 6,
+                    "kind": "let",
+                    "opdef": {
+                      "id": 7,
+                      "kind": "def",
+                      "qualifier": "val",
+                      "name": "__undefinedExprGenerated",
+                      "expr": {
+                        "id": 8,
+                        "kind": "bool",
+                        "value": true
+                      }
+                    },
+                    "expr": {
+                      "id": 9,
+                      "kind": "name",
+                      "name": "__undefinedExprGenerated"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "location": {
+          "source": "incomplete-field.qnt",
+          "start": {
+            "line": 0,
+            "col": 20,
+            "index": 20
+          },
+          "end": {
+            "line": 0,
+            "col": 20,
+            "index": 20
+          }
+        }
+      },
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "location": {
+          "source": "incomplete-field.qnt",
+          "start": {
+            "line": 0,
+            "col": 30,
+            "index": 30
+          },
+          "end": {
+            "line": 0,
+            "col": 30,
+            "index": 30
+          }
+        }
+      },
+      {
+        "code": "QNT000",
+        "message": "extraneous input '<EOF>' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "location": {
+          "source": "incomplete-field.qnt",
+          "start": {
+            "line": 0,
+            "col": 31,
+            "index": 31
+          },
+          "end": {
+            "line": 0,
+            "col": 30,
+            "index": 30
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "incomplete-type-application",
+    "source": "module M { var x: List[ val y=1 }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 2,
+              "kind": "const",
+              "name": "List"
+            },
+            "id": 3
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input '[' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "location": {
+          "source": "incomplete-type-application.qnt",
+          "start": {
+            "line": 0,
+            "col": 22,
+            "index": 22
+          },
+          "end": {
+            "line": 0,
+            "col": 22,
+            "index": 22
+          }
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,129 @@
+[
+  {
+    "name": "missing-variable-type",
+    "source": "module M { var x: val y=2 }",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input 'val' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "location": {
+          "source": "missing-variable-type.qnt",
+          "start": {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          "end": {
+            "line": 0,
+            "col": 20,
+            "index": 20
+          }
+        }
+      },
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input 'y='",
+        "location": {
+          "source": "missing-variable-type.qnt",
+          "start": {
+            "line": 0,
+            "col": 23,
+            "index": 23
+          },
+          "end": {
+            "line": 0,
+            "col": 23,
+            "index": 23
+          }
+        }
+      }
+    ],
+    "pendingReason": "The reference aborts its listener after type-stack underflow; the Go parser also reports a different no-viable-alternative excerpt."
+  },
+  {
+    "name": "missing-expression-operand",
+    "source": "module M { val x=1+ val y=2 }",
+    "modules": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 4,
+                    "kind": "def",
+                    "name": "y",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  },
+                  "expr": {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 1
+                  }
+                },
+                {
+                  "id": 6,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 7,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 8,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "location": {
+          "source": "missing-expression-operand.qnt",
+          "start": {
+            "line": 0,
+            "col": 28,
+            "index": 28
+          },
+          "end": {
+            "line": 0,
+            "col": 28,
+            "index": 28
+          }
+        }
+      }
+    ],
+    "pendingReason": "The reference listener consumes an earlier operand while filling a later expression hole; recursive IR conversion cannot safely reproduce this stack behavior yet."
+  }
+]

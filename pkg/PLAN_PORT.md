@@ -186,7 +186,10 @@ without losing semantic information, and diagnostic locations remain stable.
   malformed declarations, incomplete editor input, and diagnostic positions.
   - [x] ParseModulesRecovering accumulates semantic conversion diagnostics and
     preserves corrected partial IR, declaration order, docs, and UTF-16 spans.
-  - [ ] Lexical/syntax AST recovery and project-loader diagnostic accumulation.
+  - [x] Recover supported lexical/syntax trees with partial IR, ordered diagnostics
+    and UTF-16/raw spans; load source graphs through separate recovery APIs.
+  - [ ] Resolve two unsafe malformed-tree cases (missing variable type and later
+    operand hole) currently rejected explicitly as SyntaxRecoveryError.
 - [ ] P2.9 Differential-test parsed IR and error codes across parser fixtures
   and the repository's `.qnt` corpus; normalize only documented ID differences.
 
@@ -2982,3 +2985,13 @@ word "retained" in the commit message.
   typing selects the first duplicate record field while runtime construction
   uses the last. Audited and checked existing generalization/generator/table
   integration separately from broader remaining P4 parity work.
+
+- 2026-11-02: Added supported lexical/syntax recovery plus LoadModulesRecovering
+  and ParseProjectRecovering without changing existing fail-fast entry points.
+  Twenty-seven exact upstream malformed sources compare partial IR, diagnostic
+  ordering/data and spans; 26 source graphs compare 52 project-stage snapshots,
+  including upstream's dropped imported phase-one diagnostics. Two unsafe parser
+  stack/operand cases remain explicit SyntaxRecoveryError boundaries with saved
+  pending evidence. Combined recovery tests pass0.071s, focused race1.402s, and
+  parser/source corpus checks including 53 files pass0.432s. Default tests need
+  no reference runtime; CLI/LSP adoption of the new APIs is separate work.

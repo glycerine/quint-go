@@ -33,14 +33,15 @@ func (e *SyntaxErrors) Error() string {
 
 type effectSyntaxErrors struct {
 	*antlr.DefaultErrorListener
-	text   string
-	issues []SyntaxIssue
+	text    string
+	issues  []SyntaxIssue
+	onIssue func(interface{}, int, int, string, Position)
 }
 
 func newSyntaxErrors(text string) *effectSyntaxErrors {
 	return &effectSyntaxErrors{DefaultErrorListener: antlr.NewDefaultErrorListener(), text: text}
 }
-func (e *effectSyntaxErrors) SyntaxError(_ antlr.Recognizer, _ interface{}, line, column int, message string, _ antlr.RecognitionException) {
+func (e *effectSyntaxErrors) SyntaxError(_ antlr.Recognizer, offending interface{}, line, column int, message string, _ antlr.RecognitionException) {
 	// ANTLR Go counts runes; Quint/LSP positions count UTF-16 code units.
 	pos := Position{}
 	runeColumn := 0
@@ -67,6 +68,9 @@ func (e *effectSyntaxErrors) SyntaxError(_ antlr.Recognizer, _ interface{}, line
 		issue.Code = message[1:7]
 	}
 	e.issues = append(e.issues, issue)
+	if e.onIssue != nil {
+		e.onIssue(offending, line, column, message, pos)
+	}
 }
 func (e *effectSyntaxErrors) trailing(token antlr.Token) {
 	e.SyntaxError(nil, token, token.GetLine(), token.GetColumn(), "unexpected trailing input", nil)

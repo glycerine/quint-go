@@ -18,7 +18,7 @@ type FrontendResult struct {
 // ParseProject loads a source graph and runs name resolution and declaration
 // ordering. Name errors do not prevent sorting, matching the upstream phases.
 // Source loading and syntax failures return an error with the partial source
-// maps. Recovery from those failures is not yet supported by the Go parser.
+// maps. ParseProjectRecovering provides supported partial-tree recovery.
 // This entry point does not perform type/effect inference or unshadowing.
 func ParseProject(resolver SourceResolver, main SourceLookupPath) (FrontendResult, error) {
 	loaded, err := LoadModulesWithLocations(resolver, main)

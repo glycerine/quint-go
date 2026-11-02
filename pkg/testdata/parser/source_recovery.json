@@ -1,0 +1,4611 @@
+[
+  {
+    "name": "diamond",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" import B from \"b\" }",
+      "a.qnt": "module A { import C from \"c\" }",
+      "b.qnt": "module B { import C from \"./c\" }",
+      "c.qnt": "module C {}"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt",
+      "b.qnt",
+      "c.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 8,
+          "name": "C",
+          "declarations": []
+        },
+        {
+          "id": 5,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 4,
+              "kind": "import",
+              "protoName": "C",
+              "fromSource": "c"
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "name": "B",
+          "declarations": [
+            {
+              "id": 6,
+              "kind": "import",
+              "protoName": "C",
+              "fromSource": "./c"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "B",
+              "fromSource": "b"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "a.qnt",
+        "b.qnt",
+        "c.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 8,
+          "name": "C",
+          "declarations": []
+        },
+        {
+          "id": 5,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 4,
+              "kind": "import",
+              "protoName": "C",
+              "fromSource": "c"
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "name": "B",
+          "declarations": [
+            {
+              "id": 6,
+              "kind": "import",
+              "protoName": "C",
+              "fromSource": "./c"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "B",
+              "fromSource": "b"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "a.qnt",
+        "b.qnt",
+        "c.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "main-errors-valid-import",
+    "sources": {
+      "main.qnt": "module Main { type lower = List[a] import A from \"a\" val next=1 }",
+      "a.qnt": "module A { val x=2 }"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 10,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 9,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 8,
+                "kind": "int",
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 3,
+              "kind": "typedef",
+              "name": "lower",
+              "type": {
+                "id": 2,
+                "kind": "list",
+                "elem": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              }
+            },
+            {
+              "id": 4,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "next",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 34
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 33,
+              "index": 33
+            }
+          }
+        },
+        {
+          "code": "QNT014",
+          "message": "the type variables a are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 34
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 33,
+              "index": 33
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 10,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 9,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 8,
+                "kind": "int",
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 3,
+              "kind": "typedef",
+              "name": "lower",
+              "type": {
+                "id": 2,
+                "kind": "list",
+                "elem": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              "depth": 0
+            },
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "next",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "id": 4,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 34
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 33,
+              "index": 33
+            }
+          }
+        },
+        {
+          "code": "QNT014",
+          "message": "the type variables a are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 34
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 33,
+              "index": 33
+            }
+          }
+        },
+        {
+          "code": "QNT101",
+          "message": "Built-in name 'next' is redefined in module 'Main'",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 57,
+            "end": 61
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 57,
+              "index": 57
+            },
+            "end": {
+              "line": 0,
+              "col": 60,
+              "index": 60
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "import-errors-dropped",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" val x=A::x }",
+      "a.qnt": "module A { type lower = List[a] var m:Map[int,str] val x={a:1,a:2} }"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 20,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 7,
+              "kind": "typedef",
+              "name": "lower",
+              "type": {
+                "id": 6,
+                "kind": "list",
+                "elem": {
+                  "id": 5,
+                  "kind": "var",
+                  "name": "a"
+                }
+              }
+            },
+            {
+              "kind": "var",
+              "name": "m",
+              "typeAnnotation": {
+                "id": 10,
+                "kind": "fun",
+                "arg": {
+                  "id": 8,
+                  "kind": "int"
+                },
+                "res": {
+                  "id": 9,
+                  "kind": "str"
+                }
+              },
+              "id": 12
+            },
+            {
+              "id": 19,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 18,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 14,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 13,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 16,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 15,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "name",
+                "name": "A::x"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 20,
+          "name": "A",
+          "declarations": [
+            {
+              "kind": "var",
+              "name": "m",
+              "typeAnnotation": {
+                "id": 10,
+                "kind": "fun",
+                "arg": {
+                  "id": 8,
+                  "kind": "int"
+                },
+                "res": {
+                  "id": 9,
+                  "kind": "str"
+                }
+              },
+              "id": 12,
+              "depth": 0
+            },
+            {
+              "id": 19,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 18,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 14,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 13,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 16,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 15,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            {
+              "id": 7,
+              "kind": "typedef",
+              "name": "lower",
+              "type": {
+                "id": 6,
+                "kind": "list",
+                "elem": {
+                  "id": 5,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              "depth": 0
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "name",
+                "name": "A::x"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "main-and-import-errors",
+    "sources": {
+      "main.qnt": "module Main { type lower import A from \"a\" val next=missing }",
+      "a.qnt": "module A { type small = List[a] val x=1 }"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 11,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 8,
+              "kind": "typedef",
+              "name": "small",
+              "type": {
+                "id": 7,
+                "kind": "list",
+                "elem": {
+                  "id": 6,
+                  "kind": "var",
+                  "name": "a"
+                }
+              }
+            },
+            {
+              "id": 10,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 9,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "next",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "name",
+                "name": "missing"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 11,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 10,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 9,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "id": 8,
+              "kind": "typedef",
+              "name": "small",
+              "type": {
+                "id": 7,
+                "kind": "list",
+                "elem": {
+                  "id": 6,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              "depth": 0
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower",
+              "depth": 0
+            },
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "next",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "name",
+                "name": "missing"
+              }
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        },
+        {
+          "code": "QNT101",
+          "message": "Built-in name 'next' is redefined in module 'Main'",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 47,
+            "end": 51
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 47,
+              "index": 47
+            },
+            "end": {
+              "line": 0,
+              "col": 50,
+              "index": 50
+            }
+          }
+        },
+        {
+          "code": "QNT404",
+          "message": "Name 'missing' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 52,
+            "end": 59
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 52,
+              "index": 52
+            },
+            "end": {
+              "line": 0,
+              "col": 58,
+              "index": 58
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "missing-with-main-errors",
+    "sources": {
+      "main.qnt": "module Main { type lower = List[a] import Missing from \"missing\" val next=unknown }"
+    },
+    "reads": [
+      "main.qnt",
+      "missing.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 7,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 3,
+              "kind": "typedef",
+              "name": "lower",
+              "type": {
+                "id": 2,
+                "kind": "list",
+                "elem": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              }
+            },
+            {
+              "id": 4,
+              "kind": "import",
+              "protoName": "Missing",
+              "fromSource": "missing"
+            },
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "next",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "name",
+                "name": "unknown"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 34
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 33,
+              "index": 33
+            }
+          }
+        },
+        {
+          "code": "QNT014",
+          "message": "the type variables a are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 34
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 33,
+              "index": 33
+            }
+          }
+        },
+        {
+          "code": "QNT013",
+          "message": "import ... from 'missing': could not load",
+          "span": {
+            "source": "main.qnt",
+            "start": 35,
+            "end": 64
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 35,
+              "index": 35
+            },
+            "end": {
+              "line": 0,
+              "col": 63,
+              "index": 63
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 7,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 3,
+              "kind": "typedef",
+              "name": "lower",
+              "type": {
+                "id": 2,
+                "kind": "list",
+                "elem": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              "depth": 0
+            },
+            {
+              "id": 4,
+              "kind": "import",
+              "protoName": "Missing",
+              "fromSource": "missing"
+            },
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "next",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "name",
+                "name": "unknown"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 34
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 33,
+              "index": 33
+            }
+          }
+        },
+        {
+          "code": "QNT014",
+          "message": "the type variables a are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 34
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 33,
+              "index": 33
+            }
+          }
+        },
+        {
+          "code": "QNT013",
+          "message": "import ... from 'missing': could not load",
+          "span": {
+            "source": "main.qnt",
+            "start": 35,
+            "end": 64
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 35,
+              "index": 35
+            },
+            "end": {
+              "line": 0,
+              "col": 63,
+              "index": 63
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'Missing' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 35,
+            "end": 64
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 35,
+              "index": 35
+            },
+            "end": {
+              "line": 0,
+              "col": 63,
+              "index": 63
+            }
+          }
+        },
+        {
+          "code": "QNT101",
+          "message": "Built-in name 'next' is redefined in module 'Main'",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 69,
+            "end": 73
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 69,
+              "index": 69
+            },
+            "end": {
+              "line": 0,
+              "col": 72,
+              "index": 72
+            }
+          }
+        },
+        {
+          "code": "QNT404",
+          "message": "Name 'unknown' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 74,
+            "end": 81
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 74,
+              "index": 74
+            },
+            "end": {
+              "line": 0,
+              "col": 80,
+              "index": 80
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "missing-after-valid-import",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" import Missing from \"missing\" }",
+      "a.qnt": "module A { val x=1 }"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt",
+      "missing.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "Missing",
+              "fromSource": "missing"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT013",
+          "message": "import ... from 'missing': could not load",
+          "span": {
+            "source": "main.qnt",
+            "start": 32,
+            "end": 61
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 32,
+              "index": 32
+            },
+            "end": {
+              "line": 0,
+              "col": 60,
+              "index": 60
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "Missing",
+              "fromSource": "missing"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT013",
+          "message": "import ... from 'missing': could not load",
+          "span": {
+            "source": "main.qnt",
+            "start": 32,
+            "end": 61
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 32,
+              "index": 32
+            },
+            "end": {
+              "line": 0,
+              "col": 60,
+              "index": 60
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 31
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 30,
+              "index": 30
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'Missing' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 32,
+            "end": 61
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 32,
+              "index": 32
+            },
+            "end": {
+              "line": 0,
+              "col": 60,
+              "index": 60
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "transitive-missing",
+    "sources": {
+      "main.qnt": "module Main { type lower import A from \"a\" }",
+      "a.qnt": "module A { import Missing from \"missing\" }"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt",
+      "missing.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        },
+        {
+          "code": "QNT013",
+          "message": "import ... from 'missing': could not load",
+          "span": {
+            "source": "a.qnt",
+            "start": 11,
+            "end": 40
+          },
+          "rawLocation": {
+            "source": "a.qnt",
+            "start": {
+              "line": 0,
+              "col": 11,
+              "index": 11
+            },
+            "end": {
+              "line": 0,
+              "col": 39,
+              "index": 39
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower",
+              "depth": 0
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        },
+        {
+          "code": "QNT013",
+          "message": "import ... from 'missing': could not load",
+          "span": {
+            "source": "a.qnt",
+            "start": 11,
+            "end": 40
+          },
+          "rawLocation": {
+            "source": "a.qnt",
+            "start": {
+              "line": 0,
+              "col": 11,
+              "index": 11
+            },
+            "end": {
+              "line": 0,
+              "col": 39,
+              "index": 39
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 25,
+            "end": 42
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 25,
+              "index": 25
+            },
+            "end": {
+              "line": 0,
+              "col": 41,
+              "index": 41
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "case-after-valid-import",
+    "sources": {
+      "main.qnt": "module Main { type lower import A from \"a\" import A from \"A\" }",
+      "a.qnt": "module A { val x=1 }"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 4,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 3,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "A"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        },
+        {
+          "code": "QNT408",
+          "message": "Importing two files that only differ in case: a.qnt vs. A.qnt. Choose one way.",
+          "span": {
+            "source": "main.qnt",
+            "start": 43,
+            "end": 60
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 43,
+              "index": 43
+            },
+            "end": {
+              "line": 0,
+              "col": 59,
+              "index": 59
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 4,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower",
+              "depth": 0
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 3,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "A"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        },
+        {
+          "code": "QNT408",
+          "message": "Importing two files that only differ in case: a.qnt vs. A.qnt. Choose one way.",
+          "span": {
+            "source": "main.qnt",
+            "start": 43,
+            "end": 60
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 43,
+              "index": 43
+            },
+            "end": {
+              "line": 0,
+              "col": 59,
+              "index": 59
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 25,
+            "end": 42
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 25,
+              "index": 25
+            },
+            "end": {
+              "line": 0,
+              "col": 41,
+              "index": 41
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 43,
+            "end": 60
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 43,
+              "index": 43
+            },
+            "end": {
+              "line": 0,
+              "col": 59,
+              "index": 59
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "original-uppercase-case",
+    "sources": {
+      "main.qnt": "module Main { import A from \"A\" import A from \"a\" }",
+      "A.qnt": "module A {}"
+    },
+    "reads": [
+      "main.qnt",
+      "A.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "A"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT408",
+          "message": "Importing two files that only differ in case: A.qnt vs. a.qnt. Choose one way.",
+          "span": {
+            "source": "main.qnt",
+            "start": 32,
+            "end": 49
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 32,
+              "index": 32
+            },
+            "end": {
+              "line": 0,
+              "col": 48,
+              "index": 48
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "A.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "A"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT408",
+          "message": "Importing two files that only differ in case: A.qnt vs. a.qnt. Choose one way.",
+          "span": {
+            "source": "main.qnt",
+            "start": 32,
+            "end": 49
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 32,
+              "index": 32
+            },
+            "end": {
+              "line": 0,
+              "col": 48,
+              "index": 48
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 31
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 30,
+              "index": 30
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 32,
+            "end": 49
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 32,
+              "index": 32
+            },
+            "end": {
+              "line": 0,
+              "col": 48,
+              "index": 48
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "A.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "unicode-case-expansion",
+    "sources": {
+      "main.qnt": "module Main { import A from \"İ\" import A from \"i̇\" }",
+      "İ.qnt": "module A {}"
+    },
+    "reads": [
+      "main.qnt",
+      "İ.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "İ"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "i̇"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT408",
+          "message": "Importing two files that only differ in case: İ.qnt vs. i̇.qnt. Choose one way.",
+          "span": {
+            "source": "main.qnt",
+            "start": 32,
+            "end": 50
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 32,
+              "index": 32
+            },
+            "end": {
+              "line": 0,
+              "col": 49,
+              "index": 49
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "main.qnt",
+        "İ.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "İ"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "i̇"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT408",
+          "message": "Importing two files that only differ in case: İ.qnt vs. i̇.qnt. Choose one way.",
+          "span": {
+            "source": "main.qnt",
+            "start": 32,
+            "end": 50
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 32,
+              "index": 32
+            },
+            "end": {
+              "line": 0,
+              "col": 49,
+              "index": 49
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 31
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 30,
+              "index": 30
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 32,
+            "end": 50
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 32,
+              "index": 32
+            },
+            "end": {
+              "line": 0,
+              "col": 49,
+              "index": 49
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "main.qnt",
+        "İ.qnt"
+      ]
+    }
+  },
+  {
+    "name": "unicode-final-sigma",
+    "sources": {
+      "main.qnt": "module Main { import A from \"ΟΣ/a\" import A from \"ος/a\" }",
+      "ΟΣ/a.qnt": "module A {}"
+    },
+    "reads": [
+      "main.qnt",
+      "ΟΣ/a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "ΟΣ/a"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "ος/a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT408",
+          "message": "Importing two files that only differ in case: ΟΣ/a.qnt vs. ος/a.qnt. Choose one way.",
+          "span": {
+            "source": "main.qnt",
+            "start": 35,
+            "end": 55
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 35,
+              "index": 35
+            },
+            "end": {
+              "line": 0,
+              "col": 54,
+              "index": 54
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "main.qnt",
+        "ΟΣ/a.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "ΟΣ/a"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "ος/a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT408",
+          "message": "Importing two files that only differ in case: ΟΣ/a.qnt vs. ος/a.qnt. Choose one way.",
+          "span": {
+            "source": "main.qnt",
+            "start": 35,
+            "end": 55
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 35,
+              "index": 35
+            },
+            "end": {
+              "line": 0,
+              "col": 54,
+              "index": 54
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 34
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 33,
+              "index": 33
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 35,
+            "end": 55
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 35,
+              "index": 35
+            },
+            "end": {
+              "line": 0,
+              "col": 54,
+              "index": 54
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "main.qnt",
+        "ΟΣ/a.qnt"
+      ]
+    }
+  },
+  {
+    "name": "duplicate-modules",
+    "sources": {
+      "main.qnt": "module Main { type lower import A from \"a\" } module A {}",
+      "a.qnt": "module A {}"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "A",
+          "declarations": []
+        },
+        {
+          "id": 5,
+          "name": "A",
+          "declarations": []
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        },
+        {
+          "code": "QNT101",
+          "message": "Multiple modules conflict on the same name: A",
+          "span": {
+            "source": "a.qnt",
+            "start": 0,
+            "end": 11
+          },
+          "rawLocation": {
+            "source": "a.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            },
+            "end": {
+              "line": 0,
+              "col": 10,
+              "index": 10
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower",
+              "depth": 0
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "A",
+          "declarations": []
+        },
+        {
+          "id": 5,
+          "name": "A",
+          "declarations": []
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        },
+        {
+          "code": "QNT101",
+          "message": "Multiple modules conflict on the same name: A",
+          "span": {
+            "source": "a.qnt",
+            "start": 0,
+            "end": 11
+          },
+          "rawLocation": {
+            "source": "a.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            },
+            "end": {
+              "line": 0,
+              "col": 10,
+              "index": 10
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 25,
+            "end": 42
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 25,
+              "index": 25
+            },
+            "end": {
+              "line": 0,
+              "col": 41,
+              "index": 41
+            }
+          }
+        },
+        {
+          "code": "QNT102",
+          "message": "Module with name 'A' was already defined",
+          "data": {},
+          "span": {
+            "source": "a.qnt",
+            "start": 0,
+            "end": 11
+          },
+          "rawLocation": {
+            "source": "a.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            },
+            "end": {
+              "line": 0,
+              "col": 10,
+              "index": 10
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "unknown-module",
+    "sources": {
+      "main.qnt": "module Main { type lower import Missing val x=unknown }"
+    },
+    "reads": [
+      "main.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 5,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "Missing"
+            },
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "name",
+                "name": "unknown"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module Main imports an unknown module Missing",
+          "span": {
+            "source": "main.qnt",
+            "start": 25,
+            "end": 39
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 25,
+              "index": 25
+            },
+            "end": {
+              "line": 0,
+              "col": 38,
+              "index": 38
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 5,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower",
+              "depth": 0
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "Missing"
+            },
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "name",
+                "name": "unknown"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module Main imports an unknown module Missing",
+          "span": {
+            "source": "main.qnt",
+            "start": 25,
+            "end": 39
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 25,
+              "index": 25
+            },
+            "end": {
+              "line": 0,
+              "col": 38,
+              "index": 38
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'Missing' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 25,
+            "end": 39
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 25,
+              "index": 25
+            },
+            "end": {
+              "line": 0,
+              "col": 38,
+              "index": 38
+            }
+          }
+        },
+        {
+          "code": "QNT404",
+          "message": "Name 'unknown' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 46,
+            "end": 53
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 46,
+              "index": 46
+            },
+            "end": {
+              "line": 0,
+              "col": 52,
+              "index": 52
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "cycle",
+    "sources": {
+      "main.qnt": "module Main { type lower import A from \"a\" }",
+      "a.qnt": "module A { import Main from \"main\" }"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower"
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 4,
+              "kind": "import",
+              "protoName": "Main",
+              "fromSource": "main"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        },
+        {
+          "code": "QNT098",
+          "message": "Cyclic imports among: Main, A",
+          "span": {
+            "source": "main.qnt",
+            "start": 0,
+            "end": 44
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            },
+            "end": {
+              "line": 0,
+              "col": 43,
+              "index": 43
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 3,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower",
+              "depth": 0
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 4,
+              "kind": "import",
+              "protoName": "Main",
+              "fromSource": "main"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        },
+        {
+          "code": "QNT098",
+          "message": "Cyclic imports among: Main, A",
+          "span": {
+            "source": "main.qnt",
+            "start": 0,
+            "end": 44
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            },
+            "end": {
+              "line": 0,
+              "col": 43,
+              "index": 43
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 25,
+            "end": 42
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 25,
+              "index": 25
+            },
+            "end": {
+              "line": 0,
+              "col": 41,
+              "index": 41
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "multiple-imported-modules",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" }",
+      "a.qnt": "module A { val x=1 } module Extra { val y=2 }"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 5,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "name": "Extra",
+          "declarations": [
+            {
+              "id": 7,
+              "kind": "def",
+              "name": "y",
+              "qualifier": "val",
+              "expr": {
+                "id": 6,
+                "kind": "int",
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 5,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "name": "Extra",
+          "declarations": [
+            {
+              "id": 7,
+              "kind": "def",
+              "name": "y",
+              "qualifier": "val",
+              "expr": {
+                "id": 6,
+                "kind": "int",
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "unicode-imports",
+    "sources": {
+      "main.qnt": "module Main { val s=\"😀\" import A from \"sub/a\" val x=A::x }",
+      "sub/a.qnt": "module A { type lower val x=\"é\" }"
+    },
+    "reads": [
+      "main.qnt",
+      "sub/a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 10,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 7,
+              "kind": "typedef",
+              "name": "lower"
+            },
+            {
+              "id": 9,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 8,
+                "kind": "str",
+                "value": "é"
+              }
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "def",
+              "name": "s",
+              "qualifier": "val",
+              "expr": {
+                "id": 1,
+                "kind": "str",
+                "value": "😀"
+              }
+            },
+            {
+              "id": 3,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "sub/a"
+            },
+            {
+              "id": 5,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 4,
+                "kind": "name",
+                "name": "A::x"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "main.qnt",
+        "sub/a.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 10,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 7,
+              "kind": "typedef",
+              "name": "lower",
+              "depth": 0
+            },
+            {
+              "id": 9,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 8,
+                "kind": "str",
+                "value": "é"
+              }
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "def",
+              "name": "s",
+              "qualifier": "val",
+              "expr": {
+                "id": 1,
+                "kind": "str",
+                "value": "😀"
+              }
+            },
+            {
+              "id": 3,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "sub/a"
+            },
+            {
+              "id": 5,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 4,
+                "kind": "name",
+                "name": "A::x"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "main.qnt",
+        "sub/a.qnt"
+      ]
+    }
+  },
+  {
+    "name": "empty-main",
+    "sources": {
+      "main.qnt": ""
+    },
+    "reads": [
+      "main.qnt"
+    ],
+    "loaded": {
+      "modules": [],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '<EOF>' expecting {'module', HASHBANG_LINE, DOCCOMMENT}",
+          "span": {
+            "source": "main.qnt",
+            "start": 0,
+            "end": 0
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            },
+            "end": {
+              "line": 0,
+              "col": -1,
+              "index": -1
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '<EOF>' expecting {'module', HASHBANG_LINE, DOCCOMMENT}",
+          "span": {
+            "source": "main.qnt",
+            "start": 0,
+            "end": 0
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            },
+            "end": {
+              "line": 0,
+              "col": -1,
+              "index": -1
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "empty-import",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" }",
+      "a.qnt": ""
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 2,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT405",
+          "message": "Module Main imports an unknown module A",
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 31
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 30,
+              "index": 30
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 2,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT405",
+          "message": "Module Main imports an unknown module A",
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 31
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 30,
+              "index": 30
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 31
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 30,
+              "index": 30
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "instance-import",
+    "sources": {
+      "main.qnt": "module Main { type lower import A(N=2) as I from \"a\" val x=I::x }",
+      "a.qnt": "module A { const N:int val x=N }"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 12,
+          "name": "A",
+          "declarations": [
+            {
+              "kind": "const",
+              "name": "N",
+              "typeAnnotation": {
+                "id": 8,
+                "kind": "int"
+              },
+              "id": 9
+            },
+            {
+              "id": 11,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 10,
+                "kind": "name",
+                "name": "N"
+              }
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower"
+            },
+            {
+              "id": 4,
+              "kind": "instance",
+              "qualifiedName": "I",
+              "protoName": "A",
+              "overrides": [
+                [
+                  {
+                    "id": 3,
+                    "name": "N"
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              ],
+              "identityOverride": false,
+              "fromSource": "a"
+            },
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "name",
+                "name": "I::x"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 12,
+          "name": "A",
+          "declarations": [
+            {
+              "kind": "const",
+              "name": "N",
+              "typeAnnotation": {
+                "id": 8,
+                "kind": "int"
+              },
+              "id": 9,
+              "depth": 0
+            },
+            {
+              "id": 11,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 10,
+                "kind": "name",
+                "name": "N"
+              }
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "typedef",
+              "name": "lower",
+              "depth": 0
+            },
+            {
+              "id": 4,
+              "kind": "instance",
+              "qualifiedName": "I",
+              "protoName": "A",
+              "overrides": [
+                [
+                  {
+                    "id": 3,
+                    "name": "N"
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              ],
+              "identityOverride": false,
+              "fromSource": "a"
+            },
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "name",
+                "name": "I::x"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 24
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 23,
+              "index": 23
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "imported-errors-and-missing",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" }",
+      "a.qnt": "module A { type lower import Missing from \"missing\" }"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt",
+      "missing.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 2,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT013",
+          "message": "import ... from 'missing': could not load",
+          "span": {
+            "source": "a.qnt",
+            "start": 22,
+            "end": 51
+          },
+          "rawLocation": {
+            "source": "a.qnt",
+            "start": {
+              "line": 0,
+              "col": 22,
+              "index": 22
+            },
+            "end": {
+              "line": 0,
+              "col": 50,
+              "index": 50
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 2,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT013",
+          "message": "import ... from 'missing': could not load",
+          "span": {
+            "source": "a.qnt",
+            "start": 22,
+            "end": 51
+          },
+          "rawLocation": {
+            "source": "a.qnt",
+            "start": {
+              "line": 0,
+              "col": 22,
+              "index": 22
+            },
+            "end": {
+              "line": 0,
+              "col": 50,
+              "index": 50
+            }
+          }
+        },
+        {
+          "code": "QNT405",
+          "message": "Module 'A' not found",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 31
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 30,
+              "index": 30
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "main-lexical-errors",
+    "sources": {
+      "main.qnt": "module Main { val x=1 @ type lower import A from \"a\" }",
+      "a.qnt": "module A {}"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 7,
+          "name": "A",
+          "declarations": []
+        },
+        {
+          "id": 6,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "id": 4,
+              "kind": "typedef",
+              "name": "lower"
+            },
+            {
+              "id": 5,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "token recognition error at: '@'",
+          "span": {
+            "source": "main.qnt",
+            "start": 0,
+            "end": 1
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 22,
+              "index": 0
+            },
+            "end": {
+              "line": 0,
+              "col": 22,
+              "index": 0
+            }
+          }
+        },
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 24,
+            "end": 34
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 24,
+              "index": 24
+            },
+            "end": {
+              "line": 0,
+              "col": 33,
+              "index": 33
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 7,
+          "name": "A",
+          "declarations": []
+        },
+        {
+          "id": 6,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "id": 4,
+              "kind": "typedef",
+              "name": "lower",
+              "depth": 0
+            },
+            {
+              "id": 5,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "token recognition error at: '@'",
+          "span": {
+            "source": "main.qnt",
+            "start": 0,
+            "end": 1
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 22,
+              "index": 0
+            },
+            "end": {
+              "line": 0,
+              "col": 22,
+              "index": 0
+            }
+          }
+        },
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          },
+          "span": {
+            "source": "main.qnt",
+            "start": 24,
+            "end": 34
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 24,
+              "index": 24
+            },
+            "end": {
+              "line": 0,
+              "col": 33,
+              "index": 33
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "imported-lexical-errors-dropped",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" val x=A::x }",
+      "a.qnt": "module A { val x=1 @ }"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 8,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 7,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 6,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "name",
+                "name": "A::x"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 8,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 7,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 6,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "name",
+                "name": "A::x"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "main-missing-brace",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" val x=1",
+      "a.qnt": "module A {}"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 6,
+          "name": "A",
+          "declarations": []
+        },
+        {
+          "id": 5,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "extraneous input '<EOF>' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+          "span": {
+            "source": "main.qnt",
+            "start": 39,
+            "end": 39
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 39,
+              "index": 39
+            },
+            "end": {
+              "line": 0,
+              "col": 38,
+              "index": 38
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 6,
+          "name": "A",
+          "declarations": []
+        },
+        {
+          "id": 5,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "id": 2,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "extraneous input '<EOF>' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+          "span": {
+            "source": "main.qnt",
+            "start": 39,
+            "end": 39
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 39,
+              "index": 39
+            },
+            "end": {
+              "line": 0,
+              "col": 38,
+              "index": 38
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "imported-missing-brace",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" val x=A::x }",
+      "a.qnt": "module A { val x=1"
+    },
+    "reads": [
+      "main.qnt",
+      "a.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 8,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 7,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 6,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "name",
+                "name": "A::x"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 8,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 7,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 6,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "A",
+              "fromSource": "a"
+            },
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "name",
+                "name": "A::x"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "a.qnt",
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "declaration-depth-metadata",
+    "sources": {
+      "main.qnt": "module Main { const N:int var x:int type T=int assume _=true assume named=true val n=1 }"
+    },
+    "reads": [
+      "main.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 13,
+          "name": "Main",
+          "declarations": [
+            {
+              "kind": "const",
+              "name": "N",
+              "typeAnnotation": {
+                "id": 1,
+                "kind": "int"
+              },
+              "id": 2
+            },
+            {
+              "kind": "var",
+              "name": "x",
+              "typeAnnotation": {
+                "id": 3,
+                "kind": "int"
+              },
+              "id": 4
+            },
+            {
+              "id": 6,
+              "kind": "typedef",
+              "name": "T",
+              "type": {
+                "id": 5,
+                "kind": "int"
+              }
+            },
+            {
+              "id": 8,
+              "kind": "assume",
+              "name": "_",
+              "assumption": {
+                "id": 7,
+                "kind": "bool",
+                "value": true
+              }
+            },
+            {
+              "id": 10,
+              "kind": "assume",
+              "name": "named",
+              "assumption": {
+                "id": 9,
+                "kind": "bool",
+                "value": true
+              }
+            },
+            {
+              "id": 12,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "val",
+              "expr": {
+                "id": 11,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 13,
+          "name": "Main",
+          "declarations": [
+            {
+              "id": 10,
+              "kind": "assume",
+              "name": "named",
+              "assumption": {
+                "id": 9,
+                "kind": "bool",
+                "value": true
+              },
+              "depth": 0
+            },
+            {
+              "id": 12,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "val",
+              "expr": {
+                "id": 11,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "kind": "const",
+              "name": "N",
+              "typeAnnotation": {
+                "id": 1,
+                "kind": "int"
+              },
+              "id": 2,
+              "depth": 0
+            },
+            {
+              "kind": "var",
+              "name": "x",
+              "typeAnnotation": {
+                "id": 3,
+                "kind": "int"
+              },
+              "id": 4,
+              "depth": 0
+            },
+            {
+              "id": 6,
+              "kind": "typedef",
+              "name": "T",
+              "type": {
+                "id": 5,
+                "kind": "int"
+              },
+              "depth": 0
+            },
+            {
+              "id": 8,
+              "kind": "assume",
+              "name": "_",
+              "assumption": {
+                "id": 7,
+                "kind": "bool",
+                "value": true
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "main.qnt"
+      ]
+    }
+  },
+  {
+    "name": "builtin-conflict-metadata",
+    "sources": {
+      "main.qnt": "module Main { const Int:int var Bool:bool type Nat=int assume _=true }"
+    },
+    "reads": [
+      "main.qnt"
+    ],
+    "loaded": {
+      "modules": [
+        {
+          "id": 9,
+          "name": "Main",
+          "declarations": [
+            {
+              "kind": "const",
+              "name": "Int",
+              "typeAnnotation": {
+                "id": 1,
+                "kind": "int"
+              },
+              "id": 2
+            },
+            {
+              "kind": "var",
+              "name": "Bool",
+              "typeAnnotation": {
+                "id": 3,
+                "kind": "bool"
+              },
+              "id": 4
+            },
+            {
+              "id": 6,
+              "kind": "typedef",
+              "name": "Nat",
+              "type": {
+                "id": 5,
+                "kind": "int"
+              }
+            },
+            {
+              "id": 8,
+              "kind": "assume",
+              "name": "_",
+              "assumption": {
+                "id": 7,
+                "kind": "bool",
+                "value": true
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "sourceNames": [
+        "main.qnt"
+      ]
+    },
+    "project": {
+      "modules": [
+        {
+          "id": 9,
+          "name": "Main",
+          "declarations": [
+            {
+              "kind": "const",
+              "name": "Int",
+              "typeAnnotation": {
+                "id": 1,
+                "kind": "int"
+              },
+              "id": 2
+            },
+            {
+              "kind": "var",
+              "name": "Bool",
+              "typeAnnotation": {
+                "id": 3,
+                "kind": "bool"
+              },
+              "id": 4
+            },
+            {
+              "id": 6,
+              "kind": "typedef",
+              "name": "Nat",
+              "type": {
+                "id": 5,
+                "kind": "int"
+              }
+            },
+            {
+              "id": 8,
+              "kind": "assume",
+              "name": "_",
+              "assumption": {
+                "id": 7,
+                "kind": "bool",
+                "value": true
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT101",
+          "message": "Built-in name 'Int' is redefined in module 'Main'",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 14,
+            "end": 27
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 14,
+              "index": 14
+            },
+            "end": {
+              "line": 0,
+              "col": 26,
+              "index": 26
+            }
+          }
+        },
+        {
+          "code": "QNT101",
+          "message": "Built-in name 'Bool' is redefined in module 'Main'",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 28,
+            "end": 41
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 28,
+              "index": 28
+            },
+            "end": {
+              "line": 0,
+              "col": 40,
+              "index": 40
+            }
+          }
+        },
+        {
+          "code": "QNT101",
+          "message": "Built-in name 'Nat' is redefined in module 'Main'",
+          "data": {},
+          "span": {
+            "source": "main.qnt",
+            "start": 42,
+            "end": 54
+          },
+          "rawLocation": {
+            "source": "main.qnt",
+            "start": {
+              "line": 0,
+              "col": 42,
+              "index": 42
+            },
+            "end": {
+              "line": 0,
+              "col": 53,
+              "index": 53
+            }
+          }
+        }
+      ],
+      "sourceNames": [
+        "main.qnt"
+      ]
+    }
+  }
+]
