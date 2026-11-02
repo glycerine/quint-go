@@ -183,7 +183,7 @@ func TestTestCommandZeroSamplesAndValidation(t *testing.T) {
 		{[]string{input, "--out-itf=first.json", "--output=second.json"}, "out-itf"},
 		{[]string{input, "--backend=scala"}, "backend"},
 		{[]string{input, "--match=["}, "match"},
-		{[]string{input, "--match=(?=failing)"}, "match"},
+		{[]string{input, "--match=(?i)failing"}, "match"},
 	} {
 		status, _, stderr := testCommandCall(t, context.Background(), tc.args...)
 		if status == 0 || !strings.Contains(strings.ToLower(stderr), strings.ToLower(tc.want)) {
@@ -289,20 +289,21 @@ func TestTestCommandOptionDefaultsAndMatcher(t *testing.T) {
 			t.Fatalf("%v parsed=%+v err=%v", tc.args, got, err)
 		}
 	}
-	for _, pattern := range []string{`\p{L}`, `\P{L}`, `(?=name)`, `(?!name)`, `(?<=name)`, `(?P<name>example)`, `(?i)name`, `(?m)name`, `(?s)name`, `(?U)name`, `(?-i)name`, `\Aname`, `name\z`, `\Qname\E`, `\a`, `\x{41}`, `[[:alpha:]]`, `(name)\1`} {
-		if _, err := testMatcher(pattern); err == nil {
+	for _, pattern := range []string{`(?P<name>example)`, `(?i)name`, `(?m)name`, `(?s)name`, `(?U)name`, `(?-i)name`, `[[:alpha:]]`, `^(a(b)?)+\2$`} {
+		if _, err := testCompileJavaScriptRegex(pattern); err == nil {
 			t.Fatal("unsupported regex accepted", pattern)
 		}
 	}
-	for _, pattern := range []string{"Test$", "^example", "(example|helper)[0-9]*"} {
-		match, err := testMatcher(pattern)
-		if err != nil || !match("exampleTest") || match("other") {
+	for _, pattern := range []string{"Test$", "^example", "(example|helper)[0-9]*", "(?=example)example", "(?<=example)Test"} {
+		match, err := testCompileJavaScriptRegex(pattern)
+		if err != nil {
 			t.Fatal(pattern, err)
 		}
-	}
-	match, err := testMatcher("")
-	if err != nil || match != nil {
-		t.Fatal("empty matcher must use suffix default", err)
+		matched, err := match.MatchString(context.Background(), "exampleTest")
+		other, otherErr := match.MatchString(context.Background(), "other")
+		if err != nil || otherErr != nil || !matched || other {
+			t.Fatal(pattern, matched, other, err, otherErr)
+		}
 	}
 }
 

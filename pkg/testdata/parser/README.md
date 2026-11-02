@@ -971,3 +971,12 @@ closure/domain fallbacks, zero-source serializer intermediates, ownership,
 HAMT thresholds and fresh-object history. Its separate benchmark file keeps
 large trees out of the unit cases. Cached child expressions remain deep-copied;
 actual payload objects and allocation identity are preserved.
+
+`cli/testdata/test_regex.json` saves 160 actual upstream isMatchingTest patterns
+and 9230 outcomes from `cli/test_regex_fixtures.cjs`. The native Go regexp2
+adapter preserves JavaScript captures, identity escapes and UTF-16 patterns;
+default tests cover CLI selection and error-before-execution behavior. Escaped/
+Unicode capture names, nested class syntax and capture-reset-dependent nested
+backreferences remain explicit rejections. Definition names are ASCII. Matching
+has a 25ms engine budget with a coarse timer (about 200ms observed cancellation
+latency), checked context before/after, and no Node/runtime process dependency.

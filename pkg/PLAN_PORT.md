@@ -560,8 +560,12 @@ including failed actions that must not leak partially updated state.
     replayable failing seeds, pending-state commits, and selected traces.
   - [x] Source-project suite/name wiring, imported/instanced tests, sample/seed
     flags, shared JavaScript/RE2 filters, summaries, replay hints, and JSON/ITF.
-  - [ ] Full JavaScript regex features (unsupported constructs reject),
-    execution frames/hooks, and richer user-facing assertion reports.
+  - [x] Native Go ECMAScript matcher with lookaround, backreferences, named
+    captures, UTF-16 pattern translation and bounded matching; 160 actual
+    upstream patterns and 9230 matching outcomes, plus CLI selections.
+  - [ ] Remaining regex limits (Unicode/escaped capture names, nested class
+    syntax and capture-reset-dependent references), execution-frame display
+    and richer user-facing assertion reports.
 - [ ] P8.3 Preserve trace hooks, action names, nondeterministic picks, debug
   metadata, and output filename templates used in model-based testing.
 - [x] P8.4 Implement REPL multiline input, commands, load/reload, incremental
@@ -3263,3 +3267,12 @@ word "retained" in the commit message.
   30% bytes and72% allocations; wide construction improves20% CPU. Three full
   isolated suites pass, but aggregate suite timing remains within measurement
   noise, so this does not close the under-one-second target.
+
+- 2026-11-02: Extended test --match with a pinned pure-Go ECMAScript engine,
+  JavaScript grammar validation, lexical capture numbering, lookaround/backrefs,
+  legacy escapes and UTF-16 pattern translation. Actual upstream oracle covers
+  160 patterns/9230 outcomes; CLI selections, bounded matching and cancellation
+  pass before any selected test executes. Focused tests pass0.229s, race1.276s,
+  with translator99.4% and compilation100% coverage. Unicode/escaped capture
+  names, nested classes and capture-reset-dependent nested refs remain explicit
+  limits; coarse engine timing is documented rather than claimed hard25ms.

@@ -9,7 +9,6 @@ import (
 	"math/big"
 	"os"
 	"path/filepath"
-	"regexp"
 	"slices"
 	"strconv"
 	"strings"
@@ -45,7 +44,8 @@ func (w *testOutputWriter) Write(data []byte) (int, error) {
 const testUsage = `Usage: quint test <input> [options]
   --main NAME          main module (defaults to the source module or filename)
   --match REGEX        select test names; defaults to names ending in Test
-                       supports the shared JavaScript/RE2 regular-expression subset
+                       JavaScript lookaround, backreferences and named captures
+                       nested-class/capture-reset limits and a short execution budget apply
   --max-samples N      successful samples per randomized test (default 10000, or 1 with --seed)
   --seed INTEGER       replay an arbitrary-precision decimal/hexadecimal seed
   --verbosity N        output level from 0 to 5 (default 2)
@@ -140,25 +140,6 @@ func testParseOptions(args []string) (testCommandOptions, error) {
 		}
 	}
 	return o, nil
-}
-
-// Quint names use ASCII identifiers. The shared JavaScript/RE2 subset therefore
-// covers ordinary name filtering without claiming support for backreferences,
-// lookaround, Unicode classes, or Go-only inline flags.
-func testMatcher(pattern string) (func(string) bool, error) {
-	if pattern == "" {
-		return nil, nil
-	}
-	for _, unsupported := range []string{`\p`, `\P`, `(?=`, `(?!`, `(?<`, `(?P`, `(?i`, `(?m`, `(?s`, `(?U`, `(?-`, `\A`, `\z`, `\Q`, `\E`, `\a`, `\x{`, `[[:`} {
-		if strings.Contains(pattern, unsupported) {
-			return nil, fmt.Errorf("unsupported --match expression: the Go CLI supports the shared JavaScript/RE2 subset (no lookaround, backreferences, Unicode classes, or inline flags)")
-		}
-	}
-	compiled, err := regexp.Compile(pattern)
-	if err != nil {
-		return nil, fmt.Errorf("invalid or unsupported --match expression %q: %w", pattern, err)
-	}
-	return compiled.MatchString, nil
 }
 
 type testSelection struct {
@@ -330,9 +311,21 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	if err = ctx.Err(); err != nil {
 		return fail(err)
 	}
-	match, err := testMatcher(options.match)
-	if err != nil {
-		return fail(err)
+	var match func(string) bool
+	var matchErr error
+	if options.match != "" {
+		matcher, err := testCompileJavaScriptRegex(options.match)
+		if err != nil {
+			return fail(err)
+		}
+		match = func(name string) bool {
+			if matchErr != nil {
+				return false
+			}
+			var matched bool
+			matched, matchErr = matcher.MatchString(ctx, name)
+			return matched
+		}
 	}
 	var seed quint.Integer
 	if options.seedSet {
@@ -386,6 +379,9 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	selections, err := testSelections(front, main, match)
 	if err != nil {
 		return fail(err)
+	}
+	if matchErr != nil {
+		return fail(matchErr)
 	}
 	fields.Set("stage", "testing")
 	passed, failed, ignored := []string{}, []string{}, []string{}
