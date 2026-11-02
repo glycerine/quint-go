@@ -189,7 +189,7 @@ errors without panics or losing subsequent declarations after recoverable errors
   exports/re-exports, and parameterized module instances with overrides.
   - [x] Link ordered module imports, aliases, exports, and instance overrides.
   - [x] Compare instance reference targets and diagnostics with TypeScript fixtures.
-  - [ ] Validate nested instance provenance, collisions, and broader linking fixtures.
+  - [x] Validate nested instance provenance, collisions, and broader linking fixtures.
 - [ ] P3.3 Port unshadowing and fresh-name handling without capturing variables.
 - [ ] P3.4 Port call graphs, stable topological sorting, module ordering, and
   recursion/dependency-cycle diagnostics.
@@ -1097,3 +1097,13 @@ word "retained" in the commit message.
   compare ordered bindings and error references. Default tests pass (combined
   execution 0.508s). P3.2 remains open for broader nested-instance/provenance
   validation; dependency-ordered input remains required.
+
+- 2026-11-02: Expanded name-resolution differential coverage to 22 cases,
+  including nested instances, same-alias replacement, conflicting imports,
+  selective re-exports, hidden values, missing modules, repeated instances,
+  qualified-name prefixes, and lambdas in overrides. All cases now compare
+  namespace order, hidden/shadowing flags, and import provenance in addition to
+  binding identities, depth, insertion order, and diagnostic references.
+  These cases match the TypeScript resolver without implementation changes.
+  P3 remains open for incremental analysis, unused definitions, unshadowing,
+  call graphs, and full static fixture validation.

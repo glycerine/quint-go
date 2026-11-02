@@ -13,6 +13,9 @@ func TestUpstreamNameResolution(t *testing.T) {
 	type binding struct {
 		Reference, Definition string
 		Depth                 int
+		Namespaces            []string
+		Hidden, Shadowing     bool
+		ImportedFrom          string
 	}
 	type diagnostic struct{ Code, Message, Reference string }
 	var fixtures []struct {
@@ -72,7 +75,12 @@ func TestUpstreamNameResolution(t *testing.T) {
 			}
 			got := []binding{}
 			for id, def := range r.Table.All() {
-				got = append(got, binding{paths[id], paths[def.ID], def.Depth})
+				namespaces := append([]string{}, def.Namespaces...)
+				importedFrom := ""
+				if def.ImportedFrom != nil {
+					importedFrom = paths[def.ImportedFrom.ID]
+				}
+				got = append(got, binding{paths[id], paths[def.ID], def.Depth, namespaces, def.Hidden, def.Shadowing, importedFrom})
 			}
 			if !reflect.DeepEqual(got, f.Bindings) {
 				t.Errorf("bindings Go %+v\nTS %+v", got, f.Bindings)

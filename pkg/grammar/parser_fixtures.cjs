@@ -105,6 +105,18 @@ if(process.argv.includes('--corpus')){
 }
 const {resolveNames}=require(path.join(root,'quint/src/names/resolver'))
 const resolutionCases=[
+ ['linked-conflicts','module A { val x=1 } module B { val x=2 } module C { import A.* import B.x export A.* val y=x }'],
+ ['linked-missing','module A { import Missing.* export Unknown.x val y=missing }'],
+ ['alias-replacement','module A { val x=1 } module B { val x=2 } module C { import A as I import B as I export I.* val y=I::x }'],
+ ['instance-override-lambda','module A { const F: int => int val x=F(1) } module B { import A(F=(x)=>x) as I val y=I::x }'],
+ ['instance-hidden-value','module A { val x=1 } module B { const N: int import A.* } module C { import B(N=1) as I val y=I::x }'],
+
+ ['nested-instances','module A { const N: int val x=N } module B { import A(N=1) as I export I.* } module C { import B(N=2) as J export J.* val z=J::x } module D { import C.* val z=x }'],
+ ['instance-collisions','module A { const N: int val x=N } module B { const N: int val x=2 import A(N=3).* val y=x }'],
+ ['repeated-instance','module A { const N: int val x=N } module B { import A(N=1) as I import A(N=2) as I val y=I::x }'],
+ ['selective-alias-export','module A { val x=1 type T=int } module B { import A as I export I.x val y=I::x } module C { import B.* val z=x }'],
+ ['qualified-name-prefix','module A { val I::x=1 } module B { import A as I val y=I::I::x }'],
+
  ['instance-alias','module A { const N: int val x=N } module B { val outside=3 import A(N=outside) as I export I.* val y=I::x }'],
  ['instance-open','module A { const N: int val x=N } module B { import A(N=1).* val y=x }'],
  ['instance-errors','module A { val x=1 } module B { import A(x=missing, N=1) as I }'],
@@ -126,6 +138,6 @@ const resolutionFixtures=resolutionCases.map(([name,source])=>{
  function visit(v,p){if(!v||typeof v!=='object')return;if(v.id!==undefined&&!paths.has(v.id))paths.set(v.id,p);for(const k of Object.keys(v).sort())if(k!=='id')visit(v[k],p+'/'+k)}
  visit(parsed.modules,'')
  const result=resolveNames(parsed.modules)
- return {name,source,bindings:[...result.table].map(([id,def])=>({reference:paths.get(id),definition:paths.get(def.id),depth:def.depth??0})),errors:result.errors.map(e=>({code:e.code,message:e.message,reference:paths.get(e.reference)}))}
+ return {name,source,bindings:[...result.table].map(([id,def])=>({reference:paths.get(id),definition:paths.get(def.id),depth:def.depth??0,namespaces:def.namespaces??[],hidden:def.hidden??false,shadowing:def.shadowing??false,importedFrom:def.importedFrom?paths.get(def.importedFrom.id):''})),errors:result.errors.map(e=>({code:e.code,message:e.message,reference:paths.get(e.reference)}))}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/resolution.json'),JSONbig.stringify(resolutionFixtures,null,2)+'\n')

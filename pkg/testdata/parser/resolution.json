@@ -1,42 +1,683 @@
 [
   {
+    "name": "linked-conflicts",
+    "source": "module A { val x=1 } module B { val x=2 } module C { import A.* import B.x export A.* val y=x }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/0",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/0",
+        "definition": "/1/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/2/declarations/3",
+        "definition": "/2/declarations/3",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/2/declarations/3/expr",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": "/2/declarations/2"
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'x' in module 'C'",
+        "reference": "/0/declarations/0"
+      },
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'x' in module 'C'",
+        "reference": "/2/declarations/1"
+      },
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'x' in module 'C'",
+        "reference": "/1/declarations/0"
+      },
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'x' in module 'C'",
+        "reference": "/0/declarations/0"
+      }
+    ]
+  },
+  {
+    "name": "linked-missing",
+    "source": "module A { import Missing.* export Unknown.x val y=missing }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/2",
+        "definition": "/0/declarations/2",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT405",
+        "message": "Module 'Missing' not found",
+        "reference": "/0/declarations/0"
+      },
+      {
+        "code": "QNT405",
+        "message": "Module 'Unknown' not found",
+        "reference": "/0/declarations/1"
+      },
+      {
+        "code": "QNT404",
+        "message": "Name 'missing' not found",
+        "reference": "/0/declarations/2/expr"
+      }
+    ]
+  },
+  {
+    "name": "alias-replacement",
+    "source": "module A { val x=1 } module B { val x=2 } module C { import A as I import B as I export I.* val y=I::x }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/0",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/0",
+        "definition": "/1/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/2/declarations/3",
+        "definition": "/2/declarations/3",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/2/declarations/3/expr",
+        "definition": "/1/declarations/0",
+        "depth": 0,
+        "namespaces": [
+          "I"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/2/declarations/1"
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'I::x' in module 'C'",
+        "reference": "/0/declarations/0"
+      },
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'I::x' in module 'C'",
+        "reference": "/1/declarations/0"
+      }
+    ]
+  },
+  {
+    "name": "instance-override-lambda",
+    "source": "module A { const F: int => int val x=F(1) } module B { import A(F=(x)=>x) as I val y=I::x }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/1",
+        "definition": "/0/declarations/1",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/0/declarations/1/expr",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/0/overrides/0/0",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [
+          "I",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/0"
+      },
+      {
+        "reference": "/1/declarations/0/overrides/0/1/expr",
+        "definition": "/1/declarations/0/overrides/0/1/params/0",
+        "depth": 1,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/1",
+        "definition": "/1/declarations/1",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/1/expr",
+        "definition": "/0/declarations/1",
+        "depth": 0,
+        "namespaces": [
+          "I",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/0"
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "instance-hidden-value",
+    "source": "module A { val x=1 } module B { const N: int import A.* } module C { import B(N=1) as I val y=I::x }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/0",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/2/declarations/0/overrides/0/0",
+        "definition": "/1/declarations/0",
+        "depth": 0,
+        "namespaces": [
+          "I",
+          "C"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/2/declarations/0"
+      },
+      {
+        "reference": "/2/declarations/1",
+        "definition": "/2/declarations/1",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT404",
+        "message": "Name 'I::x' not found",
+        "reference": "/2/declarations/1/expr"
+      }
+    ]
+  },
+  {
+    "name": "nested-instances",
+    "source": "module A { const N: int val x=N } module B { import A(N=1) as I export I.* } module C { import B(N=2) as J export J.* val z=J::x } module D { import C.* val z=x }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/1",
+        "definition": "/0/declarations/1",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/0/declarations/1/expr",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/0/overrides/0/0",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [
+          "I",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/0"
+      },
+      {
+        "reference": "/2/declarations/0/overrides/0/0",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [
+          "J",
+          "C"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/2/declarations/0"
+      },
+      {
+        "reference": "/2/declarations/2",
+        "definition": "/2/declarations/2",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/2/declarations/2/expr",
+        "definition": "/0/declarations/1",
+        "depth": 0,
+        "namespaces": [
+          "J",
+          "C"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/2/declarations/0"
+      },
+      {
+        "reference": "/3/declarations/1",
+        "definition": "/3/declarations/1",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/3/declarations/1/expr",
+        "definition": "/0/declarations/1",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/3/declarations/0"
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'z' in module 'D'",
+        "reference": "/2/declarations/2"
+      },
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'z' in module 'D'",
+        "reference": "/3/declarations/1"
+      }
+    ]
+  },
+  {
+    "name": "instance-collisions",
+    "source": "module A { const N: int val x=N } module B { const N: int val x=2 import A(N=3).* val y=x }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/1",
+        "definition": "/0/declarations/1",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/0/declarations/1/expr",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/1",
+        "definition": "/1/declarations/1",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/2/overrides/0/0",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [
+          "A",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/2"
+      },
+      {
+        "reference": "/1/declarations/3",
+        "definition": "/1/declarations/3",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/3/expr",
+        "definition": "/0/declarations/1",
+        "depth": 0,
+        "namespaces": [
+          "A",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/2"
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'N' in module 'B'",
+        "reference": "/1/declarations/0"
+      },
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'N' in module 'B'",
+        "reference": "/0/declarations/0"
+      },
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'x' in module 'B'",
+        "reference": "/1/declarations/1"
+      },
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'x' in module 'B'",
+        "reference": "/0/declarations/1"
+      }
+    ]
+  },
+  {
+    "name": "repeated-instance",
+    "source": "module A { const N: int val x=N } module B { import A(N=1) as I import A(N=2) as I val y=I::x }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/1",
+        "definition": "/0/declarations/1",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/0/declarations/1/expr",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/0/overrides/0/0",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [
+          "I",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/1"
+      },
+      {
+        "reference": "/1/declarations/1/overrides/0/0",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [
+          "I",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/1"
+      },
+      {
+        "reference": "/1/declarations/2",
+        "definition": "/1/declarations/2",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/2/expr",
+        "definition": "/0/declarations/1",
+        "depth": 0,
+        "namespaces": [
+          "I",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/1"
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "selective-alias-export",
+    "source": "module A { val x=1 type T=int } module B { import A as I export I.x val y=I::x } module C { import B.* val z=x }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/0",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/2",
+        "definition": "/1/declarations/2",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/2/expr",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [
+          "I"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/0"
+      },
+      {
+        "reference": "/2/declarations/1",
+        "definition": "/2/declarations/1",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/2/declarations/1/expr",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/2/declarations/0"
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "qualified-name-prefix",
+    "source": "module A { val I::x=1 } module B { import A as I val y=I::I::x }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/0",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/1",
+        "definition": "/1/declarations/1",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
+      },
+      {
+        "reference": "/1/declarations/1/expr",
+        "definition": "/0/declarations/0",
+        "depth": 0,
+        "namespaces": [],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/0"
+      }
+    ],
+    "errors": []
+  },
+  {
     "name": "instance-alias",
     "source": "module A { const N: int val x=N } module B { val outside=3 import A(N=outside) as I export I.* val y=I::x }",
     "bindings": [
       {
         "reference": "/0/declarations/1",
         "definition": "/0/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/1/expr",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/1/declarations/0",
         "definition": "/1/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/1/declarations/1/overrides/0/0",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [
+          "I",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/1"
       },
       {
         "reference": "/1/declarations/1/overrides/0/1",
         "definition": "/1/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/1/declarations/3",
         "definition": "/1/declarations/3",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/1/declarations/3/expr",
         "definition": "/0/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [
+          "I",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/1"
       }
     ],
     "errors": []
@@ -48,27 +689,53 @@
       {
         "reference": "/0/declarations/1",
         "definition": "/0/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/1/expr",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/1/declarations/0/overrides/0/0",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [
+          "A",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/0"
       },
       {
         "reference": "/1/declarations/1",
         "definition": "/1/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/1/declarations/1/expr",
         "definition": "/0/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [
+          "A",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/0"
       }
     ],
     "errors": []
@@ -80,12 +747,23 @@
       {
         "reference": "/0/declarations/0",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/1/declarations/0/overrides/0/0",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [
+          "I",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/1/declarations/0"
       }
     ],
     "errors": [
@@ -135,27 +813,50 @@
       {
         "reference": "/0/declarations/1",
         "definition": "/0/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/1/expr",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/2/declarations/0/overrides/0/0",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [
+          "I",
+          "B"
+        ],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/2/declarations/0"
       },
       {
         "reference": "/3/declarations/1",
         "definition": "/3/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/3/declarations/1/expr",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": true,
+        "shadowing": false,
+        "importedFrom": "/3/declarations/0"
       }
     ],
     "errors": []
@@ -167,27 +868,47 @@
       {
         "reference": "/0/declarations/0",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/0/expr",
         "definition": "/0/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/0/expr/args/0",
         "definition": "/0/declarations/2",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/1",
         "definition": "/0/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/1/expr/expr",
         "definition": "/0/declarations/1/expr/params/0",
-        "depth": 1
+        "depth": 1,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       }
     ],
     "errors": []
@@ -199,37 +920,65 @@
       {
         "reference": "/0/declarations/0",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/1",
         "definition": "/0/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/1/expr/expr/opdef",
         "definition": "/0/declarations/1/expr/expr/opdef",
-        "depth": 3
+        "depth": 3,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": true,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/1/expr/expr/opdef/expr",
         "definition": "/0/declarations/1/expr/params/0",
-        "depth": 1
+        "depth": 1,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/1/expr/expr/expr/args/0",
         "definition": "/0/declarations/1/expr/expr/opdef",
-        "depth": 3
+        "depth": 3,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": true,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/1/expr/expr/expr/args/1",
         "definition": "/0/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/1/expr/expr/expr/args/1/args/0",
         "definition": "/0/declarations/1/expr/params/0",
-        "depth": 1
+        "depth": 1,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       }
     ],
     "errors": []
@@ -241,22 +990,38 @@
       {
         "reference": "/0/declarations/1/typeAnnotation",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/2/typeAnnotation",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/2",
         "definition": "/0/declarations/2",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/2/expr",
         "definition": "/0/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       }
     ],
     "errors": []
@@ -268,7 +1033,11 @@
       {
         "reference": "/0/declarations/0",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       }
     ],
     "errors": [
@@ -291,12 +1060,20 @@
       {
         "reference": "/0/declarations/0",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/0/expr/expr",
         "definition": "/0/declarations/0/expr/params/1",
-        "depth": 1
+        "depth": 1,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": true,
+        "importedFrom": ""
       }
     ],
     "errors": [
@@ -319,22 +1096,38 @@
       {
         "reference": "/0/declarations/0",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/1",
         "definition": "/0/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/2",
         "definition": "/0/declarations/2",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/2/expr",
         "definition": "/0/declarations/1",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": true,
+        "importedFrom": ""
       }
     ],
     "errors": [
@@ -357,27 +1150,47 @@
       {
         "reference": "/0/declarations/0",
         "definition": "/0/declarations/0",
-        "depth": 0
+        "depth": 0,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/0/expr/opdef",
         "definition": "/0/declarations/0/expr/opdef",
-        "depth": 2
+        "depth": 2,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/0/expr/opdef/expr/expr",
         "definition": "/0/declarations/0/expr/opdef",
-        "depth": 2
+        "depth": 2,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/0/expr/opdef/expr/expr/args/0",
         "definition": "/0/declarations/0/expr/opdef/expr/params/0",
-        "depth": 3
+        "depth": 3,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       },
       {
         "reference": "/0/declarations/0/expr/expr",
         "definition": "/0/declarations/0/expr/opdef",
-        "depth": 2
+        "depth": 2,
+        "namespaces": [],
+        "hidden": false,
+        "shadowing": false,
+        "importedFrom": ""
       }
     ],
     "errors": []
