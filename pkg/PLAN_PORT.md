@@ -243,6 +243,8 @@ analysis, with reproducible errors for invalid module structures.
   - [ ] Validate remaining application cases and integrate with inferred type tables.
 - [ ] P4.4 Port every builtin type signature and special constraint; maintain
   an opcode-to-signature coverage table to catch omissions.
+  - [x] Generate structural constraints for Rec, field, fieldNames, and with.
+  - [ ] Port tuple/item and sum/match constraints and connect generator dispatch.
 - [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
   and incremental inference used by the REPL and editor.
 - [ ] P4.6 Compare inferred schemes modulo type-variable renaming and compare
@@ -1300,3 +1302,12 @@ word "retained" in the commit message.
   generalization ordering, and input/type-tree isolation. Default tests pass
   (combined execution 0.574s). Constraint-generation traversal and end-to-end
   inference remain pending.
+
+- 2026-11-02: Added record-specific constraint generation for construction,
+  field access, field-name sets, and updates, plus expression diagnostic printing.
+  Tests solve generated constraints end to end for each operator, cover empty
+  records, preserve concrete record fields on updates, and check literal-name
+  diagnostics and invalid arities. Printing tests cover literals, large integers,
+  calls, lambdas, and annotated local definitions. Default tests pass (combined
+  execution 0.561s). Tuple/sum constraints, upstream differential special-constraint
+  fixtures, and generator integration remain pending.
