@@ -639,3 +639,14 @@ scenarios and 43 expression outcomes capture Int/Nat, intervals, products,
 powersets and map sets, including hashes/cardinality/bounds/picks, thrown versus
 returned errors, huge non-enumerated intervals and upstream edge cases. This is
 pending parity evidence and is not counted as passing implementation coverage.
+
+CLI and tooling tests additionally exercise all eight commands using temporary
+sources and injected streams, without subprocesses or Node. They cover imports
+and overridden instances, source selectors, JSON stage schemas, lossless ITF,
+replay seeds, option/error/output failures, and actual Go checker/TLA smoke paths.
+REPL tests cover incremental analysis/rollback, declarations and closures, state
+commits, imports/load/reload, multiline commands, history/seeds, and quiet output.
+LSP tests run framed JSON-RPC and semantic requests in process, covering UTF-16
+edits/ranges, buffered imports, diagnostics, stale/cancelled jobs, lifecycle,
+large request IDs, navigation, completion, symbols and conservative rename.
+The complete upstream CLI/editor transcript audit remains open.

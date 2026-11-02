@@ -213,7 +213,7 @@ errors without panics or losing subsequent declarations after recoverable errors
   - [x] Track collected binding identity and expose unused-definition queries.
   - [x] Compare unused definitions against upstream module-resolution fixtures.
   - [x] Support module switching and shared-table incremental expression analysis.
-  - [ ] Integrate declaration reanalysis and expression sessions with the REPL.
+  - [x] Integrate declaration reanalysis and expression sessions with the REPL.
 - [x] P3.6 Run name/static fixtures, including nested instances, collisions,
   export visibility, import cycles, and deterministic ordering.
 
@@ -316,8 +316,8 @@ the baseline corpus, including state-transition legality.
   the conditions under which init/step are required or optional.
   - [x] Library compilation orchestration, default/action validation, explicit
     flatten selection, and forced TLA+ flattening with upstream fixtures.
-  - [ ] Wire the CLI command, JSON serialization, output/error reporting,
-    and default flag handling end to end.
+  - [x] Wire the CLI command, JSON serialization, output/error reporting,
+    and default flag handling end to end; track remaining output parity in P10.1.
 - [ ] P6.5 Port `initToPredicate` and removal of run definitions for the paths
   that require them; preserve the different contracts of checking and TLA output.
   - [x] Go Apalache TLA API prepares a copied module with run removal and
@@ -365,8 +365,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     dependency ordering, forward references, cycles, and lazy module bindings.
   - [x] Parsed-project pure evaluation through module sorting, resolution,
     static analysis, and full import/export/instance flattening with overrides.
-  - [ ] Filesystem/CLI evaluation wiring, remaining definition caches, and
-    complete runtime stack traces.
+  - [x] Filesystem/CLI evaluation through run/test and incremental REPL sessions.
+  - [ ] Remaining definition caches and complete runtime stack traces.
   - [ ] Repeated factory-lambda object reuse and shared captured parameter cells;
     TypeScript compiles one closure per AST, while Go currently captures per call.
 - [ ] P7.3 Port arithmetic, Boolean, comparison, string, and conversion
@@ -467,9 +467,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     constructor/reset semantics, state restoration, and 120 upstream vectors.
   - [x] CLI-compatible explicit seed parsing with JavaScript BigInt syntax,
     ECMAScript whitespace, exact error messages, and reference fixtures.
-  - [x] Finite-set sampling/traversal with exact bounded RNG consumption.
-  - [ ] Default initialization/CLI wiring and comparison with the Rust
-    runtime's seeded behavior.
+  - [x] CLI seed flags/replay output and finite-set sampling/traversal.
+  - [ ] Exact default initialization across CLI/REPL and comparison with the
+    Rust runtime's seeded behavior.
 - [ ] P7.9 Complete an opcode coverage matrix for evaluation, typing, effects,
   and symbolic conversion, distinguishing supported operations and deliberate
   context restrictions.
@@ -489,8 +489,9 @@ including failed actions that must not leak partially updated state.
     state resets without RNG rewind, and disabled-action sample termination.
   - [x] TypeScript-compatible invariant/witness timing, cumulative violation
     results, trace ranking/seeds, statistics, and runtime-error outcomes.
-  - [ ] Source expression selectors, run CLI defaults/flags/output, and
-    individual invariant reporting.
+  - [x] Source expression selectors, run CLI defaults/flags/output, witnesses,
+    replay seeds, metadata, JSON/ITF traces, and cancellation/error statuses.
+  - [ ] Individual invariant reporting and full reference formatting parity.
 - [ ] P8.2 Implement `test` discovery/filtering, randomized repetitions,
   pass/fail/ignore results, assertion reports, and replayable failing seeds.
   - [x] Collector-order discovery with default Test suffix/custom predicates,
@@ -498,12 +499,16 @@ including failed actions that must not leak partially updated state.
   - [x] Sequential named test execution with deterministic early exit,
     randomized repetitions, pass/fail/ignore results, QNT511 references,
     replayable failing seeds, pending-state commits, and selected traces.
-  - [ ] JavaScript-compatible CLI regex handling, source-project suite/name
-    wiring, execution frames/hooks, and user-facing assertion reports.
+  - [x] Source-project suite/name wiring, imported/instanced tests, sample/seed
+    flags, shared JavaScript/RE2 filters, summaries, replay hints, and JSON/ITF.
+  - [ ] Full JavaScript regex features (unsupported constructs reject),
+    execution frames/hooks, and richer user-facing assertion reports.
 - [ ] P8.3 Preserve trace hooks, action names, nondeterministic picks, debug
   metadata, and output filename templates used in model-based testing.
-- [ ] P8.4 Implement REPL multiline input, commands, load/reload, incremental
+- [x] P8.4 Implement REPL multiline input, commands, load/reload, incremental
   definitions and analysis, evaluation, state display, history, and quiet mode.
+  - [ ] Additional .save/session replay, execution frames/value diffs, and
+    interruption of caller-owned blocked input readers.
 - [ ] P8.5 Add cancellation and bounded resource controls. Where concurrent
   simulation is exposed, isolate RNG/state/cache ownership and define result
   ordering and reproducibility across worker counts.
@@ -525,14 +530,16 @@ TypeScript or Rust evaluator process.
     exercised with source-generated safe, violating, and instanced models.
   - [x] Public bounded-check and TLA APIs with configuration merging and
     structured responses.
-  - [ ] Complete higher-level verification orchestration and CLI integration.
+  - [x] Higher-level bounded/inductive verification orchestration and CLI
+    integration with source diagnostics, backend categories, and trace files.
 - [ ] P9.2 Port config-file/CLI precedence, init/next/invariant selection,
   maximum steps, random-transition simulation, and supported tuning options.
   Report unsupported options explicitly.
   - [x] Library configuration precedence, explicit bounds/init/next/invariants,
     temporal selection, tuning merge, and simulation overrides; five upstream
     createConfig fixtures match. Unknown options reach strict service validation.
-  - [ ] Add config-file loading and CLI flag/default wiring.
+  - [x] Config-file loading and CLI flag/default wiring, including main-module
+    selection when the entry filename differs from its sole module.
 - [ ] P9.3 Implement bounded safety checking, no-invariant deadlock checking,
   and ordinary/multiple-invariant handling with equivalent result categories.
   - [x] Bounded-check API, explicit no-invariant selection, lossless violation/
@@ -553,20 +560,25 @@ TypeScript or Rust evaluator process.
   - [x] ReportCheck/ReportVerification provide source-resolved preparation
     diagnostics, upstream error explanations, proof phases, raw backend data,
     and lossless copied counterexample traces.
-  - [ ] Implement ITF interpretation/output and individual-invariant violation
-    reporting with variable/source mapping and CLI rendering.
+  - [x] Lossless ITF file output through verification CLI.
+  - [ ] Individual-invariant violation reporting and variable/source rendering;
+    Shai currently omits temporal loop indices from its ITF response.
 - [ ] P9.7 Implement `compile --target=tlaplus` through Go Apalache and port
   `tlaplusPostprocessing.ts`; compare parsed TLA semantics and required textual
   output against reference fixtures.
   - [x] TLA API through the Go command service, typed preparation/backend
     failures, cancellation, and all upstream printer-postprocessing examples.
-  - [ ] Wire compile CLI output and complete generated-TLA compatibility tests.
+  - [x] Compile CLI output through the Go TLA API.
+  - [ ] Complete generated-TLA semantic compatibility tests.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.
 - [ ] P9.9 Replace Scala version/download/launch behavior. Define Go backend
   selection/version reporting and the treatment of legacy endpoint/version
   flags; test Go gRPC compatibility if endpoint mode is retained.
+  - [x] Default in-process Go backend and explicit legacy endpoint/Scala version
+    flag rejection; no Scala download or endpoint fallback.
+  - [ ] Backend version reporting and complete compatibility matrix.
 - [ ] P9.10 Propagate cancellation, solver unknown/resource exhaustion, invalid
   models, and backend errors distinctly from successful bounded checks. Close
   solver sessions, connections, temporary files, and owned child processes.
@@ -588,6 +600,10 @@ Build these items alongside the phases that supply their command behavior.
 - [ ] P10.1 Implement `cmd/quint` with parse/typecheck/compile first, then
   run/test/verify/repl/docs; preserve default-command behavior, aliases, help,
   argument validation, version output, and exit status contracts.
+  - [x] Go executable and all eight command dispatch paths, default REPL,
+    help/version, signal contexts, validation, and in-process command tests.
+  - [ ] Complete flag/alias/output parity audit; compile --out currently
+    suppresses stdout while the TypeScript implementation also prints its target.
 - [ ] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
 - [ ] P10.3 Port machine-readable stage output and diagnostics; explicitly
@@ -608,12 +624,12 @@ Build these items alongside the phases that supply their command behavior.
   - [x] TraceWriter connects trace naming, ITF encoding, MBT metadata, headers,
     and filesystem output with caller-owned clocks and returned errors.
   - [ ] Audit collation across upstream locales/Unicode versions; implement
-    symbolic runtime normalization and CLI trace file/output integration.
+    symbolic runtime normalization; CLI run/test/verify trace files are wired.
 - [ ] P10.5 Port pretty printing, source-error rendering, value diffs, execution
   frames, trace display, statistics, and witness/invariant reports.
   - [x] Plain source excerpts and ordered multi-source/runtime callstack rendering
     with Unicode UTF-16, CRLF/tabs, offsets, REPL formatting, and source fallback.
-- [ ] P10.6 Port documentation extraction and `docs`; embed builtin definitions
+- [x] P10.6 Port documentation extraction and `docs`; embed builtin definitions
   and necessary runtime assets so the binary works outside the checkout.
   - [x] Reusable documentation extraction/Markdown rendering and embedded
     generated builtin documentation with copied results; no runtime parser/assets.
@@ -622,6 +638,9 @@ Build these items alongside the phases that supply their command behavior.
   Document ownership, incremental state, concurrency, and cancellation.
 - [ ] P10.8 Run CLI language/I/O/verification integration tests and JSON/ITF
   compatibility checks, including redirected output and nonzero exit paths.
+  - [x] In-process tests across all commands, source imports/instances, actual
+    Go checker/TLA smoke paths, JSON/ITF, redirected output, and error statuses.
+  - [ ] Full upstream command transcript/format compatibility corpus.
 
 Exit gate: documented Go commands and library entry points expose the ported
 behavior with predictable output and no dependency on the source working directory.
@@ -630,14 +649,22 @@ behavior with predictable output and no dependency on the source working directo
 
 This follows the core CLI milestone but remains tracked for tooling parity.
 
-- [ ] P11.1 Inventory LSP capabilities and decide whether the existing editor
+- [x] P11.1 Inventory LSP capabilities and decide whether the existing editor
   client connects to a Go server or a temporary adapter around the Go library.
-- [ ] P11.2 Port document lifecycle, incremental analysis, diagnostics,
+  Go stdio server lives in cmd/quint-lsp with direct frontend/analysis APIs.
+- [x] P11.2 Port document lifecycle, incremental analysis, diagnostics,
   cancellation, stale-result rejection, and UTF-16 position handling.
 - [ ] P11.3 Port hover, completion/builtin docs, definition lookup, references,
   rename, and document symbols using the Go IR and lookup tables.
+  - [x] Hover/builtin docs, definition/references, document symbols, scoped
+    completion, and conservative rename with precise UTF-16 ranges.
+  - [ ] Field completion and selective-import rename; remaining capability
+    audit includes signature help, code actions, and workspace symbols.
 - [ ] P11.4 Update editor launch/build configuration and run protocol-level
   regressions for edits, imports, incomplete syntax, and cross-file navigation.
+  - [x] Protocol tests for edits, imports, malformed input, lifecycle, stale
+    work, cancellation, navigation, semantic requests, and large JSON-RPC IDs.
+  - [ ] Existing editor-client launch/build wiring to the Go server.
 
 Exit gate: the editor can analyze and navigate files through the Go frontend;
 any remaining TypeScript client code is distinguished from language-server logic.
@@ -2765,3 +2792,22 @@ word "retained" in the commit message.
   pick discovery, and symbolic domains remain open. A separate symbolic oracle
   has 22 domain scenarios and 43 expression outcomes; these are pending evidence,
   not passing Go coverage.
+
+- 2026-11-02: Added cmd/quint and all eight command paths: parse, typecheck,
+  compile, run, test, verify, repl, and docs. Commands use Go library/checker APIs,
+  explicit unsupported-backend errors, owned output streams, seed/replay flags,
+  source diagnostics, and JSON/ITF output. Compile/TLA and bounded/inductive
+  verification exercise the actual Go backend; main-module selection handles
+  imported sources and filename/module mismatches. Added incremental REPL
+  sessions with transactional static updates, state commits, imports/load/reload,
+  history, multiline commands, seeds, and quiet mode. Added cmd/quint-lsp with
+  framed JSON-RPC, UTF-16 incremental edits, buffered imports, cancellation/stale
+  result rejection, diagnostics, navigation, hover/docs, scoped completion,
+  symbols, and conservative rename. Twenty LSP test groups and focused race
+  checks pass; all CLI/session tests and full default tests pass. Added pkg README
+  with local Go Apalache workspace/build/command instructions. Remaining gaps
+  include full CLI transcripts/formatting/regexes, invariant/frame reporting,
+  shared runtime identity state, advanced LSP features/client launch wiring, and
+  native Go TLC integration. The checker supports bounded always/eventually/
+  leadsTo, rejects fairness/temporal quantifiers, and currently drops ITF loop
+  indices at its Shai boundary; full Quint temporal coverage remains open.
