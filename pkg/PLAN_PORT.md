@@ -464,6 +464,8 @@ Build these items alongside the phases that supply their command behavior.
     precedence; preserve existing loops, parameters, and custom trace fields.
   - [x] Concrete ITF value normalization with eight upstream fixtures: zero IDs,
     sorted records/sets/maps, set equality, and last-value map replacement.
+  - [x] TraceWriter connects trace naming, ITF encoding, MBT metadata, headers,
+    and filesystem output with caller-owned clocks and returned errors.
   - [ ] Audit collation across upstream locales/Unicode versions; implement
     symbolic runtime normalization and CLI trace file/output integration.
 - [ ] P10.5 Port pretty printing, source-error rendering, value diffs, execution
@@ -2083,3 +2085,15 @@ word "retained" in the commit message.
   collections, and retained raw trace metadata/loops. Full default tests pass
   (combined package execution 0.939s). Cross-locale/Unicode-version collation,
   symbolic runtime collections, and CLI trace output remain open.
+
+- 2026-11-02: Added TraceWriter to port prepareOnTrace's file-output path:
+  optional output templates, named/sequenced traces, automatic indexing when
+  multiple traces are requested, optional MBT metadata, and per-event status in
+  the generated header. Caller-supplied clock values keep library output
+  deterministic. Files are replaced using the upstream behavior; conversion and
+  filesystem errors are returned for CLI reporting. File-based tests cover
+  every naming mode, large integers, decoded metadata and MBT names, replacing
+  existing files, disabled output, conversion failures without creating files,
+  and missing-directory errors with errors.Is support. Full default tests pass
+  (combined package execution 0.920s). CLI command wiring, default clock/date
+  presentation, trace rendering, and individual-invariant evaluation remain open.
