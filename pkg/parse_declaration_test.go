@@ -42,7 +42,7 @@ func TestDeclarationDocumentationAndErrors(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if ds[0].Doc == nil || *ds[0].Doc != "first\nsecond" || ds[1].Doc != nil || ds[2].Doc != nil {
+	if ds[2].Doc == nil || *ds[2].Doc != "first\nsecond" || ds[1].Doc != nil || ds[0].Doc != nil {
 		t.Fatal("documentation attachment")
 	}
 	for _, source := range []string{"", "/// docs only", "val x =", "val x = 1 val y = 2", "module M {}", "var x: int junk", "val x = 1\n/// trailing"} {

@@ -19,12 +19,12 @@ func TestSumDeclarationConstructors(t *testing.T) {
 		t.Fatalf("declarations: %+v", ds)
 	}
 	d := ds[0]
-	if d.Type.Kind != "sum" || len(d.Type.Fields.Fields) != 3 || len(d.Params) != 2 || d.Params[0] != "a" || d.Params[1] != "b" || d.Doc == nil || *d.Doc != "Result docs" {
+	if d.Type.Kind != "sum" || len(d.Type.Fields.Fields) != 3 || len(d.Params) != 2 || d.Params[0] != "a" || d.Params[1] != "b" || ds[3].Doc == nil || *ds[3].Doc != "Result docs" {
 		t.Fatalf("type: %+v", d)
 	}
 	for i, name := range []string{"Ok", "Err", "Pending"} {
 		c := ds[i+1]
-		if c.Name != name || c.Kind != "def" || c.Doc != nil {
+		if c.Name != name || c.Kind != "def" || (i < 2 && c.Doc != nil) {
 			t.Fatalf("constructor %+v", c)
 		}
 		expr, ret := c.Expr, c.TypeAnnotation

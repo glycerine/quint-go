@@ -33,7 +33,7 @@ func ParseDeclaration(text string) ([]Declaration, error) {
 	if err != nil {
 		return nil, err
 	}
-	ds[0].Doc = joinedDocs(docs)
+	ds[len(ds)-1].Doc = joinedDocs(docs)
 	return ds, nil
 }
 

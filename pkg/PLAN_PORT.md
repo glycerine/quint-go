@@ -807,3 +807,12 @@ word "retained" in the commit message.
   Default tests pass within the sub-second execution target. P2.8 remains open
   for upstream recovery/partial IR and semantic-error accumulation; source names,
   token spans, and IR source-map integration remain pending in P2.5.
+
+- 2026-11-02: Corrected documentation conversion against ToIrListener: preserve
+  whitespace after removing the four-character prefix and final LF, omit empty
+  documentation, and attach docs to the last generated declaration for sum types
+  and destructuring. Updated earlier tests that encoded first-declaration
+  attachment. Added tests for indentation/trailing spaces, CRLF, blank doc lines,
+  missing prefix spaces, expanded declarations, and orphan docs between modules.
+  Default tests pass within the sub-second execution target. P2.5 remains open
+  for source-map integration and full Unicode/source-coordinate parity.

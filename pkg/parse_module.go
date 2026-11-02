@@ -40,7 +40,7 @@ func ParseModules(text string) ([]Module, error) {
 			if err != nil {
 				return nil, err
 			}
-			decls[0].Doc = joinedDocs(docs)
+			decls[len(decls)-1].Doc = joinedDocs(docs)
 			docs = nil
 			module.Declarations = append(module.Declarations, decls...)
 		}
@@ -55,9 +55,17 @@ func joinedDocs(lines []string) *string {
 	}
 	parts := make([]string, len(lines))
 	for i, line := range lines {
-		parts[i] = strings.TrimSpace(strings.TrimPrefix(line, "///"))
+		// Match JavaScript slice(4, -1): remove the prefix plus one character
+		// and the terminating LF, preserving all other whitespace.
+		runes := []rune(line)
+		if len(runes) > 4 {
+			parts[i] = string(runes[4 : len(runes)-1])
+		}
 	}
 	text := strings.Join(parts, "\n")
+	if text == "" {
+		return nil
+	}
 	return &text
 }
 func declarationFromContext(ctx p.IDeclarationContext, ids *IDGenerator) (Declaration, error) {
