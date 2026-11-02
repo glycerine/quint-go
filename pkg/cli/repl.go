@@ -109,25 +109,10 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 	if level > 0 {
 		out("Quint Go REPL\nType \".exit\" to exit, or \".help\" for more information\n")
 	}
-	if options.Require != "" {
-		file, main := options.Require, options.Main
-		if i := strings.LastIndex(file, "::"); i >= 0 {
-			main, file = file[i+2:], file[:i]
-		}
-		if err := session.Load(ctx, file, main); err != nil {
-			report(err)
-			return 1
-		}
-	}
 	pending := ""
 	braces, parens, comments := 0, 0, 0
 	recycling := false
-	evaluate := func(text string) {
-		result, err := session.Evaluate(ctx, text)
-		if err != nil {
-			report(err)
-			return
-		}
+	renderResult := func(result quint.REPLResult) {
 		switch result.Kind {
 		case "declaration":
 			out("\n")
@@ -141,6 +126,27 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 			if len(result.Missing) > 0 {
 				out("[warning] some variables are undefined: " + strings.Join(result.Missing, ", ") + "\n")
 			}
+		}
+	}
+	evaluate := func(text string) {
+		result, err := session.Evaluate(ctx, text)
+		if err != nil {
+			report(err)
+			return
+		}
+		renderResult(result)
+	}
+	replayHooks := func() quint.REPLReplayHooks {
+		return replReplayOutput(func() int { return level }, out, report, renderResult, &writeErr)
+	}
+	if options.Require != "" {
+		file, main := options.Require, options.Main
+		if i := strings.LastIndex(file, "::"); i >= 0 {
+			main, file = file[i+2:], file[:i]
+		}
+		if err := session.LoadWithReplay(ctx, file, main, replayHooks()); err != nil {
+			report(err)
+			return 1
 		}
 	}
 	// A command returns true only when the caller explicitly exits the loop.
@@ -187,7 +193,7 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 				pending = ""
 				return true
 			case ".help":
-				out(".clear\tClear definitions and expression history\n.exit\tExit the REPL\n.help\tPrint this help message\n.load <filename> [module]\tLoad a file and optionally import a module\n.reload\tReload the last loaded file\n.state\tPrint current variable values\n.history\tPrint accepted input history\n.verbosity=[0-5]\tSet output level\n.seed[=<number>]\tSet or get the random seed\n\nFinish multiline input with an empty line.\n")
+				out(".clear\tClear definitions and expression history\n.exit\tExit the REPL\n.help\tPrint this help message\n.load <filename> [module]\tLoad a file and optionally import a module\n.reload\tReload the last loaded file\n.save <filename>\tSave definitions and expression history\n.state\tPrint current variable values\n.history\tPrint accepted input history\n.verbosity=[0-5]\tSet output level\n.seed[=<number>]\tSet or get the random seed\n\nFinish multiline input with an empty line.\n")
 			case ".clear":
 				session.Reset()
 				pending, braces, parens, comments, recycling = "", 0, 0, 0, false
@@ -200,12 +206,12 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 					if len(fields) == 3 {
 						main = fields[2]
 					}
-					if err := session.Load(ctx, fields[1], main); err != nil {
+					if err := session.LoadWithReplay(ctx, fields[1], main, replayHooks()); err != nil {
 						report(err)
 					}
 				}
 			case ".reload":
-				if err := session.Reload(ctx); err != nil {
+				if err := session.ReloadWithReplay(ctx, replayHooks()); err != nil {
 					report(err)
 				}
 			case ".state":
@@ -225,7 +231,7 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 					out(text + "\n")
 				}
 			case ".save":
-				report(errors.New(".save is not implemented in the Go REPL"))
+				replSaveCommand(ctx, session, fields, out)
 			default:
 				report(fmt.Errorf("Unexpected command: %s\nType .help to see the list of commands", line))
 			}

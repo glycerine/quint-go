@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -38,6 +39,7 @@ type REPLSession struct {
 	input    uint64
 	loaded   string
 	loadMain string
+	saved    replSessionArchive
 }
 
 func NewREPLSession() *REPLSession {
@@ -62,6 +64,7 @@ func (s *REPLSession) Reset() {
 	s.code = insdict.NewDict[string, string]()
 	s.history = []string{}
 	s.input = 0
+	s.saved = replSessionArchive{}
 }
 
 func (s *REPLSession) Seed() Integer                { return s.runtime.RNG.State() }
@@ -76,6 +79,7 @@ func (s *REPLSession) Evaluate(ctx context.Context, text string) (REPLResult, er
 	if err := ctx.Err(); err != nil {
 		return REPLResult{}, err
 	}
+	s.saved.ensure()
 	source := fmt.Sprintf("<input-%d>", s.input)
 	s.input++
 	s.code.Set(source, text)
@@ -125,6 +129,7 @@ func (s *REPLSession) Evaluate(ctx context.Context, text string) (REPLResult, er
 		result.Type = &copied
 	}
 	s.history = append(s.history, strings.TrimSpace(text))
+	s.saved.expressions = append(s.saved.expressions, strings.TrimSpace(text))
 	result.Value, err = s.runtime.Evaluate(ctx, "q::input", nil)
 	if err != nil {
 		return result, err
@@ -179,6 +184,7 @@ func (s *REPLSession) addDeclarations(ctx context.Context, declarations []Declar
 	s.adoptRuntime(runtime)
 	s.modules, s.analysis = candidate, output
 	s.history = append(s.history, strings.TrimSpace(text))
+	s.saved.declaration(text)
 	return REPLResult{Kind: "declaration"}, nil
 }
 
@@ -223,7 +229,7 @@ func (s *REPLSession) prepareRuntime(ctx context.Context, modules []Module, link
 // source file. An explicit main selects that module. Without main, the upstream
 // // @mainModule annotation is honored; otherwise a fresh __repl__ scope is
 // created and the loaded modules are available to subsequent import inputs.
-func (s *REPLSession) Load(ctx context.Context, path, main string) error {
+func (s *REPLSession) loadProject(ctx context.Context, path, main string) error {
 	if err := ctx.Err(); err != nil {
 		return err
 	}
@@ -234,8 +240,22 @@ func (s *REPLSession) Load(ctx context.Context, path, main string) error {
 	if err != nil {
 		return err
 	}
+	raw, err := os.ReadFile(absolute)
+	if err != nil {
+		return err
+	}
+	loadedText := decodeSourceUTF8(raw)
+	parserText := loadedText
+	emptySavedSession := false
+	cleaned, _ := replExtractExpressions(loadedText)
+	if annotation := replMainAnnotation.FindStringSubmatchIndex(cleaned); annotation != nil && cleaned[annotation[2]:annotation[3]] == "__repl__" && strings.TrimSpace(cleaned[annotation[1]:]) == "" && (main == "" || main == "__repl__") {
+		// Saving before the first evaluation produces only this annotation.
+		// Supply the empty scope while parsing so that it can be loaded too.
+		parserText += replEmptyModuleText
+		emptySavedSession = true
+	}
 	code := map[string]string{}
-	resolver := NewFileSourceResolver(code, nil)
+	resolver := replMainSourceResolver{SourceResolver: NewFileSourceResolver(code, nil), path: absolute, text: parserText, code: code}
 	parsed, err := ParseProject(resolver, resolver.LookupPath(filepath.Dir(absolute), filepath.Base(absolute)))
 	s.sources = parsed.Sources
 	s.ids = parsed.IDs
@@ -259,7 +279,8 @@ func (s *REPLSession) Load(ctx context.Context, path, main string) error {
 	}
 	loadMain := main
 	modules := parsed.Modules
-	if main == "" {
+	synthetic := main == "" || (main == "__repl__" && len(modules) == 0)
+	if synthetic {
 		main = "__repl__"
 		modules = append(append([]Module{}, modules...), Module{ID: parsed.IDs.Next(), Name: main, Declarations: []Declaration{}})
 	}
@@ -280,6 +301,10 @@ func (s *REPLSession) Load(ctx context.Context, path, main string) error {
 	if len(analysis.Diagnostics) > 0 {
 		return analysis.Diagnostics[0]
 	}
+	archive, err := newREPLArchive(absolute, loadedText, main, synthetic || emptySavedSession)
+	if err != nil {
+		return err
+	}
 	s.ids, s.sources, s.main = parsed.IDs, parsed.Sources, main
 	output := AnalysisOutput{Types: analysis.Types, Effects: analysis.Effects, Modes: analysis.Modes}
 	runtime, err := s.prepareRuntime(ctx, analysis.Modules, linked, output)
@@ -289,6 +314,7 @@ func (s *REPLSession) Load(ctx context.Context, path, main string) error {
 	}
 	s.modules, s.analysis, s.runtime = analysis.Modules, output, runtime
 	s.loadMain = loadMain
+	s.saved = archive
 	return nil
 }
 

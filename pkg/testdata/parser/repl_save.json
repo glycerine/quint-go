@@ -1,0 +1,539 @@
+{
+  "cases": [
+    {
+      "name": "empty_before_evaluation",
+      "evaluations": [],
+      "input": ".save $DIR/session.qnt\n.exit\n",
+      "stdout": "Session saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule __repl__\n"
+    },
+    {
+      "name": "empty_after_comment",
+      "evaluations": [
+        "// a comment\n"
+      ],
+      "input": "// a comment\n.save $DIR/session.qnt\n.exit\n",
+      "stdout": "Session saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \n}"
+    },
+    {
+      "name": "mixed_declarations_expressions",
+      "evaluations": [
+        "pure val x = 2\n",
+        "x + 3\n",
+        "pure def twice(n) = n * 2\n",
+        "twice(x)\n"
+      ],
+      "input": "pure val x = 2\nx + 3\npure def twice(n) = n * 2\ntwice(x)\n.save $DIR/session.qnt\n.exit\n",
+      "replay": "x\ntwice(x)\n",
+      "stdout": "\n5\n\n4\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \npure val x = 2\n\npure def twice(n) = n * 2\n\n}/*! x + 3 !*/\n\n/*! twice(x) !*/\n",
+      "replayed": {
+        "stdout": "5\n4\n2\n4\nSession saved to: $DIR/replayed.qnt\n",
+        "stderr": "",
+        "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \npure val x = 2\n\npure def twice(n) = n * 2\n\n}/*! x + 3 !*/\n\n/*! twice(x) !*/\n/*! x + 3 !*/\n\n/*! twice(x) !*/\n\n/*! x !*/\n\n/*! twice(x) !*/\n"
+      }
+    },
+    {
+      "name": "rejected_inputs_omitted_runtime_error_retained",
+      "evaluations": [
+        "pure val x = 2\n",
+        "pure val bad = missing\n",
+        "missing\n",
+        "1 + true\n",
+        "1 / 0\n",
+        "x\n"
+      ],
+      "input": "pure val x = 2\npure val bad = missing\nmissing\n1 + true\n1 / 0\nx\n.save $DIR/session.qnt\n.exit\n",
+      "replay": "x\n",
+      "stdout": "\nstatic analysis error: \n Error [QNT404]: Name 'missing' not found\n\n  at <input-1>:0:16\n  pure val bad = missing\n                 ^^^^^^^\n\nstatic analysis error: \n Error [QNT404]: Name 'missing' not found\n\n  at <input-2>:0:1\n  missing\n  ^^^^^^^\n\nstatic analysis error: \n Error [QNT000]: Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (int, bool) => _t0\n\n\n  at <input-3>:0:1\n  1 + true\n  ^^^^^^^^\n\nruntime error: \n Error [QNT503]: Division by zero\n\n  at <input-4>:0:1\n  1 / 0\n  ^^^^^\n\n2\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \npure val x = 2\n\n}/*! 1 / 0 !*/\n\n/*! x !*/\n",
+      "replayed": {
+        "stdout": "runtime error: \n Error [QNT503]: Division by zero\n\n  at <input-0>:0:1\n  1 / 0\n  ^^^^^\n\n2\n2\nSession saved to: $DIR/replayed.qnt\n",
+        "stderr": "",
+        "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \npure val x = 2\n\n}/*! 1 / 0 !*/\n\n/*! x !*/\n/*! 1 / 0 !*/\n\n/*! x !*/\n\n/*! x !*/\n"
+      }
+    },
+    {
+      "name": "multiline_declaration_and_expression",
+      "evaluations": [
+        "pure def twice(n) = {\nn * 2\n}",
+        "List(\n1,\n2\n)"
+      ],
+      "input": "pure def twice(n) = {\n n * 2\n}\n\nList(\n1,\n2\n)\n\n.save $DIR/session.qnt\n.exit\n",
+      "replay": "twice(3)\n",
+      "stdout": "\n[1, 2]\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \npure def twice(n) = {\nn * 2\n}\n}/*! List(\n1,\n2\n) !*/\n",
+      "replayed": {
+        "stdout": "[1, 2]\n6\nSession saved to: $DIR/replayed.qnt\n",
+        "stderr": "",
+        "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \npure def twice(n) = {\nn * 2\n}\n}/*! List(\n1,\n2\n) !*/\n/*! List(\n1,\n2\n) !*/\n\n/*! twice(3) !*/\n"
+      }
+    },
+    {
+      "name": "loaded_main_without_final_newline",
+      "files": [
+        {
+          "name": "main.qnt",
+          "source": "// original comment\nmodule M { pure val base=7 }"
+        }
+      ],
+      "load": "main.qnt",
+      "main": "M",
+      "evaluations": [
+        "pure val extra = base+1\n",
+        "extra\n"
+      ],
+      "input": ".load $DIR/main.qnt M\npure val extra = base+1\nextra\n.save $DIR/session.qnt\n.exit\n",
+      "replay": "extra\n",
+      "stdout": "\n8\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule M\n// original comment\nmodule M { pure val base=7 pure val extra = base+1\n\n}/*! extra !*/\n",
+      "replayed": {
+        "stdout": "8\n8\nSession saved to: $DIR/replayed.qnt\n",
+        "stderr": "",
+        "saved": "// @mainModule M\n// original comment\nmodule M { pure val base=7 pure val extra = base+1\n\n}/*! extra !*/\n/*! extra !*/\n\n/*! extra !*/\n"
+      }
+    },
+    {
+      "name": "loaded_main_with_final_newline",
+      "unsafeUpstream": "declaration appended outside loaded module",
+      "files": [
+        {
+          "name": "main.qnt",
+          "source": "// original comment\nmodule M { pure val base=7 }\n"
+        }
+      ],
+      "load": "main.qnt",
+      "main": "M",
+      "evaluations": [
+        "pure val extra = base+1\n",
+        "extra\n"
+      ],
+      "input": ".load $DIR/main.qnt M\npure val extra = base+1\nextra\n.save $DIR/session.qnt\n.exit\n",
+      "replay": "extra\n",
+      "stdout": "\n8\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule M\n// original comment\nmodule M { pure val base=7 }pure val extra = base+1\n\n}/*! extra !*/\n",
+      "replayed": {
+        "stdout": "syntax error: \n Error [QNT000]: extraneous input 'pure' expecting {<EOF>, 'module', DOCCOMMENT}\n\n  at <modules>:2:29\n  module M { pure val base=7 }pure val extra = base+1\n                              ^^^^\n\nPick the right module name and import it (the file has been loaded)\nstatic analysis error: \n Error [QNT404]: Name 'extra' not found\n\n  at <input-0>:0:1\n  extra\n  ^^^^^\n\nSession saved to: $DIR/replayed.qnt\n",
+        "stderr": "",
+        "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \n}"
+      }
+    },
+    {
+      "name": "loaded_main_not_final_module",
+      "unsafeUpstream": "declaration appended to final module instead of selected main",
+      "files": [
+        {
+          "name": "main.qnt",
+          "source": "module M { pure val base=7 }\nmodule Other { pure val other=0 }"
+        }
+      ],
+      "load": "main.qnt",
+      "main": "M",
+      "evaluations": [
+        "pure val extra = base+1\n",
+        "extra\n"
+      ],
+      "input": ".load $DIR/main.qnt M\npure val extra = base+1\nextra\n.save $DIR/session.qnt\n.exit\n",
+      "replay": "extra\n",
+      "stdout": "\n8\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule M\nmodule M { pure val base=7 }\nmodule Other { pure val other=0 pure val extra = base+1\n\n}/*! extra !*/\n",
+      "replayed": {
+        "stdout": "syntax error: \n Error [QNT404]: Name 'base' not found\n\n  at <modules>:2:50\n  module Other { pure val other=0 pure val extra = base+1\n                                                   ^^^^\n\nstatic analysis error: \n Error [QNT000]: Signature not found for name: base\nGenerating constraints for base\n\n\n  at <modules>:2:50\n  module Other { pure val other=0 pure val extra = base+1\n                                                   ^^^^\n\nstatic analysis error: \n Error [QNT000]: Signature not found for name: base\nInferring effect for base\n\n\n  at <modules>:2:50\n  module Other { pure val other=0 pure val extra = base+1\n                                                   ^^^^\n\nstatic analysis error: \n Error [QNT000]: Signature not found for name: base\nGenerating constraints for base\n\n\n  at <modules>:2:50\n  module Other { pure val other=0 pure val extra = base+1\n                                                   ^^^^\n\nstatic analysis error: \n Error [QNT000]: Signature not found for name: base\nInferring effect for base\n\n\n  at <modules>:2:50\n  module Other { pure val other=0 pure val extra = base+1\n                                                   ^^^^\n\nPick the right module name and import it (the file has been loaded)\nstatic analysis error: \n Error [QNT404]: Name 'extra' not found\n\n  at <input-0>:0:1\n  extra\n  ^^^^^\n\nSession saved to: $DIR/replayed.qnt\n",
+        "stderr": "",
+        "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \n}"
+      }
+    },
+    {
+      "name": "loaded_without_selected_main",
+      "files": [
+        {
+          "name": "main.qnt",
+          "source": "module M { pure val base=7 }\n"
+        }
+      ],
+      "load": "main.qnt",
+      "evaluations": [
+        "import M.*\n",
+        "base\n"
+      ],
+      "input": ".load $DIR/main.qnt\nimport M.*\nbase\n.save $DIR/session.qnt\n.exit\n",
+      "replay": "base\n",
+      "stdout": "\n7\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule __repl__\nmodule M { pure val base=7 }\nmodule __repl__ {\n  \nimport M.*\n\n}/*! base !*/\n",
+      "replayed": {
+        "stdout": "7\n7\nSession saved to: $DIR/replayed.qnt\n",
+        "stderr": "",
+        "saved": "// @mainModule __repl__\nmodule M { pure val base=7 }\nmodule __repl__ {\n  \nimport M.*\n\n}/*! base !*/\n/*! base !*/\n\n/*! base !*/\n"
+      }
+    },
+    {
+      "name": "main_annotation_preserved",
+      "files": [
+        {
+          "name": "main.qnt",
+          "source": "// @mainModule M\nmodule M { pure val base=7 }"
+        }
+      ],
+      "load": "main.qnt",
+      "evaluations": [
+        "base\n"
+      ],
+      "input": ".load $DIR/main.qnt\nbase\n.save $DIR/session.qnt\n.exit\n",
+      "replay": "base\n",
+      "stdout": "7\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule M\nmodule M { pure val base=7 }/*! base !*/\n",
+      "replayed": {
+        "stdout": "7\n7\nSession saved to: $DIR/replayed.qnt\n",
+        "stderr": "",
+        "saved": "// @mainModule M\nmodule M { pure val base=7 }/*! base !*/\n/*! base !*/\n\n/*! base !*/\n"
+      }
+    },
+    {
+      "name": "main_annotation_explicit_override_preserves_old_marker",
+      "unsafeUpstream": "existing main marker is preserved despite explicit selected module",
+      "files": [
+        {
+          "name": "main.qnt",
+          "source": "// @mainModule M\nmodule M { pure val value=7 }\nmodule N { pure val value=9 }"
+        }
+      ],
+      "load": "main.qnt",
+      "main": "N",
+      "evaluations": [
+        "value\n"
+      ],
+      "input": ".load $DIR/main.qnt N\nvalue\n.save $DIR/session.qnt\n.exit\n",
+      "replay": "value\n",
+      "stdout": "9\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule M\nmodule M { pure val value=7 }\nmodule N { pure val value=9 }/*! value !*/\n",
+      "replayed": {
+        "stdout": "7\n7\nSession saved to: $DIR/replayed.qnt\n",
+        "stderr": "",
+        "saved": "// @mainModule M\nmodule M { pure val value=7 }\nmodule N { pure val value=9 }/*! value !*/\n/*! value !*/\n\n/*! value !*/\n"
+      }
+    },
+    {
+      "name": "loaded_crlf_raw_preserved",
+      "files": [
+        {
+          "name": "main.qnt",
+          "source": "// raw CRLF\r\nmodule M { pure val base=7 }\r\n"
+        }
+      ],
+      "load": "main.qnt",
+      "main": "M",
+      "evaluations": [
+        "base\n"
+      ],
+      "input": ".load $DIR/main.qnt M\nbase\n.save $DIR/session.qnt\n.exit\n",
+      "replay": "base\n",
+      "stdout": "7\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule M\n// raw CRLF\r\nmodule M { pure val base=7 }\r\n/*! base !*/\n",
+      "replayed": {
+        "stdout": "7\n7\nSession saved to: $DIR/replayed.qnt\n",
+        "stderr": "",
+        "saved": "// @mainModule M\n// raw CRLF\r\nmodule M { pure val base=7 }\r\n/*! base !*/\n/*! base !*/\n\n/*! base !*/\n"
+      }
+    },
+    {
+      "name": "crlf_annotation_not_recognized",
+      "files": [
+        {
+          "name": "main.qnt",
+          "source": "// @mainModule M\r\nmodule M { pure val base=7 }\r\n"
+        }
+      ],
+      "load": "main.qnt",
+      "evaluations": [
+        "import M.*\n",
+        "base\n"
+      ],
+      "input": ".load $DIR/main.qnt\nimport M.*\nbase\n.save $DIR/session.qnt\n.exit\n",
+      "replay": "base\n",
+      "stdout": "\n7\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule M\r\nmodule M { pure val base=7 }\r\nmodule __repl__ {\n  \nimport M.*\n\n}/*! base !*/\n",
+      "replayed": {
+        "stdout": "syntax error: \n Error [QNT101]: Multiple modules conflict on the same name: __repl__\n\n  at <modules>:7:1\n  module __repl__ {\n  ^^^^^^^^^^^^^^^^^\n    \n  ^^\n  }\n  ^^^^^^^^^^^^^^^^^^^^^^\n\nsyntax error: \n Error [QNT102]: Module with name '__repl__' was already defined\n\n  at <modules>:7:1\n  module __repl__ {\n  ^^^^^^^^^^^^^^^^^\n    \n  ^^\n  }\n  ^^^^^^^^^^^^^^^^^^^^^^\n\nPick the right module name and import it (the file has been loaded)\nstatic analysis error: \n Error [QNT404]: Name 'base' not found\n\n  at <input-0>:0:1\n  base\n  ^^^^\n\nSession saved to: $DIR/replayed.qnt\n",
+        "stderr": "",
+        "saved": "// @mainModule __repl__\n"
+      }
+    },
+    {
+      "name": "clear_resets_saved_history",
+      "evaluations": [
+        "pure val before=1\n",
+        "before\n"
+      ],
+      "input": "pure val before=1\nbefore\n.clear\n.save $DIR/session.qnt\n.exit\n",
+      "stdout": "\n1\n\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule __repl__\n"
+    },
+    {
+      "name": "clear_preserves_last_module_annotation",
+      "files": [
+        {
+          "name": "main.qnt",
+          "source": "module M { pure val base=7 }"
+        }
+      ],
+      "load": "main.qnt",
+      "main": "M",
+      "evaluations": [
+        "base\n"
+      ],
+      "input": ".load $DIR/main.qnt M\nbase\n.clear\n.save $DIR/session.qnt\n.exit\n",
+      "stdout": "7\n\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule M\n"
+    },
+    {
+      "name": "expression_comment_delimiter",
+      "unsafeUpstream": "saved expression closes replay block comment",
+      "evaluations": [
+        "\"a */ b\"\n"
+      ],
+      "input": "\"a */ b\"\n.save $DIR/session.qnt\n.exit\n",
+      "replay": "",
+      "stdout": "\"a */ b\"\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \n}/*! \"a */ b\" !*/\n",
+      "replayed": {
+        "stdout": "syntax error: \n Error [QNT000]: extraneous input 'b' expecting {<EOF>, 'module', DOCCOMMENT}\n\n  at <modules>:3:12\n  }/*! \"a */ b\" !*/\n             ^\n\nsyntax error: \n Error [QNT000]: token recognition error at: '\" !*/\\n'\n\n  at <modules>:3:13\n  }/*! \"a */ b\" !*/\n              ^\n\nPick the right module name and import it (the file has been loaded)\nSession saved to: $DIR/replayed.qnt\n",
+        "stderr": "",
+        "saved": "// @mainModule __repl__\n"
+      }
+    },
+    {
+      "name": "save_missing_filename",
+      "input": ".save\n.exit\n",
+      "savedName": null,
+      "stdout": ".save requires a filename\n",
+      "stderr": "",
+      "saved": null
+    },
+    {
+      "name": "save_extra_arguments_ignored",
+      "evaluations": [
+        "1\n"
+      ],
+      "input": "1\n.save $DIR/session.qnt ignored\n.exit\n",
+      "stdout": "1\nSession saved to: $DIR/session.qnt\n",
+      "stderr": "",
+      "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \n}/*! 1 !*/\n"
+    }
+  ],
+  "codec": [
+    {
+      "name": "empty",
+      "moduleHist": "",
+      "exprHist": [],
+      "saved": "// @mainModule __repl__\n",
+      "stdout": "Session saved to: $DIR/codec.qnt\n"
+    },
+    {
+      "name": "selected_empty",
+      "moduleHist": "",
+      "exprHist": [],
+      "main": "M",
+      "saved": "// @mainModule M\n",
+      "stdout": "Session saved to: $DIR/codec.qnt\n"
+    },
+    {
+      "name": "initialized_empty",
+      "moduleHist": "module __repl__ {\n  \n}",
+      "exprHist": [],
+      "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \n}",
+      "stdout": "Session saved to: $DIR/codec.qnt\n"
+    },
+    {
+      "name": "expressions",
+      "moduleHist": "module __repl__ {\n  \n}",
+      "exprHist": [
+        "1",
+        "2",
+        "1/0"
+      ],
+      "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \n}/*! 1 !*/\n\n/*! 2 !*/\n\n/*! 1/0 !*/\n",
+      "stdout": "Session saved to: $DIR/codec.qnt\n"
+    },
+    {
+      "name": "multiline_expressions",
+      "moduleHist": "module __repl__ {\n  \n}",
+      "exprHist": [
+        "List(\n1,\n2\n)",
+        "\"😀\""
+      ],
+      "saved": "// @mainModule __repl__\nmodule __repl__ {\n  \n}/*! List(\n1,\n2\n) !*/\n\n/*! \"😀\" !*/\n",
+      "stdout": "Session saved to: $DIR/codec.qnt\n"
+    },
+    {
+      "name": "raw_history_and_selected_main",
+      "moduleHist": "// raw\r\nmodule M { val x=1 }\r\n",
+      "exprHist": [
+        "x"
+      ],
+      "main": "M",
+      "saved": "// @mainModule M\n// raw\r\nmodule M { val x=1 }\r\n/*! x !*/\n",
+      "stdout": "Session saved to: $DIR/codec.qnt\n"
+    },
+    {
+      "name": "existing_annotation_preserved",
+      "moduleHist": "// @mainModule M\nmodule M { val x=1 }",
+      "exprHist": [
+        "x"
+      ],
+      "main": "N",
+      "saved": "// @mainModule M\nmodule M { val x=1 }/*! x !*/\n",
+      "stdout": "Session saved to: $DIR/codec.qnt\n"
+    },
+    {
+      "name": "annotation_prefix_only",
+      "moduleHist": "// @mainModuleBogus\nmodule M {}",
+      "exprHist": [],
+      "saved": "// @mainModuleBogus\nmodule M {}",
+      "stdout": "Session saved to: $DIR/codec.qnt\n"
+    }
+  ],
+  "loaded": [
+    {
+      "name": "no_markers",
+      "text": "module M {}",
+      "moduleHist": "module M {}module Previous {}",
+      "exprHist": [],
+      "originalModuleHist": "module Previous {}",
+      "originalExprHist": [
+        "previous"
+      ],
+      "stdout": ""
+    },
+    {
+      "name": "single",
+      "text": "module M {}/*! x !*/\n",
+      "moduleHist": "module M {}/*! x !*/\nmodule Previous {}",
+      "exprHist": [
+        "x"
+      ],
+      "originalModuleHist": "module Previous {}",
+      "originalExprHist": [
+        "previous"
+      ],
+      "stdout": ""
+    },
+    {
+      "name": "multiple_multiline",
+      "text": "/*! 1 !*/\n\n/*! List(\n1,\n2\n) !*/\n",
+      "moduleHist": "/*! 1 !*/\n\n/*! List(\n1,\n2\n) !*/\nmodule Previous {}",
+      "exprHist": [
+        "1",
+        "List(\n1,\n2\n)"
+      ],
+      "originalModuleHist": "module Previous {}",
+      "originalExprHist": [
+        "previous"
+      ],
+      "stdout": ""
+    },
+    {
+      "name": "required_spaces",
+      "text": "/*!x !*/ /*! y!*/ /*!  !*/ /*! z !*/",
+      "moduleHist": "/*!x !*/ /*! y!*/ /*!  !*/ /*! z !*/module Previous {}",
+      "exprHist": [
+        "y!*/ /*! ",
+        "z"
+      ],
+      "originalModuleHist": "module Previous {}",
+      "originalExprHist": [
+        "previous"
+      ],
+      "stdout": ""
+    },
+    {
+      "name": "crlf_content",
+      "text": "/*! List(\r\n1,\r\n2\r\n) !*/\r\n",
+      "moduleHist": "/*! List(\r\n1,\r\n2\r\n) !*/\r\nmodule Previous {}",
+      "exprHist": [
+        "List(\r\n1,\r\n2\r\n)"
+      ],
+      "originalModuleHist": "module Previous {}",
+      "originalExprHist": [
+        "previous"
+      ],
+      "stdout": ""
+    },
+    {
+      "name": "marker_in_string_is_not_lexed",
+      "text": "module M { val s=\"/*! 1 !*/\" }",
+      "moduleHist": "module M { val s=\"/*! 1 !*/\" }module Previous {}",
+      "exprHist": [
+        "1"
+      ],
+      "originalModuleHist": "module Previous {}",
+      "originalExprHist": [
+        "previous"
+      ],
+      "stdout": ""
+    },
+    {
+      "name": "early_close_inside_string",
+      "text": "module M {}/*! \" !*/\" !*/",
+      "moduleHist": "module M {}/*! \" !*/\" !*/module Previous {}",
+      "exprHist": [
+        "\""
+      ],
+      "originalModuleHist": "module Previous {}",
+      "originalExprHist": [
+        "previous"
+      ],
+      "stdout": ""
+    }
+  ],
+  "errors": [
+    {
+      "name": "save_directory",
+      "operation": "save",
+      "target": "$DIR",
+      "stdout": "Error: EISDIR: illegal operation on a directory, open '$DIR'\n",
+      "resultUndefined": true,
+      "stateUnchanged": true
+    },
+    {
+      "name": "save_missing_parent",
+      "operation": "save",
+      "target": "$DIR/missing-parent/file.qnt",
+      "stdout": "Error: ENOENT: no such file or directory, open '$DIR/missing-parent/file.qnt'\n",
+      "resultUndefined": true,
+      "stateUnchanged": true
+    },
+    {
+      "name": "load_missing",
+      "operation": "load",
+      "target": "$DIR/missing.qnt",
+      "stdout": "Error: ENOENT: no such file or directory, open '$DIR/missing.qnt'\n",
+      "resultUndefined": true,
+      "stateUnchanged": true
+    },
+    {
+      "name": "load_directory",
+      "operation": "load",
+      "target": "$DIR",
+      "stdout": "Error: EISDIR: illegal operation on a directory, read\n",
+      "resultUndefined": true,
+      "stateUnchanged": true
+    }
+  ]
+}

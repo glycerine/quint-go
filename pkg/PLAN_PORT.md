@@ -574,7 +574,9 @@ including failed actions that must not leak partially updated state.
   metadata, and output filename templates used in model-based testing.
 - [x] P8.4 Implement REPL multiline input, commands, load/reload, incremental
   definitions and analysis, evaluation, state display, history, and quiet mode.
-  - [ ] Additional .save/session replay, execution frames/value diffs, and
+  - [x] Save source snapshots and accepted expression history, load/reload with
+    replay, raw line endings, selected-module markers and safe round trips.
+  - [ ] Execution frames/value diffs, and
     interruption of caller-owned blocked input readers.
 - [ ] P8.5 Add cancellation and bounded resource controls. Where concurrent
   simulation is exposed, isolate RNG/state/cache ownership and define result
@@ -3299,3 +3301,12 @@ word "retained" in the commit message.
   tests0.096s, CLI0.053s, optional broad corpus1.054s, parser race1.321s/docs race
   1.146s and vet pass. Multi-field record operand borrowing remains an explicit
   unsupported recovery boundary; other CLI execution/check adapters stay separate.
+
+- 2026-11-02: Added REPL .save and load/reload expression replay with37 upstream
+  oracle entries including18 real command streams. Owned source snapshots preserve
+  raw line endings, selected-module markers, relative imports and accepted history
+  while keeping RNG/closures/reload state independent of save. Verified closing
+  braces and consumed replay markers correct upstream corruption/duplication bugs;
+  unsafe comment terminators fail before writing. Callback, cancellation, I/O and
+  token-boundary tests pass. Focused core0.143s/CLI0.058s, races1.431s/1.196s and
+  vet pass. Verbose frame/value-diff display remains separate work.

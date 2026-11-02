@@ -39,10 +39,10 @@ func TestREPLErrorsKeepSessionUsable(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	input := "val x = 2\nx + true\nx\n.load\n.reload\n.save\n.verbosity=9\n.seed=-1\n.nope\n1\n"
 	status := RunREPL(context.Background(), strings.NewReader(input), &stdout, &stderr, REPLLoopOptions{Quiet: true})
-	if status != 0 || !strings.HasSuffix(stdout.String(), "2\n1\n") {
+	if status != 0 || !strings.Contains(stdout.String(), "2\n.save requires a filename\n") || !strings.HasSuffix(stdout.String(), "1\n") {
 		t.Fatalf("status=%d stdout=%q stderr=%q", status, stdout.String(), stderr.String())
 	}
-	for _, want := range []string{".load requires", "reload", ".save is not implemented", ".verbosity requires", ".seed requires", "Unexpected command"} {
+	for _, want := range []string{".load requires", "reload", ".verbosity requires", ".seed requires", "Unexpected command"} {
 		if !strings.Contains(stderr.String(), want) {
 			t.Fatalf("missing %q in %q", want, stderr.String())
 		}

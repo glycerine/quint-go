@@ -997,3 +997,13 @@ actual upstream snapshots each for retained stages/source maps and partial docs
 before accumulated errors. Matching generators live in grammar/. New reducers
 have 100% coverage. Malformed multi-field record operand borrowing remains an
 explicit SyntaxRecoveryError; run/test/verify still use their fail-fast adapters.
+
+`repl_save.json` contains 37 actual upstream oracle entries, including 18 real
+REPL command streams, from `grammar/repl_save_fixtures.cjs`. Core/CLI tests add
+round trips, raw CRLF/bare-CR preservation, relative imports, changed-on-disk source,
+RNG/closure/history ownership, callbacks, cancellation and filesystem errors.
+Intentional reference corrections use the chosen module's verified closing brace,
+write its actual marker, and remove consumed replay comments to avoid duplication.
+Lexical scanning avoids strings/comments/hashbangs and preserves token separation;
+expressions containing */ are rejected before file writes rather than corrupting
+comment-based archives. CLI load/reload replays accepted expressions once.

@@ -115,8 +115,8 @@ options; commented-out `--timeout` is not an upstream implemented option.
 | `docs` | `--out` | Embedded builtin docs and source Markdown generation implemented. |
 
 REPL `.clear`, `.exit`/`.quit`, `.help`, `.load`, `.reload`, `.state`, `.history`,
-`.verbosity`, `.seed`, and multiline input are implemented; `.save` explicitly
-reports unimplemented. Interactive blocked-read cancellation belongs to the
+`.verbosity`, `.seed`, `.save`, saved-expression replay and multiline input are
+implemented. Interactive blocked-read cancellation belongs to the
 input owner. Parser/evaluator errors leave the session available.
 
 `--seed` reduces default run/test samples to one unless `--max-samples` is
