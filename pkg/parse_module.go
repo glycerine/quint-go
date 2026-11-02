@@ -10,6 +10,10 @@ import (
 // ParseModules performs syntax parsing and IR conversion only; imports, names,
 // types, and effects are resolved by subsequent passes.
 func ParseModules(text string) ([]Module, error) {
+	return parseModulesWithIDs(text, NewIDGenerator())
+}
+
+func parseModulesWithIDs(text string, ids *IDGenerator) ([]Module, error) {
 	listener := newSyntaxErrors(text)
 	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
@@ -21,7 +25,6 @@ func ParseModules(text string) ([]Module, error) {
 	if len(listener.issues) > 0 {
 		return nil, listener.err("module")
 	}
-	ids := NewIDGenerator()
 	modules := []Module{}
 	for _, ctx := range tree.AllModule() {
 		module := Module{Name: ctx.QualId().GetText(), Declarations: []Declaration{}}

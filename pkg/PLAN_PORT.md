@@ -850,3 +850,12 @@ word "retained" in the commit message.
   configuration. Default tests pass within the sub-second execution target.
   P2.7 remains open for parser integration, duplicate-import traversal, cycles,
   and import diagnostics; invalid-UTF-8 decoding parity is also still pending.
+
+- 2026-11-02: Added transitive source loading with shared parser IDs, upstream
+  breadth-first discovery/reversed imported-module order, .qnt suffix handling,
+  normalized-path deduplication, QNT013 missing imports, and QNT408 case conflicts.
+  Tests cover diamonds, repeated paths, instances, cyclic file references without
+  repeated loads, global ID uniqueness, discovery order, and load diagnostics.
+  Default tests pass within the sub-second target. P2.7 remains open: this API
+  deliberately returns discovery order, with dependency sorting, module-cycle
+  diagnostics, partial-result behavior, and source maps still to implement.
