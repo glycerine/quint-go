@@ -1421,3 +1421,12 @@ word "retained" in the commit message.
   monomorphic/open schemes, input immutability, and incompatible cross-kind
   names. Default tests pass (combined execution 0.626s). Nondeterminism checking
   and broader scheme-format differential validation remain pending.
+
+- 2026-11-02: Added NondetChecker with QNT203–QNT206 checks for selection
+  placement, nondet body shape, boolean continuations, and top-level bindings.
+  The checker preserves upstream's last-visited qualifier state and accumulating
+  errors across batches. Tests run parsing/name/type analysis before checks and
+  cover both selection operators, valid actions, ordered multiple errors, missing
+  type entries, source references, and incremental accumulation. Default tests
+  pass (combined execution 0.601s). Upstream differential checker fixtures and
+  combined-analysis integration remain pending.
