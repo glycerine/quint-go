@@ -84,3 +84,9 @@ module IR exactly, without normalizing generated names or identities.
 cases, retaining original IDs and including inputs with name errors. Tests compare
 every graph vertex and dependency set; edge order is normalized because the
 upstream graph uses Immutable sets. Go stores discoveries in insertion order.
+
+
+`declaration_sort.json` applies upstream topological sorting to the 22
+call-graph fixtures. Tests compare exact declaration order and residual cycle
+sets. Cycle IDs are sorted in the fixtures: upstream Immutable iteration order
+for diagnostics is not covered by this comparison.

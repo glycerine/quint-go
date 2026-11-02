@@ -165,3 +165,12 @@ const graphFixtures=resolutionCases.map(([name,source])=>{
  })}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/callgraph.json'),JSONbig.stringify(graphFixtures,null,2)+'\n')
+
+const {toposort}=require(path.join(root,'quint/src/static/toposort'))
+const sortFixtures=graphFixtures.map(f=>({name:f.name,input:f.input,results:f.input.map((m,i)=>{
+ const {Map,Set}=require(path.join(root,'quint/node_modules/immutable'))
+ const graph=Map(Object.entries(f.graphs[i]).map(([id,uses])=>[BigInt(id),Set(uses.map(BigInt))]))
+ const result=toposort(graph,m.declarations)
+ return {sorted:result.sorted.map(d=>String(d.id)),cycles:[...result.cycles].map(String).sort()}
+})}))
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/declaration_sort.json'),JSONbig.stringify(sortFixtures,null,2)+'\n')

@@ -199,7 +199,9 @@ errors without panics or losing subsequent declarations after recoverable errors
   - [x] Build declaration dependency graphs including types, local bindings,
     imports, exports, and instance overrides.
   - [x] Compare graph vertices and edges against upstream fixtures.
-  - [ ] Sort declarations and report residual cycles through the parser pipeline.
+  - [x] Sort declarations by dependency layers and emit residual QNT099 diagnostics.
+  - [ ] Integrate sorting into the full parser pipeline and verify cycle-diagnostic
+    order against upstream Immutable collection iteration.
 - [ ] P3.5 Preserve definition identity and lookup-table consistency across
   module boundaries and incremental declaration analysis.
 - [ ] P3.6 Run name/static fixtures, including nested instances, collisions,
@@ -1131,3 +1133,13 @@ word "retained" in the commit message.
   erroneous and recursive inputs; focused tests verify nested type/value
   dependencies and input immutability. Default tests pass (combined execution
   0.526s). Declaration sorting and QNT099 cycle reporting remain open.
+
+- 2026-11-02: Added SortDeclarations and SortModuleDeclarations, retaining
+  sortable declarations on cycles, including external graph vertices in dependency
+  layers, and matching decimal-ID ordering within layers. QNT099 diagnostics cover
+  nested recursive definitions and blocked dependents. Tests compare declaration
+  order and residual cycle sets against all 22 upstream graph fixtures, with
+  focused layer-order, external-dependency, immutability, and nested-cycle tests.
+  Default tests pass (combined execution 0.513s). Go emits residual diagnostics in
+  graph discovery order; exact upstream Immutable diagnostic ordering and full
+  parser pipeline integration remain pending.
