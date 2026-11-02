@@ -1567,3 +1567,11 @@ word "retained" in the commit message.
   they verify substitution/frame cleanup. Default tests pass under one second.
   Exact upstream inference-table parity, broader declaration/error lifecycle
   coverage, and combined analyzer integration remain open under P5.2/P5.5.
+
+- 2026-11-02: Added nine exact upstream effect-inference table fixtures covering
+  reads, assignment, polymorphic/local operators, temporal propagation,
+  higher-order list mapping, operator-valued results, and operator constants.
+  Comparisons include ordered entries, full effects/source references, quantified
+  names, and diagnostic trees with no normalization. All match without code
+  changes. Full default tests pass (combined execution 0.689s). Cross-module,
+  instance, broader failure-lifecycle parity and combined analysis remain open.

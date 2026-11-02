@@ -373,3 +373,23 @@ const builtinEffectFixtures=[...getEffectSignatures()].flatMap(([name,signature]
   return {name,arity,scheme:{effect:s.effect,effectVariables:[...s.effectVariables],entityVariables:[...s.entityVariables]}}
  }))
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/builtin_effects.json'),JSONbig.stringify(builtinEffectFixtures,null,2)+'\n')
+
+const {EffectInferrer}=require(path.join(root,'quint/src/effects/inferrer'))
+const effectInferenceCases=[
+ ['reads',"module M { var x:int val a=x+1 }"],
+ ['assign',"module M { var x:int action a=x'=x+1 }"],
+ ['identity',"module M { def identity(x)=x val a=identity(1) val b=identity(true) }"],
+ ['local',"module M { var x:int val a=def identity(y)=y; identity(x) }"],
+ ['temporal',"module M { var x:int temporal a=always(x>0) }"],
+ ['higher-order',"module M { var x:int val a=List(1,2).map(y=>y+x) }"],
+ ['error',"module M { var x:int val a=next(x)+1 val b=2 }"],
+ ['operator-result',"module M { def f(x)=(y)=>y }"],
+ ['constants',"module M { const c:int const f:(int)=>int val a=f(c) }"],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/effect_inference.json'),JSONbig.stringify(effectInferenceCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ if(parsed.errors.length)throw Error(JSONbig.stringify(parsed.errors))
+ const linked=resolveNames(parsed.modules)
+ const [errors,effects]=new EffectInferrer(linked.table).inferEffects(parsed.modules[0].declarations)
+ return {name,input:parsed.modules,effects:[...effects].map(([id,s])=>({id:String(id),scheme:{effect:s.effect,effectVariables:[...s.effectVariables],entityVariables:[...s.entityVariables]}})),errors:[...errors].map(([id,error])=>({id:String(id),error}))}
+}),null,2)+'\n')
