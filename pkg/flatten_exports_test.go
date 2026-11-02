@@ -38,3 +38,34 @@ func TestExpandModuleExports(t *testing.T) {
 		t.Fatal("source mutated")
 	}
 }
+
+func TestQualifiedExportDependencyNamespace(t *testing.T) {
+	ms, err := ParseModules("module A { val base=1 val a=base+1 } module B { import A as I export I } module C { import B.* val c=I::a }")
+	if err != nil {
+		t.Fatal(err)
+	}
+	linked, _ := ResolveLinkedModules(ms)
+	if len(linked.Errors) > 0 {
+		t.Fatal(linked.Errors)
+	}
+	modules := insdict.NewDict[string, Module]()
+	for _, m := range ms {
+		modules.Set(m.Name, m)
+	}
+	got, err := ExpandModuleExports(ms[1], modules, linked.Table)
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := false
+	for _, d := range got.Declarations {
+		if d.Name == "I::base" {
+			found = true
+		}
+		if d.Name == "base" {
+			t.Fatal("dependency lost export namespace")
+		}
+	}
+	if !found {
+		t.Fatal(got)
+	}
+}

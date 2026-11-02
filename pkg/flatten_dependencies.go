@@ -10,6 +10,9 @@ import (
 // DependentDefinitions collects referenced definitions in dependency order for
 // flattening. Instance imports are handled by the separate instantiation pass.
 func DependentDefinitions(expression Expr, table *insdict.Dict[ID, LookupDefinition]) ([]Declaration, error) {
+	return dependentDefinitionsInNamespace(expression, table, "")
+}
+func dependentDefinitionsInNamespace(expression Expr, table *insdict.Dict[ID, LookupDefinition], namespace string) ([]Declaration, error) {
 	out := []Declaration{}
 	active := map[string]bool{}
 	var visit func(Expr, string) error
@@ -92,6 +95,6 @@ func DependentDefinitions(expression Expr, table *insdict.Dict[ID, LookupDefinit
 		}
 		return nil
 	}
-	err := visit(expression, "")
+	err := visit(expression, namespace)
 	return out, err
 }

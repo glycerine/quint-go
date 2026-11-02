@@ -1773,3 +1773,11 @@ word "retained" in the commit message.
   (combined execution 0.748s). Nested export dependency namespaces, deduplication,
   exact upstream export fixtures, and integration with import expansion remain
   open; P6.1 is incomplete.
+
+- 2026-11-02: Corrected export dependency collection to inherit the export
+  namespace, including recursively referenced definitions. Added a linked
+  qualified-export test ensuring internal base definitions become I::base rather
+  than leaking unqualified names. Existing dependency and module differential
+  fixtures remain green. Default tests pass (combined execution 0.768s).
+  Export deduplication/full upstream fixtures and unified flattening traversal
+  remain open under P6.1.

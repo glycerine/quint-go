@@ -65,7 +65,7 @@ func ExpandModuleExports(module Module, modules *insdict.Dict[string, Module], t
 			}
 			// Discover dependencies with the namespace applied to references.
 			if copied.Expr != nil {
-				dependencies, err := DependentDefinitions(*copied.Expr, table)
+				dependencies, err := dependentDefinitionsInNamespace(*copied.Expr, table, namespace)
 				if err != nil {
 					return Module{}, err
 				}
