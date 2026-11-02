@@ -697,3 +697,11 @@ transitions, temporal failures and any supplied loop index rather than requiring
 an exact solver witness. Current missing loop metadata and unclear quantified-
 temporal errors remain documented limitations. These tests use Go Apalache,
 not Scala, Node, or the upstream evaluator.
+
+LSP watcher regressions additionally mutate/delete/recreate an unopened imported
+file, preserve unsaved main/import buffers, reject stale same-version work, and
+validate event batches and malformed/non-file notifications. Client-only VSCode
+selector/activation tests run separately from Go tests; they verify configured,
+bundled and PATH Go startup, explicit TypeScript choice, and startup errors.
+Native build and stdio lifecycle smoke pass. Full extension compilation,
+VSIX/real-host installation, and cross-platform checks remain unrun locally.

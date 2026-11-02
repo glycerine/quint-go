@@ -7,8 +7,11 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
+	"os"
+	"path/filepath"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"testing"
 )
 
@@ -266,6 +269,177 @@ func TestServerImportedOpenBufferChanges(t *testing.T) {
 		if len(item.Diagnostics) != 0 {
 			t.Fatal(got)
 		}
+	}
+}
+
+func TestServerWatchedDiskImportsAndUnsavedBuffers(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	dependency := filepath.Join(directory, "dep.qnt")
+	main := filepath.Join(directory, "main.qnt")
+	write := func(path, text string) {
+		t.Helper()
+		if err := os.WriteFile(path, []byte(text), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	write(dependency, `module Dep { pure val value = 1 }`)
+	write(main, "unsaved main buffer must override this disk text")
+	mainText := `module Main { import Dep.* from "dep" pure val result = value + 1 }`
+	mainURI, dependencyURI := uriForSource(main), uriForSource(dependency)
+	server := NewServer(Options{})
+	defer server.Close()
+	capture := &capturedMessages{}
+	initializeTest(t, server, capture)
+	handleTest(t, server, capture, "textDocument/didOpen", nil, openParams(mainURI, mainText, 7))
+	waitTest(t, server)
+	assertMain := func(code string, expected int) {
+		t.Helper()
+		got := diagnosticsTest(t, capture.take())
+		if len(got) != expected {
+			t.Fatal(got)
+		}
+		found := false
+		for _, item := range got {
+			if item.URI == mainURI {
+				found = true
+				if item.Version == nil || *item.Version != 7 {
+					t.Fatal(item)
+				}
+				if code == "" {
+					if len(item.Diagnostics) != 0 {
+						t.Fatal(item)
+					}
+				} else if len(item.Diagnostics) == 0 || item.Diagnostics[0].Code != code {
+					t.Fatal(item)
+				}
+			}
+		}
+		if !found {
+			t.Fatal("main diagnostics missing", got)
+		}
+		server.mu.Lock()
+		text, version := server.documents.Get(mainURI).Text, server.documents.Get(mainURI).Version
+		server.mu.Unlock()
+		if text != mainText || version != 7 {
+			t.Fatal("disk event changed open main buffer", text, version)
+		}
+	}
+	assertMain("", 1)
+	watch := func(kind int) {
+		t.Helper()
+		handleTest(t, server, capture, "workspace/didChangeWatchedFiles", nil, map[string]any{"changes": []any{map[string]any{"uri": dependencyURI, "type": kind}}})
+		waitTest(t, server)
+	}
+	write(dependency, `module Dep { pure val value = true }`)
+	watch(2)
+	assertMain("QNT000", 1)
+	if err := os.Remove(dependency); err != nil {
+		t.Fatal(err)
+	}
+	watch(3)
+	assertMain("QNT013", 1)
+	write(dependency, `module Dep { pure val value = 3 }`)
+	watch(1)
+	assertMain("", 1)
+	dependencyText := `module Dep { pure val value = 4 }`
+	handleTest(t, server, capture, "textDocument/didOpen", nil, openParams(dependencyURI, dependencyText, 3))
+	waitTest(t, server)
+	assertMain("", 2)
+	write(dependency, `module Dep { pure val value = false }`)
+	watch(2)
+	assertMain("", 2)
+	server.mu.Lock()
+	retained := server.documents.Get(dependencyURI).Text
+	before := server.documents.Get(mainURI).generation
+	server.mu.Unlock()
+	if retained != dependencyText {
+		t.Fatal("disk event overwrote unsaved imported buffer", retained)
+	}
+	// Several events (including an unrelated path) still schedule only one
+	// generation per open document for the whole notification.
+	handleTest(t, server, capture, "workspace/didChangeWatchedFiles", nil, map[string]any{"changes": []any{map[string]any{"uri": dependencyURI, "type": 2}, map[string]any{"uri": uriForSource(filepath.Join(directory, "unknown.qnt")), "type": 1}}})
+	waitTest(t, server)
+	assertMain("", 2)
+	server.mu.Lock()
+	after := server.documents.Get(mainURI).generation
+	server.mu.Unlock()
+	if after != before+1 {
+		t.Fatal("watch batch scheduled duplicate generations", before, after)
+	}
+	content, err := os.ReadFile(main)
+	if err != nil || string(content) != "unsaved main buffer must override this disk text" {
+		t.Fatal("server wrote an open buffer to disk", string(content), err)
+	}
+}
+
+func TestServerWatchedFileNotificationValidation(t *testing.T) {
+	t.Parallel()
+	var analyses atomic.Int32
+	server := NewServer(Options{Analyze: func(ctx context.Context, doc Document) (*Snapshot, error) {
+		analyses.Add(1)
+		return &Snapshot{URI: doc.URI, Version: doc.Version, Text: doc.Text}, nil
+	}})
+	defer server.Close()
+	capture := &capturedMessages{}
+	initializeTest(t, server, capture)
+	handleTest(t, server, capture, "textDocument/didOpen", nil, openParams("untitled:watch-validation", "buffer", 1))
+	waitTest(t, server)
+	capture.take()
+	for _, params := range []any{
+		map[string]any{"changes": []any{}},
+		map[string]any{"changes": []any{map[string]any{"uri": "untitled:virtual.qnt", "type": 2}}},
+		map[string]any{"changes": []any{map[string]any{"uri": "file:///tmp/readme.txt", "type": 2}}},
+	} {
+		handleTest(t, server, capture, "workspace/didChangeWatchedFiles", nil, params)
+		waitTest(t, server)
+		if messages := capture.take(); len(messages) != 0 {
+			t.Fatal(messages)
+		}
+	}
+	for _, params := range []any{
+		map[string]any{"changes": "invalid"},
+		map[string]any{"changes": []any{map[string]any{"uri": "%", "type": 2}}},
+		map[string]any{"changes": []any{map[string]any{"uri": "relative.qnt", "type": 2}}},
+		map[string]any{"changes": []any{map[string]any{"uri": "file://remote-host/import.qnt", "type": 2}}},
+		map[string]any{"changes": []any{map[string]any{"uri": "file:///tmp/import.qnt", "type": 99}}},
+		map[string]any{"changes": []any{map[string]any{"uri": "file:///tmp/import.qnt", "type": 2}, map[string]any{"uri": "", "type": 1}}},
+	} {
+		handleTest(t, server, capture, "workspace/didChangeWatchedFiles", nil, params)
+		waitTest(t, server)
+		if messages := capture.take(); len(messages) != 1 || !bytes.Contains(messages[0], []byte(`"method":"window/logMessage"`)) {
+			t.Fatal(messages)
+		}
+	}
+	if got := analyses.Load(); got != 1 {
+		t.Fatal("invalid/irrelevant events caused analysis", got)
+	}
+}
+
+func TestServerWatchedFilesRejectOldGeneration(t *testing.T) {
+	t.Parallel()
+	started, release := make(chan struct{}), make(chan struct{})
+	var analyses atomic.Int32
+	server := NewServer(Options{Analyze: func(ctx context.Context, doc Document) (*Snapshot, error) {
+		message := "latest"
+		if analyses.Add(1) == 1 {
+			close(started)
+			<-release
+			message = "stale"
+		}
+		return &Snapshot{URI: doc.URI, Version: doc.Version, Text: doc.Text, Diagnostics: []Diagnostic{{Severity: 1, Source: "quint", Message: message}}}, nil
+	}})
+	defer server.Close()
+	capture := &capturedMessages{}
+	initializeTest(t, server, capture)
+	handleTest(t, server, capture, "textDocument/didOpen", nil, openParams("untitled:watch-generation", "unchanged buffer", 1))
+	<-started
+	handleTest(t, server, capture, "workspace/didChangeWatchedFiles", nil, map[string]any{"changes": []any{map[string]any{"uri": "file:///tmp/changed-import.qnt", "type": 2}}})
+	close(release)
+	waitTest(t, server)
+	got := diagnosticsTest(t, capture.take())
+	if len(got) != 1 || *got[0].Version != 1 || got[0].Diagnostics[0].Message != "latest" {
+		t.Fatal(got)
 	}
 }
 func TestServerInvalidEditsAreAtomic(t *testing.T) {

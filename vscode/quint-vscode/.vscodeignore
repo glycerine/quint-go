@@ -1,0 +1,8 @@
+client/src/**
+client/test/**
+server/src/**
+server/test/**
+scripts/**
+.vscode/**
+**/*.tsbuildinfo
+!bin/**

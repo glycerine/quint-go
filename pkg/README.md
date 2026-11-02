@@ -56,10 +56,12 @@ returned mutable IR views are copied as documented by their APIs.
 Configure an editor's language-server executable as `/tmp/quint-go-lsp`; it
 speaks Content-Length framed JSON-RPC over stdin/stdout. It supports document
 updates and diagnostics, hover, definitions, references, symbols, scoped
-completion, and conservative rename with UTF-16 ranges. Existing editor-client
-launch configuration has not yet been switched to this executable. Field
-completion, selective-import rename, and several additional capabilities remain
-open.
+completion, and conservative rename with UTF-16 ranges. The VSCode extension defaults to Go and selects a configured machine-scope
+executable path, its bundled native binary, or `quint-lsp` on PATH. TypeScript is
+an explicit alternative. Its native build/development tasks and client selector
+regressions pass; full extension compilation and host/VSIX packaging remain
+unverified because the extension dependencies are absent locally. Field
+completion, selective-import rename, and additional capabilities remain open.
 
 Default tests use saved upstream fixtures and run without the reference tools.
 The fixture manifest is in [testdata/parser/README.md](testdata/parser/README.md).

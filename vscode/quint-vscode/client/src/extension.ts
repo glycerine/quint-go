@@ -4,39 +4,55 @@
  * See LICENSE in the project root for license information.
  * --------------------------------------------------------------------------------- */
 
-import * as path from 'path'
-import { ExtensionContext, workspace } from 'vscode'
+import { ExtensionContext, ExtensionMode, window, workspace } from 'vscode'
 
 import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind } from 'vscode-languageclient/node'
+import { ServerSelection, selectLanguageServer } from './serverSelection'
 
 let client: LanguageClient
 
 export function activate(context: ExtensionContext) {
-  // The server is implemented in node
-  const serverModule = context.asAbsolutePath(path.join('server', 'out', 'src', 'server.js'))
-  // The debug options for the server
-  // --inspect=6009: runs the server in Node's Inspector mode
-  // so VS Code can attach to the server for debugging
-  const debugOptions = { execArgv: ['--nolazy', '--inspect=6009'] }
-
-  // If the extension is launched in debug mode then the debug server options are used
-  // Otherwise the run options are used
-  const serverOptions: ServerOptions = {
-    run: { module: serverModule, transport: TransportKind.ipc },
-    debug: {
-      module: serverModule,
-      transport: TransportKind.ipc,
-      options: debugOptions,
-    },
+  const configuration = workspace.getConfiguration('quint.languageServer')
+  let selection: ServerSelection
+  try {
+    selection = selectLanguageServer(
+      { backend: configuration.get<string>('backend', 'go'), executable: configuration.get<string>('path', '') },
+      context.extensionPath,
+      process.platform,
+      undefined,
+      context.extensionMode === ExtensionMode.Development ? process.env.QUINT_VSCODE_SERVER_BACKEND : undefined
+    )
+  } catch (error) {
+    void window.showErrorMessage(String(error))
+    return
   }
+  const serverOptions: ServerOptions =
+    selection.backend === 'go'
+      ? {
+          run: { command: selection.command, transport: TransportKind.stdio },
+          debug: { command: selection.command, transport: TransportKind.stdio },
+        }
+      : {
+          run: { module: selection.module, transport: TransportKind.ipc },
+          debug: {
+            module: selection.module,
+            transport: TransportKind.ipc,
+            options: { execArgv: ['--nolazy', '--inspect=6009'] },
+          },
+        }
+
+  const watcher = workspace.createFileSystemWatcher('**/*.qnt')
+  context.subscriptions.push(watcher)
 
   // Options to control the language client
   const clientOptions: LanguageClientOptions = {
-    // Register the server for plain text documents
-    documentSelector: [{ scheme: 'file', language: 'quint' }],
+    documentSelector: [
+      { scheme: 'file', language: 'quint' },
+      { scheme: 'untitled', language: 'quint' },
+    ],
     synchronize: {
       // watch for changes in Quint files
-      fileEvents: workspace.createFileSystemWatcher('**/*.qnt'),
+      fileEvents: watcher,
     },
   }
 
@@ -44,7 +60,17 @@ export function activate(context: ExtensionContext) {
   client = new LanguageClient('quintLspClient', 'Quint Language Server', serverOptions, clientOptions)
 
   // Start the client. This will also launch the server
-  client.start()
+  context.subscriptions.push(client.start())
+  void client.onReady().catch(error => {
+    const executable = selection.backend === 'go' ? ` (${selection.command})` : ''
+    const hint =
+      selection.backend === 'go'
+        ? ' Install quint-lsp or set quint.languageServer.path, then reload the window.'
+        : ' Compile the TypeScript server, then reload the window.'
+    void window.showErrorMessage(
+      `Quint ${selection.backend} language server${executable} failed to start: ${String(error)}.${hint}`
+    )
+  })
 }
 
 export function deactivate(): Promise<void> | undefined {

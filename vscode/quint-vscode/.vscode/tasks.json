@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "compile extension client",
+      "type": "npm",
+      "script": "compile:client",
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "compile Go language server",
+      "type": "npm",
+      "script": "compile:go",
+      "problemMatcher": []
+    },
+    {
+      "label": "build Go extension",
+      "dependsOrder": "parallel",
+      "dependsOn": ["compile extension client", "compile Go language server"],
+      "problemMatcher": []
+    },
+    {
+      "label": "build TypeScript extension",
+      "type": "npm",
+      "script": "compile",
+      "problemMatcher": "$tsc"
+    }
+  ]
+}

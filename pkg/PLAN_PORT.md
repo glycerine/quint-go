@@ -670,12 +670,15 @@ This follows the core CLI milestone but remains tracked for tooling parity.
   - [x] Hover/builtin docs, definition/references, document symbols, scoped
     completion, and conservative rename with precise UTF-16 ranges.
   - [ ] Field completion and selective-import rename; remaining capability
-    audit includes signature help, code actions, and workspace symbols.
-- [ ] P11.4 Update editor launch/build configuration and run protocol-level
+    audit includes signature help and code actions.
+- [x] P11.4 Update editor launch/build configuration and run protocol-level
   regressions for edits, imports, incomplete syntax, and cross-file navigation.
   - [x] Protocol tests for edits, imports, malformed input, lifecycle, stale
     work, cancellation, navigation, semantic requests, and large JSON-RPC IDs.
-  - [ ] Existing editor-client launch/build wiring to the Go server.
+  - [x] VSCode Go/TypeScript choice, executable selection, stdio startup, native
+    build/development tasks, and watched import refresh preserving unsaved buffers.
+  - [ ] Full extension typecheck/VSIX/real-host and cross-platform validation;
+    local VSCode client dependencies were unavailable without installation.
 
 Exit gate: the editor can analyze and navigate files through the Go frontend;
 any remaining TypeScript client code is distinguished from language-server logic.
@@ -2900,3 +2903,15 @@ word "retained" in the commit message.
   Quantified temporal formulas currently fail assignment rewriting instead of
   producing a dedicated unsupported diagnostic. Full default tests/vet pass;
   no Scala or external reference checker was invoked.
+
+- 2026-11-02: VSCode now defaults to the Go stdio server, choosing an explicit
+  machine-scope path, bundled binary, or PATH command; TypeScript IPC remains an
+  explicit choice with no automatic fallback. Added native build/prepublish and
+  development launch tasks, selector/activation regressions, and platform
+  packaging instructions. Go LSP watched-file notifications refresh open
+  documents for unopened import creation/change/deletion while retaining unsaved
+  overlays and rejecting stale work; three new regression groups and race
+  checks pass (LSP0.038s). Client helper tests/typecheck, lint/format, native
+  rebuild, and actual initialize/shutdown/exit smoke pass. Full extension tsc
+  could not run because its VSCode/client dependencies are absent; VSIX/real-host
+  and cross-platform checks remain unrun. No dependencies were downloaded.

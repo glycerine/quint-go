@@ -46,16 +46,39 @@
 				"scopeName": "source.quint",
 				"path": "./syntaxes/quint.tmLanguage.json"
 			}
-		]
+		],
+		"configuration": {
+			"title": "Quint",
+			"properties": {
+				"quint.languageServer.backend": {
+					"type": "string",
+					"enum": [
+						"go",
+						"typescript"
+					],
+					"default": "go",
+					"description": "Language-server implementation. Go launches quint-lsp over stdio; TypeScript explicitly selects the existing Node server. Reload the window after changing this setting."
+				},
+				"quint.languageServer.path": {
+					"type": "string",
+					"default": "",
+					"scope": "machine",
+					"description": "Go quint-lsp executable path or command. Empty uses the bundled native executable when present, otherwise quint-lsp on PATH. Reload the window after changing this setting."
+				}
+			}
+		}
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run compile",
+		"vscode:prepublish": "npm run compile && npm run compile:go",
 		"compile": "tsc -b",
 		"watch": "tsc -b -w",
 		"postinstall": "cd server && npm install && cd ..",
-		"test": "cd server && npm test",
+		"test": "npm run test:client && cd server && npm test",
 		"format-check": "npx prettier --check '**/*.ts' && npx eslint '**/*.ts'",
-		"format": "npx prettier --write '**/*.ts' && npx eslint --fix '**/*.ts'"
+		"format": "npx prettier --write '**/*.ts' && npx eslint --fix '**/*.ts'",
+		"compile:client": "tsc -p client",
+		"compile:go": "node scripts/build-go-server.cjs",
+		"test:client": "node client/test/serverSelection.test.cjs"
 	},
 	"devDependencies": {
 		"@types/mocha": "^10.0.10",

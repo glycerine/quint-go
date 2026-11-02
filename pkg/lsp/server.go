@@ -8,6 +8,9 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net/url"
+	"path/filepath"
+	"strings"
 	"sync"
 
 	"github.com/glycerine/insdict"
@@ -313,6 +316,41 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 		s.mu.Lock()
 		s.scheduleAllLocked(ctx, send)
 		s.mu.Unlock()
+		return nil
+	case "workspace/didChangeWatchedFiles":
+		var params struct {
+			Changes []struct {
+				URI  string `json:"uri"`
+				Type int    `json:"type"`
+			} `json:"changes"`
+		}
+		if json.Unmarshal(message.Params, &params) != nil {
+			return fail(-32602, "Invalid didChangeWatchedFiles parameters")
+		}
+		reanalyze := false
+		for _, change := range params.Changes {
+			uri, err := url.Parse(change.URI)
+			if err != nil || uri.Scheme == "" || change.Type < 1 || change.Type > 3 {
+				return fail(-32602, "Invalid watched-file change")
+			}
+			if uri.Scheme != "file" {
+				continue
+			}
+			path, err := sourceForURI(change.URI)
+			if err != nil {
+				return fail(-32602, err.Error())
+			}
+			if strings.EqualFold(filepath.Ext(path), ".qnt") {
+				reanalyze = true
+			}
+		}
+		if reanalyze {
+			// A disk dependency may affect any open project. Analyze one fresh
+			// generation per document, preserving all unsaved buffer overlays.
+			s.mu.Lock()
+			s.scheduleAllLocked(ctx, send)
+			s.mu.Unlock()
+		}
 		return nil
 	case "textDocument/didClose":
 		var params struct {
