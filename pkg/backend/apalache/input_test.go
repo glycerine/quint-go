@@ -10,7 +10,7 @@ import (
 	quint "github.com/glycerine/quint-go/pkg"
 )
 
-func compileSource(t *testing.T, source string) quint.CompilationResult {
+func compileSource(t *testing.T, source string, inductive ...string) quint.CompilationResult {
 	t.Helper()
 	parsed, err := quint.ParseModulesWithLocations("M.qnt", source)
 	if err != nil {
@@ -24,7 +24,11 @@ func compileSource(t *testing.T, source string) quint.CompilationResult {
 	if err != nil || len(analyzed.Diagnostics) > 0 {
 		t.Fatal(err, analyzed.Diagnostics)
 	}
-	compiled, err := quint.CompileModules(analyzed.Modules, quint.AnalysisOutput{Types: analyzed.Types, Effects: analyzed.Effects, Modes: analyzed.Modes}, parsed.IDs, parsed.Sources, quint.CompilationOptions{Main: "M", CompilationEntries: quint.CompilationEntries{Target: "json", Flatten: true, Invariants: []string{"safe"}}})
+	inductiveExpression := ""
+	if len(inductive) > 0 {
+		inductiveExpression = inductive[0]
+	}
+	compiled, err := quint.CompileModules(analyzed.Modules, quint.AnalysisOutput{Types: analyzed.Types, Effects: analyzed.Effects, Modes: analyzed.Modes}, parsed.IDs, parsed.Sources, quint.CompilationOptions{Main: "M", CompilationEntries: quint.CompilationEntries{Target: "json", Flatten: true, Invariants: []string{"safe"}, InductiveInvariant: inductiveExpression}})
 	if err != nil || len(compiled.Diagnostics) > 0 || len(compiled.AnalysisDiagnostics) > 0 {
 		t.Fatal(err, compiled.Diagnostics, compiled.AnalysisDiagnostics)
 	}
@@ -32,6 +36,7 @@ func compileSource(t *testing.T, source string) quint.CompilationResult {
 }
 
 func TestSourceToGoApalache(t *testing.T) {
+	t.Parallel()
 	for _, tc := range []struct {
 		name, source string
 		safe         bool

@@ -397,9 +397,11 @@ TypeScript or Rust evaluator process.
   - [x] Bounded-check API, explicit no-invariant selection, lossless violation/
     deadlock responses, and source-generated safe/violating/instance checks.
   - [ ] Complete ordinary/multiple-invariant user-facing orchestration tests.
-- [ ] P9.4 Port inductive-invariant orchestration: initialization at bound 0,
+- [x] P9.4 Port inductive-invariant orchestration: initialization at bound 0,
   one-step preservation from the inductive predicate, and optional implication
   of ordinary invariants at bound 0.
+  Executor.Verify records phases, stops on failures/errors/cancellation, and
+  passes a stateful three-phase Go-checker test plus protocol/error unit tests.
 - [ ] P9.5 Integrate temporal-property handling and document the actual Go
   checker's supported scope. Test lasso traces and bounded interpretations;
   never turn an unsupported temporal query into a successful safety result.
@@ -1960,3 +1962,21 @@ word "retained" in the commit message.
   and existing command tests green (0.231s). Quint's full default suite passes
   (combined execution 0.980s). Config-file/CLI wiring, inductive phases, detailed
   diagnostics/ITF reporting, and remaining backend compatibility audits stay open.
+
+- 2026-11-02: Added Executor.Verify with bounded and inductive verification
+  modes. Inductive mode checks initial inclusion at bound zero, preservation
+  from q::inductiveInv at bound one, and optional implication of selected
+  ordinary invariants at bound zero, matching verify.ts. VerificationResult
+  records attempted phases; VerificationError preserves the failed phase and
+  unwraps service/solver/cancellation errors. Tests cover every phase's early
+  violation, deadlocks, two/three-phase selection, ordinary/custom invariant
+  selection, option retention, invalid checker outcomes, absent inductive
+  wrappers, errors at each phase, and cancellation between phases. A finite
+  two-state invariant passes all three phases through the real Go checker.
+  Arbitrary initial predicates still must satisfy the checker's assignment
+  extraction rules; failures propagate rather than becoming successful proofs.
+  The independent source-checker and inductive integration tests now run in
+  parallel to keep the full default suite under one second (combined execution
+  0.991s); backend race tests also pass (2.743s with instrumentation).
+  CLI progress/error reporting and the remaining P9 integration work
+  remain open.
