@@ -330,6 +330,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   tuples, records, variants, sequences, sets, maps/functions, and closures.
   Define structural equality, hashing, canonical printing, and immutable-value
   ownership without relying on Go map iteration order.
+  - [x] Immutable concrete-value ownership, typed structural identity, stable
+    Go hashing, canonical IR printing, and upstream equal-type comparisons.
+  - [ ] Closures, symbolic collections, iteration order, and cross-type
+    equality audit (TypeScript's set-like fallback equates unlike constructors).
 - [ ] P7.2 Port evaluation/compilation of IR, lexical closures, operator values,
   local bindings, lazy branches, definition caches, and runtime error traces.
 - [ ] P7.3 Port arithmetic, Boolean, comparison, string, and conversion
@@ -2128,3 +2132,17 @@ word "retained" in the commit message.
   decimal-seeded RNG output and counter. Full default tests pass (combined
   package execution 0.951s). Default seed initialization, CLI wiring, collection
   sampling/traversal, and Rust seeded-runtime comparison remain under P7.8.
+
+- 2026-11-02: Started the concrete RuntimeValue layer required before sampling:
+  validation/canonicalization, immutable expression ownership, exact typed
+  equality, deterministic structural SHA-256 hashes, and copied IR export.
+  Thirty upstream values yield a 900-entry equality matrix covering primitive
+  distinctions, ordered sequences, unordered sets/maps, nested sets, duplicate
+  keys, records, variants/unit tuples, and large integers. Tests cover hash
+  consistency, constructor/export isolation, collation-independent identity,
+  invalid values, and round trips. Investigation found TypeScript's cross-type
+  set-like fallback equates empty lists/tuples with records/maps of any size;
+  Go deliberately retains type-sensitive identity pending the explicit P7.1
+  compatibility audit. Equal-constructor comparisons match upstream. Full
+  default tests pass (combined package execution 0.983s). Runtime traversal,
+  symbolic values, closures, and evaluator/collection integration remain open.

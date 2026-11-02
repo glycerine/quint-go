@@ -1,0 +1,1475 @@
+{
+  "expressions": [
+    {
+      "id": 2,
+      "kind": "bool",
+      "value": true
+    },
+    {
+      "id": 2,
+      "kind": "bool",
+      "value": false
+    },
+    {
+      "id": 2,
+      "kind": "int",
+      "value": 1
+    },
+    {
+      "id": 2,
+      "kind": "int",
+      "value": 2
+    },
+    {
+      "id": 2,
+      "kind": "str",
+      "value": "1"
+    },
+    {
+      "id": 2,
+      "kind": "str",
+      "value": "a"
+    },
+    {
+      "id": 2,
+      "kind": "str",
+      "value": "é"
+    },
+    {
+      "id": 2,
+      "kind": "str",
+      "value": "é"
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "List",
+      "args": []
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "List",
+      "args": [
+        {
+          "id": 3,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "List",
+      "args": [
+        {
+          "id": 3,
+          "kind": "int",
+          "value": 2
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Tup",
+      "args": []
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Tup",
+      "args": [
+        {
+          "id": 3,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 3,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 2
+        },
+        {
+          "id": 5,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 3,
+          "kind": "int",
+          "value": 2
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 7,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 8,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 7,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 8,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Map",
+      "args": []
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Map",
+      "args": [
+        {
+          "id": 5,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 3,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 6,
+              "kind": "str",
+              "value": "a"
+            },
+            {
+              "id": 7,
+              "kind": "bool",
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Map",
+      "args": [
+        {
+          "id": 5,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 3,
+              "kind": "str",
+              "value": "a"
+            },
+            {
+              "id": 4,
+              "kind": "bool",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 6,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 7,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Map",
+      "args": [
+        {
+          "id": 5,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 3,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 6,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 7,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Map",
+      "args": [
+        {
+          "id": 5,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 3,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 3,
+          "kind": "str",
+          "value": "a"
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 5,
+          "kind": "str",
+          "value": "b"
+        },
+        {
+          "id": 6,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 3,
+          "kind": "str",
+          "value": "b"
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 2
+        },
+        {
+          "id": 5,
+          "kind": "str",
+          "value": "a"
+        },
+        {
+          "id": 6,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 3,
+          "kind": "str",
+          "value": "a"
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 2
+        },
+        {
+          "id": 5,
+          "kind": "str",
+          "value": "b"
+        },
+        {
+          "id": 6,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "variant",
+      "args": [
+        {
+          "id": 3,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "variant",
+      "args": [
+        {
+          "id": 3,
+          "kind": "str",
+          "value": "Other"
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "app",
+      "opcode": "Tup",
+      "args": []
+    },
+    {
+      "id": 2,
+      "kind": "int",
+      "value": 9007199254740993123456789
+    }
+  ],
+  "equal": [
+    [
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  ]
+}
