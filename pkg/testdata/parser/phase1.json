@@ -1,0 +1,1091 @@
+[
+  {
+    "name": "core",
+    "source": "module M { const N: int var x: int assume _ = N > 0 action init = x' = 0 action step = x' = x + 1 }",
+    "modules": [
+      {
+        "id": 19,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2
+          },
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4
+          },
+          {
+            "id": 8,
+            "kind": "assume",
+            "name": "_",
+            "assumption": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "igt",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "N"
+                },
+                {
+                  "id": 6,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": 18,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 17,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 16,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "types",
+    "source": "module M { type Address type Bag[a] = Set[a] type Result[a,b] = Ok(a) | Err(b) | Pending }",
+    "modules": [
+      {
+        "id": 28,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 1,
+            "kind": "typedef",
+            "name": "Address"
+          },
+          {
+            "id": 4,
+            "kind": "typedef",
+            "name": "Bag",
+            "type": {
+              "id": 3,
+              "kind": "set",
+              "elem": {
+                "id": 2,
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            "params": [
+              "a"
+            ]
+          },
+          {
+            "id": 8,
+            "kind": "typedef",
+            "name": "Result",
+            "type": {
+              "id": 8,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "Ok",
+                    "fieldType": {
+                      "id": 5,
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  },
+                  {
+                    "fieldName": "Err",
+                    "fieldType": {
+                      "id": 6,
+                      "kind": "var",
+                      "name": "b"
+                    }
+                  },
+                  {
+                    "fieldName": "Pending",
+                    "fieldType": {
+                      "id": 7,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            },
+            "params": [
+              "a",
+              "b"
+            ]
+          },
+          {
+            "id": 17,
+            "kind": "def",
+            "name": "Ok",
+            "qualifier": "def",
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "var",
+                  "name": "a"
+                }
+              ],
+              "res": {
+                "id": 8,
+                "kind": "app",
+                "ctor": {
+                  "id": 9,
+                  "kind": "const",
+                  "name": "Result"
+                },
+                "args": [
+                  {
+                    "id": 10,
+                    "kind": "var",
+                    "name": "a"
+                  },
+                  {
+                    "id": 11,
+                    "kind": "var",
+                    "name": "b"
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 16,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 13,
+                  "name": "__OkParam"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 15,
+                "kind": "app",
+                "opcode": "variant",
+                "args": [
+                  {
+                    "id": 12,
+                    "kind": "str",
+                    "value": "Ok"
+                  },
+                  {
+                    "kind": "name",
+                    "name": "__OkParam",
+                    "id": 14
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": 23,
+            "kind": "def",
+            "name": "Err",
+            "qualifier": "def",
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "var",
+                  "name": "b"
+                }
+              ],
+              "res": {
+                "id": 8,
+                "kind": "app",
+                "ctor": {
+                  "id": 9,
+                  "kind": "const",
+                  "name": "Result"
+                },
+                "args": [
+                  {
+                    "id": 10,
+                    "kind": "var",
+                    "name": "a"
+                  },
+                  {
+                    "id": 11,
+                    "kind": "var",
+                    "name": "b"
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 22,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 19,
+                  "name": "__ErrParam"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 21,
+                "kind": "app",
+                "opcode": "variant",
+                "args": [
+                  {
+                    "id": 18,
+                    "kind": "str",
+                    "value": "Err"
+                  },
+                  {
+                    "kind": "name",
+                    "name": "__ErrParam",
+                    "id": 20
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": 27,
+            "kind": "def",
+            "name": "Pending",
+            "qualifier": "val",
+            "typeAnnotation": {
+              "id": 8,
+              "kind": "app",
+              "ctor": {
+                "id": 9,
+                "kind": "const",
+                "name": "Result"
+              },
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "var",
+                  "name": "a"
+                },
+                {
+                  "id": 11,
+                  "kind": "var",
+                  "name": "b"
+                }
+              ]
+            },
+            "expr": {
+              "id": 26,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 24,
+                  "kind": "str",
+                  "value": "Pending"
+                },
+                {
+                  "id": 25,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "calls",
+    "source": "module M { val x = q::debug(0xFF) val y = [1,2].append(3)[0] val z = (1,2)._2 }",
+    "modules": [
+      {
+        "id": 19,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "q::debug",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "str",
+                  "value": "q::debug(0xFF)"
+                },
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 255
+                }
+              ]
+            }
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "nth",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "append",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "app",
+                      "opcode": "List",
+                      "args": [
+                        {
+                          "id": 5,
+                          "kind": "int",
+                          "value": 1
+                        },
+                        {
+                          "id": 6,
+                          "kind": "int",
+                          "value": 2
+                        }
+                      ]
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 10,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": 18,
+            "kind": "def",
+            "name": "z",
+            "qualifier": "val",
+            "expr": {
+              "id": 17,
+              "kind": "app",
+              "opcode": "item",
+              "args": [
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 16,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "records",
+    "source": "module M { val x = {a: 1, b: true} val y = {...x, a: 2} }",
+    "modules": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 3,
+                  "kind": "bool",
+                  "value": true
+                }
+              ]
+            }
+          },
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "with",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 8,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bindings",
+    "source": "module M { pure def f(x: int): int = val y = x + 1; y val g = (x,y) => x + y }",
+    "modules": [
+      {
+        "id": 19,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "puredef",
+            "expr": {
+              "id": 10,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "x",
+                  "typeAnnotation": {
+                    "id": 1,
+                    "kind": "int"
+                  }
+                }
+              ],
+              "qualifier": "puredef",
+              "expr": {
+                "id": 9,
+                "kind": "let",
+                "opdef": {
+                  "id": 7,
+                  "kind": "def",
+                  "name": "y",
+                  "qualifier": "val",
+                  "expr": {
+                    "id": 6,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                },
+                "expr": {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "y"
+                }
+              }
+            },
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int"
+                }
+              ],
+              "res": {
+                "id": 3,
+                "kind": "int"
+              }
+            }
+          },
+          {
+            "id": 18,
+            "kind": "def",
+            "name": "g",
+            "qualifier": "val",
+            "expr": {
+              "id": 17,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 12,
+                  "name": "x"
+                },
+                {
+                  "id": 13,
+                  "name": "y"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 16,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 14,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 15,
+                    "kind": "name",
+                    "name": "y"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "match",
+    "source": "module M { val x = match r { Some(v) => v | None => 0 | _ => -1 } }",
+    "modules": [
+      {
+        "id": 17,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "matchVariant",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "name",
+                  "name": "r"
+                },
+                {
+                  "id": 7,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 8,
+                  "kind": "lambda",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 2,
+                    "kind": "name",
+                    "name": "v"
+                  },
+                  "params": [
+                    {
+                      "name": "v",
+                      "id": 9
+                    }
+                  ]
+                },
+                {
+                  "id": 10,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 11,
+                  "kind": "lambda",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  "params": [
+                    {
+                      "name": "_",
+                      "id": 12
+                    }
+                  ]
+                },
+                {
+                  "id": 13,
+                  "kind": "str",
+                  "value": "_"
+                },
+                {
+                  "id": 14,
+                  "kind": "lambda",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 5,
+                    "kind": "app",
+                    "opcode": "iuminus",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "params": [
+                    {
+                      "name": "_",
+                      "id": 15
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "imports",
+    "source": "module M { import A.* from \"a\" import A(N=3) as B export B }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 1,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "A",
+            "fromSource": "a"
+          },
+          {
+            "id": 4,
+            "kind": "instance",
+            "qualifiedName": "B",
+            "protoName": "A",
+            "overrides": [
+              [
+                {
+                  "id": 3,
+                  "name": "N"
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 5,
+            "kind": "export",
+            "protoName": "B"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "docs",
+    "source": "/// Module\nmodule M { /// Type\n type T = A | B /// tail\n }",
+    "modules": [
+      {
+        "id": 13,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "typedef",
+            "name": "T",
+            "type": {
+              "id": 3,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "A",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "B",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "A",
+            "qualifier": "val",
+            "typeAnnotation": {
+              "id": 4,
+              "kind": "const",
+              "name": "T"
+            },
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "A"
+                },
+                {
+                  "id": 6,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          },
+          {
+            "doc": "Type",
+            "id": 12,
+            "kind": "def",
+            "name": "B",
+            "qualifier": "val",
+            "typeAnnotation": {
+              "id": 4,
+              "kind": "const",
+              "name": "T"
+            },
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "str",
+                  "value": "B"
+                },
+                {
+                  "id": 10,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          }
+        ],
+        "doc": "Module"
+      }
+    ]
+  },
+  {
+    "name": "operators",
+    "source": "module M { val a = 1 + 2 * 3 ^ 4 ^ 5 val b = true implies false iff true val c = all { true, false } val d = true leadsTo false }",
+    "modules": [
+      {
+        "id": 25,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 8,
+                  "kind": "app",
+                  "opcode": "imul",
+                  "args": [
+                    {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 2
+                    },
+                    {
+                      "id": 7,
+                      "kind": "app",
+                      "opcode": "ipow",
+                      "args": [
+                        {
+                          "id": 3,
+                          "kind": "int",
+                          "value": 3
+                        },
+                        {
+                          "id": 6,
+                          "kind": "app",
+                          "opcode": "ipow",
+                          "args": [
+                            {
+                              "id": 4,
+                              "kind": "int",
+                              "value": 4
+                            },
+                            {
+                              "id": 5,
+                              "kind": "int",
+                              "value": 5
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "implies",
+              "args": [
+                {
+                  "id": 11,
+                  "kind": "bool",
+                  "value": true
+                },
+                {
+                  "id": 14,
+                  "kind": "app",
+                  "opcode": "iff",
+                  "args": [
+                    {
+                      "id": 12,
+                      "kind": "bool",
+                      "value": false
+                    },
+                    {
+                      "id": 13,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": 20,
+            "kind": "def",
+            "name": "c",
+            "qualifier": "val",
+            "expr": {
+              "id": 19,
+              "kind": "app",
+              "opcode": "actionAll",
+              "args": [
+                {
+                  "id": 17,
+                  "kind": "bool",
+                  "value": true
+                },
+                {
+                  "id": 18,
+                  "kind": "bool",
+                  "value": false
+                }
+              ]
+            }
+          },
+          {
+            "id": 24,
+            "kind": "def",
+            "name": "d",
+            "qualifier": "val",
+            "expr": {
+              "id": 23,
+              "kind": "app",
+              "opcode": "leadsTo",
+              "args": [
+                {
+                  "id": 21,
+                  "kind": "bool",
+                  "value": true
+                },
+                {
+                  "id": 22,
+                  "kind": "bool",
+                  "value": false
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
