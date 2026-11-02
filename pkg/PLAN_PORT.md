@@ -1601,3 +1601,11 @@ word "retained" in the commit message.
   agreement, and suggestions. Default tests pass under one second. Recursive
   checker traversal, action-as-temporal explanations, and instance override
   purity validation remain open under P5.3.
+
+- 2026-11-02: Added recursive mode-check traversal through local definitions,
+  applications, lambdas, assumptions, and override expressions, with retained
+  diagnostics/suggestions. Instance overrides now reject non-pure effects with
+  QNT201. Tests cover parsed/inferred nested definitions, pure suggestions,
+  missing inference entries, and mixed pure/stateful overrides with exact
+  messages and references. Default tests pass under one second. Action-as-temporal
+  explanations and exact upstream mode-check differential fixtures remain open.
