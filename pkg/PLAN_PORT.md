@@ -1348,3 +1348,13 @@ word "retained" in the commit message.
   source IDs, and ordinary-call solving. Default tests pass (combined execution
   0.584s). This helper expects inferred argument types and instantiated signatures;
   expression traversal, signature fetching, and inference integration remain open.
+
+- 2026-11-02: Added TypeSignatureContext for constraint-generation name lookup.
+  Builtins and unannotated operator schemes are freshly instantiated; constants
+  and variables use inferred types, while explicit operator/parameter annotations
+  take precedence over stored results. Prior inference failures propagate.
+  Tests cover fresh builtin instances, user schemes, constant annotation/result
+  precedence, missing names, prior errors, and annotated parameters. Default
+  tests pass (combined execution 0.554s). Missing saved results currently return
+  structured errors rather than upstream internal exceptions; traversal and
+  inference result lifecycle remain pending.
