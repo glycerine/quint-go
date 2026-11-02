@@ -1575,3 +1575,11 @@ word "retained" in the commit message.
   names, and diagnostic trees with no normalization. All match without code
   changes. Full default tests pass (combined execution 0.689s). Cross-module,
   instance, broader failure-lifecycle parity and combined analysis remain open.
+
+- 2026-11-02: Added concrete/variable effect mode classification and upstream
+  qualifier generality ordering. Tests cover read/update/temporal priority,
+  quantified versus free entity names, concrete state occurrences, empty
+  components, explanatory wording, and every qualifier-order pair. Full default
+  tests pass under one second. Arrow-mode classification, declaration checking,
+  action-as-temporal diagnostics, suggestions, and instance purity checks remain
+  open under P5.3.
