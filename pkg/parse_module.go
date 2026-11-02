@@ -69,6 +69,54 @@ func declarationFromContext(ctx p.IDeclarationContext, ids *IDGenerator) (Declar
 			return d, err
 		}
 		return Declaration{ID: op.ID, Kind: op.Kind, Name: op.Name, Qualifier: op.Qualifier, Expr: op.Expr, TypeAnnotation: op.TypeAnnotation}, nil
+	case *p.ImportDefContext:
+		imp := c.ImportMod()
+		d.Kind, d.ProtoName = "import", imp.Name(0).GetText()
+		if imp.IdentOrStar() != nil {
+			value := imp.IdentOrStar().GetText()
+			d.DefName = &value
+		}
+		if len(imp.AllName()) > 1 {
+			value := imp.Name(1).GetText()
+			d.QualifiedName = &value
+		}
+		if imp.FromSource() != nil {
+			value := imp.FromSource().GetText()
+			value = value[1 : len(value)-1]
+			d.FromSource = &value
+		}
+	case *p.ExportDefContext:
+		exp := c.ExportMod()
+		d.Kind, d.ProtoName = "export", exp.Name(0).GetText()
+		if exp.IdentOrStar() != nil {
+			value := exp.IdentOrStar().GetText()
+			d.DefName = &value
+		}
+		if len(exp.AllName()) > 1 {
+			value := exp.Name(1).GetText()
+			d.QualifiedName = &value
+		}
+	case *p.InstanceContext:
+		inst := c.InstanceMod()
+		d.Kind, d.ProtoName = "instance", inst.ModuleName().GetText()
+		d.IdentityOverride = inst.MUL() != nil
+		d.Overrides = []Override{}
+		if inst.QualifiedName() != nil {
+			value := inst.QualifiedName().GetText()
+			d.QualifiedName = &value
+		}
+		if inst.FromSource() != nil {
+			value := inst.FromSource().GetText()
+			value = value[1 : len(value)-1]
+			d.FromSource = &value
+		}
+		for i, ctx := range inst.AllExpr() {
+			expr, err := expressionFromContext(ctx, ids)
+			if err != nil {
+				return d, err
+			}
+			d.Overrides = append(d.Overrides, Override{Parameter: Parameter{ID: ids.Next(), Name: inst.Name(i).GetText()}, Expr: expr})
+		}
 	case *p.ConstContext:
 		typ, err := typeFromContext(c.Type_())
 		if err != nil {

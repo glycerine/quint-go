@@ -698,3 +698,12 @@ word "retained" in the commit message.
   reject malformed modules. Default tests pass (core 0.266s). P2.3 remains open
   for imports/exports/instances, sum declarations, and exact documentation/source
   location parity; the entry point currently rejects unsupported conversions.
+
+- 2026-11-02: Added import, export, and module-instance IR conversion, preserving
+  selected/wildcard members, aliases, source strings, ordered parameter overrides,
+  and upstream wildcard identityOverride behavior. Tests cover qualified module
+  names, every import/export form, instance aliases/wildcards, trailing commas,
+  override ID uniqueness, and malformed declarations. Default tests pass (core
+  0.268s; combined package execution under one second). P2.3 remains open for sum
+  declarations and exact documentation/source location parity; file loading and
+  name resolution remain separate pending phases.
