@@ -742,3 +742,12 @@ word "retained" in the commit message.
   combined package execution 0.377s). P2.3/P2.4 remain open for semantic diagnostic
   and source-map parity. The single-operator entry point still rejects expanding
   destructuring syntax; a multi-declaration entry point remains needed in P2.6.
+
+- 2026-11-02: Added ParseDeclaration for complete standalone declarations with
+  optional leading documentation and expansion into multiple IR declarations.
+  Module parsing now shares the same conversion path. Tests cover every
+  declaration family, exact parity with module conversion, sum/destructuring
+  expansion, documentation, malformed input, and trailing-input rejection.
+  Default tests pass with combined package execution under one second. P2.6
+  remains open for the combined declaration-or-expression REPL entry point,
+  including blank/comment-only input and diagnostic/source-location integration.
