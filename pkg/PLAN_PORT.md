@@ -1414,3 +1414,10 @@ word "retained" in the commit message.
   application/inference failures with retained partial results. Default tests
   pass (combined execution 0.589s). This is type-only analysis; effects, modes,
   remaining static checks, and combined analyzer integration remain open.
+
+- 2026-11-02: Added canonical type-scheme formatting required by static-check
+  diagnostics. Quantified type/row variables receive ordered tN/rN names, while
+  free variables remain unchanged. Tests cover mixed quantifiers, order,
+  monomorphic/open schemes, input immutability, and incompatible cross-kind
+  names. Default tests pass (combined execution 0.626s). Nondeterminism checking
+  and broader scheme-format differential validation remain pending.
