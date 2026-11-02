@@ -163,5 +163,10 @@ func declarationFromContext(ctx p.IDeclarationContext, ids *IDGenerator) (Declar
 		return d, fmt.Errorf("declaration conversion not implemented for %T", ctx)
 	}
 	d.ID = ids.Next()
+	if d.Kind == "typedef" {
+		if err := checkTypeDeclaration(d, true); err != nil {
+			return Declaration{}, err
+		}
+	}
 	return d, nil
 }

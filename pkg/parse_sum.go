@@ -21,12 +21,17 @@ func sumDeclarations(ctx *p.TypeSumDefContext, ids *IDGenerator) ([]Declaration,
 		}
 		fields = append(fields, RowField{Name: variant.GetSumLabel().GetText(), Type: typ})
 	}
+	d.Type = &Type{Kind: "sum", Fields: &Row{Kind: "row", Fields: fields, Other: &Row{Kind: "empty"}}}
+	// Upstream checks sum parameters, but applies its uppercase-name check only
+	// to abstract and alias declarations.
+	if err := checkTypeDeclaration(d, false); err != nil {
+		return nil, err
+	}
 	if len(fields) == 1 && isUnitType(fields[0].Type) && sum.GetSeparator() == nil {
 		d.Type = &Type{Kind: "const", Name: sum.TypeSumVariant(0).GetText()}
 		d.Params = nil // Match upstream's alias disambiguation.
 		return []Declaration{d}, nil
 	}
-	d.Type = &Type{Kind: "sum", Fields: &Row{Kind: "row", Fields: fields, Other: &Row{Kind: "empty"}}}
 	result := Type{Kind: "const", Name: d.Name}
 	if len(d.Params) > 0 {
 		ctor := result

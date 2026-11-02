@@ -772,3 +772,12 @@ word "retained" in the commit message.
   reserved identifiers, comments, and module hashbang placement. Default tests
   pass (core 0.310s; combined package execution 0.370s). P2.2/P2.4 remain open
   pending full lexical/differential parity and source diagnostic integration.
+
+- 2026-11-02: Added QNT007 uppercase-name diagnostics and qualified replacement
+  fixes for abstract/alias types, plus QNT014 unbound type/row variable checks
+  for aliases and sums. Preserved upstream's omission of the uppercase check on
+  sum declarations. Tests cover diagnostic codes/messages/references, fixes,
+  ordered/deduplicated variables, declared parameters, and module/REPL integration.
+  Default tests pass (core 0.328s; combined package execution 0.394s). Parser
+  diagnostics remain fail-fast; accumulation, partial IR, and source locations
+  remain open in P2.5/P2.8.
