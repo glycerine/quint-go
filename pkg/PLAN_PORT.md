@@ -247,7 +247,8 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Generate tuple construction and item-access constraints.
   - [x] Generate variant constraints with declared-sum membership checks.
   - [x] Generate match constraints with wildcard and eliminator validation.
-  - [ ] Resolve tuple-prefix resource-limit parity and connect generator dispatch.
+  - [x] Dispatch application constraints with upstream special-builtin arity checks.
+  - [ ] Resolve tuple-prefix resource-limit parity and connect expression traversal.
 - [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
   and incremental inference used by the REPL and editor.
 - [ ] P4.6 Compare inferred schemes modulo type-variable renaming and compare
@@ -1339,3 +1340,11 @@ word "retained" in the commit message.
   unknown variants, malformed cases, and invalid arity. Default tests pass
   (combined execution 0.555s). Differential special-constraint fixtures and
   expression-generator dispatch remain pending.
+
+- 2026-11-02: Added ApplicationConstraints dispatch for all eight structural
+  builtins and ordinary instantiated operator signatures. Shared arity validation
+  now emits upstream wording before special-rule checks. Tests cover all special
+  arity predicates, propagation of literal-validation failures, empty constructors,
+  source IDs, and ordinary-call solving. Default tests pass (combined execution
+  0.584s). This helper expects inferred argument types and instantiated signatures;
+  expression traversal, signature fetching, and inference integration remain open.
