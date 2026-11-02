@@ -37,9 +37,18 @@ type TypeScheme struct {
 }
 
 func (t Type) Validate() error {
+	return t.validate(true)
+}
+
+// JSON children validate as they are decoded. The same checks can therefore
+// validate only their parent, while public Validate still walks hand-built IR.
+func (t Type) validate(recurse bool) error {
 	need := func(v *Type) error {
 		if v == nil {
 			return fmt.Errorf("%s type missing child", t.Kind)
+		}
+		if !recurse {
+			return nil
 		}
 		return v.Validate()
 	}
@@ -57,9 +66,11 @@ func (t Type) Validate() error {
 		}
 		return need(t.Res)
 	case "oper", "app":
-		for _, a := range t.Args {
-			if err := a.Validate(); err != nil {
-				return err
+		if recurse {
+			for _, a := range t.Args {
+				if err := a.Validate(); err != nil {
+					return err
+				}
 			}
 		}
 		if t.Kind == "oper" {
@@ -68,13 +79,16 @@ func (t Type) Validate() error {
 		if t.Ctor == nil || t.Ctor.Kind != "const" {
 			return fmt.Errorf("type application requires constant constructor")
 		}
-		return t.Ctor.Validate()
+		return need(t.Ctor)
 	case "tup", "rec", "sum":
 		if t.Fields == nil {
 			return fmt.Errorf("%s type missing row", t.Kind)
 		}
 		if t.Kind == "sum" && t.Fields.Kind != "row" {
 			return fmt.Errorf("sum requires concrete row")
+		}
+		if !recurse {
+			return nil
 		}
 		return t.Fields.Validate()
 	default:
@@ -83,6 +97,10 @@ func (t Type) Validate() error {
 	return nil
 }
 func (r Row) Validate() error {
+	return r.validate(true)
+}
+
+func (r Row) validate(recurse bool) error {
 	switch r.Kind {
 	case "empty":
 		return nil
@@ -93,12 +111,20 @@ func (r Row) Validate() error {
 		return nil
 	case "row":
 		for _, f := range r.Fields {
-			if err := f.Type.Validate(); err != nil {
-				return err
+			// RowField permits an absent fieldType (and null entries), so its
+			// zero Type did not pass through the child decoder. Check it here,
+			// after all child decoding and parent schema checks, as before.
+			if recurse || f.Type.Kind == "" {
+				if err := f.Type.Validate(); err != nil {
+					return err
+				}
 			}
 		}
 		if r.Other == nil {
 			return fmt.Errorf("row missing tail")
+		}
+		if !recurse {
+			return nil
 		}
 		return r.Other.Validate()
 	default:
@@ -239,7 +265,7 @@ func (t *Type) UnmarshalJSON(b []byte) error {
 	if len(wire.Name)+len(wire.Elem)+len(wire.Arg)+len(wire.Res)+len(wire.Args)+len(wire.Fields)+len(wire.Ctor)+len(wire.Extra) != 0 {
 		return fmt.Errorf("unexpected fields in %s type", v.Kind)
 	}
-	if err := v.Validate(); err != nil {
+	if err := v.validate(false); err != nil {
 		return err
 	}
 	*t = v
@@ -270,7 +296,7 @@ func (r *Row) UnmarshalJSON(b []byte) error {
 	if len(wire.Name)+len(wire.Fields)+len(wire.Other)+len(wire.Extra) != 0 {
 		return fmt.Errorf("unexpected fields in %s row", v.Kind)
 	}
-	if err := v.Validate(); err != nil {
+	if err := v.validate(false); err != nil {
 		return err
 	}
 	*r = v

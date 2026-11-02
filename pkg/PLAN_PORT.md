@@ -744,6 +744,8 @@ any remaining TypeScript client code is distinguished from language-server logic
 - [ ] P12.3 Add targeted property/fuzz checks for parsers, JSON/ITF decoders,
   type/effect substitution, flattening, and evaluation rollback. Retain
   minimized regressions for discovered failures.
+  - [x] Type/row decoder compatibility checks and 21 default fuzz seeds;
+    bounded fuzzing passes 1,319,538 executions without failure.
 - [ ] P12.4 Run representative and broad corpus comparisons covering parsing,
   analysis, execution, and verification. Keep a fast deterministic suite and
   a separately scheduled expensive solver/corpus suite.
@@ -3152,3 +3154,14 @@ word "retained" in the commit message.
   identical fixtures; focused parser tests and races pass, with sum helpers at
   100% statement coverage. Broad optional parser/source/type checks pass, including
   the 53-file corpus and full upstream inferrer suite.
+
+- 2026-11-02: Removed redundant recursive type/row decoder validation while
+  preserving fully recursive public Validate and missing-field/error priority.
+  Old/new decoder copies pass the same schema/priority tests; 21 default seeds
+  and 1.32 million bounded fuzz executions pass. Matched nested benchmarks show
+  a modest 4–8% improvement with unchanged allocations. Preallocated known-size
+  NormalizeValue outputs without changing key bytes, ordering or wrapper history;
+  67 independent old-formula/ownership cases and focused races pass. List128
+  allocations fall8→1, nested allocations451→309 (221KB→132KB), with matched
+  nested time120µs→92µs. Default scheduling remained faster than bounded runner
+  alternatives; no tests or coverage were removed to change timing.

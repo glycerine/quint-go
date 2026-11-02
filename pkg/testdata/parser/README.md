@@ -878,3 +878,11 @@ Six sum scenarios additionally compare exact project/inference output. Coverage
 includes application/constructor order, discarded Map/alias allocations, empty
 records, wrong-TypeApp recovery, sum constructors, match branches and Unicode
 spans. Standalone no-source ParseType still removes IDs by its public contract.
+
+`type_decode_validation_test.go` adds old/new decoder compatibility checks for
+competing errors, missing/null fields, duplicate keys, invalid UTF-8 and public
+hand-built validation, plus 21 default fuzz seeds. Bounded fuzzing ran1.32million
+inputs separately. `value_normalize_prealloc_test.go` compares67 cases against
+the complete prior normalization formula, including Unicode ordering, duplicate
+maps/records, nil/empty views, IDs, error priority and deep ownership; its separate
+benchmarks keep the old append-based implementation as a measurable baseline.

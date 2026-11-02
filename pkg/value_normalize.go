@@ -60,13 +60,13 @@ func NormalizeValue(input Expr) (Expr, error) {
 		default:
 			return Expr{}, fmt.Errorf("Cannot convert %s to a runtime value", ExpressionString(e))
 		}
-		out := Expr{Kind: "app", Opcode: e.Opcode, Args: []Expr{}}
-		for _, child := range e.Args {
+		out := Expr{Kind: "app", Opcode: e.Opcode, Args: make([]Expr, len(e.Args))}
+		for i, child := range e.Args {
 			value, err := normalize(child)
 			if err != nil {
 				return Expr{}, err
 			}
-			out.Args = append(out.Args, value)
+			out.Args[i] = value
 		}
 		switch e.Opcode {
 		case "Rec":
@@ -80,14 +80,15 @@ func NormalizeValue(input Expr) (Expr, error) {
 				}
 				fields.Set(out.Args[i].Str, out.Args[i+1])
 			}
-			names := []string{}
+			names := make([]string, 0, fields.Len())
 			for name := range fields.All() {
 				names = append(names, name)
 			}
 			sort.Slice(names, func(i, j int) bool { return utf16Less(names[i], names[j]) })
-			out.Args = []Expr{}
-			for _, name := range names {
-				out.Args = append(out.Args, Expr{Kind: "str", Str: name}, fields.Get(name))
+			out.Args = make([]Expr, len(names)*2)
+			for i, name := range names {
+				out.Args[2*i] = Expr{Kind: "str", Str: name}
+				out.Args[2*i+1] = fields.Get(name)
 			}
 		case "Set":
 			seen := map[string]bool{}
@@ -109,7 +110,7 @@ func NormalizeValue(input Expr) (Expr, error) {
 				}
 				pairs.Set(normalizedValueKey(pair.Args[0]), pair)
 			}
-			out.Args = []Expr{}
+			out.Args = make([]Expr, 0, pairs.Len())
 			for _, pair := range pairs.All() {
 				out.Args = append(out.Args, pair)
 			}
