@@ -208,7 +208,8 @@ errors without panics or losing subsequent declarations after recoverable errors
   module boundaries and incremental declaration analysis.
   - [x] Track collected binding identity and expose unused-definition queries.
   - [x] Compare unused definitions against upstream module-resolution fixtures.
-  - [ ] Support incremental declaration analysis and module switching.
+  - [x] Support module switching and shared-table incremental expression analysis.
+  - [ ] Integrate declaration reanalysis and expression sessions with the REPL.
 - [ ] P3.6 Run name/static fixtures, including nested instances, collisions,
   export visibility, import cycles, and deterministic ordering.
 
@@ -1167,3 +1168,12 @@ word "retained" in the commit message.
   in all 22 upstream resolution fixtures and verify prototype/import independence,
   absent modules, and frontend queries. Default tests pass under one second.
   Incremental resolution and module switching remain pending.
+
+- 2026-11-02: Added ModuleNameResolver expression sessions with shared lookup
+  tables and module switching, including alias and transient missing-module
+  scopes. Switching retains references and diagnostics; ClearErrors explicitly
+  clears session errors. Tests cover cross-module identities, accumulated usage,
+  alias resolution, unknown modules, error retention, and restoration of lambda
+  and let scopes at explicit surrounding depths. Default tests pass under one
+  second. Upstream reparses modules for declaration changes; REPL declaration
+  reanalysis and expression-session integration remain pending.
