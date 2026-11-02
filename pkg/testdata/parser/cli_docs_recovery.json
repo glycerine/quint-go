@@ -1,0 +1,1790 @@
+[
+  {
+    "name": "missing-module-brace",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M {\n/// Kept despite the missing brace.\nval x=1"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "documentation",
+      "warnings": [],
+      "errors": [
+        {
+          "explanation": "[QNT000] extraneous input '<EOF>' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 2,
+                "col": 7,
+                "index": 54
+              },
+              "end": {
+                "line": 2,
+                "col": 6,
+                "index": 53
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "stdout": "# Documentation for M\n\n## x\n\nSignature: `val x`\n\nKept despite the missing brace.\n",
+    "stderr": "",
+    "incidentalDebug": "",
+    "modules": [
+      {
+        "id": 4,
+        "name": "M",
+        "declarations": [
+          {
+            "doc": "Kept despite the missing brace.",
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input '<EOF>' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 7,
+          "index": 54
+        },
+        "end": {
+          "line": 2,
+          "col": 6,
+          "index": 53
+        }
+      },
+      "2": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 6,
+          "index": 53
+        },
+        "end": {
+          "line": 2,
+          "col": 6,
+          "index": 53
+        }
+      },
+      "3": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 4,
+          "index": 51
+        },
+        "end": {
+          "line": 2,
+          "col": 4,
+          "index": 51
+        }
+      },
+      "4": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 2,
+          "col": 53,
+          "index": 53
+        }
+      }
+    },
+    "nextID": 5
+  },
+  {
+    "name": "missing-definition-body",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M {\n/// Missing body.\nval x=\n/// Following definition.\nval y=2 }"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "documentation",
+      "warnings": [],
+      "errors": [
+        {
+          "explanation": "[QNT000] extraneous input '/// Following definition.\\n' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 3,
+                "col": 0,
+                "index": 36
+              },
+              "end": {
+                "line": 3,
+                "col": 25,
+                "index": 61
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT000] mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 4,
+                "col": 8,
+                "index": 70
+              },
+              "end": {
+                "line": 4,
+                "col": 8,
+                "index": 70
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "stdout": "# Documentation for M\n\n## x\n\nSignature: `val x`\n\nMissing body.\n",
+    "stderr": "",
+    "incidentalDebug": "[DEBUG] generating undefined expr to fill hole in: /// Following definition.\nvaly=2\n",
+    "modules": [
+      {
+        "id": 11,
+        "name": "M",
+        "declarations": [
+          {
+            "doc": "Missing body.",
+            "id": 10,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "let",
+              "opdef": {
+                "id": 4,
+                "kind": "def",
+                "name": "y",
+                "qualifier": "val",
+                "expr": {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 2
+                }
+              },
+              "expr": {
+                "id": 5,
+                "kind": "let",
+                "opdef": {
+                  "id": 6,
+                  "kind": "def",
+                  "qualifier": "val",
+                  "name": "__undefinedExprGenerated",
+                  "expr": {
+                    "id": 7,
+                    "kind": "bool",
+                    "value": true
+                  }
+                },
+                "expr": {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "__undefinedExprGenerated"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input '/// Following definition.\\n' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 3,
+          "col": 0,
+          "index": 36
+        },
+        "end": {
+          "line": 3,
+          "col": 25,
+          "index": 61
+        }
+      },
+      "2": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 4,
+          "col": 8,
+          "index": 70
+        },
+        "end": {
+          "line": 4,
+          "col": 8,
+          "index": 70
+        }
+      },
+      "3": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 4,
+          "col": 6,
+          "index": 68
+        },
+        "end": {
+          "line": 4,
+          "col": 6,
+          "index": 68
+        }
+      },
+      "4": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 4,
+          "col": 4,
+          "index": 66
+        },
+        "end": {
+          "line": 4,
+          "col": 4,
+          "index": 66
+        }
+      },
+      "5": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 3,
+          "col": 0,
+          "index": 36
+        },
+        "end": {
+          "line": 4,
+          "col": 32,
+          "index": 68
+        }
+      },
+      "6": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 3,
+          "col": 0,
+          "index": 36
+        },
+        "end": {
+          "line": 4,
+          "col": 32,
+          "index": 68
+        }
+      },
+      "7": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 3,
+          "col": 0,
+          "index": 36
+        },
+        "end": {
+          "line": 4,
+          "col": 32,
+          "index": 68
+        }
+      },
+      "8": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 3,
+          "col": 0,
+          "index": 36
+        },
+        "end": {
+          "line": 4,
+          "col": 32,
+          "index": 68
+        }
+      },
+      "9": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 3,
+          "col": 0,
+          "index": 36
+        },
+        "end": {
+          "line": 4,
+          "col": 32,
+          "index": 68
+        }
+      },
+      "10": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 4,
+          "index": 33
+        },
+        "end": {
+          "line": 2,
+          "col": 4,
+          "index": 33
+        }
+      },
+      "11": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 4,
+          "col": 70,
+          "index": 70
+        }
+      }
+    },
+    "nextID": 12
+  },
+  {
+    "name": "syntax-and-semantic",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M { val x=1 @ type lower=List[a] val r={a:1,a:2} }"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "documentation",
+      "warnings": [],
+      "errors": [
+        {
+          "explanation": "[QNT000] token recognition error at: '@'",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 19,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": 19,
+                "index": 0
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT007] type names must start with an uppercase letter",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 21,
+                "index": 21
+              },
+              "end": {
+                "line": 0,
+                "col": 38,
+                "index": 38
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT014] the type variables a are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 21,
+                "index": 21
+              },
+              "end": {
+                "line": 0,
+                "col": 38,
+                "index": 38
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT016] Field a cannot be defined more than once",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 46,
+                "index": 46
+              },
+              "end": {
+                "line": 0,
+                "col": 54,
+                "index": 54
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "stdout": "# Documentation for M\n\n## x\n\nSignature: `val x`\n\n\n\n## lower\n\nSignature: `type lower = List[a]`\n\n\n\n## r\n\nSignature: `val r`\n\n\n",
+    "stderr": "",
+    "incidentalDebug": "",
+    "modules": [
+      {
+        "id": 14,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          },
+          {
+            "id": 6,
+            "kind": "typedef",
+            "name": "lower",
+            "type": {
+              "id": 5,
+              "kind": "list",
+              "elem": {
+                "id": 4,
+                "kind": "var",
+                "name": "a"
+              }
+            }
+          },
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 7,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 10,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "token recognition error at: '@'",
+        "reference": 1
+      },
+      {
+        "code": "QNT007",
+        "message": "type names must start with an uppercase letter",
+        "reference": 6,
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "type lower",
+            "replacement": "type Lower"
+          }
+        }
+      },
+      {
+        "code": "QNT014",
+        "message": "the type variables a are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+        "reference": 6,
+        "data": {}
+      },
+      {
+        "code": "QNT016",
+        "message": "Field a cannot be defined more than once",
+        "reference": 11,
+        "data": {}
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 0
+        }
+      },
+      "2": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "3": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "4": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        },
+        "end": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        }
+      },
+      "5": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        }
+      },
+      "6": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        }
+      },
+      "7": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "8": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 47,
+          "index": 47
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "9": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 53,
+          "index": 53
+        },
+        "end": {
+          "line": 0,
+          "col": 53,
+          "index": 53
+        }
+      },
+      "10": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 51,
+          "index": 51
+        },
+        "end": {
+          "line": 0,
+          "col": 53,
+          "index": 53
+        }
+      },
+      "11": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        },
+        "end": {
+          "line": 0,
+          "col": 54,
+          "index": 54
+        }
+      },
+      "12": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        },
+        "end": {
+          "line": 0,
+          "col": 54,
+          "index": 54
+        }
+      },
+      "13": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        },
+        "end": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        }
+      },
+      "14": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 56,
+          "index": 56
+        }
+      }
+    },
+    "nextID": 15
+  },
+  {
+    "name": "missing-variable-type-prefix",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module Good {\n/// Completed module.\nval x=1 } module Bad { val before=0 var x: val y=2 } module Next { val z=3 }"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "documentation",
+      "warnings": [],
+      "errors": [
+        {
+          "explanation": "[QNT000] extraneous input 'val' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 2,
+                "col": 43,
+                "index": 79
+              },
+              "end": {
+                "line": 2,
+                "col": 45,
+                "index": 81
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT000] no viable alternative at input 'y='",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 2,
+                "col": 48,
+                "index": 84
+              },
+              "end": {
+                "line": 2,
+                "col": 48,
+                "index": 84
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "stdout": "# Documentation for Good\n\n## x\n\nSignature: `val x`\n\nCompleted module.\n",
+    "stderr": "",
+    "incidentalDebug": "[DEBUG] ignoring listener exception in favor of parse errors. Exception: Error: Value is None\n",
+    "modules": [
+      {
+        "id": 5,
+        "name": "Good",
+        "declarations": [
+          {
+            "doc": "Completed module.",
+            "id": 4,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input 'val' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input 'y='",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 43,
+          "index": 79
+        },
+        "end": {
+          "line": 2,
+          "col": 45,
+          "index": 81
+        }
+      },
+      "2": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 48,
+          "index": 84
+        },
+        "end": {
+          "line": 2,
+          "col": 48,
+          "index": 84
+        }
+      },
+      "3": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 6,
+          "index": 42
+        },
+        "end": {
+          "line": 2,
+          "col": 6,
+          "index": 42
+        }
+      },
+      "4": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 4,
+          "index": 40
+        },
+        "end": {
+          "line": 2,
+          "col": 4,
+          "index": 40
+        }
+      },
+      "5": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 2,
+          "col": 44,
+          "index": 44
+        }
+      },
+      "6": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 34,
+          "index": 70
+        },
+        "end": {
+          "line": 2,
+          "col": 34,
+          "index": 70
+        }
+      },
+      "7": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 27,
+          "index": 63
+        },
+        "end": {
+          "line": 2,
+          "col": 32,
+          "index": 68
+        }
+      }
+    },
+    "nextID": 8
+  },
+  {
+    "name": "missing-variable-type-no-modules",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M { var x: val y=2 }"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "documentation",
+      "warnings": [],
+      "errors": [
+        {
+          "explanation": "[QNT000] extraneous input 'val' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 18,
+                "index": 18
+              },
+              "end": {
+                "line": 0,
+                "col": 20,
+                "index": 20
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT000] no viable alternative at input 'y='",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 23,
+                "index": 23
+              },
+              "end": {
+                "line": 0,
+                "col": 23,
+                "index": 23
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "stdout": "",
+    "stderr": "",
+    "incidentalDebug": "[DEBUG] ignoring listener exception in favor of parse errors. Exception: Error: Value is None\n",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input 'val' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input 'y='",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "2": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      }
+    },
+    "nextID": 3
+  },
+  {
+    "name": "later-operand",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M {\n/// A recovered expression.\nval x=1+val y=2 }"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "documentation",
+      "warnings": [],
+      "errors": [
+        {
+          "explanation": "[QNT000] mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 2,
+                "col": 16,
+                "index": 55
+              },
+              "end": {
+                "line": 2,
+                "col": 16,
+                "index": 55
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "stdout": "# Documentation for M\n\n## x\n\nSignature: `val x`\n\nA recovered expression.\n",
+    "stderr": "",
+    "incidentalDebug": "[DEBUG] generating undefined expr to fill hole in: 1+valy=2\n",
+    "modules": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "doc": "A recovered expression.",
+            "id": 11,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 4,
+                    "kind": "def",
+                    "name": "y",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  },
+                  "expr": {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 1
+                  }
+                },
+                {
+                  "id": 6,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 7,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 8,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 16,
+          "index": 55
+        },
+        "end": {
+          "line": 2,
+          "col": 16,
+          "index": 55
+        }
+      },
+      "2": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 6,
+          "index": 45
+        },
+        "end": {
+          "line": 2,
+          "col": 6,
+          "index": 45
+        }
+      },
+      "3": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 14,
+          "index": 53
+        },
+        "end": {
+          "line": 2,
+          "col": 14,
+          "index": 53
+        }
+      },
+      "4": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 12,
+          "index": 51
+        },
+        "end": {
+          "line": 2,
+          "col": 12,
+          "index": 51
+        }
+      },
+      "5": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 8,
+          "index": 47
+        },
+        "end": {
+          "line": 2,
+          "col": 14,
+          "index": 53
+        }
+      },
+      "6": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 6,
+          "index": 45
+        },
+        "end": {
+          "line": 2,
+          "col": 14,
+          "index": 53
+        }
+      },
+      "7": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 6,
+          "index": 45
+        },
+        "end": {
+          "line": 2,
+          "col": 14,
+          "index": 53
+        }
+      },
+      "8": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 6,
+          "index": 45
+        },
+        "end": {
+          "line": 2,
+          "col": 14,
+          "index": 53
+        }
+      },
+      "9": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 6,
+          "index": 45
+        },
+        "end": {
+          "line": 2,
+          "col": 14,
+          "index": 53
+        }
+      },
+      "10": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 6,
+          "index": 45
+        },
+        "end": {
+          "line": 2,
+          "col": 14,
+          "index": 53
+        }
+      },
+      "11": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 4,
+          "index": 43
+        },
+        "end": {
+          "line": 2,
+          "col": 4,
+          "index": 43
+        }
+      },
+      "12": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 2,
+          "col": 55,
+          "index": 55
+        }
+      }
+    },
+    "nextID": 13
+  },
+  {
+    "name": "unicode-missing-brace",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "/// 😀 Module\nmodule M {\n/// Unicode 😀 documentation.\nval emoji=\"😀\"\nval x=1"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "documentation",
+      "warnings": [],
+      "errors": [
+        {
+          "explanation": "[QNT000] extraneous input '<EOF>' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 4,
+                "col": 7,
+                "index": 74
+              },
+              "end": {
+                "line": 4,
+                "col": 6,
+                "index": 73
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "stdout": "# Documentation for M\n\n## emoji\n\nSignature: `val emoji`\n\nUnicode 😀 documentation.\n\n## x\n\nSignature: `val x`\n\n\n",
+    "stderr": "",
+    "incidentalDebug": "",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "doc": "Unicode 😀 documentation.",
+            "id": 3,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "str",
+              "value": "😀"
+            }
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ],
+        "doc": "😀 Module"
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input '<EOF>' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 4,
+          "col": 7,
+          "index": 74
+        },
+        "end": {
+          "line": 4,
+          "col": 6,
+          "index": 73
+        }
+      },
+      "2": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 3,
+          "col": 10,
+          "index": 63
+        },
+        "end": {
+          "line": 3,
+          "col": 12,
+          "index": 65
+        }
+      },
+      "3": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 3,
+          "col": 4,
+          "index": 57
+        },
+        "end": {
+          "line": 3,
+          "col": 8,
+          "index": 61
+        }
+      },
+      "4": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 4,
+          "col": 6,
+          "index": 73
+        },
+        "end": {
+          "line": 4,
+          "col": 6,
+          "index": 73
+        }
+      },
+      "5": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 4,
+          "col": 4,
+          "index": 71
+        },
+        "end": {
+          "line": 4,
+          "col": 4,
+          "index": 71
+        }
+      },
+      "6": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 4,
+          "col": 73,
+          "index": 73
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "name": "semantic-only",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M {\n/// An invalid type name.\ntype lower=int\n/// Still documented.\nval x=1 }"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "documentation",
+      "warnings": [],
+      "errors": [
+        {
+          "explanation": "[QNT007] type names must start with an uppercase letter",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 2,
+                "col": 0,
+                "index": 37
+              },
+              "end": {
+                "line": 2,
+                "col": 13,
+                "index": 50
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "stdout": "# Documentation for M\n\n## lower\n\nSignature: `type lower = int`\n\nAn invalid type name.\n\n## x\n\nSignature: `val x`\n\nStill documented.\n",
+    "stderr": "",
+    "incidentalDebug": "",
+    "modules": [
+      {
+        "id": 5,
+        "name": "M",
+        "declarations": [
+          {
+            "doc": "An invalid type name.",
+            "id": 2,
+            "kind": "typedef",
+            "name": "lower",
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "doc": "Still documented.",
+            "id": 4,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT007",
+        "message": "type names must start with an uppercase letter",
+        "reference": 2,
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "type lower",
+            "replacement": "type Lower"
+          }
+        }
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 11,
+          "index": 48
+        },
+        "end": {
+          "line": 2,
+          "col": 13,
+          "index": 50
+        }
+      },
+      "2": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 0,
+          "index": 37
+        },
+        "end": {
+          "line": 2,
+          "col": 13,
+          "index": 50
+        }
+      },
+      "3": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 4,
+          "col": 6,
+          "index": 80
+        },
+        "end": {
+          "line": 4,
+          "col": 6,
+          "index": 80
+        }
+      },
+      "4": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 4,
+          "col": 4,
+          "index": 78
+        },
+        "end": {
+          "line": 4,
+          "col": 4,
+          "index": 78
+        }
+      },
+      "5": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 4,
+          "col": 82,
+          "index": 82
+        }
+      }
+    },
+    "nextID": 6
+  },
+  {
+    "name": "imports-not-parsed",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M { import Lib.* from \"Lib\"\n/// Imports are not resolved by docs.\nval x=unknown }"
+      },
+      {
+        "name": "Lib.qnt",
+        "source": "module Lib { var x: }"
+      }
+    ],
+    "status": 0,
+    "summary": "",
+    "stage": {
+      "stage": "documentation",
+      "warnings": [],
+      "documentation": {
+        "M": {
+          "x": {
+            "name": "x",
+            "signature": "val x",
+            "documentation": "Imports are not resolved by docs."
+          }
+        }
+      }
+    },
+    "stdout": "# Documentation for M\n\n## x\n\nSignature: `val x`\n\nImports are not resolved by docs.\n",
+    "stderr": "",
+    "incidentalDebug": "",
+    "modules": [
+      {
+        "id": 4,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 1,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "Lib",
+            "fromSource": "Lib"
+          },
+          {
+            "doc": "Imports are not resolved by docs.",
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "unknown"
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "2": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 6,
+          "index": 79
+        },
+        "end": {
+          "line": 2,
+          "col": 12,
+          "index": 85
+        }
+      },
+      "3": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 2,
+          "col": 4,
+          "index": 77
+        },
+        "end": {
+          "line": 2,
+          "col": 4,
+          "index": 77
+        }
+      },
+      "4": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 2,
+          "col": 87,
+          "index": 87
+        }
+      }
+    },
+    "nextID": 5
+  },
+  {
+    "name": "empty-file",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": ""
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "documentation",
+      "warnings": [],
+      "errors": [
+        {
+          "explanation": "[QNT000] mismatched input '<EOF>' expecting {'module', HASHBANG_LINE, DOCCOMMENT}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 0,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": -1,
+                "index": -1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "stdout": "",
+    "stderr": "",
+    "incidentalDebug": "",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '<EOF>' expecting {'module', HASHBANG_LINE, DOCCOMMENT}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "<fixture>/M.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": -1,
+          "index": -1
+        }
+      }
+    },
+    "nextID": 2
+  }
+]

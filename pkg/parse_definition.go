@@ -83,6 +83,7 @@ func operatorFromContext(ctx p.IOperDefContext, ids parserIDAllocator) (Operator
 		}
 		body = v
 	}
+	body = recoveryExpressionBody(ids, ctx, body)
 	if len(params) > 0 {
 		inner := body
 		body = Expr{ID: ids.Next(), Kind: "lambda", Params: params, Qualifier: qualifier, Body: &inner}

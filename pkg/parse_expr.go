@@ -35,15 +35,9 @@ func parseExpressionWithIDs(text string, ids parserIDAllocator) (Expr, error) {
 func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, error) {
 	if recoveringSyntax(ids) {
 		if _, missing := ctx.(*p.ExprContext); missing {
-			if !recoveryMissingExpressionAllowed(ctx) {
-				return Expr{}, unexpectedRecoveryNode(ctx)
-			}
-			return parserUndefinedExpression(ids), nil
+			return Expr{}, nil
 		}
-		// The reference's listener can consume preceding operands while filling
-		// a hole in a later operand. Recursive conversion cannot safely model
-		// that stack behavior yet, so report this boundary explicitly.
-		if unsupportedRecoveryOperands(ctx, ids) {
+		if unsupportedRecoveryOperands(ctx, ids) && !recoveryOperandReducerSupported(ctx) {
 			return Expr{}, unexpectedRecoveryNode(ctx)
 		}
 	}
@@ -123,6 +117,7 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 			if err != nil {
 				return Expr{}, err
 			}
+			body = recoveryExpressionBody(ids, tuple, body)
 			freshID := ids.Next()
 			fresh := Parameter{ID: freshID, Name: "quintTupledLambdaParam" + freshID.String()}
 			// Upstream reduces left to right: the last binding encloses the others.
@@ -145,6 +140,7 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 		if err != nil {
 			return Expr{}, err
 		}
+		body = recoveryExpressionBody(ids, lambda, body)
 		return Expr{ID: ids.Next(), Kind: "lambda", Params: params, Qualifier: Def, Body: &body}, nil
 	}
 	if c, ok := ctx.(*p.RecordContext); ok {
@@ -159,6 +155,7 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 			if err != nil {
 				return Expr{}, err
 			}
+			value = recoveryExpressionBody(ids, elem, value)
 			if elem.SimpleId() == nil {
 				spreadCount++
 				spread = &value
@@ -210,6 +207,7 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 			if err != nil {
 				return Expr{}, err
 			}
+			body = recoveryExpressionBody(ids, c, body)
 			for _, op := range defs[1:] {
 				inner := body
 				body = Expr{ID: ids.Next(), Kind: "let", Opdef: &op, Body: &inner}
@@ -225,34 +223,53 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 		if err != nil {
 			return Expr{}, err
 		}
+		body = recoveryExpressionBody(ids, c, body)
 		return Expr{ID: ids.Next(), Kind: "let", Opdef: &definition, Body: &body}, nil
 	}
 	args := []Expr{}
+	defer recoveryOperandFrame(ids, &args)()
+	required := 0
 	for _, child := range ctx.GetChildren() {
 		if ex, ok := child.(p.IExprContext); ok {
+			required++
 			v, err := expressionFromContext(ex, ids)
 			if err != nil {
 				return Expr{}, err
 			}
-			args = append(args, v)
+			if v.Kind != "" {
+				args = append(args, v)
+			}
 		}
 	}
 	appendArgs := func(list p.IArgListContext) error {
 		if list == nil {
 			return nil
 		}
+		values := []Expr{}
+		restore := recoveryOperandFrame(ids, &values)
+		defer restore()
 		for _, ctx := range list.AllExpr() {
 			v, err := expressionFromContext(ctx, ids)
 			if err != nil {
 				return err
 			}
-			args = append(args, v)
+			if v.Kind != "" {
+				values = append(values, v)
+			}
 		}
+		if recoveringSyntax(ids) {
+			values = recoveryTakeOperands(ids.(*recoveringParserIDs), len(list.AllExpr()), list)
+		}
+		required += len(list.AllExpr())
+		args = append(args, values...)
 		return nil
 	}
 	opcode := ""
 	switch c := ctx.(type) {
 	case *p.ParenContext, *p.BracesContext:
+		if len(args) == 0 && recoveringSyntax(ids) {
+			return Expr{}, nil
+		}
 		return args[0], nil
 	case *p.OperAppContext:
 		opcode = c.NormalCallName().GetText()
@@ -283,6 +300,12 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 		opcode = "nth"
 	case *p.AsgnContext:
 		opcode = "assign"
+		if recoveringSyntax(ids) {
+			lhs := Expr{ID: ids.Next(), Kind: "name", Name: c.QualId().GetText()}
+			args = recoveryTakeOperands(ids.(*recoveringParserIDs), 1, ctx)
+			args = append([]Expr{lhs}, args...)
+			break
+		}
 		args = append([]Expr{{ID: ids.Next(), Kind: "name", Name: c.QualId().GetText()}}, args...)
 	case *p.UminusContext:
 		opcode = "iuminus"
@@ -318,6 +341,13 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 		opcode = "ite"
 	default:
 		return Expr{}, fmt.Errorf("expression conversion not implemented for %T", ctx)
+	}
+	if recoveringSyntax(ids) && ids.(*recoveringParserIDs).expressionHole(ctx) && opcode != "assign" {
+		recovery := ids.(*recoveringParserIDs)
+		if opcode == "iuminus" && recoveryOperandCount(recovery) == 0 {
+			return Expr{}, nil
+		}
+		args = recoveryTakeOperands(recovery, required, ctx)
 	}
 	id := ids.Next()
 	if opcode == "q::debug" && len(args) == 1 {

@@ -1,0 +1,2286 @@
+[
+  {
+    "name": "missing-module-brace",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M { val x=1"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "parsing",
+      "warnings": [],
+      "modules": [
+        {
+          "id": 4,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        }
+      ],
+      "table": {
+        "3": {
+          "id": 3,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "val",
+          "expr": {
+            "id": 2,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0
+        }
+      },
+      "errors": [
+        {
+          "explanation": "[QNT000] extraneous input '<EOF>' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 18,
+                "index": 18
+              },
+              "end": {
+                "line": 0,
+                "col": 17,
+                "index": 17
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sourceMap": {
+      "sourceIndex": {
+        "0": "<fixture>/M.qnt"
+      },
+      "map": {
+        "1": [
+          0,
+          {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          }
+        ],
+        "2": [
+          0,
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          },
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          }
+        ],
+        "3": [
+          0,
+          {
+            "line": 0,
+            "col": 15,
+            "index": 15
+          },
+          {
+            "line": 0,
+            "col": 15,
+            "index": 15
+          }
+        ],
+        "4": [
+          0,
+          {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          }
+        ]
+      }
+    },
+    "incidentalStdout": "",
+    "incidentalStderr": ""
+  },
+  {
+    "name": "missing-definition-body",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M { val x= val y=2 }"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "parsing",
+      "warnings": [],
+      "modules": [
+        {
+          "id": 10,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 9,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 8,
+                "kind": "let",
+                "opdef": {
+                  "id": 3,
+                  "kind": "def",
+                  "name": "y",
+                  "qualifier": "val",
+                  "expr": {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 2
+                  }
+                },
+                "expr": {
+                  "id": 4,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 5,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 6,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "table": {
+        "3": {
+          "id": 3,
+          "kind": "def",
+          "name": "y",
+          "qualifier": "val",
+          "expr": {
+            "id": 2,
+            "kind": "int",
+            "value": 2
+          },
+          "depth": 2
+        },
+        "5": {
+          "id": 5,
+          "kind": "def",
+          "qualifier": "val",
+          "name": "__undefinedExprGenerated",
+          "expr": {
+            "id": 6,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 3
+        },
+        "7": {
+          "id": 5,
+          "kind": "def",
+          "qualifier": "val",
+          "name": "__undefinedExprGenerated",
+          "expr": {
+            "id": 6,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 3
+        },
+        "9": {
+          "id": 9,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "val",
+          "expr": {
+            "id": 8,
+            "kind": "let",
+            "opdef": {
+              "id": 3,
+              "kind": "def",
+              "name": "y",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "int",
+                "value": 2
+              }
+            },
+            "expr": {
+              "id": 4,
+              "kind": "let",
+              "opdef": {
+                "id": 5,
+                "kind": "def",
+                "qualifier": "val",
+                "name": "__undefinedExprGenerated",
+                "expr": {
+                  "id": 6,
+                  "kind": "bool",
+                  "value": true
+                }
+              },
+              "expr": {
+                "id": 7,
+                "kind": "name",
+                "name": "__undefinedExprGenerated"
+              }
+            }
+          },
+          "depth": 0
+        }
+      },
+      "errors": [
+        {
+          "explanation": "[QNT000] mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 26,
+                "index": 26
+              },
+              "end": {
+                "line": 0,
+                "col": 26,
+                "index": 26
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sourceMap": {
+      "sourceIndex": {
+        "0": "<fixture>/M.qnt"
+      },
+      "map": {
+        "1": [
+          0,
+          {
+            "line": 0,
+            "col": 26,
+            "index": 26
+          },
+          {
+            "line": 0,
+            "col": 26,
+            "index": 26
+          }
+        ],
+        "2": [
+          0,
+          {
+            "line": 0,
+            "col": 24,
+            "index": 24
+          },
+          {
+            "line": 0,
+            "col": 24,
+            "index": 24
+          }
+        ],
+        "3": [
+          0,
+          {
+            "line": 0,
+            "col": 22,
+            "index": 22
+          },
+          {
+            "line": 0,
+            "col": 22,
+            "index": 22
+          }
+        ],
+        "4": [
+          0,
+          {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          {
+            "line": 0,
+            "col": 24,
+            "index": 24
+          }
+        ],
+        "5": [
+          0,
+          {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          {
+            "line": 0,
+            "col": 24,
+            "index": 24
+          }
+        ],
+        "6": [
+          0,
+          {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          {
+            "line": 0,
+            "col": 24,
+            "index": 24
+          }
+        ],
+        "7": [
+          0,
+          {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          {
+            "line": 0,
+            "col": 24,
+            "index": 24
+          }
+        ],
+        "8": [
+          0,
+          {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          {
+            "line": 0,
+            "col": 24,
+            "index": 24
+          }
+        ],
+        "9": [
+          0,
+          {
+            "line": 0,
+            "col": 15,
+            "index": 15
+          },
+          {
+            "line": 0,
+            "col": 15,
+            "index": 15
+          }
+        ],
+        "10": [
+          0,
+          {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          {
+            "line": 0,
+            "col": 26,
+            "index": 26
+          }
+        ]
+      }
+    },
+    "incidentalStdout": "[DEBUG] generating undefined expr to fill hole in: valy=2\n",
+    "incidentalStderr": ""
+  },
+  {
+    "name": "syntax-and-semantic",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M { val x=1 @ type lower=List[a] val r={a:1,a:2} }"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "parsing",
+      "warnings": [],
+      "modules": [
+        {
+          "id": 14,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 13,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 12,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 8,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 7,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 10,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 9,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "id": 6,
+              "kind": "typedef",
+              "name": "lower",
+              "type": {
+                "id": 5,
+                "kind": "list",
+                "elem": {
+                  "id": 4,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              "depth": 0
+            }
+          ]
+        }
+      ],
+      "table": {
+        "3": {
+          "id": 3,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "val",
+          "expr": {
+            "id": 2,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0
+        },
+        "13": {
+          "id": 13,
+          "kind": "def",
+          "name": "r",
+          "qualifier": "val",
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 8,
+                "kind": "str",
+                "value": "a"
+              },
+              {
+                "id": 7,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 10,
+                "kind": "str",
+                "value": "a"
+              },
+              {
+                "id": 9,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          },
+          "depth": 0
+        }
+      },
+      "errors": [
+        {
+          "explanation": "[QNT000] token recognition error at: '@'",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 19,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": 19,
+                "index": 0
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT007] type names must start with an uppercase letter",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 21,
+                "index": 21
+              },
+              "end": {
+                "line": 0,
+                "col": 38,
+                "index": 38
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT014] the type variables a are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 21,
+                "index": 21
+              },
+              "end": {
+                "line": 0,
+                "col": 38,
+                "index": 38
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT016] Field a cannot be defined more than once",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 46,
+                "index": 46
+              },
+              "end": {
+                "line": 0,
+                "col": 54,
+                "index": 54
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sourceMap": {
+      "sourceIndex": {
+        "0": "<fixture>/M.qnt"
+      },
+      "map": {
+        "1": [
+          0,
+          {
+            "line": 0,
+            "col": 19,
+            "index": 0
+          },
+          {
+            "line": 0,
+            "col": 19,
+            "index": 0
+          }
+        ],
+        "2": [
+          0,
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          },
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          }
+        ],
+        "3": [
+          0,
+          {
+            "line": 0,
+            "col": 15,
+            "index": 15
+          },
+          {
+            "line": 0,
+            "col": 15,
+            "index": 15
+          }
+        ],
+        "4": [
+          0,
+          {
+            "line": 0,
+            "col": 37,
+            "index": 37
+          },
+          {
+            "line": 0,
+            "col": 37,
+            "index": 37
+          }
+        ],
+        "5": [
+          0,
+          {
+            "line": 0,
+            "col": 32,
+            "index": 32
+          },
+          {
+            "line": 0,
+            "col": 38,
+            "index": 38
+          }
+        ],
+        "6": [
+          0,
+          {
+            "line": 0,
+            "col": 21,
+            "index": 21
+          },
+          {
+            "line": 0,
+            "col": 38,
+            "index": 38
+          }
+        ],
+        "7": [
+          0,
+          {
+            "line": 0,
+            "col": 49,
+            "index": 49
+          },
+          {
+            "line": 0,
+            "col": 49,
+            "index": 49
+          }
+        ],
+        "8": [
+          0,
+          {
+            "line": 0,
+            "col": 47,
+            "index": 47
+          },
+          {
+            "line": 0,
+            "col": 49,
+            "index": 49
+          }
+        ],
+        "9": [
+          0,
+          {
+            "line": 0,
+            "col": 53,
+            "index": 53
+          },
+          {
+            "line": 0,
+            "col": 53,
+            "index": 53
+          }
+        ],
+        "10": [
+          0,
+          {
+            "line": 0,
+            "col": 51,
+            "index": 51
+          },
+          {
+            "line": 0,
+            "col": 53,
+            "index": 53
+          }
+        ],
+        "11": [
+          0,
+          {
+            "line": 0,
+            "col": 46,
+            "index": 46
+          },
+          {
+            "line": 0,
+            "col": 54,
+            "index": 54
+          }
+        ],
+        "12": [
+          0,
+          {
+            "line": 0,
+            "col": 46,
+            "index": 46
+          },
+          {
+            "line": 0,
+            "col": 54,
+            "index": 54
+          }
+        ],
+        "13": [
+          0,
+          {
+            "line": 0,
+            "col": 44,
+            "index": 44
+          },
+          {
+            "line": 0,
+            "col": 44,
+            "index": 44
+          }
+        ],
+        "14": [
+          0,
+          {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          {
+            "line": 0,
+            "col": 56,
+            "index": 56
+          }
+        ]
+      }
+    },
+    "incidentalStdout": "",
+    "incidentalStderr": ""
+  },
+  {
+    "name": "imported-syntax-dropped",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M { import Lib.* from \"Lib\" val x=n }"
+      },
+      {
+        "name": "Lib.qnt",
+        "source": "module Lib { val n=1"
+      }
+    ],
+    "status": 0,
+    "summary": "",
+    "stage": {
+      "stage": "parsing",
+      "warnings": [],
+      "modules": [
+        {
+          "id": 8,
+          "name": "Lib",
+          "declarations": [
+            {
+              "id": 7,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "val",
+              "expr": {
+                "id": 6,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "defName": "*",
+              "protoName": "Lib",
+              "fromSource": "Lib"
+            },
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "name",
+                "name": "n"
+              }
+            }
+          ]
+        }
+      ],
+      "table": {
+        "2": {
+          "id": 7,
+          "kind": "def",
+          "name": "n",
+          "qualifier": "val",
+          "expr": {
+            "id": 6,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 1,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "Lib",
+            "fromSource": "Lib"
+          },
+          "hidden": true
+        },
+        "3": {
+          "id": 3,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "val",
+          "expr": {
+            "id": 2,
+            "kind": "name",
+            "name": "n"
+          },
+          "depth": 0
+        },
+        "7": {
+          "id": 7,
+          "kind": "def",
+          "name": "n",
+          "qualifier": "val",
+          "expr": {
+            "id": 6,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0
+        }
+      },
+      "errors": []
+    },
+    "sourceMap": {
+      "sourceIndex": {
+        "0": "<fixture>/M.qnt",
+        "4": "<fixture>/Lib.qnt"
+      },
+      "map": {
+        "1": [
+          0,
+          {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          },
+          {
+            "line": 0,
+            "col": 33,
+            "index": 33
+          }
+        ],
+        "2": [
+          0,
+          {
+            "line": 0,
+            "col": 41,
+            "index": 41
+          },
+          {
+            "line": 0,
+            "col": 41,
+            "index": 41
+          }
+        ],
+        "3": [
+          0,
+          {
+            "line": 0,
+            "col": 39,
+            "index": 39
+          },
+          {
+            "line": 0,
+            "col": 39,
+            "index": 39
+          }
+        ],
+        "4": [
+          0,
+          {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          {
+            "line": 0,
+            "col": 43,
+            "index": 43
+          }
+        ],
+        "5": [
+          4,
+          {
+            "line": 0,
+            "col": 20,
+            "index": 20
+          },
+          {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          }
+        ],
+        "6": [
+          4,
+          {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          },
+          {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          }
+        ],
+        "7": [
+          4,
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          },
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          }
+        ],
+        "8": [
+          4,
+          {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          }
+        ]
+      }
+    },
+    "incidentalStdout": "",
+    "incidentalStderr": ""
+  },
+  {
+    "name": "main-and-imported-syntax",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M { import Lib.* from \"Lib\" val x= @ n }"
+      },
+      {
+        "name": "Lib.qnt",
+        "source": "module Lib { val n=1"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "parsing",
+      "warnings": [],
+      "modules": [
+        {
+          "id": 9,
+          "name": "Lib",
+          "declarations": [
+            {
+              "id": 8,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "val",
+              "expr": {
+                "id": 7,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "import",
+              "defName": "*",
+              "protoName": "Lib",
+              "fromSource": "Lib"
+            },
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "name",
+                "name": "n"
+              }
+            }
+          ]
+        }
+      ],
+      "table": {
+        "3": {
+          "id": 8,
+          "kind": "def",
+          "name": "n",
+          "qualifier": "val",
+          "expr": {
+            "id": 7,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 2,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "Lib",
+            "fromSource": "Lib"
+          },
+          "hidden": true
+        },
+        "4": {
+          "id": 4,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "val",
+          "expr": {
+            "id": 3,
+            "kind": "name",
+            "name": "n"
+          },
+          "depth": 0
+        },
+        "8": {
+          "id": 8,
+          "kind": "def",
+          "name": "n",
+          "qualifier": "val",
+          "expr": {
+            "id": 7,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0
+        }
+      },
+      "errors": [
+        {
+          "explanation": "[QNT000] token recognition error at: '@'",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 42,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": 42,
+                "index": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sourceMap": {
+      "sourceIndex": {
+        "0": "<fixture>/M.qnt",
+        "5": "<fixture>/Lib.qnt"
+      },
+      "map": {
+        "1": [
+          0,
+          {
+            "line": 0,
+            "col": 42,
+            "index": 0
+          },
+          {
+            "line": 0,
+            "col": 42,
+            "index": 0
+          }
+        ],
+        "2": [
+          0,
+          {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          },
+          {
+            "line": 0,
+            "col": 33,
+            "index": 33
+          }
+        ],
+        "3": [
+          0,
+          {
+            "line": 0,
+            "col": 44,
+            "index": 44
+          },
+          {
+            "line": 0,
+            "col": 44,
+            "index": 44
+          }
+        ],
+        "4": [
+          0,
+          {
+            "line": 0,
+            "col": 39,
+            "index": 39
+          },
+          {
+            "line": 0,
+            "col": 39,
+            "index": 39
+          }
+        ],
+        "5": [
+          0,
+          {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          {
+            "line": 0,
+            "col": 46,
+            "index": 46
+          }
+        ],
+        "6": [
+          5,
+          {
+            "line": 0,
+            "col": 20,
+            "index": 20
+          },
+          {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          }
+        ],
+        "7": [
+          5,
+          {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          },
+          {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          }
+        ],
+        "8": [
+          5,
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          },
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          }
+        ],
+        "9": [
+          5,
+          {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          }
+        ]
+      }
+    },
+    "incidentalStdout": "",
+    "incidentalStderr": ""
+  },
+  {
+    "name": "missing-variable-type-abort",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M { var x: val y=2 }"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "parsing",
+      "warnings": [],
+      "modules": [],
+      "table": {},
+      "errors": [
+        {
+          "explanation": "[QNT000] extraneous input 'val' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 18,
+                "index": 18
+              },
+              "end": {
+                "line": 0,
+                "col": 20,
+                "index": 20
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT000] no viable alternative at input 'y='",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 23,
+                "index": 23
+              },
+              "end": {
+                "line": 0,
+                "col": 23,
+                "index": 23
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sourceMap": {
+      "sourceIndex": {
+        "0": "<fixture>/M.qnt"
+      },
+      "map": {
+        "1": [
+          0,
+          {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          {
+            "line": 0,
+            "col": 20,
+            "index": 20
+          }
+        ],
+        "2": [
+          0,
+          {
+            "line": 0,
+            "col": 23,
+            "index": 23
+          },
+          {
+            "line": 0,
+            "col": 23,
+            "index": 23
+          }
+        ]
+      }
+    },
+    "incidentalStdout": "[DEBUG] ignoring listener exception in favor of parse errors. Exception: Error: Value is None\n",
+    "incidentalStderr": ""
+  },
+  {
+    "name": "missing-variable-type-prefix",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module Good { val x=1 } module Bad { val before=0 var x: val y=2 } module Next { val z=3 }"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "parsing",
+      "warnings": [],
+      "modules": [
+        {
+          "id": 5,
+          "name": "Good",
+          "declarations": [
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        }
+      ],
+      "table": {
+        "4": {
+          "id": 4,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "val",
+          "expr": {
+            "id": 3,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0
+        }
+      },
+      "errors": [
+        {
+          "explanation": "[QNT000] extraneous input 'val' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 57,
+                "index": 57
+              },
+              "end": {
+                "line": 0,
+                "col": 59,
+                "index": 59
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT000] no viable alternative at input 'y='",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 62,
+                "index": 62
+              },
+              "end": {
+                "line": 0,
+                "col": 62,
+                "index": 62
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sourceMap": {
+      "sourceIndex": {
+        "0": "<fixture>/M.qnt"
+      },
+      "map": {
+        "1": [
+          0,
+          {
+            "line": 0,
+            "col": 57,
+            "index": 57
+          },
+          {
+            "line": 0,
+            "col": 59,
+            "index": 59
+          }
+        ],
+        "2": [
+          0,
+          {
+            "line": 0,
+            "col": 62,
+            "index": 62
+          },
+          {
+            "line": 0,
+            "col": 62,
+            "index": 62
+          }
+        ],
+        "3": [
+          0,
+          {
+            "line": 0,
+            "col": 20,
+            "index": 20
+          },
+          {
+            "line": 0,
+            "col": 20,
+            "index": 20
+          }
+        ],
+        "4": [
+          0,
+          {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          },
+          {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          }
+        ],
+        "5": [
+          0,
+          {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          {
+            "line": 0,
+            "col": 22,
+            "index": 22
+          }
+        ],
+        "6": [
+          0,
+          {
+            "line": 0,
+            "col": 48,
+            "index": 48
+          },
+          {
+            "line": 0,
+            "col": 48,
+            "index": 48
+          }
+        ],
+        "7": [
+          0,
+          {
+            "line": 0,
+            "col": 41,
+            "index": 41
+          },
+          {
+            "line": 0,
+            "col": 46,
+            "index": 46
+          }
+        ]
+      }
+    },
+    "incidentalStdout": "[DEBUG] ignoring listener exception in favor of parse errors. Exception: Error: Value is None\n",
+    "incidentalStderr": ""
+  },
+  {
+    "name": "later-operand",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M { val x=1+val y=2 }"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "parsing",
+      "warnings": [],
+      "modules": [
+        {
+          "id": 12,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 11,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 10,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 5,
+                    "kind": "let",
+                    "opdef": {
+                      "id": 4,
+                      "kind": "def",
+                      "name": "y",
+                      "qualifier": "val",
+                      "expr": {
+                        "id": 3,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    },
+                    "expr": {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "id": 6,
+                    "kind": "let",
+                    "opdef": {
+                      "id": 7,
+                      "kind": "def",
+                      "qualifier": "val",
+                      "name": "__undefinedExprGenerated",
+                      "expr": {
+                        "id": 8,
+                        "kind": "bool",
+                        "value": true
+                      }
+                    },
+                    "expr": {
+                      "id": 9,
+                      "kind": "name",
+                      "name": "__undefinedExprGenerated"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "table": {
+        "4": {
+          "id": 4,
+          "kind": "def",
+          "name": "y",
+          "qualifier": "val",
+          "expr": {
+            "id": 3,
+            "kind": "int",
+            "value": 2
+          },
+          "depth": 2
+        },
+        "7": {
+          "id": 7,
+          "kind": "def",
+          "qualifier": "val",
+          "name": "__undefinedExprGenerated",
+          "expr": {
+            "id": 8,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 2
+        },
+        "9": {
+          "id": 7,
+          "kind": "def",
+          "qualifier": "val",
+          "name": "__undefinedExprGenerated",
+          "expr": {
+            "id": 8,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 2
+        },
+        "11": {
+          "id": 11,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "val",
+          "expr": {
+            "id": 10,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 5,
+                "kind": "let",
+                "opdef": {
+                  "id": 4,
+                  "kind": "def",
+                  "name": "y",
+                  "qualifier": "val",
+                  "expr": {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 2
+                  }
+                },
+                "expr": {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                }
+              },
+              {
+                "id": 6,
+                "kind": "let",
+                "opdef": {
+                  "id": 7,
+                  "kind": "def",
+                  "qualifier": "val",
+                  "name": "__undefinedExprGenerated",
+                  "expr": {
+                    "id": 8,
+                    "kind": "bool",
+                    "value": true
+                  }
+                },
+                "expr": {
+                  "id": 9,
+                  "kind": "name",
+                  "name": "__undefinedExprGenerated"
+                }
+              }
+            ]
+          },
+          "depth": 0
+        }
+      },
+      "errors": [
+        {
+          "explanation": "[QNT000] mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 27,
+                "index": 27
+              },
+              "end": {
+                "line": 0,
+                "col": 27,
+                "index": 27
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sourceMap": {
+      "sourceIndex": {
+        "0": "<fixture>/M.qnt"
+      },
+      "map": {
+        "1": [
+          0,
+          {
+            "line": 0,
+            "col": 27,
+            "index": 27
+          },
+          {
+            "line": 0,
+            "col": 27,
+            "index": 27
+          }
+        ],
+        "2": [
+          0,
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          },
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          }
+        ],
+        "3": [
+          0,
+          {
+            "line": 0,
+            "col": 25,
+            "index": 25
+          },
+          {
+            "line": 0,
+            "col": 25,
+            "index": 25
+          }
+        ],
+        "4": [
+          0,
+          {
+            "line": 0,
+            "col": 23,
+            "index": 23
+          },
+          {
+            "line": 0,
+            "col": 23,
+            "index": 23
+          }
+        ],
+        "5": [
+          0,
+          {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          },
+          {
+            "line": 0,
+            "col": 25,
+            "index": 25
+          }
+        ],
+        "6": [
+          0,
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          },
+          {
+            "line": 0,
+            "col": 25,
+            "index": 25
+          }
+        ],
+        "7": [
+          0,
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          },
+          {
+            "line": 0,
+            "col": 25,
+            "index": 25
+          }
+        ],
+        "8": [
+          0,
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          },
+          {
+            "line": 0,
+            "col": 25,
+            "index": 25
+          }
+        ],
+        "9": [
+          0,
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          },
+          {
+            "line": 0,
+            "col": 25,
+            "index": 25
+          }
+        ],
+        "10": [
+          0,
+          {
+            "line": 0,
+            "col": 17,
+            "index": 17
+          },
+          {
+            "line": 0,
+            "col": 25,
+            "index": 25
+          }
+        ],
+        "11": [
+          0,
+          {
+            "line": 0,
+            "col": 15,
+            "index": 15
+          },
+          {
+            "line": 0,
+            "col": 15,
+            "index": 15
+          }
+        ],
+        "12": [
+          0,
+          {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          {
+            "line": 0,
+            "col": 27,
+            "index": 27
+          }
+        ]
+      }
+    },
+    "incidentalStdout": "[DEBUG] generating undefined expr to fill hole in: 1+valy=2\n",
+    "incidentalStderr": ""
+  },
+  {
+    "name": "unicode-missing-brace",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "/// 😀 Module\nmodule M { val emoji=\"😀\"\n val x=1"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "parsing",
+      "warnings": [],
+      "modules": [
+        {
+          "id": 6,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "emoji",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "str",
+                "value": "😀"
+              }
+            },
+            {
+              "id": 5,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 4,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ],
+          "doc": "😀 Module"
+        }
+      ],
+      "table": {
+        "3": {
+          "id": 3,
+          "kind": "def",
+          "name": "emoji",
+          "qualifier": "val",
+          "expr": {
+            "id": 2,
+            "kind": "str",
+            "value": "😀"
+          },
+          "depth": 0
+        },
+        "5": {
+          "id": 5,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "val",
+          "expr": {
+            "id": 4,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0
+        }
+      },
+      "errors": [
+        {
+          "explanation": "[QNT000] extraneous input '<EOF>' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 2,
+                "col": 8,
+                "index": 46
+              },
+              "end": {
+                "line": 2,
+                "col": 7,
+                "index": 45
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sourceMap": {
+      "sourceIndex": {
+        "0": "<fixture>/M.qnt"
+      },
+      "map": {
+        "1": [
+          0,
+          {
+            "line": 2,
+            "col": 8,
+            "index": 46
+          },
+          {
+            "line": 2,
+            "col": 7,
+            "index": 45
+          }
+        ],
+        "2": [
+          0,
+          {
+            "line": 1,
+            "col": 21,
+            "index": 34
+          },
+          {
+            "line": 1,
+            "col": 23,
+            "index": 36
+          }
+        ],
+        "3": [
+          0,
+          {
+            "line": 1,
+            "col": 15,
+            "index": 28
+          },
+          {
+            "line": 1,
+            "col": 19,
+            "index": 32
+          }
+        ],
+        "4": [
+          0,
+          {
+            "line": 2,
+            "col": 7,
+            "index": 45
+          },
+          {
+            "line": 2,
+            "col": 7,
+            "index": 45
+          }
+        ],
+        "5": [
+          0,
+          {
+            "line": 2,
+            "col": 5,
+            "index": 43
+          },
+          {
+            "line": 2,
+            "col": 5,
+            "index": 43
+          }
+        ],
+        "6": [
+          0,
+          {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          {
+            "line": 2,
+            "col": 45,
+            "index": 45
+          }
+        ]
+      }
+    },
+    "incidentalStdout": "",
+    "incidentalStderr": ""
+  },
+  {
+    "name": "imported-listener-abort",
+    "files": [
+      {
+        "name": "M.qnt",
+        "source": "module M { import Lib from \"Lib\" val x=1 }"
+      },
+      {
+        "name": "Lib.qnt",
+        "source": "module Lib { var x: }"
+      }
+    ],
+    "status": 1,
+    "summary": "parsing failed",
+    "stage": {
+      "stage": "parsing",
+      "warnings": [],
+      "modules": [
+        {
+          "id": 4,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 1,
+              "kind": "import",
+              "protoName": "Lib",
+              "fromSource": "Lib"
+            },
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        }
+      ],
+      "table": {
+        "3": {
+          "id": 3,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "val",
+          "expr": {
+            "id": 2,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0
+        }
+      },
+      "errors": [
+        {
+          "explanation": "[QNT405] Module M imports an unknown module Lib",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 11,
+                "index": 11
+              },
+              "end": {
+                "line": 0,
+                "col": 31,
+                "index": 31
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT405] Module 'Lib' not found",
+          "locs": [
+            {
+              "source": "<fixture>/M.qnt",
+              "start": {
+                "line": 0,
+                "col": 11,
+                "index": 11
+              },
+              "end": {
+                "line": 0,
+                "col": 31,
+                "index": 31
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sourceMap": {
+      "sourceIndex": {
+        "0": "<fixture>/M.qnt",
+        "4": "<fixture>/Lib.qnt"
+      },
+      "map": {
+        "1": [
+          0,
+          {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          },
+          {
+            "line": 0,
+            "col": 31,
+            "index": 31
+          }
+        ],
+        "2": [
+          0,
+          {
+            "line": 0,
+            "col": 39,
+            "index": 39
+          },
+          {
+            "line": 0,
+            "col": 39,
+            "index": 39
+          }
+        ],
+        "3": [
+          0,
+          {
+            "line": 0,
+            "col": 37,
+            "index": 37
+          },
+          {
+            "line": 0,
+            "col": 37,
+            "index": 37
+          }
+        ],
+        "4": [
+          0,
+          {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          {
+            "line": 0,
+            "col": 41,
+            "index": 41
+          }
+        ],
+        "5": [
+          4,
+          {
+            "line": 0,
+            "col": 20,
+            "index": 20
+          },
+          {
+            "line": 0,
+            "col": 20,
+            "index": 20
+          }
+        ]
+      }
+    },
+    "incidentalStdout": "[DEBUG] ignoring listener exception in favor of parse errors. Exception: Error: Value is None\n",
+    "incidentalStderr": ""
+  }
+]

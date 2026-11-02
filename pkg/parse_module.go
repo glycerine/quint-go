@@ -51,6 +51,9 @@ func parseModulesWithIDs(text string, ids parserIDAllocator) (modules []Module, 
 			}
 			decls, err := declarationsFromContext(item.Declaration(), ids)
 			if err != nil {
+				if err == errParserListenerAbort {
+					return modules, nil
+				}
 				if recoveringSyntax(ids) {
 					return modules, syntaxRecoveryFailure(ids, err)
 				}
@@ -148,6 +151,9 @@ func declarationFromContext(ctx p.IDeclarationContext, ids parserIDAllocator) (D
 	case *p.ConstContext:
 		typ, err := typeFromContextWithIDs(c.Type_(), ids)
 		if err != nil {
+			if recoveringSyntax(ids) && missingRecoveryType(c.Type_()) {
+				return d, errParserListenerAbort
+			}
 			return d, err
 		}
 		d.Kind = "const"
@@ -156,6 +162,9 @@ func declarationFromContext(ctx p.IDeclarationContext, ids parserIDAllocator) (D
 	case *p.VarContext:
 		typ, err := typeFromContextWithIDs(c.Type_(), ids)
 		if err != nil {
+			if recoveringSyntax(ids) && missingRecoveryType(c.Type_()) {
+				return d, errParserListenerAbort
+			}
 			return d, err
 		}
 		d.Kind = "var"

@@ -85,8 +85,7 @@ func TestUpstreamSyntaxParserRecovery(t *testing.T) {
 func TestUnsupportedSyntaxRecoveryBoundary(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		"module Good { val x=1 } module Bad { var x: val y=2 }",
-		"module Good { val x=1 } module Bad { val x=1+ val y=2 }",
+		"module Good { val x=1 } module Bad { val r={a:1,b:val y=2} }",
 	} {
 		result, err := ParseModulesRecovering("unsupported.qnt", source)
 		var unsupported *SyntaxRecoveryError

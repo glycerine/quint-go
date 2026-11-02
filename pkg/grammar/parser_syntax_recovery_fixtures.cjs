@@ -41,9 +41,4 @@ const fixtures=cases.map(([name,source])=>{
  return {name,source,modules:parsed.modules,diagnostics:parsed.errors.map(({reference,...error})=>({...error,location:parsed.sourceMap.get(reference)}))}
 })
 console.debug=debug
-const pending=new Map([
- ['missing-variable-type','The reference aborts its listener after type-stack underflow; the Go parser also reports a different no-viable-alternative excerpt.'],
- ['missing-expression-operand','The reference listener consumes an earlier operand while filling a later expression hole; recursive IR conversion cannot safely reproduce this stack behavior yet.'],
-])
-fs.writeFileSync(path.join(root,'pkg/testdata/parser/parser_syntax_recovery.json'),JSONbig.stringify(fixtures.filter(f=>!pending.has(f.name)),null,2)+'\n')
-fs.writeFileSync(path.join(root,'pkg/testdata/parser/parser_syntax_pending.json'),JSONbig.stringify(fixtures.filter(f=>pending.has(f.name)).map(f=>({...f,pendingReason:pending.get(f.name)})),null,2)+'\n')
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/parser_syntax_recovery.json'),JSONbig.stringify(fixtures,null,2)+'\n')

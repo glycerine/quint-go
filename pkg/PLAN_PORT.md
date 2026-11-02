@@ -188,8 +188,12 @@ without losing semantic information, and diagnostic locations remain stable.
     preserves corrected partial IR, declaration order, docs, and UTF-16 spans.
   - [x] Recover supported lexical/syntax trees with partial IR, ordered diagnostics
     and UTF-16/raw spans; load source graphs through separate recovery APIs.
-  - [ ] Resolve two unsafe malformed-tree cases (missing variable type and later
-    operand hole) currently rejected explicitly as SyntaxRecoveryError.
+  - [x] Resolve missing variable/constant types and later operand holes with
+    exact listener abort/stack behavior; promote both historical pending cases.
+  - [x] Route parse/typecheck/compile and docs CLI adapters through recovery;
+    compare partial modules, stage JSON, source maps and Markdown on errors.
+  - [ ] Recover operand borrowing across malformed multi-field records;
+    this boundary still returns SyntaxRecoveryError with completed modules.
 - [ ] P2.9 Differential-test parsed IR and error codes across parser fixtures
   and the repository's `.qnt` corpus; normalize only documented ID differences.
 
@@ -463,7 +467,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     membership/cardinality, iteration, higher-order callbacks, access and display;
     150 exact source cases cover large compact queries and resource errors.
   - [ ] Complete remaining mixed symbolic-key and cross-constructor audits.
-- [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
+- [x] P7.5 Port current/next-state storage, primed assignment, simultaneous
   updates, action composition, enabled/disabled actions, rollback, and commit.
   - [x] Stable named current/next registers, unset diagnostics, shift/reset,
     next-state snapshots/recovery, current record export, and shift cache reset.
@@ -3286,3 +3290,12 @@ word "retained" in the commit message.
   actual source graphs,11 helper/publication fixtures and protocol overlay/fix
   tests pass. Full LSP0.135s, helper100% coverage, race1.523s and vet/review pass.
   Unstructured unsupported parser conversions and broader workspace audit remain.
+
+- 2026-11-02: Extended syntax recovery to exact listener-abort and operand-stack
+  behavior, promoting both historical pending malformed cases. Twenty-six new
+  stack/abort snapshots plus29 existing cases compare raw IR/IDs, diagnostics and
+  both source maps. CLI parse/typecheck/compile and docs now use recovery; ten
+  exact stage/source-map and ten partial-Markdown fixtures pass. Focused parser
+  tests0.096s, CLI0.053s, optional broad corpus1.054s, parser race1.321s/docs race
+  1.146s and vet pass. Multi-field record operand borrowing remains an explicit
+  unsupported recovery boundary; other CLI execution/check adapters stay separate.

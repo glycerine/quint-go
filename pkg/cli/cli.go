@@ -403,7 +403,7 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 	}
 	sourceCode := map[string]string{}
 	resolver := quint.NewFileSourceResolver(sourceCode, nil)
-	front, parseErr := quint.ParseProject(resolver, resolver.LookupPath(filepath.Dir(abs), filepath.Base(abs)))
+	front, parseErr := quint.ParseProjectRecovering(resolver, resolver.LookupPath(filepath.Dir(abs), filepath.Base(abs)))
 	paths := make([]string, 0, len(sourceCode))
 	for path := range sourceCode {
 		paths = append(paths, path)

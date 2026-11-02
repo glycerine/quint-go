@@ -23,6 +23,7 @@ type ModuleRecoveryResult struct {
 // Lexical and syntax diagnostics are collected before semantic diagnostics.
 // Recoverable parser trees retain their declarations; unsupported malformed
 // trees return a SyntaxRecoveryError and modules completed before that tree.
+// A reference listener abort retains completed modules without inventing IR.
 // Existing ParseModules entry points retain their fail-fast contracts.
 func ParseModulesRecovering(name, text string) (ModuleRecoveryResult, error) {
 	return parseModulesRecoveringWithIDs(name, text, NewIDGenerator())
@@ -53,6 +54,37 @@ type recoveringParserIDs struct {
 	diagnostics     []Diagnostic
 	syntaxCount     int
 	expressionHoles map[antlr.Tree]bool
+	operandFrames   []*[]Expr
+}
+
+var errParserListenerAbort = fmt.Errorf("reference listener aborted after a missing type")
+
+func missingRecoveryType(ctx antlr.Tree) bool {
+	_, missing := ctx.(*p.TypeContext)
+	return missing
+}
+
+// antlr4ts includes one more lookahead token in these failed predictions;
+// the Go simulator stops at the identifier or incomplete arithmetic operator.
+func recoveryLookaheadSyntaxIssue(recognizer antlr.Recognizer, offending interface{}, line, column int, message string, exception antlr.RecognitionException) (interface{}, int, int, string) {
+	parser, ok := recognizer.(antlr.Parser)
+	if !ok {
+		return offending, line, column, message
+	}
+	if _, noAlternative := exception.(*antlr.NoViableAltException); !noAlternative {
+		return offending, line, column, message
+	}
+	token, ok := offending.(antlr.Token)
+	next := parser.GetTokenStream().LT(2)
+	if !ok || next == nil || message != "no viable alternative at input '"+token.GetText()+"'" {
+		return offending, line, column, message
+	}
+	_, missingType := parser.GetParserRuleContext().(*p.TypeContext)
+	arithmetic := token.GetText() == "*" || token.GetText() == "/" || token.GetText() == "%"
+	if !(missingType && next.GetText() == "=") && !(arithmetic && next.GetText() == "}") {
+		return offending, line, column, message
+	}
+	return next, next.GetLine(), next.GetColumn(), "no viable alternative at input '" + token.GetText() + next.GetText() + "'"
 }
 
 // SyntaxRecoveryError identifies a malformed parse tree whose conversion does
@@ -166,15 +198,6 @@ func unsupportedRecoveryOperands(ctx p.IExprContext, ids parserIDAllocator) bool
 		hole = hole || recovery.expressionHole(child)
 	}
 	return expressions > 1 && hole
-}
-
-func recoveryMissingExpressionAllowed(ctx p.IExprContext) bool {
-	switch ctx.GetParent().(type) {
-	case *p.DeprecatedOperDefContext, *p.AnnotatedOperDefContext, *p.LetInContext,
-		*p.LambdaUnsugaredContext, *p.LambdaTupleSugarContext, *p.AsgnContext:
-		return true
-	}
-	return false
 }
 
 // reportParserDiagnostic returns whether conversion should continue after a

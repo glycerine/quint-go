@@ -1,0 +1,8007 @@
+[
+  {
+    "name": "missing-variable-type",
+    "source": "module M { var x: val y=2 }",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input 'val' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input 'y='",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "missing-variable-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "2": {
+        "source": "missing-variable-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "missing-variable-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "2": {
+        "source": "missing-variable-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      }
+    },
+    "nextID": 3
+  },
+  {
+    "name": "missing-constant-type",
+    "source": "module M { const x: val y=2 }",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input 'val' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input 'y='",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "missing-constant-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "2": {
+        "source": "missing-constant-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "missing-constant-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "2": {
+        "source": "missing-constant-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      }
+    },
+    "nextID": 3
+  },
+  {
+    "name": "missing-type-before-brace",
+    "source": "module M { var x: }",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "missing-type-before-brace.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "missing-type-before-brace.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "name": "missing-type-before-assignment",
+    "source": "module M { var x: =2 }",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '=' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "missing-type-before-assignment.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "missing-type-before-assignment.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "name": "abort-after-completed-module",
+    "source": "module Good { val x=1 } module Bad { var x: val y=2 } module Later { val z=3 }",
+    "modules": [
+      {
+        "id": 5,
+        "name": "Good",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input 'val' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input 'y='",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "abort-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "2": {
+        "source": "abort-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "3": {
+        "source": "abort-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "4": {
+        "source": "abort-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "5": {
+        "source": "abort-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "abort-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        },
+        "end": {
+          "line": 0,
+          "col": 47,
+          "index": 47
+        }
+      },
+      "2": {
+        "source": "abort-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        },
+        "end": {
+          "line": 0,
+          "col": 50,
+          "index": 50
+        }
+      },
+      "3": {
+        "source": "abort-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "4": {
+        "source": "abort-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "5": {
+        "source": "abort-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      }
+    },
+    "nextID": 6
+  },
+  {
+    "name": "abort-after-partial-declarations",
+    "source": "module Good { val x=1 } module Bad { val before=0 var x: val y=2 } module Later { val z=3 }",
+    "modules": [
+      {
+        "id": 5,
+        "name": "Good",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input 'val' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input 'y='",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 57,
+          "index": 57
+        },
+        "end": {
+          "line": 0,
+          "col": 59,
+          "index": 59
+        }
+      },
+      "2": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 62,
+          "index": 62
+        },
+        "end": {
+          "line": 0,
+          "col": 62,
+          "index": 62
+        }
+      },
+      "3": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "4": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "5": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "6": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      },
+      "7": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 57,
+          "index": 57
+        },
+        "end": {
+          "line": 0,
+          "col": 60,
+          "index": 60
+        }
+      },
+      "2": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 62,
+          "index": 62
+        },
+        "end": {
+          "line": 0,
+          "col": 63,
+          "index": 63
+        }
+      },
+      "3": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "4": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "5": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "6": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "7": {
+        "source": "abort-after-partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 47,
+          "index": 47
+        }
+      }
+    },
+    "nextID": 8
+  },
+  {
+    "name": "unicode-type-abort",
+    "source": "module Good { val s=\"😀\" }\nmodule Bad { const x: val y=2 }",
+    "modules": [
+      {
+        "id": 5,
+        "name": "Good",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "s",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "str",
+              "value": "😀"
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input 'val' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input 'y='",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "unicode-type-abort.qnt",
+        "start": {
+          "line": 1,
+          "col": 22,
+          "index": 48
+        },
+        "end": {
+          "line": 1,
+          "col": 24,
+          "index": 50
+        }
+      },
+      "2": {
+        "source": "unicode-type-abort.qnt",
+        "start": {
+          "line": 1,
+          "col": 27,
+          "index": 53
+        },
+        "end": {
+          "line": 1,
+          "col": 27,
+          "index": 53
+        }
+      },
+      "3": {
+        "source": "unicode-type-abort.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "4": {
+        "source": "unicode-type-abort.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "5": {
+        "source": "unicode-type-abort.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "unicode-type-abort.qnt",
+        "start": {
+          "line": 1,
+          "col": 22,
+          "index": 49
+        },
+        "end": {
+          "line": 1,
+          "col": 25,
+          "index": 52
+        }
+      },
+      "2": {
+        "source": "unicode-type-abort.qnt",
+        "start": {
+          "line": 1,
+          "col": 27,
+          "index": 54
+        },
+        "end": {
+          "line": 1,
+          "col": 28,
+          "index": 55
+        }
+      },
+      "3": {
+        "source": "unicode-type-abort.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "4": {
+        "source": "unicode-type-abort.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "5": {
+        "source": "unicode-type-abort.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      }
+    },
+    "nextID": 6
+  },
+  {
+    "name": "later-operand",
+    "source": "module M { val x=1+val y=2 }",
+    "modules": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 4,
+                    "kind": "def",
+                    "name": "y",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  },
+                  "expr": {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 1
+                  }
+                },
+                {
+                  "id": 6,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 7,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 8,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "2": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "3": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "4": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "5": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "6": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "7": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "8": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "9": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "10": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "11": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "12": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "2": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "4": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "5": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "6": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "7": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "8": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "9": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "10": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "11": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "12": {
+        "source": "later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      }
+    },
+    "nextID": 13
+  },
+  {
+    "name": "later-subtract",
+    "source": "module M { val x=1-val y=2 }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input '-' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "later-subtract.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "2": {
+        "source": "later-subtract.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "3": {
+        "source": "later-subtract.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "4": {
+        "source": "later-subtract.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "5": {
+        "source": "later-subtract.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "6": {
+        "source": "later-subtract.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "later-subtract.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "2": {
+        "source": "later-subtract.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "later-subtract.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "4": {
+        "source": "later-subtract.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "5": {
+        "source": "later-subtract.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "6": {
+        "source": "later-subtract.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "name": "later-multiply",
+    "source": "module M { val x=1*val y=2 }",
+    "modules": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "imul",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 4,
+                    "kind": "def",
+                    "name": "y",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  },
+                  "expr": {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 1
+                  }
+                },
+                {
+                  "id": 6,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 7,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 8,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "2": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "3": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "4": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "5": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "6": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "7": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "8": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "9": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "10": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "11": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "12": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "2": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "4": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "5": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "6": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "7": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "8": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "9": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "10": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "11": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "12": {
+        "source": "later-multiply.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      }
+    },
+    "nextID": 13
+  },
+  {
+    "name": "later-relation",
+    "source": "module M { val x=1==val y=2 }",
+    "modules": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 4,
+                    "kind": "def",
+                    "name": "y",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  },
+                  "expr": {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 1
+                  }
+                },
+                {
+                  "id": 6,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 7,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 8,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "2": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "3": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "4": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "5": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "6": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "7": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "8": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "9": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "10": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "11": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "12": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "2": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "4": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "5": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "6": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "7": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "8": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "9": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "10": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "11": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "12": {
+        "source": "later-relation.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      }
+    },
+    "nextID": 13
+  },
+  {
+    "name": "later-conjunction",
+    "source": "module M { val x=true and val y=false }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "bool",
+              "value": true
+            }
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "bool",
+              "value": false
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input 'and' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "later-conjunction.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "2": {
+        "source": "later-conjunction.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "3": {
+        "source": "later-conjunction.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "4": {
+        "source": "later-conjunction.qnt",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "5": {
+        "source": "later-conjunction.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "6": {
+        "source": "later-conjunction.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "later-conjunction.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "2": {
+        "source": "later-conjunction.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "3": {
+        "source": "later-conjunction.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "4": {
+        "source": "later-conjunction.qnt",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        }
+      },
+      "5": {
+        "source": "later-conjunction.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "6": {
+        "source": "later-conjunction.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "name": "nested-definition-operands",
+    "source": "module M { val x=1+val y=2+val z=3 }",
+    "modules": [
+      {
+        "id": 20,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 19,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 18,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 8,
+                    "kind": "def",
+                    "name": "y",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 7,
+                      "kind": "app",
+                      "opcode": "iadd",
+                      "args": [
+                        {
+                          "id": 2,
+                          "kind": "int",
+                          "value": 1
+                        },
+                        {
+                          "id": 6,
+                          "kind": "let",
+                          "opdef": {
+                            "id": 5,
+                            "kind": "def",
+                            "name": "z",
+                            "qualifier": "val",
+                            "expr": {
+                              "id": 4,
+                              "kind": "int",
+                              "value": 3
+                            }
+                          },
+                          "expr": {
+                            "id": 3,
+                            "kind": "int",
+                            "value": 2
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "expr": {
+                    "id": 9,
+                    "kind": "let",
+                    "opdef": {
+                      "id": 10,
+                      "kind": "def",
+                      "qualifier": "val",
+                      "name": "__undefinedExprGenerated",
+                      "expr": {
+                        "id": 11,
+                        "kind": "bool",
+                        "value": true
+                      }
+                    },
+                    "expr": {
+                      "id": 12,
+                      "kind": "name",
+                      "name": "__undefinedExprGenerated"
+                    }
+                  }
+                },
+                {
+                  "id": 14,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 15,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 16,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 17,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "2": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "3": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "4": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "5": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "6": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "7": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "8": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "9": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "10": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "11": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "12": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "13": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "14": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "15": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "16": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "17": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "18": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "19": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "20": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "2": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "4": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "5": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "6": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "7": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "8": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "9": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "10": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "11": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "12": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "13": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "14": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "15": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "16": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "17": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "18": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "19": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "20": {
+        "source": "nested-definition-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      }
+    },
+    "nextID": 21
+  },
+  {
+    "name": "lambda-operand",
+    "source": "module M { val x=1+x=>val y=2 }",
+    "modules": [
+      {
+        "id": 14,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 3,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 6,
+                    "kind": "let",
+                    "opdef": {
+                      "id": 5,
+                      "kind": "def",
+                      "name": "y",
+                      "qualifier": "val",
+                      "expr": {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    },
+                    "expr": {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  }
+                },
+                {
+                  "id": 8,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 9,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 10,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 11,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "2": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "3": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "4": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "5": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "6": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "7": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "8": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "9": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "10": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "11": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "12": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "13": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "14": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "2": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "4": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "5": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "6": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "7": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "8": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "9": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "10": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "11": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "12": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "13": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "14": {
+        "source": "lambda-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      }
+    },
+    "nextID": 15
+  },
+  {
+    "name": "parenthesized-operands",
+    "source": "module M { val x=100*(1+val y=2) }",
+    "modules": [
+      {
+        "id": 18,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 17,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 16,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 11,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 10,
+                    "kind": "def",
+                    "name": "y",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 9,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  },
+                  "expr": {
+                    "id": 8,
+                    "kind": "app",
+                    "opcode": "imul",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "int",
+                        "value": 100
+                      },
+                      {
+                        "id": 4,
+                        "kind": "let",
+                        "opdef": {
+                          "id": 5,
+                          "kind": "def",
+                          "qualifier": "val",
+                          "name": "__undefinedExprGenerated",
+                          "expr": {
+                            "id": 6,
+                            "kind": "bool",
+                            "value": true
+                          }
+                        },
+                        "expr": {
+                          "id": 7,
+                          "kind": "name",
+                          "name": "__undefinedExprGenerated"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": 12,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 13,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 14,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 15,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input '(1+valy=2)'",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "mismatched input ')' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "2": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "3": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "4": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "5": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "6": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "7": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "8": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "9": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "10": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "11": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "12": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "13": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "14": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "15": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "16": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "17": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "18": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "2": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "3": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "4": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "5": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "6": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "7": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "8": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "9": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "10": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "11": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "12": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "13": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "14": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "15": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "16": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "17": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "18": {
+        "source": "parenthesized-operands.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      }
+    },
+    "nextID": 19
+  },
+  {
+    "name": "missing-binary-right",
+    "source": "module M { val x=1+ }",
+    "modules": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 3,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 4,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 5,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 6,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "2": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "3": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "4": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "5": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "6": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "7": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "8": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "9": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "2": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "4": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "5": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "6": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "7": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "8": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "9": {
+        "source": "missing-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      }
+    },
+    "nextID": 10
+  },
+  {
+    "name": "nested-binary-right",
+    "source": "module M { val x=1+2* }",
+    "modules": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "imul",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 6,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 7,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 8,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input '*}'",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "2": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "3": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "4": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "5": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "6": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "7": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "8": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "9": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "10": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "11": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "12": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "2": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "3": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "4": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "5": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "6": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "7": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "8": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "9": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "10": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "11": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "12": {
+        "source": "nested-binary-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      }
+    },
+    "nextID": 13
+  },
+  {
+    "name": "nested-divide-right",
+    "source": "module M { val x=1+2/ }",
+    "modules": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "idiv",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 6,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 7,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 8,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input '/}'",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "2": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "3": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "4": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "5": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "6": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "7": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "8": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "9": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "10": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "11": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "12": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "2": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "3": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "4": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "5": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "6": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "7": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "8": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "9": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "10": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "11": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "12": {
+        "source": "nested-divide-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      }
+    },
+    "nextID": 13
+  },
+  {
+    "name": "nested-modulo-right",
+    "source": "module M { val x=1+2% }",
+    "modules": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "imod",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 6,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 7,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 8,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "no viable alternative at input '%}'",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "2": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "3": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "4": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "5": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "6": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "7": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "8": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "9": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "10": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "11": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "12": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "2": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "3": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "4": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "5": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "6": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "7": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "8": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "9": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "10": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "11": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "12": {
+        "source": "nested-modulo-right.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      }
+    },
+    "nextID": 13
+  },
+  {
+    "name": "operator-body-hole",
+    "source": "module M { val x=1+val y= }",
+    "modules": [
+      {
+        "id": 15,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 14,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 13,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 3,
+                    "kind": "def",
+                    "name": "y",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  },
+                  "expr": {
+                    "id": 4,
+                    "kind": "let",
+                    "opdef": {
+                      "id": 5,
+                      "kind": "def",
+                      "qualifier": "val",
+                      "name": "__undefinedExprGenerated",
+                      "expr": {
+                        "id": 6,
+                        "kind": "bool",
+                        "value": true
+                      }
+                    },
+                    "expr": {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "__undefinedExprGenerated"
+                    }
+                  }
+                },
+                {
+                  "id": 9,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 10,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 11,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 12,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "2": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "3": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "4": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "5": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "6": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "7": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "8": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "9": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "10": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "11": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "12": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "13": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "14": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "15": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "2": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "4": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "5": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "6": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "7": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "8": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "9": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "10": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "11": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "12": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "13": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "14": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "15": {
+        "source": "operator-body-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      }
+    },
+    "nextID": 16
+  },
+  {
+    "name": "no-earlier-let",
+    "source": "module M { val x=val y=2 }",
+    "modules": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "let",
+              "opdef": {
+                "id": 3,
+                "kind": "def",
+                "name": "y",
+                "qualifier": "val",
+                "expr": {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 2
+                }
+              },
+              "expr": {
+                "id": 4,
+                "kind": "let",
+                "opdef": {
+                  "id": 5,
+                  "kind": "def",
+                  "qualifier": "val",
+                  "name": "__undefinedExprGenerated",
+                  "expr": {
+                    "id": 6,
+                    "kind": "bool",
+                    "value": true
+                  }
+                },
+                "expr": {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "__undefinedExprGenerated"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "2": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "3": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "4": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "5": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "6": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "7": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "8": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "9": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "10": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "2": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "3": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "4": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "5": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "6": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "7": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "8": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "9": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "10": {
+        "source": "no-earlier-let.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      }
+    },
+    "nextID": 11
+  },
+  {
+    "name": "missing-lambda-body",
+    "source": "module M { val x=(a)=> }",
+    "modules": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "a"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 3,
+                "kind": "let",
+                "opdef": {
+                  "id": 4,
+                  "kind": "def",
+                  "qualifier": "val",
+                  "name": "__undefinedExprGenerated",
+                  "expr": {
+                    "id": 5,
+                    "kind": "bool",
+                    "value": true
+                  }
+                },
+                "expr": {
+                  "id": 6,
+                  "kind": "name",
+                  "name": "__undefinedExprGenerated"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "2": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "4": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "5": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "6": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "7": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "8": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "9": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "2": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "3": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "4": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "5": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "6": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "7": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "8": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "9": {
+        "source": "missing-lambda-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      }
+    },
+    "nextID": 10
+  },
+  {
+    "name": "missing-definition-body",
+    "source": "module M { val x= val y=2 }",
+    "modules": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "let",
+              "opdef": {
+                "id": 3,
+                "kind": "def",
+                "name": "y",
+                "qualifier": "val",
+                "expr": {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 2
+                }
+              },
+              "expr": {
+                "id": 4,
+                "kind": "let",
+                "opdef": {
+                  "id": 5,
+                  "kind": "def",
+                  "qualifier": "val",
+                  "name": "__undefinedExprGenerated",
+                  "expr": {
+                    "id": 6,
+                    "kind": "bool",
+                    "value": true
+                  }
+                },
+                "expr": {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "__undefinedExprGenerated"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "2": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "3": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "4": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "5": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "6": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "7": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "8": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "9": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "10": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "2": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "3": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "4": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "5": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "6": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "7": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "8": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "9": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "10": {
+        "source": "missing-definition-body.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      }
+    },
+    "nextID": 11
+  },
+  {
+    "name": "later-argument",
+    "source": "module M { val x=f(1,val y=2) }",
+    "modules": [
+      {
+        "id": 7,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "name",
+              "name": "f"
+            }
+          },
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "extraneous input '(' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "reference": 1
+      },
+      {
+        "code": "QNT000",
+        "message": "extraneous input ')' expecting {'}', 'const', 'var', 'assume', 'val', 'pure', 'type', 'def', 'action', 'run', 'temporal', 'nondet', 'import', 'export', DOCCOMMENT}",
+        "reference": 2
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "2": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "3": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "4": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "5": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "6": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "7": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "2": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "3": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "4": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "5": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "6": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "7": {
+        "source": "later-argument.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      }
+    },
+    "nextID": 8
+  },
+  {
+    "name": "later-list-element",
+    "source": "module M { val x=[1,val y=2] }",
+    "modules": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 4,
+                    "kind": "def",
+                    "name": "y",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  },
+                  "expr": {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 1
+                  }
+                },
+                {
+                  "id": 6,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 7,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 8,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input ']' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "2": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "4": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "5": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "6": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "7": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "8": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "9": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "10": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "11": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "12": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "2": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "3": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "4": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "5": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "6": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "7": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "8": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "9": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "10": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "11": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "12": {
+        "source": "later-list-element.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      }
+    },
+    "nextID": 13
+  },
+  {
+    "name": "unicode-later-operand",
+    "source": "module M { val s=\"😀\" val x=1+\nval y=2 }",
+    "modules": [
+      {
+        "id": 14,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "s",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "str",
+              "value": "😀"
+            }
+          },
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 6,
+                    "kind": "def",
+                    "name": "y",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 5,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  },
+                  "expr": {
+                    "id": 4,
+                    "kind": "int",
+                    "value": 1
+                  }
+                },
+                {
+                  "id": 8,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 9,
+                    "kind": "def",
+                    "qualifier": "val",
+                    "name": "__undefinedExprGenerated",
+                    "expr": {
+                      "id": 10,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  "expr": {
+                    "id": 11,
+                    "kind": "name",
+                    "name": "__undefinedExprGenerated"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 1,
+          "col": 8,
+          "index": 38
+        },
+        "end": {
+          "line": 1,
+          "col": 8,
+          "index": 38
+        }
+      },
+      "2": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "3": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "4": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "5": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 1,
+          "col": 6,
+          "index": 36
+        },
+        "end": {
+          "line": 1,
+          "col": 6,
+          "index": 36
+        }
+      },
+      "6": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 1,
+          "col": 4,
+          "index": 34
+        },
+        "end": {
+          "line": 1,
+          "col": 4,
+          "index": 34
+        }
+      },
+      "7": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 1,
+          "col": 0,
+          "index": 30
+        },
+        "end": {
+          "line": 1,
+          "col": 6,
+          "index": 36
+        }
+      },
+      "8": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 1,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "9": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 1,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "10": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 1,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "11": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 1,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "12": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 1,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "13": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "14": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 1,
+          "col": 38,
+          "index": 38
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 1,
+          "col": 8,
+          "index": 39
+        },
+        "end": {
+          "line": 1,
+          "col": 9,
+          "index": 40
+        }
+      },
+      "2": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "3": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "4": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "5": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 1,
+          "col": 6,
+          "index": 37
+        },
+        "end": {
+          "line": 1,
+          "col": 7,
+          "index": 38
+        }
+      },
+      "6": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 1,
+          "col": 4,
+          "index": 35
+        },
+        "end": {
+          "line": 1,
+          "col": 5,
+          "index": 36
+        }
+      },
+      "7": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 1,
+          "col": 0,
+          "index": 31
+        },
+        "end": {
+          "line": 1,
+          "col": 7,
+          "index": 38
+        }
+      },
+      "8": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 1,
+          "col": 7,
+          "index": 38
+        }
+      },
+      "9": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 1,
+          "col": 7,
+          "index": 38
+        }
+      },
+      "10": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 1,
+          "col": 7,
+          "index": 38
+        }
+      },
+      "11": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 1,
+          "col": 7,
+          "index": 38
+        }
+      },
+      "12": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 1,
+          "col": 7,
+          "index": 38
+        }
+      },
+      "13": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "14": {
+        "source": "unicode-later-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 1,
+          "col": 9,
+          "index": 40
+        }
+      }
+    },
+    "nextID": 15
+  }
+]

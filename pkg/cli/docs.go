@@ -125,7 +125,7 @@ func commandDocs(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	}
 	warnings := []any{}
 	stage.Stage, stage.Warnings = "documentation", &warnings
-	parsed, parseErr := quint.ParseModulesWithLocations(path, string(data))
+	parsed, parseErr := quint.ParseModulesRecovering(path, string(data))
 	documentation := docsModules{entries: insdict.NewDict[string, docsNamedEntries]()}
 	for _, module := range parsed.Modules {
 		if err = ctx.Err(); err != nil {
@@ -145,6 +145,10 @@ func commandDocs(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	}
 	if parseErr != nil {
 		return fail("parsing failed", docsParseDiagnostics(parseErr, parsed.Sources, path))
+	}
+	if len(parsed.Diagnostics) > 0 {
+		sources := coreCompatibilitySources(quint.FrontendResult{Sources: parsed.Sources, UpstreamSources: parsed.UpstreamSources})
+		return fail("parsing failed", coreResolveDiagnostics(sources, parsed.Diagnostics))
 	}
 	if err = ctx.Err(); err != nil {
 		return fail(err.Error(), []quint.ErrorMessage{})
