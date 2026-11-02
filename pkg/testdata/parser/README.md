@@ -285,3 +285,11 @@ difference, cardinality, finiteness, flattening, and nested set/map/record keys.
 Go unit tests additionally verify immutable inputs, malformed calls, and
 structural equality independent of Unicode collation ties. Symbolic/infinite
 sets and seeded traversal are separate, unfinished runtime work.
+
+`runtime_map.json` is regenerated with
+`node pkg/grammar/runtime_map_fixtures.cjs`. Twenty-four full TypeScript
+evaluator cases cover get/set/put/keys, empty maps, duplicate keys, set/record/
+tuple/large-integer keys, nested maps, and missing-key diagnostics. Small-map
+insertion order is checked independently of canonical printed order. Large-map
+Immutable.js hash-trie traversal and traversal retention across every nested
+collection operation remain explicit runtime compatibility audits.

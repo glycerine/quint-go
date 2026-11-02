@@ -8,6 +8,7 @@ import "crypto/sha256"
 // The zero value is invalid, rather than an implicit language value.
 type RuntimeValue struct {
 	expression Expr
+	source     Expr
 	identity   string
 }
 
@@ -18,7 +19,7 @@ func NewRuntimeValue(e Expr) (RuntimeValue, error) {
 	if err != nil {
 		return RuntimeValue{}, err
 	}
-	return RuntimeValue{expression: normalized, identity: normalizedValueKey(normalized)}, nil
+	return RuntimeValue{expression: normalized, source: copyRuntimeExpression(e), identity: normalizedValueKey(normalized)}, nil
 }
 
 func (v RuntimeValue) Valid() bool { return v.identity != "" }

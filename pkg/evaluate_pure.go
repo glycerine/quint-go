@@ -98,7 +98,7 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 		case "List", "Tup", "Set", "Map", "Rec", "variant":
 			value := Expr{Kind: "app", Opcode: e.Opcode, Args: make([]Expr, len(args))}
 			for i, arg := range args {
-				value.Args[i] = arg.expression
+				value.Args[i] = arg.source
 			}
 			return NewRuntimeValue(value)
 		case "not", "iff", "eq", "neq", "assert":
@@ -135,6 +135,8 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 		var err error
 		if sequenceBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalSequenceBuiltin(e.Opcode, args)
+		} else if mapBuiltinArity(e.Opcode) != 0 {
+			value, err = EvalMapBuiltin(e.Opcode, args)
 		} else if setBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalSetBuiltin(e.Opcode, args)
 		} else {

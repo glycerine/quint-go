@@ -353,6 +353,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     field/fieldNames/with operations with pure-evaluator integration and fixtures.
   - [x] Explicit finite-set contains/in/subseteq/union/intersect/exclude,
     size/isFinite/flatten with structural identity and upstream evaluator cases.
+  - [x] Strict map get/set/put/keys, structural keys, immutable updates, and
+    small-map diagnostic ordering through pure evaluation with upstream cases.
+  - [ ] Immutable.js large-map traversal and source-order retention through
+    every nested collection operation; higher-order map operations.
   - [ ] Remaining collections/higher-order/symbolic operations and JavaScript
     Number coercion/error formatting audit for extreme sequence indices.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
@@ -2215,3 +2219,17 @@ word "retained" in the commit message.
   Full default tests pass (combined package execution 0.984s). P7.4 remains open
   for symbolic/infinite collections, map operations, higher-order operators,
   ranges, and traversal/sampling compatibility.
+
+- 2026-11-02: Added EvalMapBuiltin and pure-evaluator dispatch for get, set,
+  put, and keys. Map keys use structural identity, set requires an existing key,
+  put inserts or replaces, and missing get reports the requested key and known
+  keys with upstream QNT507 text. RuntimeValue now owns the original expression
+  separately from canonical display/identity; constructor evaluation retains this
+  source form so small-map diagnostic order survives duplicate updates and
+  nested map lookups. Ordered map construction uses insdict. Twenty-four full
+  TypeScript evaluator cases match, including nested keys/maps, large integers,
+  duplicate keys, insertion/update diagnostics, and empty maps. Unit tests add
+  source-copy ownership, unchanged update inputs, and malformed-call validation.
+  Full default tests pass (combined package execution 1.001s, approximately the
+  one-second target). Large-map hash-trie ordering, order retention through all
+  nested collection operations, and higher-order map operations remain open.
