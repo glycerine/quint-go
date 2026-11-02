@@ -6,12 +6,15 @@ import "github.com/glycerine/insdict"
 // Declaration and Parameter are mutually exclusive payloads; the scope does not
 // mutate either payload. Import provenance is added by module resolution.
 type LookupDefinition struct {
-	ID          ID
-	Name        string
-	Depth       int
-	Shadowing   bool
-	Declaration *Declaration
-	Parameter   *Parameter
+	Hidden       bool
+	Namespaces   []string
+	ImportedFrom *Declaration
+	ID           ID
+	Name         string
+	Depth        int
+	Shadowing    bool
+	Declaration  *Declaration
+	Parameter    *Parameter
 }
 
 // NameScope stores definition stacks in insertion order, matching the collector.

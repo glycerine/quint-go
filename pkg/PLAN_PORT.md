@@ -1059,3 +1059,11 @@ word "retained" in the commit message.
   and definitions, and local recursion all match. The focused suite takes 0.025s;
   default tests remain within the sub-second target. P3.1/P3.6 remain open for
   unused definitions, wider scope edge cases, and linked module resolution.
+
+- 2026-11-02: Added import-definition collection for module-qualified, aliased,
+  wildcard, and selective imports. Preserved original definition IDs, namespace
+  metadata, import provenance, hidden visibility, and the constant exception for
+  transitive imports. Tests cover forms, source immutability, visibility, and
+  QNT404/QNT405/QNT407 errors. Default tests pass within the sub-second target.
+  P3.2 remains open for alias registration, whole-module linking, exports,
+  instances, and differential conflict/provenance validation.
