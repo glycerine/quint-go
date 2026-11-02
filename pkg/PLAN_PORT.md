@@ -690,3 +690,11 @@ word "retained" in the commit message.
   Tests cover nested lets, local functions, annotation shapes, qualifiers, and
   malformed definitions. Default tests pass (core 0.268s). P2.3/P2.4 remain open
   for module integration, destructuring definitions, matches, and source maps.
+
+- 2026-11-02: Added ParseModules and conversion for operators, constants, variables,
+  assumptions, abstract types, and parameterized aliases, with basic module and
+  declaration documentation attachment. Tests parse a two-module counter model,
+  inspect declaration/type shapes, check ID uniqueness and doc placement, and
+  reject malformed modules. Default tests pass (core 0.266s). P2.3 remains open
+  for imports/exports/instances, sum declarations, and exact documentation/source
+  location parity; the entry point currently rejects unsupported conversions.
