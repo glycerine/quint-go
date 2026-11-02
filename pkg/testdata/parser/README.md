@@ -72,3 +72,9 @@ duplicate parameters/definitions, local recursion, instance overrides, alias
 exports, hidden constants/values, instance errors, nested and repeated instances,
 collisions, alias replacement, and override lambdas. Unused-definition identity
 is outside these differential comparisons.
+
+
+`unshadow.json` contains 11 successful resolution cases transformed by the
+TypeScript unshadower. Inputs retain upstream numeric IDs because generated names
+embed expression IDs. Tests resolve these inputs in Go and compare full transformed
+module IR exactly, without normalizing generated names or identities.

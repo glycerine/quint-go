@@ -141,3 +141,13 @@ const resolutionFixtures=resolutionCases.map(([name,source])=>{
  return {name,source,bindings:[...result.table].map(([id,def])=>({reference:paths.get(id),definition:paths.get(def.id),depth:def.depth??0,namespaces:def.namespaces??[],hidden:def.hidden??false,shadowing:def.shadowing??false,importedFrom:def.importedFrom?paths.get(def.importedFrom.id):''})),errors:result.errors.map(e=>({code:e.code,message:e.message,reference:paths.get(e.reference)}))}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/resolution.json'),JSONbig.stringify(resolutionFixtures,null,2)+'\n')
+
+// Preserve upstream IDs here: generated unshadowed names embed expression IDs.
+const {unshadowNames}=require(path.join(root,'quint/src/names/unshadower'))
+const unshadowFixtures=resolutionCases.flatMap(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ const result=resolveNames(parsed.modules)
+ if(result.errors.length)return []
+ return [{name,input:parsed.modules,output:parsed.modules.map(m=>unshadowNames(m,result.table))}]
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/unshadow.json'),JSONbig.stringify(unshadowFixtures,null,2)+'\n')

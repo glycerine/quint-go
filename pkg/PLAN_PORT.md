@@ -191,6 +191,9 @@ errors without panics or losing subsequent declarations after recoverable errors
   - [x] Compare instance reference targets and diagnostics with TypeScript fixtures.
   - [x] Validate nested instance provenance, collisions, and broader linking fixtures.
 - [ ] P3.3 Port unshadowing and fresh-name handling without capturing variables.
+  - [x] Port ID-based lambda/let unshadowing and reference-table updates.
+  - [x] Compare transformed modules against upstream unshadowing fixtures.
+  - [ ] Integrate unshadowing into the complete analysis/compilation pipeline.
 - [ ] P3.4 Port call graphs, stable topological sorting, module ordering, and
   recursion/dependency-cycle diagnostics.
 - [ ] P3.5 Preserve definition identity and lookup-table consistency across
@@ -1107,3 +1110,12 @@ word "retained" in the commit message.
   These cases match the TypeScript resolver without implementation changes.
   P3 remains open for incremental analysis, unused definitions, unshadowing,
   call graphs, and full static fixture validation.
+
+- 2026-11-02: Added UnshadowNames, preserving upstream lambda/let naming rules,
+  definition IDs, and lookup reference updates. The pass copies modified
+  expression trees and shares immutable type/metadata values. Unit tests cover
+  shadowed recursive definitions, calls, nested bindings, holes, unchanged
+  nonshadowing lets, instance overrides, assumptions, and input immutability.
+  Differential fixtures retain upstream IDs and compare exact transformed module
+  IR. Default tests pass (combined execution 0.515s). Pipeline integration and
+  remaining P3 name-analysis work are still open.
