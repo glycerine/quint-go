@@ -1,9 +1,9 @@
 package quint
 
-import (
-	"fmt"
-	"sync"
-)
+import "fmt"
+
+//go:generate node grammar/builtin_types_templates.cjs
+//go:generate gofmt -w builtin_types_templates_generated.go
 
 // Fixed builtin signatures mirror the reference TypeScript table.
 var fixedBuiltinTypes = map[string]string{
@@ -91,23 +91,6 @@ var fixedBuiltinTypes = map[string]string{
 	"apalache::generate": "(int) => a",
 }
 
-// Parsed fixed signatures are immutable cache entries. The finite key set comes
-// only from the builtin table; caller-selected variable arities are never cached.
-// Each result is copied before it leaves BuiltinTypeSignature.
-type builtinTypeCacheEntry struct {
-	once   sync.Once
-	scheme TypeScheme
-	err    error
-}
-
-var fixedBuiltinTypeCache = func() map[string]*builtinTypeCacheEntry {
-	cache := make(map[string]*builtinTypeCacheEntry, len(fixedBuiltinTypes))
-	for name := range fixedBuiltinTypes {
-		cache[name] = &builtinTypeCacheEntry{}
-	}
-	return cache
-}()
-
 func cloneBuiltinTypeScheme(scheme TypeScheme) (TypeScheme, error) {
 	typ, err := ApplySubstitution(nil, scheme.Type)
 	if err != nil {
@@ -126,11 +109,7 @@ func BuiltinTypeSignature(name string, arity int) (TypeScheme, error) {
 		return TypeScheme{}, fmt.Errorf("negative builtin arity")
 	}
 	if cached, found := fixedBuiltinTypeCache[name]; found {
-		cached.once.Do(func() { cached.scheme, cached.err = parseBuiltinTypeScheme(fixedBuiltinTypes[name]) })
-		if cached.err != nil {
-			return TypeScheme{}, cached.err
-		}
-		return cloneBuiltinTypeScheme(cached.scheme)
+		return cloneBuiltinTypeScheme(cached)
 	}
 	return dynamicBuiltinTypeScheme(name, arity)
 }

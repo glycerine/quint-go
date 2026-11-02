@@ -712,3 +712,13 @@ It catches inventory drift and missing classification; it does not turn a
 written status into semantic coverage. The matrix links actual supported,
 partial, library-only, rejected and pending contracts without counting skipped
 or pending cases as passing implementations.
+
+`builtin_types_fixed.json` and `builtin_types_templates_generated.go` are generated
+by `node pkg/grammar/builtin_types_templates.cjs` (also `go generate ./pkg`).
+All 82 fixed signatures come from the actual upstream `getSignatures` parser,
+including exact type trees and type/row quantifier order with source IDs removed.
+Default tests check every template, Go and TypeScript source digests, arity
+independence, validation, deep-copy ownership and concurrency. The existing
+targeted Go parser checks remain enabled; `QUINT_CORPUS_TESTS=1` additionally
+compares all 82 Go parser results against these independent fixtures. Static
+templates remove cold ANTLR startup without parsing signatures during execution.

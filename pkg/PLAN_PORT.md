@@ -2939,3 +2939,13 @@ word "retained" in the commit message.
   scalar dispatch is complete while set interval `to` stays under P7.4. Full
   default tests and vet pass; timing varies near the one-second target (latest
   combined package execution 1.218s). Work continues on measured cold-start cost.
+
+- 2026-11-02: Replaced cold parsing of all 82 fixed builtin type signatures
+  with generated immutable type-scheme templates and existing owned deep copies.
+  The generator calls the actual upstream signature parser; default tests compare
+  every exact tree, ordered quantifier list, absence of source IDs, both source
+  inventories, and caller ownership. Existing parser/ownership/concurrency checks
+  remain enabled; an additional all-signature Go parser comparison passes in the
+  optional corpus. Generation is reproducible and focused race checks pass.
+  Cold lookup now takes roughly 0.8–2.1µs instead of 0.46–3.40ms of parsing;
+  full default tests pass in 0.992s combined package execution in the latest run.

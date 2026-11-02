@@ -1,0 +1,2387 @@
+[
+  {
+    "name": "Bool",
+    "signature": "Set[bool]",
+    "scheme": {
+      "type": {
+        "kind": "set",
+        "elem": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Int",
+    "signature": "Set[int]",
+    "scheme": {
+      "type": {
+        "kind": "set",
+        "elem": {
+          "kind": "int"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "Nat",
+    "signature": "Set[int]",
+    "scheme": {
+      "type": {
+        "kind": "set",
+        "elem": {
+          "kind": "int"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "allLists",
+    "signature": "(Set[a]) => Set[List[a]]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "allListsUpTo",
+    "signature": "(Set[a], int) => Set[List[a]]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "always",
+    "signature": "(bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "apalache::generate",
+    "signature": "(int) => a",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "append",
+    "signature": "(List[a], a) => List[a]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "assert",
+    "signature": "(bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "assign",
+    "signature": "(a, a) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "chooseSome",
+    "signature": "(Set[a]) => a",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "concat",
+    "signature": "(List[a], List[a]) => List[a]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "contains",
+    "signature": "(Set[a], a) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "enabled",
+    "signature": "(bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "eq",
+    "signature": "(a, a) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "eventually",
+    "signature": "(bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "exclude",
+    "signature": "(Set[a], Set[a]) => Set[a]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "exists",
+    "signature": "(Set[a], (a) => bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "bool"
+            }
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "expect",
+    "signature": "(bool, bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "fail",
+    "signature": "(bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "filter",
+    "signature": "(Set[a], (a) => bool) => Set[a]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "bool"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "flatten",
+    "signature": "(Set[Set[a]]) => Set[a]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "set",
+              "elem": {
+                "kind": "var",
+                "name": "a"
+              }
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "fold",
+    "signature": "(Set[a], b, (b, a) => b) => b",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "var",
+            "name": "b"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "b"
+              },
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "b"
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "foldl",
+    "signature": "(List[a], b, (b, a) => b) => b",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "var",
+            "name": "b"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "b"
+              },
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "b"
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "foldr",
+    "signature": "(List[a], b, (a, b) => b) => b",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "var",
+            "name": "b"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              },
+              {
+                "kind": "var",
+                "name": "b"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "b"
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "forall",
+    "signature": "(Set[a], (a) => bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "bool"
+            }
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "get",
+    "signature": "(a -> b, a) => b",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "fun",
+            "arg": {
+              "kind": "var",
+              "name": "a"
+            },
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "b"
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "getOnlyElement",
+    "signature": "(Set[a]) => a",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "head",
+    "signature": "(List[a]) => a",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "iadd",
+    "signature": "(int, int) => int",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "int"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "idiv",
+    "signature": "(int, int) => int",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "int"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "iff",
+    "signature": "(bool, bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "igt",
+    "signature": "(int, int) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "igte",
+    "signature": "(int, int) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "ilt",
+    "signature": "(int, int) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "ilte",
+    "signature": "(int, int) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "imod",
+    "signature": "(int, int) => int",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "int"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "implies",
+    "signature": "(bool, bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "imul",
+    "signature": "(int, int) => int",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "int"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "in",
+    "signature": "(a, Set[a]) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "indices",
+    "signature": "(List[a]) => Set[int]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "int"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "intersect",
+    "signature": "(Set[a], Set[a]) => Set[a]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "ipow",
+    "signature": "(int, int) => int",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "int"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "isFinite",
+    "signature": "(Set[a]) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "isub",
+    "signature": "(int, int) => int",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "int"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "ite",
+    "signature": "(bool, a, a) => a",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "iuminus",
+    "signature": "(int) => int",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "int"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "keys",
+    "signature": "(a -> b) => Set[a]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "fun",
+            "arg": {
+              "kind": "var",
+              "name": "a"
+            },
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "leadsTo",
+    "signature": "(bool, bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "length",
+    "signature": "(List[a]) => int",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "int"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "map",
+    "signature": "(Set[a], (a) => b) => Set[b]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "mapBy",
+    "signature": "(Set[a], (a) => b) => a -> b",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "kind": "fun",
+          "arg": {
+            "kind": "var",
+            "name": "a"
+          },
+          "res": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "mustChange",
+    "signature": "(bool, a) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "neq",
+    "signature": "(a, a) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "next",
+    "signature": "(a) => a",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "not",
+    "signature": "(bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "nth",
+    "signature": "(List[a], int) => a",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "oneOf",
+    "signature": "(Set[a]) => a",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "orKeep",
+    "signature": "(bool, a) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "powerset",
+    "signature": "(Set[a]) => Set[Set[a]]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "put",
+    "signature": "(a -> b, a, b) => a -> b",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "fun",
+            "arg": {
+              "kind": "var",
+              "name": "a"
+            },
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "b"
+          }
+        ],
+        "res": {
+          "kind": "fun",
+          "arg": {
+            "kind": "var",
+            "name": "a"
+          },
+          "res": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "q::debug",
+    "signature": "(str, a) => a",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "str"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "q::lastTrace",
+    "signature": "List[a]",
+    "scheme": {
+      "type": {
+        "kind": "list",
+        "elem": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "q::test",
+    "signature": "(int, int, int, bool, bool, bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "q::testOnce",
+    "signature": "(int, int, bool, bool, bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "range",
+    "signature": "(int, int) => List[int]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "int"
+          }
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "replaceAt",
+    "signature": "(List[a], int, a) => List[a]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "reps",
+    "signature": "(int, int => bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "int"
+              }
+            ],
+            "res": {
+              "kind": "bool"
+            }
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "select",
+    "signature": "(List[a], (a) => bool) => List[a]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "kind": "bool"
+            }
+          }
+        ],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "set",
+    "signature": "(a -> b, a, b) => a -> b",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "fun",
+            "arg": {
+              "kind": "var",
+              "name": "a"
+            },
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "var",
+            "name": "b"
+          }
+        ],
+        "res": {
+          "kind": "fun",
+          "arg": {
+            "kind": "var",
+            "name": "a"
+          },
+          "res": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "setBy",
+    "signature": "(a -> b, a, (b) => b) => a -> b",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "fun",
+            "arg": {
+              "kind": "var",
+              "name": "a"
+            },
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "b"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "kind": "fun",
+          "arg": {
+            "kind": "var",
+            "name": "a"
+          },
+          "res": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "setOfMaps",
+    "signature": "(Set[a], Set[b]) => Set[a -> b]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "fun",
+            "arg": {
+              "kind": "var",
+              "name": "a"
+            },
+            "res": {
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "setToMap",
+    "signature": "(Set[(a, b)]) => (a -> b)",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  },
+                  {
+                    "fieldName": "1",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "b"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          }
+        ],
+        "res": {
+          "kind": "fun",
+          "arg": {
+            "kind": "var",
+            "name": "a"
+          },
+          "res": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      "typeVariables": [
+        "a",
+        "b"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "size",
+    "signature": "(Set[a]) => int",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "int"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "slice",
+    "signature": "(List[a], int, int) => List[a]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "strongFair",
+    "signature": "(bool, a) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "subseteq",
+    "signature": "(Set[a], Set[a]) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "tail",
+    "signature": "(List[a]) => List[a]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "list",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "then",
+    "signature": "(bool, bool) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "to",
+    "signature": "(int, int) => Set[int]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int"
+          },
+          {
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "int"
+          }
+        }
+      },
+      "typeVariables": [],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "union",
+    "signature": "(Set[a], Set[a]) => Set[a]",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "kind": "set",
+            "elem": {
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "res": {
+          "kind": "set",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  },
+  {
+    "name": "weakFair",
+    "signature": "(bool, a) => bool",
+    "scheme": {
+      "type": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "bool"
+          },
+          {
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "kind": "bool"
+        }
+      },
+      "typeVariables": [
+        "a"
+      ],
+      "rowVariables": []
+    }
+  }
+]
