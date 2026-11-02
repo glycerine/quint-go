@@ -5,7 +5,7 @@ import p "github.com/glycerine/quint-go/pkg/internal/quintparser"
 // sumDeclarations expands a sum declaration into its type and variant operators.
 func sumDeclarations(ctx *p.TypeSumDefContext, ids parserIDAllocator) ([]Declaration, error) {
 	head, sum := ctx.TypeDefHead(), ctx.SumTypeDefinition()
-	d := Declaration{ID: ids.Next(), Kind: "typedef", Name: head.GetTypeName().GetText()}
+	d := Declaration{Kind: "typedef", Name: head.GetTypeName().GetText()}
 	for _, param := range head.AllLOW_ID() {
 		d.Params = append(d.Params, param.GetText())
 	}
@@ -18,26 +18,20 @@ func sumDeclarations(ctx *p.TypeSumDefContext, ids parserIDAllocator) ([]Declara
 			if err != nil {
 				return nil, err
 			}
+		} else {
+			id := parserIDAt(ids, variant)
+			typ.ID = &id
 		}
 		fields = append(fields, RowField{Name: variant.GetSumLabel().GetText(), Type: typ})
 	}
+	// The listener completes every payload (including synthetic units) before
+	// allocating the shared declaration/sum identity.
+	d.ID = parserIDAt(ids, ctx)
 	d.Type = &Type{ID: &d.ID, Kind: "sum", Fields: &Row{Kind: "row", Fields: fields, Other: &Row{Kind: "empty"}}}
 	// Upstream checks sum parameters, but applies its uppercase-name check only
 	// to abstract and alias declarations.
 	if err := checkParsedTypeDeclaration(d, false, ids); err != nil {
 		return nil, err
-	}
-	if len(fields) == 1 && isUnitType(fields[0].Type) && sum.GetSeparator() == nil {
-		id := parserIDAt(ids, sum.TypeSumVariant(0))
-		d.Type = &Type{ID: &id, Kind: "const", Name: sum.TypeSumVariant(0).GetText()}
-		d.Params = nil // Match upstream's alias disambiguation.
-		return []Declaration{d}, nil
-	}
-	for i := range fields {
-		if fields[i].Type.ID == nil {
-			id := parserIDAt(ids, sum.TypeSumVariant(i))
-			fields[i].Type.ID = &id
-		}
 	}
 	resultID := parserIDAt(ids, ctx)
 	result := Type{ID: &resultID, Kind: "const", Name: d.Name}
@@ -49,17 +43,27 @@ func sumDeclarations(ctx *p.TypeSumDefContext, ids parserIDAllocator) ([]Declara
 			result.Args = append(result.Args, Type{ID: &id, Kind: "var", Name: param})
 		}
 	}
+	// Alias disambiguation happens after constructing the return type upstream,
+	// so its discarded constructor/parameter IDs remain in the source maps.
+	if len(fields) == 1 && isUnitType(fields[0].Type) && sum.GetSeparator() == nil {
+		id := parserIDAt(ids, sum.TypeSumVariant(0))
+		d.Type = &Type{ID: &id, Kind: "const", Name: sum.TypeSumVariant(0).GetText()}
+		d.Params = nil
+		return []Declaration{d}, nil
+	}
 	decls := []Declaration{d}
 	for i, field := range fields {
 		restore := parserScope(ids, sum.TypeSumVariant(i))
 		label := Expr{ID: ids.Next(), Kind: "str", Str: field.Name}
-		payload := Expr{ID: parserIDAt(ids, sum.TypeSumVariant(i).GetSumLabel()), Kind: "app", Opcode: "Tup", Args: []Expr{}}
 		annotation, qualifier := result, Val
 		var parameter Parameter
-		if !isUnitType(field.Type) {
+		var payload Expr
+		if isUnitType(field.Type) {
+			payload = Expr{ID: parserIDAt(ids, sum.TypeSumVariant(i).GetSumLabel()), Kind: "app", Opcode: "Tup", Args: []Expr{}}
+		} else {
 			qualifier = Def
 			parameter = Parameter{ID: parserIDAt(ids, sum.TypeSumVariant(i).Type_()), Name: "__" + field.Name + "Param"}
-			payload.Kind, payload.Name, payload.Opcode, payload.Args = "name", parameter.Name, "", nil
+			payload = Expr{ID: parserIDAt(ids, sum.TypeSumVariant(i).GetSumLabel()), Kind: "name", Name: parameter.Name}
 			annotation = Type{Kind: "oper", Args: []Type{field.Type}, Res: &result}
 		}
 		expr := Expr{ID: ids.Next(), Kind: "app", Opcode: "variant", Args: []Expr{label, payload}}

@@ -81,12 +81,21 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 		if err != nil {
 			return Expr{}, err
 		}
-		args := []Expr{scrutinee}
-		for _, arm := range match.AllMatchSumCase() {
+		arms := match.AllMatchSumCase()
+		bodies := make([]Expr, len(arms))
+		for i, arm := range arms {
 			body, err := expressionFromContext(arm.Expr(), ids)
 			if err != nil {
 				return Expr{}, err
 			}
+			bodies[i] = body
+		}
+		// The listener visits every arm body before lowering the match into
+		// its application and synthetic label/lambda/parameter nodes.
+		matchID := parserIDAt(ids, match)
+		args := make([]Expr, 1, 1+2*len(arms))
+		args[0] = scrutinee
+		for i, arm := range arms {
 			label, name := "_", "_"
 			if variant := arm.GetVariantMatch(); variant != nil {
 				label = variant.GetVariantLabel().GetText()
@@ -95,11 +104,12 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 				}
 			}
 			labelExpr := Expr{ID: parserIDAt(ids, arm), Kind: "str", Str: label}
+			elimID := parserIDAt(ids, arm)
 			parameter := Parameter{ID: parserIDAt(ids, arm), Name: name}
-			elim := Expr{ID: parserIDAt(ids, arm), Kind: "lambda", Qualifier: Def, Params: []Parameter{parameter}, Body: &body}
+			elim := Expr{ID: elimID, Kind: "lambda", Qualifier: Def, Params: []Parameter{parameter}, Body: &bodies[i]}
 			args = append(args, labelExpr, elim)
 		}
-		return Expr{ID: ids.Next(), Kind: "app", Opcode: "matchVariant", Args: args}, nil
+		return Expr{ID: matchID, Kind: "app", Opcode: "matchVariant", Args: args}, nil
 	}
 	if c, ok := ctx.(*p.LambdaConsContext); ok {
 		lambda := c.Lambda().LambdaUnsugared()

@@ -1,0 +1,6798 @@
+[
+  {
+    "kind": "type",
+    "name": "int",
+    "source": "int",
+    "type": {
+      "id": 1,
+      "kind": "int"
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "int.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "int.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "kind": "type",
+    "name": "bool",
+    "source": "bool",
+    "type": {
+      "id": 1,
+      "kind": "bool"
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "bool.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "bool.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "kind": "type",
+    "name": "str",
+    "source": "str",
+    "type": {
+      "id": 1,
+      "kind": "str"
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "str.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "str.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "kind": "type",
+    "name": "variable",
+    "source": "a",
+    "type": {
+      "id": 1,
+      "kind": "var",
+      "name": "a"
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "variable.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "variable.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "kind": "type",
+    "name": "constant",
+    "source": "Alias",
+    "type": {
+      "id": 1,
+      "kind": "const",
+      "name": "Alias"
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "constant.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "constant.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "kind": "type",
+    "name": "qualified",
+    "source": "NS::Alias",
+    "type": {
+      "id": 1,
+      "kind": "const",
+      "name": "NS::Alias"
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "qualified.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "qualified.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "kind": "type",
+    "name": "unit",
+    "source": "()",
+    "type": {
+      "id": 1,
+      "kind": "tup",
+      "fields": {
+        "kind": "empty"
+      }
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "unit.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "unit.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "kind": "type",
+    "name": "parentheses",
+    "source": "((a))",
+    "type": {
+      "id": 1,
+      "kind": "var",
+      "name": "a"
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "parentheses.qnt",
+        "start": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        },
+        "end": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "parentheses.qnt",
+        "start": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "kind": "type",
+    "name": "empty-record",
+    "source": "{}",
+    "type": {
+      "id": 1,
+      "kind": "rec",
+      "fields": {
+        "kind": "empty"
+      }
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "empty-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "empty-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "kind": "type",
+    "name": "open-record",
+    "source": "{x:int, y:List[str] | r}",
+    "type": {
+      "id": 4,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "y",
+            "fieldType": {
+              "id": 3,
+              "kind": "list",
+              "elem": {
+                "id": 2,
+                "kind": "str"
+              }
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "r"
+        }
+      }
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "open-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        },
+        "end": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      },
+      "2": {
+        "source": "open-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "3": {
+        "source": "open-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "4": {
+        "source": "open-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "open-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        },
+        "end": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      },
+      "2": {
+        "source": "open-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "open-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "4": {
+        "source": "open-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      }
+    },
+    "nextID": 5
+  },
+  {
+    "kind": "type",
+    "name": "collections",
+    "source": "Set[List[Result[int, str]]]",
+    "type": {
+      "id": 6,
+      "kind": "set",
+      "elem": {
+        "id": 5,
+        "kind": "list",
+        "elem": {
+          "id": 3,
+          "kind": "app",
+          "ctor": {
+            "id": 4,
+            "kind": "const",
+            "name": "Result"
+          },
+          "args": [
+            {
+              "id": 1,
+              "kind": "int"
+            },
+            {
+              "id": 2,
+              "kind": "str"
+            }
+          ]
+        }
+      }
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "collections.qnt",
+        "start": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "2": {
+        "source": "collections.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "3": {
+        "source": "collections.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "4": {
+        "source": "collections.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "5": {
+        "source": "collections.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "6": {
+        "source": "collections.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "collections.qnt",
+        "start": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "2": {
+        "source": "collections.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "3": {
+        "source": "collections.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "4": {
+        "source": "collections.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "5": {
+        "source": "collections.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "6": {
+        "source": "collections.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "kind": "type",
+    "name": "function",
+    "source": "Result[int] -> List[a]",
+    "type": {
+      "id": 6,
+      "kind": "fun",
+      "arg": {
+        "id": 2,
+        "kind": "app",
+        "ctor": {
+          "id": 3,
+          "kind": "const",
+          "name": "Result"
+        },
+        "args": [
+          {
+            "id": 1,
+            "kind": "int"
+          }
+        ]
+      },
+      "res": {
+        "id": 5,
+        "kind": "list",
+        "elem": {
+          "id": 4,
+          "kind": "var",
+          "name": "a"
+        }
+      }
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "function.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      },
+      "2": {
+        "source": "function.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "3": {
+        "source": "function.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "4": {
+        "source": "function.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "5": {
+        "source": "function.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "6": {
+        "source": "function.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "function.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "2": {
+        "source": "function.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "3": {
+        "source": "function.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "4": {
+        "source": "function.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "5": {
+        "source": "function.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "6": {
+        "source": "function.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "kind": "type",
+    "name": "operator",
+    "source": "(Result[int], Set[a]) => Outer[str]",
+    "type": {
+      "id": 9,
+      "kind": "oper",
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "ctor": {
+            "id": 3,
+            "kind": "const",
+            "name": "Result"
+          },
+          "args": [
+            {
+              "id": 1,
+              "kind": "int"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "kind": "set",
+          "elem": {
+            "id": 4,
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      ],
+      "res": {
+        "id": 7,
+        "kind": "app",
+        "ctor": {
+          "id": 8,
+          "kind": "const",
+          "name": "Outer"
+        },
+        "args": [
+          {
+            "id": 6,
+            "kind": "str"
+          }
+        ]
+      }
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "2": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "3": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "4": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "5": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "6": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "7": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "8": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "9": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "2": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "3": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "4": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "5": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "6": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "7": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "8": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "9": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      }
+    },
+    "nextID": 10
+  },
+  {
+    "kind": "type",
+    "name": "nullary-operator",
+    "source": "() => Box[int]",
+    "type": {
+      "id": 4,
+      "kind": "oper",
+      "args": [],
+      "res": {
+        "id": 2,
+        "kind": "app",
+        "ctor": {
+          "id": 3,
+          "kind": "const",
+          "name": "Box"
+        },
+        "args": [
+          {
+            "id": 1,
+            "kind": "int"
+          }
+        ]
+      }
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "nullary-operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "2": {
+        "source": "nullary-operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "3": {
+        "source": "nullary-operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "4": {
+        "source": "nullary-operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "nullary-operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "2": {
+        "source": "nullary-operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        }
+      },
+      "3": {
+        "source": "nullary-operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        }
+      },
+      "4": {
+        "source": "nullary-operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        }
+      }
+    },
+    "nextID": 5
+  },
+  {
+    "kind": "type",
+    "name": "tuple",
+    "source": "(int, Result[str], {})",
+    "type": {
+      "id": 6,
+      "kind": "tup",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "0",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "1",
+            "fieldType": {
+              "id": 3,
+              "kind": "app",
+              "ctor": {
+                "id": 4,
+                "kind": "const",
+                "name": "Result"
+              },
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "str"
+                }
+              ]
+            }
+          },
+          {
+            "fieldName": "2",
+            "fieldType": {
+              "id": 5,
+              "kind": "rec",
+              "fields": {
+                "kind": "empty"
+              }
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      },
+      "2": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "3": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "4": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "5": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "6": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        }
+      },
+      "2": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "3": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "4": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "5": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "6": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "kind": "type",
+    "name": "parenthesized-application",
+    "source": "((Box[int]))",
+    "type": {
+      "id": 2,
+      "kind": "app",
+      "ctor": {
+        "id": 3,
+        "kind": "const",
+        "name": "Box"
+      },
+      "args": [
+        {
+          "id": 1,
+          "kind": "int"
+        }
+      ]
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "parenthesized-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      },
+      "2": {
+        "source": "parenthesized-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        },
+        "end": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      },
+      "3": {
+        "source": "parenthesized-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        },
+        "end": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "parenthesized-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      },
+      "2": {
+        "source": "parenthesized-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "3": {
+        "source": "parenthesized-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      }
+    },
+    "nextID": 4
+  },
+  {
+    "kind": "type",
+    "name": "application",
+    "source": "Result[List[int], {value:bool}]",
+    "type": {
+      "id": 5,
+      "kind": "app",
+      "ctor": {
+        "id": 6,
+        "kind": "const",
+        "name": "Result"
+      },
+      "args": [
+        {
+          "id": 2,
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "int"
+          }
+        },
+        {
+          "id": 4,
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "value",
+                "fieldType": {
+                  "id": 3,
+                  "kind": "bool"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      ]
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "application.qnt",
+        "start": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        },
+        "end": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        }
+      },
+      "2": {
+        "source": "application.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "3": {
+        "source": "application.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "4": {
+        "source": "application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "5": {
+        "source": "application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "6": {
+        "source": "application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "application.qnt",
+        "start": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "2": {
+        "source": "application.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "3": {
+        "source": "application.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "4": {
+        "source": "application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "5": {
+        "source": "application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "6": {
+        "source": "application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "kind": "type",
+    "name": "qualified-application",
+    "source": "NS::Result[List[int], {value:bool}]",
+    "type": {
+      "id": 5,
+      "kind": "app",
+      "ctor": {
+        "id": 6,
+        "kind": "const",
+        "name": "NS::Result"
+      },
+      "args": [
+        {
+          "id": 2,
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "int"
+          }
+        },
+        {
+          "id": 4,
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "value",
+                "fieldType": {
+                  "id": 3,
+                  "kind": "bool"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      ]
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "qualified-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "2": {
+        "source": "qualified-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "3": {
+        "source": "qualified-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "4": {
+        "source": "qualified-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "5": {
+        "source": "qualified-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "6": {
+        "source": "qualified-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "qualified-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "2": {
+        "source": "qualified-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "3": {
+        "source": "qualified-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "4": {
+        "source": "qualified-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "5": {
+        "source": "qualified-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "6": {
+        "source": "qualified-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "kind": "type",
+    "name": "nested-applications",
+    "source": "Result[Outer[int], Inner[Set[a], (bool, str)]]",
+    "type": {
+      "id": 11,
+      "kind": "app",
+      "ctor": {
+        "id": 12,
+        "kind": "const",
+        "name": "Result"
+      },
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "ctor": {
+            "id": 3,
+            "kind": "const",
+            "name": "Outer"
+          },
+          "args": [
+            {
+              "id": 1,
+              "kind": "int"
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "kind": "app",
+          "ctor": {
+            "id": 10,
+            "kind": "const",
+            "name": "Inner"
+          },
+          "args": [
+            {
+              "id": 5,
+              "kind": "set",
+              "elem": {
+                "id": 4,
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            {
+              "id": 8,
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "id": 6,
+                      "kind": "bool"
+                    }
+                  },
+                  {
+                    "fieldName": "1",
+                    "fieldType": {
+                      "id": 7,
+                      "kind": "str"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "2": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "3": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "4": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "5": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "6": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        },
+        "end": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        }
+      },
+      "7": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 40,
+          "index": 40
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "8": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        },
+        "end": {
+          "line": 0,
+          "col": 43,
+          "index": 43
+        }
+      },
+      "9": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        }
+      },
+      "10": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        }
+      },
+      "11": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      },
+      "12": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "2": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "3": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "4": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "5": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "6": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        },
+        "end": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        }
+      },
+      "7": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 40,
+          "index": 40
+        },
+        "end": {
+          "line": 0,
+          "col": 43,
+          "index": 43
+        }
+      },
+      "8": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        },
+        "end": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        }
+      },
+      "9": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      },
+      "10": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      },
+      "11": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "12": {
+        "source": "nested-applications.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      }
+    },
+    "nextID": 13
+  },
+  {
+    "kind": "type",
+    "name": "unicode-multiline",
+    "source": "Result[\n // 😀\n List[int],\n {value:bool}\n]",
+    "type": {
+      "id": 5,
+      "kind": "app",
+      "ctor": {
+        "id": 6,
+        "kind": "const",
+        "name": "Result"
+      },
+      "args": [
+        {
+          "id": 2,
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "int"
+          }
+        },
+        {
+          "id": 4,
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "value",
+                "fieldType": {
+                  "id": 3,
+                  "kind": "bool"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      ]
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "unicode-multiline.qnt",
+        "start": {
+          "line": 2,
+          "col": 6,
+          "index": 20
+        },
+        "end": {
+          "line": 2,
+          "col": 8,
+          "index": 22
+        }
+      },
+      "2": {
+        "source": "unicode-multiline.qnt",
+        "start": {
+          "line": 2,
+          "col": 1,
+          "index": 15
+        },
+        "end": {
+          "line": 2,
+          "col": 9,
+          "index": 23
+        }
+      },
+      "3": {
+        "source": "unicode-multiline.qnt",
+        "start": {
+          "line": 3,
+          "col": 8,
+          "index": 34
+        },
+        "end": {
+          "line": 3,
+          "col": 11,
+          "index": 37
+        }
+      },
+      "4": {
+        "source": "unicode-multiline.qnt",
+        "start": {
+          "line": 3,
+          "col": 1,
+          "index": 27
+        },
+        "end": {
+          "line": 3,
+          "col": 12,
+          "index": 38
+        }
+      },
+      "5": {
+        "source": "unicode-multiline.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 4,
+          "col": 40,
+          "index": 40
+        }
+      },
+      "6": {
+        "source": "unicode-multiline.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 4,
+          "col": 40,
+          "index": 40
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "unicode-multiline.qnt",
+        "start": {
+          "line": 2,
+          "col": 6,
+          "index": 21
+        },
+        "end": {
+          "line": 2,
+          "col": 9,
+          "index": 24
+        }
+      },
+      "2": {
+        "source": "unicode-multiline.qnt",
+        "start": {
+          "line": 2,
+          "col": 1,
+          "index": 16
+        },
+        "end": {
+          "line": 2,
+          "col": 10,
+          "index": 25
+        }
+      },
+      "3": {
+        "source": "unicode-multiline.qnt",
+        "start": {
+          "line": 3,
+          "col": 8,
+          "index": 35
+        },
+        "end": {
+          "line": 3,
+          "col": 12,
+          "index": 39
+        }
+      },
+      "4": {
+        "source": "unicode-multiline.qnt",
+        "start": {
+          "line": 3,
+          "col": 1,
+          "index": 28
+        },
+        "end": {
+          "line": 3,
+          "col": 13,
+          "index": 40
+        }
+      },
+      "5": {
+        "source": "unicode-multiline.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 4,
+          "col": 1,
+          "index": 42
+        }
+      },
+      "6": {
+        "source": "unicode-multiline.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 4,
+          "col": 1,
+          "index": 42
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "kind": "type",
+    "name": "deprecated-map",
+    "source": "Map[int, str]",
+    "type": {
+      "id": 3,
+      "kind": "fun",
+      "arg": {
+        "id": 1,
+        "kind": "int"
+      },
+      "res": {
+        "id": 2,
+        "kind": "str"
+      }
+    },
+    "diagnostics": [
+      {
+        "code": "QNT015",
+        "message": "Use 'int -> str' instead of 'Map[int, str]' for map types",
+        "reference": 3,
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[int, str]",
+            "replacement": "int -> str"
+          }
+        }
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      },
+      "2": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "3": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "4": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      },
+      "2": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "3": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "4": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      }
+    },
+    "nextID": 5
+  },
+  {
+    "kind": "type",
+    "name": "nested-deprecated-map",
+    "source": "Map[Box[int], Map[str, bool]]",
+    "type": {
+      "id": 8,
+      "kind": "fun",
+      "arg": {
+        "id": 2,
+        "kind": "app",
+        "ctor": {
+          "id": 3,
+          "kind": "const",
+          "name": "Box"
+        },
+        "args": [
+          {
+            "id": 1,
+            "kind": "int"
+          }
+        ]
+      },
+      "res": {
+        "id": 6,
+        "kind": "fun",
+        "arg": {
+          "id": 4,
+          "kind": "str"
+        },
+        "res": {
+          "id": 5,
+          "kind": "bool"
+        }
+      }
+    },
+    "diagnostics": [
+      {
+        "code": "QNT015",
+        "message": "Use 'str -> bool' instead of 'Map[str, bool]' for map types",
+        "reference": 6,
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[str, bool]",
+            "replacement": "str -> bool"
+          }
+        }
+      },
+      {
+        "code": "QNT015",
+        "message": "Use 'Box[int] -> (str -> bool)' instead of 'Map[Box[int], (str -> bool)]' for map types",
+        "reference": 8,
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[Box[int], (str -> bool)]",
+            "replacement": "Box[int] -> (str -> bool)"
+          }
+        }
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "2": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "3": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "4": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "5": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "6": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "7": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "8": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "9": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "2": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "3": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "4": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "5": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "6": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "7": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "8": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "9": {
+        "source": "nested-deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      }
+    },
+    "nextID": 10
+  },
+  {
+    "kind": "type",
+    "name": "unary-map-application",
+    "source": "Map[int]",
+    "type": {
+      "id": 2,
+      "kind": "app",
+      "ctor": {
+        "id": 3,
+        "kind": "const",
+        "name": "Map"
+      },
+      "args": [
+        {
+          "id": 1,
+          "kind": "int"
+        }
+      ]
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "unary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      },
+      "2": {
+        "source": "unary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      },
+      "3": {
+        "source": "unary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "unary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      },
+      "2": {
+        "source": "unary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      },
+      "3": {
+        "source": "unary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      }
+    },
+    "nextID": 4
+  },
+  {
+    "kind": "type",
+    "name": "ternary-map-application",
+    "source": "Map[int, str, bool]",
+    "type": {
+      "id": 4,
+      "kind": "app",
+      "ctor": {
+        "id": 5,
+        "kind": "const",
+        "name": "Map"
+      },
+      "args": [
+        {
+          "id": 1,
+          "kind": "int"
+        },
+        {
+          "id": 2,
+          "kind": "str"
+        },
+        {
+          "id": 3,
+          "kind": "bool"
+        }
+      ]
+    },
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "ternary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      },
+      "2": {
+        "source": "ternary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "3": {
+        "source": "ternary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "4": {
+        "source": "ternary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "5": {
+        "source": "ternary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "ternary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      },
+      "2": {
+        "source": "ternary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "3": {
+        "source": "ternary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "4": {
+        "source": "ternary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "5": {
+        "source": "ternary-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      }
+    },
+    "nextID": 6
+  },
+  {
+    "kind": "module",
+    "name": "variable-application",
+    "source": "module M { var x: Foo[int] val next = 1 }",
+    "modules": [
+      {
+        "id": 7,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 2,
+              "kind": "app",
+              "ctor": {
+                "id": 3,
+                "kind": "const",
+                "name": "Foo"
+              },
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int"
+                }
+              ]
+            },
+            "id": 4
+          },
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "2": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "3": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "4": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "5": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        },
+        "end": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        }
+      },
+      "6": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "7": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 40,
+          "index": 40
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "2": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "3": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "4": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "5": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        },
+        "end": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        }
+      },
+      "6": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "7": {
+        "source": "variable-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        }
+      }
+    },
+    "nextID": 8
+  },
+  {
+    "kind": "module",
+    "name": "constant-application",
+    "source": "module M { const x: Result[List[int], {value:bool}] val next = true }",
+    "modules": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "app",
+              "ctor": {
+                "id": 6,
+                "kind": "const",
+                "name": "Result"
+              },
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "list",
+                  "elem": {
+                    "id": 1,
+                    "kind": "int"
+                  }
+                },
+                {
+                  "id": 4,
+                  "kind": "rec",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "value",
+                        "fieldType": {
+                          "id": 3,
+                          "kind": "bool"
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": 7
+          },
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "2": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "3": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      },
+      "4": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "5": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 50,
+          "index": 50
+        }
+      },
+      "6": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 50,
+          "index": 50
+        }
+      },
+      "7": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 50,
+          "index": 50
+        }
+      },
+      "8": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 63,
+          "index": 63
+        },
+        "end": {
+          "line": 0,
+          "col": 66,
+          "index": 66
+        }
+      },
+      "9": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 56,
+          "index": 56
+        },
+        "end": {
+          "line": 0,
+          "col": 59,
+          "index": 59
+        }
+      },
+      "10": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 68,
+          "index": 68
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "2": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "3": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "4": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        },
+        "end": {
+          "line": 0,
+          "col": 50,
+          "index": 50
+        }
+      },
+      "5": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 51,
+          "index": 51
+        }
+      },
+      "6": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 51,
+          "index": 51
+        }
+      },
+      "7": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 51,
+          "index": 51
+        }
+      },
+      "8": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 63,
+          "index": 63
+        },
+        "end": {
+          "line": 0,
+          "col": 67,
+          "index": 67
+        }
+      },
+      "9": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 56,
+          "index": 56
+        },
+        "end": {
+          "line": 0,
+          "col": 60,
+          "index": 60
+        }
+      },
+      "10": {
+        "source": "constant-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 69,
+          "index": 69
+        }
+      }
+    },
+    "nextID": 11
+  },
+  {
+    "kind": "module",
+    "name": "alias-application",
+    "source": "module M { type Box[a] = List[a] const c:Box[int] val x=c }",
+    "modules": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "typedef",
+            "name": "Box",
+            "type": {
+              "id": 2,
+              "kind": "list",
+              "elem": {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            "params": [
+              "a"
+            ]
+          },
+          {
+            "kind": "const",
+            "name": "c",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "app",
+              "ctor": {
+                "id": 6,
+                "kind": "const",
+                "name": "Box"
+              },
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "int"
+                }
+              ]
+            },
+            "id": 7
+          },
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "name",
+              "name": "c"
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "2": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "3": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "4": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        },
+        "end": {
+          "line": 0,
+          "col": 47,
+          "index": 47
+        }
+      },
+      "5": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      },
+      "6": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      },
+      "7": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      },
+      "8": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 56,
+          "index": 56
+        },
+        "end": {
+          "line": 0,
+          "col": 56,
+          "index": 56
+        }
+      },
+      "9": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 54,
+          "index": 54
+        },
+        "end": {
+          "line": 0,
+          "col": 54,
+          "index": 54
+        }
+      },
+      "10": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 58,
+          "index": 58
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "2": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "3": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "4": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      },
+      "5": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "6": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "7": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "8": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 56,
+          "index": 56
+        },
+        "end": {
+          "line": 0,
+          "col": 57,
+          "index": 57
+        }
+      },
+      "9": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 54,
+          "index": 54
+        },
+        "end": {
+          "line": 0,
+          "col": 55,
+          "index": 55
+        }
+      },
+      "10": {
+        "source": "alias-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 59,
+          "index": 59
+        }
+      }
+    },
+    "nextID": 11
+  },
+  {
+    "kind": "module",
+    "name": "parameter-annotations",
+    "source": "module M { type Box[a] = List[a] def f(x:Box[int]):Box[int]=x val y=f(List(1)) }",
+    "modules": [
+      {
+        "id": 18,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "typedef",
+            "name": "Box",
+            "type": {
+              "id": 2,
+              "kind": "list",
+              "elem": {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            "params": [
+              "a"
+            ]
+          },
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 12,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 7,
+                  "name": "x",
+                  "typeAnnotation": {
+                    "id": 5,
+                    "kind": "app",
+                    "ctor": {
+                      "id": 6,
+                      "kind": "const",
+                      "name": "Box"
+                    },
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "int"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 11,
+                "kind": "name",
+                "name": "x"
+              }
+            },
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "app",
+                  "ctor": {
+                    "id": 6,
+                    "kind": "const",
+                    "name": "Box"
+                  },
+                  "args": [
+                    {
+                      "id": 4,
+                      "kind": "int"
+                    }
+                  ]
+                }
+              ],
+              "res": {
+                "id": 9,
+                "kind": "app",
+                "ctor": {
+                  "id": 10,
+                  "kind": "const",
+                  "name": "Box"
+                },
+                "args": [
+                  {
+                    "id": 8,
+                    "kind": "int"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": 17,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 16,
+              "kind": "app",
+              "opcode": "f",
+              "args": [
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "List",
+                  "args": [
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "2": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "3": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "4": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        },
+        "end": {
+          "line": 0,
+          "col": 47,
+          "index": 47
+        }
+      },
+      "5": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      },
+      "6": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      },
+      "7": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      },
+      "8": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 55,
+          "index": 55
+        },
+        "end": {
+          "line": 0,
+          "col": 57,
+          "index": 57
+        }
+      },
+      "9": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 51,
+          "index": 51
+        },
+        "end": {
+          "line": 0,
+          "col": 58,
+          "index": 58
+        }
+      },
+      "10": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 51,
+          "index": 51
+        },
+        "end": {
+          "line": 0,
+          "col": 58,
+          "index": 58
+        }
+      },
+      "11": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 60,
+          "index": 60
+        },
+        "end": {
+          "line": 0,
+          "col": 60,
+          "index": 60
+        }
+      },
+      "12": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        },
+        "end": {
+          "line": 0,
+          "col": 60,
+          "index": 60
+        }
+      },
+      "13": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        },
+        "end": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        }
+      },
+      "14": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 75,
+          "index": 75
+        },
+        "end": {
+          "line": 0,
+          "col": 75,
+          "index": 75
+        }
+      },
+      "15": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 70,
+          "index": 70
+        },
+        "end": {
+          "line": 0,
+          "col": 76,
+          "index": 76
+        }
+      },
+      "16": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 68,
+          "index": 68
+        },
+        "end": {
+          "line": 0,
+          "col": 77,
+          "index": 77
+        }
+      },
+      "17": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 66,
+          "index": 66
+        },
+        "end": {
+          "line": 0,
+          "col": 66,
+          "index": 66
+        }
+      },
+      "18": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 79,
+          "index": 79
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "2": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "3": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "4": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      },
+      "5": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "6": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "7": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "8": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 55,
+          "index": 55
+        },
+        "end": {
+          "line": 0,
+          "col": 58,
+          "index": 58
+        }
+      },
+      "9": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 51,
+          "index": 51
+        },
+        "end": {
+          "line": 0,
+          "col": 59,
+          "index": 59
+        }
+      },
+      "10": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 51,
+          "index": 51
+        },
+        "end": {
+          "line": 0,
+          "col": 59,
+          "index": 59
+        }
+      },
+      "11": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 60,
+          "index": 60
+        },
+        "end": {
+          "line": 0,
+          "col": 61,
+          "index": 61
+        }
+      },
+      "12": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        },
+        "end": {
+          "line": 0,
+          "col": 61,
+          "index": 61
+        }
+      },
+      "13": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        },
+        "end": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        }
+      },
+      "14": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 75,
+          "index": 75
+        },
+        "end": {
+          "line": 0,
+          "col": 76,
+          "index": 76
+        }
+      },
+      "15": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 70,
+          "index": 70
+        },
+        "end": {
+          "line": 0,
+          "col": 77,
+          "index": 77
+        }
+      },
+      "16": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 68,
+          "index": 68
+        },
+        "end": {
+          "line": 0,
+          "col": 78,
+          "index": 78
+        }
+      },
+      "17": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 66,
+          "index": 66
+        },
+        "end": {
+          "line": 0,
+          "col": 67,
+          "index": 67
+        }
+      },
+      "18": {
+        "source": "parameter-annotations.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 80,
+          "index": 80
+        }
+      }
+    },
+    "nextID": 19
+  },
+  {
+    "kind": "module",
+    "name": "value-annotation",
+    "source": "module M { val x: Foo[int] = 1 }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 1
+            },
+            "typeAnnotation": {
+              "id": 2,
+              "kind": "app",
+              "ctor": {
+                "id": 3,
+                "kind": "const",
+                "name": "Foo"
+              },
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "value-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "2": {
+        "source": "value-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "3": {
+        "source": "value-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "4": {
+        "source": "value-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "5": {
+        "source": "value-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "6": {
+        "source": "value-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "value-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "2": {
+        "source": "value-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "3": {
+        "source": "value-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "4": {
+        "source": "value-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "5": {
+        "source": "value-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "6": {
+        "source": "value-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "kind": "module",
+    "name": "local-annotation",
+    "source": "module M { val x = { val y: Box[int] = 1 y } }",
+    "modules": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "let",
+              "opdef": {
+                "id": 5,
+                "kind": "def",
+                "name": "y",
+                "qualifier": "val",
+                "expr": {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 1
+                },
+                "typeAnnotation": {
+                  "id": 2,
+                  "kind": "app",
+                  "ctor": {
+                    "id": 3,
+                    "kind": "const",
+                    "name": "Box"
+                  },
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "int"
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 6,
+                "kind": "name",
+                "name": "y"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "2": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "3": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "4": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        },
+        "end": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        }
+      },
+      "5": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "6": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        }
+      },
+      "7": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        }
+      },
+      "8": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "9": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "2": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "3": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "4": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        },
+        "end": {
+          "line": 0,
+          "col": 40,
+          "index": 40
+        }
+      },
+      "5": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "6": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "7": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "8": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "9": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      }
+    },
+    "nextID": 10
+  },
+  {
+    "kind": "module",
+    "name": "empty-record-annotation",
+    "source": "module M { const x: {} val next = true }",
+    "modules": [
+      {
+        "id": 5,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "rec",
+              "fields": {
+                "kind": "empty"
+              }
+            },
+            "id": 2
+          },
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "empty-record-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "2": {
+        "source": "empty-record-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "3": {
+        "source": "empty-record-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        },
+        "end": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        }
+      },
+      "4": {
+        "source": "empty-record-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "5": {
+        "source": "empty-record-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "empty-record-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "2": {
+        "source": "empty-record-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "3": {
+        "source": "empty-record-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        },
+        "end": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        }
+      },
+      "4": {
+        "source": "empty-record-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "5": {
+        "source": "empty-record-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 40,
+          "index": 40
+        }
+      }
+    },
+    "nextID": 6
+  },
+  {
+    "kind": "module",
+    "name": "deprecated-map-annotation",
+    "source": "module M { var x: Map[int,str] val next = 1 }",
+    "modules": [
+      {
+        "id": 8,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "fun",
+              "arg": {
+                "id": 1,
+                "kind": "int"
+              },
+              "res": {
+                "id": 2,
+                "kind": "str"
+              }
+            },
+            "id": 5
+          },
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT015",
+        "message": "Use 'int -> str' instead of 'Map[int, str]' for map types",
+        "reference": 3,
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[int, str]",
+            "replacement": "int -> str"
+          }
+        }
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "2": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "3": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "4": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "5": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "6": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "7": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        },
+        "end": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        }
+      },
+      "8": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "2": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "3": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "4": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "5": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "6": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        },
+        "end": {
+          "line": 0,
+          "col": 43,
+          "index": 43
+        }
+      },
+      "7": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        },
+        "end": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        }
+      },
+      "8": {
+        "source": "deprecated-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      }
+    },
+    "nextID": 9
+  },
+  {
+    "kind": "module",
+    "name": "nested-map-annotation",
+    "source": "module M { var x: Map[Foo[int], Map[str,bool]] val next = 1 }",
+    "modules": [
+      {
+        "id": 13,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 8,
+              "kind": "fun",
+              "arg": {
+                "id": 2,
+                "kind": "app",
+                "ctor": {
+                  "id": 3,
+                  "kind": "const",
+                  "name": "Foo"
+                },
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int"
+                  }
+                ]
+              },
+              "res": {
+                "id": 6,
+                "kind": "fun",
+                "arg": {
+                  "id": 4,
+                  "kind": "str"
+                },
+                "res": {
+                  "id": 5,
+                  "kind": "bool"
+                }
+              }
+            },
+            "id": 10
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 11,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT015",
+        "message": "Use 'str -> bool' instead of 'Map[str, bool]' for map types",
+        "reference": 6,
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[str, bool]",
+            "replacement": "str -> bool"
+          }
+        }
+      },
+      {
+        "code": "QNT015",
+        "message": "Use 'Foo[int] -> (str -> bool)' instead of 'Map[Foo[int], (str -> bool)]' for map types",
+        "reference": 8,
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[Foo[int], (str -> bool)]",
+            "replacement": "Foo[int] -> (str -> bool)"
+          }
+        }
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "2": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "3": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "4": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        },
+        "end": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        }
+      },
+      "5": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 40,
+          "index": 40
+        },
+        "end": {
+          "line": 0,
+          "col": 43,
+          "index": 43
+        }
+      },
+      "6": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        }
+      },
+      "7": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        }
+      },
+      "8": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      },
+      "9": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      },
+      "10": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      },
+      "11": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 58,
+          "index": 58
+        },
+        "end": {
+          "line": 0,
+          "col": 58,
+          "index": 58
+        }
+      },
+      "12": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 51,
+          "index": 51
+        },
+        "end": {
+          "line": 0,
+          "col": 54,
+          "index": 54
+        }
+      },
+      "13": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 60,
+          "index": 60
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "2": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "3": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "4": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        },
+        "end": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        }
+      },
+      "5": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 40,
+          "index": 40
+        },
+        "end": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        }
+      },
+      "6": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      },
+      "7": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      },
+      "8": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "9": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "10": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "11": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 58,
+          "index": 58
+        },
+        "end": {
+          "line": 0,
+          "col": 59,
+          "index": 59
+        }
+      },
+      "12": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 51,
+          "index": 51
+        },
+        "end": {
+          "line": 0,
+          "col": 55,
+          "index": 55
+        }
+      },
+      "13": {
+        "source": "nested-map-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 61,
+          "index": 61
+        }
+      }
+    },
+    "nextID": 14
+  },
+  {
+    "kind": "module",
+    "name": "wrong-application",
+    "source": "module M { var x: Foo(int) val z=1 }",
+    "modules": [
+      {
+        "id": 8,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "app",
+              "ctor": {
+                "id": 4,
+                "kind": "const",
+                "name": "Foo"
+              },
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "int"
+                }
+              ]
+            },
+            "id": 5
+          },
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "z",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT009",
+        "message": "Use square brackets instead of parenthesis for type application: Foo[int]",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "2": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "3": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "4": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "5": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "6": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "7": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "8": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "2": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "3": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "4": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "5": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "6": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "7": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "8": {
+        "source": "wrong-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      }
+    },
+    "nextID": 9
+  },
+  {
+    "kind": "module",
+    "name": "wrong-map-application",
+    "source": "module M { var x: Map(int,str) val z=1 }",
+    "modules": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 4,
+              "kind": "fun",
+              "arg": {
+                "id": 2,
+                "kind": "int"
+              },
+              "res": {
+                "id": 3,
+                "kind": "str"
+              }
+            },
+            "id": 6
+          },
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "z",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT009",
+        "message": "Use square brackets instead of parenthesis for type application: Map[int, str]",
+        "reference": 1
+      },
+      {
+        "code": "QNT015",
+        "message": "Use 'int -> str' instead of 'Map[int, str]' for map types",
+        "reference": 4,
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[int, str]",
+            "replacement": "int -> str"
+          }
+        }
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "2": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "3": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "4": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "5": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "6": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "7": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        },
+        "end": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        }
+      },
+      "8": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "9": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "2": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "3": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      },
+      "4": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "5": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "6": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "7": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        },
+        "end": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        }
+      },
+      "8": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "9": {
+        "source": "wrong-map-application.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 40,
+          "index": 40
+        }
+      }
+    },
+    "nextID": 10
+  }
+]

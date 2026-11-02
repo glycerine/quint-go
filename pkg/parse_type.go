@@ -58,6 +58,33 @@ func typeFromContextWithIDs(ctx p.ITypeContext, ids parserIDAllocator) (result T
 		}
 		return out, nil
 	}
+	application := func(name string, children []p.ITypeContext) (Type, error) {
+		args, err := many(children)
+		if err != nil {
+			return Type{}, err
+		}
+		var applicationID, constructorID *ID
+		if ids != nil {
+			// The listener allocates the application before its constructor,
+			// including the constructor discarded by deprecated Map syntax.
+			application := parserIDAt(ids, ctx)
+			constructor := parserIDAt(ids, ctx)
+			applicationID = &application
+			constructorID = &constructor
+		}
+		if name == "Map" && len(args) == 2 {
+			key, value := TypeString(args[0]), TypeString(args[1])
+			original := "Map[" + key + ", " + value + "]"
+			replacement := key + " -> " + value
+			diagnostic := Diagnostic{Reference: applicationID, Code: QNT015, Message: "Use '" + replacement + "' instead of '" + original + "' for map types", Data: &DiagnosticData{Fix: &DiagnosticFix{Kind: "replace", Original: original, Replacement: replacement}}}
+			if reportParserDiagnostic(ids, diagnostic) {
+				return Type{ID: applicationID, Kind: "fun", Arg: &args[0], Res: &args[1]}, nil
+			}
+			return Type{}, diagnostic
+		}
+		ctor := Type{ID: constructorID, Kind: "const", Name: name}
+		return Type{ID: applicationID, Kind: "app", Ctor: &ctor, Args: args}, nil
+	}
 	switch c := ctx.(type) {
 	case *p.TypeIntContext:
 		return Type{Kind: "int"}, nil
@@ -100,6 +127,9 @@ func typeFromContextWithIDs(ctx p.ITypeContext, ids parserIDAllocator) (result T
 		}
 		return Type{Kind: "tup", Fields: &Row{Kind: "row", Fields: fields, Other: &Row{Kind: "empty"}}}, nil
 	case *p.TypeRecContext:
+		if c.Row() == nil {
+			return Type{Kind: "rec", Fields: &Row{Kind: "empty"}}, nil
+		}
 		row := &Row{Kind: "row", Fields: []RowField{}, Other: &Row{Kind: "empty"}}
 		if r := c.Row(); r != nil {
 			ts, err := many(r.AllType_())
@@ -116,31 +146,10 @@ func typeFromContextWithIDs(ctx p.ITypeContext, ids parserIDAllocator) (result T
 		return Type{Kind: "rec", Fields: row}, nil
 	case *p.TypeAppContext:
 		app := c.TypeApplication()
-		args, err := many(app.TypeArgs().AllType_())
-		if err != nil {
-			return Type{}, err
-		}
-		if app.QualId().GetText() == "Map" && len(args) == 2 {
-			key, value := TypeString(args[0]), TypeString(args[1])
-			original := "Map[" + key + ", " + value + "]"
-			replacement := key + " -> " + value
-			var reference *ID
-			if ids != nil {
-				id := parserIDAt(ids, ctx)
-				reference = &id
-			}
-			diagnostic := Diagnostic{Reference: reference, Code: QNT015, Message: "Use '" + replacement + "' instead of '" + original + "' for map types", Data: &DiagnosticData{Fix: &DiagnosticFix{Kind: "replace", Original: original, Replacement: replacement}}}
-			if reportParserDiagnostic(ids, diagnostic) {
-				return Type{ID: reference, Kind: "fun", Arg: &args[0], Res: &args[1]}, nil
-			}
-			return Type{}, diagnostic
-		}
-		ctor := Type{Kind: "const", Name: app.QualId().GetText()}
-		if ids != nil {
-			id := parserIDAt(ids, ctx)
-			ctor.ID = &id
-		}
-		return Type{Kind: "app", Ctor: &ctor, Args: args}, nil
+		return application(app.QualId().GetText(), app.TypeArgs().AllType_())
+	case *p.WrongTypeAppContext:
+		app := c.WrongTypeApplication()
+		return application(app.QualId().GetText(), app.TypeArgs().AllType_())
 	}
 	return Type{}, fmt.Errorf("unsupported type parse node %T", ctx)
 }

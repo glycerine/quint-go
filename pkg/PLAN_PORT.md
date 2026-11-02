@@ -3143,3 +3143,12 @@ word "retained" in the commit message.
   automatic CI keeps TypeScript checks until a fetchable checker is pinned.
   Real host and other-platform execution remain unrun; legacy TS development
   dependencies still account for substantial archive bloat.
+
+- 2026-11-02: Matched raw source IDs/spans through type applications, deprecated
+  Map recovery, empty record rows, sum expansion and match desugaring. Thirty-five
+  type snapshots plus 53 sum/match snapshots compare exact IR, both source maps,
+  diagnostics and continuing ID allocation; six sum cases compare complete raw
+  inference metadata. Standalone ParseType remains ID-free. Generators reproduce
+  identical fixtures; focused parser tests and races pass, with sum helpers at
+  100% statement coverage. Broad optional parser/source/type checks pass, including
+  the 53-file corpus and full upstream inferrer suite.
