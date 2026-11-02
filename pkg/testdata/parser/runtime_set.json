@@ -1,0 +1,1290 @@
+[
+  {
+    "source": "Set().size()",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "size",
+      "args": [
+        {
+          "id": 1,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "source": "Set(1,1,2).size()",
+    "input": {
+      "id": 5,
+      "kind": "app",
+      "opcode": "size",
+      "args": [
+        {
+          "id": 4,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 3,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 2
+    }
+  },
+  {
+    "source": "Set().isFinite()",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "isFinite",
+      "args": [
+        {
+          "id": 1,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "Set(1,2).contains(1)",
+    "input": {
+      "id": 5,
+      "kind": "app",
+      "opcode": "contains",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "Set(1,2).contains(3)",
+    "input": {
+      "id": 5,
+      "kind": "app",
+      "opcode": "contains",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 3
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "source": "1.in(Set(1,2))",
+    "input": {
+      "id": 5,
+      "kind": "app",
+      "opcode": "in",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 4,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 3,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "3.in(Set(1,2))",
+    "input": {
+      "id": 5,
+      "kind": "app",
+      "opcode": "in",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int",
+          "value": 3
+        },
+        {
+          "id": 4,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 3,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "source": "Set().subseteq(Set())",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "subseteq",
+      "args": [
+        {
+          "id": 1,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        },
+        {
+          "id": 2,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "Set().subseteq(Set(1))",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "subseteq",
+      "args": [
+        {
+          "id": 1,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        },
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "Set(1).subseteq(Set())",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "subseteq",
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "source": "Set(2,1).subseteq(Set(1,2,3))",
+    "input": {
+      "id": 8,
+      "kind": "app",
+      "opcode": "subseteq",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 6,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "Set(1,2).union(Set(2,3))",
+    "input": {
+      "id": 7,
+      "kind": "app",
+      "opcode": "union",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        }
+      ]
+    }
+  },
+  {
+    "source": "Set().union(Set(1))",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "union",
+      "args": [
+        {
+          "id": 1,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        },
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    }
+  },
+  {
+    "source": "Set(1).union(Set())",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "union",
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    }
+  },
+  {
+    "source": "Set(1,2).intersect(Set(2,3))",
+    "input": {
+      "id": 7,
+      "kind": "app",
+      "opcode": "intersect",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "source": "Set(1).intersect(Set())",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "intersect",
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    }
+  },
+  {
+    "source": "Set(1,2).exclude(Set(2,3))",
+    "input": {
+      "id": 7,
+      "kind": "app",
+      "opcode": "exclude",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    }
+  },
+  {
+    "source": "Set().exclude(Set(1))",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "exclude",
+      "args": [
+        {
+          "id": 1,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        },
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    }
+  },
+  {
+    "source": "Set(1).exclude(Set(1))",
+    "input": {
+      "id": 5,
+      "kind": "app",
+      "opcode": "exclude",
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 3,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    }
+  },
+  {
+    "source": "Set(Set(1,2),Set(2,3)).flatten()",
+    "input": {
+      "id": 8,
+      "kind": "app",
+      "opcode": "flatten",
+      "args": [
+        {
+          "id": 7,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 3,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 5,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        }
+      ]
+    }
+  },
+  {
+    "source": "Set().flatten()",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "flatten",
+      "args": [
+        {
+          "id": 1,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    }
+  },
+  {
+    "source": "Set(Set(),Set(1)).flatten()",
+    "input": {
+      "id": 5,
+      "kind": "app",
+      "opcode": "flatten",
+      "args": [
+        {
+          "id": 4,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "app",
+              "opcode": "Set",
+              "args": []
+            },
+            {
+              "id": 3,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    }
+  },
+  {
+    "source": "Set(Set(2,1)).contains(Set(1,2))",
+    "input": {
+      "id": 8,
+      "kind": "app",
+      "opcode": "contains",
+      "args": [
+        {
+          "id": 4,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 3,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 6,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "Set(Map((1,2),(3,4))).contains(Map((3,4),(1,2)))",
+    "input": {
+      "id": 16,
+      "kind": "app",
+      "opcode": "contains",
+      "args": [
+        {
+          "id": 8,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 7,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 6,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 3
+                    },
+                    {
+                      "id": 5,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 11,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 3
+                },
+                {
+                  "id": 10,
+                  "kind": "int",
+                  "value": 4
+                }
+              ]
+            },
+            {
+              "id": 14,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 12,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 13,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "Set({a:1,b:2}).contains({b:2,a:1})",
+    "input": {
+      "id": 12,
+      "kind": "app",
+      "opcode": "contains",
+      "args": [
+        {
+          "id": 6,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 5,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 8,
+              "kind": "str",
+              "value": "b"
+            },
+            {
+              "id": 7,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 10,
+              "kind": "str",
+              "value": "a"
+            },
+            {
+              "id": 9,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "Set(List(1,2)).contains(List(2,1))",
+    "input": {
+      "id": 8,
+      "kind": "app",
+      "opcode": "contains",
+      "args": [
+        {
+          "id": 4,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 3,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 6,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "source": "Set(Set(1,2)).union(Set(Set(2,1)))",
+    "input": {
+      "id": 9,
+      "kind": "app",
+      "opcode": "union",
+      "args": [
+        {
+          "id": 4,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 3,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 7,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 6,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "source": "Set(9007199254740993123456789).contains(9007199254740993123456789)",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "contains",
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 9007199254740993123456789
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "kind": "int",
+          "value": 9007199254740993123456789
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  }
+]

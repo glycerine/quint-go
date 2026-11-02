@@ -277,3 +277,11 @@ nested operations, and empty/missing/out-of-bounds errors. Go tests additionally
 check immutable ownership, invalid types/arity, and oversized indices. The
 reference's Number coercion and error formatting for extreme indices remain an
 explicit compatibility audit; Go currently reports exact integer indices.
+
+`runtime_set.json` is regenerated with
+`node pkg/grammar/runtime_set_fixtures.cjs`. Twenty-eight full TypeScript
+evaluator cases cover finite set membership, inclusion, union/intersection/
+difference, cardinality, finiteness, flattening, and nested set/map/record keys.
+Go unit tests additionally verify immutable inputs, malformed calls, and
+structural equality independent of Unicode collation ties. Symbolic/infinite
+sets and seeded traversal are separate, unfinished runtime work.

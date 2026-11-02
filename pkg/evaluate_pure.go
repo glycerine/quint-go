@@ -135,6 +135,8 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 		var err error
 		if sequenceBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalSequenceBuiltin(e.Opcode, args)
+		} else if setBuiltinArity(e.Opcode) != 0 {
+			value, err = EvalSetBuiltin(e.Opcode, args)
 		} else {
 			value, err = EvalIntegerBuiltin(e.Opcode, args)
 		}

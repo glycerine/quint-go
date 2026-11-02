@@ -351,6 +351,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   fold, indexing, range, and lazy/infinite-set operations.
   - [x] Strict head/tail/length/append/concat, nth/item/replaceAt/slice, and
     field/fieldNames/with operations with pure-evaluator integration and fixtures.
+  - [x] Explicit finite-set contains/in/subseteq/union/intersect/exclude,
+    size/isFinite/flatten with structural identity and upstream evaluator cases.
   - [ ] Remaining collections/higher-order/symbolic operations and JavaScript
     Number coercion/error formatting audit for extreme sequence indices.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
@@ -2201,3 +2203,15 @@ word "retained" in the commit message.
   (combined package execution 0.942s). Extreme-index JavaScript Number coercion
   and diagnostic formatting remain explicitly open, as do remaining collection,
   higher-order, range, and symbolic-set operations under P7.4.
+
+- 2026-11-02: Added EvalSetBuiltin with explicit finite-set membership,
+  inclusion, union, intersection, difference, size, finiteness, and flattening,
+  integrated into pure IR evaluation. Ordered result construction uses insdict;
+  membership uses exact structural identities independently of display ordering.
+  Twenty-eight full TypeScript evaluator cases match, covering empty sets,
+  deduplication, nested set/map/record elements, ordered-list distinction, and
+  large integers. Unit tests cover input/export isolation, invalid arity/types,
+  invalid flatten elements, and collation-tied nested Unicode set identity.
+  Full default tests pass (combined package execution 0.984s). P7.4 remains open
+  for symbolic/infinite collections, map operations, higher-order operators,
+  ranges, and traversal/sampling compatibility.
