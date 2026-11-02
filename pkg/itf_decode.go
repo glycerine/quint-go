@@ -65,12 +65,16 @@ func DecodeITFValue(data []byte, ids *IDGenerator) (Expr, error) {
 	if ids == nil {
 		ids = &IDGenerator{}
 	}
+	return decodeITFValue(data, ids.Next)
+}
+
+func decodeITFValue(data []byte, nextID func() ID) (Expr, error) {
 	data = bytes.TrimSpace(data)
 	if !json.Valid(data) {
 		return Expr{}, fmt.Errorf("invalid ITF JSON")
 	}
-	e := Expr{ID: ids.Next()}
-	decode := func(raw json.RawMessage) (Expr, error) { return DecodeITFValue(raw, ids) }
+	e := Expr{ID: nextID()}
+	decode := func(raw json.RawMessage) (Expr, error) { return decodeITFValue(raw, nextID) }
 	array := func(raw json.RawMessage) ([]Expr, error) {
 		var values []json.RawMessage
 		if len(raw) == 0 || bytes.TrimSpace(raw)[0] != '[' {
@@ -164,7 +168,7 @@ func DecodeITFValue(data []byte, ids *IDGenerator) (Expr, error) {
 			if err != nil {
 				return Expr{}, err
 			}
-			e.Args = append(e.Args, Expr{ID: ids.Next(), Kind: "app", Opcode: "Tup", Args: []Expr{key, value}})
+			e.Args = append(e.Args, Expr{ID: nextID(), Kind: "app", Opcode: "Tup", Args: []Expr{key, value}})
 		}
 		return e, nil
 	}
@@ -188,7 +192,7 @@ func DecodeITFValue(data []byte, ids *IDGenerator) (Expr, error) {
 				e.Opcode, e.Args = "Tup", []Expr{}
 				return e, nil
 			}
-			e.Opcode, e.Args = "Rec", []Expr{{ID: ids.Next(), Kind: "str", Str: "tag"}, label}
+			e.Opcode, e.Args = "Rec", []Expr{{ID: nextID(), Kind: "str", Str: "tag"}, label}
 			return e, nil
 		}
 	}
@@ -197,7 +201,7 @@ func DecodeITFValue(data []byte, ids *IDGenerator) (Expr, error) {
 		if key == "#meta" || strings.HasPrefix(key, "__") {
 			continue
 		}
-		name := Expr{ID: ids.Next(), Kind: "str", Str: key}
+		name := Expr{ID: nextID(), Kind: "str", Str: key}
 		value, err := decode(fields.Get(key))
 		if err != nil {
 			return Expr{}, err

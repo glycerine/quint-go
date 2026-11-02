@@ -36,3 +36,13 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/itf_encode.json'),JSONbig.s
  const result=toItf(vars,input,mbt)
  return {name,input,vars,mbt,...(result.isRight()?{output:result.value}:{error:result.value})}
 }),null,2)+'\n')
+
+const {diagnosticsOfItf,pendingDiagnosticsOfItf}=require(path.join(root,'quint/src/itf'))
+const debugCases=[
+ ['absent',{vars:[],states:[{}, {'#meta':{index:1}}]}],
+ ['state',{vars:[],states:[{}, {'#meta':{diagnostics:JSON.stringify([{label:'first',value:{'#bigint':'9007199254740993123456789'}},{label:'nested',value:{'#map':[['key',{'#set':[1,2]}]]}}])}}, {'#meta':{diagnostics:'[]'}}]}],
+ ['pending',{vars:[],states:[], '#meta':{pending_diagnostics:JSON.stringify([{label:'failed',value:{tag:'Some',value:{'#tup':[true,1]}}}])}}],
+ ['both',{vars:[],states:[{'#meta':{diagnostics:JSON.stringify([{label:'state',value:[1,2]}])}}], '#meta':{pending_diagnostics:JSON.stringify([{label:'pending',value:{tag:'UNIT'}}])}}],
+ ['empty-pending',{vars:[],states:[], '#meta':{pending_diagnostics:''}}],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/itf_diagnostics.json'),JSONbig.stringify(debugCases.map(([name,input])=>({name,input,states:diagnosticsOfItf(input),pending:pendingDiagnosticsOfItf(input)})),null,2)+'\n')

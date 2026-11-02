@@ -8,6 +8,7 @@ import (
 )
 
 func TestUpstreamBuiltinEffectSignatures(t *testing.T) {
+	t.Parallel()
 	var fixtures []struct {
 		Name   string
 		Arity  int

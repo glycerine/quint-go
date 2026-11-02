@@ -8,6 +8,7 @@ import (
 )
 
 func TestFixedBuiltinTypeSignatures(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("../quint/src/types/builtinSignatures.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -34,6 +35,7 @@ func TestFixedBuiltinTypeSignatures(t *testing.T) {
 	}
 }
 func TestVariableBuiltinTypeSignatures(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"List", "Set", "Map", "and", "or", "actionAll", "actionAny", "tuples"} {
 		for _, arity := range []int{0, 1, 3} {
 			s, err := BuiltinTypeSignature(name, arity)

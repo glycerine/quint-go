@@ -458,8 +458,10 @@ Build these items alongside the phases that supply their command behavior.
     integers/raw metadata, JavaScript record key order, and seven fixtures.
   - [x] Concrete-value ITF writing, indexed state envelopes, and MBT variable
     metadata with eleven upstream encoding/error fixtures.
-  - [ ] Implement headers/loop output, runtime normalization, diagnostics
-    extraction, and trace filename/output integration.
+  - [x] State and pending-step diagnostic extraction with zero expression IDs,
+    sparse diagnostic rows, and five exact upstream fixtures.
+  - [ ] Implement headers/loop output, runtime normalization, and trace
+    filename/output integration.
 - [ ] P10.5 Port pretty printing, source-error rendering, value diffs, execution
   frames, trace display, statistics, and witness/invariant reports.
 - [ ] P10.6 Port documentation extraction and `docs`; embed builtin definitions
@@ -2036,3 +2038,18 @@ word "retained" in the commit message.
   Full default tests pass (combined execution 1.005s, approximately the one-second
   target). P10.4 remains open for trace headers/loop output, runtime normalization,
   metadata diagnostics, filename substitution, and CLI integration.
+
+- 2026-11-02: Added ITFDiagnostics/PendingITFDiagnostics and DebugMessage for
+  diagnosticsOfItf/pendingDiagnosticsOfItf. State rows are emitted only where
+  diagnostic metadata exists; pending failed-step diagnostics are separate.
+  Nested diagnostic values use the ITF decoder with a zero-ID allocator, while
+  ordinary trace decoding retains its existing allocation sequence. Five exact
+  upstream fixtures cover absent/state/pending/combined/empty-pending metadata,
+  large integers, maps/sets/tuples, variants, and unit values. Tests also cover
+  malformed metadata and message JSON, missing labels/values, contextual state
+  indexes, falsey pending values, and input isolation. Timing identified the
+  independent builtin type/effect signature suites as significant serial work;
+  those three suites now run in parallel without reducing coverage. Focused
+  signature/ITF race tests pass (1.910s with instrumentation), and full default
+  tests pass (combined execution 0.983s). Header/loop output, normalization,
+  filename substitution, and CLI trace display remain open under P10.4/P9.6.

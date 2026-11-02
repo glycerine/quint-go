@@ -1,0 +1,198 @@
+[
+  {
+    "name": "absent",
+    "input": {
+      "vars": [],
+      "states": [
+        {},
+        {
+          "#meta": {
+            "index": 1
+          }
+        }
+      ]
+    },
+    "states": [],
+    "pending": []
+  },
+  {
+    "name": "state",
+    "input": {
+      "vars": [],
+      "states": [
+        {},
+        {
+          "#meta": {
+            "diagnostics": "[{\"label\":\"first\",\"value\":{\"#bigint\":\"9007199254740993123456789\"}},{\"label\":\"nested\",\"value\":{\"#map\":[[\"key\",{\"#set\":[1,2]}]]}}]"
+          }
+        },
+        {
+          "#meta": {
+            "diagnostics": "[]"
+          }
+        }
+      ]
+    },
+    "states": [
+      [
+        {
+          "label": "first",
+          "value": {
+            "id": 0,
+            "kind": "int",
+            "value": 9007199254740993123456789
+          }
+        },
+        {
+          "label": "nested",
+          "value": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "str",
+                    "value": "key"
+                  },
+                  {
+                    "id": 0,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 0,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 0,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      []
+    ],
+    "pending": []
+  },
+  {
+    "name": "pending",
+    "input": {
+      "vars": [],
+      "states": [],
+      "#meta": {
+        "pending_diagnostics": "[{\"label\":\"failed\",\"value\":{\"tag\":\"Some\",\"value\":{\"#tup\":[true,1]}}}]"
+      }
+    },
+    "states": [],
+    "pending": [
+      {
+        "label": "failed",
+        "value": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "Some"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "bool",
+                  "value": true
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "both",
+    "input": {
+      "vars": [],
+      "states": [
+        {
+          "#meta": {
+            "diagnostics": "[{\"label\":\"state\",\"value\":[1,2]}]"
+          }
+        }
+      ],
+      "#meta": {
+        "pending_diagnostics": "[{\"label\":\"pending\",\"value\":{\"tag\":\"UNIT\"}}]"
+      }
+    },
+    "states": [
+      [
+        {
+          "label": "state",
+          "value": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        }
+      ]
+    ],
+    "pending": [
+      {
+        "label": "pending",
+        "value": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "empty-pending",
+    "input": {
+      "vars": [],
+      "states": [],
+      "#meta": {
+        "pending_diagnostics": ""
+      }
+    },
+    "states": [],
+    "pending": []
+  }
+]
