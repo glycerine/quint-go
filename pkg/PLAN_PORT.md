@@ -410,13 +410,20 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     recovery, metadata restoration, false diagnostics, and error behavior.
   - [x] Runtime state trace snapshots, module commit/shift, then/reps extension,
     expect drop semantics, and q::lastTrace values.
-  - [ ] Audit primed-expression restrictions, simulation-level transaction
-    handling, trace rendering, and execution recorder callbacks.
+  - [x] Direct next()/unbound oneOf() runtime rejection with the reference's
+    lazy argument behavior and source-referenced QNT000 diagnostics.
+  - [ ] Simulation-level transaction handling, trace rendering, and execution
+    recorder callbacks.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
   empty choices, and bounded sampling of infinite domains.
 - [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
   model-based-testing metadata. Explicitly reject non-executable temporal
   constructs where the reference runtime does.
+  - [x] Bool runtime value, strict fail/assert Boolean behavior, temporal
+    rejection messages, direct lazy next/oneOf restrictions, and unknown-opcode
+    diagnostics with argument-error precedence.
+  - [ ] Run/test combinator expression dispatch, tracing/debug output hooks,
+    and remaining model-based-testing metadata integration.
 - [ ] P7.8 Port RNG state, seed parsing, counter arithmetic, and sampling.
   Choose and document the reference backend for seed-exact reproduction;
   compare RNG vectors and collection traversal order, not just repeatability.
@@ -2615,3 +2622,12 @@ word "retained" in the commit message.
   compatibility work; persistent mutation histories and propagation through
   all nested operations also remain open. Full default tests pass (combined
   package execution 0.972s).
+
+- 2026-11-02: Added the Bool runtime value and strict fail Boolean negation.
+  Differential tests pin explicit temporal/infinite-list rejections, symbolic
+  generation and unknown-opcode diagnostics, and error precedence. Direct
+  next/oneOf calls match the reference's lazy QNT000 Unknown stateful op
+  behavior without forcing their arguments; bound nondeterministic oneOf is
+  still unfinished. Twenty-seven upstream cases plus malformed-call and exact
+  source-reference tests pass. Full default tests pass with all current batches
+  integrated (combined package execution 0.946s).

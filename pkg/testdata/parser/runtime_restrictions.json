@@ -1,0 +1,718 @@
+[
+  {
+    "source": "Bool",
+    "input": {
+      "id": 1,
+      "kind": "name",
+      "name": "Bool"
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "bool",
+          "value": false
+        },
+        {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        }
+      ]
+    }
+  },
+  {
+    "source": "Bool.contains(true)",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "contains",
+      "args": [
+        {
+          "id": 1,
+          "kind": "name",
+          "name": "Bool"
+        },
+        {
+          "id": 2,
+          "kind": "bool",
+          "value": true
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "Bool.contains(false)",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "contains",
+      "args": [
+        {
+          "id": 1,
+          "kind": "name",
+          "name": "Bool"
+        },
+        {
+          "id": 2,
+          "kind": "bool",
+          "value": false
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "Bool.size()",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "size",
+      "args": [
+        {
+          "id": 1,
+          "kind": "name",
+          "name": "Bool"
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 2
+    }
+  },
+  {
+    "source": "fail(true)",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "fail",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": true
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "source": "fail(false)",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "fail",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": false
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "false.fail().fail()",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "fail",
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "opcode": "fail",
+          "args": [
+            {
+              "id": 1,
+              "kind": "bool",
+              "value": false
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "source": "always(true)",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "always",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": true
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT501",
+      "message": "Runtime does not support the built -in operator 'always'",
+      "reference": 2
+    }
+  },
+  {
+    "source": "eventually(false)",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "eventually",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": false
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT501",
+      "message": "Runtime does not support the built -in operator 'eventually'",
+      "reference": 2
+    }
+  },
+  {
+    "source": "enabled(true)",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "enabled",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": true
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT501",
+      "message": "Runtime does not support the built -in operator 'enabled'",
+      "reference": 2
+    }
+  },
+  {
+    "source": "orKeep(true,0)",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "orKeep",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": true
+        },
+        {
+          "id": 2,
+          "kind": "int",
+          "value": 0
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT501",
+      "message": "Runtime does not support the built -in operator 'orKeep'",
+      "reference": 3
+    }
+  },
+  {
+    "source": "mustChange(false,0)",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "mustChange",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": false
+        },
+        {
+          "id": 2,
+          "kind": "int",
+          "value": 0
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT501",
+      "message": "Runtime does not support the built -in operator 'mustChange'",
+      "reference": 3
+    }
+  },
+  {
+    "source": "weakFair(true,0)",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "weakFair",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": true
+        },
+        {
+          "id": 2,
+          "kind": "int",
+          "value": 0
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT501",
+      "message": "Runtime does not support the built -in operator 'weakFair'",
+      "reference": 3
+    }
+  },
+  {
+    "source": "strongFair(false,0)",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "strongFair",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": false
+        },
+        {
+          "id": 2,
+          "kind": "int",
+          "value": 0
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT501",
+      "message": "Runtime does not support the built -in operator 'strongFair'",
+      "reference": 3
+    }
+  },
+  {
+    "source": "leadsTo(true,false)",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "leadsTo",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": true
+        },
+        {
+          "id": 2,
+          "kind": "bool",
+          "value": false
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT501",
+      "message": "Runtime does not support the built -in operator 'leadsTo'",
+      "reference": 3
+    }
+  },
+  {
+    "source": "Set(1).allLists()",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "allLists",
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT501",
+      "message": "Runtime does not support the built -in operator 'allLists'",
+      "reference": 3
+    }
+  },
+  {
+    "source": "Set(1).chooseSome()",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "chooseSome",
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT501",
+      "message": "Runtime does not support the built -in operator 'chooseSome'",
+      "reference": 3
+    }
+  },
+  {
+    "source": "next(1)",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "next",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT000",
+      "message": "Unknown stateful op",
+      "reference": 2
+    }
+  },
+  {
+    "source": "next(1/0)",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "next",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "idiv",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT000",
+      "message": "Unknown stateful op",
+      "reference": 4
+    }
+  },
+  {
+    "source": "oneOf(1/0)",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "oneOf",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "idiv",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT000",
+      "message": "Unknown stateful op",
+      "reference": 4
+    }
+  },
+  {
+    "source": "oneOf(Set(1))",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "oneOf",
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT000",
+      "message": "Unknown stateful op",
+      "reference": 3
+    }
+  },
+  {
+    "source": "apalache::generate(1)",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "apalache::generate",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT000",
+      "message": "Unknown builtin apalache::generate",
+      "reference": 2
+    }
+  },
+  {
+    "source": "missingOperator(1)",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "missingOperator",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT000",
+      "message": "Unknown builtin missingOperator",
+      "reference": 2
+    }
+  },
+  {
+    "source": "always(1/0==0)",
+    "input": {
+      "id": 6,
+      "kind": "app",
+      "opcode": "always",
+      "args": [
+        {
+          "id": 5,
+          "kind": "app",
+          "opcode": "eq",
+          "args": [
+            {
+              "id": 3,
+              "kind": "app",
+              "opcode": "idiv",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero",
+      "reference": 3
+    }
+  },
+  {
+    "source": "fail(1/0==0)",
+    "input": {
+      "id": 6,
+      "kind": "app",
+      "opcode": "fail",
+      "args": [
+        {
+          "id": 5,
+          "kind": "app",
+          "opcode": "eq",
+          "args": [
+            {
+              "id": 3,
+              "kind": "app",
+              "opcode": "idiv",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero",
+      "reference": 3
+    }
+  },
+  {
+    "source": "if(true) fail(false) else always(true)",
+    "input": {
+      "id": 6,
+      "kind": "app",
+      "opcode": "ite",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": true
+        },
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "fail",
+          "args": [
+            {
+              "id": 2,
+              "kind": "bool",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "kind": "app",
+          "opcode": "always",
+          "args": [
+            {
+              "id": 4,
+              "kind": "bool",
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "false and enabled(true)",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "and",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": false
+        },
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "enabled",
+          "args": [
+            {
+              "id": 2,
+              "kind": "bool",
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  }
+]

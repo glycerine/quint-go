@@ -476,3 +476,11 @@ identity hashes use a process-global UID counter and can change which duplicate
 key wins. Constructor ordering of runtime tuple keys alone does not reproduce
 this behavior. The Go evaluator continues to reject setToMap until its
 compatibility policy and representation are implemented.
+
+`runtime_restrictions.json` is regenerated with
+`node pkg/grammar/runtime_restrictions_fixtures.cjs`. Twenty-seven upstream
+cases compare Bool, fail, unsupported temporal/infinite-list operations, direct
+next/oneOf rejection, symbolic generation rejection, unknown opcodes, lazy
+branches, and argument-error precedence. Unit tests add malformed fail calls
+and exact diagnostic source references. Bound nondeterministic oneOf handling
+is a separate unfinished implementation.

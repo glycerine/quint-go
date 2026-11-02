@@ -101,6 +101,9 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 					}
 				}
 			}
+			if e.Name == "Bool" {
+				return NewRuntimeValue(Expr{Kind: "app", Opcode: "Set", Args: []Expr{{Kind: "bool", Bool: false}, {Kind: "bool", Bool: true}}})
+			}
 			if e.Name == "q::lastTrace" {
 				args := []Expr{}
 				if trace != nil {
@@ -225,6 +228,9 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 			return v.expression.Bool, nil
 		}
 		switch e.Opcode {
+		case "next", "oneOf":
+			id := e.ID
+			return RuntimeValue{}, Diagnostic{Code: "QNT000", Message: "Unknown stateful op", Reference: &id}
 		case "then":
 			if storage == nil {
 				return fail(e, "Action sequencing requires variable storage")
@@ -491,9 +497,9 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 				value.Args[i] = arg.source
 			}
 			return NewRuntimeValue(value)
-		case "not", "iff", "eq", "neq", "assert":
+		case "not", "fail", "iff", "eq", "neq", "assert":
 			arity := 2
-			if e.Opcode == "not" || e.Opcode == "assert" {
+			if e.Opcode == "not" || e.Opcode == "fail" || e.Opcode == "assert" {
 				arity = 1
 			}
 			if len(args) != arity {
@@ -509,7 +515,7 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 				}
 			}
 			switch e.Opcode {
-			case "not":
+			case "not", "fail":
 				return boolValue(!args[0].expression.Bool)
 			case "iff":
 				return boolValue(args[0].expression.Bool == args[1].expression.Bool)
@@ -538,7 +544,11 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 		} else if setBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalSetBuiltin(e.Opcode, args)
 		} else {
-			value, err = EvalIntegerBuiltin(e.Opcode, args)
+			if e.Opcode == "apalache::generate" || !IsBuiltinOpcode(e.Opcode) {
+				err = Diagnostic{Code: "QNT000", Message: "Unknown builtin " + e.Opcode}
+			} else {
+				value, err = EvalIntegerBuiltin(e.Opcode, args)
+			}
 		}
 		if d, ok := err.(Diagnostic); ok {
 			if d.Reference == nil {
