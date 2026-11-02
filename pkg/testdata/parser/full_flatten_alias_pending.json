@@ -1,0 +1,4444 @@
+[
+  {
+    "name": "abstract-export-alias-inside-nested-instance",
+    "source": "\nmodule Proto { type Count=int const limit:Count pure def add(n:Count):Count=n+limit }\nmodule Bridge { const outer:int import Proto(limit=outer) as Inner export Inner }\nmodule Main { import Bridge(outer=4) as Outer pure val result=Outer::Inner::add(2) }\n",
+    "inputBeforeAnalysis": [
+      {
+        "id": 13,
+        "name": "Proto",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "typedef",
+            "name": "Count",
+            "type": {
+              "id": 1,
+              "kind": "int"
+            },
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "limit",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "const",
+              "name": "Count"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "add",
+            "qualifier": "puredef",
+            "expr": {
+              "id": 11,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 6,
+                  "name": "n",
+                  "typeAnnotation": {
+                    "id": 5,
+                    "kind": "const",
+                    "name": "Count"
+                  }
+                }
+              ],
+              "qualifier": "puredef",
+              "expr": {
+                "id": 10,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 8,
+                    "kind": "name",
+                    "name": "n"
+                  },
+                  {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "limit"
+                  }
+                ]
+              }
+            },
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "const",
+                  "name": "Count"
+                }
+              ],
+              "res": {
+                "id": 7,
+                "kind": "const",
+                "name": "Count"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 20,
+        "name": "Bridge",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "outer",
+            "typeAnnotation": {
+              "id": 14,
+              "kind": "int"
+            },
+            "id": 15,
+            "depth": 0
+          },
+          {
+            "id": 18,
+            "kind": "instance",
+            "qualifiedName": "Inner",
+            "protoName": "Proto",
+            "overrides": [
+              [
+                {
+                  "id": 17,
+                  "name": "limit"
+                },
+                {
+                  "id": 16,
+                  "kind": "name",
+                  "name": "outer"
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 19,
+            "kind": "export",
+            "protoName": "Inner"
+          }
+        ]
+      },
+      {
+        "id": 27,
+        "name": "Main",
+        "declarations": [
+          {
+            "id": 23,
+            "kind": "instance",
+            "qualifiedName": "Outer",
+            "protoName": "Bridge",
+            "overrides": [
+              [
+                {
+                  "id": 22,
+                  "name": "outer"
+                },
+                {
+                  "id": 21,
+                  "kind": "int",
+                  "value": 4
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 26,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 25,
+              "kind": "app",
+              "opcode": "Outer::Inner::add",
+              "args": [
+                {
+                  "id": 24,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "input": [
+      {
+        "id": 13,
+        "name": "Proto",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "typedef",
+            "name": "Count",
+            "type": {
+              "id": 1,
+              "kind": "int"
+            },
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "limit",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "const",
+              "name": "Count"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "add",
+            "qualifier": "puredef",
+            "expr": {
+              "id": 11,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 6,
+                  "name": "n",
+                  "typeAnnotation": {
+                    "id": 5,
+                    "kind": "const",
+                    "name": "Count"
+                  }
+                }
+              ],
+              "qualifier": "puredef",
+              "expr": {
+                "id": 10,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 8,
+                    "kind": "name",
+                    "name": "n"
+                  },
+                  {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "limit"
+                  }
+                ]
+              }
+            },
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "const",
+                  "name": "Count"
+                }
+              ],
+              "res": {
+                "id": 7,
+                "kind": "const",
+                "name": "Count"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 20,
+        "name": "Bridge",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "outer",
+            "typeAnnotation": {
+              "id": 14,
+              "kind": "int"
+            },
+            "id": 15,
+            "depth": 0
+          },
+          {
+            "id": 18,
+            "kind": "instance",
+            "qualifiedName": "Inner",
+            "protoName": "Proto",
+            "overrides": [
+              [
+                {
+                  "id": 17,
+                  "name": "limit"
+                },
+                {
+                  "id": 16,
+                  "kind": "name",
+                  "name": "outer"
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 19,
+            "kind": "export",
+            "protoName": "Inner"
+          }
+        ]
+      },
+      {
+        "id": 27,
+        "name": "Main",
+        "declarations": [
+          {
+            "id": 23,
+            "kind": "instance",
+            "qualifiedName": "Outer",
+            "protoName": "Bridge",
+            "overrides": [
+              [
+                {
+                  "id": 22,
+                  "name": "outer"
+                },
+                {
+                  "id": 21,
+                  "kind": "int",
+                  "value": 4
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 26,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 25,
+              "kind": "app",
+              "opcode": "Outer::Inner::add",
+              "args": [
+                {
+                  "id": 24,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "lastID": "27",
+    "inputTable": [
+      {
+        "id": "3",
+        "target": "2",
+        "name": "Count",
+        "kind": "typedef",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "5",
+        "target": "2",
+        "name": "Count",
+        "kind": "typedef",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "7",
+        "target": "2",
+        "name": "Count",
+        "kind": "typedef",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "12",
+        "target": "12",
+        "name": "add",
+        "kind": "def",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "8",
+        "target": "6",
+        "name": "n",
+        "kind": "param",
+        "depth": 1,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "9",
+        "target": "4",
+        "name": "limit",
+        "kind": "const",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "17",
+        "target": "4",
+        "name": "limit",
+        "kind": "const",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [
+          "Inner"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 19,
+          "kind": "export",
+          "protoName": "Inner"
+        }
+      },
+      {
+        "id": "16",
+        "target": "15",
+        "name": "outer",
+        "kind": "const",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "22",
+        "target": "15",
+        "name": "outer",
+        "kind": "const",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "Outer",
+          "Main"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 23,
+          "kind": "instance",
+          "qualifiedName": "Outer",
+          "protoName": "Bridge",
+          "overrides": [
+            [
+              {
+                "id": 22,
+                "name": "outer"
+              },
+              {
+                "id": 21,
+                "kind": "int",
+                "value": 4
+              }
+            ]
+          ],
+          "identityOverride": false
+        }
+      },
+      {
+        "id": "26",
+        "target": "26",
+        "name": "result",
+        "kind": "def",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "25",
+        "target": "12",
+        "name": "add",
+        "kind": "def",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "Inner",
+          "Outer",
+          "Main"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 23,
+          "kind": "instance",
+          "qualifiedName": "Outer",
+          "protoName": "Bridge",
+          "overrides": [
+            [
+              {
+                "id": 22,
+                "name": "outer"
+              },
+              {
+                "id": 21,
+                "kind": "int",
+                "value": 4
+              }
+            ]
+          ],
+          "identityOverride": false
+        }
+      }
+    ],
+    "inputAnalysis": {
+      "types": [
+        {
+          "id": "4",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "const",
+              "name": "Count"
+            }
+          }
+        },
+        {
+          "id": "6",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 5,
+              "kind": "const",
+              "name": "Count"
+            }
+          }
+        },
+        {
+          "id": "8",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 5,
+              "kind": "const",
+              "name": "Count"
+            }
+          }
+        },
+        {
+          "id": "9",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "const",
+              "name": "Count"
+            }
+          }
+        },
+        {
+          "id": "10",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "11",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "const",
+                  "name": "Count"
+                }
+              ],
+              "res": {
+                "id": 3,
+                "kind": "int"
+              }
+            }
+          }
+        },
+        {
+          "id": "12",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "const",
+                  "name": "Count"
+                }
+              ],
+              "res": {
+                "id": 3,
+                "kind": "int"
+              }
+            }
+          }
+        },
+        {
+          "id": "15",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 14,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "16",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 14,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "17",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "const",
+              "name": "Count"
+            }
+          }
+        },
+        {
+          "id": "21",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "22",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 14,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "24",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "25",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "26",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "int"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "id": "4",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "6",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v0"
+                  }
+                },
+                {
+                  "kind": "temporal",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v1"
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v2"
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "8",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v0"
+                  }
+                },
+                {
+                  "kind": "temporal",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v1"
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v2"
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "9",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "10",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v0"
+                  }
+                },
+                {
+                  "kind": "temporal",
+                  "entity": {
+                    "kind": "union",
+                    "entities": [
+                      {
+                        "kind": "variable",
+                        "name": "_v1"
+                      },
+                      {
+                        "kind": "variable",
+                        "name": "_v2"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "11",
+          "scheme": {
+            "effect": {
+              "kind": "arrow",
+              "params": [
+                {
+                  "kind": "concrete",
+                  "components": [
+                    {
+                      "kind": "read",
+                      "entity": {
+                        "kind": "variable",
+                        "name": "_v0"
+                      }
+                    },
+                    {
+                      "kind": "temporal",
+                      "entity": {
+                        "kind": "variable",
+                        "name": "_v1"
+                      }
+                    },
+                    {
+                      "kind": "update",
+                      "entity": {
+                        "kind": "variable",
+                        "name": "_v2"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "result": {
+                "kind": "concrete",
+                "components": [
+                  {
+                    "kind": "read",
+                    "entity": {
+                      "kind": "variable",
+                      "name": "_v0"
+                    }
+                  },
+                  {
+                    "kind": "temporal",
+                    "entity": {
+                      "kind": "union",
+                      "entities": [
+                        {
+                          "kind": "variable",
+                          "name": "_v1"
+                        },
+                        {
+                          "kind": "variable",
+                          "name": "_v2"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "12",
+          "scheme": {
+            "effectVariables": [],
+            "entityVariables": [
+              "_v0",
+              "_v1",
+              "_v2"
+            ],
+            "effect": {
+              "kind": "arrow",
+              "params": [
+                {
+                  "kind": "concrete",
+                  "components": [
+                    {
+                      "kind": "read",
+                      "entity": {
+                        "kind": "variable",
+                        "name": "_v0"
+                      }
+                    },
+                    {
+                      "kind": "temporal",
+                      "entity": {
+                        "kind": "variable",
+                        "name": "_v1"
+                      }
+                    },
+                    {
+                      "kind": "update",
+                      "entity": {
+                        "kind": "variable",
+                        "name": "_v2"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "result": {
+                "kind": "concrete",
+                "components": [
+                  {
+                    "kind": "read",
+                    "entity": {
+                      "kind": "variable",
+                      "name": "_v0"
+                    }
+                  },
+                  {
+                    "kind": "temporal",
+                    "entity": {
+                      "kind": "union",
+                      "entities": [
+                        {
+                          "kind": "variable",
+                          "name": "_v1"
+                        },
+                        {
+                          "kind": "variable",
+                          "name": "_v2"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "15",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "16",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "21",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "24",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "25",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "26",
+          "scheme": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        }
+      ],
+      "modes": []
+    },
+    "inputSources": [
+      {
+        "id": "1",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 26,
+            "index": 27
+          },
+          "end": {
+            "line": 1,
+            "col": 28,
+            "index": 29
+          }
+        }
+      },
+      {
+        "id": "2",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 15,
+            "index": 16
+          },
+          "end": {
+            "line": 1,
+            "col": 28,
+            "index": 29
+          }
+        }
+      },
+      {
+        "id": "3",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 42,
+            "index": 43
+          },
+          "end": {
+            "line": 1,
+            "col": 46,
+            "index": 47
+          }
+        }
+      },
+      {
+        "id": "4",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 30,
+            "index": 31
+          },
+          "end": {
+            "line": 1,
+            "col": 46,
+            "index": 47
+          }
+        }
+      },
+      {
+        "id": "5",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 63,
+            "index": 64
+          },
+          "end": {
+            "line": 1,
+            "col": 67,
+            "index": 68
+          }
+        }
+      },
+      {
+        "id": "6",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 61,
+            "index": 62
+          },
+          "end": {
+            "line": 1,
+            "col": 67,
+            "index": 68
+          }
+        }
+      },
+      {
+        "id": "7",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 70,
+            "index": 71
+          },
+          "end": {
+            "line": 1,
+            "col": 74,
+            "index": 75
+          }
+        }
+      },
+      {
+        "id": "8",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 76,
+            "index": 77
+          },
+          "end": {
+            "line": 1,
+            "col": 76,
+            "index": 77
+          }
+        }
+      },
+      {
+        "id": "9",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 78,
+            "index": 79
+          },
+          "end": {
+            "line": 1,
+            "col": 82,
+            "index": 83
+          }
+        }
+      },
+      {
+        "id": "10",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 76,
+            "index": 77
+          },
+          "end": {
+            "line": 1,
+            "col": 82,
+            "index": 83
+          }
+        }
+      },
+      {
+        "id": "11",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 48,
+            "index": 49
+          },
+          "end": {
+            "line": 1,
+            "col": 82,
+            "index": 83
+          }
+        }
+      },
+      {
+        "id": "12",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 57,
+            "index": 58
+          },
+          "end": {
+            "line": 1,
+            "col": 59,
+            "index": 60
+          }
+        }
+      },
+      {
+        "id": "13",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 1,
+            "col": 0,
+            "index": 1
+          },
+          "end": {
+            "line": 1,
+            "col": 84,
+            "index": 85
+          }
+        }
+      },
+      {
+        "id": "14",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 2,
+            "col": 28,
+            "index": 115
+          },
+          "end": {
+            "line": 2,
+            "col": 30,
+            "index": 117
+          }
+        }
+      },
+      {
+        "id": "15",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 2,
+            "col": 16,
+            "index": 103
+          },
+          "end": {
+            "line": 2,
+            "col": 30,
+            "index": 117
+          }
+        }
+      },
+      {
+        "id": "16",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 2,
+            "col": 51,
+            "index": 138
+          },
+          "end": {
+            "line": 2,
+            "col": 55,
+            "index": 142
+          }
+        }
+      },
+      {
+        "id": "17",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 2,
+            "col": 45,
+            "index": 132
+          },
+          "end": {
+            "line": 2,
+            "col": 49,
+            "index": 136
+          }
+        }
+      },
+      {
+        "id": "18",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 2,
+            "col": 32,
+            "index": 119
+          },
+          "end": {
+            "line": 2,
+            "col": 65,
+            "index": 152
+          }
+        }
+      },
+      {
+        "id": "19",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 2,
+            "col": 67,
+            "index": 154
+          },
+          "end": {
+            "line": 2,
+            "col": 78,
+            "index": 165
+          }
+        }
+      },
+      {
+        "id": "20",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 2,
+            "col": 0,
+            "index": 87
+          },
+          "end": {
+            "line": 2,
+            "col": 80,
+            "index": 167
+          }
+        }
+      },
+      {
+        "id": "21",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 3,
+            "col": 34,
+            "index": 203
+          },
+          "end": {
+            "line": 3,
+            "col": 34,
+            "index": 203
+          }
+        }
+      },
+      {
+        "id": "22",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 3,
+            "col": 28,
+            "index": 197
+          },
+          "end": {
+            "line": 3,
+            "col": 32,
+            "index": 201
+          }
+        }
+      },
+      {
+        "id": "23",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 3,
+            "col": 14,
+            "index": 183
+          },
+          "end": {
+            "line": 3,
+            "col": 44,
+            "index": 213
+          }
+        }
+      },
+      {
+        "id": "24",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 3,
+            "col": 80,
+            "index": 249
+          },
+          "end": {
+            "line": 3,
+            "col": 80,
+            "index": 249
+          }
+        }
+      },
+      {
+        "id": "25",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 3,
+            "col": 62,
+            "index": 231
+          },
+          "end": {
+            "line": 3,
+            "col": 81,
+            "index": 250
+          }
+        }
+      },
+      {
+        "id": "26",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 3,
+            "col": 55,
+            "index": 224
+          },
+          "end": {
+            "line": 3,
+            "col": 60,
+            "index": 229
+          }
+        }
+      },
+      {
+        "id": "27",
+        "location": {
+          "source": "abstract-export-alias-inside-nested-instance.qnt",
+          "start": {
+            "line": 3,
+            "col": 0,
+            "index": 169
+          },
+          "end": {
+            "line": 3,
+            "col": 83,
+            "index": 252
+          }
+        }
+      }
+    ],
+    "error": "Internal error while flattening [QNT404] Name 'Main::Outer::Inner::limit' not found"
+  },
+  {
+    "name": "imported-variable-namespace-instance-empty-analysis",
+    "source": "module A {var x:int} module B {const C:int import A as Shared action init=Shared::x'=C} module M {import B(C=1) as Outer action start=Outer::init}",
+    "inputBeforeAnalysis": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "B",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "C",
+            "typeAnnotation": {
+              "id": 4,
+              "kind": "int"
+            },
+            "id": 5,
+            "depth": 0
+          },
+          {
+            "id": 6,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "Shared"
+          },
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "Shared::x"
+                },
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "C"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 14,
+            "kind": "instance",
+            "qualifiedName": "Outer",
+            "protoName": "B",
+            "overrides": [
+              [
+                {
+                  "id": 13,
+                  "name": "C"
+                },
+                {
+                  "id": 12,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "start",
+            "qualifier": "action",
+            "expr": {
+              "id": 15,
+              "kind": "name",
+              "name": "Outer::init"
+            }
+          }
+        ]
+      }
+    ],
+    "input": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "B",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "C",
+            "typeAnnotation": {
+              "id": 4,
+              "kind": "int"
+            },
+            "id": 5,
+            "depth": 0
+          },
+          {
+            "id": 6,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "Shared"
+          },
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "Shared::x"
+                },
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "C"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 14,
+            "kind": "instance",
+            "qualifiedName": "Outer",
+            "protoName": "B",
+            "overrides": [
+              [
+                {
+                  "id": 13,
+                  "name": "C"
+                },
+                {
+                  "id": 12,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "start",
+            "qualifier": "action",
+            "expr": {
+              "id": 15,
+              "kind": "name",
+              "name": "Outer::init"
+            }
+          }
+        ]
+      }
+    ],
+    "lastID": "17",
+    "inputTable": [
+      {
+        "id": "10",
+        "target": "10",
+        "name": "init",
+        "kind": "def",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "8",
+        "target": "2",
+        "name": "x",
+        "kind": "var",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "Shared"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 6,
+          "kind": "import",
+          "protoName": "A",
+          "qualifiedName": "Shared"
+        }
+      },
+      {
+        "id": "7",
+        "target": "5",
+        "name": "C",
+        "kind": "const",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "13",
+        "target": "5",
+        "name": "C",
+        "kind": "const",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "Outer",
+          "M"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 14,
+          "kind": "instance",
+          "qualifiedName": "Outer",
+          "protoName": "B",
+          "overrides": [
+            [
+              {
+                "id": 13,
+                "name": "C"
+              },
+              {
+                "id": 12,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          ],
+          "identityOverride": false
+        }
+      },
+      {
+        "id": "16",
+        "target": "16",
+        "name": "start",
+        "kind": "def",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "15",
+        "target": "10",
+        "name": "init",
+        "kind": "def",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "Outer",
+          "M"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 14,
+          "kind": "instance",
+          "qualifiedName": "Outer",
+          "protoName": "B",
+          "overrides": [
+            [
+              {
+                "id": 13,
+                "name": "C"
+              },
+              {
+                "id": 12,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          ],
+          "identityOverride": false
+        }
+      }
+    ],
+    "inputAnalysis": {
+      "types": [],
+      "effects": [],
+      "modes": []
+    },
+    "inputSources": [
+      {
+        "id": "1",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 16,
+            "index": 16
+          },
+          "end": {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          }
+        }
+      },
+      {
+        "id": "2",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 10,
+            "index": 10
+          },
+          "end": {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          }
+        }
+      },
+      {
+        "id": "3",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          }
+        }
+      },
+      {
+        "id": "4",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 39,
+            "index": 39
+          },
+          "end": {
+            "line": 0,
+            "col": 41,
+            "index": 41
+          }
+        }
+      },
+      {
+        "id": "5",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 31,
+            "index": 31
+          },
+          "end": {
+            "line": 0,
+            "col": 41,
+            "index": 41
+          }
+        }
+      },
+      {
+        "id": "6",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 43,
+            "index": 43
+          },
+          "end": {
+            "line": 0,
+            "col": 60,
+            "index": 60
+          }
+        }
+      },
+      {
+        "id": "7",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 85,
+            "index": 85
+          },
+          "end": {
+            "line": 0,
+            "col": 85,
+            "index": 85
+          }
+        }
+      },
+      {
+        "id": "8",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 74,
+            "index": 74
+          },
+          "end": {
+            "line": 0,
+            "col": 85,
+            "index": 85
+          }
+        }
+      },
+      {
+        "id": "9",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 74,
+            "index": 74
+          },
+          "end": {
+            "line": 0,
+            "col": 85,
+            "index": 85
+          }
+        }
+      },
+      {
+        "id": "10",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 69,
+            "index": 69
+          },
+          "end": {
+            "line": 0,
+            "col": 72,
+            "index": 72
+          }
+        }
+      },
+      {
+        "id": "11",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 21,
+            "index": 21
+          },
+          "end": {
+            "line": 0,
+            "col": 86,
+            "index": 86
+          }
+        }
+      },
+      {
+        "id": "12",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 109,
+            "index": 109
+          },
+          "end": {
+            "line": 0,
+            "col": 109,
+            "index": 109
+          }
+        }
+      },
+      {
+        "id": "13",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 107,
+            "index": 107
+          },
+          "end": {
+            "line": 0,
+            "col": 107,
+            "index": 107
+          }
+        }
+      },
+      {
+        "id": "14",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 98,
+            "index": 98
+          },
+          "end": {
+            "line": 0,
+            "col": 119,
+            "index": 119
+          }
+        }
+      },
+      {
+        "id": "15",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 134,
+            "index": 134
+          },
+          "end": {
+            "line": 0,
+            "col": 144,
+            "index": 144
+          }
+        }
+      },
+      {
+        "id": "16",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 128,
+            "index": 128
+          },
+          "end": {
+            "line": 0,
+            "col": 132,
+            "index": 132
+          }
+        }
+      },
+      {
+        "id": "17",
+        "location": {
+          "source": "imported-variable-namespace-instance-empty-analysis.qnt",
+          "start": {
+            "line": 0,
+            "col": 88,
+            "index": 88
+          },
+          "end": {
+            "line": 0,
+            "col": 145,
+            "index": 145
+          }
+        }
+      }
+    ],
+    "analysisMode": "empty",
+    "error": "Internal error while flattening [QNT404] Name 'M::Outer::Shared::x' not found"
+  },
+  {
+    "name": "imported-variable-namespace-instance-analyzed",
+    "source": "module A {var x:int} module B {const C:int import A as Shared action init=Shared::x'=C} module M {import B(C=1) as Outer action start=Outer::init}",
+    "inputBeforeAnalysis": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "B",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "C",
+            "typeAnnotation": {
+              "id": 4,
+              "kind": "int"
+            },
+            "id": 5,
+            "depth": 0
+          },
+          {
+            "id": 6,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "Shared"
+          },
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "Shared::x"
+                },
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "C"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 14,
+            "kind": "instance",
+            "qualifiedName": "Outer",
+            "protoName": "B",
+            "overrides": [
+              [
+                {
+                  "id": 13,
+                  "name": "C"
+                },
+                {
+                  "id": 12,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "start",
+            "qualifier": "action",
+            "expr": {
+              "id": 15,
+              "kind": "name",
+              "name": "Outer::init"
+            }
+          }
+        ]
+      }
+    ],
+    "input": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "B",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "C",
+            "typeAnnotation": {
+              "id": 4,
+              "kind": "int"
+            },
+            "id": 5,
+            "depth": 0
+          },
+          {
+            "id": 6,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "Shared"
+          },
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "Shared::x"
+                },
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "C"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 14,
+            "kind": "instance",
+            "qualifiedName": "Outer",
+            "protoName": "B",
+            "overrides": [
+              [
+                {
+                  "id": 13,
+                  "name": "C"
+                },
+                {
+                  "id": 12,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "start",
+            "qualifier": "action",
+            "expr": {
+              "id": 15,
+              "kind": "name",
+              "name": "Outer::init"
+            }
+          }
+        ]
+      }
+    ],
+    "lastID": "17",
+    "inputTable": [
+      {
+        "id": "10",
+        "target": "10",
+        "name": "init",
+        "kind": "def",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "8",
+        "target": "2",
+        "name": "x",
+        "kind": "var",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "Shared"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 6,
+          "kind": "import",
+          "protoName": "A",
+          "qualifiedName": "Shared"
+        }
+      },
+      {
+        "id": "7",
+        "target": "5",
+        "name": "C",
+        "kind": "const",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "13",
+        "target": "5",
+        "name": "C",
+        "kind": "const",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "Outer",
+          "M"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 14,
+          "kind": "instance",
+          "qualifiedName": "Outer",
+          "protoName": "B",
+          "overrides": [
+            [
+              {
+                "id": 13,
+                "name": "C"
+              },
+              {
+                "id": 12,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          ],
+          "identityOverride": false
+        }
+      },
+      {
+        "id": "16",
+        "target": "16",
+        "name": "start",
+        "kind": "def",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "15",
+        "target": "10",
+        "name": "init",
+        "kind": "def",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "Outer",
+          "M"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 14,
+          "kind": "instance",
+          "qualifiedName": "Outer",
+          "protoName": "B",
+          "overrides": [
+            [
+              {
+                "id": 13,
+                "name": "C"
+              },
+              {
+                "id": 12,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          ],
+          "identityOverride": false
+        }
+      }
+    ],
+    "inputAnalysis": {
+      "types": [
+        {
+          "id": "2",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "5",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 4,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "8",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "7",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 4,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "9",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          }
+        },
+        {
+          "id": "10",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          }
+        },
+        {
+          "id": "12",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "13",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 4,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "15",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          }
+        },
+        {
+          "id": "16",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "id": "2",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "5",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "8",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "7",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "9",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "10",
+          "scheme": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "12",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "15",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "M::Outer::x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "16",
+          "scheme": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "M::Outer::x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "modes": []
+    },
+    "inputSources": [
+      {
+        "id": "1",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 16,
+            "index": 16
+          },
+          "end": {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          }
+        }
+      },
+      {
+        "id": "2",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 10,
+            "index": 10
+          },
+          "end": {
+            "line": 0,
+            "col": 18,
+            "index": 18
+          }
+        }
+      },
+      {
+        "id": "3",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 19,
+            "index": 19
+          }
+        }
+      },
+      {
+        "id": "4",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 39,
+            "index": 39
+          },
+          "end": {
+            "line": 0,
+            "col": 41,
+            "index": 41
+          }
+        }
+      },
+      {
+        "id": "5",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 31,
+            "index": 31
+          },
+          "end": {
+            "line": 0,
+            "col": 41,
+            "index": 41
+          }
+        }
+      },
+      {
+        "id": "6",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 43,
+            "index": 43
+          },
+          "end": {
+            "line": 0,
+            "col": 60,
+            "index": 60
+          }
+        }
+      },
+      {
+        "id": "7",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 85,
+            "index": 85
+          },
+          "end": {
+            "line": 0,
+            "col": 85,
+            "index": 85
+          }
+        }
+      },
+      {
+        "id": "8",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 74,
+            "index": 74
+          },
+          "end": {
+            "line": 0,
+            "col": 85,
+            "index": 85
+          }
+        }
+      },
+      {
+        "id": "9",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 74,
+            "index": 74
+          },
+          "end": {
+            "line": 0,
+            "col": 85,
+            "index": 85
+          }
+        }
+      },
+      {
+        "id": "10",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 69,
+            "index": 69
+          },
+          "end": {
+            "line": 0,
+            "col": 72,
+            "index": 72
+          }
+        }
+      },
+      {
+        "id": "11",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 21,
+            "index": 21
+          },
+          "end": {
+            "line": 0,
+            "col": 86,
+            "index": 86
+          }
+        }
+      },
+      {
+        "id": "12",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 109,
+            "index": 109
+          },
+          "end": {
+            "line": 0,
+            "col": 109,
+            "index": 109
+          }
+        }
+      },
+      {
+        "id": "13",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 107,
+            "index": 107
+          },
+          "end": {
+            "line": 0,
+            "col": 107,
+            "index": 107
+          }
+        }
+      },
+      {
+        "id": "14",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 98,
+            "index": 98
+          },
+          "end": {
+            "line": 0,
+            "col": 119,
+            "index": 119
+          }
+        }
+      },
+      {
+        "id": "15",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 134,
+            "index": 134
+          },
+          "end": {
+            "line": 0,
+            "col": 144,
+            "index": 144
+          }
+        }
+      },
+      {
+        "id": "16",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 128,
+            "index": 128
+          },
+          "end": {
+            "line": 0,
+            "col": 132,
+            "index": 132
+          }
+        }
+      },
+      {
+        "id": "17",
+        "location": {
+          "source": "imported-variable-namespace-instance-analyzed.qnt",
+          "start": {
+            "line": 0,
+            "col": 88,
+            "index": 88
+          },
+          "end": {
+            "line": 0,
+            "col": 145,
+            "index": 145
+          }
+        }
+      }
+    ],
+    "analysisMode": "analyzed",
+    "error": "Internal error while flattening [QNT404] Name 'M::Outer::Shared::x' not found"
+  },
+  {
+    "name": "repeated-export-alias-root-root",
+    "source": "\nmodule A { pure val x=1 }\nmodule B { import A as Root export Root }\nmodule C { import B as Root export Root }\nmodule Main { import C.* pure val result=Root::Root::x }\n",
+    "inputBeforeAnalysis": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "Root"
+          },
+          {
+            "id": 5,
+            "kind": "export",
+            "protoName": "Root"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "name": "C",
+        "declarations": [
+          {
+            "id": 7,
+            "kind": "import",
+            "protoName": "B",
+            "qualifiedName": "Root"
+          },
+          {
+            "id": 8,
+            "kind": "export",
+            "protoName": "Root"
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "name": "Main",
+        "declarations": [
+          {
+            "id": 10,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "C"
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 11,
+              "kind": "name",
+              "name": "Root::Root::x"
+            }
+          }
+        ]
+      }
+    ],
+    "input": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "Root"
+          },
+          {
+            "id": 5,
+            "kind": "export",
+            "protoName": "Root"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "name": "C",
+        "declarations": [
+          {
+            "id": 7,
+            "kind": "import",
+            "protoName": "B",
+            "qualifiedName": "Root"
+          },
+          {
+            "id": 8,
+            "kind": "export",
+            "protoName": "Root"
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "name": "Main",
+        "declarations": [
+          {
+            "id": 10,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "C"
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 11,
+              "kind": "name",
+              "name": "Root::Root::x"
+            }
+          }
+        ]
+      }
+    ],
+    "lastID": "13",
+    "inputTable": [
+      {
+        "id": "2",
+        "target": "2",
+        "name": "x",
+        "kind": "def",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "12",
+        "target": "12",
+        "name": "result",
+        "kind": "def",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "11",
+        "target": "2",
+        "name": "x",
+        "kind": "def",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "Root"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 10,
+          "kind": "import",
+          "defName": "*",
+          "protoName": "C"
+        }
+      }
+    ],
+    "inputAnalysis": {
+      "types": [
+        {
+          "id": "1",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "2",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "11",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "12",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "id": "1",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "2",
+          "scheme": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        {
+          "id": "11",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "12",
+          "scheme": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        }
+      ],
+      "modes": []
+    },
+    "inputSources": [
+      {
+        "id": "1",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 1,
+            "col": 22,
+            "index": 23
+          },
+          "end": {
+            "line": 1,
+            "col": 22,
+            "index": 23
+          }
+        }
+      },
+      {
+        "id": "2",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 1,
+            "col": 20,
+            "index": 21
+          },
+          "end": {
+            "line": 1,
+            "col": 20,
+            "index": 21
+          }
+        }
+      },
+      {
+        "id": "3",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 1,
+            "col": 0,
+            "index": 1
+          },
+          "end": {
+            "line": 1,
+            "col": 24,
+            "index": 25
+          }
+        }
+      },
+      {
+        "id": "4",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 2,
+            "col": 11,
+            "index": 38
+          },
+          "end": {
+            "line": 2,
+            "col": 26,
+            "index": 53
+          }
+        }
+      },
+      {
+        "id": "5",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 2,
+            "col": 28,
+            "index": 55
+          },
+          "end": {
+            "line": 2,
+            "col": 38,
+            "index": 65
+          }
+        }
+      },
+      {
+        "id": "6",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 2,
+            "col": 0,
+            "index": 27
+          },
+          "end": {
+            "line": 2,
+            "col": 40,
+            "index": 67
+          }
+        }
+      },
+      {
+        "id": "7",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 3,
+            "col": 11,
+            "index": 80
+          },
+          "end": {
+            "line": 3,
+            "col": 26,
+            "index": 95
+          }
+        }
+      },
+      {
+        "id": "8",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 3,
+            "col": 28,
+            "index": 97
+          },
+          "end": {
+            "line": 3,
+            "col": 38,
+            "index": 107
+          }
+        }
+      },
+      {
+        "id": "9",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 3,
+            "col": 0,
+            "index": 69
+          },
+          "end": {
+            "line": 3,
+            "col": 40,
+            "index": 109
+          }
+        }
+      },
+      {
+        "id": "10",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 4,
+            "col": 14,
+            "index": 125
+          },
+          "end": {
+            "line": 4,
+            "col": 23,
+            "index": 134
+          }
+        }
+      },
+      {
+        "id": "11",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 4,
+            "col": 41,
+            "index": 152
+          },
+          "end": {
+            "line": 4,
+            "col": 53,
+            "index": 164
+          }
+        }
+      },
+      {
+        "id": "12",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 4,
+            "col": 34,
+            "index": 145
+          },
+          "end": {
+            "line": 4,
+            "col": 39,
+            "index": 150
+          }
+        }
+      },
+      {
+        "id": "13",
+        "location": {
+          "source": "repeated-export-alias-root-root.qnt",
+          "start": {
+            "line": 4,
+            "col": 0,
+            "index": 111
+          },
+          "end": {
+            "line": 4,
+            "col": 55,
+            "index": 166
+          }
+        }
+      }
+    ],
+    "error": "Internal error while flattening [QNT404] Name 'Root::Root::x' not found"
+  },
+  {
+    "name": "adjacent-repeated-module-instance-alias",
+    "source": "\nmodule A { const c:int pure val value=c }\nmodule I { const d:int import A(c=d) as I pure val nested=I::value }\nmodule Main { import I(d=3) as I pure val result=I::nested }\n",
+    "inputBeforeAnalysis": [
+      {
+        "id": 5,
+        "name": "A",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "c",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "value",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 3,
+              "kind": "name",
+              "name": "c"
+            }
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "name": "I",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "d",
+            "typeAnnotation": {
+              "id": 6,
+              "kind": "int"
+            },
+            "id": 7,
+            "depth": 0
+          },
+          {
+            "id": 10,
+            "kind": "instance",
+            "qualifiedName": "I",
+            "protoName": "A",
+            "overrides": [
+              [
+                {
+                  "id": 9,
+                  "name": "c"
+                },
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "d"
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "nested",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 11,
+              "kind": "name",
+              "name": "I::value"
+            }
+          }
+        ]
+      },
+      {
+        "id": 19,
+        "name": "Main",
+        "declarations": [
+          {
+            "id": 16,
+            "kind": "instance",
+            "qualifiedName": "I",
+            "protoName": "I",
+            "overrides": [
+              [
+                {
+                  "id": 15,
+                  "name": "d"
+                },
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 18,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 17,
+              "kind": "name",
+              "name": "I::nested"
+            }
+          }
+        ]
+      }
+    ],
+    "input": [
+      {
+        "id": 5,
+        "name": "A",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "c",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "value",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 3,
+              "kind": "name",
+              "name": "c"
+            }
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "name": "I",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "d",
+            "typeAnnotation": {
+              "id": 6,
+              "kind": "int"
+            },
+            "id": 7,
+            "depth": 0
+          },
+          {
+            "id": 10,
+            "kind": "instance",
+            "qualifiedName": "I",
+            "protoName": "A",
+            "overrides": [
+              [
+                {
+                  "id": 9,
+                  "name": "c"
+                },
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "d"
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "nested",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 11,
+              "kind": "name",
+              "name": "I::value"
+            }
+          }
+        ]
+      },
+      {
+        "id": 19,
+        "name": "Main",
+        "declarations": [
+          {
+            "id": 16,
+            "kind": "instance",
+            "qualifiedName": "I",
+            "protoName": "I",
+            "overrides": [
+              [
+                {
+                  "id": 15,
+                  "name": "d"
+                },
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 18,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 17,
+              "kind": "name",
+              "name": "I::nested"
+            }
+          }
+        ]
+      }
+    ],
+    "lastID": "19",
+    "inputTable": [
+      {
+        "id": "4",
+        "target": "4",
+        "name": "value",
+        "kind": "def",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "3",
+        "target": "2",
+        "name": "c",
+        "kind": "const",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "9",
+        "target": "2",
+        "name": "c",
+        "kind": "const",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "I"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 10,
+          "kind": "instance",
+          "qualifiedName": "I",
+          "protoName": "A",
+          "overrides": [
+            [
+              {
+                "id": 9,
+                "name": "c"
+              },
+              {
+                "id": 8,
+                "kind": "name",
+                "name": "d"
+              }
+            ]
+          ],
+          "identityOverride": false
+        }
+      },
+      {
+        "id": "8",
+        "target": "7",
+        "name": "d",
+        "kind": "const",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "12",
+        "target": "12",
+        "name": "nested",
+        "kind": "def",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "11",
+        "target": "4",
+        "name": "value",
+        "kind": "def",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "I"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 10,
+          "kind": "instance",
+          "qualifiedName": "I",
+          "protoName": "A",
+          "overrides": [
+            [
+              {
+                "id": 9,
+                "name": "c"
+              },
+              {
+                "id": 8,
+                "kind": "name",
+                "name": "d"
+              }
+            ]
+          ],
+          "identityOverride": false
+        }
+      },
+      {
+        "id": "15",
+        "target": "7",
+        "name": "d",
+        "kind": "const",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "I",
+          "Main"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 16,
+          "kind": "instance",
+          "qualifiedName": "I",
+          "protoName": "I",
+          "overrides": [
+            [
+              {
+                "id": 15,
+                "name": "d"
+              },
+              {
+                "id": 14,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          ],
+          "identityOverride": false
+        }
+      },
+      {
+        "id": "18",
+        "target": "18",
+        "name": "result",
+        "kind": "def",
+        "depth": 0,
+        "hidden": false,
+        "namespaces": [],
+        "shadowing": false,
+        "importedFrom": null
+      },
+      {
+        "id": "17",
+        "target": "12",
+        "name": "nested",
+        "kind": "def",
+        "depth": 0,
+        "hidden": true,
+        "namespaces": [
+          "I",
+          "Main"
+        ],
+        "shadowing": false,
+        "importedFrom": {
+          "id": 16,
+          "kind": "instance",
+          "qualifiedName": "I",
+          "protoName": "I",
+          "overrides": [
+            [
+              {
+                "id": 15,
+                "name": "d"
+              },
+              {
+                "id": 14,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          ],
+          "identityOverride": false
+        }
+      }
+    ],
+    "inputAnalysis": {
+      "types": [
+        {
+          "id": "2",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "3",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "4",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "7",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 6,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "8",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 6,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "9",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "11",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "12",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "14",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "15",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 6,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "17",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        },
+        {
+          "id": "18",
+          "scheme": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        }
+      ],
+      "effects": [
+        {
+          "id": "2",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "3",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "4",
+          "scheme": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        {
+          "id": "7",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "8",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "11",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "12",
+          "scheme": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        {
+          "id": "14",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "17",
+          "scheme": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          }
+        },
+        {
+          "id": "18",
+          "scheme": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        }
+      ],
+      "modes": []
+    },
+    "inputSources": [
+      {
+        "id": "1",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 1,
+            "col": 19,
+            "index": 20
+          },
+          "end": {
+            "line": 1,
+            "col": 21,
+            "index": 22
+          }
+        }
+      },
+      {
+        "id": "2",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 1,
+            "col": 11,
+            "index": 12
+          },
+          "end": {
+            "line": 1,
+            "col": 21,
+            "index": 22
+          }
+        }
+      },
+      {
+        "id": "3",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 1,
+            "col": 38,
+            "index": 39
+          },
+          "end": {
+            "line": 1,
+            "col": 38,
+            "index": 39
+          }
+        }
+      },
+      {
+        "id": "4",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 1,
+            "col": 32,
+            "index": 33
+          },
+          "end": {
+            "line": 1,
+            "col": 36,
+            "index": 37
+          }
+        }
+      },
+      {
+        "id": "5",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 1,
+            "col": 0,
+            "index": 1
+          },
+          "end": {
+            "line": 1,
+            "col": 40,
+            "index": 41
+          }
+        }
+      },
+      {
+        "id": "6",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 2,
+            "col": 19,
+            "index": 62
+          },
+          "end": {
+            "line": 2,
+            "col": 21,
+            "index": 64
+          }
+        }
+      },
+      {
+        "id": "7",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 2,
+            "col": 11,
+            "index": 54
+          },
+          "end": {
+            "line": 2,
+            "col": 21,
+            "index": 64
+          }
+        }
+      },
+      {
+        "id": "8",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 2,
+            "col": 34,
+            "index": 77
+          },
+          "end": {
+            "line": 2,
+            "col": 34,
+            "index": 77
+          }
+        }
+      },
+      {
+        "id": "9",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 2,
+            "col": 32,
+            "index": 75
+          },
+          "end": {
+            "line": 2,
+            "col": 32,
+            "index": 75
+          }
+        }
+      },
+      {
+        "id": "10",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 2,
+            "col": 23,
+            "index": 66
+          },
+          "end": {
+            "line": 2,
+            "col": 40,
+            "index": 83
+          }
+        }
+      },
+      {
+        "id": "11",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 2,
+            "col": 58,
+            "index": 101
+          },
+          "end": {
+            "line": 2,
+            "col": 65,
+            "index": 108
+          }
+        }
+      },
+      {
+        "id": "12",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 2,
+            "col": 51,
+            "index": 94
+          },
+          "end": {
+            "line": 2,
+            "col": 56,
+            "index": 99
+          }
+        }
+      },
+      {
+        "id": "13",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 2,
+            "col": 0,
+            "index": 43
+          },
+          "end": {
+            "line": 2,
+            "col": 67,
+            "index": 110
+          }
+        }
+      },
+      {
+        "id": "14",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 3,
+            "col": 25,
+            "index": 137
+          },
+          "end": {
+            "line": 3,
+            "col": 25,
+            "index": 137
+          }
+        }
+      },
+      {
+        "id": "15",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 3,
+            "col": 23,
+            "index": 135
+          },
+          "end": {
+            "line": 3,
+            "col": 23,
+            "index": 135
+          }
+        }
+      },
+      {
+        "id": "16",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 3,
+            "col": 14,
+            "index": 126
+          },
+          "end": {
+            "line": 3,
+            "col": 31,
+            "index": 143
+          }
+        }
+      },
+      {
+        "id": "17",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 3,
+            "col": 49,
+            "index": 161
+          },
+          "end": {
+            "line": 3,
+            "col": 57,
+            "index": 169
+          }
+        }
+      },
+      {
+        "id": "18",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 3,
+            "col": 42,
+            "index": 154
+          },
+          "end": {
+            "line": 3,
+            "col": 47,
+            "index": 159
+          }
+        }
+      },
+      {
+        "id": "19",
+        "location": {
+          "source": "adjacent-repeated-module-instance-alias.qnt",
+          "start": {
+            "line": 3,
+            "col": 0,
+            "index": 112
+          },
+          "end": {
+            "line": 3,
+            "col": 59,
+            "index": 171
+          }
+        }
+      }
+    ],
+    "error": "Internal error while flattening [QNT404] Name 'I::value' not found"
+  }
+]

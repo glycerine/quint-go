@@ -1074,3 +1074,14 @@ cancellation and writer failures. Test replay hints preserve Go-specific backend
 flags as an explicit adaptation. Recording activates only for verbose console
 paths, and checked serialization shares evaluator object history. REPL state diffs,
 terminal colors and full banner/width parity remain separate work.
+
+`full_flatten_aliases.json` compares 18 actual upstream full-pipeline graphs:
+recursive exports, nested/overridden instances, shadowing, capture avoidance,
+repeated qualifiers and upstream regressions #802/#1141/#1391. The generator
+`full_flatten_alias_fixtures.cjs` saves complete modules, ordered bindings and
+visibility/provenance, raw types/effects/modes, source maps, continued IDs and
+ownership expectations. `full_flatten_alias_pending.json` separately saves five
+upstream internal failures. Go preserves its existing nested import/instance
+support by inferring namespaces from actual import provenance, avoiding reapplying
+old namespace metadata to already-qualified local declarations. Three metadata
+integration tests and two namespace regression modes cover that correction.

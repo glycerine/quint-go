@@ -49,7 +49,11 @@ func ResolveLinkedModules(modules []Module) (LinkedNameResolution, error) {
 				}
 				depth := 0
 				local.Depth = &depth
-				scope.Add(LookupDefinition{ID: local.ID, Name: local.Name, Declaration: &local})
+				// Collection starts a new local binding. The declaration's
+				// visibility and namespaces survive flattening, while import
+				// provenance belongs to the current collection operation.
+				local.ImportedFrom = nil
+				scope.Add(declarationLookup(local))
 			}
 		}
 		result.Modules.Set(m.Name, scope)

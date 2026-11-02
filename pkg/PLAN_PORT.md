@@ -324,21 +324,22 @@ the baseline corpus, including state-transition legality.
 
 ## P6 — Flattening and compilation
 
-- [ ] P6.1 Port module and instance flattening, constant overrides, import and
+- [x] P6.1 Port module and instance flattening, constant overrides, import and
   export expansion, namespacing, and capture-avoiding substitutions.
   - [x] Expose combined export/import expansion through FlattenModule; validate
     against six upstream module fixtures and preserve input modules.
   - [x] Integrate the full module queue with unshadowing, alias inlining,
     instance expansion, and repeated name resolution; nine exact upstream
     fixtures cover ordinary, imported/exported, shadowed, and nested instances.
-  - [ ] Complete the flattening compatibility audit for remaining upstream
-    fixtures, recursive export aliases, and capture-avoiding substitutions.
+  - [x] Eighteen full-pipeline raw oracles cover recursive exports, overrides,
+    capture avoidance, repeated aliases and regressions #802/#1141/#1391; final
+    lookup metadata, analysis/source tables and continued IDs match.
 - [x] P6.2 Refresh IDs and remap source locations, references, type/effect
   schemes, and modes together during transformations.
 - [x] P6.3 Port main-module selection and synthesis of `q::init`, `q::step`,
   `q::inv`, `q::inductiveInv`, and `q::temporalProps`; analyze added definitions.
   Verified by compilation option/entry tests and nine upstream compile fixtures.
-- [ ] P6.4 Match `compile --target=json`, flattened/unflattened behavior, and
+- [x] P6.4 Match `compile --target=json`, flattened/unflattened behavior, and
   the conditions under which init/step are required or optional.
   - [x] Library compilation orchestration, default/action validation, explicit
     flatten selection, and forced TLA+ flattening with upstream fixtures.
@@ -353,8 +354,11 @@ the baseline corpus, including state-transition legality.
   with explicit schema adaptation rather than dropping unknown fields blindly.
   MarshalInput validates its projected envelope with the production importer;
   source-to-CHECK safe/violating/instance tests and source-to-TLA tests pass.
-- [ ] P6.7 Differential-test nested instances, overrides, unused imports,
+- [x] P6.7 Differential-test nested instances, overrides, unused imports,
   source maps, and reference/type consistency after every transformation.
+  Phase fixtures and eighteen full-graph oracles preserve input ownership and
+  final metadata. Five upstream failures are separate witnesses; a provenance
+  correction preserves Go's working nested import/instance capability.
 
 Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accepts.
 
@@ -3388,3 +3392,13 @@ word "retained" in the commit message.
   Focused core0.060s/CLI0.105s and races1.197s/1.304s pass; functional helpers and
   public REPL APIs have100% coverage. State diffs and terminal/color/banner parity
   remain separate, and Go replay hints keep the explicit native backend.
+
+- 2026-11-02: Completed the flattening compatibility audit with18 actual raw
+  full-pipeline graphs, including recursive exports, nested overrides, capture
+  avoidance, repeated aliases and upstream issue regressions. Rebuilt lookup
+  bindings now preserve hidden/depth/namespace/shadowing/import metadata. Namespace
+  inference uses real import provenance, preserving working Go instance paths
+  despite an upstream duplicate-prefix failure. Five reference failures remain
+  explicit witnesses. New tests0.153s, broader suite0.256s, race2.649s and vet pass;
+  metadata helper100% covered. P6.1/P6.4/P6.7 are complete; recursive init/TLA
+  conversion remains separately audited under P6.5/P9.7.

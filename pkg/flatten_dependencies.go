@@ -39,7 +39,11 @@ func dependentDefinitionsInNamespace(expression Expr, table *insdict.Dict[ID, Lo
 			return nil
 		}
 		namespace := inherited
-		if namespace == "" {
+		if namespace == "" && def.ImportedFrom != nil {
+			// An import introduces a namespace into the current module. Local
+			// flattened bindings already carry concrete qualified names; their
+			// retained namespace metadata describes prior imports and must not
+			// be applied again after an outer instance qualifies those names.
 			parts := append([]string{}, def.Namespaces...)
 			for l, r := 0, len(parts)-1; l < r; l, r = l+1, r-1 {
 				parts[l], parts[r] = parts[r], parts[l]

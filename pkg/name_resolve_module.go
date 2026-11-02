@@ -26,7 +26,9 @@ func (resolver *ExpressionNameResolver) resolveModuleBody(module Module) {
 		}
 		switch d.Kind {
 		case "def":
-			resolver.Table.Set(d.ID, LookupDefinition{ID: d.ID, Name: d.Name, Depth: 0, Declaration: &d})
+			definition := declarationLookup(d)
+			definition.Depth = 0
+			resolver.Table.Set(d.ID, definition)
 			resolver.Resolve(d.Expr, 0)
 		case "instance":
 			for _, override := range d.Overrides {

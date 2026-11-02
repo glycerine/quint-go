@@ -38,7 +38,8 @@ func CollectLocalNames(modules []Module) LocalNameCollection {
 				}
 				depth := 0
 				local.Depth = &depth
-				scope.Add(LookupDefinition{ID: local.ID, Name: local.Name, Depth: 0, Declaration: &local})
+				local.ImportedFrom = nil
+				scope.Add(declarationLookup(local))
 			}
 		}
 		result.Modules.Set(module.Name, scope)
