@@ -534,3 +534,15 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/refresh_ids.json'),JSONbig.
  const output=generateFreshIds(input,newIdGenerator(),new Map(),{types:new Map(),effects:new Map(),modes:new Map()})
  return {name,input,output}
 }),null,2)+'\n')
+
+const {flattenInstances}=require(path.join(root,'quint/src/flattening/instanceFlattener'))
+const instanceCases=[
+ ['simple',"module A { const c:int val a=c def f(x)=x+c } module B { import A(c=1) as I val a=I::a val b=I::f(2) }"],
+ ['dependency',"module A { const c:int var x:int val a=x+c } module B { val outside=2 import A(c=outside) as I val a=I::a }"],
+ ['two',"module A { const c:int val a=c } module B { import A(c=1) as I import A(c=2) as J val a=I::a+J::a }"],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/flatten_instances.json'),JSONbig.stringify(instanceCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name),linked=resolveNames(parsed.modules)
+ const output=flattenInstances(parsed.modules[1],new Map(parsed.modules.map(m=>[m.name,m])),linked.table,newIdGenerator(),new Map(),{types:new Map(),effects:new Map(),modes:new Map()})
+ return {name,input:parsed.modules,output}
+}),null,2)+'\n')

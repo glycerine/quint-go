@@ -1833,3 +1833,11 @@ word "retained" in the commit message.
   successful name resolution of generated modules. Default tests pass (combined
   execution 0.792s). Exact upstream instance fixtures, nested instances, and
   full flattening orchestration remain open under P6.1.
+
+- 2026-11-02: Added three complete upstream instance-flattening fixtures for
+  overridden constants, stateful prototypes, external override dependencies,
+  operator references, and two differently valued instances. Generated modules,
+  replacement imports, fresh IDs, and rewritten expressions all match upstream
+  structurally without changes. Default tests pass (combined execution 0.800s).
+  Nested instances, metadata extension parity, and full flattening orchestration
+  remain open under P6.1/P6.2.

@@ -1,0 +1,644 @@
+[
+  {
+    "name": "simple",
+    "input": [
+      {
+        "id": 11,
+        "name": "A",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "c",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "name",
+              "name": "c"
+            }
+          },
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 9,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 5,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 8,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 6,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "c"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 20,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 14,
+            "kind": "instance",
+            "qualifiedName": "I",
+            "protoName": "A",
+            "overrides": [
+              [
+                {
+                  "id": 13,
+                  "name": "c"
+                },
+                {
+                  "id": 12,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "name",
+              "name": "I::a"
+            }
+          },
+          {
+            "id": 19,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "val",
+            "expr": {
+              "id": 18,
+              "kind": "app",
+              "opcode": "I::f",
+              "args": [
+                {
+                  "id": 17,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 11,
+        "name": "B::I",
+        "declarations": [
+          {
+            "kind": "def",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 12,
+              "kind": "int",
+              "value": 1
+            },
+            "id": 13,
+            "name": "B::I::c",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "id": 1,
+            "kind": "def",
+            "name": "B::I::a",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "B::I::c"
+            }
+          },
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "B::I::f",
+            "qualifier": "def",
+            "expr": {
+              "id": 4,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 5,
+                  "name": "B::I::x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 6,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "name",
+                    "name": "B::I::x"
+                  },
+                  {
+                    "id": 8,
+                    "kind": "name",
+                    "name": "B::I::c"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 20,
+        "name": "B",
+        "declarations": [
+          {
+            "kind": "import",
+            "id": 14,
+            "protoName": "B::I",
+            "defName": "*"
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "name",
+              "name": "B::I::a"
+            }
+          },
+          {
+            "id": 19,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "val",
+            "expr": {
+              "id": 18,
+              "kind": "app",
+              "opcode": "B::I::f",
+              "args": [
+                {
+                  "id": 17,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dependency",
+    "input": [
+      {
+        "id": 9,
+        "name": "A",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "c",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 6,
+                  "kind": "name",
+                  "name": "c"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "outside",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "int",
+              "value": 2
+            }
+          },
+          {
+            "id": 14,
+            "kind": "instance",
+            "qualifiedName": "I",
+            "protoName": "A",
+            "overrides": [
+              [
+                {
+                  "id": 13,
+                  "name": "c"
+                },
+                {
+                  "id": 12,
+                  "kind": "name",
+                  "name": "outside"
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "name",
+              "name": "I::a"
+            }
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 9,
+        "name": "B::I",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "outside",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "int",
+              "value": 2
+            },
+            "depth": 0
+          },
+          {
+            "kind": "def",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 12,
+              "kind": "name",
+              "name": "outside"
+            },
+            "id": 13,
+            "name": "B::I::c",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "kind": "var",
+            "name": "B::I::x",
+            "typeAnnotation": {
+              "id": 2,
+              "kind": "int"
+            },
+            "id": 1,
+            "depth": 0
+          },
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "B::I::a",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "B::I::x"
+                },
+                {
+                  "id": 6,
+                  "kind": "name",
+                  "name": "B::I::c"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "outside",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "int",
+              "value": 2
+            }
+          },
+          {
+            "kind": "import",
+            "id": 14,
+            "protoName": "B::I",
+            "defName": "*"
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "name",
+              "name": "B::I::a"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "two",
+    "input": [
+      {
+        "id": 5,
+        "name": "A",
+        "declarations": [
+          {
+            "kind": "const",
+            "name": "c",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "name",
+              "name": "c"
+            }
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 8,
+            "kind": "instance",
+            "qualifiedName": "I",
+            "protoName": "A",
+            "overrides": [
+              [
+                {
+                  "id": 7,
+                  "name": "c"
+                },
+                {
+                  "id": 6,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 11,
+            "kind": "instance",
+            "qualifiedName": "J",
+            "protoName": "A",
+            "overrides": [
+              [
+                {
+                  "id": 10,
+                  "name": "c"
+                },
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            ],
+            "identityOverride": false
+          },
+          {
+            "id": 15,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 14,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 12,
+                  "kind": "name",
+                  "name": "I::a"
+                },
+                {
+                  "id": 13,
+                  "kind": "name",
+                  "name": "J::a"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 5,
+        "name": "B::I",
+        "declarations": [
+          {
+            "kind": "def",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 6,
+              "kind": "int",
+              "value": 1
+            },
+            "id": 7,
+            "name": "B::I::c",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "id": 1,
+            "kind": "def",
+            "name": "B::I::a",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "B::I::c"
+            }
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "B::J",
+        "declarations": [
+          {
+            "kind": "def",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 9,
+              "kind": "int",
+              "value": 2
+            },
+            "id": 10,
+            "name": "B::J::c",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "B::J::a",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "name",
+              "name": "B::J::c"
+            }
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "name": "B",
+        "declarations": [
+          {
+            "kind": "import",
+            "id": 8,
+            "protoName": "B::I",
+            "defName": "*"
+          },
+          {
+            "kind": "import",
+            "id": 11,
+            "protoName": "B::J",
+            "defName": "*"
+          },
+          {
+            "id": 15,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 14,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 12,
+                  "kind": "name",
+                  "name": "B::I::a"
+                },
+                {
+                  "id": 13,
+                  "kind": "name",
+                  "name": "B::J::a"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

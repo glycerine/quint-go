@@ -180,3 +180,6 @@ export and import expansion, including depth, visibility, and dependency names.
 
 `refresh_ids.json` compares four complete upstream refreshed definitions,
 including exact ID allocation order through annotations and nested expressions.
+
+`flatten_instances.json` compares three upstream instance-flattening runs,
+including exact fresh IDs, generated module order, overrides, and references.
