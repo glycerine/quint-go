@@ -2,6 +2,7 @@ package quint
 
 import (
 	"encoding/json"
+	"github.com/glycerine/insdict"
 	"os"
 	"reflect"
 	"testing"
@@ -23,7 +24,11 @@ func TestUpstreamModuleImportFlattening(t *testing.T) {
 	for _, f := range fixtures {
 		t.Run(f.Name, func(t *testing.T) {
 			linked, _ := ResolveLinkedModules(f.Input)
-			out, err := FlattenModuleImports(f.Input[len(f.Input)-1], linked.Table)
+			modules := insdict.NewDict[string, Module]()
+			for _, m := range f.Input {
+				modules.Set(m.Name, m)
+			}
+			out, err := FlattenModule(f.Input[len(f.Input)-1], modules, linked.Table)
 			if err != nil {
 				t.Fatal(err)
 			}

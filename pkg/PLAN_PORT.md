@@ -292,6 +292,10 @@ the baseline corpus, including state-transition legality.
 
 - [ ] P6.1 Port module and instance flattening, constant overrides, import and
   export expansion, namespacing, and capture-avoiding substitutions.
+  - [x] Expose combined export/import expansion through FlattenModule; validate
+    against six upstream module fixtures and preserve input modules.
+  - [ ] Integrate the full module queue with unshadowing, alias inlining,
+    instance expansion, and repeated name resolution.
 - [ ] P6.2 Refresh IDs and remap source locations, references, type/effect
   schemes, and modes together during transformations.
 - [ ] P6.3 Port main-module selection and synthesis of `q::init`, `q::step`,
@@ -1841,3 +1845,9 @@ word "retained" in the commit message.
   structurally without changes. Default tests pass (combined execution 0.800s).
   Nested instances, metadata extension parity, and full flattening orchestration
   remain open under P6.1/P6.2.
+
+- 2026-11-02: Added FlattenModule as the combined export/import expansion entry
+  point. Six upstream fixtures now exercise this API, covering local definitions,
+  transitive and star imports, retained instances, and star/qualified exports.
+  Tests also verify input isolation and missing-export error propagation. Full
+  module-queue orchestration remains open under P6.1.

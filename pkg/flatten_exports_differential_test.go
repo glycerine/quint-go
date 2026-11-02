@@ -28,13 +28,14 @@ func TestUpstreamExportFlattening(t *testing.T) {
 			for _, m := range f.Input {
 				modules.Set(m.Name, m)
 			}
-			expanded, err := ExpandModuleExports(f.Input[1], modules, linked.Table)
+			before, _ := json.Marshal(f.Input)
+			out, err := FlattenModule(f.Input[1], modules, linked.Table)
 			if err != nil {
 				t.Fatal(err)
 			}
-			out, err := FlattenModuleImports(expanded, linked.Table)
-			if err != nil {
-				t.Fatal(err)
+			after, _ := json.Marshal(f.Input)
+			if string(before) != string(after) {
+				t.Fatal("input modules changed")
 			}
 			a, _ := json.Marshal(out)
 			b, _ := json.Marshal(f.Output)
