@@ -665,6 +665,10 @@ Build these items alongside the phases that supply their command behavior.
   frames, trace display, statistics, and witness/invariant reports.
   - [x] Plain source excerpts and ordered multi-source/runtime callstack rendering
     with Unicode UTF-16, CRLF/tabs, offsets, REPL formatting, and source fallback.
+  - [x] Width-aware plain value formatting, recursive concrete value diffs with
+    collapse/styling options, state prefixes and captured execution-frame trees.
+  - [ ] Runtime frame capture/listener integration, terminal width/colors and
+    remaining command report formatting.
 - [x] P10.6 Port documentation extraction and `docs`; embed builtin definitions
   and necessary runtime assets so the binary works outside the checkout.
   - [x] Reusable documentation extraction/Markdown rendering and embedded
@@ -3006,3 +3010,12 @@ word "retained" in the commit message.
   tests pass0.054s, focused race1.192s, coverage89.9%. Arbitrary/chained receiver
   completion remains outside the inspected upstream support; signature help,
   code actions and broader workspace references remain separate work.
+
+- 2026-11-02: Added one shared width-aware value formatter, recursive concrete
+  value diffs with optional styling/collapse, state-prefix formatting and captured
+  execution-frame rendering. Exact upstream fixtures cover 252 values, 47 diffs,
+  16 states and 12 frames; direct tests cover UTF-16 fitting, decorators, nested
+  callable rejection, invalid inputs and ownership. Combined focused tests pass
+  0.081s; public value/diff formatting APIs have 100% statement coverage. The
+  renderer accepts captured frame trees; collecting them from execution remains
+  separate work. Symbolic values and full terminal/color policy remain open.
