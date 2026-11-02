@@ -36,6 +36,18 @@ func ParseModules(text string) ([]Module, error) {
 				docs = append(docs, item.DOCCOMMENT().GetText())
 				continue
 			}
+			if td, ok := item.Declaration().(*p.TypeDefsContext); ok {
+				if sum, ok := td.TypeDef().(*p.TypeSumDefContext); ok {
+					decls, err := sumDeclarations(sum, ids)
+					if err != nil {
+						return nil, err
+					}
+					decls[0].Doc = joinedDocs(docs)
+					docs = nil
+					module.Declarations = append(module.Declarations, decls...)
+					continue
+				}
+			}
 			decl, err := declarationFromContext(item.Declaration(), ids)
 			if err != nil {
 				return nil, err

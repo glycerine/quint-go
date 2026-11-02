@@ -707,3 +707,13 @@ word "retained" in the commit message.
   0.268s; combined package execution under one second). P2.3 remains open for sum
   declarations and exact documentation/source location parity; file loading and
   name resolution remain separate pending phases.
+
+- 2026-11-02: Added sum-type declarations and generated variant constructors,
+  including generic return annotations, payload lambdas, unit-valued variants,
+  and upstream alias-versus-leading-pipe disambiguation. Tests cover variant and
+  parameter order, constructor bindings/qualifiers, documentation attachment,
+  JSON round trips, monomorphic/generic annotations, and invalid syntax. Default
+  tests pass (core 0.267s; combined package execution under one second). P2.3
+  remains open for destructuring declarations, semantic declaration diagnostics,
+  and exact documentation/source mapping parity; synthesized type IDs remain
+  part of the pending source-mapping work.
