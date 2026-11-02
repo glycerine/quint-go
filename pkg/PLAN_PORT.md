@@ -841,3 +841,12 @@ word "retained" in the commit message.
   fixtures and default tests pass (core 0.346s; combined execution 0.403s).
   P2.9 remains open for broader/error-recovery coverage; semantic diagnostics
   still stop at the first error rather than returning accumulated partial IR.
+
+- 2026-11-02: Added SourceResolver/SourceLookupPath and a filesystem resolver with
+  normalized identities, portable diagnostic names and a name replacement hook,
+  parent-path lookup, LF normalization, refreshed source storage, and unwrap-capable
+  load errors matching upstream ENOENT wording. Tests cover equivalent paths,
+  parent imports, CRLF/CR, file refresh, missing files, directories, and optional
+  configuration. Default tests pass within the sub-second execution target.
+  P2.7 remains open for parser integration, duplicate-import traversal, cycles,
+  and import diagnostics; invalid-UTF-8 decoding parity is also still pending.
