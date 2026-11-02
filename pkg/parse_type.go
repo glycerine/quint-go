@@ -106,6 +106,12 @@ func typeFromContext(ctx p.ITypeContext) (Type, error) {
 		if err != nil {
 			return Type{}, err
 		}
+		if app.QualId().GetText() == "Map" && len(args) == 2 {
+			key, value := TypeString(args[0]), TypeString(args[1])
+			original := "Map[" + key + ", " + value + "]"
+			replacement := key + " -> " + value
+			return Type{}, Diagnostic{Code: QNT015, Message: "Use '" + replacement + "' instead of '" + original + "' for map types", Data: &DiagnosticData{Fix: &DiagnosticFix{Kind: "replace", Original: original, Replacement: replacement}}}
+		}
 		return Type{Kind: "app", Ctor: &Type{Kind: "const", Name: app.QualId().GetText()}, Args: args}, nil
 	}
 	return Type{}, fmt.Errorf("unsupported type parse node %T", ctx)

@@ -781,3 +781,11 @@ word "retained" in the commit message.
   Default tests pass (core 0.328s; combined package execution 0.394s). Parser
   diagnostics remain fail-fast; accumulation, partial IR, and source locations
   remain open in P2.5/P2.8.
+
+- 2026-11-02: Added QNT015 for deprecated Map[key, value] types with upstream
+  diagnostic text and replacement fixes. Tests cover nested/generic map syntax,
+  applying the suggested replacement, nonmatching arities/qualified names, and
+  propagation through module, declaration, operator, and REPL entry points.
+  Default tests pass within the sub-second package-execution target. Conversion
+  currently returns the diagnostic without upstream's recovered function-type IR;
+  partial-result recovery and source references remain open in P2.8/P2.5.
