@@ -220,6 +220,8 @@ analysis, with reproducible errors for invalid module structures.
 
 - [ ] P4.1 Port type schemes, generalization/instantiation, free variables,
   substitutions, occurs checks, and simplification.
+  - [x] Bind type and row variables with separate occurs checks and copied substitutions.
+  - [ ] Integrate binding checks with unification and substitution composition.
 - [ ] P4.2 Port constraint generation/solving for primitive, collection,
   function/operator, tuple, record, row-polymorphic, and sum types.
 - [ ] P4.3 Port type aliases, abstract types, type applications, parameter
@@ -1229,3 +1231,11 @@ word "retained" in the commit message.
   The added cases match upstream without implementation changes. Default tests
   pass (combined execution 0.557s). Full inference and broader type-system parity
   remain open.
+
+- 2026-11-02: Added type/row binding helpers with upstream occurs-check messages.
+  Type bindings inspect type variables throughout nested structures; row bindings
+  inspect only row tails, preserving upstream separation from field types. Tests
+  cover direct and structural cycles, functions/operators, collections, tuples,
+  records, application arguments, namespace separation, malformed IR, and copied
+  replacement values. Default tests pass (combined execution 0.558s). These are
+  unification prerequisites; structural unification and composition remain open.
