@@ -36,6 +36,23 @@ func ParseModules(text string) ([]Module, error) {
 				docs = append(docs, item.DOCCOMMENT().GetText())
 				continue
 			}
+			if oper, ok := item.Declaration().(*p.OperContext); ok {
+				defs, err := destructuredOperators(oper.OperDef(), ids)
+				if err != nil {
+					return nil, err
+				}
+				if defs != nil {
+					for i, op := range defs {
+						decl := Declaration{ID: op.ID, Kind: op.Kind, Name: op.Name, Qualifier: op.Qualifier, Expr: op.Expr}
+						if i == 0 {
+							decl.Doc = joinedDocs(docs)
+						}
+						module.Declarations = append(module.Declarations, decl)
+					}
+					docs = nil
+					continue
+				}
+			}
 			if td, ok := item.Declaration().(*p.TypeDefsContext); ok {
 				if sum, ok := td.TypeDef().(*p.TypeSumDefContext); ok {
 					decls, err := sumDeclarations(sum, ids)

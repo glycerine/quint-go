@@ -146,6 +146,22 @@ func expressionFromContext(ctx p.IExprContext, ids *IDGenerator) (Expr, error) {
 		return record, nil
 	}
 	if c, ok := ctx.(*p.LetInContext); ok {
+		defs, err := destructuredOperators(c.OperDef(), ids)
+		if err != nil {
+			return Expr{}, err
+		}
+		if defs != nil {
+			body, err := expressionFromContext(c.Expr(), ids)
+			if err != nil {
+				return Expr{}, err
+			}
+			for _, op := range defs[1:] {
+				inner := body
+				body = Expr{ID: ids.Next(), Kind: "let", Opdef: &op, Body: &inner}
+			}
+			return Expr{ID: ids.Next(), Kind: "let", Opdef: &defs[0], Body: &body}, nil
+		}
+
 		definition, err := operatorFromContext(c.OperDef(), ids)
 		if err != nil {
 			return Expr{}, err

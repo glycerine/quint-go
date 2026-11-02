@@ -733,3 +733,12 @@ word "retained" in the commit message.
   fresh names, call arguments, and malformed syntax. Default tests pass (core
   0.304s; combined package execution 0.366s). P2.4 remains open for destructuring
   bindings, source mapping, and full diagnostic parity.
+
+- 2026-11-02: Added tuple/record destructuring declarations at module and local
+  scope. Conversion binds the RHS once, skips tuple holes without renumbering
+  indexes, preserves val/pureval qualifiers, and matches upstream local binding
+  nesting. Tests cover fields, holes/all holes, freshness, qualifiers, projection
+  indexes, local scope, and invalid patterns. Default tests pass (core 0.309s;
+  combined package execution 0.377s). P2.3/P2.4 remain open for semantic diagnostic
+  and source-map parity. The single-operator entry point still rejects expanding
+  destructuring syntax; a multi-declaration entry point remains needed in P2.6.
