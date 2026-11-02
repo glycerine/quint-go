@@ -1430,3 +1430,10 @@ word "retained" in the commit message.
   type entries, source references, and incremental accumulation. Default tests
   pass (combined execution 0.601s). Upstream differential checker fixtures and
   combined-analysis integration remain pending.
+
+- 2026-11-02: Added eight upstream nondeterminism fixtures using upstream inferred
+  types to isolate checker behavior. Exact diagnostic comparisons cover both
+  selection operators, top-level misuse, valid local bindings, multiple failures,
+  and last-visited qualifier changes/retention across nested definitions.
+  All cases match without implementation changes. Default tests pass (combined
+  execution 0.606s). Combined-analysis integration and effects/modes remain open.

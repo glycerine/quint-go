@@ -119,3 +119,8 @@ post-failure behavior. These fixtures use an empty lookup table.
 ordered expression/definition type tables, quantified variable names, and errors.
 Only IDs inside type trees are stripped: builtin-signature type IDs are currently
 absent in Go. Expression/definition IDs and all type-variable names remain exact.
+
+
+`nondet.json` records eight upstream nondeterminism checks together with the
+upstream inferred types. Go consumes those types and compares full ordered
+diagnostics, isolating checker behavior from inference implementation differences.

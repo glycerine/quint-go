@@ -274,3 +274,24 @@ const inferenceFixtures=inferenceCases.map(([name,source])=>{
  return {name,input:parsed.modules,types:[...types].map(([id,s])=>({id:String(id),scheme:{type:s.type,typeVariables:[...s.typeVariables],rowVariables:[...s.rowVariables]}})),errors:[...errors].map(([id,error])=>({id:String(id),error}))}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/inference.json'),JSONbig.stringify(inferenceFixtures,null,2)+'\n')
+
+const {NondetChecker}=require(path.join(root,'quint/src/effects/NondetChecker'))
+const nondetCases=[
+ ['selection','module M { val x=Set(1).oneOf() }'],
+ ['generate','module M { val x=apalache::generate(1) }'],
+ ['top-level','module M { nondet x=Set(1).oneOf() }'],
+ ['valid','module M { action step=nondet x=Set(1).oneOf(); x>0 }'],
+ ['body-and-result','module M { action step=nondet x=1; x }'],
+ ['result','module M { action step=nondet x=Set(1).oneOf(); x }'],
+ ['nested-qualifier','module M { action step=nondet x=Set(1).oneOf(); val y=2; Set(1).oneOf()>y }'],
+ ['qualifier-retained','module M { action step=nondet x=Set(1).oneOf(); Set(1).oneOf()>x }'],
+]
+const nondetFixtures=nondetCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ if(parsed.errors.length)throw Error(JSONbig.stringify(parsed.errors))
+ const linked=resolveNames(parsed.modules)
+ const [,types]=new TypeInferrer(linked.table).inferTypes(parsed.modules[0].declarations)
+ const errors=new NondetChecker(linked.table).checkNondets(types,parsed.modules[0].declarations)
+ return {name,input:parsed.modules,types:[...types].map(([id,s])=>({id:String(id),scheme:{type:s.type,typeVariables:[...s.typeVariables],rowVariables:[...s.rowVariables]}})),errors}
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/nondet.json'),JSONbig.stringify(nondetFixtures,null,2)+'\n')

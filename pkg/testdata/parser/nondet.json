@@ -1,0 +1,1111 @@
+[
+  {
+    "name": "selection",
+    "input": [
+      {
+        "id": 5,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "app",
+              "opcode": "oneOf",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "set",
+            "elem": {
+              "kind": "int"
+            },
+            "id": 3
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT203",
+        "message": "'oneOf' must be used inside a nondet definition",
+        "reference": 3,
+        "data": {}
+      }
+    ]
+  },
+  {
+    "name": "generate",
+    "input": [
+      {
+        "id": 4,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "apalache::generate",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t1"
+          },
+          "typeVariables": [
+            "_t1"
+          ],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT203",
+        "message": "'apalache::generate' must be used inside a nondet definition",
+        "reference": 2,
+        "data": {}
+      }
+    ]
+  },
+  {
+    "name": "top-level",
+    "input": [
+      {
+        "id": 5,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "nondet",
+            "expr": {
+              "id": 3,
+              "kind": "app",
+              "opcode": "oneOf",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "set",
+            "elem": {
+              "kind": "int"
+            },
+            "id": 3
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT206",
+        "message": "'nondet' can only be used inside actions, not at the top level",
+        "reference": 4,
+        "data": {}
+      }
+    ]
+  },
+  {
+    "name": "valid",
+    "input": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 8,
+              "kind": "let",
+              "opdef": {
+                "id": 4,
+                "kind": "def",
+                "name": "x",
+                "qualifier": "nondet",
+                "expr": {
+                  "id": 3,
+                  "kind": "app",
+                  "opcode": "oneOf",
+                  "args": [
+                    {
+                      "id": 2,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": [
+                        {
+                          "id": 1,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 7,
+                "kind": "app",
+                "opcode": "igt",
+                "args": [
+                  {
+                    "id": 5,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 6,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "set",
+            "elem": {
+              "kind": "int"
+            },
+            "id": 3
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "body-and-result",
+    "input": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 4,
+              "kind": "let",
+              "opdef": {
+                "id": 2,
+                "kind": "def",
+                "name": "x",
+                "qualifier": "nondet",
+                "expr": {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                }
+              },
+              "expr": {
+                "id": 3,
+                "kind": "name",
+                "name": "x"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT204",
+        "message": "the outermost expression in a nondet definition must be either 'oneOf' or 'apalache::generate'",
+        "reference": 1,
+        "data": {}
+      },
+      {
+        "code": "QNT205",
+        "message": "nondet bindings can only be used with boolean expressions, but expression has type: int",
+        "reference": 4,
+        "data": {}
+      }
+    ]
+  },
+  {
+    "name": "result",
+    "input": [
+      {
+        "id": 8,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 6,
+              "kind": "let",
+              "opdef": {
+                "id": 4,
+                "kind": "def",
+                "name": "x",
+                "qualifier": "nondet",
+                "expr": {
+                  "id": 3,
+                  "kind": "app",
+                  "opcode": "oneOf",
+                  "args": [
+                    {
+                      "id": 2,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": [
+                        {
+                          "id": 1,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 5,
+                "kind": "name",
+                "name": "x"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "set",
+            "elem": {
+              "kind": "int"
+            },
+            "id": 3
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT205",
+        "message": "nondet bindings can only be used with boolean expressions, but expression has type: int",
+        "reference": 6,
+        "data": {}
+      }
+    ]
+  },
+  {
+    "name": "nested-qualifier",
+    "input": [
+      {
+        "id": 15,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 14,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 13,
+              "kind": "let",
+              "opdef": {
+                "id": 4,
+                "kind": "def",
+                "name": "x",
+                "qualifier": "nondet",
+                "expr": {
+                  "id": 3,
+                  "kind": "app",
+                  "opcode": "oneOf",
+                  "args": [
+                    {
+                      "id": 2,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": [
+                        {
+                          "id": 1,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 12,
+                "kind": "let",
+                "opdef": {
+                  "id": 6,
+                  "kind": "def",
+                  "name": "y",
+                  "qualifier": "val",
+                  "expr": {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 2
+                  }
+                },
+                "expr": {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "igt",
+                  "args": [
+                    {
+                      "id": 9,
+                      "kind": "app",
+                      "opcode": "oneOf",
+                      "args": [
+                        {
+                          "id": 8,
+                          "kind": "app",
+                          "opcode": "Set",
+                          "args": [
+                            {
+                              "id": 7,
+                              "kind": "int",
+                              "value": 1
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "y"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "set",
+            "elem": {
+              "kind": "int"
+            },
+            "id": 3
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "set",
+            "elem": {
+              "kind": "int"
+            },
+            "id": 3
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "10",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "11",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "12",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "13",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "14",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT203",
+        "message": "'oneOf' must be used inside a nondet definition",
+        "reference": 9,
+        "data": {}
+      }
+    ]
+  },
+  {
+    "name": "qualifier-retained",
+    "input": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 10,
+              "kind": "let",
+              "opdef": {
+                "id": 4,
+                "kind": "def",
+                "name": "x",
+                "qualifier": "nondet",
+                "expr": {
+                  "id": 3,
+                  "kind": "app",
+                  "opcode": "oneOf",
+                  "args": [
+                    {
+                      "id": 2,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": [
+                        {
+                          "id": 1,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 9,
+                "kind": "app",
+                "opcode": "igt",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "app",
+                    "opcode": "oneOf",
+                    "args": [
+                      {
+                        "id": 6,
+                        "kind": "app",
+                        "opcode": "Set",
+                        "args": [
+                          {
+                            "id": 5,
+                            "kind": "int",
+                            "value": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": 8,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "set",
+            "elem": {
+              "kind": "int"
+            },
+            "id": 3
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "set",
+            "elem": {
+              "kind": "int"
+            },
+            "id": 3
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "10",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "11",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": []
+  }
+]
