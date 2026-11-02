@@ -470,3 +470,30 @@ the completion criterion.
   P1.1 and P1.4 remain open: expression/declaration IR and other analysis tables
   still need implementation, and strict rejection of extraneous variant fields
   remains to be addressed.
+
+- 2026-11-02: Added all seven expression variants, qualifiers, lambda parameters,
+  and local operator definitions in `expr.go`. Literal decoding preserves exact
+  integers and false/empty values; missing/null required fields, unknown kinds,
+  and extra expression fields produce errors. Upstream evaluator fixture
+  expressions round-trip through the Go representation, alongside malformed
+  expression and large-literal tests. `go test ./pkg/...` passed (5.371s).
+  P1.1 remains open for the remaining declaration/module variants; P1.4 still
+  requires complete analysis tables and stronger schema validation.
+
+- 2026-11-02: Added module and declaration representations for definitions,
+  constants, variables, assumptions, typedefs, imports, exports, and instances.
+  Instance overrides retain upstream two-element tuple encoding, and false
+  identityOverride flags remain present in JSON. Module fixture round trips
+  and explicit declaration-variant schema comparisons pass; all current Go
+  tests pass (5.628s). P1.1 remains open pending exhaustive optional-field
+  preservation and malformed declaration validation; the representation inventory
+  is now implemented but validation is not yet complete.
+
+- 2026-11-02: Added required-field and variant-field validation for declarations,
+  modules, parameters, and local definitions, plus preservation of explicitly
+  empty typedef parameter lists. Strict decoding exposed resolver metadata in
+  upstream fixtures (`depth`, `hidden`, `namespaces`, `shadowing`, `importedFrom`)
+  that earlier decoding silently dropped. Those fields are now retained;
+  shadowing/import provenance remain raw JSON pending typed resolver structures.
+  Regression and corpus tests pass (`go test ./pkg/...`, 5.956s). P1.1/P1.4
+  remain open for remaining schema and analysis-table work.
