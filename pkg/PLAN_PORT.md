@@ -409,6 +409,11 @@ TypeScript or Rust evaluator process.
   ITF, preserving variable names, integer values, loop information, and source
   references where available. Port individual-invariant violation reporting
   without requiring the upstream Rust helper.
+  - [x] ReportCheck/ReportVerification provide source-resolved preparation
+    diagnostics, upstream error explanations, proof phases, raw backend data,
+    and lossless copied counterexample traces.
+  - [ ] Implement ITF interpretation/output and individual-invariant violation
+    reporting with variable/source mapping and CLI rendering.
 - [ ] P9.7 Implement `compile --target=tlaplus` through Go Apalache and port
   `tlaplusPostprocessing.ts`; compare parsed TLA semantics and required textual
   output against reference fixtures.
@@ -1980,3 +1985,18 @@ word "retained" in the commit message.
   0.991s); backend race tests also pass (2.743s with instrumentation).
   CLI progress/error reporting and the remaining P9 integration work
   remain open.
+
+- 2026-11-02: Added terminal-independent ReportCheck and ReportVerification with
+  the upstream counterexample, deadlock, parsing/type-checking, and unassigned
+  variable explanations, including Go assignment-extraction errors. Reports
+  retain the proof phase, raw backend text, and lossless copied ITF traces;
+  preparation diagnostics resolve their source IDs through the frontend map.
+  Unknown passes/types, malformed payloads, and inconclusive statuses remain
+  visible and never imply success. Tests cover upstream messages, namespaced
+  variables, generic/cancellation errors, malformed and future backend data,
+  serializable report fields, source locations, integer/loop preservation, and
+  output isolation. The independent metadata-projection test now runs in parallel
+  with integration tests. Full default tests pass (combined execution 0.973s),
+  final report-schema tests pass, and backend race tests pass (2.528s with
+  instrumentation). P9.6 remains open for ITF interpretation/output, individual
+  invariant reporting, source/variable mapping, and CLI presentation.

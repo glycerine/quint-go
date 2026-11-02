@@ -106,6 +106,7 @@ func TestInputRejections(t *testing.T) {
 }
 
 func TestInputProjectionAndOrderedTypes(t *testing.T) {
+	t.Parallel()
 	compiled := compileSource(t, "/// docs\nmodule M { type T=int def f(x:T):T=val y=x; y action init=true action step=true val safe=9007199254740993>0 }")
 	// Lookup-only metadata must not cross the strict importer boundary, even on
 	// nested local definitions and parameters. Its removal must leave source IR intact.
