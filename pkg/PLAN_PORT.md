@@ -652,3 +652,10 @@ word "retained" in the commit message.
   precedence, zero-based tuple field labels, validation, and syntax failures.
   All default tests pass (core 0.023s, Quint grammar 0.019s). P2.6 remains open
   for expression/declaration entry points and annotated source identity handling.
+
+- 2026-11-02: Ported all fixed and variable-arity ordinary builtin type signatures
+  from types/builtinSignatures.ts, including quantification and match/tuple
+  signature construction. Tests compare every fixed signature with upstream and
+  exercise variable arities, missing signatures, and invalid arities. Default
+  tests pass (core 0.207s). P4.4 remains open for product/variant special constraints;
+  builtin effect signatures remain to be ported under P5.2.
