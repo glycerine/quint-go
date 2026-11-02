@@ -635,3 +635,13 @@ word "retained" in the commit message.
   reference order, and parsed effects feeding multiple-update checking. Default
   tests pass (core 0.009s). P2.6 remains open for Quint/type entry points; effect
   signature parsing is now usable by later builtin-signature work.
+
+- 2026-11-02: Adapted the full upstream Quint grammar's four TypeScript diagnostic
+  actions and rule argument syntax for Go; `pkg/grammar/adapt.py` reproduces the
+  adaptation from the reference grammar and asserts every replacement matches.
+  Generated the full Go lexer/parser/listener/visitor using ANTLR 4.13.2, package
+  quintparser, from pkg/grammar/Quint.g4. Tests cover arithmetic, assignments,
+  variants/matches, imports/records, malformed declarations, and preserved QNT006,
+  QNT008, QNT009 diagnostics. All default tests pass; parser execution 0.022s.
+  P2.1 remains open for automated generator integrity/version checks. P2.3/P2.4
+  require parse-tree-to-IR conversion before they can be marked complete.
