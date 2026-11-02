@@ -839,3 +839,12 @@ Fixed template generation emits both normalized and raw-ID fixtures. New
 provenance tests also compare all ten saved raw upstream inference cases and
 mutate constructor/node IDs across calls and concurrent workers. Only the
 standalone no-source ParseType API intentionally removes IDs.
+
+Native `backend/tlc` tests execute the actual Go checker for exhaustive safe,
+initial/reachable violation, deadlock, multiple-invariant, concrete trace and
+configuration paths. Default regressions contaminate native DFID/continuation
+settings to prevent false safety and verify restoration; optional
+`QUINT_CORPUS_TESTS=1` cases add generated Quint/TLA checks and cancellation
+fanout. Deadline tests require incomplete/error after expiry without claiming
+hard preemption during synchronous tool preparation. Focused race checks cover
+ownership, global restoration and cancellation. No Java, Scala or JAR runs.

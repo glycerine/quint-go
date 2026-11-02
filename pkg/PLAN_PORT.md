@@ -124,7 +124,7 @@ reporting that evaluates expressions will also depend on P7.
 - [ ] P0.7 Compare accepted JSON envelopes, types, opcodes, and configuration
   fields against this Quint revision. Record importer gaps and deliberate
   rejections with fixtures; do not infer full compatibility from an API name.
-- [ ] P0.8 Decide the TLC backend path: assess the existing Go `tlago/tlc`
+- [x] P0.8 Decide the TLC backend path: assess the existing Go `tlago/tlc`
   implementation for reuse, or document a separate optional external TLC
   mode. Do not retain an implicit Scala Apalache/JAR download dependency.
 
@@ -619,6 +619,9 @@ TypeScript or Rust evaluator process.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.
+  - [x] Native Go TLC finite-state safety adapter, Go TLA generation, embedded
+    Variants module, configuration, exhaustive outcomes and concrete TLA traces.
+  - [ ] Temporal/ITF output, full native semantic parity and hard preemption.
 - [ ] P9.9 Replace Scala version/download/launch behavior. Define Go backend
   selection/version reporting and the treatment of legacy endpoint/version
   flags; test Go gRPC compatibility if endpoint mode is retained.
@@ -3101,3 +3104,14 @@ word "retained" in the commit message.
   static lookups still avoid parser startup. Standalone ParseType continues to
   omit IDs by contract; source type-application allocation order is a separate
   parser audit. No annotation-propagation change was needed.
+
+- 2026-11-02: Added a native tlago/tlc adapter using Go Apalache TLA output and
+  embedded Variants support. Exhaustive safety, deadlocks, multiple invariants,
+  concrete traces, config/errors and concurrent-call ownership are tested.
+  Independent review found inherited DFID/continuation modes could falsely report
+  safety; regressions now force BFS, reject probabilistic sampling, inspect error
+  events and restore native runner settings. Default adapter tests pass 0.117s;
+  optional source/cancellation corpus and targeted races pass. Deadlines cover
+  printing and enumeration cooperatively; synchronous preparation/single builtins
+  may exceed them and still return incomplete/error. Temporal/ITF output, hard
+  preemption and native resolver-directory cleanup remain dependency audit items.
