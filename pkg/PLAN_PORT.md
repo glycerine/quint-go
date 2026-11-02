@@ -357,8 +357,11 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     small-map diagnostic ordering through pure evaluation with upstream cases.
   - [ ] Immutable.js large-map traversal and source-order retention through
     every nested collection operation; higher-order map operations.
-  - [ ] Remaining collections/higher-order/symbolic operations and JavaScript
-    Number coercion/error formatting audit for extreme sequence indices.
+  - [x] JavaScript Number coercion/error formatting for extreme sequence
+    indices, including rounding, exponent cutoffs, and signed Infinity.
+  - [x] Preserve nested map source order through strict sequence/record access
+    and updates, including duplicate-record-field replacement.
+  - [ ] Remaining collections/higher-order/symbolic operations.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
   updates, action composition, enabled/disabled actions, rollback, and commit.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
@@ -2233,3 +2236,16 @@ word "retained" in the commit message.
   Full default tests pass (combined package execution 1.001s, approximately the
   one-second target). Large-map hash-trie ordering, order retention through all
   nested collection operations, and higher-order map operations remain open.
+
+- 2026-11-02: Closed the strict sequence-index compatibility gap: indices now
+  undergo the reference's binary64 conversion before tuple offset arithmetic
+  and bounds checks. Diagnostic numbers match JavaScript decimal/exponent
+  cutoffs and signed Infinity. Sequence/record access and updates now retain
+  owned source expressions instead of canonical display order, preserving
+  nested map key order in missing-key diagnostics. Record access searches last
+  duplicate field first, retaining last-value semantics during updates.
+  Expanded the upstream sequence corpus from 35 to 77 cases with rounded indices
+  beyond 2^53, 10^20/10^21 notation boundaries, signed 401-digit inputs, nested
+  map access through every strict sequence/record path, and duplicate fields.
+  Full default tests pass (combined package execution 0.997s). Large-map
+  hash-trie traversal and remaining higher-order/symbolic operations stay open.

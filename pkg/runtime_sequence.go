@@ -1,8 +1,9 @@
 package quint
 
 import (
+	"encoding/json"
 	"fmt"
-	"math/big"
+	"math"
 )
 
 func sequenceBuiltinArity(op string) int {
@@ -18,7 +19,7 @@ func sequenceBuiltinArity(op string) int {
 }
 
 // EvalSequenceBuiltin evaluates strict sequence/tuple/record operations on owned
-// runtime values. Indexing uses exact integers; tuple positions start at one,
+// runtime values. Indexing follows JavaScript Number conversion; tuple positions start at one,
 // while list positions and slice endpoints start at zero.
 func EvalSequenceBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 	fail := func(code, message string) (RuntimeValue, error) {
@@ -47,7 +48,7 @@ func EvalSequenceBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 	if args[0].expression.Kind != "app" || args[0].expression.Opcode != expected {
 		return fail("QNT501", op+" requires a "+expected+" value")
 	}
-	e := args[0].Expression()
+	e := copyRuntimeExpression(args[0].source)
 	elems := e.Args
 	makeValue := func(op string, elems []Expr) (RuntimeValue, error) {
 		return NewRuntimeValue(Expr{Kind: "app", Opcode: op, Args: elems})
@@ -64,12 +65,12 @@ func EvalSequenceBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 			return fail("QNT501", op+" requires a string field")
 		}
 		name := args[1].expression.Str
-		for i := 0; i < len(elems); i += 2 {
+		for i := len(elems) - 2; i >= 0; i -= 2 {
 			if elems[i].Str == name {
 				if op == "field" {
 					return NewRuntimeValue(elems[i+1])
 				}
-				elems[i+1] = args[2].expression
+				elems[i+1] = args[2].source
 				return makeValue("Rec", elems)
 			}
 		}
@@ -91,42 +92,54 @@ func EvalSequenceBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 		}
 		return makeValue("List", elems[1:])
 	case "append":
-		return makeValue("List", append(elems, args[1].expression))
+		return makeValue("List", append(elems, args[1].source))
 	case "concat":
 		if args[1].expression.Kind != "app" || args[1].expression.Opcode != "List" {
 			return fail("QNT501", "concat requires List values")
 		}
-		return makeValue("List", append(elems, args[1].expression.Args...))
+		return makeValue("List", append(elems, args[1].source.Args...))
 	}
 	if args[1].expression.Kind != "int" {
 		return fail("QNT501", op+" requires integer indices")
 	}
-	index := args[1].expression.Int.Big()
+	index, _ := args[1].expression.Int.Big().Float64()
 	if op == "item" {
-		index.Sub(index, big.NewInt(1))
+		index--
 	}
-	valid := index.IsInt64() && index.Sign() >= 0 && index.Int64() < int64(len(elems))
+	valid := index >= 0 && index < float64(len(elems))
 	switch op {
 	case "item", "nth":
 		if !valid {
-			return fail("QNT510", "Out of bounds, nth("+index.String()+")")
+			return fail("QNT510", "Out of bounds, nth("+runtimeNumberString(index)+")")
 		}
-		return NewRuntimeValue(elems[int(index.Int64())])
+		return NewRuntimeValue(elems[int(index)])
 	case "replaceAt":
 		if !valid {
-			return fail("QNT510", "Out of bounds, replaceAt("+index.String()+")")
+			return fail("QNT510", "Out of bounds, replaceAt("+runtimeNumberString(index)+")")
 		}
-		elems[int(index.Int64())] = args[2].expression
+		elems[int(index)] = args[2].source
 		return makeValue("List", elems)
 	case "slice":
-		if args[2].expression.Kind != "int" {
+		if args[2].source.Kind != "int" {
 			return fail("QNT501", "slice requires integer indices")
 		}
-		end := args[2].expression.Int.Big()
-		if index.Sign() < 0 || index.Cmp(end) > 0 || !end.IsInt64() || end.Int64() > int64(len(elems)) {
-			return fail("QNT506", fmt.Sprintf("slice(..., %s, %s) applied to a list of size %d", index, end, len(elems)))
+		end, _ := args[2].source.Int.Big().Float64()
+		if index < 0 || index > end || end > float64(len(elems)) {
+			return fail("QNT506", fmt.Sprintf("slice(..., %s, %s) applied to a list of size %d", runtimeNumberString(index), runtimeNumberString(end), len(elems)))
 		}
-		return makeValue("List", elems[int(index.Int64()):int(end.Int64())])
+		return makeValue("List", elems[int(index):int(end)])
 	}
 	panic("unreachable sequence builtin")
+}
+
+// JSON's float formatting uses the same decimal/exponent cutoffs as JavaScript.
+func runtimeNumberString(n float64) string {
+	if math.IsInf(n, 1) {
+		return "Infinity"
+	}
+	if math.IsInf(n, -1) {
+		return "-Infinity"
+	}
+	encoded, _ := json.Marshal(n)
+	return string(encoded)
 }
