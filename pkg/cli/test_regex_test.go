@@ -30,10 +30,8 @@ func TestJavaScriptRegexReference(t *testing.T) {
 		t.Fatal(err)
 	}
 	unsupported := map[string]bool{
-		"pattern_045": true, // JavaScript nested character class, not subtraction.
 		"pattern_079": true, "pattern_080": true, "pattern_081": true,
 		"pattern_082": true, "pattern_083": true, "pattern_085": true,
-		"pattern_086": true, "pattern_109": true, // Non-ASCII/escaped capture names.
 	}
 	for _, fixture := range fixtures {
 		t.Run(fixture.Name, func(t *testing.T) {
@@ -122,7 +120,7 @@ func TestTestCommandJavaScriptRegexSelection(t *testing.T) {
 	if err := json.Unmarshal(data, &fixtures); err != nil {
 		t.Fatal(err)
 	}
-	names := []string{"a", "b", "aba", "abb", "abc", "Afoo", "foo", "Test", "fooTest"}
+	names := []string{"a", "aa", "b", "aba", "abb", "abc", "Afoo", "foo", "Test", "fooTest"}
 	var source strings.Builder
 	source.WriteString("module M {")
 	for _, name := range names {
@@ -130,7 +128,7 @@ func TestTestCommandJavaScriptRegexSelection(t *testing.T) {
 	}
 	source.WriteByte('}')
 	for _, fixture := range fixtures {
-		if !slices.Contains([]string{"default_suffix", "pattern_001", "pattern_002", "pattern_009", "pattern_014", "pattern_020", "pattern_055", "pattern_058"}, fixture.Name) {
+		if !slices.Contains([]string{"default_suffix", "pattern_001", "pattern_002", "pattern_009", "pattern_014", "pattern_020", "pattern_055", "pattern_058", "pattern_086", "pattern_109", "pattern_165", "pattern_204", "pattern_210", "pattern_211"}, fixture.Name) {
 			continue
 		}
 		t.Run(fixture.Name, func(t *testing.T) {

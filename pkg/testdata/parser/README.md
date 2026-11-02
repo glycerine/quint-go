@@ -974,9 +974,8 @@ actual payload objects and allocation identity are preserved.
 `cli/testdata/test_regex.json` saves 160 actual upstream isMatchingTest patterns
 and 9230 outcomes from `cli/test_regex_fixtures.cjs`. The native Go regexp2
 adapter preserves JavaScript captures, identity escapes and UTF-16 patterns;
-default tests cover CLI selection and error-before-execution behavior. Escaped/
-Unicode capture names, nested class syntax and capture-reset-dependent nested
-backreferences remain explicit rejections. Definition names are ASCII. Matching
+default tests cover CLI selection and error-before-execution behavior. Unicode/escaped capture names and JavaScript class syntax now have expanded
+coverage; capture-reset-dependent nested backreferences remain explicit rejections. Definition names are ASCII. Matching
 has a 25ms engine budget with a coarse timer (about 200ms observed cancellation
 latency), checked context before/after, and no Node/runtime process dependency.
 
@@ -1028,3 +1027,9 @@ allocation bound instead of claiming reference resource parity. Matching generat
 live in grammar/. The existing opt-in 29-case inferrer suite now compares raw type
 IDs too. Duplicate alias parameters consume fresh names for every occurrence but
 use ordered first-position/last-value parameter entries, matching TypeScript Map.
+The matcher corpus now has 240 patterns and 15,400 outcomes over 88 ASCII names.
+Unicode/escaped capture identifiers are canonicalized with exact duplicate checks;
+JavaScript flat classes and Annex B ranges translate without .NET class semantics.
+Independent bounded audits compare 613,200 class cases and all 1,114,112 Unicode
+codepoints against the actual Node runtime. Repeated nested capture references
+still reject where the engines reset capture history differently.

@@ -570,8 +570,9 @@ including failed actions that must not leak partially updated state.
   - [x] Native Go ECMAScript matcher with lookaround, backreferences, named
     captures, UTF-16 pattern translation and bounded matching; 160 actual
     upstream patterns and 9230 matching outcomes, plus CLI selections.
-  - [ ] Remaining regex limits (Unicode/escaped capture names, nested class
-    syntax and capture-reset-dependent references), execution-frame display
+  - [x] Unicode/escaped capture names and JavaScript character-class grammar,
+    verified with 240 fixtures and independent class/Unicode audits.
+  - [ ] Capture-reset-dependent regex references, execution-frame display
     and richer user-facing assertion reports.
 - [ ] P8.3 Preserve trace hooks, action names, nondeterministic picks, debug
   metadata, and output filename templates used in model-based testing.
@@ -3330,3 +3331,11 @@ word "retained" in the commit message.
   Focused69 new plus29 existing cases pass0.077s. Actual TypeScript allocates a
   1,000,002-field tuple prefix; Go's explicit allocation bound remains a documented
   resource policy. Wider generator/example parity is still open.
+
+- 2026-11-02: Closed Unicode/escaped regex capture-name and JavaScript class
+  grammar gaps. Expanded actual TypeScript corpus has240 patterns/15,400 outcomes;
+  independent613,200 class comparisons and all1,114,112 Unicode codepoints match.
+  Names preserve lexical capture numbering and exact canonical-duplicate errors;
+  class translation preserves Annex B ranges while avoiding .NET-only semantics.
+  Focused tests0.236s and races1.368s pass, with class helpers100% coverage.
+  Repeated nested capture references remain the explicit semantic limit.

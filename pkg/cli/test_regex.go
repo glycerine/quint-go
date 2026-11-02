@@ -74,7 +74,6 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 	reset := map[int]bool{}
 	references := []testRegexReference{}
 	captures := 0
-	inClass := false
 	hasNamedCapture := testRegexHasNamedCapture(pattern)
 	addReference := func(start, end int, name string) {
 		var open []int
@@ -95,7 +94,7 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 			escape := pattern[i+1]
 			i += 2
 			switch {
-			case escape >= '1' && escape <= '9' && !inClass:
+			case escape >= '1' && escape <= '9':
 				begin := i - 1
 				for i < len(pattern) && pattern[i] >= '0' && pattern[i] <= '9' {
 					i++
@@ -103,7 +102,7 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 				out.WriteByte('\\')
 				out.WriteString(pattern[begin:i])
 				addReference(start, out.Len(), pattern[begin:i])
-			case escape == 'k' && !inClass:
+			case escape == 'k':
 				if !hasNamedCapture {
 					out.WriteString(`\x6b`)
 					break
@@ -121,7 +120,7 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 				out.WriteString(`\x6b`)
 				addReference(start, out.Len(), "k!")
 			case escape == 'c':
-				if i < len(pattern) && (testRegexASCIIAlpha(pattern[i]) || inClass && (pattern[i] == '_' || pattern[i] >= '0' && pattern[i] <= '9')) {
+				if i < len(pattern) && testRegexASCIIAlpha(pattern[i]) {
 					fmt.Fprintf(&out, `\x%02x`, pattern[i]%32)
 					i++
 				} else {
@@ -162,22 +161,14 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 			i += size
 			continue
 		}
-		if inClass {
-			if c == '[' {
-				return "", unsupported("nested character classes and class subtraction are not supported")
-			}
-			out.WriteByte(c)
-			i++
-			if c == ']' {
-				inClass = false
-			}
-			continue
-		}
 		switch c {
 		case '[':
-			inClass = true
-			out.WriteByte(c)
-			i++
+			class, end, err := testRegexTranslateClass(pattern, i)
+			if err != nil {
+				return "", invalid(err.Error())
+			}
+			out.WriteString(class)
+			i = end
 		case '(':
 			group := testRegexGroup{firstCapture: captures + 1}
 			i++
@@ -208,11 +199,8 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 							return "", invalid("unterminated capture name")
 						}
 						end += i
-						name := pattern[i:end]
-						if !testRegexCaptureName(name) {
-							if strings.Contains(name, `\`) || !testRegexASCII(name) {
-								return "", unsupported("escaped and Unicode capture names are not supported")
-							}
+						name, valid := testRegexCaptureName(pattern[i:end])
+						if !valid {
 							return "", invalid("invalid capture name")
 						}
 						if _, exists := named[name]; exists {
@@ -253,7 +241,7 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 			i++
 		}
 	}
-	if inClass || len(groups) != 0 {
+	if len(groups) != 0 {
 		return "", invalid("unterminated character class or group")
 	}
 	translated := out.String()
@@ -267,16 +255,16 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 				return "", invalid("malformed named capture reference")
 			}
 		} else if name, namedReference := strings.CutPrefix(reference.name, "k:"); namedReference {
-			if len(named) == 0 {
-				replacement = `\x6b<` + name + ">"
-			} else {
-				var exists bool
-				n, exists = named[name]
-				if !exists {
-					return "", invalid("reference to unknown capture name")
-				}
-				replacement = fmt.Sprintf(`(?:\%d)`, n)
+			name, valid := testRegexCaptureName(name)
+			if !valid {
+				return "", invalid("invalid capture reference name")
 			}
+			var exists bool
+			n, exists = named[name]
+			if !exists {
+				return "", invalid("reference to unknown capture name")
+			}
+			replacement = fmt.Sprintf(`(?:\%d)`, n)
 		} else {
 			n, _ = strconv.Atoi(reference.name)
 			if n > captures {
@@ -332,25 +320,6 @@ func testRegexHasNamedCapture(pattern string) bool {
 	return false
 }
 
-func testRegexASCII(s string) bool {
-	for _, c := range s {
-		if c > 127 {
-			return false
-		}
-	}
-	return true
-}
-func testRegexCaptureName(s string) bool {
-	if s == "" || !(testRegexASCIIAlpha(s[0]) || s[0] == '_' || s[0] == '$') {
-		return false
-	}
-	for i := 1; i < len(s); i++ {
-		if !(testRegexASCIIAlpha(s[i]) || s[i] == '_' || s[i] == '$' || s[i] >= '0' && s[i] <= '9') {
-			return false
-		}
-	}
-	return true
-}
 func testRegexHex(s string) bool {
 	for _, c := range s {
 		if !(c >= '0' && c <= '9' || c >= 'a' && c <= 'f' || c >= 'A' && c <= 'F') {

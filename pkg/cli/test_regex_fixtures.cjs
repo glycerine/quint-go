@@ -91,6 +91,80 @@ patterns.push(
 )
 inputs.push('aaa', 'aaaa', 'aaaaa', 'aaaaaa', 'aaaaaaa', 'aaaaaaaa')
 
+// Capture identifiers use Unicode ID_Start/ID_Continue (plus $, _, and
+// continuation-only join controls), even when the subjects are ASCII names.
+patterns.push(
+  String.raw`(?<π>a)(b)\1`,
+  String.raw`(?<\u03c0>a)\k<π>`,
+  String.raw`(?<\u03C0>a)\k<\u03c0>`,
+  String.raw`(?<\u{3c0}>a)\k<π>`,
+  String.raw`(?<π>a)\k<\u{3C0}>`,
+  String.raw`(?<𝒜>a)\k<𝒜>`,
+  String.raw`(?<\uD835\uDC9C>a)\k<𝒜>`,
+  String.raw`(?<\uD835\uDC9C>a)\k<\uD835\uDC9C>`,
+  String.raw`(?<\u{1D49C}>a)\k<\uD835\uDC9C>`,
+  String.raw`(?<𝒜>a)(b)\1`,
+  String.raw`(?<a\u200C>a)\k<a\u200C>`,
+  String.raw`(?<a\u200D>a)\k<a\u200D>`,
+  '(?<a\u200C>a)\\k<a\u200C>',
+  '(?<a\u200D>a)\\k<a\u200D>',
+  String.raw`(?<\u200Ca>a)`, String.raw`(?<\u200Da>a)`,
+  '(?<\u200Ca>a)', '(?<\u200Da>a)',
+  String.raw`(?<a\u0301>a)\k<a\u0301>`,
+  String.raw`(?<\u0301a>a)`,
+  String.raw`(?<x>a)(?<\u0078>b)`,
+  String.raw`(?<π>a)(?<\u03C0>b)`,
+  String.raw`(?<𝒜>a)(?<\uD835\uDC9C>b)`,
+  String.raw`(?<é>a)(?<e\u0301>b)\k<é>\k<e\u0301>`,
+  String.raw`(?<\uD835>a)`, String.raw`(?<\uDC9C>a)`,
+  String.raw`(?<\uD835\u0061>a)`,
+  String.raw`(?<\u{110000}>a)`, String.raw`(?<\u{D835}>a)`,
+  String.raw`(?<\u{31}a>a)`, '(?<1a>a)',
+  String.raw`(?<a\u002Db>a)`, String.raw`(?<\x61>a)`,
+  String.raw`(?<\u061>a)`, String.raw`(?<\u{}>a)`,
+  String.raw`(?<\u{00000000000000000061}>a)\k<a>`,
+  String.raw`(?<$_1>a)\k<$_1>`,
+  String.raw`(?<℘>a)\k<℘>`, String.raw`(?<℮>a)\k<℮>`,
+  String.raw`(?<゛>a)\k<゛>`,
+  String.raw`(?<π>a)\k<\u006>`,
+  '(?<\uD835>a)', '(?<\uDC9C>a)',
+)
+
+// Nested '[' is a literal in flagless JS classes; .NET subtraction/Posix
+// syntax must not change their interpretation or legacy escape range ends.
+patterns.push(
+  '[[]', '[[a]', '[[:alpha:]]', '[a-z-[a]', '[a-z-[a]]',
+  '[a-[]', '[a--c]', String.raw`[\w-a]`, String.raw`[a-\w]`,
+  String.raw`[\w-\d]`, String.raw`[a-\w-z]`, String.raw`[\w--a]`,
+)
+inputs.push('[', ']', 'a]', 'b]', '[a', '-')
+
+// Fixed-width escaped surrogate pairs form an identifier code point, but
+// a brace escape denoting either surrogate is invalid before any pairing.
+patterns.push(
+  String.raw`(?<\u{D835}\uDC9C>a)`,
+  String.raw`(?<\uD835\u{DC9C}>a)`,
+  String.raw`(?<\u{D835}\u{DC9C}>a)`,
+)
+
+// Exercise every class-atom escape through the real helper, including the
+// ASCII controls those escapes denote and malformed class/name boundaries.
+patterns.push(
+  String.raw`[\b]`, String.raw`[\f]`, String.raw`[\n]`,
+  String.raw`[\r]`, String.raw`[\t]`, String.raw`[\v]`,
+  String.raw`[\u0061]`, String.raw`[\x61]`,
+  String.raw`[\uZZZZ]`, String.raw`[\xZZ]`,
+  String.raw`[\400]`, String.raw`[\777]`,
+  String.raw`[\08]`, String.raw`[\9]`,
+  '[', '[a-', '[\\', '(?<>a)', String.raw`(?<\u{61>a)`,
+)
+inputs.push(...[8, 12, 10, 13, 9, 11, 0, 31].map(code => String.fromCharCode(code)),
+  ' ', '\\', '0')
+
+// U+2E2F is a modifier letter excluded by Pattern_Syntax from Unicode
+// identifiers; the exclusion applies at both identifier positions.
+patterns.push('(?<ⸯ>a)', '(?<aⸯ>a)', '[a-' + String.fromCharCode(92))
+
 const names = [...new Set(inputs)]
 const fixtures = ['', ...new Set(patterns)].map((pattern, index) => {
   const fixture = {
