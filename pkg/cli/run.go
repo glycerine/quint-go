@@ -312,6 +312,11 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 	if err != nil {
 		return fail(err)
 	}
+	var recorder *quint.TraceRecorder
+	if o.out == "" && o.verbosity >= 3 {
+		recorder = quint.NewTraceRecorder(o.verbosity, evaluator.RNG, o.traces)
+		ctx = quint.WithExecutionListener(ctx, recorder)
+	}
 	started := time.Now()
 	outcome, err := evaluator.Simulate(ctx, quint.SimulationOptions{Init: "q::init", Step: "q::step", Invariant: "q::inv", Witnesses: witnessNames, MaxSamples: o.maxSamples, MaxSteps: o.maxSteps, NumberOfTraces: o.traces})
 	if err != nil {
@@ -357,8 +362,7 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 		}
 	} else {
 		if o.verbosity >= 2 && len(serializedTraces) > 0 && len(serializedTraces[0]) > 0 {
-			fmt.Fprint(stdout, "An example execution:\n\n")
-			if err = runPrintTrace(stdout, serializedTraces[0], o.hide); err != nil {
+			if err = executionPrintCounterExample(ctx, stdout, o.verbosity, serializedTraces[0], executionBestFrames(recorder, ""), o.hide, hashes); err != nil {
 				return fail(err)
 			}
 		}

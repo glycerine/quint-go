@@ -200,7 +200,9 @@ func testPrepareEvaluator(ctx context.Context, front quint.FrontendResult, main 
 			}
 			selections[j].entry = name
 			reference := quint.Expr{ID: front.IDs.Next(), Kind: "name", Name: selections[j].reference}
-			working[i].Declarations = append(working[i].Declarations, quint.Declaration{ID: id, Kind: "def", Qualifier: selections[j].definition.Declaration.Qualifier, Name: name, Expr: &reference})
+			// The selector must not claim action metadata or add a synthetic
+			// action frame before the selected source definition is evaluated.
+			working[i].Declarations = append(working[i].Declarations, quint.Declaration{ID: id, Kind: "def", Qualifier: quint.Run, Name: name, Expr: &reference})
 		}
 	}
 	linked, err := quint.ResolveLinkedModules(working)
@@ -399,6 +401,13 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	if options.out != "" {
 		verbosity = 0
 	}
+	var recorder *quint.TraceRecorder
+	var recordedFrames [][]quint.ExecutionFrame
+	if verbosity >= 3 {
+		recorder = quint.NewTraceRecorder(verbosity, evaluator.RNG)
+		ctx = quint.WithExecutionListener(ctx, recorder)
+		recordedFrames = make([][]quint.ExecutionFrame, 0, len(selections))
+	}
 	start := time.Now()
 	if verbosity > 0 {
 		fmt.Fprintf(stdout, "\n  %s\n", main)
@@ -419,6 +428,9 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 			}
 		}
 		results = append(results, result)
+		if recorder != nil {
+			recordedFrames = append(recordedFrames, executionBestFrames(recorder, selection.entry))
+		}
 		switch result.Status {
 		case "passed":
 			passed = append(passed, result.Name)
@@ -466,28 +478,22 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 		}
 	}
 	if verbosity >= 2 && len(failed) > 0 {
-		fmt.Fprintln(stdout)
-		number := 0
+		details := make([]executionTestFailure, 0, len(failed))
 		for index, result := range results {
 			if result.Status == "failed" {
-				for _, diagnostic := range result.Errors {
-					number++
-					fmt.Fprintf(stdout, "  %d) %s:\n", number, result.Name)
-					for _, line := range strings.Split(quint.RenderDiagnostic(diagnostic, front.Sources, code), "\n") {
-						if strings.TrimSpace(line) != "" {
-							fmt.Fprintf(stdout, "      %s\n", line)
-						}
-					}
-					// Discovery matches unqualified names; replay keeps this
-					// distinction even when result names include namespaces.
-					fmt.Fprintf(stdout, "    Use --seed=0x%s --match=^%s$ --backend=go to repeat.\n", result.Seed.Big().Text(16), selections[index].definition.Name)
+				failure := executionTestFailure{Name: result.Name, Seed: result.Seed,
+					Repeat: fmt.Sprintf("Use --seed=0x%s --match=^%s$ --backend=go to repeat.", result.Seed.Big().Text(16), selections[index].definition.Name)}
+				if recorder != nil {
+					failure.Frames = recordedFrames[index]
 				}
+				for _, diagnostic := range result.Errors {
+					failure.Messages = append(failure.Messages, quint.ResolveDiagnostic(front.Sources, diagnostic))
+				}
+				details = append(details, failure)
 			}
 		}
-		fmt.Fprintln(stdout)
-		if verbosity < 3 {
-			fmt.Fprintln(stdout, "\n  Use --verbosity=3 to show executions.")
-			fmt.Fprintf(stdout, "  Further debug with: quint test --verbosity=3 %s\n", options.input)
+		if err := executionPrintTestErrors(ctx, stdout, verbosity, options.input, code, details, evaluator.ObjectHashState()); err != nil {
+			return fail(err)
 		}
 	}
 	if len(failed) > 0 {

@@ -112,39 +112,59 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 	pending := ""
 	braces, parens, comments := 0, 0, 0
 	recycling := false
-	renderResult := func(result quint.REPLResult) {
+	renderResult := func(result quint.REPLResult) error {
 		switch result.Kind {
 		case "declaration":
 			out("\n")
 		case "value":
 			formatted, err := session.FormatValueContext(ctx, result.Value, 80)
 			if err != nil {
-				report(err)
-				return
+				return err
 			}
 			out(formatted + "\n")
 			if len(result.Missing) > 0 {
 				out("[warning] some variables are undefined: " + strings.Join(result.Missing, ", ") + "\n")
 			}
 		}
+		return writeErr
 	}
 	evaluate := func(text string) {
-		result, err := session.Evaluate(ctx, text)
+		evaluationContext, recorder, err := executionREPLContext(ctx, session, level)
 		if err != nil {
 			report(err)
 			return
 		}
-		renderResult(result)
+		result, evaluationError := session.Evaluate(evaluationContext, text)
+		if evaluationError == nil {
+			if err := renderResult(result); err != nil {
+				report(err)
+				return
+			}
+		}
+		if err := executionPrintREPLFrames(ctx, stdout, session, recorder); err != nil {
+			report(err)
+			return
+		}
+		if evaluationError != nil {
+			report(evaluationError)
+		}
 	}
-	replayHooks := func() quint.REPLReplayHooks {
-		return replReplayOutput(func() int { return level }, out, report, renderResult, &writeErr)
+	replay := func(filename, main string, reload bool) error {
+		replayContext, hooks, err := executionREPLReplay(ctx, session, func() int { return level }, out, stdout, report, renderResult, &writeErr)
+		if err != nil {
+			return err
+		}
+		if reload {
+			return session.ReloadWithReplay(replayContext, hooks)
+		}
+		return session.LoadWithReplay(replayContext, filename, main, hooks)
 	}
 	if options.Require != "" {
 		file, main := options.Require, options.Main
 		if i := strings.LastIndex(file, "::"); i >= 0 {
 			main, file = file[i+2:], file[:i]
 		}
-		if err := session.LoadWithReplay(ctx, file, main, replayHooks()); err != nil {
+		if err := replay(file, main, false); err != nil {
 			report(err)
 			return 1
 		}
@@ -206,12 +226,12 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 					if len(fields) == 3 {
 						main = fields[2]
 					}
-					if err := session.LoadWithReplay(ctx, fields[1], main, replayHooks()); err != nil {
+					if err := replay(fields[1], main, false); err != nil {
 						report(err)
 					}
 				}
 			case ".reload":
-				if err := session.ReloadWithReplay(ctx, replayHooks()); err != nil {
+				if err := replay("", "", true); err != nil {
 					report(err)
 				}
 			case ".state":

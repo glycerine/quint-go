@@ -522,7 +522,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     arbitrary init/step/invariant expressions through shared simulation.
   - [x] Execution recorder callbacks through expression, test and simulation
     drivers, including saved closures invoked under later listener contexts.
-  - [ ] Remaining model-based-testing metadata and CLI frame presentation audit.
+  - [x] CLI captured-frame presentation for verbose run, failed tests and REPL,
+    including checked compact values, replay isolation and writer errors.
+  - [ ] Remaining model-based-testing metadata audit.
 - [ ] P7.8 Port RNG state, seed parsing, counter arithmetic, and sampling.
   Choose and document the reference backend for seed-exact reproduction;
   compare RNG vectors and collection traversal order, not just repeatability.
@@ -575,16 +577,17 @@ including failed actions that must not leak partially updated state.
     upstream patterns and 9230 matching outcomes, plus CLI selections.
   - [x] Unicode/escaped capture names and JavaScript character-class grammar,
     verified with 240 fixtures and independent class/Unicode audits.
-  - [ ] Capture-reset-dependent regex references, execution-frame display
-    and richer user-facing assertion reports.
+  - [x] Captured execution frames and richer assertion source/error reports at
+    verbosity levels zero through five, with actual command comparisons.
+  - [ ] Capture-reset-dependent regex references and remaining terminal audit.
 - [ ] P8.3 Preserve trace hooks, action names, nondeterministic picks, debug
   metadata, and output filename templates used in model-based testing.
 - [x] P8.4 Implement REPL multiline input, commands, load/reload, incremental
   definitions and analysis, evaluation, state display, history, and quiet mode.
   - [x] Save source snapshots and accepted expression history, load/reload with
     replay, raw line endings, selected-module markers and safe round trips.
-  - [ ] Execution frames/value diffs, and
-    interruption of caller-owned blocked input readers.
+  - [x] Verbose captured execution frames, including loaded/replayed expressions.
+  - [ ] State value diffs and interruption of caller-owned blocked input readers.
 - [ ] P8.5 Add cancellation and bounded resource controls. Where concurrent
   simulation is exposed, isolate RNG/state/cache ownership and define result
   ordering and reproducibility across worker counts.
@@ -3376,3 +3379,12 @@ word "retained" in the commit message.
   state. Independent review executes four typechecked programs and finds no
   blocker; targeted race2.261s, vet and focused0.175s pass. Broad unlike-constructor
   fallback remains an explicit P7.1 audit, separate from typed collection support.
+
+- 2026-11-02: Wired captured frames into verbose run, failed-test reports and
+  REPL evaluation/replay, enabling recording only when console verbosity needs it.
+  Sixty-six upstream transcripts plus15 actual command checks cover levels0–5,
+  source/error ordering, loaded-session isolation and compact values. Checked
+  renderers share object history, cancellation and writer-failure handling.
+  Focused core0.060s/CLI0.105s and races1.197s/1.304s pass; functional helpers and
+  public REPL APIs have100% coverage. State diffs and terminal/color/banner parity
+  remain separate, and Go replay hints keep the explicit native backend.

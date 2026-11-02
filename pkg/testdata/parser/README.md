@@ -1065,3 +1065,12 @@ symmetric and agrees with canonical HashContext. Memo state is atomic and owned
 by value allocation; no global history is introduced. Four unlike-constructor
 counterexamples remain separate pending evidence. Independent typechecked source
 review and targeted races pass; context entry APIs have 100% coverage.
+
+`cli_execution_frames.json` saves 66 upstream transcripts: 24 run reports,
+24 failed-test reports and 18 REPL frame blocks at verbosity zero through five.
+Its matching grammar generator captures actual frames; default tests add 15
+real run/test command comparisons, replay isolation/error ordering, compact values,
+cancellation and writer failures. Test replay hints preserve Go-specific backend
+flags as an explicit adaptation. Recording activates only for verbose console
+paths, and checked serialization shares evaluator object history. REPL state diffs,
+terminal colors and full banner/width parity remain separate work.
