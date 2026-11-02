@@ -1743,3 +1743,10 @@ word "retained" in the commit message.
   and source isolation. Default tests pass (combined execution 0.724s).
   Cyclic input receives an explicit error rather than upstream recursion;
   exact dependency fixtures and complete module/export expansion remain open.
+
+- 2026-11-02: Added four exact upstream flattening-dependency fixtures covering
+  local/global references, repeated calls, namespaced imports, and instance
+  deferral. They exposed missing import provenance on collected definitions;
+  hidden/namespaces/importedFrom fields are now retained. Entire declaration
+  arrays match without normalization. Default tests pass (combined execution
+  0.727s). Full module/export expansion remains open under P6.1.

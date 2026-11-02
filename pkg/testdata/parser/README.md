@@ -168,3 +168,6 @@ local action dependencies.
 
 `namespace.json` compares six complete namespaced definitions with upstream,
 including nested operators, preserved names, and type annotations.
+
+`flatten_dependencies.json` compares four upstream dependency collections,
+including declaration order, namespaced IR, and retained import metadata.

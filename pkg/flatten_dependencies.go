@@ -1,6 +1,7 @@
 package quint
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/glycerine/insdict"
 	"strings"
@@ -19,6 +20,12 @@ func DependentDefinitions(expression Expr, table *insdict.Dict[ID, LookupDefinit
 			return nil
 		}
 		d := *def.Declaration
+		if def.ImportedFrom != nil {
+			hidden := def.Hidden
+			d.Hidden = &hidden
+			d.Namespaces = append([]string{}, def.Namespaces...)
+			d.ImportedFrom, _ = json.Marshal(def.ImportedFrom)
+		}
 		if d.Kind == "def" && def.Depth > 0 {
 			return nil
 		}

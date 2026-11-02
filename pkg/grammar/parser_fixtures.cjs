@@ -485,3 +485,16 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/namespace.json'),JSONbig.st
  const input=parsed.modules[0].declarations[0]
  return {name,input,namespace,preserve,output:addNamespaceToDefinition(input,namespace,new Set(preserve))}
 }),null,2)+'\n')
+
+const {dependentDefinitions}=require(path.join(root,'quint/src/flattening/flattener'))
+const dependencyCases=[
+ ['plain',"module M { const c:int def f(x)=x+c val use=f(1)+f(2) }"],
+ ['namespace',"module A { const c:int def f(x)=x+c } module B { import A as I val use=I::f(1)+I::f(2) }"],
+ ['local',"module M { val use=def identity(x)=x; identity(1) }"],
+ ['instance',"module A { const c:int val a=c } module B { import A(c=1) as I val use=I::a }"],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/flatten_dependencies.json'),JSONbig.stringify(dependencyCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name),linked=resolveNames(parsed.modules)
+ const module=parsed.modules[parsed.modules.length-1],expr=module.declarations[module.declarations.length-1].expr
+ return {name,input:parsed.modules,expression:expr,output:dependentDefinitions(expr,linked.table)}
+}),null,2)+'\n')
