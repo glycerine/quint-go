@@ -186,11 +186,21 @@ func (u TypeUnifier) UnifyRows(a, b Row) ([]Substitution, *ErrorTree) {
 	}
 	shared := map[string]bool{}
 	left, right := []Type{}, []Type{}
-	for _, f := range a.Fields {
+	for index, f := range a.Fields {
 		for _, g := range b.Fields {
 			if f.Name == g.Name {
 				shared[f.Name] = true
-				left = append(left, f.Type)
+				// Upstream keeps every occurrence of a shared label, but its
+				// find() lookup uses the first field with that name on each side.
+				// This also applies to valid IR containing duplicate row labels.
+				first := f.Type
+				for _, prior := range a.Fields[:index] {
+					if prior.Name == f.Name {
+						first = prior.Type
+						break
+					}
+				}
+				left = append(left, first)
 				right = append(right, g.Type)
 				break
 			}

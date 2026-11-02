@@ -235,7 +235,8 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Bind type and row variables with separate occurs checks and copied substitutions.
   - [x] Compute free scheme variables and instantiate quantified variables in order.
   - [x] Compute scope free variables, expand solved bindings, and generalize new variables.
-  - [ ] Integrate scheme/generalization helpers with constraint-generation traversal.
+  - [x] Integrate scheme/generalization helpers with constraint-generation traversal;
+    local/top-level generation and the upstream inferrer suite cover both paths.
   - [x] Integrate binding checks with structural unification and substitution composition.
 - [ ] P4.2 Port constraint generation/solving for primitive, collection,
   function/operator, tuple, record, row-polymorphic, and sum types.
@@ -243,7 +244,8 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Compare initial type/row unification substitutions and errors exactly with upstream.
   - [x] Solve equality/conjunction/defined-type constraints and collect source-keyed errors.
   - [x] Compare initial constraint-solving substitutions and ordered diagnostics with upstream.
-  - [ ] Expand composition-failure coverage and integrate constraint generation.
+  - [x] Integrate constraint generation with ordered solving and inference.
+  - [ ] Expand remaining composition-failure coverage.
 - [ ] P4.3 Port type aliases, abstract types, type applications, parameter
   substitution, alias inlining, and recursive-alias rejection.
   - [x] Resolve outer aliases and recursively inline type-tree aliases by lookup ID.
@@ -252,7 +254,9 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Transform declaration annotations and alias bodies, including nested expressions.
   - [x] Transform lookup payloads in insertion order before declarations.
   - [x] Compare application expansion and arity errors with initial upstream fixtures.
-  - [ ] Validate remaining application cases and integrate with inferred type tables.
+  - [x] Integrate application/declaration resolution with inferred type tables;
+    replay all 29 cases from the upstream inferrer test suite.
+  - [ ] Validate broader example/application edge cases beyond the saved suite.
 - [ ] P4.4 Port every builtin type signature and special constraint; maintain
   an opcode-to-signature coverage table to catch omissions.
   - [x] Generate structural constraints for Rec, field, fieldNames, and with.
@@ -268,6 +272,9 @@ analysis, with reproducible errors for invalid module structures.
     failures; aggregate every invalid match case and record field in order.
 - [ ] P4.6 Compare inferred schemes modulo type-variable renaming and compare
   rejection cases against the upstream type suite and example corpus.
+  - [x] Replay the full 29-case upstream inferrer suite, comparing ordered
+    schemes/quantifiers, resolved declarations and errors (type-node IDs removed).
+  - [ ] Broader examples and Rust/reference-runtime disagreement audit.
 
 Exit gate: analyzed fixtures carry complete, consistent type tables, including
 the information required by Go Apalache's importer.
@@ -2965,3 +2972,13 @@ word "retained" in the commit message.
   compound-domain pending oracle records product/powerset/map-set cursor,
   empty-product and V8 resource exceptions without huge allocations; it is not
   counted as passing implementation coverage.
+
+- 2026-11-02: Matched duplicate row-label unification to upstream's first-label
+  lookup. Twelve source inference and 15 direct record/tuple/sum unification
+  cases compare ordered schemes, substitutions and errors without mutating
+  inputs (focused tests0.024s). The separate optional corpus now replays every
+  one of the 29 upstream inferrer test cases, including application-resolved
+  declarations (0.047s). This preserves the reference inconsistency where
+  typing selects the first duplicate record field while runtime construction
+  uses the last. Audited and checked existing generalization/generator/table
+  integration separately from broader remaining P4 parity work.
