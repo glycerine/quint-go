@@ -557,3 +557,11 @@ word "retained" in the commit message.
   first-name lookup semantics, and type/row cycles. Default tests pass (core
   0.007s). P4.1 remains open: constraint substitution, composition with unification,
   generalization, and instantiation are not yet implemented.
+
+- 2026-11-02: Added type constraints and recursive constraint substitution,
+  retaining arbitrary-precision source IDs. Constraint priority matches upstream
+  (empty, equality, conjunction, isDefined). Tests cover both equality operands,
+  nested conjunctions, defined-type checks, mutation isolation, identity cases,
+  and error propagation through every constraint variant. Default tests pass
+  (core 0.008s). Constraint generation/solving and substitution composition remain
+  open under P4.1/P4.2.
