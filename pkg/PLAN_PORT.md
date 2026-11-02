@@ -101,8 +101,8 @@ reporting that evaluates expressions will also depend on P7.
 
 ## P0 — Baseline, compatibility contract, and backend probe
 
-- [ ] P0.1 Record the Quint and Go Apalache commits, Go toolchain, dependency
-  versions, and commands used to build the reference implementations.
+- [x] P0.1 Record the Quint and Go Apalache commits, Go toolchain, dependency
+  versions, and commands used to build the reference implementations (BASELINE.md).
 - [ ] P0.2 Build a compatibility matrix covering every CLI command, flag,
   environment variable, builtin opcode, JSON field, error/status code, and
   editor feature. Distinguish language semantics from incidental formatting.
@@ -115,7 +115,7 @@ reporting that evaluates expressions will also depend on P7.
 - [ ] P0.4 Wire local development to `~/apalache/pkg` using a local workspace
   or development-only replacement; choose a pinned dependency version for
   reproducible builds without committing a machine-specific absolute path.
-- [ ] P0.5 Feed an existing flattened, typed Quint fixture through the Go
+- [x] P0.5 Feed an existing flattened, typed Quint fixture through the Go
   checker's importer, production checking path, and TLA output path. Establish
   safe, violating, and malformed-input cases without writing a new parser.
 - [x] P0.6 Inspect the Go checker's exported entry points and Shai implementation;
@@ -745,11 +745,18 @@ any remaining TypeScript client code is distinguished from language-server logic
 - [ ] P12.6 Add CI jobs that build and test the `pkg/` module with pinned
   dependencies, reproducible grammar generation, and supported OS/architecture
   targets. Keep reference-tool jobs separate from Go-only validation.
+  - [x] Isolated native verification script and manual CI accept an explicit
+    full checker SHA and build/test/vet without reference-tool dependencies.
+  - [ ] Publish/pin the checker revision before automatic CI and release builds;
+    complete reproducible grammar and platform matrix jobs.
 - [ ] P12.7 Package `cmd/quint`, embedded assets, licenses/notices, version
   metadata, installation instructions, and a migration/compatibility guide.
 - [ ] P12.8 Test from a clean environment without Node, Rust, Java, Scala,
   downloaded Scala Apalache, or repository-relative runtime assets for all
   default Go workflows. Document any explicitly optional external backend.
+  - [x] Native version/typecheck/run/test and LSP EOF smoke from outside both
+    source trees with PATH=/nonexistent; both binaries build with CGO disabled.
+  - [ ] Complete every default command/backend and platform in clean packaging.
 - [ ] P12.9 Run a final command/flag/builtin/schema/diagnostic/editor matrix
   audit. Link each completed area to validation evidence; list unresolved gaps
   and agreed exclusions before declaring the port complete.
@@ -3019,3 +3026,12 @@ word "retained" in the commit message.
   0.081s; public value/diff formatting APIs have 100% statement coverage. The
   renderer accepts captured frame trees; collecting them from execution remains
   separate work. Symbolic values and full terminal/color policy remain open.
+
+- 2026-11-02: Recorded exact source/checker/toolchain/reference-tool baselines
+  and added an isolated native build/test/vet script with 11 orchestration,
+  cleanup and failure tests. Manual CI accepts and verifies a full accessible
+  checker SHA. Both native commands build without CGo; out-of-tree tutorial
+  version/typecheck/run/test and LSP startup/EOF pass with PATH=/nonexistent.
+  The exact clean local checker commit cannot currently resolve from its public
+  module (unknown revision), so public module pinning and automatic release CI
+  remain open. No checker repository was pushed or modified.

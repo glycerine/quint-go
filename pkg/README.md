@@ -69,3 +69,8 @@ Default tests use saved upstream fixtures and run without the reference tools.
 The fixture manifest is in [testdata/parser/README.md](testdata/parser/README.md).
 The target is less than one second of combined package test execution, excluding
 compilation; heavier corpus, race, and solver checks are separate.
+
+[BASELINE.md](BASELINE.md) records exact tool and checker revisions. Run
+`bash scripts/verify-go.sh --checker /path/to/apalache-go` for an isolated native
+build, test and vet check; its manual CI workflow requires a fetchable checker
+commit. The current local checker revision is not yet published remotely.

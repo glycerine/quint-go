@@ -778,3 +778,12 @@ and frame trees; additional checks cover UTF-16 widths, styled decorators,
 invalid input, nested callable rejection and ownership. All consumers share one
 formatter engine. These fixtures cover rendering supplied frames rather than
 runtime frame capture, and concrete values rather than symbolic domains.
+
+Native packaging orchestration has 11 separate Python unit tests under
+`pkg/scripts/test_verify_go.py` (run with `python3 -m unittest discover -s
+pkg/scripts -p 'test_*.py'`). They use fake tool executables to check exact
+checker revision/cleanliness, isolated workspaces, readonly manifests, failure
+propagation and cleanup. Real build/test/vet and out-of-tree minimal-PATH
+tutorial/LSP checks use `pkg/scripts/verify-go.sh`; see `pkg/BASELINE.md`.
+These checks do not imply that the currently unpublished checker revision is a
+fetchable release dependency.

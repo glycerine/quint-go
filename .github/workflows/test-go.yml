@@ -1,0 +1,65 @@
+name: Verify Go port
+
+# The recorded checker commit is local and not yet fetchable from its public
+# module. Keep this manual until a published, compatible checker is pinned.
+on:
+  workflow_dispatch:
+    inputs:
+      checker_ref:
+        description: Accessible full 40-character glycerine/apalache-go commit SHA
+        required: true
+        type: string
+      corpus:
+        description: Also run the slower saved parser and solver corpora
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  native-go:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out Quint
+        uses: actions/checkout@v4
+        with:
+          path: quint-go
+          persist-credentials: false
+      - name: Check out explicitly selected Go checker
+        uses: actions/checkout@v4
+        with:
+          repository: glycerine/apalache-go
+          ref: ${{ inputs.checker_ref }}
+          path: apalache-go
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.3'
+          cache-dependency-path: |
+            quint-go/pkg/go.sum
+            apalache-go/pkg/go.sum
+      - name: Check validation script
+        run: python3 -m unittest discover -s quint-go/pkg/scripts -p 'test_*.py'
+      - name: Build, test, and vet native commands
+        env:
+          CHECKER_REF: ${{ inputs.checker_ref }}
+          QUINT_CORPUS_TESTS: ${{ inputs.corpus && '1' || '' }}
+        run: >-
+          bash quint-go/pkg/scripts/verify-go.sh
+          --checker "$GITHUB_WORKSPACE/apalache-go"
+          --checker-revision "$CHECKER_REF"
+          --output "$RUNNER_TEMP/quint-go-bin"
+      - name: Smoke native binaries outside source trees
+        run: |
+          mkdir -p "$RUNNER_TEMP/quint-go-smoke"
+          cp quint-go/examples/tutorials/hello.qnt "$RUNNER_TEMP/quint-go-smoke/hello.qnt"
+          cd "$RUNNER_TEMP/quint-go-smoke"
+          export PATH=/nonexistent
+          "$RUNNER_TEMP/quint-go-bin/quint" --version
+          "$RUNNER_TEMP/quint-go-bin/quint" typecheck hello.qnt
+          "$RUNNER_TEMP/quint-go-bin/quint" run hello.qnt --seed=42 --max-steps=3 --verbosity=0
+          "$RUNNER_TEMP/quint-go-bin/quint" test hello.qnt --seed=42
+          "$RUNNER_TEMP/quint-go-bin/quint-lsp" </dev/null
