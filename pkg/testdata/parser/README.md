@@ -1044,3 +1044,12 @@ TLA adds a named Variants instance only for real qualified references, with expl
 name-collision rejection. Export/reporting errors preserve definitive verdicts;
 explicit --out-itf fails unavailable export while report-only paths warn. Native
 integer/resource bounds and hard-preemption limits remain unchanged.
+
+`parse_fast_test.go` compares speculative SLL parsing with the unchanged LL
+syntax/reduction path on 19 default success/fallback scenarios and continued IDs.
+Optional comparisons cover 640 distinct saved module sources and all 197 repository
+.qnt files, in normal and recovering modes, with exact IR, IDs, both source maps,
+diagnostics and error rendering. No normalization is used. A private bail strategy
+and isolated listener discard speculative failures before a fresh LL recovery;
+semantic conversion allocates IDs only after syntax succeeds. Concurrent recovery
+race tests pass. Large benchmark inputs remain outside the default unit cases.

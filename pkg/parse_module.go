@@ -2,9 +2,9 @@ package quint
 
 import (
 	"fmt"
-	"github.com/antlr4-go/antlr/v4"
-	p "github.com/glycerine/quint-go/pkg/internal/quintparser"
 	"strings"
+
+	p "github.com/glycerine/quint-go/pkg/internal/quintparser"
 )
 
 // ParseModules performs syntax parsing and IR conversion only; imports, names,
@@ -13,18 +13,16 @@ func ParseModules(text string) ([]Module, error) {
 	return parseModulesWithIDs(text, NewIDGenerator())
 }
 
-func parseModulesWithIDs(text string, ids parserIDAllocator) (modules []Module, err error) {
+func parseModulesWithIDs(text string, ids parserIDAllocator) ([]Module, error) {
 	listener := newSyntaxErrors(text)
 	if recovery, ok := ids.(*recoveringParserIDs); ok {
 		listener.onIssue = recovery.syntaxIssue
 	}
-	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
-	lexer.RemoveErrorListeners()
-	lexer.AddErrorListener(listener)
-	parser := p.NewQuintParser(antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel))
-	parser.RemoveErrorListeners()
-	parser.AddErrorListener(listener)
-	tree := parser.Modules()
+	tree := parseModuleTree(text, listener)
+	return modulesFromContext(tree, listener, ids)
+}
+
+func modulesFromContext(tree p.IModulesContext, listener *effectSyntaxErrors, ids parserIDAllocator) (modules []Module, err error) {
 	if recoveringSyntax(ids) {
 		defer func() {
 			if failure := recover(); failure != nil {

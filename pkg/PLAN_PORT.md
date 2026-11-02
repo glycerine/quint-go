@@ -3354,3 +3354,12 @@ word "retained" in the commit message.
   cases, default helpers/CLI writes, races and independent review pass. Backend
   default0.161s and verify CLI0.198s; larger optional TLC/CLI corpora pass4.186s/
   1.375s. Native numeric bounds, broader parity and hard preemption remain open.
+
+- 2026-11-02: Added speculative SLL module parsing with fresh exact LL fallback
+  for lexer/parser/action diagnostics. The existing tree reduction is unchanged;
+  speculation allocates no IR IDs or recovery state. Nineteen default scenarios,
+  continued-ID checks, mixed concurrent recovery races and vet/review pass.
+  Optional exact comparisons cover640 fixture sources plus197 repository files
+  in both parser modes. SuperSpec improves24.3→3.07ms and7.96MB→0.789MB;
+  nested calls8.8→0.398ms. Small inputs remain similar; malformed fallback costs
+  an extra syntax pass (81→121us). Aggregate suite timing is measured separately.
