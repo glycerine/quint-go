@@ -262,6 +262,8 @@ the information required by Go Apalache's importer.
 
 - [ ] P5.1 Port effect expressions/schemes, entities, namespaces, substitutions,
   simplification, unification, and effect printing.
+  - [x] Port effect-variable occurs checks and recursive entity-union binding rules.
+  - [ ] Integrate binding rules into structural effect/entity unification and validate against upstream fixtures.
 - [ ] P5.2 Port builtin effect signatures and effect inference through calls,
   lambdas, local definitions, imports, and instantiated modules.
 - [ ] P5.3 Port qualifier/mode validation for `pure val`, `pure def`, `val`,
@@ -1462,3 +1464,11 @@ word "retained" in the commit message.
   Update unions retain duplicate members as upstream requires. Default tests
   pass under one second. Composition differential coverage and effect unification
   remain pending.
+
+- 2026-11-02: Added effect-variable binding with separate-namespace occurs checks
+  and entity binding that recursively splits self-containing unions, retaining
+  self bindings, duplicate names, and member order as upstream requires. Tests
+  cover nested arrow occurrences, entity/effect namespace separation, empty and
+  nested unions, unaffected subunions, and output isolation. Default tests pass
+  (combined execution 0.625s). Structural unification and its differential
+  validation remain pending.
