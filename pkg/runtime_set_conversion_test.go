@@ -44,9 +44,10 @@ func TestSetConversionsValidationAndOwnership(t *testing.T) {
 	if err != nil || item.source.Args[0].Args[0].Int.String() != "2" {
 		t.Fatal("singleton source order changed", err)
 	}
-	item.source.Args[0].Args[1] = Expr{Kind: "bool", Bool: true}
+	copy := item.Expression()
+	copy.Args[0].Args[1] = Expr{Kind: "bool", Bool: true}
 	original, err := EvalSetConversionBuiltin("getOnlyElement", []RuntimeValue{singleton})
 	if err != nil || original.source.Args[0].Args[1].Kind != "int" {
-		t.Fatal("singleton result aliases input", err)
+		t.Fatal("singleton expression copy aliases stored value", err)
 	}
 }

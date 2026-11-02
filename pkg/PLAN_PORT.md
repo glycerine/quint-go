@@ -332,9 +332,14 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   ownership without relying on Go map iteration order.
   - [x] Immutable concrete-value ownership, typed structural identity, stable
     Go hashing, canonical IR printing, and upstream equal-type comparisons.
-  - [ ] Closures inside collections, symbolic collections, iteration order,
-    and cross-type equality audit (TypeScript's set-like fallback equates unlike
-    constructors).
+  - [x] Retained concrete child objects and persistent collection traversal
+    through constructors, normalization, accessors, state records, and traces.
+  - [ ] Closures inside collections, symbolic collections, remaining iteration
+    behavior, and cross-type equality audit (TypeScript's set-like fallback
+    equates unlike constructors).
+  - [ ] Map display parity for Unicode collation ties: upstream serializes
+    through a transient tuple set before stable sorting; canonical IR sorting
+    alone can retain a different tie order and affect key diagnostics.
 - [ ] P7.2 Port evaluation/compilation of IR, lexical closures, operator values,
   local bindings, lazy branches, definition caches, and runtime error traces.
   - [x] Pure IR expression evaluation: literals, concrete constructors, explicit
@@ -365,15 +370,19 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] Explicit finite-set contains/in/subseteq/union/intersect/exclude,
     size/isFinite/flatten with structural identity and upstream evaluator cases.
   - [x] Strict map get/set/put/keys, structural keys, immutable updates, and
-    small-map diagnostic ordering through pure evaluation with upstream cases.
+    small/large/collision-map diagnostic ordering through pure evaluation with
+    upstream cases, including the diagnostic view's separate map rebuild.
   - [x] Private Immutable.js-compatible concrete hash and constructor-order
     helpers, including UTF-16 strings, nested values, ninth-key HAMT conversion,
     low-to-high hash fragments, and collision order; public Go hash unchanged.
   - [x] Private persistent traversal nodes for array/value/collision/bitmap/dense
     transitions, deletion swaps/compression, and same-object no-op updates.
-  - [ ] Mutable ownerID constructor batches, child RuntimeValue payloads and
-    normal-form rules, traversal propagation through nested operations, and
-    higher-order map operations.
+  - [x] Mutable ownerID constructor batches, retained concrete child payloads,
+    constructor-specific normal forms, and traversal propagation through nested
+    map/set/list/record/tuple/variant operations.
+  - [x] Explicit finite-set exists/forall/map/filter/fold/mapBy with retained
+    traversal, eager quantifier callbacks, normalized results, and upstream
+    tree snapshots; empty folds preserve their initial object.
   - [x] getOnlyElement with singleton deduplication, owned nested values,
     last-equal-element source retention, and exact cardinality diagnostics.
   - [ ] setToMap parity, including its intermediate JS-array identity hashing;
@@ -414,6 +423,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     recovery, metadata restoration, false diagnostics, and error behavior.
   - [x] Runtime state trace snapshots, module commit/shift, then/reps extension,
     expect drop semantics, and q::lastTrace values.
+  - [x] Retain actual nested child objects and collection mutation history in
+    storage records, metadata, snapshots/recovery, trace reads, and restoration.
   - [x] Direct next()/unbound oneOf() runtime rejection with the reference's
     lazy argument behavior and source-referenced QNT000 diagnostics.
   - [ ] Simulation-level transaction handling, trace rendering, and execution
@@ -2682,3 +2693,20 @@ word "retained" in the commit message.
   985.5ns/1264B/4 allocations, Map from 8053930ns to 4212ns, matchVariant from
   5652360ns to 1765ns, and tuples from 11242913ns to 3481ns. Full default tests
   pass with all current batches integrated (combined package execution 0.946s).
+
+- 2026-11-02: Runtime collections now retain actual child values and persistent
+  traversal trees rather than reconstructing children from printed IR. Added
+  copy-on-write constructor/withMutations batches, exact Map/Set/Variant normal
+  forms, and propagation through map/set/list/record/tuple/variant operations,
+  storage metadata, records, snapshots, traces, and restoration. Missing-map-key
+  errors reproduce the reference's additional diagnostic-view map rebuild.
+  Added explicit finite-set exists/forall/map/filter/fold/mapBy with eager
+  quantifier callbacks, reference traversal and result normalization, empty-fold
+  laziness, cancellation, and error propagation. Sixteen constructor scenarios,
+  111 expression/tree cases, and twelve state/trace operations were obtained
+  from TypeScript; direct tests check object reuse, immutable ownership,
+  normalization and validation. Full default tests pass (combined package
+  execution 0.952s), as do focused race checks. Insertion-ordered utility
+  dictionaries use insdict.Dict. Closures inside collections, symbolic values,
+  heterogeneous equality, setToMap's JS-array identity hashing, and a confirmed
+  Unicode collation-tie map serialization discrepancy remain open.

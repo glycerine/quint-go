@@ -458,8 +458,9 @@ variants. These private traversal hashes leave public RuntimeValue.Hash intact.
 `node pkg/grammar/runtime_reference_order_fixtures.cjs`. Twenty vectors compare
 Immutable.Map constructor traversal: small insertion order, ninth-key HAMT
 conversion, 100-key dense traversal, hash collisions, duplicates, and nested
-keys. The helper covers construction only. Persistent mutation/deletion history
-and the separately audited heterogeneous equality discrepancy remain open.
+keys. The helper now uses the retained traversal map and its constructor batch
+implementation. The separately audited heterogeneous equality discrepancy remains
+open.
 
 `runtime_set_conversion.json` is regenerated with
 `node pkg/grammar/runtime_set_conversion_fixtures.cjs`. Twelve supported
@@ -512,8 +513,8 @@ mutations. Coverage includes small-map deletion swaps, ninth insertion, dense
 expansion/packing, collision ordering/collapse, nested keys, lookups, reinsertion,
 and same-object no-op updates preserving key source. Private allocation tokens
 track object reuse without changing public structural equality/hash. This is
-the persistent ownerless primitive; transient ownerID constructor batches and
-propagating retained children/history through runtime operations remain open.
+the persistent ownerless primitive; the constructor and runtime propagation
+corpora below exercise its integration.
 
 `builtin_types_dynamic.json` is regenerated with
 `node pkg/grammar/builtin_types_dynamic_fixtures.cjs`. Fifty-two upstream
@@ -524,3 +525,40 @@ variable order, validate shapes, mutate arguments/results to catch sharing,
 and check exact invalid-arity/unknown-name errors. The saved oracle avoids
 reparsing signatures in the default suite; the prior parsed construction is
 retained only for explicit benchmarks and cheap validation-error comparisons.
+
+`runtime_reference_map_build.json` is regenerated with
+`node pkg/grammar/runtime_reference_map_build_fixtures.cjs`. Sixteen scenarios
+compare Immutable.Map constructors and withMutations batches, including editable
+versus borrowed leaf key retention, repeated keys, no-op object reuse, dense
+nodes, deep hash fragments, and full collisions. Tests also recheck all prior
+snapshots, owned result slices, and atomic validation failures.
+
+`runtime_payload_access.json` is regenerated with
+`node pkg/grammar/runtime_payload_access_fixtures.cjs`. Forty-two cases compare
+nested map diagnostics through sequence/record/tuple/variant access, updates,
+list callbacks, singleton extraction, and setBy. Cases retain collision and
+large-map traversal and verify empty-fold callback laziness. Direct tests check
+child object identity and copied child slices.
+
+`runtime_payload_collections.json` is regenerated with
+`node pkg/grammar/runtime_payload_collections_fixtures.cjs`. Twenty-nine cases
+compare canonical values and recursively inspect actual stored entries and
+children. They cover constructors and normal forms, keys/get/set/put, set
+union/intersect/exclude/flatten, nested keys, collision maps, and deletion/rebuild
+history. Unit tests verify retained values and same-object map updates.
+
+`runtime_payload_state.json` is regenerated with
+`node pkg/grammar/runtime_payload_state_fixtures.cjs`. Twelve operations compare
+module results/errors, registers, every trace state, and RNG across init, update,
+shift, trace reads, and record restoration. Missing-key diagnostics observe the
+nested map history through current variables, saved traces, and restored values.
+Direct tests check normal-form object identity, metadata construction, and
+storage record/snapshot ownership.
+
+`runtime_set_higher.json` is regenerated with
+`node pkg/grammar/runtime_set_higher_fixtures.cjs`. Forty cases compare explicit
+finite-set exists/forall/map/filter/fold/mapBy results and retained trees,
+including collisions, large sets, nested values, callback failures, and fold
+argument order. Direct tests cover eager quantifier callbacks, Boolean reduction
+order, cancellation, empty-fold callback laziness, and retained child identity.
+Closures inside collections and symbolic-set operations remain unfinished.

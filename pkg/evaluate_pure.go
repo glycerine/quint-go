@@ -105,13 +105,11 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 				return NewRuntimeValue(Expr{Kind: "app", Opcode: "Set", Args: []Expr{{Kind: "bool", Bool: false}, {Kind: "bool", Bool: true}}})
 			}
 			if e.Name == "q::lastTrace" {
-				args := []Expr{}
+				args := []RuntimeValue{}
 				if trace != nil {
-					for _, state := range trace.States() {
-						args = append(args, copyRuntimeExpression(state.source))
-					}
+					args = trace.States()
 				}
-				return NewRuntimeValue(Expr{Kind: "app", Opcode: "List", Args: args})
+				return newRuntimeComposite("List", args)
 			}
 			return fail(e, "Unbound runtime name: "+e.Name)
 		case "lambda":
@@ -430,10 +428,11 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 				if err != nil {
 					return RuntimeValue{}, err
 				}
-				payload, err := NewRuntimeValue(matched.source.Args[1])
+				children, err := runtimeChildren(matched)
 				if err != nil {
 					return RuntimeValue{}, err
 				}
+				payload := children[1]
 				result, err := branch.Apply(ctx, []RuntimeValue{payload})
 				if d, ok := err.(Diagnostic); ok && d.Reference == nil {
 					id := e.ID
@@ -492,11 +491,7 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 		}
 		switch e.Opcode {
 		case "List", "Tup", "Set", "Map", "Rec", "variant":
-			value := Expr{Kind: "app", Opcode: e.Opcode, Args: make([]Expr, len(args))}
-			for i, arg := range args {
-				value.Args[i] = arg.source
-			}
-			return NewRuntimeValue(value)
+			return newRuntimeComposite(e.Opcode, args)
 		case "not", "fail", "iff", "eq", "neq", "assert":
 			arity := 2
 			if e.Opcode == "not" || e.Opcode == "fail" || e.Opcode == "assert" {
@@ -533,6 +528,8 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 			value, err = EvalMapSetBy(ctx, args)
 		} else if listHigherBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalListHigherBuiltin(ctx, e.Opcode, args)
+		} else if setHigherBuiltinArity(e.Opcode) != 0 {
+			value, err = EvalSetHigherBuiltin(ctx, e.Opcode, args)
 		} else if e.Opcode == "range" {
 			value, err = EvalRangeBuiltin(ctx, args)
 		} else if sequenceBuiltinArity(e.Opcode) != 0 {

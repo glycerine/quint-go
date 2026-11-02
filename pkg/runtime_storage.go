@@ -140,24 +140,38 @@ func (s *VariableStorage) Recover(snapshot VariableSnapshot) {
 
 // Record exports set current variables and optional action/pick metadata.
 func (s *VariableStorage) Record() (RuntimeValue, error) {
-	args := []Expr{}
+	text := func(value string) RuntimeValue { v, _ := NewRuntimeValue(Expr{Kind: "str", Str: value}); return v }
+	args := []RuntimeValue{}
 	for _, register := range s.current.All() {
 		if register.Value.Valid() {
-			args = append(args, Expr{Kind: "str", Str: register.Name}, register.Value.source)
+			args = append(args, text(register.Name), register.Value)
 		}
 	}
 	if s.metadata {
-		picks := []Expr{}
+		picks := []RuntimeValue{}
 		for name, value := range s.NondetPicks.All() {
-			label, payload := "None", Expr{Kind: "app", Opcode: "Tup", Args: []Expr{}}
-			if value.Valid() {
-				label, payload = "Some", value.source
+			label := "Some"
+			if !value.Valid() {
+				label = "None"
+				var err error
+				value, err = newRuntimeComposite("Tup", nil)
+				if err != nil {
+					return RuntimeValue{}, err
+				}
 			}
-			picks = append(picks, Expr{Kind: "str", Str: name}, Expr{Kind: "app", Opcode: "variant", Args: []Expr{{Kind: "str", Str: label}, payload}})
+			variant, err := newRuntimeComposite("variant", []RuntimeValue{text(label), value})
+			if err != nil {
+				return RuntimeValue{}, err
+			}
+			picks = append(picks, text(name), variant)
 		}
-		args = append(args, Expr{Kind: "str", Str: ITFNondetPicks}, Expr{Kind: "app", Opcode: "Rec", Args: picks}, Expr{Kind: "str", Str: ITFActionTaken}, Expr{Kind: "str", Str: s.ActionTaken})
+		pickRecord, err := newRuntimeComposite("Rec", picks)
+		if err != nil {
+			return RuntimeValue{}, err
+		}
+		args = append(args, text(ITFNondetPicks), pickRecord, text(ITFActionTaken), text(s.ActionTaken))
 	}
-	return NewRuntimeValue(Expr{Kind: "app", Opcode: "Rec", Args: args})
+	return newRuntimeComposite("Rec", args)
 }
 
 // FromRecord resets registers, restores known variable names and optional
@@ -169,15 +183,12 @@ func (s *VariableStorage) FromRecord(record RuntimeValue) error {
 		return fail("Expected a record value")
 	}
 	s.Reset()
-	fields := insdict.NewDict[string, Expr]()
-	for i := 0; i < len(record.source.Args); i += 2 {
-		fields.Set(record.source.Args[i].Str, record.source.Args[i+1])
+	fields, err := runtimeChildren(record)
+	if err != nil {
+		return err
 	}
-	for name, expression := range fields.All() {
-		value, err := NewRuntimeValue(expression)
-		if err != nil {
-			return err
-		}
+	for i := 0; i < len(fields); i += 2 {
+		name, value := fields[i].expression.Str, fields[i+1]
 		found := false
 		for _, register := range s.current.All() {
 			if register.Name == name {
@@ -191,26 +202,27 @@ func (s *VariableStorage) FromRecord(record RuntimeValue) error {
 		}
 		switch name {
 		case ITFActionTaken:
-			if expression.Kind != "str" {
+			if value.expression.Kind != "str" {
 				return fail("Expected a string action name")
 			}
-			s.ActionTaken = expression.Str
+			s.ActionTaken = value.expression.Str
 		case ITFNondetPicks:
-			if expression.Kind != "app" || expression.Opcode != "Rec" {
+			if value.expression.Kind != "app" || value.expression.Opcode != "Rec" {
 				return fail("Expected a record of nondeterministic picks")
 			}
-			for i := 0; i < len(expression.Args); i += 2 {
-				pick, err := NewRuntimeValue(expression.Args[i+1])
-				if err != nil {
-					return err
-				}
+			picks, err := runtimeChildren(value)
+			if err != nil {
+				return err
+			}
+			for i := 0; i < len(picks); i += 2 {
+				pick := picks[i+1]
 				if pick.expression.Kind != "app" || pick.expression.Opcode != "variant" {
 					return fail("Expected a variant pick value")
 				}
 				if pick.expression.Args[0].Str == "None" {
 					pick = RuntimeValue{}
 				}
-				s.NondetPicks.Set(expression.Args[i].Str, pick)
+				s.NondetPicks.Set(picks[i].expression.Str, pick)
 			}
 		}
 	}

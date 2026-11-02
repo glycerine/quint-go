@@ -9,8 +9,8 @@ import (
 // Immutable.js Map traversal. The zero value is an empty map. Keys use the
 // Go runtime's structural equality boundary and the private reference hash.
 // Nodes and slices are never mutated after publication. Updates reproduce the
-// persistent ownerless path; mutable ownerID batches used by some upstream
-// constructors require a separate transient API before they can be reproduced.
+// persistent ownerless path; runtimeReferenceMapBatchSet implements mutable
+// owner batches with private copy-on-write ownership before publication.
 type runtimeReferenceMap struct {
 	root *runtimeReferenceMapNode
 	size int

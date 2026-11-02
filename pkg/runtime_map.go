@@ -2,7 +2,6 @@ package quint
 
 import (
 	"fmt"
-	"github.com/glycerine/insdict"
 	"strings"
 )
 
@@ -18,9 +17,9 @@ func mapBuiltinArity(op string) int {
 	return 0
 }
 
-// EvalMapBuiltin implements strict map lookup/update and key enumeration.
-// Keys compare structurally; duplicate keys retain their first insertion
-// position and their last value, as in the reference's small immutable maps.
+// EvalMapBuiltin implements strict map lookup/update and key enumeration over
+// retained runtime entries. Updates preserve persistent traversal history and
+// returning stored values retains their nested collection payloads.
 func EvalMapBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 	fail := func(code, message string) (RuntimeValue, error) {
 		return RuntimeValue{}, Diagnostic{Code: code, Message: message}
@@ -40,48 +39,47 @@ func EvalMapBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 	if args[0].expression.Kind != "app" || args[0].expression.Opcode != "Map" {
 		return fail("QNT501", op+" requires a Map value")
 	}
-	pairs := insdict.NewDict[string, Expr]()
-	for _, pair := range args[0].source.Args {
-		key, err := NewRuntimeValue(pair.Args[0])
+	entries, err := runtimeMap(args[0])
+	if err != nil {
+		return RuntimeValue{}, err
+	}
+	if op == "keys" {
+		keys := make([]RuntimeValue, 0, entries.Len())
+		for _, entry := range entries.Entries() {
+			keys = append(keys, entry.Key)
+		}
+		return newRuntimeComposite("Set", keys)
+	}
+	key, err := runtimeNormalForm(args[1])
+	if err != nil {
+		return RuntimeValue{}, err
+	}
+	value, found, err := entries.Lookup(key)
+	if err != nil {
+		return RuntimeValue{}, err
+	}
+	if op == "get" {
+		if found {
+			return value, nil
+		}
+		// The reference constructs the diagnostic view with Map.toMap(),
+		// which rebuilds a map from its keyed sequence before enumerating keys.
+		diagnosticEntries, err := runtimeReferenceMapFromEntries(entries.Entries())
 		if err != nil {
 			return RuntimeValue{}, err
 		}
-		pairs.Set(key.identity, pair)
-	}
-	if op == "keys" {
-		keys := []Expr{}
-		for _, pair := range pairs.All() {
-			keys = append(keys, pair.Args[0])
-		}
-		return NewRuntimeValue(Expr{Kind: "app", Opcode: "Set", Args: keys})
-	}
-	key := args[1]
-	pair, found := pairs.Get2(key.identity)
-	if op == "get" {
-		if found {
-			return NewRuntimeValue(pair.Args[1])
-		}
-		names := []string{}
-		for _, entry := range pairs.All() {
-			value, err := NewRuntimeValue(entry.Args[0])
-			if err != nil {
-				return RuntimeValue{}, err
-			}
-			names = append(names, value.String())
+		names := make([]string, 0, entries.Len())
+		for _, entry := range diagnosticEntries.Entries() {
+			names = append(names, entry.Key.String())
 		}
 		return fail("QNT507", fmt.Sprintf("Called 'get' with a non-existing key. Key is %s. Map has keys: %s", key.String(), strings.Join(names, ", ")))
 	}
 	if op == "set" && !found {
 		return fail("QNT507", "Called 'set' with a non-existing key")
 	}
-	keyExpr := key.source
-	if found {
-		keyExpr = pair.Args[0]
+	updated, err := entries.Set(key, args[2])
+	if err != nil {
+		return RuntimeValue{}, err
 	}
-	pairs.Set(key.identity, Expr{Kind: "app", Opcode: "Tup", Args: []Expr{keyExpr, args[2].source}})
-	entries := []Expr{}
-	for _, entry := range pairs.All() {
-		entries = append(entries, entry)
-	}
-	return NewRuntimeValue(Expr{Kind: "app", Opcode: "Map", Args: entries})
+	return runtimeWithEntries("Map", updated)
 }

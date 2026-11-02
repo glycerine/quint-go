@@ -31,9 +31,12 @@ func EvalSetConversionBuiltin(op string, args []RuntimeValue) (RuntimeValue, err
 	if set.expression.Kind != "app" || set.expression.Opcode != "Set" {
 		return fail(op + " requires a Set value")
 	}
-	if size := len(set.expression.Args); size != 1 {
+	entries, err := runtimeEntries(set)
+	if err != nil {
+		return RuntimeValue{}, err
+	}
+	if size := len(entries); size != 1 {
 		return RuntimeValue{}, Diagnostic{Code: "QNT505", Message: fmt.Sprintf("Called 'getOnlyElement' on a set with %d elements. Make sure the set has exactly one element.", size)}
 	}
-	// Set.add replaces the stored value for a structurally equal key.
-	return NewRuntimeValue(set.source.Args[len(set.source.Args)-1])
+	return entries[0].Value, nil
 }

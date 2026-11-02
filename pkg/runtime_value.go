@@ -21,16 +21,27 @@ type RuntimeValue struct {
 	identity   string
 	closure    *runtimeClosure
 	allocation *runtimeValueAllocation
+	payload    *runtimePayload
 }
 
 // NewRuntimeValue validates and copies a concrete expression, removing source IDs
 // and canonicalizing records, sets and maps. The caller retains ownership of e.
 func NewRuntimeValue(e Expr) (RuntimeValue, error) {
-	normalized, err := NormalizeValue(e)
-	if err != nil {
-		return RuntimeValue{}, err
+	if e.Kind == "app" {
+		switch e.Opcode {
+		case "List", "Tup", "Rec", "Set", "Map", "variant":
+			children := make([]RuntimeValue, len(e.Args))
+			for i, child := range e.Args {
+				value, err := NewRuntimeValue(child)
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+				children[i] = value
+			}
+			return newRuntimeComposite(e.Opcode, children)
+		}
 	}
-	return RuntimeValue{expression: normalized, source: copyRuntimeExpression(e), identity: normalizedValueKey(normalized), allocation: &runtimeValueAllocation{}}, nil
+	return runtimeAssemble(e, nil)
 }
 
 func (v RuntimeValue) Valid() bool { return v.identity != "" || v.closure != nil }

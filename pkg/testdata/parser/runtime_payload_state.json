@@ -1,0 +1,5667 @@
+{
+  "module": {
+    "id": 56,
+    "name": "M",
+    "declarations": [
+      {
+        "kind": "var",
+        "name": "x",
+        "typeAnnotation": {
+          "id": 3,
+          "kind": "fun",
+          "arg": {
+            "id": 1,
+            "kind": "int"
+          },
+          "res": {
+            "id": 2,
+            "kind": "int"
+          }
+        },
+        "id": 4,
+        "depth": 0
+      },
+      {
+        "id": 35,
+        "kind": "def",
+        "name": "init",
+        "qualifier": "action",
+        "expr": {
+          "id": 34,
+          "kind": "app",
+          "opcode": "assign",
+          "args": [
+            {
+              "id": 33,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 32,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 5,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 6,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 10,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 9,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 13,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 11,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 12,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 16,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 15,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 19,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 17,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 18,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 22,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 20,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 21,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 25,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 23,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 24,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 28,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 26,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 27,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 31,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 29,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 30,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 42,
+        "kind": "def",
+        "name": "step",
+        "qualifier": "action",
+        "expr": {
+          "id": 41,
+          "kind": "app",
+          "opcode": "assign",
+          "args": [
+            {
+              "id": 40,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 39,
+              "kind": "app",
+              "opcode": "put",
+              "args": [
+                {
+                  "id": 36,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 37,
+                  "kind": "int",
+                  "value": 38654705664
+                },
+                {
+                  "id": 38,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 47,
+        "kind": "def",
+        "name": "read",
+        "qualifier": "val",
+        "expr": {
+          "id": 46,
+          "kind": "app",
+          "opcode": "get",
+          "args": [
+            {
+              "id": 43,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 45,
+              "kind": "app",
+              "opcode": "iuminus",
+              "args": [
+                {
+                  "id": 44,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 55,
+        "kind": "def",
+        "name": "traceRead",
+        "qualifier": "val",
+        "expr": {
+          "id": 54,
+          "kind": "app",
+          "opcode": "get",
+          "args": [
+            {
+              "id": 51,
+              "kind": "app",
+              "opcode": "field",
+              "args": [
+                {
+                  "id": 49,
+                  "kind": "app",
+                  "opcode": "head",
+                  "args": [
+                    {
+                      "id": 48,
+                      "kind": "name",
+                      "name": "q::lastTrace"
+                    }
+                  ]
+                },
+                {
+                  "id": 50,
+                  "kind": "str",
+                  "value": "x"
+                }
+              ]
+            },
+            {
+              "id": 53,
+              "kind": "app",
+              "opcode": "iuminus",
+              "args": [
+                {
+                  "id": 52,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "operation": "read",
+      "error": {
+        "code": "QNT502",
+        "message": "Variable x not set",
+        "reference": 43
+      },
+      "record": {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": ""
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          }
+        ]
+      },
+      "trace": [],
+      "rng": "0"
+    },
+    {
+      "operation": "init",
+      "output": {
+        "id": 0,
+        "kind": "bool",
+        "value": true
+      },
+      "record": {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "init"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          }
+        ]
+      },
+      "trace": [],
+      "rng": "0"
+    },
+    {
+      "operation": "shift",
+      "record": {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": ""
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 12884901888
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 17179869184
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 21474836480
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 5
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 25769803776
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 6
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 30064771072
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 7
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 34359738368
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4294967296
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8589934592
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rng": "0"
+    },
+    {
+      "operation": "read",
+      "error": {
+        "code": "QNT507",
+        "message": "Called 'get' with a non-existing key. Key is -1. Map has keys: 30064771072, 34359738368, 0, 4294967296, 8589934592, 12884901888, 17179869184, 21474836480, 25769803776",
+        "reference": 46
+      },
+      "record": {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": ""
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 12884901888
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 17179869184
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 21474836480
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 5
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 25769803776
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 6
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 30064771072
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 7
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 34359738368
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4294967296
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8589934592
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rng": "0"
+    },
+    {
+      "operation": "traceRead",
+      "error": {
+        "code": "QNT507",
+        "message": "Called 'get' with a non-existing key. Key is -1. Map has keys: 30064771072, 34359738368, 0, 4294967296, 8589934592, 12884901888, 17179869184, 21474836480, 25769803776",
+        "reference": 54
+      },
+      "record": {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": ""
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 12884901888
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 17179869184
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 21474836480
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 5
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 25769803776
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 6
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 30064771072
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 7
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 34359738368
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4294967296
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8589934592
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rng": "0"
+    },
+    {
+      "operation": "step",
+      "output": {
+        "id": 0,
+        "kind": "bool",
+        "value": true
+      },
+      "record": {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "step"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 12884901888
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 17179869184
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 21474836480
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 5
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 25769803776
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 6
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 30064771072
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 7
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 34359738368
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4294967296
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8589934592
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rng": "0"
+    },
+    {
+      "operation": "shift",
+      "record": {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": ""
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 12884901888
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 17179869184
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 21474836480
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 5
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 25769803776
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 6
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 30064771072
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 7
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 34359738368
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 38654705664
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 9
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4294967296
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8589934592
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "step"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 38654705664
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rng": "0"
+    },
+    {
+      "operation": "read",
+      "error": {
+        "code": "QNT507",
+        "message": "Called 'get' with a non-existing key. Key is -1. Map has keys: 30064771072, 34359738368, 0, 4294967296, 8589934592, 12884901888, 17179869184, 21474836480, 25769803776, 38654705664",
+        "reference": 46
+      },
+      "record": {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": ""
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 12884901888
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 17179869184
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 21474836480
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 5
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 25769803776
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 6
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 30064771072
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 7
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 34359738368
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 38654705664
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 9
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4294967296
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8589934592
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "step"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 38654705664
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rng": "0"
+    },
+    {
+      "operation": "traceRead",
+      "error": {
+        "code": "QNT507",
+        "message": "Called 'get' with a non-existing key. Key is -1. Map has keys: 30064771072, 34359738368, 0, 4294967296, 8589934592, 12884901888, 17179869184, 21474836480, 25769803776",
+        "reference": 54
+      },
+      "record": {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": ""
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 12884901888
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 17179869184
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 21474836480
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 5
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 25769803776
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 6
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 30064771072
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 7
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 34359738368
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 38654705664
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 9
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4294967296
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8589934592
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "step"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 38654705664
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rng": "0"
+    },
+    {
+      "operation": "restoreFirst",
+      "record": {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "init"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 12884901888
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 17179869184
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 21474836480
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 5
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 25769803776
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 6
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 30064771072
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 7
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 34359738368
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4294967296
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8589934592
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "step"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 38654705664
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rng": "0"
+    },
+    {
+      "operation": "read",
+      "error": {
+        "code": "QNT507",
+        "message": "Called 'get' with a non-existing key. Key is -1. Map has keys: 30064771072, 34359738368, 0, 4294967296, 8589934592, 12884901888, 17179869184, 21474836480, 25769803776",
+        "reference": 46
+      },
+      "record": {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "init"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 12884901888
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 17179869184
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 21474836480
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 5
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 25769803776
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 6
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 30064771072
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 7
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 34359738368
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4294967296
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8589934592
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "step"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 38654705664
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rng": "0"
+    },
+    {
+      "operation": "traceRead",
+      "error": {
+        "code": "QNT507",
+        "message": "Called 'get' with a non-existing key. Key is -1. Map has keys: 30064771072, 34359738368, 0, 4294967296, 8589934592, 12884901888, 17179869184, 21474836480, 25769803776",
+        "reference": 54
+      },
+      "record": {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::actionTaken"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "init"
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "mbt::nondetPicks"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": []
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 12884901888
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 17179869184
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 21474836480
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 5
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 25769803776
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 6
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 30064771072
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 7
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 34359738368
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4294967296
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 8589934592
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "step"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12884901888
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 17179869184
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 21474836480
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 25769803776
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 30064771072
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 34359738368
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 38654705664
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4294967296
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 8589934592
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rng": "0"
+    }
+  ]
+}

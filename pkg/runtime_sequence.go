@@ -48,14 +48,14 @@ func EvalSequenceBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 	if args[0].expression.Kind != "app" || args[0].expression.Opcode != expected {
 		return fail("QNT501", op+" requires a "+expected+" value")
 	}
-	e := copyRuntimeExpression(args[0].source)
-	elems := e.Args
-	makeValue := func(op string, elems []Expr) (RuntimeValue, error) {
-		return NewRuntimeValue(Expr{Kind: "app", Opcode: op, Args: elems})
+	elems, err := runtimeChildren(args[0])
+	if err != nil {
+		return RuntimeValue{}, err
 	}
+	makeValue := newRuntimeComposite
 	if record {
 		if op == "fieldNames" {
-			names := []Expr{}
+			names := []RuntimeValue{}
 			for i := 0; i < len(elems); i += 2 {
 				names = append(names, elems[i])
 			}
@@ -66,11 +66,11 @@ func EvalSequenceBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 		}
 		name := args[1].expression.Str
 		for i := len(elems) - 2; i >= 0; i -= 2 {
-			if elems[i].Str == name {
+			if elems[i].expression.Str == name {
 				if op == "field" {
-					return NewRuntimeValue(elems[i+1])
+					return elems[i+1], nil
 				}
-				elems[i+1] = args[2].source
+				elems[i+1] = args[2]
 				return makeValue("Rec", elems)
 			}
 		}
@@ -81,10 +81,13 @@ func EvalSequenceBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 	}
 	switch op {
 	case "indices":
-		indices := make([]Expr, len(elems))
+		indices := make([]RuntimeValue, len(elems))
 		for i := range elems {
 			n, _ := ParseInteger(fmt.Sprint(i))
-			indices[i] = Expr{Kind: "int", Int: n}
+			indices[i], err = NewRuntimeValue(Expr{Kind: "int", Int: n})
+			if err != nil {
+				return RuntimeValue{}, err
+			}
 		}
 		return makeValue("Set", indices)
 	case "length":
@@ -95,16 +98,20 @@ func EvalSequenceBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 			return fail("QNT505", fmt.Sprintf("Called '%s' on an empty list", op))
 		}
 		if op == "head" {
-			return NewRuntimeValue(elems[0])
+			return elems[0], nil
 		}
 		return makeValue("List", elems[1:])
 	case "append":
-		return makeValue("List", append(elems, args[1].source))
+		return makeValue("List", append(elems, args[1]))
 	case "concat":
 		if args[1].expression.Kind != "app" || args[1].expression.Opcode != "List" {
 			return fail("QNT501", "concat requires List values")
 		}
-		return makeValue("List", append(elems, args[1].source.Args...))
+		other, err := runtimeChildren(args[1])
+		if err != nil {
+			return RuntimeValue{}, err
+		}
+		return makeValue("List", append(elems, other...))
 	}
 	if args[1].expression.Kind != "int" {
 		return fail("QNT501", op+" requires integer indices")
@@ -119,18 +126,18 @@ func EvalSequenceBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 		if !valid {
 			return fail("QNT510", "Out of bounds, nth("+runtimeNumberString(index)+")")
 		}
-		return NewRuntimeValue(elems[int(index)])
+		return elems[int(index)], nil
 	case "replaceAt":
 		if !valid {
 			return fail("QNT510", "Out of bounds, replaceAt("+runtimeNumberString(index)+")")
 		}
-		elems[int(index)] = args[2].source
+		elems[int(index)] = args[2]
 		return makeValue("List", elems)
 	case "slice":
-		if args[2].source.Kind != "int" {
+		if args[2].expression.Kind != "int" {
 			return fail("QNT501", "slice requires integer indices")
 		}
-		end, _ := args[2].source.Int.Big().Float64()
+		end, _ := args[2].expression.Int.Big().Float64()
 		if index < 0 || index > end || end > float64(len(elems)) {
 			return fail("QNT506", fmt.Sprintf("slice(..., %s, %s) applied to a list of size %d", runtimeNumberString(index), runtimeNumberString(end), len(elems)))
 		}

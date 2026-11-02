@@ -41,18 +41,19 @@ func EvalListHigherBuiltin(ctx context.Context, op string, args []RuntimeValue) 
 		return fail(op + " requires a List value")
 	}
 	lambda := args[arity-1]
-	if lambda.closure == nil {
+	elements, err := runtimeChildren(args[0])
+	if err != nil {
+		return RuntimeValue{}, err
+	}
+	// The reference resolves a select predicate before traversal, while fold
+	// callbacks are resolved only when an element actually invokes them.
+	if lambda.closure == nil && (op == "select" || len(elements) > 0) {
 		return fail("Expected a lambda value")
 	}
-	elements := args[0].source.Args
 	if op == "select" {
-		selected := []Expr{}
+		selected := []RuntimeValue{}
 		for _, element := range elements {
-			value, err := NewRuntimeValue(element)
-			if err != nil {
-				return RuntimeValue{}, err
-			}
-			predicate, err := lambda.Apply(ctx, []RuntimeValue{value})
+			predicate, err := lambda.Apply(ctx, []RuntimeValue{element})
 			if err != nil {
 				return RuntimeValue{}, err
 			}
@@ -63,7 +64,7 @@ func EvalListHigherBuiltin(ctx context.Context, op string, args []RuntimeValue) 
 				selected = append(selected, element)
 			}
 		}
-		return NewRuntimeValue(Expr{Kind: "app", Opcode: "List", Args: selected})
+		return newRuntimeComposite("List", selected)
 	}
 	accumulator := args[1]
 	for i := 0; i < len(elements); i++ {
@@ -71,10 +72,7 @@ func EvalListHigherBuiltin(ctx context.Context, op string, args []RuntimeValue) 
 		if op == "foldr" {
 			index = len(elements) - 1 - i
 		}
-		value, err := NewRuntimeValue(elements[index])
-		if err != nil {
-			return RuntimeValue{}, err
-		}
+		value := elements[index]
 		parameters := []RuntimeValue{accumulator, value}
 		if op == "foldr" {
 			parameters[0], parameters[1] = value, accumulator

@@ -1,9 +1,6 @@
 package quint
 
-import (
-	"fmt"
-	"github.com/glycerine/insdict"
-)
+import "fmt"
 
 func setBuiltinArity(op string) int {
 	switch op {
@@ -15,9 +12,9 @@ func setBuiltinArity(op string) int {
 	return 0
 }
 
-// EvalSetBuiltin evaluates operations on explicit finite sets. It uses exact
-// structural keys, independently of locale-dependent display ordering. Symbolic
-// and infinite collections are handled separately by the full evaluator.
+// EvalSetBuiltin evaluates operations on explicit finite sets using retained
+// runtime entries. Intermediate set mutations retain their reference traversal;
+// final results follow the reference's mkSet normalization/rebuild boundary.
 func EvalSetBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 	fail := func(message string) (RuntimeValue, error) {
 		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: message}
@@ -42,62 +39,119 @@ func EvalSetBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 		return fail(op + " requires a Set value")
 	}
 	boolean := func(value bool) (RuntimeValue, error) { return NewRuntimeValue(Expr{Kind: "bool", Bool: value}) }
-	left := args[0].expression.Args
+	left, err := runtimeMap(args[0])
+	if err != nil {
+		return RuntimeValue{}, err
+	}
 	if op == "size" {
-		n, _ := ParseInteger(fmt.Sprint(len(left)))
+		n, _ := ParseInteger(fmt.Sprint(left.Len()))
 		return NewRuntimeValue(Expr{Kind: "int", Int: n})
 	}
 	if op == "isFinite" {
 		return boolean(true)
 	}
 	if op == "contains" || op == "in" {
-		for _, element := range left {
-			if normalizedValueKey(element) == args[1].identity {
-				return boolean(true)
-			}
+		key, err := runtimeNormalForm(args[1])
+		if err != nil {
+			return RuntimeValue{}, err
 		}
-		return boolean(false)
+		_, present, err := left.Lookup(key)
+		if err != nil {
+			return RuntimeValue{}, err
+		}
+		return boolean(present)
 	}
-	output := insdict.NewDict[string, Expr]()
 	if op == "flatten" {
-		for _, element := range left {
-			if element.Kind != "app" || element.Opcode != "Set" {
+		// Set.map(s => s.toSet()) rebuilds an intermediate set keyed by the
+		// underlying sets. Their structural hashes equal the wrapper hashes,
+		// but constructor traversal can differ from the outer set's history.
+		mapped := make([]runtimeReferenceEntry, 0, left.Len())
+		for _, entry := range left.Entries() {
+			if !isSet(entry.Value) {
 				return fail("flatten requires a Set of Set values")
 			}
-			for _, child := range element.Args {
-				output.Set(normalizedValueKey(child), child)
+			mapped = append(mapped, runtimeReferenceEntry{Key: entry.Value, Value: entry.Value})
+		}
+		intermediate, err := runtimeReferenceMapFromEntries(mapped)
+		if err != nil {
+			return RuntimeValue{}, err
+		}
+		// Immutable.Set.flatten builds its result through a mutable constructor
+		// before rv.mkSet performs the final persistent normalized rebuild.
+		flatEntries := []runtimeReferenceEntry{}
+		for _, entry := range intermediate.Entries() {
+			inner, err := runtimeEntries(entry.Value)
+			if err != nil {
+				return RuntimeValue{}, err
+			}
+			for _, child := range inner {
+				flatEntries = append(flatEntries, runtimeReferenceEntry{Key: child.Value, Value: child.Value})
+			}
+		}
+		flat, err := runtimeReferenceMapFromEntries(flatEntries)
+		if err != nil {
+			return RuntimeValue{}, err
+		}
+		values := make([]RuntimeValue, 0, flat.Len())
+		for _, entry := range flat.Entries() {
+			values = append(values, entry.Value)
+		}
+		return newRuntimeComposite("Set", values)
+	}
+	if !isSet(args[1]) {
+		return fail(op + " requires Set values")
+	}
+	right, err := runtimeMap(args[1])
+	if err != nil {
+		return RuntimeValue{}, err
+	}
+	if op == "subseteq" {
+		for _, entry := range left.Entries() {
+			_, present, err := right.Lookup(entry.Value)
+			if err != nil {
+				return RuntimeValue{}, err
+			}
+			if !present {
+				return boolean(false)
+			}
+		}
+		return boolean(true)
+	}
+	output := left
+	if op == "union" {
+		switch {
+		case right.Len() == 0:
+		case left.Len() == 0:
+			output = right
+		default:
+			output, err = runtimeReferenceMapBatchSet(left, right.Entries())
+			if err != nil {
+				return RuntimeValue{}, err
 			}
 		}
 	} else {
-		if !isSet(args[1]) {
-			return fail(op + " requires Set values")
-		}
-		right := map[string]bool{}
-		for _, element := range args[1].expression.Args {
-			right[normalizedValueKey(element)] = true
-		}
-		for _, element := range left {
-			key := normalizedValueKey(element)
-			present := right[key]
-			if op == "subseteq" && !present {
-				return boolean(false)
+		// Collect removal keys before touching the tree: small-map/collision
+		// deletion swaps with the last entry and changes subsequent traversal.
+		removed := []RuntimeValue{}
+		for _, entry := range left.Entries() {
+			_, present, err := right.Lookup(entry.Value)
+			if err != nil {
+				return RuntimeValue{}, err
 			}
-			if op == "union" || (op == "exclude" && !present) || (op == "intersect" && present) {
-				output.Set(key, element)
+			if (op == "exclude" && present) || (op == "intersect" && !present) {
+				removed = append(removed, entry.Value)
 			}
 		}
-		if op == "subseteq" {
-			return boolean(true)
-		}
-		if op == "union" {
-			for _, element := range args[1].expression.Args {
-				output.Set(normalizedValueKey(element), element)
+		for _, key := range removed {
+			output, err = output.Delete(key)
+			if err != nil {
+				return RuntimeValue{}, err
 			}
 		}
 	}
-	values := []Expr{}
-	for _, element := range output.All() {
-		values = append(values, element)
+	values := make([]RuntimeValue, 0, output.Len())
+	for _, entry := range output.Entries() {
+		values = append(values, entry.Value)
 	}
-	return NewRuntimeValue(Expr{Kind: "app", Opcode: "Set", Args: values})
+	return newRuntimeComposite("Set", values)
 }
