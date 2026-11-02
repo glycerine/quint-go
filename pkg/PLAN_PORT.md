@@ -2836,3 +2836,13 @@ word "retained" in the commit message.
   templates fail explicitly. Regeneration with the pinned 4.13.2 jar and --check,
   six Python tests, focused parser tests, full default tests, and unrestricted
   go vet ./pkg/... pass. Generated files were regenerated, not hand-edited.
+
+- 2026-11-02: Obtained a separate pending closure-lifetime corpus with 16
+  expression scenarios/48 evaluations, 40 raw factory operations, and four
+  persistent module evaluations. TypeScript allocates one lambda per compiled
+  AST/builder and keeps shared parameter cells without restoring arguments;
+  returned closures can observe later factory calls. Compiled local-definition
+  caches add save/clear/restore behavior. Go currently creates per-call captured
+  scopes, so this observable identity/capture gap remains explicitly open. The
+  pending oracle is evidence for an evaluator-owned execution graph/cache fix,
+  not passing Go parity coverage and not resolved by lambda token memoization.

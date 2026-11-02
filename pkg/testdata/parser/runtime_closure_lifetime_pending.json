@@ -1,0 +1,5268 @@
+{
+  "status": "pending",
+  "reason": "Go currently creates per-call lexical closures; TypeScript creates one closure per compiled lambda AST and shares parameter registers without save/restore.",
+  "expressionCases": [
+    {
+      "name": "factory_noncaptured_identity",
+      "source": "module M { val result={ def f(x)=List((y)=>y); Set(f(1).head(),f(2).head()).size() } }",
+      "input": {
+        "id": 16,
+        "kind": "let",
+        "opdef": {
+          "id": 7,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 6,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 2,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 3,
+                    "kind": "name",
+                    "name": "y"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 15,
+          "kind": "app",
+          "opcode": "size",
+          "args": [
+            {
+              "id": 14,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "app",
+                  "opcode": "head",
+                  "args": [
+                    {
+                      "id": 9,
+                      "kind": "app",
+                      "opcode": "f",
+                      "args": [
+                        {
+                          "id": 8,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 13,
+                  "kind": "app",
+                  "opcode": "head",
+                  "args": [
+                    {
+                      "id": 12,
+                      "kind": "app",
+                      "opcode": "f",
+                      "args": [
+                        {
+                          "id": 11,
+                          "kind": "int",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "factory_captured_identity",
+      "source": "module M { val result={ def f(x)=List((y)=>x+y); Set(f(1).head(),f(2).head()).size() } }",
+      "input": {
+        "id": 18,
+        "kind": "let",
+        "opdef": {
+          "id": 9,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 8,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 2,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 5,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 4,
+                        "kind": "name",
+                        "name": "y"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 17,
+          "kind": "app",
+          "opcode": "size",
+          "args": [
+            {
+              "id": 16,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "head",
+                  "args": [
+                    {
+                      "id": 11,
+                      "kind": "app",
+                      "opcode": "f",
+                      "args": [
+                        {
+                          "id": 10,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "head",
+                  "args": [
+                    {
+                      "id": 14,
+                      "kind": "app",
+                      "opcode": "f",
+                      "args": [
+                        {
+                          "id": 13,
+                          "kind": "int",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "distinct_factory_asts",
+      "source": "module M { val result={ def f(x)=List((y)=>y); def g(x)=List((y)=>y); Set(f(1).head(),g(2).head()).size() } }",
+      "input": {
+        "id": 24,
+        "kind": "let",
+        "opdef": {
+          "id": 7,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 6,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 2,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 3,
+                    "kind": "name",
+                    "name": "y"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 23,
+          "kind": "let",
+          "opdef": {
+            "id": 14,
+            "kind": "def",
+            "name": "g",
+            "qualifier": "def",
+            "expr": {
+              "id": 13,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 8,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 12,
+                "kind": "app",
+                "opcode": "List",
+                "args": [
+                  {
+                    "id": 11,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 9,
+                        "name": "y"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "y"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "expr": {
+            "id": 22,
+            "kind": "app",
+            "opcode": "size",
+            "args": [
+              {
+                "id": 21,
+                "kind": "app",
+                "opcode": "Set",
+                "args": [
+                  {
+                    "id": 17,
+                    "kind": "app",
+                    "opcode": "head",
+                    "args": [
+                      {
+                        "id": 16,
+                        "kind": "app",
+                        "opcode": "f",
+                        "args": [
+                          {
+                            "id": 15,
+                            "kind": "int",
+                            "value": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": 20,
+                    "kind": "app",
+                    "opcode": "head",
+                    "args": [
+                      {
+                        "id": 19,
+                        "kind": "app",
+                        "opcode": "g",
+                        "args": [
+                          {
+                            "id": 18,
+                            "kind": "int",
+                            "value": 2
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "distinct_lambda_asts",
+      "source": "module M { val result=Set((x)=>x,(x)=>x).size() }",
+      "input": {
+        "id": 8,
+        "kind": "app",
+        "opcode": "size",
+        "args": [
+          {
+            "id": 7,
+            "kind": "app",
+            "opcode": "Set",
+            "args": [
+              {
+                "id": 3,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 1,
+                    "name": "x"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "x"
+                }
+              },
+              {
+                "id": 6,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 4,
+                    "name": "x"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "factory_returned_direct",
+      "source": "module M { val result={ def f(x)=(y)=>x+y; Set(f(1),f(2)).size() } }",
+      "input": {
+        "id": 15,
+        "kind": "let",
+        "opdef": {
+          "id": 8,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 6,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "y"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "y"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "expr": {
+          "id": 14,
+          "kind": "app",
+          "opcode": "size",
+          "args": [
+            {
+              "id": 13,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 9,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 11,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "factory_returned_record",
+      "source": "module M { val result={ def f(x)={g:(y)=>x+y}; Set(f(1).g,f(2).g).size() } }",
+      "input": {
+        "id": 21,
+        "kind": "let",
+        "opdef": {
+          "id": 10,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 9,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 8,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "str",
+                  "value": "g"
+                },
+                {
+                  "id": 6,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 2,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 5,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 4,
+                        "kind": "name",
+                        "name": "y"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 20,
+          "kind": "app",
+          "opcode": "size",
+          "args": [
+            {
+              "id": 19,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 14,
+                  "kind": "app",
+                  "opcode": "field",
+                  "args": [
+                    {
+                      "id": 12,
+                      "kind": "app",
+                      "opcode": "f",
+                      "args": [
+                        {
+                          "id": 11,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    },
+                    {
+                      "id": 13,
+                      "kind": "str",
+                      "value": "g"
+                    }
+                  ]
+                },
+                {
+                  "id": 18,
+                  "kind": "app",
+                  "opcode": "field",
+                  "args": [
+                    {
+                      "id": 16,
+                      "kind": "app",
+                      "opcode": "f",
+                      "args": [
+                        {
+                          "id": 15,
+                          "kind": "int",
+                          "value": 2
+                        }
+                      ]
+                    },
+                    {
+                      "id": 17,
+                      "kind": "str",
+                      "value": "g"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "factory_returned_map",
+      "source": "module M { val result={ def f(x)=Map((0,(y)=>x+y)); Set(f(1).get(0),f(2).get(0)).size() } }",
+      "input": {
+        "id": 22,
+        "kind": "let",
+        "opdef": {
+          "id": 11,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 10,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 7,
+                      "kind": "lambda",
+                      "params": [
+                        {
+                          "id": 3,
+                          "name": "y"
+                        }
+                      ],
+                      "qualifier": "def",
+                      "expr": {
+                        "id": 6,
+                        "kind": "app",
+                        "opcode": "iadd",
+                        "args": [
+                          {
+                            "id": 4,
+                            "kind": "name",
+                            "name": "x"
+                          },
+                          {
+                            "id": 5,
+                            "kind": "name",
+                            "name": "y"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 21,
+          "kind": "app",
+          "opcode": "size",
+          "args": [
+            {
+              "id": 20,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "get",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "app",
+                      "opcode": "f",
+                      "args": [
+                        {
+                          "id": 12,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    },
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 19,
+                  "kind": "app",
+                  "opcode": "get",
+                  "args": [
+                    {
+                      "id": 17,
+                      "kind": "app",
+                      "opcode": "f",
+                      "args": [
+                        {
+                          "id": 16,
+                          "kind": "int",
+                          "value": 2
+                        }
+                      ]
+                    },
+                    {
+                      "id": 18,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "factory_returned_variant",
+      "source": "module M { val result={ def f(x)=variant(\"F\",(y)=>x+y); val a=match f(1) { F(g)=>g }; val b=match f(2) { F(g)=>g }; Set(a,b).size() } }",
+      "input": {
+        "id": 33,
+        "kind": "let",
+        "opdef": {
+          "id": 10,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 9,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 8,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "F"
+                },
+                {
+                  "id": 7,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 3,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 6,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 5,
+                        "kind": "name",
+                        "name": "y"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 32,
+          "kind": "let",
+          "opdef": {
+            "id": 18,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 14,
+              "kind": "app",
+              "opcode": "matchVariant",
+              "args": [
+                {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 11,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 15,
+                  "kind": "str",
+                  "value": "F"
+                },
+                {
+                  "id": 16,
+                  "kind": "lambda",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 13,
+                    "kind": "name",
+                    "name": "g"
+                  },
+                  "params": [
+                    {
+                      "name": "g",
+                      "id": 17
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 31,
+            "kind": "let",
+            "opdef": {
+              "id": 26,
+              "kind": "def",
+              "name": "b",
+              "qualifier": "val",
+              "expr": {
+                "id": 22,
+                "kind": "app",
+                "opcode": "matchVariant",
+                "args": [
+                  {
+                    "id": 20,
+                    "kind": "app",
+                    "opcode": "f",
+                    "args": [
+                      {
+                        "id": 19,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  },
+                  {
+                    "id": 23,
+                    "kind": "str",
+                    "value": "F"
+                  },
+                  {
+                    "id": 24,
+                    "kind": "lambda",
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 21,
+                      "kind": "name",
+                      "name": "g"
+                    },
+                    "params": [
+                      {
+                        "name": "g",
+                        "id": 25
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 30,
+              "kind": "app",
+              "opcode": "size",
+              "args": [
+                {
+                  "id": 29,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 27,
+                      "kind": "name",
+                      "name": "a"
+                    },
+                    {
+                      "id": 28,
+                      "kind": "name",
+                      "name": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "same_branch_ast",
+      "source": "module M { val result={ def f(x)=if(x>0) (y)=>x+y else (y)=>x-y; Set(f(1),f(2)).size() } }",
+      "input": {
+        "id": 24,
+        "kind": "let",
+        "opdef": {
+          "id": 17,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 16,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "ite",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "app",
+                  "opcode": "igt",
+                  "args": [
+                    {
+                      "id": 2,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 9,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 5,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 8,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 6,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 7,
+                        "kind": "name",
+                        "name": "y"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": 14,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 10,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 13,
+                    "kind": "app",
+                    "opcode": "isub",
+                    "args": [
+                      {
+                        "id": 11,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 12,
+                        "kind": "name",
+                        "name": "y"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 23,
+          "kind": "app",
+          "opcode": "size",
+          "args": [
+            {
+              "id": 22,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 19,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 18,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 21,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 20,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "distinct_branch_asts",
+      "source": "module M { val result={ def f(x)=if(x>0) (y)=>x+y else (y)=>x-y; Set(f(1),f(0)).size() } }",
+      "input": {
+        "id": 24,
+        "kind": "let",
+        "opdef": {
+          "id": 17,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 16,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "ite",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "app",
+                  "opcode": "igt",
+                  "args": [
+                    {
+                      "id": 2,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 9,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 5,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 8,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 6,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 7,
+                        "kind": "name",
+                        "name": "y"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": 14,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 10,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 13,
+                    "kind": "app",
+                    "opcode": "isub",
+                    "args": [
+                      {
+                        "id": 11,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 12,
+                        "kind": "name",
+                        "name": "y"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 23,
+          "kind": "app",
+          "opcode": "size",
+          "args": [
+            {
+              "id": 22,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 19,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 18,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 21,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 20,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "latest_outer_parameter",
+      "source": "module M { val result={ def f(x)=(y)=>x+y; val fs=List(f(10),f(20)); val a=fs.head(); val b=fs.nth(1); List(a(1),b(2)) } }",
+      "input": {
+        "id": 30,
+        "kind": "let",
+        "opdef": {
+          "id": 8,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 6,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "y"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "y"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "expr": {
+          "id": 29,
+          "kind": "let",
+          "opdef": {
+            "id": 14,
+            "kind": "def",
+            "name": "fs",
+            "qualifier": "val",
+            "expr": {
+              "id": 13,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 9,
+                      "kind": "int",
+                      "value": 10
+                    }
+                  ]
+                },
+                {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 11,
+                      "kind": "int",
+                      "value": 20
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 28,
+            "kind": "let",
+            "opdef": {
+              "id": 17,
+              "kind": "def",
+              "name": "a",
+              "qualifier": "val",
+              "expr": {
+                "id": 16,
+                "kind": "app",
+                "opcode": "head",
+                "args": [
+                  {
+                    "id": 15,
+                    "kind": "name",
+                    "name": "fs"
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 27,
+              "kind": "let",
+              "opdef": {
+                "id": 21,
+                "kind": "def",
+                "name": "b",
+                "qualifier": "val",
+                "expr": {
+                  "id": 20,
+                  "kind": "app",
+                  "opcode": "nth",
+                  "args": [
+                    {
+                      "id": 18,
+                      "kind": "name",
+                      "name": "fs"
+                    },
+                    {
+                      "id": 19,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 26,
+                "kind": "app",
+                "opcode": "List",
+                "args": [
+                  {
+                    "id": 23,
+                    "kind": "app",
+                    "opcode": "a",
+                    "args": [
+                      {
+                        "id": 22,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  {
+                    "id": 25,
+                    "kind": "app",
+                    "opcode": "b",
+                    "args": [
+                      {
+                        "id": 24,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 21
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 22
+              }
+            ]
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 21
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 22
+              }
+            ]
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 21
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 22
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "latest_outer_parameter_collection",
+      "source": "module M { val result={ def f(x)=List((y)=>x+y); val fs=List(f(10).head(),f(20).head()); val a=fs.head(); val b=fs.nth(1); List(a(1),b(2)) } }",
+      "input": {
+        "id": 33,
+        "kind": "let",
+        "opdef": {
+          "id": 9,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 8,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 2,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 5,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 4,
+                        "kind": "name",
+                        "name": "y"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 32,
+          "kind": "let",
+          "opdef": {
+            "id": 17,
+            "kind": "def",
+            "name": "fs",
+            "qualifier": "val",
+            "expr": {
+              "id": 16,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "head",
+                  "args": [
+                    {
+                      "id": 11,
+                      "kind": "app",
+                      "opcode": "f",
+                      "args": [
+                        {
+                          "id": 10,
+                          "kind": "int",
+                          "value": 10
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "head",
+                  "args": [
+                    {
+                      "id": 14,
+                      "kind": "app",
+                      "opcode": "f",
+                      "args": [
+                        {
+                          "id": 13,
+                          "kind": "int",
+                          "value": 20
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 31,
+            "kind": "let",
+            "opdef": {
+              "id": 20,
+              "kind": "def",
+              "name": "a",
+              "qualifier": "val",
+              "expr": {
+                "id": 19,
+                "kind": "app",
+                "opcode": "head",
+                "args": [
+                  {
+                    "id": 18,
+                    "kind": "name",
+                    "name": "fs"
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 30,
+              "kind": "let",
+              "opdef": {
+                "id": 24,
+                "kind": "def",
+                "name": "b",
+                "qualifier": "val",
+                "expr": {
+                  "id": 23,
+                  "kind": "app",
+                  "opcode": "nth",
+                  "args": [
+                    {
+                      "id": 21,
+                      "kind": "name",
+                      "name": "fs"
+                    },
+                    {
+                      "id": 22,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 29,
+                "kind": "app",
+                "opcode": "List",
+                "args": [
+                  {
+                    "id": 26,
+                    "kind": "app",
+                    "opcode": "a",
+                    "args": [
+                      {
+                        "id": 25,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  {
+                    "id": 28,
+                    "kind": "app",
+                    "opcode": "b",
+                    "args": [
+                      {
+                        "id": 27,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 21
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 22
+              }
+            ]
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 21
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 22
+              }
+            ]
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 21
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 22
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "nested_factory_parameters",
+      "source": "module M { val result={ def f(x)=(y)=>(z)=>x+y+z; val fs=List(f(10),f(20)); val a=fs.head(); val b=fs.nth(1); val gs=List(a(100),b(200)); val c=gs.head(); val d=gs.nth(1); List(c(1),d(2)) } }",
+      "input": {
+        "id": 50,
+        "kind": "let",
+        "opdef": {
+          "id": 12,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 11,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 10,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "y"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 9,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 3,
+                    "name": "z"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "id": 8,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 6,
+                      "kind": "app",
+                      "opcode": "iadd",
+                      "args": [
+                        {
+                          "id": 4,
+                          "kind": "name",
+                          "name": "x"
+                        },
+                        {
+                          "id": 5,
+                          "kind": "name",
+                          "name": "y"
+                        }
+                      ]
+                    },
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "z"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "expr": {
+          "id": 49,
+          "kind": "let",
+          "opdef": {
+            "id": 18,
+            "kind": "def",
+            "name": "fs",
+            "qualifier": "val",
+            "expr": {
+              "id": 17,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 14,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "int",
+                      "value": 10
+                    }
+                  ]
+                },
+                {
+                  "id": 16,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 15,
+                      "kind": "int",
+                      "value": 20
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 48,
+            "kind": "let",
+            "opdef": {
+              "id": 21,
+              "kind": "def",
+              "name": "a",
+              "qualifier": "val",
+              "expr": {
+                "id": 20,
+                "kind": "app",
+                "opcode": "head",
+                "args": [
+                  {
+                    "id": 19,
+                    "kind": "name",
+                    "name": "fs"
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 47,
+              "kind": "let",
+              "opdef": {
+                "id": 25,
+                "kind": "def",
+                "name": "b",
+                "qualifier": "val",
+                "expr": {
+                  "id": 24,
+                  "kind": "app",
+                  "opcode": "nth",
+                  "args": [
+                    {
+                      "id": 22,
+                      "kind": "name",
+                      "name": "fs"
+                    },
+                    {
+                      "id": 23,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 46,
+                "kind": "let",
+                "opdef": {
+                  "id": 31,
+                  "kind": "def",
+                  "name": "gs",
+                  "qualifier": "val",
+                  "expr": {
+                    "id": 30,
+                    "kind": "app",
+                    "opcode": "List",
+                    "args": [
+                      {
+                        "id": 27,
+                        "kind": "app",
+                        "opcode": "a",
+                        "args": [
+                          {
+                            "id": 26,
+                            "kind": "int",
+                            "value": 100
+                          }
+                        ]
+                      },
+                      {
+                        "id": 29,
+                        "kind": "app",
+                        "opcode": "b",
+                        "args": [
+                          {
+                            "id": 28,
+                            "kind": "int",
+                            "value": 200
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "expr": {
+                  "id": 45,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 34,
+                    "kind": "def",
+                    "name": "c",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 33,
+                      "kind": "app",
+                      "opcode": "head",
+                      "args": [
+                        {
+                          "id": 32,
+                          "kind": "name",
+                          "name": "gs"
+                        }
+                      ]
+                    }
+                  },
+                  "expr": {
+                    "id": 44,
+                    "kind": "let",
+                    "opdef": {
+                      "id": 38,
+                      "kind": "def",
+                      "name": "d",
+                      "qualifier": "val",
+                      "expr": {
+                        "id": 37,
+                        "kind": "app",
+                        "opcode": "nth",
+                        "args": [
+                          {
+                            "id": 35,
+                            "kind": "name",
+                            "name": "gs"
+                          },
+                          {
+                            "id": 36,
+                            "kind": "int",
+                            "value": 1
+                          }
+                        ]
+                      }
+                    },
+                    "expr": {
+                      "id": 43,
+                      "kind": "app",
+                      "opcode": "List",
+                      "args": [
+                        {
+                          "id": 40,
+                          "kind": "app",
+                          "opcode": "c",
+                          "args": [
+                            {
+                              "id": 39,
+                              "kind": "int",
+                              "value": 1
+                            }
+                          ]
+                        },
+                        {
+                          "id": 42,
+                          "kind": "app",
+                          "opcode": "d",
+                          "args": [
+                            {
+                              "id": 41,
+                              "kind": "int",
+                              "value": 2
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 221
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 222
+              }
+            ]
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 221
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 222
+              }
+            ]
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 221
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 222
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "local_lazy_value_capture",
+      "source": "module M { val result={ def f(x)={ val z=x*2; (y)=>z+y }; val fs=List(f(10),f(20)); val a=fs.head(); val b=fs.nth(1); List(a(1),b(2)) } }",
+      "input": {
+        "id": 35,
+        "kind": "let",
+        "opdef": {
+          "id": 13,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 12,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 11,
+              "kind": "let",
+              "opdef": {
+                "id": 5,
+                "kind": "def",
+                "name": "z",
+                "qualifier": "val",
+                "expr": {
+                  "id": 4,
+                  "kind": "app",
+                  "opcode": "imul",
+                  "args": [
+                    {
+                      "id": 2,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 10,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 6,
+                    "name": "y"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "z"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "name",
+                      "name": "y"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "expr": {
+          "id": 34,
+          "kind": "let",
+          "opdef": {
+            "id": 19,
+            "kind": "def",
+            "name": "fs",
+            "qualifier": "val",
+            "expr": {
+              "id": 18,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 10
+                    }
+                  ]
+                },
+                {
+                  "id": 17,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 16,
+                      "kind": "int",
+                      "value": 20
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 33,
+            "kind": "let",
+            "opdef": {
+              "id": 22,
+              "kind": "def",
+              "name": "a",
+              "qualifier": "val",
+              "expr": {
+                "id": 21,
+                "kind": "app",
+                "opcode": "head",
+                "args": [
+                  {
+                    "id": 20,
+                    "kind": "name",
+                    "name": "fs"
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 32,
+              "kind": "let",
+              "opdef": {
+                "id": 26,
+                "kind": "def",
+                "name": "b",
+                "qualifier": "val",
+                "expr": {
+                  "id": 25,
+                  "kind": "app",
+                  "opcode": "nth",
+                  "args": [
+                    {
+                      "id": 23,
+                      "kind": "name",
+                      "name": "fs"
+                    },
+                    {
+                      "id": 24,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 31,
+                "kind": "app",
+                "opcode": "List",
+                "args": [
+                  {
+                    "id": 28,
+                    "kind": "app",
+                    "opcode": "a",
+                    "args": [
+                      {
+                        "id": 27,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  {
+                    "id": 30,
+                    "kind": "app",
+                    "opcode": "b",
+                    "args": [
+                      {
+                        "id": 29,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 41
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 42
+              }
+            ]
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 41
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 42
+              }
+            ]
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 41
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 42
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "factory_calls_via_map",
+      "source": "module M { val result={ def f(x)=List((y)=>x+y); val fs=Set(10,20).mapBy(x=>f(x).head()); val a=fs.get(10); val b=fs.get(20); List(a(1),b(2)) } }",
+      "input": {
+        "id": 36,
+        "kind": "let",
+        "opdef": {
+          "id": 9,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 8,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 2,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 5,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 4,
+                        "kind": "name",
+                        "name": "y"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 35,
+          "kind": "let",
+          "opdef": {
+            "id": 19,
+            "kind": "def",
+            "name": "fs",
+            "qualifier": "val",
+            "expr": {
+              "id": 18,
+              "kind": "app",
+              "opcode": "mapBy",
+              "args": [
+                {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 10,
+                      "kind": "int",
+                      "value": 10
+                    },
+                    {
+                      "id": 11,
+                      "kind": "int",
+                      "value": 20
+                    }
+                  ]
+                },
+                {
+                  "id": 17,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 13,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 16,
+                    "kind": "app",
+                    "opcode": "head",
+                    "args": [
+                      {
+                        "id": 15,
+                        "kind": "app",
+                        "opcode": "f",
+                        "args": [
+                          {
+                            "id": 14,
+                            "kind": "name",
+                            "name": "x"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 34,
+            "kind": "let",
+            "opdef": {
+              "id": 23,
+              "kind": "def",
+              "name": "a",
+              "qualifier": "val",
+              "expr": {
+                "id": 22,
+                "kind": "app",
+                "opcode": "get",
+                "args": [
+                  {
+                    "id": 20,
+                    "kind": "name",
+                    "name": "fs"
+                  },
+                  {
+                    "id": 21,
+                    "kind": "int",
+                    "value": 10
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 33,
+              "kind": "let",
+              "opdef": {
+                "id": 27,
+                "kind": "def",
+                "name": "b",
+                "qualifier": "val",
+                "expr": {
+                  "id": 26,
+                  "kind": "app",
+                  "opcode": "get",
+                  "args": [
+                    {
+                      "id": 24,
+                      "kind": "name",
+                      "name": "fs"
+                    },
+                    {
+                      "id": 25,
+                      "kind": "int",
+                      "value": 20
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 32,
+                "kind": "app",
+                "opcode": "List",
+                "args": [
+                  {
+                    "id": 29,
+                    "kind": "app",
+                    "opcode": "a",
+                    "args": [
+                      {
+                        "id": 28,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  {
+                    "id": 31,
+                    "kind": "app",
+                    "opcode": "b",
+                    "args": [
+                      {
+                        "id": 30,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 21
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 22
+              }
+            ]
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 21
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 22
+              }
+            ]
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 21
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 22
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "factory_calls_via_list_fold",
+      "source": "module M { val result={ def f(x)=List((y)=>x+y); val fs=List(10,20).foldl(List(),(a,x)=>a.append(f(x).head())); val a=fs.head(); val b=fs.nth(1); List(a(1),b(2)) } }",
+      "input": {
+        "id": 39,
+        "kind": "let",
+        "opdef": {
+          "id": 9,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 8,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 2,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 5,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 4,
+                        "kind": "name",
+                        "name": "y"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 38,
+          "kind": "let",
+          "opdef": {
+            "id": 23,
+            "kind": "def",
+            "name": "fs",
+            "qualifier": "val",
+            "expr": {
+              "id": 22,
+              "kind": "app",
+              "opcode": "foldl",
+              "args": [
+                {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "List",
+                  "args": [
+                    {
+                      "id": 10,
+                      "kind": "int",
+                      "value": 10
+                    },
+                    {
+                      "id": 11,
+                      "kind": "int",
+                      "value": 20
+                    }
+                  ]
+                },
+                {
+                  "id": 13,
+                  "kind": "app",
+                  "opcode": "List",
+                  "args": []
+                },
+                {
+                  "id": 21,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 14,
+                      "name": "a"
+                    },
+                    {
+                      "id": 15,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 20,
+                    "kind": "app",
+                    "opcode": "append",
+                    "args": [
+                      {
+                        "id": 16,
+                        "kind": "name",
+                        "name": "a"
+                      },
+                      {
+                        "id": 19,
+                        "kind": "app",
+                        "opcode": "head",
+                        "args": [
+                          {
+                            "id": 18,
+                            "kind": "app",
+                            "opcode": "f",
+                            "args": [
+                              {
+                                "id": 17,
+                                "kind": "name",
+                                "name": "x"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 37,
+            "kind": "let",
+            "opdef": {
+              "id": 26,
+              "kind": "def",
+              "name": "a",
+              "qualifier": "val",
+              "expr": {
+                "id": 25,
+                "kind": "app",
+                "opcode": "head",
+                "args": [
+                  {
+                    "id": 24,
+                    "kind": "name",
+                    "name": "fs"
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 36,
+              "kind": "let",
+              "opdef": {
+                "id": 30,
+                "kind": "def",
+                "name": "b",
+                "qualifier": "val",
+                "expr": {
+                  "id": 29,
+                  "kind": "app",
+                  "opcode": "nth",
+                  "args": [
+                    {
+                      "id": 27,
+                      "kind": "name",
+                      "name": "fs"
+                    },
+                    {
+                      "id": 28,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 35,
+                "kind": "app",
+                "opcode": "List",
+                "args": [
+                  {
+                    "id": 32,
+                    "kind": "app",
+                    "opcode": "a",
+                    "args": [
+                      {
+                        "id": 31,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  {
+                    "id": 34,
+                    "kind": "app",
+                    "opcode": "b",
+                    "args": [
+                      {
+                        "id": 33,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "evaluations": [
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 21
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 22
+              }
+            ]
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 21
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 22
+              }
+            ]
+          }
+        },
+        {
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 21
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 22
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "name": "uncaptured_factory",
+      "source": "module M { def factory(x)=List((y)=>y) }",
+      "module": {
+        "id": 8,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "factory",
+            "qualifier": "def",
+            "expr": {
+              "id": 6,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "List",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 2,
+                        "name": "y"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 3,
+                      "kind": "name",
+                      "name": "y"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "input": {
+        "id": 6,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 1,
+            "name": "x"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 5,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 4,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "y"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 3,
+                "kind": "name",
+                "name": "y"
+              }
+            }
+          ]
+        }
+      },
+      "compiledFactoryObject": 1,
+      "repeatedBuildSameObject": true,
+      "newBuilderDifferentObject": true,
+      "steps": [
+        {
+          "kind": "factory",
+          "argument": 10,
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 0,
+                    "name": "_a0"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "kind": "str",
+                  "value": "lambda_1_params",
+                  "id": 0
+                }
+              }
+            ]
+          },
+          "closureObject": 2,
+          "sameAsFirst": true,
+          "directEqualsFirst": false,
+          "registers": [
+            {
+              "id": 2,
+              "error": {
+                "code": "QNT501",
+                "message": "Parameter y not set"
+              }
+            },
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 10
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 1,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          },
+          "registers": [
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 10
+              }
+            }
+          ]
+        },
+        {
+          "kind": "factory",
+          "argument": 20,
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 0,
+                    "name": "_a0"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "kind": "str",
+                  "value": "lambda_1_params",
+                  "id": 0
+                }
+              }
+            ]
+          },
+          "closureObject": 2,
+          "sameAsFirst": true,
+          "directEqualsFirst": false,
+          "registers": [
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 2,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          },
+          "registers": [
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 2
+              }
+            },
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 1,
+          "argument": 3,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 3
+          },
+          "registers": [
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 3
+              }
+            },
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            }
+          ]
+        },
+        {
+          "kind": "reset",
+          "registers": [
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 3
+              }
+            },
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 4,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 4
+          },
+          "registers": [
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 4
+              }
+            },
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            }
+          ]
+        },
+        {
+          "kind": "factory",
+          "argument": 30,
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 0,
+                    "name": "_a0"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "kind": "str",
+                  "value": "lambda_1_params",
+                  "id": 0
+                }
+              }
+            ]
+          },
+          "closureObject": 2,
+          "sameAsFirst": true,
+          "directEqualsFirst": false,
+          "registers": [
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 4
+              }
+            },
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 30
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 5,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 5
+          },
+          "registers": [
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 5
+              }
+            },
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 30
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 2,
+          "argument": 6,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 6
+          },
+          "registers": [
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 6
+              }
+            },
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 30
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "captured_factory",
+      "source": "module M { def factory(x)=List((y)=>x+y) }",
+      "module": {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "factory",
+            "qualifier": "def",
+            "expr": {
+              "id": 8,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 7,
+                "kind": "app",
+                "opcode": "List",
+                "args": [
+                  {
+                    "id": 6,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 2,
+                        "name": "y"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 5,
+                      "kind": "app",
+                      "opcode": "iadd",
+                      "args": [
+                        {
+                          "id": 3,
+                          "kind": "name",
+                          "name": "x"
+                        },
+                        {
+                          "id": 4,
+                          "kind": "name",
+                          "name": "y"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "input": {
+        "id": 8,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 1,
+            "name": "x"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 7,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 6,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "y"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "y"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "compiledFactoryObject": 1,
+      "repeatedBuildSameObject": true,
+      "newBuilderDifferentObject": true,
+      "steps": [
+        {
+          "kind": "factory",
+          "argument": 10,
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 0,
+                    "name": "_a0"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "kind": "str",
+                  "value": "lambda_1_params",
+                  "id": 0
+                }
+              }
+            ]
+          },
+          "closureObject": 2,
+          "sameAsFirst": true,
+          "directEqualsFirst": false,
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 10
+              }
+            },
+            {
+              "id": 2,
+              "error": {
+                "code": "QNT501",
+                "message": "Parameter y not set"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 1,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 11
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 10
+              }
+            },
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "kind": "factory",
+          "argument": 20,
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 0,
+                    "name": "_a0"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "kind": "str",
+                  "value": "lambda_1_params",
+                  "id": 0
+                }
+              }
+            ]
+          },
+          "closureObject": 2,
+          "sameAsFirst": true,
+          "directEqualsFirst": false,
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 2,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 22
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 1,
+          "argument": 3,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 23
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 3
+              }
+            }
+          ]
+        },
+        {
+          "kind": "reset",
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 3
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 4,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 24
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 4
+              }
+            }
+          ]
+        },
+        {
+          "kind": "factory",
+          "argument": 30,
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 0,
+                    "name": "_a0"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "kind": "str",
+                  "value": "lambda_1_params",
+                  "id": 0
+                }
+              }
+            ]
+          },
+          "closureObject": 2,
+          "sameAsFirst": true,
+          "directEqualsFirst": false,
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 30
+              }
+            },
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 4
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 5,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 35
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 30
+              }
+            },
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 5
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 2,
+          "argument": 6,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 36
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 30
+              }
+            },
+            {
+              "id": 2,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 6
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lazy_local_capture",
+      "source": "module M { def factory(x)={ val z=x*2; List((y)=>z+y) } }",
+      "module": {
+        "id": 15,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 14,
+            "kind": "def",
+            "name": "factory",
+            "qualifier": "def",
+            "expr": {
+              "id": 13,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 12,
+                "kind": "let",
+                "opdef": {
+                  "id": 5,
+                  "kind": "def",
+                  "name": "z",
+                  "qualifier": "val",
+                  "expr": {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "imul",
+                    "args": [
+                      {
+                        "id": 2,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 3,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                },
+                "expr": {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "List",
+                  "args": [
+                    {
+                      "id": 10,
+                      "kind": "lambda",
+                      "params": [
+                        {
+                          "id": 6,
+                          "name": "y"
+                        }
+                      ],
+                      "qualifier": "def",
+                      "expr": {
+                        "id": 9,
+                        "kind": "app",
+                        "opcode": "iadd",
+                        "args": [
+                          {
+                            "id": 7,
+                            "kind": "name",
+                            "name": "z"
+                          },
+                          {
+                            "id": 8,
+                            "kind": "name",
+                            "name": "y"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "input": {
+        "id": 13,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 1,
+            "name": "x"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 12,
+          "kind": "let",
+          "opdef": {
+            "id": 5,
+            "kind": "def",
+            "name": "z",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "imul",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 10,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 6,
+                    "name": "y"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "z"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "name",
+                      "name": "y"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "compiledFactoryObject": 1,
+      "repeatedBuildSameObject": true,
+      "newBuilderDifferentObject": true,
+      "steps": [
+        {
+          "kind": "factory",
+          "argument": 10,
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 0,
+                    "name": "_a0"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "kind": "str",
+                  "value": "lambda_1_params",
+                  "id": 0
+                }
+              }
+            ]
+          },
+          "closureObject": 2,
+          "sameAsFirst": true,
+          "directEqualsFirst": false,
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 10
+              }
+            },
+            {
+              "id": 6,
+              "error": {
+                "code": "QNT501",
+                "message": "Parameter y not set"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 1,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 21
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 10
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "kind": "factory",
+          "argument": 20,
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 0,
+                    "name": "_a0"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "kind": "str",
+                  "value": "lambda_1_params",
+                  "id": 0
+                }
+              }
+            ]
+          },
+          "closureObject": 2,
+          "sameAsFirst": true,
+          "directEqualsFirst": false,
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 2,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 22
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 1,
+          "argument": 3,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 23
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 3
+              }
+            }
+          ]
+        },
+        {
+          "kind": "reset",
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 3
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 4,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 24
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 4
+              }
+            }
+          ]
+        },
+        {
+          "kind": "factory",
+          "argument": 30,
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 0,
+                    "name": "_a0"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "kind": "str",
+                  "value": "lambda_1_params",
+                  "id": 0
+                }
+              }
+            ]
+          },
+          "closureObject": 2,
+          "sameAsFirst": true,
+          "directEqualsFirst": false,
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 30
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 4
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 5,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 25
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 30
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 5
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 2,
+          "argument": 6,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 26
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 30
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 6
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "eager_local_capture",
+      "source": "module M { def factory(x)={ val z=x*2; List((y)=>z+y,z) } }",
+      "module": {
+        "id": 16,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 15,
+            "kind": "def",
+            "name": "factory",
+            "qualifier": "def",
+            "expr": {
+              "id": 14,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 13,
+                "kind": "let",
+                "opdef": {
+                  "id": 5,
+                  "kind": "def",
+                  "name": "z",
+                  "qualifier": "val",
+                  "expr": {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "imul",
+                    "args": [
+                      {
+                        "id": 2,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 3,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                },
+                "expr": {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "List",
+                  "args": [
+                    {
+                      "id": 10,
+                      "kind": "lambda",
+                      "params": [
+                        {
+                          "id": 6,
+                          "name": "y"
+                        }
+                      ],
+                      "qualifier": "def",
+                      "expr": {
+                        "id": 9,
+                        "kind": "app",
+                        "opcode": "iadd",
+                        "args": [
+                          {
+                            "id": 7,
+                            "kind": "name",
+                            "name": "z"
+                          },
+                          {
+                            "id": 8,
+                            "kind": "name",
+                            "name": "y"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "id": 11,
+                      "kind": "name",
+                      "name": "z"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "input": {
+        "id": 14,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 1,
+            "name": "x"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 13,
+          "kind": "let",
+          "opdef": {
+            "id": 5,
+            "kind": "def",
+            "name": "z",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "imul",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 10,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 6,
+                    "name": "y"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "z"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "name",
+                      "name": "y"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 11,
+                "kind": "name",
+                "name": "z"
+              }
+            ]
+          }
+        }
+      },
+      "compiledFactoryObject": 1,
+      "repeatedBuildSameObject": true,
+      "newBuilderDifferentObject": true,
+      "steps": [
+        {
+          "kind": "factory",
+          "argument": 10,
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 0,
+                    "name": "_a0"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "kind": "str",
+                  "value": "lambda_1_params",
+                  "id": 0
+                }
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            ]
+          },
+          "closureObject": 2,
+          "sameAsFirst": true,
+          "directEqualsFirst": false,
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 10
+              }
+            },
+            {
+              "id": 6,
+              "error": {
+                "code": "QNT501",
+                "message": "Parameter y not set"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 1,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 21
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 10
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "kind": "factory",
+          "argument": 20,
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 0,
+                    "name": "_a0"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "kind": "str",
+                  "value": "lambda_1_params",
+                  "id": 0
+                }
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 40
+              }
+            ]
+          },
+          "closureObject": 2,
+          "sameAsFirst": true,
+          "directEqualsFirst": false,
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 2,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 22
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 1,
+          "argument": 3,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 23
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 3
+              }
+            }
+          ]
+        },
+        {
+          "kind": "reset",
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 3
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 4,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 24
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 20
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 4
+              }
+            }
+          ]
+        },
+        {
+          "kind": "factory",
+          "argument": 30,
+          "output": {
+            "id": 0,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 0,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 0,
+                    "name": "_a0"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "kind": "str",
+                  "value": "lambda_1_params",
+                  "id": 0
+                }
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 60
+              }
+            ]
+          },
+          "closureObject": 2,
+          "sameAsFirst": true,
+          "directEqualsFirst": false,
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 30
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 4
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 0,
+          "argument": 5,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 25
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 30
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 5
+              }
+            }
+          ]
+        },
+        {
+          "kind": "callChild",
+          "child": 2,
+          "argument": 6,
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 26
+          },
+          "registers": [
+            {
+              "id": 1,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 30
+              }
+            },
+            {
+              "id": 6,
+              "output": {
+                "id": 0,
+                "kind": "int",
+                "value": 6
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "moduleEvaluations": {
+    "source": "module M { def factory(x)=List((y)=>x+y) val first=factory(10).head() val second=factory(20).head() }",
+    "module": {
+      "id": 18,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 9,
+          "kind": "def",
+          "name": "factory",
+          "qualifier": "def",
+          "expr": {
+            "id": 8,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 2,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 5,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 4,
+                        "kind": "name",
+                        "name": "y"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 13,
+          "kind": "def",
+          "name": "first",
+          "qualifier": "val",
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "head",
+            "args": [
+              {
+                "id": 11,
+                "kind": "app",
+                "opcode": "factory",
+                "args": [
+                  {
+                    "id": 10,
+                    "kind": "int",
+                    "value": 10
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 17,
+          "kind": "def",
+          "name": "second",
+          "qualifier": "val",
+          "expr": {
+            "id": 16,
+            "kind": "app",
+            "opcode": "head",
+            "args": [
+              {
+                "id": 15,
+                "kind": "app",
+                "opcode": "factory",
+                "args": [
+                  {
+                    "id": 14,
+                    "kind": "int",
+                    "value": 20
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "evaluations": [
+      {
+        "name": "first",
+        "input": {
+          "id": 19,
+          "kind": "name",
+          "name": "first"
+        },
+        "output": {
+          "id": 0,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 0,
+              "name": "_a0"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "kind": "str",
+            "value": "lambda_1_params",
+            "id": 0
+          }
+        },
+        "closureObject": 1,
+        "sameAsFirst": true,
+        "invokeWithOne": {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 11
+          }
+        }
+      },
+      {
+        "name": "second",
+        "input": {
+          "id": 20,
+          "kind": "name",
+          "name": "second"
+        },
+        "output": {
+          "id": 0,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 0,
+              "name": "_a0"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "kind": "str",
+            "value": "lambda_1_params",
+            "id": 0
+          }
+        },
+        "closureObject": 1,
+        "sameAsFirst": true,
+        "invokeWithOne": {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 21
+          }
+        }
+      },
+      {
+        "name": "first",
+        "input": {
+          "id": 21,
+          "kind": "name",
+          "name": "first"
+        },
+        "output": {
+          "id": 0,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 0,
+              "name": "_a0"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "kind": "str",
+            "value": "lambda_1_params",
+            "id": 0
+          }
+        },
+        "closureObject": 1,
+        "sameAsFirst": true,
+        "invokeWithOne": {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 21
+          }
+        }
+      },
+      {
+        "name": "second",
+        "input": {
+          "id": 22,
+          "kind": "name",
+          "name": "second"
+        },
+        "output": {
+          "id": 0,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 0,
+              "name": "_a0"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "kind": "str",
+            "value": "lambda_1_params",
+            "id": 0
+          }
+        },
+        "closureObject": 1,
+        "sameAsFirst": true,
+        "invokeWithOne": {
+          "output": {
+            "id": 0,
+            "kind": "int",
+            "value": 21
+          }
+        }
+      }
+    ],
+    "separateEvaluator": {
+      "differentClosure": true,
+      "newInvokeWithOne": {
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 11
+        }
+      },
+      "oldInvokeWithOne": {
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 21
+        }
+      }
+    }
+  }
+}

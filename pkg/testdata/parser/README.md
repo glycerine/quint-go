@@ -656,3 +656,13 @@ parser and verify complete result ownership, no concrete occurrence tokens,
 concurrent mutation isolation, finite bounds, dynamic exclusions, and errors.
 Benchmarks retain uncached parsing as an explicit baseline; ordinary repeated
 signature lookup only clones the finite templates.
+
+`runtime_closure_lifetime_pending.json` is regenerated with
+`node pkg/grammar/runtime_closure_lifetime_pending_fixtures.cjs`. Sixteen
+expression scenarios (48 evaluations), forty raw factory operations, and four
+persistent module evaluations record closure-object labels, capture results,
+parameter cells, scoped cache effects, repeated builds, and separate builders.
+Upstream reuses compiled lambda objects and shared argument cells; Go currently
+uses per-call captured scopes. This is pending parity evidence, not passing Go
+coverage. Fixing allocation tokens alone would leave captured-value behavior
+incorrect.
