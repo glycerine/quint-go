@@ -726,3 +726,10 @@ word "retained" in the commit message.
   P2.4 remains open for tuple-lambda/destructuring conversion, source mapping, and
   diagnostic parity; exhaustiveness and duplicate-case checking belong to the
   pending semantic passes.
+
+- 2026-11-02: Added tuple-destructuring lambda conversion using a fresh tuple
+  parameter and nested pureval item projections, preserving upstream's binding
+  order and one-based tuple indexes. Tests cover two/three fields, holes, nested
+  fresh names, call arguments, and malformed syntax. Default tests pass (core
+  0.304s; combined package execution 0.366s). P2.4 remains open for destructuring
+  bindings, source mapping, and full diagnostic parity.

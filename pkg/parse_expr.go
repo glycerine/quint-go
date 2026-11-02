@@ -80,7 +80,28 @@ func expressionFromContext(ctx p.IExprContext, ids *IDGenerator) (Expr, error) {
 	if c, ok := ctx.(*p.LambdaConsContext); ok {
 		lambda := c.Lambda().LambdaUnsugared()
 		if lambda == nil {
-			return Expr{}, fmt.Errorf("tuple-destructuring lambda conversion not implemented")
+			tuple := c.Lambda().LambdaTupleSugar()
+			params := []Parameter{}
+			for _, param := range tuple.AllParameter() {
+				params = append(params, Parameter{ID: ids.Next(), Name: param.GetText()})
+			}
+			body, err := expressionFromContext(tuple.Expr(), ids)
+			if err != nil {
+				return Expr{}, err
+			}
+			freshID := ids.Next()
+			fresh := Parameter{ID: freshID, Name: "quintTupledLambdaParam" + freshID.String()}
+			// Upstream reduces left to right: the last binding encloses the others.
+			for i, param := range params {
+				index, _ := ParseInteger(fmt.Sprint(i + 1))
+				access := Expr{ID: ids.Next(), Kind: "app", Opcode: "item", Args: []Expr{
+					{ID: ids.Next(), Kind: "name", Name: fresh.Name},
+					{ID: ids.Next(), Kind: "int", Int: index},
+				}}
+				inner := body
+				body = Expr{ID: ids.Next(), Kind: "let", Opdef: &OperatorDef{ID: param.ID, Kind: "def", Name: param.Name, Qualifier: PureVal, Expr: &access}, Body: &inner}
+			}
+			return Expr{ID: ids.Next(), Kind: "lambda", Params: []Parameter{fresh}, Qualifier: Def, Body: &body}, nil
 		}
 		params := []Parameter{}
 		for _, param := range lambda.AllParameter() {
