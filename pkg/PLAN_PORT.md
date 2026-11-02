@@ -1825,3 +1825,11 @@ word "retained" in the commit message.
   dependency order, state names, fresh IDs, and prototype isolation. Default
   tests pass (combined execution 0.725s). Instance-reference rewriting, module
   traversal/registration, and exact upstream instance fixtures remain open.
+
+- 2026-11-02: Added FlattenInstances traversal that rewrites instance-backed
+  name/application references, constructs instance modules in declaration order,
+  replaces directives with star imports, and returns generated modules before
+  their owner. Tests verify qualified values/operators, source isolation, and
+  successful name resolution of generated modules. Default tests pass (combined
+  execution 0.792s). Exact upstream instance fixtures, nested instances, and
+  full flattening orchestration remain open under P6.1.
