@@ -1720,3 +1720,11 @@ word "retained" in the commit message.
   Tests cover priority, suffix case, missing modules, flag ordering, literal true,
   and wrapper shape. Default tests pass under one second. CLI wiring, argument
   mode validation, and full compilation orchestration remain open.
+
+- 2026-11-02: Added definition namespacing for flattening, including local
+  definitions, lambda parameters, expression references, application opcodes,
+  and constant-type annotations. Preserved reference names, underscore handling,
+  existing-prefix idempotence, and copied output are tested. Definition names
+  intentionally ignore the preserve set, matching the current upstream flattener.
+  Default tests pass under one second. Exact namespace differential fixtures and
+  module/instance expansion remain open under P6.1.
