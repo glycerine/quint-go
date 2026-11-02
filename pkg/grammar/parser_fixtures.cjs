@@ -251,3 +251,23 @@ const solverFixtures=solverCases.map(([name,constraint])=>{
  return {name,input,substitutions:result.isRight()?result.value:null,errors:result.isLeft()?[...result.value].map(([id,error])=>({id:String(id),error})):[]}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/constraint_solver.json'),JSONbig.stringify(solverFixtures,null,2)+'\n')
+
+const {TypeInferrer}=require(path.join(root,'quint/src/types/inferrer'))
+const inferenceCases=[
+ ['basic','module M { val x=1+2 val y=List(1,2) }'],
+ ['polymorphic','module M { def identity(x)=x val a=identity(1) val b=identity(true) }'],
+ ['local','module M { val pair=def identity(x)=x; (identity(1),identity(true)) }'],
+ ['records','module M { val r={x:1,y:true} val x=r.x val s=r.with("x",2) }'],
+ ['lambda','module M { val f=(x)=>x+1 val y=List(1,2).map(f) }'],
+ ['annotations','module M { const n:int var v:int def f(x:int):int=x+n val y=f(v) }'],
+ ['mismatch','module M { val x=1+true val y=2 }'],
+ ['too-general','module M { def f(x:a):a=x+1 }'],
+]
+const inferenceFixtures=inferenceCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ if(parsed.errors.length)throw Error(JSONbig.stringify(parsed.errors))
+ const linked=resolveNames(parsed.modules)
+ const [errors,types]=new TypeInferrer(linked.table).inferTypes(parsed.modules[0].declarations)
+ return {name,input:parsed.modules,types:[...types].map(([id,s])=>({id:String(id),scheme:{type:s.type,typeVariables:[...s.typeVariables],rowVariables:[...s.rowVariables]}})),errors:[...errors].map(([id,error])=>({id:String(id),error}))}
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/inference.json'),JSONbig.stringify(inferenceFixtures,null,2)+'\n')

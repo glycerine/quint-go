@@ -1378,3 +1378,13 @@ word "retained" in the commit message.
   boolean assumption constraints. Default tests pass (combined execution 0.582s).
   Public inference orchestration, pending-constraint finalization policy, exact
   upstream declaration parity, and generator diagnostic parity remain open.
+
+- 2026-11-02: Added eight upstream inference-table fixtures covering literals,
+  calls, polymorphic operators/local definitions, records, lambdas, annotations,
+  and type errors. Comparisons caught and fixed publication of a declaration
+  scheme after solver failure. Tests compare ordered schemes/quantifiers and
+  structured errors, normalizing only type-node IDs because Go builtin signature
+  parsing currently omits upstream parser IDs. This provenance difference remains
+  open; expression/definition IDs and variable names are compared exactly.
+  Default tests pass (combined execution 0.603s). Public inference orchestration,
+  builtin type-ID parity, and broader inference coverage remain pending.

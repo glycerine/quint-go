@@ -44,6 +44,9 @@ func (g *TypeConstraintGenerator) GenerateDeclaration(d Declaration) error {
 				if err != nil {
 					return err
 				}
+				if g.failed() {
+					goto cleanup
+				}
 				before, err = ExpandFreeVariables(before, subs)
 				if err != nil {
 					return err
@@ -109,6 +112,7 @@ func (g *TypeConstraintGenerator) GenerateDeclaration(d Declaration) error {
 			}
 		}
 	}
+cleanup:
 	restored := insdict.NewDict[string, TypeScheme]()
 	for id, s := range g.Scope.All() {
 		if saved.Get(id) {

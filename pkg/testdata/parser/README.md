@@ -113,3 +113,9 @@ resolved-alias behavior is currently covered by Go unit tests.
 order retained before the upstream solver sorts conjunctions. Tests compare
 ordered substitutions and source-keyed error trees, including nested and
 post-failure behavior. These fixtures use an empty lookup table.
+
+
+`inference.json` contains eight upstream declaration-inference cases. Tests compare
+ordered expression/definition type tables, quantified variable names, and errors.
+Only IDs inside type trees are stripped: builtin-signature type IDs are currently
+absent in Go. Expression/definition IDs and all type-variable names remain exact.
