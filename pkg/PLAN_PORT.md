@@ -645,3 +645,10 @@ word "retained" in the commit message.
   QNT008, QNT009 diagnostics. All default tests pass; parser execution 0.022s.
   P2.1 remains open for automated generator integrity/version checks. P2.3/P2.4
   require parse-tree-to-IR conversion before they can be marked complete.
+
+- 2026-11-02: Added ParseType using the generated Quint grammar, covering primitive,
+  variable/qualified constant, collection, function/operator, tuple/unit, record,
+  open row, and type application syntax. Tests verify expected IR printing,
+  precedence, zero-based tuple field labels, validation, and syntax failures.
+  All default tests pass (core 0.023s, Quint grammar 0.019s). P2.6 remains open
+  for expression/declaration entry points and annotated source identity handling.
