@@ -1795,3 +1795,11 @@ word "retained" in the commit message.
   output, absent metadata, and generator advancement. Default tests pass
   (combined execution 0.725s). Definition/type-annotation refreshing, traversal
   order differential fixtures, and instance integration remain open under P6.2.
+
+- 2026-11-02: Added type-node ID refreshing with copied trees, preorder
+  allocation, absent-ID preservation, and shared source/analysis metadata
+  extension. Expression/type refreshing now use one metadata-copy helper.
+  Tests cover parent/child IDs, retained old source entries, analysis extension,
+  pointer isolation, and absent IDs. Default tests pass (combined execution
+  0.735s). Full declaration traversal order and instance integration remain open
+  under P6.2.
