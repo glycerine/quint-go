@@ -1067,3 +1067,11 @@ word "retained" in the commit message.
   QNT404/QNT405/QNT407 errors. Default tests pass within the sub-second target.
   P3.2 remains open for alias registration, whole-module linking, exports,
   instances, and differential conflict/provenance validation.
+
+- 2026-11-02: Added selective/wildcard/qualified/aliased export collection through
+  shared import/export copying rules. Tests verify visibility through a subsequent
+  importer, identity preservation, replacement of hidden imports without duplicate
+  conflicts, selective conflict references, missing members, and self-export
+  diagnostics. Default tests pass within the sub-second target. P3.2 remains open
+  for alias registration, ordered whole-module linking, and instance overrides;
+  these collection primitives do not yet implement a complete linker.

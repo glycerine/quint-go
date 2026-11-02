@@ -6,12 +6,21 @@ import "strings"
 // The caller resolves the source module and registers aliases for later exports.
 // Imports are hidden from subsequent imports except for constants, as upstream.
 func (s *NameScope) ImportDefinitions(source *NameScope, decl Declaration) {
+	s.copyModuleDefinitions(source, decl, true)
+}
+
+// ExportDefinitions makes copied definitions visible to subsequent importers.
+// The caller resolves aliases before supplying the source scope.
+func (s *NameScope) ExportDefinitions(source *NameScope, decl Declaration) {
+	s.copyModuleDefinitions(source, decl, false)
+}
+func (s *NameScope) copyModuleDefinitions(source *NameScope, decl Declaration, hide bool) {
 	report := func(code, message string) {
 		id := decl.ID
 		s.Errors = append(s.Errors, Diagnostic{Code: code, Message: message, Reference: &id, Data: &DiagnosticData{}})
 	}
 	if decl.ProtoName == s.Module {
-		report(QNT407, "Cannot import '"+decl.ProtoName+"' inside '"+decl.ProtoName+"'")
+		report(QNT407, "Cannot "+decl.Kind+" '"+decl.ProtoName+"' inside '"+decl.ProtoName+"'")
 		return
 	}
 	if source == nil {
@@ -49,7 +58,9 @@ func (s *NameScope) ImportDefinitions(source *NameScope, decl Declaration) {
 		}
 		found = true
 		def := *candidate
-		def.Hidden = true
+		if hide {
+			def.Hidden = true
+		}
 		def.ImportedFrom = &decl
 		def.Namespaces = append([]string(nil), def.Namespaces...)
 		if namespace != "" && !strings.HasPrefix(def.Name, namespace+"::") && (len(def.Namespaces) == 0 || def.Namespaces[len(def.Namespaces)-1] != namespace) {
