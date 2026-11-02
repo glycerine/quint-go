@@ -848,3 +848,15 @@ settings to prevent false safety and verify restoration; optional
 fanout. Deadline tests require incomplete/error after expiry without claiming
 hard preemption during synchronous tool preparation. Focused race checks cover
 ownership, global restoration and cancellation. No Java, Scala or JAR runs.
+
+CLI source-builder oracles now include `cli_core.json` (13 complete stages, 30
+scalar-option and 16 informational cases), `cli/testdata/run_transcripts.json`
+(14 cases), `test_command.json` (35 cases) and `debug_output.json` (14 cases).
+Generators are `grammar/cli_core_fixtures.cjs`, `grammar/cli_run_fixtures.cjs`,
+`cli/test_fixtures.cjs` and `cli/debug_fixtures.cjs`. Comparisons preserve every
+IR/lookup/effect/type ID and stage field, normalizing temporary paths and declared
+timing/date fields only. Tests include exact diagnostics, ITF data, quiet/output
+debug side effects, repeated samples, source carets, writer failures and REPL
+wrapping/history. Native verify CLI source cases use the actual backend; expensive
+cases remain optional. This is a saved corpus, not a claim of all terminal/help
+or unadvertised yargs behavior.

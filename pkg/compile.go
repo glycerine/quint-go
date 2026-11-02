@@ -16,6 +16,11 @@ type CompilationOptions struct {
 // upstream compile does not reject the generated definitions on analysis errors.
 type CompilationResult struct {
 	FlatteningResult
+	// UnflattenedModules is the analyzed source module list after q::* entry
+	// synthesis. The CLI stage output includes this view even when the target
+	// contains only the flattened main module. Module/declaration slices are
+	// copied; nested IR remains read-only, as in the other compilation views.
+	UnflattenedModules  []Module
 	MainModule          Module
 	Main                string
 	Diagnostics         []Diagnostic
@@ -53,6 +58,9 @@ func CompileModules(modules []Module, analysis AnalysisOutput, ids *IDGenerator,
 		}
 	}
 	resolver := linked.ExpressionResolver(result.Main)
+	// Keep successful flag references on failures, matching the CLI resolver's
+	// shared-table behavior without mutating the caller's lookup table.
+	result.Table = resolver.Table
 	for _, flag := range []struct {
 		name  string
 		value *string
@@ -93,6 +101,10 @@ func CompileModules(modules []Module, analysis AnalysisOutput, ids *IDGenerator,
 	}
 	working := append([]Module{}, modules...)
 	working[index].Declarations = append(append([]Declaration{}, modules[index].Declarations...), extra...)
+	result.UnflattenedModules = append([]Module{}, working...)
+	for i := range result.UnflattenedModules {
+		result.UnflattenedModules[i].Declarations = append([]Declaration{}, working[i].Declarations...)
+	}
 	linked, err = ResolveLinkedModules(working)
 	if err != nil {
 		return result, err

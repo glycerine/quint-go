@@ -3,12 +3,15 @@ package cli
 import (
 	"context"
 	"crypto/rand"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
+	"math"
 	"math/big"
 	"os"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -174,10 +177,12 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 		fmt.Fprintln(stderr, "error:", err)
 		return 1
 	}
+	ctx = quint.WithRuntimeHooks(ctx, quint.RuntimeHooks{DebugWriter: stdout})
 	fields := insdict.NewDict[string, any]()
 	fields.Set("stage", "loading")
 	fields.Set("errors", []quint.ErrorMessage{})
 	sources := quint.SourceMap{}
+	sourceCode := insdict.NewDict[string, string]()
 	fail := func(err error) int {
 		var diagnostic quint.Diagnostic
 		message := quint.ErrorMessage{Explanation: err.Error(), Locations: []quint.Location{}}
@@ -190,7 +195,7 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 				fmt.Fprintln(stderr, "error:", writeErr)
 			}
 		} else {
-			fmt.Fprintln(stderr, "error:", message.Explanation)
+			fmt.Fprintln(stderr, quint.RenderErrorMessage(message, sourceCode, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
 		}
 		return 1
 	}
@@ -213,9 +218,18 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 	if err != nil {
 		return fail(err)
 	}
-	resolver := quint.NewFileSourceResolver(nil, nil)
+	loadedSources := map[string]string{}
+	resolver := quint.NewFileSourceResolver(loadedSources, nil)
 	frontend, err := quint.ParseProject(resolver, quint.SourceLookupPath{NormalizedPath: path, SourceName: path})
-	sources = frontend.Sources
+	paths := make([]string, 0, len(loadedSources))
+	for name := range loadedSources {
+		paths = append(paths, name)
+	}
+	sort.Strings(paths)
+	for _, name := range paths {
+		sourceCode.Set(name, loadedSources[name])
+	}
+	sources = coreCompatibilitySources(frontend)
 	fields = coreStageFields("parsing", frontend, nil)
 	if err != nil {
 		return fail(err)
@@ -258,7 +272,7 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 	if err = runValidateAction(frontend, o.main, "step", o.step); err != nil {
 		return fail(err)
 	}
-	combined, _ := quint.CompilationInvariants(o.invariant, o.invariants)
+	combined, individualInvariants := quint.CompilationInvariants(o.invariant, o.invariants)
 	declarations, err := quint.SynthesizeCompilationEntries(quint.CompilationEntries{Target: "json", Init: &o.init, Step: &o.step, Invariants: []string{combined}}, frontend.IDs)
 	if err != nil {
 		return fail(err)
@@ -280,6 +294,18 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 		declarations = append(declarations, parsed.Declarations...)
 		witnessNames = append(witnessNames, name)
 	}
+	invariantNames := []string{}
+	if len(individualInvariants) > 1 {
+		for i, expression := range individualInvariants {
+			name := fmt.Sprintf("q::runInvariant%d", i)
+			parsed, parseErr := quint.ParseExpressionOrDeclaration("val "+name+" = "+expression, frontend.IDs)
+			if parseErr != nil {
+				return fail(parseErr)
+			}
+			declarations = append(declarations, parsed.Declarations...)
+			invariantNames = append(invariantNames, name)
+		}
+	}
 	modules := append([]quint.Module{}, analysis.Modules...)
 	modules[index].Declarations = append(append([]quint.Declaration{}, modules[index].Declarations...), declarations...)
 	evaluator, err := quint.NewProjectEvaluator(ctx, modules, frontend.IDs, o.main, quint.NewRNG(seed), o.metadata)
@@ -297,17 +323,24 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 		messages[i] = quint.ResolveDiagnostic(sources, d)
 	}
 	fields.Set("errors", messages)
-	if len(outcome.BestTraces) > 0 {
-		first := outcome.BestTraces[0]
-		states := runExpressions(first.States)
-		fields.Set("trace", states)
-		fields.Set("seed", first.Seed)
+	serializedTraces := make([][]quint.Expr, len(outcome.BestTraces))
+	hashes := evaluator.ObjectHashState()
+	for i, trace := range outcome.BestTraces {
+		serializedTraces[i], err = runExpressions(trace.States, hashes)
+		if err != nil {
+			return fail(err)
+		}
 	}
+	if len(outcome.BestTraces) > 0 {
+		fields.Set("trace", serializedTraces[0])
+		fields.Set("seed", outcome.BestTraces[0].Seed)
+	}
+	elapsed := time.Since(started).Milliseconds()
 	if o.outITF != "" {
 		now := time.Now()
 		writer := quint.TraceWriter{Template: o.outITF, TraceCount: o.traces, Metadata: o.metadata, Header: quint.ITFHeader{Source: o.input, Timestamp: now.UnixMilli(), CreatedAt: now.Format(time.RFC1123)}}
 		for i, trace := range outcome.BestTraces {
-			states := runExpressions(trace.States)
+			states := serializedTraces[i]
 			status := "ok"
 			if !trace.Result {
 				status = "violation"
@@ -323,42 +356,56 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 			return 1
 		}
 	} else {
-		if o.verbosity >= 2 && len(outcome.BestTraces) > 0 {
+		if o.verbosity >= 2 && len(serializedTraces) > 0 && len(serializedTraces[0]) > 0 {
 			fmt.Fprint(stdout, "An example execution:\n\n")
-			for i, state := range outcome.BestTraces[0].States {
-				fmt.Fprintf(stdout, "State %d: %s\n", i, runVisibleState(state.Expression(), o.hide))
+			if err = runPrintTrace(stdout, serializedTraces[0], o.hide); err != nil {
+				return fail(err)
 			}
 		}
 		if o.verbosity >= 1 {
-			switch outcome.Status {
-			case "ok":
-				fmt.Fprintf(stdout, "[ok] No violation found (%dms).\n", time.Since(started).Milliseconds())
-			case "violation":
-				fmt.Fprintf(stdout, "[violation] Found an issue (%dms).\n", time.Since(started).Milliseconds())
-			case "error":
-				fmt.Fprintf(stdout, "[error] Runtime error (%dms).\n", time.Since(started).Milliseconds())
+			summary := "No violation found"
+			if outcome.Status == "violation" {
+				summary = "Found an issue"
+			} else if outcome.Status == "error" {
+				summary = "Runtime error"
 			}
-			if len(o.witnesses) > 0 {
+			fmt.Fprintf(stdout, "[%s] %s (%dms at %s traces/second).\n", outcome.Status, summary, elapsed, runThroughput(outcome.Samples, elapsed))
+			if outcome.Status == "violation" && len(invariantNames) > 1 && len(serializedTraces) > 0 && len(serializedTraces[0]) > 0 {
+				states := serializedTraces[0]
+				violations, reportErr := runViolatedInvariants(ctx, modules, frontend.IDs, o.main, invariantNames, states[len(states)-1])
+				if reportErr != nil {
+					return fail(reportErr)
+				}
+				for _, index := range violations {
+					fmt.Fprintf(stdout, "  ❌ %s\n", individualInvariants[index])
+				}
+			}
+			if o.verbosity >= 2 {
+				if outcome.Status == "ok" {
+					s := outcome.TraceStatistics
+					fmt.Fprintf(stdout, "Trace length statistics: max=%s, min=%s, average=%.2f\n", runNumber(s.MaxTraceLength), runNumber(s.MinTraceLength), s.AverageTraceLength)
+					fmt.Fprintln(stdout, "You may increase --max-samples and --max-steps.")
+					fmt.Fprintln(stdout, "Use --verbosity to produce more (or less) output.")
+				} else if outcome.Status == "violation" {
+					fmt.Fprintln(stdout, "Use --verbosity=3 to show executions.")
+				}
+			}
+			if outcome.Status != "error" && len(o.witnesses) > 0 {
 				fmt.Fprintln(stdout, "Witnesses:")
 				for i, witness := range o.witnesses {
-					percentage := 0.0
+					percentage := math.NaN()
 					if outcome.Samples > 0 {
 						percentage = 100 * float64(outcome.WitnessingTraces[i]) / float64(outcome.Samples)
 					}
 					fmt.Fprintf(stdout, "%s was witnessed in %d trace(s) out of %d explored (%.2f%%)\n", witness, outcome.WitnessingTraces[i], outcome.Samples, percentage)
 				}
 			}
-			if o.outITF == "" && len(outcome.BestTraces) > 0 {
-				fmt.Fprintf(stdout, "Use --seed=0x%s --backend=go to reproduce.\n", outcome.BestTraces[0].Seed.Big().Text(16))
-			}
 		}
-		if o.verbosity >= 2 && outcome.Status == "ok" {
-			s := outcome.TraceStatistics
-			fmt.Fprintf(stdout, "Trace length statistics: max=%v, min=%v, average=%.2f\n", s.MaxTraceLength, s.MinTraceLength, s.AverageTraceLength)
-			fmt.Fprintln(stdout, "You may increase --max-samples and --max-steps.")
+		for _, message := range runUniqueMessages(messages) {
+			fmt.Fprintln(stderr, quint.RenderErrorMessage(message, sourceCode, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
 		}
-		for _, message := range messages {
-			fmt.Fprintln(stderr, "error:", message.Explanation)
+		if o.verbosity >= 1 && o.outITF == "" && len(outcome.BestTraces) > 0 && outcome.BestTraces[0].Seed.Big().Sign() != 0 {
+			fmt.Fprintf(stdout, "Use --seed=0x%s --backend=go to reproduce.\n", outcome.BestTraces[0].Seed.Big().Text(16))
 		}
 		switch outcome.Status {
 		case "violation":
@@ -399,12 +446,16 @@ func runValidateAction(frontend quint.FrontendResult, main, flag, text string) e
 	return nil
 }
 
-func runExpressions(values []quint.RuntimeValue) []quint.Expr {
+func runExpressions(values []quint.RuntimeValue, hashes *quint.RuntimeObjectHashState) ([]quint.Expr, error) {
 	result := make([]quint.Expr, len(values))
 	for i, value := range values {
-		result[i] = value.Expression()
+		expression, err := quint.SerializeRuntimeValue(value, hashes)
+		if err != nil {
+			return nil, err
+		}
+		result[i] = expression
 	}
-	return result
+	return result, nil
 }
 func runVariables(states []quint.Expr, metadata bool) []string {
 	names := []string{}
@@ -419,24 +470,74 @@ func runVariables(states []quint.Expr, metadata bool) []string {
 	}
 	return names
 }
-func runVisibleState(state quint.Expr, hide []string) string {
-	fields := insdict.NewDict[string, bool]()
-	for _, name := range hide {
-		fields.Set(name, true)
-	}
-	visible := []quint.Expr{}
-	for i := 0; i+1 < len(state.Args); i += 2 {
-		if !fields.Get(state.Args[i].Str) {
-			visible = append(visible, state.Args[i], state.Args[i+1])
-		}
-	}
-	state.Args = visible
-	return quint.ExpressionString(state)
-}
 func runWriteStage(filename string, fields *insdict.Dict[string, any]) error {
 	data, err := coreMarshalStage(fields)
 	if err != nil {
 		return err
 	}
 	return os.WriteFile(filename, append(data, '\n'), 0666)
+}
+
+func runThroughput(samples int, elapsed int64) string {
+	return runNumber(math.Round(float64(samples) * 1000 / float64(elapsed)))
+}
+
+func runNumber(value float64) string {
+	if math.IsInf(value, 1) {
+		return "Infinity"
+	}
+	if math.IsInf(value, -1) {
+		return "-Infinity"
+	}
+	return strconv.FormatFloat(value, 'f', -1, 64)
+}
+
+func runUniqueMessages(messages []quint.ErrorMessage) []quint.ErrorMessage {
+	seen := insdict.NewDict[string, bool]()
+	unique := make([]quint.ErrorMessage, 0, len(messages))
+	for _, message := range messages {
+		encoded, _ := json.Marshal(message)
+		key := string(encoded)
+		if !seen.Get(key) {
+			seen.Set(key, true)
+			unique = append(unique, message)
+		}
+	}
+	return unique
+}
+
+// Reporting runs in its own evaluator. Upstream first evaluates each invariant
+// to register reads, then restores the selected final state and evaluates again.
+// An invariant that fails at runtime is omitted from the list of false values.
+func runViolatedInvariants(ctx context.Context, modules []quint.Module, ids *quint.IDGenerator, main string, names []string, state quint.Expr) ([]int, error) {
+	reporter, err := quint.NewProjectEvaluator(ctx, modules, ids, main, quint.NewRNG(quint.Integer{}), false)
+	if err != nil {
+		return nil, err
+	}
+	record, err := quint.NewRuntimeValue(state)
+	if err != nil {
+		return nil, err
+	}
+	violations := []int{}
+	for i, name := range names {
+		if err := ctx.Err(); err != nil {
+			return nil, err
+		}
+		_, _ = reporter.Evaluate(ctx, name, nil)
+		if err := reporter.Storage.FromRecord(record); err != nil {
+			return nil, err
+		}
+		value, err := reporter.Evaluate(ctx, name, nil)
+		if err != nil {
+			if ctx.Err() != nil {
+				return nil, ctx.Err()
+			}
+			continue
+		}
+		expression := value.Expression()
+		if expression.Kind == "bool" && !expression.Bool {
+			violations = append(violations, i)
+		}
+	}
+	return violations, nil
 }

@@ -171,6 +171,9 @@ func TestTestCommandZeroSamplesAndValidation(t *testing.T) {
 		{[]string{input, "extra.qnt"}, "input"},
 		{[]string{input, "--unknown"}, "unknown"},
 		{[]string{input, "--main"}, "main"},
+		{[]string{input, "--main", "--seed=0"}, "--main requires"},
+		{[]string{input, "--out", "--seed=0"}, "--out requires"},
+		{[]string{input, "--seed", "--verbosity=0"}, "--seed requires"},
 		{[]string{input, "--main=Missing"}, "Missing"},
 		{[]string{input, "--max-samples=-1"}, "max-samples"},
 		{[]string{input, "--max-samples=1.5"}, "max-samples"},
@@ -329,5 +332,17 @@ func TestTestCommandOutputErrors(t *testing.T) {
 	}
 	if status := commandTest(context.Background(), []string{"--help"}, nil, nil); status != 0 {
 		t.Fatal("nil output should discard", status)
+	}
+}
+
+func TestTestCommandInvalidSeedPrecedesOutput(t *testing.T) {
+	t.Parallel()
+	output := filepath.Join(t.TempDir(), "stage.json")
+	status, stdout, stderr := testCommandCall(t, context.Background(), "missing.qnt", "--seed=NotANumber", "--out="+output)
+	if status != 1 || stdout != "" || stderr != "--seed must be a big integer, found: NotANumber\n" {
+		t.Fatal(status, stdout, stderr)
+	}
+	if _, err := os.Stat(output); !os.IsNotExist(err) {
+		t.Fatal("argument coercion must precede loading and stage output", err)
 	}
 }

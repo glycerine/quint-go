@@ -8,6 +8,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"math"
+	"math/big"
 	"os"
 	"path/filepath"
 	"sort"
@@ -31,25 +33,39 @@ func Execute(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	if stderr == nil {
 		stderr = io.Discard
 	}
-	if len(args) > 0 {
-		switch args[0] {
-		case "--version":
-			if len(args) != 1 {
-				fmt.Fprintln(stderr, "error: --version does not accept additional arguments")
-				return 1
-			}
-			if _, err := fmt.Fprintln(stdout, Version); err != nil {
-				fmt.Fprintln(stderr, "error:", err)
-				return 1
-			}
-			return 0
-		case "--help", "-h":
-			return coreHelp(stdout, stderr, "")
-		}
-	}
 	if err := ctx.Err(); err != nil {
 		fmt.Fprintln(stderr, "error:", err)
 		return 1
+	}
+	help, version, args := coreInformationalOptions(args)
+	if help {
+		command := ""
+		if len(args) > 0 {
+			command = args[0]
+		}
+		switch command {
+		case "parse", "typecheck", "compile":
+			return coreHelp(stdout, stderr, command)
+		case "run":
+			return commandRun(ctx, []string{"--help"}, stdout, stderr)
+		case "test":
+			return commandTest(ctx, []string{"--help"}, stdout, stderr)
+		case "verify":
+			return commandVerify(ctx, []string{"--help"}, stdout, stderr)
+		case "docs":
+			return commandDocs(ctx, []string{"--help"}, stdout, stderr)
+		case "repl":
+			return commandREPL(ctx, []string{"--help"}, stdout, stderr)
+		default:
+			return coreHelp(stdout, stderr, "")
+		}
+	}
+	if version {
+		if _, err := fmt.Fprintln(stdout, Version); err != nil {
+			fmt.Fprintln(stderr, "error:", err)
+			return 1
+		}
+		return 0
 	}
 	if len(args) == 0 {
 		return commandREPL(ctx, nil, stdout, stderr)
@@ -74,6 +90,60 @@ func Execute(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	}
 }
 
+// Help/version are handled before required arguments and scalar validation by
+// yargs. A positional terminator protects literal filenames named --help.
+func coreInformationalOptions(args []string) (help, version bool, remaining []string) {
+	remaining = make([]string, 0, len(args))
+	for i := 0; i < len(args); i++ {
+		argument := args[i]
+		if argument == "--" {
+			remaining = append(remaining, args[i:]...)
+			break
+		}
+		name, value, inline := strings.Cut(argument, "=")
+		if name == "--help" || name == "-h" || name == "--version" || name == "--no-help" || name == "--no-version" {
+			if !inline {
+				value = "true"
+				if strings.HasPrefix(name, "--no-") {
+					value = "false"
+				} else if i+1 < len(args) && (args[i+1] == "true" || args[i+1] == "false") {
+					i++
+					value = args[i]
+				}
+			}
+			if name == "--version" || name == "--no-version" {
+				version = value == "true"
+			} else {
+				help = value == "true"
+			}
+			continue
+		}
+		remaining = append(remaining, argument)
+		if argument == "help" {
+			help = true
+		}
+		if !strings.HasPrefix(argument, "-") || inline {
+			continue
+		}
+		boolean := false
+		switch name {
+		case "--flatten", "--no-flatten", "--mbt", "--no-mbt", "--quiet", "--no-quiet", "-q", "--random-transitions", "--no-random-transitions":
+			boolean = true
+		}
+		if i+1 < len(args) && ((!boolean && coreOptionValueArgument(args[i+1])) || (boolean && (args[i+1] == "true" || args[i+1] == "false"))) {
+			i++
+			remaining = append(remaining, args[i])
+			if name == "--invariants" || name == "--witnesses" || name == "--hide" {
+				for i+1 < len(args) && coreOptionValueArgument(args[i+1]) {
+					i++
+					remaining = append(remaining, args[i])
+				}
+			}
+		}
+	}
+	return help, version, remaining
+}
+
 func coreHelp(stdout, stderr io.Writer, command string) int {
 	text := "quint [command]\n\nCommands:\n  parse <input>       parse and resolve a specification\n  typecheck <input>   check types and effects\n  compile <input>     compile to JSON or TLA+ using Go Apalache\n  run <input>         simulate a specification\n  test <input>        run named tests\n  verify <input>      verify with Go Apalache\n  repl [commands..]   evaluate interactively (default)\n  docs <input>        produce documentation\n\nOptions:\n  --help              show help\n  --version           show version\n"
 	if command != "" {
@@ -96,7 +166,7 @@ type coreOptions struct {
 	input, out, sourceMap, main, target, invariant, temporal string
 	init, step                                               *string
 	flatten                                                  bool
-	verbosity                                                int
+	verbosity                                                float64
 	help                                                     bool
 }
 
@@ -112,7 +182,7 @@ func coreParseOptions(command string, args []string) (coreOptions, error) {
 			positionals = append(positionals, args[i+1:]...)
 			break
 		}
-		if !strings.HasPrefix(arg, "-") || arg == "-" {
+		if coreOptionValueArgument(arg) {
 			positionals = append(positionals, arg)
 			continue
 		}
@@ -120,16 +190,24 @@ func coreParseOptions(command string, args []string) (coreOptions, error) {
 			arg = "--help"
 		}
 		if !strings.HasPrefix(arg, "--") {
-			return o, fmt.Errorf("Unknown argument: %s", strings.TrimPrefix(arg, "-"))
+			return o, coreUnknownShortArguments(arg)
 		}
 		name, value, inline := strings.Cut(strings.TrimPrefix(arg, "--"), "=")
+		switch name {
+		case "sourceMap":
+			name = "source-map"
+		case "apalacheVersion":
+			name = "apalache-version"
+		case "serverEndpoint":
+			name = "server-endpoint"
+		}
 		if name == "no-flatten" {
 			if inline {
 				return o, fmt.Errorf("Unknown argument: %s", name)
 			}
 			name, value, inline = "flatten", "false", true
 		}
-		if seen.Get(name) {
+		if seen.Get(name) && name != "help" && name != "flatten" {
 			return o, fmt.Errorf("--%s can not be specified more than once", name)
 		}
 		seen.Set(name, true)
@@ -151,10 +229,7 @@ func coreParseOptions(command string, args []string) (coreOptions, error) {
 			if !inline {
 				value = "true"
 			}
-			boolean, err := strconv.ParseBool(value)
-			if err != nil || (value != "true" && value != "false") {
-				return o, fmt.Errorf("--%s must be true or false", name)
-			}
+			boolean := value == "true"
 			if name == "help" {
 				o.help = boolean
 			} else {
@@ -163,11 +238,17 @@ func coreParseOptions(command string, args []string) (coreOptions, error) {
 			continue
 		}
 		if !inline {
-			if i+1 == len(args) || strings.HasPrefix(args[i+1], "--") {
-				return o, fmt.Errorf("Not enough arguments following: %s", name)
+			if i+1 == len(args) || !coreOptionValueArgument(args[i+1]) {
+				// String options default to the empty string; an omitted
+				// numeric option retains its declared default.
+				if name == "verbosity" {
+					continue
+				}
+				value = ""
+			} else {
+				i++
+				value = args[i]
 			}
-			i++
-			value = args[i]
 		}
 		switch name {
 		case "out":
@@ -190,11 +271,7 @@ func coreParseOptions(command string, args []string) (coreOptions, error) {
 		case "temporal":
 			o.temporal = value
 		case "verbosity":
-			n, err := strconv.Atoi(value)
-			if err != nil || n < 0 || n > 5 {
-				return o, fmt.Errorf("--verbosity must be an integer between 0 and 5")
-			}
-			o.verbosity = n
+			o.verbosity = coreNumberOption(value)
 		case "apalache-version", "server-endpoint":
 			return o, fmt.Errorf("--%s is unsupported: this CLI uses in-process Go Apalache", name)
 		}
@@ -209,6 +286,76 @@ func coreParseOptions(command string, args []string) (coreOptions, error) {
 	return o, nil
 }
 
+// yargs consumes decimal negative values, while negative exponent/hex strings
+// and other leading-dash values remain flags unless supplied with '='.
+func coreOptionValueArgument(value string) bool {
+	if !strings.HasPrefix(value, "-") || value == "-" {
+		return true
+	}
+	digits, decimal := false, false
+	for i := 1; i < len(value); i++ {
+		if value[i] >= '0' && value[i] <= '9' {
+			digits = true
+		} else if value[i] == '.' && !decimal && i+1 < len(value) {
+			decimal = true
+		} else {
+			return false
+		}
+	}
+	return digits
+}
+
+func coreUnknownShortArguments(argument string) error {
+	cluster, _, _ := strings.Cut(strings.TrimPrefix(argument, "-"), "=")
+	seen := map[rune]bool{}
+	names := []string{}
+	for index, name := range cluster {
+		if !seen[name] {
+			seen[name] = true
+			names = append(names, string(name))
+		}
+		if index+1 < len(cluster) {
+			if _, err := strconv.ParseFloat(cluster[index+1:], 64); err == nil {
+				break
+			}
+		}
+	}
+	if len(names) == 1 {
+		return fmt.Errorf("Unknown argument: %s", names[0])
+	}
+	return fmt.Errorf("Unknown arguments: %s", strings.Join(names, ", "))
+}
+
+func coreNumberOption(value string) float64 {
+	value = strings.TrimSpace(value)
+	if value == "" {
+		return 0
+	}
+	if value == "Infinity" || value == "+Infinity" {
+		return math.Inf(1)
+	}
+	if value == "-Infinity" {
+		return math.Inf(-1)
+	}
+	if strings.HasPrefix(value, "0x") || strings.HasPrefix(value, "0X") || strings.HasPrefix(value, "0b") || strings.HasPrefix(value, "0B") || strings.HasPrefix(value, "0o") || strings.HasPrefix(value, "0O") {
+		integer, ok := new(big.Int).SetString(value, 0)
+		if ok {
+			number, _ := integer.Float64()
+			return number
+		}
+		return math.NaN()
+	}
+	// ParseFloat accepts Go-only spellings of infinity; JavaScript does not.
+	if strings.Contains(value, "Inf") || strings.Contains(value, "_") {
+		return math.NaN()
+	}
+	number, err := strconv.ParseFloat(value, 64)
+	if err != nil && !errors.Is(err, strconv.ErrRange) {
+		return math.NaN()
+	}
+	return number
+}
+
 func coreFrontendCommand(ctx context.Context, command string, args []string, stdout, stderr io.Writer) int {
 	o, err := coreParseOptions(command, args)
 	if err != nil {
@@ -220,7 +367,6 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 	}
 	fields := insdict.NewDict[string, any]()
 	fields.Set("stage", "loading")
-	fields.Set("warnings", []any{})
 	fields.Set("errors", []quint.ErrorMessage{})
 	code := insdict.NewDict[string, string]()
 	fail := func(summary string, failure error) int {
@@ -235,7 +381,7 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 		}
 		if diagnostics, ok := fields.Get("errors").([]quint.ErrorMessage); ok {
 			for _, diagnostic := range diagnostics {
-				fmt.Fprintln(stderr, quint.RenderErrorMessage(diagnostic, code))
+				fmt.Fprintln(stderr, quint.RenderErrorMessage(diagnostic, code, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
 			}
 		}
 		if failure == nil || summary != failure.Error() {
@@ -248,9 +394,9 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 		return fail(err.Error(), err)
 	}
 	if _, err = os.Stat(abs); errors.Is(err, os.ErrNotExist) {
-		return fail("file "+o.input+" does not exist", fmt.Errorf("file %s does not exist", o.input))
+		return fail("file "+o.input+" does not exist", nil)
 	} else if err != nil {
-		return fail(err.Error(), err)
+		return fail("file "+o.input+" could not be opened due to "+err.Error(), nil)
 	}
 	if err = ctx.Err(); err != nil {
 		return fail(err.Error(), err)
@@ -265,6 +411,10 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 	sort.Strings(paths)
 	for _, path := range paths {
 		code.Set(path, sourceCode[path])
+	}
+	var loadError *quint.SourceLoadError
+	if errors.As(parseErr, &loadError) && loadError.Path == abs {
+		return fail("file "+o.input+" could not be opened due to "+loadError.Error(), nil)
 	}
 	fields = coreStageFields("parsing", front, nil)
 	if o.sourceMap != "" {
@@ -315,21 +465,34 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 	defaultModule := coreDefaultModule(front, abs)
 	options := quint.CompilationOptions{CompilationEntries: quint.CompilationEntries{Target: o.target, Flatten: o.flatten, Init: o.init, Step: o.step, Temporal: o.temporal}, Main: o.main, DefaultModule: defaultModule, Input: o.input, Invariant: o.invariant}
 	compiled, err := quint.CompileModules(analysis.Modules, quint.AnalysisOutput{Types: analysis.Types, Effects: analysis.Effects, Modes: analysis.Modes}, front.IDs, front.Sources, options)
-	fields.Set("stage", "compiling")
 	if err != nil {
+		if compiled.Main == "" {
+			return fail(err.Error(), nil)
+		}
 		return fail(err.Error(), err)
 	}
 	if len(compiled.Diagnostics) > 0 {
-		fields.Set("errors", coreResolveDiagnostics(front.Sources, compiled.Diagnostics))
-		return fail("compilation failed", nil)
+		if compiled.Table != nil {
+			fields.Set("table", coreLookupTable(compiled.Table))
+		}
+		if compiled.UnflattenedModules == nil {
+			// toExpr's argument errors are deliberately resolved against an
+			// empty map upstream, even though parsing the flag allocated IDs.
+			fields.Set("errors", coreResolveDiagnostics(nil, compiled.Diagnostics))
+			return fail("Argument error", nil)
+		}
+		fields.Set("modules", coreModules(compiled.UnflattenedModules))
+		fields.Set("errors", coreResolveDiagnostics(coreCompatibilitySources(front), compiled.Diagnostics))
+		return fail("name resolution failed", nil)
 	}
-	fields.Set("modules", compiled.Modules)
+	fields.Set("stage", "compiling")
+	fields.Set("modules", coreModules(compiled.UnflattenedModules))
 	fields.Set("table", coreLookupTable(compiled.Table))
 	fields.Set("types", coreStringTable(compiled.Analysis.Types))
-	fields.Set("effects", coreStringTable(compiled.Analysis.Effects))
+	fields.Set("effects", coreStringTable(coreCompilationEffects(compiled, analysis.Effects)))
 	fields.Set("main", compiled.Main)
 	if o.target == "tlaplus" {
-		if !o.flatten && o.verbosity > 0 && o.out == "" {
+		if !o.flatten {
 			fmt.Fprintln(stderr, "Warning: flattening is required for TLA+ output, ignoring --flatten=false option.")
 		}
 		tla, err := apalache.New().TLA(ctx, compiled)
@@ -338,30 +501,29 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 			fields.Set("status", "error")
 			return fail(err.Error(), err)
 		}
+		if _, err = io.WriteString(stdout, tla); err != nil {
+			return fail(err.Error(), err)
+		}
 		if o.out != "" {
 			if err = coreWriteStage(o.out, fields); err != nil {
 				return fail(err.Error(), err)
 			}
-			return 0
-		}
-		if _, err = io.WriteString(stdout, tla); err != nil {
-			return fail(err.Error(), err)
 		}
 		return 0
 	}
-	if o.out != "" {
-		if err = coreWriteStage(o.out, fields); err != nil {
-			return fail(err.Error(), err)
-		}
-		return 0
-	}
-	fields.Set("modules", []quint.Module{compiled.MainModule})
+	fields.Set("modules", coreModules([]quint.Module{compiled.MainModule}))
 	encoded, err := coreMarshalStage(fields)
 	if err != nil {
 		return fail(err.Error(), err)
 	}
 	if _, err = stdout.Write(encoded); err != nil {
 		return fail(err.Error(), err)
+	}
+	if o.out != "" {
+		fields.Set("modules", coreModules(compiled.UnflattenedModules))
+		if err = coreWriteStage(o.out, fields); err != nil {
+			return fail(err.Error(), err)
+		}
 	}
 	return 0
 }
@@ -394,20 +556,109 @@ func coreStageFields(stage string, front quint.FrontendResult, analysis *quint.A
 	fields.Set("stage", stage)
 	fields.Set("warnings", []any{})
 	if front.Modules != nil {
-		fields.Set("modules", front.Modules)
+		fields.Set("modules", coreModules(front.Modules))
 	}
 	if front.Table != nil {
 		fields.Set("table", coreLookupTable(front.Table))
 	}
 	diagnostics := append([]quint.Diagnostic{}, front.Diagnostics...)
 	if analysis != nil {
-		fields.Set("modules", analysis.Modules)
+		fields.Set("modules", coreModules(analysis.Modules))
 		fields.Set("types", coreStringTable(analysis.Types))
 		fields.Set("effects", coreStringTable(analysis.Effects))
 		diagnostics = append(diagnostics, analysis.Diagnostics...)
 	}
-	fields.Set("errors", coreResolveDiagnostics(front.Sources, diagnostics))
+	fields.Set("errors", coreResolveDiagnostics(coreCompatibilitySources(front), diagnostics))
 	return fields
+}
+
+// The reference collector adds depth to non-operator source definitions in
+// place. Keep the Go IR immutable and project that metadata at the CLI boundary.
+func coreModules(modules []quint.Module) []quint.Module {
+	result := append([]quint.Module{}, modules...)
+	for i := range result {
+		result[i].Declarations = append([]quint.Declaration{}, modules[i].Declarations...)
+		for j := range result[i].Declarations {
+			declaration := &result[i].Declarations[j]
+			switch declaration.Kind {
+			case "var", "const", "typedef", "assume":
+				if declaration.Depth == nil {
+					depth := 0
+					declaration.Depth = &depth
+				}
+			}
+		}
+	}
+	return result
+}
+
+// CLI JSON uses upstream's inclusive code-point coordinates; the public editor
+// source map continues to expose half-open UTF-16 spans.
+func coreCompatibilitySources(front quint.FrontendResult) quint.SourceMap {
+	sources := make(quint.SourceMap, len(front.Sources))
+	for id, location := range front.Sources {
+		sources[id] = location
+	}
+	for id, location := range front.UpstreamSources {
+		position := func(p quint.UpstreamPosition) quint.Position {
+			return quint.Position{Line: p.Line, Col: p.Col, Index: p.Index}
+		}
+		compatible := quint.Location{Source: location.Source, Start: position(location.Start)}
+		if location.End != nil {
+			end := position(*location.End)
+			compatible.End = &end
+		}
+		sources[id] = compatible
+	}
+	return sources
+}
+
+// analyzeInc shares the type table but copies effects; the reference compile
+// command ignores its returned effects. Keep the library's complete analysis
+// while projecting the CLI's original effects plus refreshed instance entries.
+func coreCompilationEffects(compiled quint.CompilationResult, original *insdict.Dict[string, quint.EffectScheme]) *insdict.Dict[string, quint.EffectScheme] {
+	generated := map[string]bool{}
+	for _, modules := range [][]quint.Module{compiled.UnflattenedModules, compiled.Modules} {
+		for _, module := range modules {
+			for _, declaration := range module.Declarations {
+				name := declaration.Name
+				wrapper := false
+				for _, suffix := range []string{"q::init", "q::step", "q::inv", "q::inductiveInv", "q::temporalProps"} {
+					if name == suffix || strings.HasSuffix(name, "::"+suffix) {
+						wrapper = true
+						break
+					}
+				}
+				if !wrapper {
+					continue
+				}
+				generated[declaration.ID.String()] = true
+				_ = quint.WalkExpr(declaration.Expr, func(expression *quint.Expr) (bool, error) {
+					generated[expression.ID.String()] = true
+					for _, parameter := range expression.Params {
+						generated[parameter.ID.String()] = true
+					}
+					if expression.Opdef != nil {
+						generated[expression.Opdef.ID.String()] = true
+					}
+					return true, nil
+				})
+			}
+		}
+	}
+	result := insdict.NewDict[string, quint.EffectScheme]()
+	if compiled.Analysis.Effects != nil {
+		for id, effect := range compiled.Analysis.Effects.All() {
+			source := false
+			if original != nil {
+				_, source = original.Get2(id)
+			}
+			if source || !generated[id] {
+				result.Set(id, effect)
+			}
+		}
+	}
+	return result
 }
 
 type coreObject struct{ fields *insdict.Dict[string, any] }
@@ -419,7 +670,23 @@ func coreMarshalStage(fields *insdict.Dict[string, any]) ([]byte, error) {
 	buffer.WriteByte('{')
 	first := true
 	if fields != nil {
-		for key, value := range fields.All() {
+		keys := make([]string, 0, fields.Len())
+		for key := range fields.All() {
+			keys = append(keys, key)
+		}
+		// JSON.stringify(Object.fromEntries(map)) enumerates array-index
+		// properties numerically before the remaining insertion-ordered keys.
+		// IR IDs in lookup/type/effect tables are commonly such properties.
+		sort.SliceStable(keys, func(i, j int) bool {
+			a, aIndex := coreObjectIndex(keys[i])
+			b, bIndex := coreObjectIndex(keys[j])
+			if aIndex != bIndex {
+				return aIndex
+			}
+			return aIndex && a < b
+		})
+		for _, key := range keys {
+			value := fields.Get(key)
 			encoded, err := json.Marshal(value)
 			if err != nil {
 				return nil, err
@@ -438,6 +705,11 @@ func coreMarshalStage(fields *insdict.Dict[string, any]) ([]byte, error) {
 	return buffer.Bytes(), nil
 }
 
+func coreObjectIndex(key string) (uint64, bool) {
+	index, err := strconv.ParseUint(key, 10, 32)
+	return index, err == nil && index < 1<<32-1 && strconv.FormatUint(index, 10) == key
+}
+
 func coreStringTable[T any](table *insdict.Dict[string, T]) coreObject {
 	fields := insdict.NewDict[string, any]()
 	if table != nil {
@@ -454,6 +726,11 @@ func coreLookupTable(table *insdict.Dict[quint.ID, quint.LookupDefinition]) core
 		for id, definition := range table.All() {
 			if definition.Declaration != nil {
 				declaration := *definition.Declaration
+				// Declaration entries retain the import which introduced them;
+				// resolved references carry their current lookup provenance.
+				if id != declaration.ID {
+					declaration.ImportedFrom = nil
+				}
 				if declaration.Kind == "def" {
 					depth := definition.Depth
 					declaration.Depth = &depth
@@ -510,11 +787,13 @@ func coreCompactSourceMap(sources quint.UpstreamSourceMap) ([]byte, error) {
 	indexes := insdict.NewDict[string, int]()
 	locations := insdict.NewDict[string, any]()
 	indexFields := insdict.NewDict[string, any]()
-	for _, id := range ids {
+	for locationIndex, id := range ids {
 		location := sources[id]
 		index, present := indexes.Get2(location.Source)
 		if !present {
-			index = indexes.Len()
+			// Upstream indexes the full sequence of locations, so later files
+			// start after all preceding locations rather than at file ordinal 1.
+			index = locationIndex
 			indexes.Set(location.Source, index)
 			indexFields.Set(strconv.Itoa(index), location.Source)
 		}

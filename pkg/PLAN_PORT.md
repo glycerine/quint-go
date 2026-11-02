@@ -531,7 +531,8 @@ including failed actions that must not leak partially updated state.
     results, trace ranking/seeds, statistics, and runtime-error outcomes.
   - [x] Source expression selectors, run CLI defaults/flags/output, witnesses,
     replay seeds, metadata, JSON/ITF traces, and cancellation/error statuses.
-  - [ ] Individual invariant reporting and full reference formatting parity.
+  - [x] Individual false-invariant reports and saved plain-text command transcripts.
+  - [ ] Remaining terminal/color/selector and full formatting parity audit.
 - [ ] P8.2 Implement `test` discovery/filtering, randomized repetitions,
   pass/fail/ignore results, assertion reports, and replayable failing seeds.
   - [x] Collector-order discovery with default Test suffix/custom predicates,
@@ -651,8 +652,9 @@ Build these items alongside the phases that supply their command behavior.
   argument validation, version output, and exit status contracts.
   - [x] Go executable and all eight command dispatch paths, default REPL,
     help/version, signal contexts, validation, and in-process command tests.
-  - [ ] Complete flag/alias/output parity audit; compile --out currently
-    suppresses stdout while the TypeScript implementation also prints its target.
+  - [x] Compile --out preserves stdout for JSON and TLA targets; exact saved
+    stage fields/IDs, lookup provenance, effects and source indexes match upstream.
+  - [ ] Complete remaining flag/alias/help/error-prose parity audit.
 - [ ] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
 - [ ] P10.3 Port machine-readable stage output and diagnostics; explicitly
@@ -3115,3 +3117,16 @@ word "retained" in the commit message.
   printing and enumeration cooperatively; synchronous preparation/single builtins
   may exceed them and still return incomplete/error. Temporal/ITF output, hard
   preemption and native resolver-directory cleanup remain dependency audit items.
+
+- 2026-11-02: Completed a broad CLI transcript batch: 13 complete stage outputs,
+  30 scalar-option cases, 16 informational cases, 14 run transcripts, 35 test
+  transcripts and 14 debug/quiet-REPL transcripts from actual TypeScript. Compile
+  stdout remains active with --out; stage fields/IDs/provenance/effects, loading
+  failures and source indexes are exact in saved cases. Run reports individual
+  invariants and uses shared pretty/state rendering; test reports source excerpts,
+  hints and ITF variable order. Debug uses injected writers even in quiet/output
+  modes, and REPL results share serialization history. Native TLC is exposed by
+  verify with explicit unsupported-mode errors and exhaustive outcome wording.
+  Full CLI tests pass 0.207s. Remaining differences include unadvertised string
+  negation flags, help/OS-error prose, terminal colors/width, full JS regex and
+  static REPL diagnostic stream formatting.

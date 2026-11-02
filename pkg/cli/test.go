@@ -8,6 +8,7 @@ import (
 	"io"
 	"math/big"
 	"os"
+	"path/filepath"
 	"regexp"
 	"slices"
 	"strconv"
@@ -48,7 +49,7 @@ const testUsage = `Usage: quint test <input> [options]
   --max-samples N      successful samples per randomized test (default 10000, or 1 with --seed)
   --seed INTEGER       replay an arbitrary-precision decimal/hexadecimal seed
   --verbosity N        output level from 0 to 5 (default 2)
-  --out FILE           write stage JSON and suppress console output
+  --out FILE           write stage JSON and suppress test reports
   --out-itf TEMPLATE   write passing/false-result traces; supports {test} and {seq}
   --output TEMPLATE    alias for --out-itf
   --backend go         use the Go evaluator
@@ -91,7 +92,7 @@ func testParseOptions(args []string) (testCommandOptions, error) {
 		}
 		if !hasValue {
 			i++
-			if i >= len(args) {
+			if i >= len(args) || strings.HasPrefix(args[i], "--") {
 				return o, fmt.Errorf("%s requires a value", name)
 			}
 			value = args[i]
@@ -133,6 +134,11 @@ func testParseOptions(args []string) (testCommandOptions, error) {
 	if !o.help && o.input == "" {
 		return o, fmt.Errorf("test requires an input file")
 	}
+	if o.seedSet {
+		if _, err := quint.ParseSeed(o.seed); err != nil {
+			return o, err
+		}
+	}
 	return o, nil
 }
 
@@ -158,6 +164,7 @@ func testMatcher(pattern string) (func(string) bool, error) {
 type testSelection struct {
 	definition             quint.LookupDefinition
 	reference, name, entry string
+	variables              []string
 }
 
 func testSelections(front quint.FrontendResult, main string, match func(string) bool) ([]testSelection, error) {
@@ -195,9 +202,9 @@ func testSelections(front quint.FrontendResult, main string, match func(string) 
 // module, while preserving discovery order, namespaces, dependencies, and
 // independent constant-overridden instances. They are private execution entries
 // and never appear in the output stage.
-func testPrepareEvaluator(ctx context.Context, front quint.FrontendResult, main string, selections []testSelection, rng *quint.RNG) (*quint.ModuleEvaluator, []string, error) {
+func testPrepareEvaluator(ctx context.Context, front quint.FrontendResult, main string, selections []testSelection, rng *quint.RNG) (*quint.ModuleEvaluator, error) {
 	if err := ctx.Err(); err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 	working := append([]quint.Module{}, front.Modules...)
 	for i, module := range working {
@@ -218,43 +225,113 @@ func testPrepareEvaluator(ctx context.Context, front quint.FrontendResult, main 
 	}
 	linked, err := quint.ResolveLinkedModules(working)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 	if len(linked.Errors) > 0 {
-		return nil, nil, linked.Errors[0]
+		return nil, linked.Errors[0]
 	}
 	working, diagnostics := quint.SortModuleDeclarations(working, linked.Table)
 	if len(diagnostics) > 0 {
-		return nil, nil, diagnostics[0]
+		return nil, diagnostics[0]
 	}
 	analysis, err := quint.AnalyzeModules(working, linked.Table)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 	if len(analysis.Diagnostics) > 0 {
-		return nil, nil, analysis.Diagnostics[0]
+		return nil, analysis.Diagnostics[0]
 	}
 	flat, err := quint.FlattenModules(analysis.Modules, linked.Table, front.IDs, front.Sources, quint.AnalysisOutput{Types: analysis.Types, Effects: analysis.Effects, Modes: analysis.Modes})
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 	if err = ctx.Err(); err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 	for _, module := range flat.Modules {
 		if module.Name != main {
 			continue
 		}
-		vars := []string{}
-		for _, decl := range module.Declarations {
-			if decl.Kind == "var" {
-				vars = append(vars, decl.Name)
+		testVariableOrder(module, flat.Table, selections)
+		return quint.NewModuleEvaluator(module, rng, false)
+	}
+	return nil, fmt.Errorf("flattened module %s does not exist", main)
+}
+
+// The reference's builder registers variables while compiling each selected
+// definition, rather than enumerating module declarations. Registrations
+// accumulate across the test suite, including variables in unevaluated branches.
+// Application arguments compile before the operator body; assignment targets
+// compile after the right-hand side. Retain that order in each ITF header.
+func testVariableOrder(module quint.Module, table *insdict.Dict[quint.ID, quint.LookupDefinition], selections []testSelection) {
+	definitions := insdict.NewDict[string, quint.Declaration]()
+	for _, declaration := range module.Declarations {
+		if declaration.Kind == "def" {
+			definitions.Set(declaration.Name, declaration)
+		}
+	}
+	seenDefinitions := map[quint.ID]bool{}
+	variables := insdict.NewDict[string, string]()
+	var expression func(quint.Expr)
+	var definition func(quint.LookupDefinition)
+	definition = func(lookup quint.LookupDefinition) {
+		if lookup.Declaration == nil {
+			return
+		}
+		declaration := lookup.Declaration
+		if declaration.Kind == "var" {
+			variables.Set(declaration.ID.String(), declaration.Name)
+			return
+		}
+		if seenDefinitions[declaration.ID] {
+			return
+		}
+		seenDefinitions[declaration.ID] = true
+		if declaration.Expr != nil {
+			expression(*declaration.Expr)
+		}
+	}
+	reference := func(id quint.ID) {
+		if lookup, found := table.Get2(id); found {
+			definition(lookup)
+		}
+	}
+	expression = func(value quint.Expr) {
+		switch value.Kind {
+		case "name":
+			reference(value.ID)
+		case "app":
+			if value.Opcode == "assign" && len(value.Args) == 2 {
+				expression(value.Args[1])
+				reference(value.Args[0].ID)
+				return
+			}
+			for _, argument := range value.Args {
+				expression(argument)
+			}
+			reference(value.ID)
+		case "lambda":
+			if value.Body != nil {
+				expression(*value.Body)
+			}
+		case "let":
+			if value.Opdef != nil && value.Opdef.Expr != nil {
+				expression(*value.Opdef.Expr)
+			}
+			if value.Body != nil {
+				expression(*value.Body)
 			}
 		}
-		evaluator, err := quint.NewModuleEvaluator(module, rng, false)
-		return evaluator, vars, err
 	}
-	return nil, nil, fmt.Errorf("flattened module %s does not exist", main)
+	for i := range selections {
+		if declaration, found := definitions.Get2(selections[i].entry); found && declaration.Expr != nil {
+			expression(*declaration.Expr)
+		}
+		selections[i].variables = make([]string, 0, variables.Len())
+		for _, name := range variables.All() {
+			selections[i].variables = append(selections[i].variables, name)
+		}
+	}
 }
 
 func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) int {
@@ -266,9 +343,14 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	}
 	output := &testOutputWriter{writer: stdout}
 	stdout = output
+	ctx = quint.WithRuntimeHooks(ctx, quint.RuntimeHooks{DebugWriter: stdout})
 	options, err := testParseOptions(args)
 	if err != nil {
-		fmt.Fprintln(stderr, "error:", err)
+		if strings.HasPrefix(err.Error(), "--seed must be a big integer") {
+			fmt.Fprintln(stderr, err)
+		} else {
+			fmt.Fprintln(stderr, "error:", err)
+		}
 		return 1
 	}
 	if options.help {
@@ -281,6 +363,8 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	fields := insdict.NewDict[string, any]()
 	fields.Set("stage", "loading")
 	fields.Set("errors", []quint.ErrorMessage{})
+	code := insdict.NewDict[string, string]()
+	var sources quint.SourceMap
 	finish := func(status int) int {
 		if output.err != nil {
 			fmt.Fprintln(stderr, "error: writing test output:", output.err)
@@ -298,17 +382,28 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 		}
 		return status
 	}
+	failMessages := func(summary string, messages []quint.ErrorMessage) int {
+		fields.Set("errors", messages)
+		if options.out == "" {
+			duplicate := false
+			for _, message := range messages {
+				rendered := quint.RenderErrorMessage(message, code)
+				fmt.Fprintln(stderr, rendered)
+				duplicate = duplicate || rendered == "error: "+summary
+			}
+			if summary != "" && !duplicate {
+				fmt.Fprintln(stderr, "error:", summary)
+			}
+		}
+		return finish(1)
+	}
 	fail := func(err error) int {
 		message := quint.ErrorMessage{Explanation: err.Error(), Locations: []quint.Location{}}
 		var diagnostic quint.Diagnostic
 		if errors.As(err, &diagnostic) {
-			message.Explanation = diagnostic.Error()
+			message = quint.ResolveDiagnostic(sources, diagnostic)
 		}
-		fields.Set("errors", []quint.ErrorMessage{message})
-		if options.out == "" {
-			fmt.Fprintln(stderr, "error:", message.Explanation)
-		}
-		return finish(1)
+		return failMessages("", []quint.ErrorMessage{message})
 	}
 	if err = ctx.Err(); err != nil {
 		return fail(err)
@@ -330,20 +425,29 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	if err != nil {
 		return fail(err)
 	}
-	resolver := quint.NewFileSourceResolver(nil, nil)
-	path := resolver.LookupPath("", options.input)
+	abs, err := filepath.Abs(options.input)
+	if err != nil {
+		return fail(err)
+	}
+	sourceCode := map[string]string{}
+	resolver := quint.NewFileSourceResolver(sourceCode, nil)
+	path := resolver.LookupPath(filepath.Dir(abs), filepath.Base(abs))
 	front, err := quint.ParseProject(resolver, path)
+	sources = front.Sources
+	paths := make([]string, 0, len(sourceCode))
+	for path := range sourceCode {
+		paths = append(paths, path)
+	}
+	slices.Sort(paths)
+	for _, path := range paths {
+		code.Set(path, sourceCode[path])
+	}
 	fields = coreStageFields("parsing", front, nil)
 	if err != nil {
 		return fail(err)
 	}
 	if len(front.Diagnostics) > 0 {
-		if options.out == "" {
-			for _, d := range front.Diagnostics {
-				fmt.Fprintln(stderr, "error:", d.Error())
-			}
-		}
-		return finish(1)
+		return failMessages("parsing failed", coreResolveDiagnostics(front.Sources, front.Diagnostics))
 	}
 	analysis, err := quint.AnalyzeModules(front.Modules, front.Table)
 	fields = coreStageFields("typechecking", front, &analysis)
@@ -351,32 +455,11 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 		return fail(err)
 	}
 	if len(analysis.Diagnostics) > 0 {
-		messages := make([]quint.ErrorMessage, 0, len(analysis.Diagnostics))
-		for _, d := range analysis.Diagnostics {
-			messages = append(messages, quint.ResolveDiagnostic(front.Sources, d))
-			if options.out == "" {
-				fmt.Fprintln(stderr, "error:", d.Error())
-			}
-		}
-		fields.Set("errors", messages)
-		return finish(1)
+		return failMessages("typechecking failed", coreResolveDiagnostics(front.Sources, analysis.Diagnostics))
 	}
-	main := options.main
-	if main == "" {
-		rootModules := []string{}
-		for _, module := range front.Modules {
-			if location, ok := front.Sources[module.ID]; ok && location.Source == path.SourceName {
-				rootModules = append(rootModules, module.Name)
-			}
-		}
-		if len(rootModules) == 1 {
-			main = rootModules[0]
-		} else {
-			main = quint.GuessMainModule("", "", options.input)
-		}
-	}
+	main := quint.GuessMainModule(options.main, coreDefaultModule(front, abs), options.input)
 	if _, err = quint.SelectMainModule(front.Modules, main, "", options.input); err != nil {
-		return fail(quint.Diagnostic{Code: "QNT405", Message: "Main module " + main + " not found"})
+		return failMessages("Argument error", []quint.ErrorMessage{{Explanation: "[QNT405] Main module " + main + " not found", Locations: []quint.Location{}}})
 	}
 	selections, err := testSelections(front, main, match)
 	if err != nil {
@@ -390,7 +473,7 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	if len(selections) == 0 {
 		return fail(errors.New(quint.NoTestsMatchedMessage(options.match)))
 	}
-	evaluator, vars, err := testPrepareEvaluator(ctx, front, main, selections, quint.NewRNG(seed))
+	evaluator, err := testPrepareEvaluator(ctx, front, main, selections, quint.NewRNG(seed))
 	if err != nil {
 		return fail(err)
 	}
@@ -441,7 +524,7 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 			}
 			now := time.Now()
 			writer := quint.TraceWriter{Template: options.itf, Header: quint.ITFHeader{Source: options.input, CreatedAt: now.Format(time.RFC1123Z), Timestamp: now.UnixMilli()}}
-			if _, err = writer.Write(index, result.Status, vars, states, result.Name); err != nil {
+			if _, err = writer.Write(index, result.Status, selection.variables, states, result.Name); err != nil {
 				return fail(err)
 			}
 		}
@@ -461,19 +544,29 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 			fmt.Fprintf(stdout, "  %d ignored\n", len(ignored))
 		}
 	}
-	if verbosity >= 2 {
+	if verbosity >= 2 && len(failed) > 0 {
+		fmt.Fprintln(stdout)
 		number := 0
 		for index, result := range results {
 			if result.Status == "failed" {
-				number++
-				fmt.Fprintf(stdout, "\n  %d) %s:\n", number, result.Name)
 				for _, diagnostic := range result.Errors {
-					fmt.Fprintf(stdout, "      %s\n", diagnostic.Error())
+					number++
+					fmt.Fprintf(stdout, "  %d) %s:\n", number, result.Name)
+					for _, line := range strings.Split(quint.RenderDiagnostic(diagnostic, front.Sources, code), "\n") {
+						if strings.TrimSpace(line) != "" {
+							fmt.Fprintf(stdout, "      %s\n", line)
+						}
+					}
+					// Discovery matches unqualified names; replay keeps this
+					// distinction even when result names include namespaces.
+					fmt.Fprintf(stdout, "    Use --seed=0x%s --match=^%s$ --backend=go to repeat.\n", result.Seed.Big().Text(16), selections[index].definition.Name)
 				}
-				// Discovery matches the unqualified declaration name, even when
-				// the displayed result includes import/instance namespaces.
-				fmt.Fprintf(stdout, "    Use --seed=0x%s --match=^%s$ --backend=go to repeat.\n", result.Seed.Big().Text(16), selections[index].definition.Name)
 			}
+		}
+		fmt.Fprintln(stdout)
+		if verbosity < 3 {
+			fmt.Fprintln(stdout, "\n  Use --verbosity=3 to show executions.")
+			fmt.Fprintf(stdout, "  Further debug with: quint test --verbosity=3 %s\n", options.input)
 		}
 	}
 	if len(failed) > 0 {

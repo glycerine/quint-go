@@ -43,8 +43,9 @@ or a command's `--help` for its implemented options. Examples:
 
 Verification and TLA+ generation use the Go Apalache production API in-process.
 Bounded success is reported as bounded. Legacy Scala endpoint/version options
-and unsupported backends reject explicitly. Native Go TLC integration is still
-pending. The test filter accepts the shared JavaScript/RE2 regex subset and
+and unsupported backends reject explicitly. Native Go TLC supports exhaustive
+finite-state safety checking with concrete traces; temporal/ITF TLC output remains
+open. The test filter accepts the shared JavaScript/RE2 regex subset and
 rejects unsupported features. Full output, flag, runtime, and temporal trace
 compatibility remain checklist items.
 

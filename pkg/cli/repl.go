@@ -94,6 +94,8 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 		session.SetSeed(*options.Seed)
 	}
 	var writeErr error
+	stdout = &replOutputWriter{writer: stdout, err: &writeErr}
+	ctx = quint.WithRuntimeHooks(ctx, quint.RuntimeHooks{DebugWriter: stdout})
 	out := func(text string) {
 		if writeErr == nil {
 			_, writeErr = io.WriteString(stdout, text)
@@ -130,7 +132,12 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 		case "declaration":
 			out("\n")
 		case "value":
-			out(result.Value.String() + "\n")
+			formatted, err := session.FormatValue(result.Value, 80)
+			if err != nil {
+				report(err)
+				return
+			}
+			out(formatted + "\n")
 			if len(result.Missing) > 0 {
 				out("[warning] some variables are undefined: " + strings.Join(result.Missing, ", ") + "\n")
 			}
@@ -241,6 +248,9 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 		return false
 	}
 	for _, command := range options.Commands {
+		if writeErr != nil {
+			return 1
+		}
 		if err := ctx.Err(); err != nil {
 			report(err)
 			return 1
@@ -295,6 +305,25 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 		return 1
 	}
 	return 0
+}
+
+// Runtime debug output shares the REPL stream's failure state, including short
+// writes. A failed debug write stops the loop before any later evaluation.
+type replOutputWriter struct {
+	writer io.Writer
+	err    *error
+}
+
+func (w *replOutputWriter) Write(data []byte) (int, error) {
+	if *w.err != nil {
+		return 0, *w.err
+	}
+	n, err := w.writer.Write(data)
+	if err == nil && n < len(data) {
+		err = io.ErrShortWrite
+	}
+	*w.err = err
+	return n, err
 }
 
 func replTrimDecorations(line string) string {

@@ -181,8 +181,9 @@ func TestRunStateProjectionOwnership(t *testing.T) {
 		t.Fatal(err)
 	}
 	before := quint.ExpressionString(state)
-	if got := runVisibleState(state, []string{"x"}); got != `Rec("y", 2)` || quint.ExpressionString(state) != before {
-		t.Fatal(got, quint.ExpressionString(state))
+	var output bytes.Buffer
+	if err := runPrintTrace(&output, []quint.Expr{state}, []string{"x"}); err != nil || output.String() != "[State 0] { y: 2 }\n\n" || quint.ExpressionString(state) != before {
+		t.Fatal(output.String(), quint.ExpressionString(state), err)
 	}
 	if got := runVariables([]quint.Expr{state}, false); !reflect.DeepEqual(got, []string{"x", "y"}) {
 		t.Fatal(got)

@@ -1,0 +1,509 @@
+[
+  {
+    "name": "quiet_debug",
+    "source": "module Counter { var x:int action init=x'=q::debug(\"init\",0) action step=x'=q::debug(\"step\",x+1) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=0",
+      "--max-steps=1"
+    ],
+    "exitCode": 0,
+    "stdout": "> init 0\n> step 1\n",
+    "stderr": ""
+  },
+  {
+    "name": "out_debug",
+    "source": "module Counter { var x:int action init=x'=q::debug(\"init\",0) action step=x'=q::debug(\"step\",x+1) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=0",
+      "--max-steps=1",
+      "--out=${STAGE}"
+    ],
+    "exitCode": 0,
+    "stdout": "> init 0\n> step 1\n",
+    "stderr": "",
+    "stage": {
+      "stage": "running",
+      "status": "ok",
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "seed": 18,
+      "errors": []
+    }
+  },
+  {
+    "name": "quiet_success",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 val safe=x<2 val positive=x>=0 val boom=assert(false) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=0",
+      "--max-steps=1"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "success_witnesses",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 val safe=x<2 val positive=x>=0 val boom=assert(false) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=1",
+      "--max-steps=1",
+      "--witnesses",
+      "x == 1",
+      "x == 2"
+    ],
+    "exitCode": 0,
+    "stdout": "[ok] No violation found (<elapsed>ms at <rate> traces/second).\nWitnesses:\nx == 1 was witnessed in 1 trace(s) out of 1 explored (100.00%)\nx == 2 was witnessed in 0 trace(s) out of 1 explored (0.00%)\nUse --seed=0x12 --backend=go to reproduce.\n",
+    "stderr": ""
+  },
+  {
+    "name": "success_details",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 val safe=x<2 val positive=x>=0 val boom=assert(false) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=2",
+      "--max-steps=1",
+      "--witnesses",
+      "x == 1"
+    ],
+    "exitCode": 0,
+    "stdout": "An example execution:\n\n[State 0] { x: 0 }\n\n[State 1] { x: 1 }\n\n[ok] No violation found (<elapsed>ms at <rate> traces/second).\nTrace length statistics: max=2, min=2, average=2.00\nYou may increase --max-samples and --max-steps.\nUse --verbosity to produce more (or less) output.\nWitnesses:\nx == 1 was witnessed in 1 trace(s) out of 1 explored (100.00%)\nUse --seed=0x12 --backend=go to reproduce.\n",
+    "stderr": ""
+  },
+  {
+    "name": "multiple_invariants",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 val safe=x<2 val positive=x>=0 val boom=assert(false) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=1",
+      "--max-steps=3",
+      "--invariants",
+      "safe",
+      "positive"
+    ],
+    "exitCode": 1,
+    "stdout": "[violation] Found an issue (<elapsed>ms at <rate> traces/second).\n  ❌ safe\nUse --seed=0x12 --backend=go to reproduce.\n",
+    "stderr": "error: Invariant violated\n"
+  },
+  {
+    "name": "mixed_expression_invariants",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 val safe=x<2 val positive=x>=0 val boom=assert(false) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=1",
+      "--max-steps=3",
+      "--invariant=x < 2",
+      "--invariants",
+      "positive"
+    ],
+    "exitCode": 1,
+    "stdout": "[violation] Found an issue (<elapsed>ms at <rate> traces/second).\n  ❌ x < 2\nUse --seed=0x12 --backend=go to reproduce.\n",
+    "stderr": "error: Invariant violated\n"
+  },
+  {
+    "name": "hidden_variables",
+    "source": "module Counter { var x:int var y:int action init=all { x'=0, y'=2 } action step=all { x'=x+1, y'=y+2 } }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=2",
+      "--max-steps=1",
+      "--hide",
+      "x"
+    ],
+    "exitCode": 0,
+    "stdout": "An example execution:\n\n[State 0] { y: 2 }\n\n[State 1] { y: 4 }\n\n[ok] No violation found (<elapsed>ms at <rate> traces/second).\nTrace length statistics: max=2, min=2, average=2.00\nYou may increase --max-samples and --max-steps.\nUse --verbosity to produce more (or less) output.\nUse --seed=0x12 --backend=go to reproduce.\n",
+    "stderr": ""
+  },
+  {
+    "name": "metadata_named_multiple_traces",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 val safe=x<2 val positive=x>=0 val boom=assert(false) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=1",
+      "--max-steps=1",
+      "--max-samples=2",
+      "--n-traces=2",
+      "--mbt",
+      "--out-itf=${TRACE}"
+    ],
+    "exitCode": 0,
+    "stdout": "[ok] No violation found (<elapsed>ms at <rate> traces/second).\n",
+    "stderr": "",
+    "traces": [
+      {
+        "filename": "trace-0.itf.json",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "${SOURCE}",
+            "status": "ok",
+            "description": "Created by Quint on ${CREATED}",
+            "timestamp": 0
+          },
+          "vars": [
+            "x",
+            "mbt::actionTaken",
+            "mbt::nondetPicks"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "mbt::actionTaken": "init",
+              "mbt::nondetPicks": {},
+              "x": {
+                "#bigint": "0"
+              }
+            },
+            {
+              "#meta": {
+                "index": 1
+              },
+              "mbt::actionTaken": "step",
+              "mbt::nondetPicks": {},
+              "x": {
+                "#bigint": "1"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "filename": "trace-1.itf.json",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "${SOURCE}",
+            "status": "ok",
+            "description": "Created by Quint on ${CREATED}",
+            "timestamp": 0
+          },
+          "vars": [
+            "x",
+            "mbt::actionTaken",
+            "mbt::nondetPicks"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "mbt::actionTaken": "init",
+              "mbt::nondetPicks": {},
+              "x": {
+                "#bigint": "0"
+              }
+            },
+            {
+              "#meta": {
+                "index": 1
+              },
+              "mbt::actionTaken": "step",
+              "mbt::nondetPicks": {},
+              "x": {
+                "#bigint": "1"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "metadata_expression_selectors",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 val safe=x<2 val positive=x>=0 val boom=assert(false) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=1",
+      "--max-steps=1",
+      "--init=x'=0",
+      "--step=x'=x+1",
+      "--mbt",
+      "--out-itf=${TRACE}"
+    ],
+    "exitCode": 0,
+    "stdout": "[ok] No violation found (<elapsed>ms at <rate> traces/second).\n",
+    "stderr": "",
+    "traces": [
+      {
+        "filename": "trace-0.itf.json",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "${SOURCE}",
+            "status": "ok",
+            "description": "Created by Quint on ${CREATED}",
+            "timestamp": 0
+          },
+          "vars": [
+            "x",
+            "mbt::actionTaken",
+            "mbt::nondetPicks"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "mbt::actionTaken": "",
+              "mbt::nondetPicks": {},
+              "x": {
+                "#bigint": "0"
+              }
+            },
+            {
+              "#meta": {
+                "index": 1
+              },
+              "mbt::actionTaken": "",
+              "mbt::nondetPicks": {},
+              "x": {
+                "#bigint": "1"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "stage_success",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 val safe=x<2 val positive=x>=0 val boom=assert(false) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=2",
+      "--max-steps=1",
+      "--out=${STAGE}"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "stage": {
+      "stage": "running",
+      "status": "ok",
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "seed": 18,
+      "errors": []
+    }
+  },
+  {
+    "name": "stage_violation",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 val safe=x<2 val positive=x>=0 val boom=assert(false) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=2",
+      "--max-steps=3",
+      "--invariant=safe",
+      "--out=${STAGE}"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "",
+    "stage": {
+      "stage": "running",
+      "status": "violation",
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "seed": 18,
+      "errors": []
+    }
+  },
+  {
+    "name": "zero_samples_witness",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 val safe=x<2 val positive=x>=0 val boom=assert(false) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=1",
+      "--max-samples=0",
+      "--n-traces=0",
+      "--witnesses",
+      "x > 0"
+    ],
+    "exitCode": 0,
+    "stdout": "[ok] No violation found (<elapsed>ms at <rate> traces/second).\nWitnesses:\nx > 0 was witnessed in 0 trace(s) out of 0 explored (NaN%)\n",
+    "stderr": ""
+  },
+  {
+    "name": "runtime_error_stage",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 val safe=x<2 val positive=x>=0 val boom=assert(false) }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=2",
+      "--max-steps=0",
+      "--invariant=boom",
+      "--out=${STAGE}"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "",
+    "stage": {
+      "stage": "running",
+      "status": "error",
+      "errors": [
+        {
+          "explanation": "[QNT508] Assertion failed",
+          "locs": [
+            {
+              "source": "${SOURCE}",
+              "start": {
+                "line": 0,
+                "col": 103,
+                "index": 103
+              },
+              "end": {
+                "line": 0,
+                "col": 115,
+                "index": 115
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "[QNT508] Assertion failed",
+          "locs": [
+            {
+              "source": "${SOURCE}",
+              "start": {
+                "line": 0,
+                "col": 103,
+                "index": 103
+              },
+              "end": {
+                "line": 0,
+                "col": 115,
+                "index": 115
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

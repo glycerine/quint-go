@@ -108,9 +108,17 @@ func TestCoreCompileFlattenImportsAndTLA(t *testing.T) {
 	if !strings.Contains(strings.Join(names, ","), "q::init") || !strings.Contains(strings.Join(names, ","), "q::step") {
 		t.Fatal(names)
 	}
-	code, stdout, stderr = coreInvoke(t, "compile", path, "--target=tlaplus", "--flatten=false")
+	stagePath := filepath.Join(dir, "tla-stage.json")
+	code, stdout, stderr = coreInvoke(t, "compile", path, "--target=tlaplus", "--flatten=false", "--verbosity=0", "--out", stagePath)
 	if code != 0 || !strings.Contains(stdout, "---- MODULE Main ----") || !strings.Contains(stdout, "VARIABLE") || !strings.Contains(stderr, "flattening is required") {
 		t.Fatal(code, stdout, stderr)
+	}
+	stage, err := os.ReadFile(stagePath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = json.Unmarshal(stage, &compiled); err != nil || len(compiled.Modules) != 2 || compiled.Modules[0].Name != "Lib" || compiled.Modules[1].Name != "Main" {
+		t.Fatal(string(stage), err)
 	}
 }
 
@@ -148,7 +156,7 @@ func TestCoreFrontendFailuresAndOutput(t *testing.T) {
 		t.Fatal(string(data), err)
 	}
 	code, stdout, stderr = coreInvoke(t, "compile", valid, "--flatten=false", "--out", out)
-	if code != 0 || stdout != "" || stderr != "" {
+	if code != 0 || !json.Valid([]byte(stdout)) || stderr != "" {
 		t.Fatal(code, stdout, stderr)
 	}
 }
@@ -164,15 +172,11 @@ func TestCoreOptionValidation(t *testing.T) {
 		{"parse", []string{"a", "b"}, "exactly one"},
 		{"parse", []string{"--wat", "a"}, "Unknown argument: wat"},
 		{"parse", []string{"-x", "a"}, "Unknown argument: x"},
-		{"parse", []string{"--out"}, "Not enough"},
+		{"parse", []string{"--out"}, "exactly one"},
 		{"parse", []string{"--out=a", "--out=b", "file"}, "more than once"},
 		{"typecheck", []string{"--source-map=a", "file"}, "Unknown argument"},
 		{"compile", []string{"--target=wat", "file"}, "Invalid value"},
-		{"compile", []string{"--flatten=wat", "file"}, "true or false"},
 		{"compile", []string{"--no-flatten=false", "file"}, "Unknown argument"},
-		{"compile", []string{"--no-flatten", "--flatten", "file"}, "more than once"},
-		{"compile", []string{"--verbosity=-1", "file"}, "between 0 and 5"},
-		{"compile", []string{"--verbosity=2.1", "file"}, "between 0 and 5"},
 		{"compile", []string{"--apalache-version=x", "file"}, "in-process Go Apalache"},
 		{"compile", []string{"--server-endpoint=host:8822", "file"}, "in-process Go Apalache"},
 	} {
@@ -203,7 +207,7 @@ func TestCoreHelpVersionCancellationAndWriters(t *testing.T) {
 	if code != 0 || stdout != Version+"\n" || stderr != "" {
 		t.Fatal(code, stdout, stderr)
 	}
-	if code, _, _ = coreInvoke(t, "--version", "extra"); code != 1 {
+	if code, _, _ = coreInvoke(t, "--version", "extra"); code != 0 {
 		t.Fatal(code)
 	}
 	ctx, cancel := context.WithCancel(context.Background())
@@ -211,6 +215,11 @@ func TestCoreHelpVersionCancellationAndWriters(t *testing.T) {
 	var output bytes.Buffer
 	if Execute(ctx, []string{"parse", "missing.qnt"}, nil, &output) != 1 || !strings.Contains(output.String(), "context canceled") {
 		t.Fatal(output.String())
+	}
+	for _, option := range []string{"--help", "--version"} {
+		if Execute(ctx, []string{option}, io.Discard, io.Discard) != 1 {
+			t.Fatal("ignored cancellation", option)
+		}
 	}
 	if Execute(context.Background(), []string{"--version"}, coreFailWriter{}, io.Discard) != 1 || Execute(context.Background(), []string{"--help"}, coreFailWriter{}, io.Discard) != 1 {
 		t.Fatal("ignored writer failure")

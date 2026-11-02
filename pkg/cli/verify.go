@@ -13,6 +13,7 @@ import (
 
 	quint "github.com/glycerine/quint-go/pkg"
 	"github.com/glycerine/quint-go/pkg/backend/apalache"
+	gotlc "github.com/glycerine/quint-go/pkg/backend/tlc"
 )
 
 type verifyBackend interface {
@@ -21,7 +22,7 @@ type verifyBackend interface {
 
 type verifyOptions struct {
 	input, main, init, step, invariant, inductive, temporal string
-	config, out, outITF, backend                            string
+	config, tlcConfig, out, outITF, backend                 string
 	maxSteps, verbosity                                     int
 	randomTransitions                                       bool
 	invariants                                              verifyStringFlags
@@ -46,8 +47,9 @@ type verifyStage struct {
 	Errors      []quint.ErrorMessage         `json:"errors"`
 	Trace       json.RawMessage              `json:"trace,omitempty"`
 	Phases      []apalache.VerificationPhase `json:"phases,omitempty"`
-	MaxSteps    int                          `json:"maxSteps"`
+	MaxSteps    *int                         `json:"maxSteps,omitempty"`
 	BackendData string                       `json:"backendData,omitempty"`
+	TLC         *gotlc.Result                `json:"tlc,omitempty"`
 }
 
 func commandVerify(ctx context.Context, args []string, stdout, stderr io.Writer) int {
@@ -55,6 +57,12 @@ func commandVerify(ctx context.Context, args []string, stdout, stderr io.Writer)
 }
 
 func verifyWithBackend(ctx context.Context, args []string, stdout, stderr io.Writer, backend verifyBackend) int {
+	return verifyWithCheckers(ctx, args, stdout, stderr, backend, gotlc.Check)
+}
+
+type verifyTLCBackend func(context.Context, quint.CompilationResult, gotlc.Options) (gotlc.Result, error)
+
+func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Writer, backend verifyBackend, tlcBackend verifyTLCBackend) int {
 	options, help, err := verifyParseOptions(args, stdout, stderr)
 	if help {
 		return 0
@@ -63,13 +71,27 @@ func verifyWithBackend(ctx context.Context, args []string, stdout, stderr io.Wri
 		fmt.Fprintln(stderr, err)
 		return 1
 	}
-	stage := verifyStage{Status: "failure", Input: options.input, Errors: []quint.ErrorMessage{}, MaxSteps: options.maxSteps}
+	stage := verifyStage{Status: "failure", Input: options.input, Errors: []quint.ErrorMessage{}}
+	if !verifyUsesTLC(options) {
+		stage.MaxSteps = &options.maxSteps
+	}
 	fail := func(err error) int {
 		stage.Explanation = err.Error()
 		return verifyOutput(options, stage, stdout, stderr)
 	}
 	if err = ctx.Err(); err != nil {
 		return fail(err)
+	}
+	tlcOptions := gotlc.Options{}
+	if options.tlcConfig != "" {
+		data, loadErr := os.ReadFile(options.tlcConfig)
+		if loadErr != nil {
+			return fail(fmt.Errorf("load TLC configuration: %w", loadErr))
+		}
+		tlcOptions, err = gotlc.ParseConfig(data)
+		if err != nil {
+			return fail(err)
+		}
 	}
 	var loaded json.RawMessage
 	if options.config != "" {
@@ -131,6 +153,31 @@ func verifyWithBackend(ctx context.Context, args []string, stdout, stderr io.Wri
 	if err = ctx.Err(); err != nil {
 		return fail(err)
 	}
+	if verifyUsesTLC(options) {
+		if len(invariants) == 0 {
+			tlcOptions.Invariants = []string{}
+		}
+		result, checkErr := tlcBackend(ctx, compiled, tlcOptions)
+		stage.TLC = &result
+		if checkErr != nil {
+			return fail(checkErr)
+		}
+		if !result.Complete {
+			return fail(fmt.Errorf("TLC did not complete checking"))
+		}
+		stage.Outcome = apalache.CheckOutcome(result.Outcome)
+		switch result.Outcome {
+		case gotlc.Safe:
+			stage.Status = "ok"
+			stage.Explanation = fmt.Sprintf("TLC explored all %d distinct states; no violation found.", result.DistinctStates)
+		case gotlc.Violation, gotlc.Deadlock:
+			stage.Status = "violation"
+			stage.Explanation = fmt.Sprintf("TLC found a %s.\n%s", result.Outcome, result.Log)
+		default:
+			return fail(fmt.Errorf("invalid TLC outcome %q", result.Outcome))
+		}
+		return verifyOutput(options, stage, stdout, stderr)
+	}
 	checkOptions := apalache.CheckOptions{MaxSteps: options.maxSteps, RandomTransitions: options.randomTransitions}
 	if len(invariants) == 0 {
 		checkOptions.Invariants = []string{}
@@ -172,9 +219,10 @@ func verifyParseOptions(args []string, stdout, stderr io.Writer) (verifyOptions,
 	flags.StringVar(&options.inductive, "inductive-invariant", "", "inductive invariant")
 	flags.StringVar(&options.temporal, "temporal", "", "comma-separated temporal properties")
 	flags.StringVar(&options.config, "apalache-config", "", "additional Go Apalache JSON configuration")
+	flags.StringVar(&options.tlcConfig, "tlc-config", "", "native Go TLC JSON: workers, checkDeadlock, soft timeoutMillis (preparation/builtins may exceed it)")
 	flags.StringVar(&options.out, "out", "", "write a JSON verification result and suppress console output")
 	flags.StringVar(&options.outITF, "out-itf", "", "write the counterexample as lossless ITF and suppress console output")
-	flags.StringVar(&options.backend, "backend", "apalache", "verification backend (apalache or apalache-go)")
+	flags.StringVar(&options.backend, "backend", "apalache", "verification backend (apalache, apalache-go, tlc, or tlc-go)")
 	flags.IntVar(&options.maxSteps, "max-steps", 10, "maximum number of transitions")
 	flags.IntVar(&options.verbosity, "verbosity", 2, "console verbosity (0 to 5)")
 	flags.BoolVar(&options.randomTransitions, "random-transitions", false, "choose symbolic transitions at random")
@@ -206,10 +254,42 @@ func verifyParseOptions(args []string, stdout, stderr io.Writer) (verifyOptions,
 	if options.verbosity < 0 || options.verbosity > 5 {
 		return options, false, fmt.Errorf("verbosity must be between 0 and 5")
 	}
-	if options.backend != "apalache" && options.backend != "apalache-go" {
-		return options, false, fmt.Errorf("unsupported verification backend %q; this command uses the Go Apalache backend", options.backend)
+	if options.backend != "apalache" && options.backend != "apalache-go" && !verifyUsesTLC(options) {
+		return options, false, fmt.Errorf("unsupported verification backend %q; choose a Go Apalache or Go TLC backend", options.backend)
+	}
+	if verifyUsesTLC(options) {
+		explicitBound := false
+		flags.Visit(func(f *flag.Flag) {
+			if f.Name == "max-steps" {
+				explicitBound = true
+			}
+		})
+		if explicitBound {
+			return options, false, fmt.Errorf("--max-steps is unsupported by exhaustive Go TLC checking")
+		}
+		if options.config != "" {
+			return options, false, fmt.Errorf("--apalache-config is unsupported by Go TLC; use --tlc-config")
+		}
+		if options.randomTransitions {
+			return options, false, fmt.Errorf("--random-transitions is unsupported by Go TLC")
+		}
+		if options.inductive != "" {
+			return options, false, fmt.Errorf("--inductive-invariant is unsupported by Go TLC")
+		}
+		if options.temporal != "" {
+			return options, false, fmt.Errorf("--temporal is not yet supported by the Go TLC adapter")
+		}
+		if options.outITF != "" {
+			return options, false, fmt.Errorf("--out-itf is not yet supported by Go TLC; --out retains concrete TLC counterexample states")
+		}
+	} else if options.tlcConfig != "" {
+		return options, false, fmt.Errorf("--tlc-config requires the Go TLC backend")
 	}
 	return options, false, nil
+}
+
+func verifyUsesTLC(options verifyOptions) bool {
+	return options.backend == "tlc" || options.backend == "tlc-go"
 }
 
 // flag.FlagSet stops at the first positional argument; Quint accepts options on
@@ -228,7 +308,7 @@ func verifyInterspersedArgs(args []string) ([]string, error) {
 		}
 		name := strings.TrimLeft(strings.SplitN(arg, "=", 2)[0], "-")
 		switch name {
-		case "server-endpoint", "apalache-version", "tlc-config":
+		case "server-endpoint", "apalache-version":
 			return nil, fmt.Errorf("--%s is unsupported by the in-process Go Apalache backend", name)
 		case "invariants":
 			if strings.Contains(arg, "=") {
@@ -298,7 +378,9 @@ func verifyOutput(options verifyOptions, stage verifyStage, stdout, stderr io.Wr
 	}
 	if code == 0 {
 		var err error
-		if options.inductive != "" {
+		if verifyUsesTLC(options) {
+			_, err = fmt.Fprintln(stdout, "[ok] "+stage.Explanation)
+		} else if options.inductive != "" {
 			_, err = fmt.Fprintln(stdout, "[ok] Inductive invariant verified.")
 		} else {
 			_, err = fmt.Fprintf(stdout, "[ok] No violation found up to %d steps.\n", options.maxSteps)

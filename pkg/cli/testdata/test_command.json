@@ -1,0 +1,1318 @@
+[
+  {
+    "name": "passing_v0",
+    "source": "module M { val passingTest=true }",
+    "main": "",
+    "match": "",
+    "verbosity": 0,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 0,
+    "stdout": "",
+    "stderr": "",
+    "passed": [
+      "passingTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "false_v0",
+    "source": "module M { val falseTest=false }",
+    "main": "",
+    "match": "",
+    "verbosity": 0,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "",
+    "stderr": "error: Tests failed\n",
+    "passed": [],
+    "failed": [
+      "falseTest"
+    ],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "mixed_v0",
+    "source": "module M { val passingTest=true val falseTest=false val ignoredTest=7 val lastTest=true }",
+    "main": "",
+    "match": "",
+    "verbosity": 0,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "",
+    "stderr": "error: Tests failed\n",
+    "passed": [
+      "passingTest",
+      "lastTest"
+    ],
+    "failed": [
+      "falseTest"
+    ],
+    "ignored": [
+      "ignoredTest"
+    ],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "assert_v0",
+    "source": "module M { val assertionTest=assert(false) }",
+    "main": "",
+    "match": "",
+    "verbosity": 0,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "",
+    "stderr": "error: Tests failed\n",
+    "passed": [],
+    "failed": [
+      "assertionTest"
+    ],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "then_errors_v0",
+    "source": "module test {\n  var x: int\n\n  action init(ok) = all { ok, x' = 1 }\n  action a = x' = 1\n  action b = all { false, x' = 2 }\n  action c = x' = 3\n\n  run bFailsTest = init(true)\n    .then(a)\n    .then(b)\n    .then(c)\n    .then(c)\n\n  run initFailsTest = init(false)\n    .then(a)\n\n  run lastActionFailsTest = init(true)\n    .then(a)\n    .then(b)\n}\n",
+    "main": "test",
+    "match": "",
+    "verbosity": 0,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "",
+    "stderr": "error: Tests failed\n",
+    "passed": [],
+    "failed": [
+      "bFailsTest",
+      "initFailsTest",
+      "lastActionFailsTest"
+    ],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "passing_v1",
+    "source": "module M { val passingTest=true }",
+    "main": "",
+    "match": "",
+    "verbosity": 1,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 0,
+    "stdout": "\n  M\n    ok passingTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "passingTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "false_v1",
+    "source": "module M { val falseTest=false }",
+    "main": "",
+    "match": "",
+    "verbosity": 1,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "\n  M\n    1) falseTest failed after 1 test(s)\n\n  1 failed\n",
+    "stderr": "error: Tests failed\n",
+    "passed": [],
+    "failed": [
+      "falseTest"
+    ],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "mixed_v1",
+    "source": "module M { val passingTest=true val falseTest=false val ignoredTest=7 val lastTest=true }",
+    "main": "",
+    "match": "",
+    "verbosity": 1,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "\n  M\n    ok passingTest passed 1 test(s)\n    1) falseTest failed after 1 test(s)\n    ok lastTest passed 1 test(s)\n\n  2 passing (0ms)\n  1 failed\n  1 ignored\n",
+    "stderr": "error: Tests failed\n",
+    "passed": [
+      "passingTest",
+      "lastTest"
+    ],
+    "failed": [
+      "falseTest"
+    ],
+    "ignored": [
+      "ignoredTest"
+    ],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "assert_v1",
+    "source": "module M { val assertionTest=assert(false) }",
+    "main": "",
+    "match": "",
+    "verbosity": 1,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "\n  M\n    1) assertionTest failed after 1 test(s)\n\n  1 failed\n",
+    "stderr": "error: Tests failed\n",
+    "passed": [],
+    "failed": [
+      "assertionTest"
+    ],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "then_errors_v1",
+    "source": "module test {\n  var x: int\n\n  action init(ok) = all { ok, x' = 1 }\n  action a = x' = 1\n  action b = all { false, x' = 2 }\n  action c = x' = 3\n\n  run bFailsTest = init(true)\n    .then(a)\n    .then(b)\n    .then(c)\n    .then(c)\n\n  run initFailsTest = init(false)\n    .then(a)\n\n  run lastActionFailsTest = init(true)\n    .then(a)\n    .then(b)\n}\n",
+    "main": "test",
+    "match": "",
+    "verbosity": 1,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "\n  test\n    1) bFailsTest failed after 1 test(s)\n    2) initFailsTest failed after 1 test(s)\n    3) lastActionFailsTest failed after 1 test(s)\n\n  3 failed\n",
+    "stderr": "error: Tests failed\n",
+    "passed": [],
+    "failed": [
+      "bFailsTest",
+      "initFailsTest",
+      "lastActionFailsTest"
+    ],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "passing_v2",
+    "source": "module M { val passingTest=true }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 0,
+    "stdout": "\n  M\n    ok passingTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "passingTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "false_v2",
+    "source": "module M { val falseTest=false }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "\n  M\n    1) falseTest failed after 1 test(s)\n\n  1 failed\n\n  1) falseTest:\n       Error [QNT511]: Test falseTest returned false\n        at fixture.qnt:1:16\n        1: module M { val falseTest=false }\n                          ^^^^^^^^^\n    Use --seed=0x1 --match=falseTest to repeat.\n\n\n  Use --verbosity=3 to show executions.\n  Further debug with: quint test --verbosity=3 fixture.qnt\n",
+    "stderr": "error: Tests failed\n",
+    "passed": [],
+    "failed": [
+      "falseTest"
+    ],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "mixed_v2",
+    "source": "module M { val passingTest=true val falseTest=false val ignoredTest=7 val lastTest=true }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "\n  M\n    ok passingTest passed 1 test(s)\n    1) falseTest failed after 1 test(s)\n    ok lastTest passed 1 test(s)\n\n  2 passing (0ms)\n  1 failed\n  1 ignored\n\n  1) falseTest:\n       Error [QNT511]: Test falseTest returned false\n        at fixture.qnt:1:37\n        1: module M { val passingTest=true val falseTest=false val ignoredTest=7 val lastTest=true }\n                                               ^^^^^^^^^\n    Use --seed=0x1 --match=falseTest to repeat.\n\n\n  Use --verbosity=3 to show executions.\n  Further debug with: quint test --verbosity=3 fixture.qnt\n",
+    "stderr": "error: Tests failed\n",
+    "passed": [
+      "passingTest",
+      "lastTest"
+    ],
+    "failed": [
+      "falseTest"
+    ],
+    "ignored": [
+      "ignoredTest"
+    ],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "assert_v2",
+    "source": "module M { val assertionTest=assert(false) }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "\n  M\n    1) assertionTest failed after 1 test(s)\n\n  1 failed\n\n  1) assertionTest:\n       Error [QNT508]: Assertion failed\n        at fixture.qnt:1:30\n        1: module M { val assertionTest=assert(false) }\n                                        ^^^^^^^^^^^^^\n    Use --seed=0x1 --match=assertionTest to repeat.\n\n\n  Use --verbosity=3 to show executions.\n  Further debug with: quint test --verbosity=3 fixture.qnt\n",
+    "stderr": "error: Tests failed\n",
+    "passed": [],
+    "failed": [
+      "assertionTest"
+    ],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "then_errors_v2",
+    "source": "module test {\n  var x: int\n\n  action init(ok) = all { ok, x' = 1 }\n  action a = x' = 1\n  action b = all { false, x' = 2 }\n  action c = x' = 3\n\n  run bFailsTest = init(true)\n    .then(a)\n    .then(b)\n    .then(c)\n    .then(c)\n\n  run initFailsTest = init(false)\n    .then(a)\n\n  run lastActionFailsTest = init(true)\n    .then(a)\n    .then(b)\n}\n",
+    "main": "test",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "\n  test\n    1) bFailsTest failed after 1 test(s)\n    2) initFailsTest failed after 1 test(s)\n    3) lastActionFailsTest failed after 1 test(s)\n\n  3 failed\n\n  1) bFailsTest:\n       Error [QNT513]: Cannot continue in `then` because the highlighted expression evaluated to false\n        at fixture.qnt:11:11\n        11:     .then(b)\n                      ^\n    Use --seed=0x1 --match=bFailsTest to repeat.\n  2) initFailsTest:\n       Error [QNT513]: Cannot continue in `then` because the highlighted expression evaluated to false\n        at fixture.qnt:15:23\n        15:   run initFailsTest = init(false)\n                                  ^^^^^^^^^^^\n    Use --seed=0x1 --match=initFailsTest to repeat.\n  3) lastActionFailsTest:\n       Error [QNT511]: Test lastActionFailsTest returned false\n        at fixture.qnt:18:7\n        18:   run lastActionFailsTest = init(true)\n                  ^^^^^^^^^^^^^^^^^^^\n    Use --seed=0x1 --match=lastActionFailsTest to repeat.\n\n\n  Use --verbosity=3 to show executions.\n  Further debug with: quint test --verbosity=3 fixture.qnt\n",
+    "stderr": "error: Tests failed\n",
+    "passed": [],
+    "failed": [
+      "bFailsTest",
+      "initFailsTest",
+      "lastActionFailsTest"
+    ],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "default_match",
+    "source": "// Regression fixture for #2056.\n// `trap1` has a run that does not end in Test, so the default filter selects nothing.\n// `withDefaultTest` has both, so the default filter must still run `runOneTest`.\n\nmodule trap1 {\n  val x = 1\n\n  run runOne = x == 1\n}\n\nmodule withDefaultTest {\n  val x = 1\n\n  run runOne = x == 1\n  run runOneTest = x == 1\n}\n",
+    "main": "withDefaultTest",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 0,
+    "stdout": "\n  withDefaultTest\n    ok runOneTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "runOneTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "explicit_match",
+    "source": "// Regression fixture for #2056.\n// `trap1` has a run that does not end in Test, so the default filter selects nothing.\n// `withDefaultTest` has both, so the default filter must still run `runOneTest`.\n\nmodule trap1 {\n  val x = 1\n\n  run runOne = x == 1\n}\n\nmodule withDefaultTest {\n  val x = 1\n\n  run runOne = x == 1\n  run runOneTest = x == 1\n}\n",
+    "main": "trap1",
+    "match": "runOne",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 0,
+    "stdout": "\n  trap1\n    ok runOne passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "runOne"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "no_default_match",
+    "source": "// Regression fixture for #2056.\n// `trap1` has a run that does not end in Test, so the default filter selects nothing.\n// `withDefaultTest` has both, so the default filter must still run `runOneTest`.\n\nmodule trap1 {\n  val x = 1\n\n  run runOne = x == 1\n}\n\nmodule withDefaultTest {\n  val x = 1\n\n  run runOne = x == 1\n  run runOneTest = x == 1\n}\n",
+    "main": "trap1",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "",
+    "stderr": "error: no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')\n",
+    "passed": [],
+    "failed": [],
+    "ignored": [],
+    "errors": [
+      {
+        "explanation": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')",
+        "locs": []
+      }
+    ],
+    "traces": []
+  },
+  {
+    "name": "no_explicit_match",
+    "source": "// Regression fixture for #2056.\n// `trap1` has a run that does not end in Test, so the default filter selects nothing.\n// `withDefaultTest` has both, so the default filter must still run `runOneTest`.\n\nmodule trap1 {\n  val x = 1\n\n  run runOne = x == 1\n}\n\nmodule withDefaultTest {\n  val x = 1\n\n  run runOne = x == 1\n  run runOneTest = x == 1\n}\n",
+    "main": "withDefaultTest",
+    "match": "doesNotExist",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "",
+    "stderr": "error: no tests matched --match 'doesNotExist'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')\n",
+    "passed": [],
+    "failed": [],
+    "ignored": [],
+    "errors": [
+      {
+        "explanation": "no tests matched --match 'doesNotExist'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')",
+        "locs": []
+      }
+    ],
+    "traces": []
+  },
+  {
+    "name": "zero_samples",
+    "source": "module M { val falseTest=false }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 0,
+    "seed": "1",
+    "itf": false,
+    "status": 0,
+    "stdout": "\n  M\n    ok falseTest passed 0 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "falseTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "hidden_import",
+    "source": "module A { val importedTest=true } module M { import A as I }",
+    "main": "M",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 0,
+    "stdout": "\n  M\n    ok I::importedTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "I::importedTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "independent_instances",
+    "source": "module A { const N:int val importedTest=N==1 } module M { import A(N=1) as I import A(N=2) as J }",
+    "main": "M",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": false,
+    "status": 1,
+    "stdout": "\n  M\n    ok M::I::importedTest passed 1 test(s)\n    1) M::J::importedTest failed after 1 test(s)\n\n  1 passing (0ms)\n  1 failed\n\n  1) M::J::importedTest:\n       Error [QNT511]: Test M::J::importedTest returned false\n        at fixture.qnt:1:28\n        1: module A { const N:int val importedTest=N==1 } module M { import A(N=1) as I import A(N=2) as J }\n                                      ^^^^^^^^^^^^\n    Use --seed=0x1 --match=M::J::importedTest to repeat.\n\n\n  Use --verbosity=3 to show executions.\n  Further debug with: quint test --verbosity=3 fixture.qnt\n",
+    "stderr": "error: Tests failed\n",
+    "passed": [
+      "M::I::importedTest"
+    ],
+    "failed": [
+      "M::J::importedTest"
+    ],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "multiple_itf",
+    "source": "module manyTests {\n  var x: int\n  action init = x' = 0\n\n  run firstTest = init.then(x' = 1).then(all { assert(x == 1), x' = x })\n  run secondTest = init.then(x' = 2).then(all { assert(x == 2), x' = x })\n}\n",
+    "main": "manyTests",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  manyTests\n    ok firstTest passed 1 test(s)\n    ok secondTest passed 1 test(s)\n\n  2 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "firstTest",
+      "secondTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "firstTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "x"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "x": {
+                "#bigint": "0"
+              }
+            },
+            {
+              "#meta": {
+                "index": 1
+              },
+              "x": {
+                "#bigint": "1"
+              }
+            },
+            {
+              "#meta": {
+                "index": 2
+              },
+              "x": {
+                "#bigint": "1"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 1,
+        "name": "secondTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "x"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "x": {
+                "#bigint": "0"
+              }
+            },
+            {
+              "#meta": {
+                "index": 1
+              },
+              "x": {
+                "#bigint": "2"
+              }
+            },
+            {
+              "#meta": {
+                "index": 2
+              },
+              "x": {
+                "#bigint": "2"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "variant_itf",
+    "source": "// Regression test for https://github.com/informalsystems/quint/issues/1281\n// ITF export did not have support for sum types\nmodule sum {\n    type T = None | Some(int)\n    var x: T\n    action init = x' = None\n    action step = x' = match x { None => Some(1) | Some(n) => Some(n+1) }\n    run xTest = init.then(step).then(step).then(step)\n}\n",
+    "main": "sum",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  sum\n    ok xTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "xTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "xTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "x"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "x": {
+                "tag": "None",
+                "value": {
+                  "#tup": []
+                }
+              }
+            },
+            {
+              "#meta": {
+                "index": 1
+              },
+              "x": {
+                "tag": "Some",
+                "value": {
+                  "#bigint": "1"
+                }
+              }
+            },
+            {
+              "#meta": {
+                "index": 2
+              },
+              "x": {
+                "tag": "Some",
+                "value": {
+                  "#bigint": "2"
+                }
+              }
+            },
+            {
+              "#meta": {
+                "index": 3
+              },
+              "x": {
+                "tag": "Some",
+                "value": {
+                  "#bigint": "3"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "final_assignment_itf",
+    "source": "// See:\n// https://github.com/informalsystems/quint/issues/1133\nmodule lastActionInRun {\n    var s: str\n\n    action A = \n        s' = \"A\"\n    \n    action B = \n        s' = \"B\"\n    \n    run t1 = A.then(A).then(B)\n\n    run t2 = A.then(A).then(B).then(s'=s)\n}\n",
+    "main": "lastActionInRun",
+    "match": "(t1|t2)",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  lastActionInRun\n    ok t1 passed 1 test(s)\n    ok t2 passed 1 test(s)\n\n  2 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "t1",
+      "t2"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "t1",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "s"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "s": "A"
+            },
+            {
+              "#meta": {
+                "index": 1
+              },
+              "s": "A"
+            },
+            {
+              "#meta": {
+                "index": 2
+              },
+              "s": "B"
+            }
+          ]
+        }
+      },
+      {
+        "index": 1,
+        "name": "t2",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "s"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "s": "A"
+            },
+            {
+              "#meta": {
+                "index": 1
+              },
+              "s": "A"
+            },
+            {
+              "#meta": {
+                "index": 2
+              },
+              "s": "B"
+            },
+            {
+              "#meta": {
+                "index": 3
+              },
+              "s": "B"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "expect_itf",
+    "source": "module test {\n  var x: int\n\n  action init = (x' = 0).then(x' = 1).expect(x == 1)\n  action step = (x' = x + 1).expect(x < 10).then(x' = 0)\n\n  run NoExpectTest =\n    init\n      .then(step)\n      .then(step)\n\n  run WithExpectTest =\n    init\n      .then(step)\n      .then(step)\n      .expect(x < 44)\n}\n",
+    "main": "test",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  test\n    ok NoExpectTest passed 1 test(s)\n    ok WithExpectTest passed 1 test(s)\n\n  2 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "NoExpectTest",
+      "WithExpectTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "NoExpectTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "x"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "x": {
+                "#bigint": "0"
+              }
+            },
+            {
+              "#meta": {
+                "index": 1
+              },
+              "x": {
+                "#bigint": "1"
+              }
+            },
+            {
+              "#meta": {
+                "index": 2
+              },
+              "x": {
+                "#bigint": "2"
+              }
+            },
+            {
+              "#meta": {
+                "index": 3
+              },
+              "x": {
+                "#bigint": "0"
+              }
+            },
+            {
+              "#meta": {
+                "index": 4
+              },
+              "x": {
+                "#bigint": "1"
+              }
+            },
+            {
+              "#meta": {
+                "index": 5
+              },
+              "x": {
+                "#bigint": "0"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 1,
+        "name": "WithExpectTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "x"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "x": {
+                "#bigint": "0"
+              }
+            },
+            {
+              "#meta": {
+                "index": 1
+              },
+              "x": {
+                "#bigint": "1"
+              }
+            },
+            {
+              "#meta": {
+                "index": 2
+              },
+              "x": {
+                "#bigint": "2"
+              }
+            },
+            {
+              "#meta": {
+                "index": 3
+              },
+              "x": {
+                "#bigint": "0"
+              }
+            },
+            {
+              "#meta": {
+                "index": 4
+              },
+              "x": {
+                "#bigint": "1"
+              }
+            },
+            {
+              "#meta": {
+                "index": 5
+              },
+              "x": {
+                "#bigint": "0"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "false_itf",
+    "source": "module M { val falseTest=false }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 1,
+    "stdout": "\n  M\n    1) falseTest failed after 1 test(s)\n\n  1 failed\n\n  1) falseTest:\n       Error [QNT511]: Test falseTest returned false\n        at fixture.qnt:1:16\n        1: module M { val falseTest=false }\n                          ^^^^^^^^^\n    Use --seed=0x1 --match=falseTest to repeat.\n\n\n  Use --verbosity=3 to show executions.\n  Further debug with: quint test --verbosity=3 fixture.qnt\n",
+    "stderr": "error: Tests failed\n",
+    "passed": [],
+    "failed": [
+      "falseTest"
+    ],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "falseTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "failed"
+          },
+          "vars": [],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "ignored_itf",
+    "source": "module M { val ignoredTest=7 }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  M\n\n  1 ignored\n",
+    "stderr": "",
+    "passed": [],
+    "failed": [],
+    "ignored": [
+      "ignoredTest"
+    ],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "assert_itf",
+    "source": "module M { val assertionTest=assert(false) }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 1,
+    "stdout": "\n  M\n    1) assertionTest failed after 1 test(s)\n\n  1 failed\n\n  1) assertionTest:\n       Error [QNT508]: Assertion failed\n        at fixture.qnt:1:30\n        1: module M { val assertionTest=assert(false) }\n                                        ^^^^^^^^^^^^^\n    Use --seed=0x1 --match=assertionTest to repeat.\n\n\n  Use --verbosity=3 to show executions.\n  Further debug with: quint test --verbosity=3 fixture.qnt\n",
+    "stderr": "error: Tests failed\n",
+    "passed": [],
+    "failed": [
+      "assertionTest"
+    ],
+    "ignored": [],
+    "errors": [],
+    "traces": []
+  },
+  {
+    "name": "unused_variable_itf",
+    "source": "module M { var unused:int val sampleTest=true }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  M\n    ok sampleTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "sampleTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "sampleTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "cumulative_variable_order_itf",
+    "source": "module M { var a:int var b:int action firstTest=b'=1 action secondTest=a'=2 }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  M\n    ok firstTest passed 1 test(s)\n    ok secondTest passed 1 test(s)\n\n  2 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "firstTest",
+      "secondTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "firstTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "b"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "b": {
+                "#bigint": "1"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 1,
+        "name": "secondTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "b",
+            "a"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "a": {
+                "#bigint": "2"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "assignment_rhs_first_itf",
+    "source": "module M { var a:int var b:int action assignmentTest=all{a'=if(false)b else 1,b'=1} }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  M\n    ok assignmentTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "assignmentTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "assignmentTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "b",
+            "a"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "a": {
+                "#bigint": "1"
+              },
+              "b": {
+                "#bigint": "1"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "application_argument_order_itf",
+    "source": "module M { var a:int var b:int action assignA(v)=a'=v action orderTest=all{assignA(if(false)b else 1),b'=1} }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  M\n    ok orderTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "orderTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "orderTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "b",
+            "a"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "a": {
+                "#bigint": "1"
+              },
+              "b": {
+                "#bigint": "1"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "lazy_branch_variable_itf",
+    "source": "module M { var a:int val coldTest=if(false) a==1 else true }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  M\n    ok coldTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "coldTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "coldTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "a"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "instance_variable_order_itf",
+    "source": "module A { const N:int var x:int action importedTest=x'=N } module M { import A(N=1) as I import A(N=2) as J }",
+    "main": "M",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  M\n    ok M::I::importedTest passed 1 test(s)\n    ok M::J::importedTest passed 1 test(s)\n\n  2 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "M::I::importedTest",
+      "M::J::importedTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "M::I::importedTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "M::I::x"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "M::I::x": {
+                "#bigint": "1"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 1,
+        "name": "M::J::importedTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "M::I::x",
+            "M::J::x"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "M::J::x": {
+                "#bigint": "2"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

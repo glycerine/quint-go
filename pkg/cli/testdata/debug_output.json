@@ -1,0 +1,172 @@
+[
+  {
+    "name": "test_passing_v0",
+    "command": "test",
+    "verbosity": 0,
+    "source": "module M { val sampleTest=q::debug(\"sample\",true) }",
+    "maxSamples": 1,
+    "status": 0,
+    "stdout": "> sample true\n",
+    "stderr": "",
+    "passed": [
+      "sampleTest"
+    ],
+    "failed": [],
+    "ignored": []
+  },
+  {
+    "name": "test_passing_v1",
+    "command": "test",
+    "verbosity": 1,
+    "source": "module M { val sampleTest=q::debug(\"sample\",true) }",
+    "maxSamples": 1,
+    "status": 0,
+    "stdout": "\n  M\n> sample true\n    ok sampleTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "sampleTest"
+    ],
+    "failed": [],
+    "ignored": []
+  },
+  {
+    "name": "test_passing_v2",
+    "command": "test",
+    "verbosity": 2,
+    "source": "module M { val sampleTest=q::debug(\"sample\",true) }",
+    "maxSamples": 1,
+    "status": 0,
+    "stdout": "\n  M\n> sample true\n    ok sampleTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "sampleTest"
+    ],
+    "failed": [],
+    "ignored": []
+  },
+  {
+    "name": "test_out",
+    "command": "test",
+    "verbosity": 2,
+    "out": true,
+    "source": "module M { val sampleTest=q::debug(\"stage\",true) }",
+    "maxSamples": 1,
+    "status": 0,
+    "stdout": "> stage true\n",
+    "stderr": "",
+    "passed": [
+      "sampleTest"
+    ],
+    "failed": [],
+    "ignored": []
+  },
+  {
+    "name": "test_false_v0",
+    "command": "test",
+    "verbosity": 0,
+    "source": "module M { val sampleTest=q::debug(\"result\",false) }",
+    "maxSamples": 1,
+    "status": 1,
+    "stdout": "> result false\n",
+    "stderr": "error: Tests failed\n",
+    "passed": [],
+    "failed": [
+      "sampleTest"
+    ],
+    "ignored": []
+  },
+  {
+    "name": "test_lazy_out",
+    "command": "test",
+    "verbosity": 2,
+    "out": true,
+    "source": "module M { val sampleTest=if(false) q::debug(\"skipped\",false) else q::debug(\"taken\",true) }",
+    "maxSamples": 1,
+    "status": 0,
+    "stdout": "> taken true\n",
+    "stderr": "",
+    "passed": [
+      "sampleTest"
+    ],
+    "failed": [],
+    "ignored": []
+  },
+  {
+    "name": "test_samples_v0",
+    "command": "test",
+    "verbosity": 0,
+    "maxSamples": 3,
+    "source": "module M { val sampleTest={ nondet n=Set(1,2).oneOf() q::debug(\"choice\",n>0) } }",
+    "status": 0,
+    "stdout": "> choice true\n> choice true\n> choice true\n",
+    "stderr": "",
+    "passed": [
+      "sampleTest"
+    ],
+    "failed": [],
+    "ignored": []
+  },
+  {
+    "name": "repl_quiet_scalar",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "q::debug(\"number\",42)\n2+3\n.exit\n",
+    "status": 0,
+    "stdout": "> number 42\n42\n5\n",
+    "stderr": ""
+  },
+  {
+    "name": "repl_quiet_nested",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "q::debug(\"outer\",q::debug(\"inner\",List(1,2,3)))\n.exit\n",
+    "status": 0,
+    "stdout": "> inner [1, 2, 3]\n> outer [1, 2, 3]\n[1, 2, 3]\n",
+    "stderr": ""
+  },
+  {
+    "name": "repl_quiet_lazy",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "if(false) q::debug(\"skipped\",false) else q::debug(\"taken\",true)\n.exit\n",
+    "status": 0,
+    "stdout": "> taken true\ntrue\n",
+    "stderr": ""
+  },
+  {
+    "name": "repl_quiet_record",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "q::debug(\"record\",{b:List(2,1),a:3})\n.exit\n",
+    "status": 0,
+    "stdout": "> record { a: 3, b: [2, 1] }\n{ a: 3, b: [2, 1] }\n",
+    "stderr": ""
+  },
+  {
+    "name": "repl_quiet_map",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "q::debug(\"map\",Map((2,List(2,1)),(1,List(3))))\n.exit\n",
+    "status": 0,
+    "stdout": "> map Map(1 -> [3], 2 -> [2, 1])\nMap(1 -> [3], 2 -> [2, 1])\n",
+    "stderr": ""
+  },
+  {
+    "name": "repl_quiet_lambda",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "q::debug(\"answer\",42)\nx=>x+1\n.exit\n",
+    "status": 0,
+    "stdout": "> answer 42\n42\n{(_a0) => ...}\n",
+    "stderr": ""
+  },
+  {
+    "name": "repl_quiet_wrapping",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "q::debug(\"long\",List(\"alpha-alpha-alpha\",\"beta-beta-beta\",\"gamma-gamma-gamma\",\"delta-delta-delta\",\"epsilon-epsilon\"))\n.exit\n",
+    "status": 0,
+    "stdout": "> long [\n  \"alpha-alpha-alpha\",\n  \"beta-beta-beta\",\n  \"gamma-gamma-gamma\",\n  \"delta-delta-delta\",\n  \"epsilon-epsilon\"\n]\n[\n  \"alpha-alpha-alpha\",\n  \"beta-beta-beta\",\n  \"gamma-gamma-gamma\",\n  \"delta-delta-delta\",\n  \"epsilon-epsilon\"\n]\n",
+    "stderr": ""
+  }
+]

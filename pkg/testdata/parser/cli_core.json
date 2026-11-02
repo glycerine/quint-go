@@ -1,0 +1,6886 @@
+{
+  "cases": [
+    {
+      "name": "loading_missing",
+      "command": "parse",
+      "files": [],
+      "options": {},
+      "status": 1,
+      "summary": "file /tmp/quint-cli-core-biEiz8/M.qnt does not exist",
+      "stdout": null,
+      "stage": {
+        "stage": "loading",
+        "errors": []
+      }
+    },
+    {
+      "name": "loading_directory",
+      "command": "parse",
+      "files": [],
+      "options": {
+        "input": "."
+      },
+      "status": 1,
+      "summary": "file . could not be opened due to Error: EISDIR: illegal operation on a directory, read",
+      "stdout": null,
+      "stage": {
+        "stage": "loading",
+        "errors": []
+      }
+    },
+    {
+      "name": "parse",
+      "command": "parse",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { pure def f(x: int): int=x+1 pure val n=f(2) }"
+        }
+      ],
+      "options": {},
+      "status": 0,
+      "summary": "",
+      "stdout": null,
+      "stage": {
+        "stage": "parsing",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 12,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 8,
+                "kind": "def",
+                "name": "f",
+                "qualifier": "puredef",
+                "expr": {
+                  "id": 7,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 2,
+                      "name": "x",
+                      "typeAnnotation": {
+                        "id": 1,
+                        "kind": "int"
+                      }
+                    }
+                  ],
+                  "qualifier": "puredef",
+                  "expr": {
+                    "id": 6,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                },
+                "typeAnnotation": {
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "int"
+                    }
+                  ],
+                  "res": {
+                    "id": 3,
+                    "kind": "int"
+                  }
+                }
+              },
+              {
+                "id": 11,
+                "kind": "def",
+                "name": "n",
+                "qualifier": "pureval",
+                "expr": {
+                  "id": 10,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 9,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "4": {
+            "id": 2,
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "kind": "param",
+            "depth": 1
+          },
+          "8": {
+            "id": 8,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "puredef",
+            "expr": {
+              "id": 7,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "x",
+                  "typeAnnotation": {
+                    "id": 1,
+                    "kind": "int"
+                  }
+                }
+              ],
+              "qualifier": "puredef",
+              "expr": {
+                "id": 6,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int"
+                }
+              ],
+              "res": {
+                "id": 3,
+                "kind": "int"
+              }
+            },
+            "depth": 0
+          },
+          "10": {
+            "id": 8,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "puredef",
+            "expr": {
+              "id": 7,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "x",
+                  "typeAnnotation": {
+                    "id": 1,
+                    "kind": "int"
+                  }
+                }
+              ],
+              "qualifier": "puredef",
+              "expr": {
+                "id": 6,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "depth": 0
+          },
+          "11": {
+            "id": 11,
+            "kind": "def",
+            "name": "n",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "f",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "errors": []
+      }
+    },
+    {
+      "name": "typecheck",
+      "command": "typecheck",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { pure def f(x: int): int=x+1 pure val n=f(2) }"
+        }
+      ],
+      "options": {},
+      "status": 0,
+      "summary": "",
+      "stdout": null,
+      "stage": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 12,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 8,
+                "kind": "def",
+                "name": "f",
+                "qualifier": "puredef",
+                "expr": {
+                  "id": 7,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 2,
+                      "name": "x",
+                      "typeAnnotation": {
+                        "id": 1,
+                        "kind": "int"
+                      }
+                    }
+                  ],
+                  "qualifier": "puredef",
+                  "expr": {
+                    "id": 6,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                },
+                "typeAnnotation": {
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "int"
+                    }
+                  ],
+                  "res": {
+                    "id": 3,
+                    "kind": "int"
+                  }
+                }
+              },
+              {
+                "id": 11,
+                "kind": "def",
+                "name": "n",
+                "qualifier": "pureval",
+                "expr": {
+                  "id": 10,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 9,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "4": {
+            "id": 2,
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "kind": "param",
+            "depth": 1
+          },
+          "8": {
+            "id": 8,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "puredef",
+            "expr": {
+              "id": 7,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "x",
+                  "typeAnnotation": {
+                    "id": 1,
+                    "kind": "int"
+                  }
+                }
+              ],
+              "qualifier": "puredef",
+              "expr": {
+                "id": 6,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int"
+                }
+              ],
+              "res": {
+                "id": 3,
+                "kind": "int"
+              }
+            },
+            "depth": 0
+          },
+          "10": {
+            "id": 8,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "puredef",
+            "expr": {
+              "id": 7,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "x",
+                  "typeAnnotation": {
+                    "id": 1,
+                    "kind": "int"
+                  }
+                }
+              ],
+              "qualifier": "puredef",
+              "expr": {
+                "id": 6,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "depth": 0
+          },
+          "11": {
+            "id": 11,
+            "kind": "def",
+            "name": "n",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "f",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "4": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "6": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "int"
+            }
+          },
+          "7": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int"
+                }
+              ],
+              "res": {
+                "id": 3,
+                "kind": "int"
+              }
+            }
+          },
+          "8": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int"
+                }
+              ],
+              "res": {
+                "id": 3,
+                "kind": "int"
+              }
+            }
+          },
+          "9": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "10": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "int"
+            }
+          },
+          "11": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "int"
+            }
+          }
+        },
+        "effects": {
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v0"
+                  }
+                },
+                {
+                  "kind": "temporal",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v1"
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v2"
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "4": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v0"
+                  }
+                },
+                {
+                  "kind": "temporal",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v1"
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v2"
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "5": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "6": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "variable",
+                    "name": "_v0"
+                  }
+                },
+                {
+                  "kind": "temporal",
+                  "entity": {
+                    "kind": "union",
+                    "entities": [
+                      {
+                        "kind": "variable",
+                        "name": "_v1"
+                      },
+                      {
+                        "kind": "variable",
+                        "name": "_v2"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "7": {
+            "effect": {
+              "kind": "arrow",
+              "params": [
+                {
+                  "kind": "concrete",
+                  "components": [
+                    {
+                      "kind": "read",
+                      "entity": {
+                        "kind": "variable",
+                        "name": "_v0"
+                      }
+                    },
+                    {
+                      "kind": "temporal",
+                      "entity": {
+                        "kind": "variable",
+                        "name": "_v1"
+                      }
+                    },
+                    {
+                      "kind": "update",
+                      "entity": {
+                        "kind": "variable",
+                        "name": "_v2"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "result": {
+                "kind": "concrete",
+                "components": [
+                  {
+                    "kind": "read",
+                    "entity": {
+                      "kind": "variable",
+                      "name": "_v0"
+                    }
+                  },
+                  {
+                    "kind": "temporal",
+                    "entity": {
+                      "kind": "union",
+                      "entities": [
+                        {
+                          "kind": "variable",
+                          "name": "_v1"
+                        },
+                        {
+                          "kind": "variable",
+                          "name": "_v2"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "8": {
+            "effectVariables": [],
+            "entityVariables": [
+              "_v0",
+              "_v1",
+              "_v2"
+            ],
+            "effect": {
+              "kind": "arrow",
+              "params": [
+                {
+                  "kind": "concrete",
+                  "components": [
+                    {
+                      "kind": "read",
+                      "entity": {
+                        "kind": "variable",
+                        "name": "_v0"
+                      }
+                    },
+                    {
+                      "kind": "temporal",
+                      "entity": {
+                        "kind": "variable",
+                        "name": "_v1"
+                      }
+                    },
+                    {
+                      "kind": "update",
+                      "entity": {
+                        "kind": "variable",
+                        "name": "_v2"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "result": {
+                "kind": "concrete",
+                "components": [
+                  {
+                    "kind": "read",
+                    "entity": {
+                      "kind": "variable",
+                      "name": "_v0"
+                    }
+                  },
+                  {
+                    "kind": "temporal",
+                    "entity": {
+                      "kind": "union",
+                      "entities": [
+                        {
+                          "kind": "variable",
+                          "name": "_v1"
+                        },
+                        {
+                          "kind": "variable",
+                          "name": "_v2"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "9": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "10": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "11": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": []
+      }
+    },
+    {
+      "name": "compile_unflattened",
+      "command": "compile",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { pure val n=9007199254740993 }"
+        }
+      ],
+      "options": {
+        "flatten": false
+      },
+      "status": 0,
+      "summary": "",
+      "stdout": {
+        "stage": "compiling",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 3,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "def",
+                "name": "n",
+                "qualifier": "pureval",
+                "expr": {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 9007199254740993
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 2,
+            "kind": "def",
+            "name": "n",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 9007199254740993
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "1": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          }
+        },
+        "effects": {
+          "1": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "2": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": [],
+        "main": "M"
+      },
+      "stage": {
+        "stage": "compiling",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 3,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "def",
+                "name": "n",
+                "qualifier": "pureval",
+                "expr": {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 9007199254740993
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 2,
+            "kind": "def",
+            "name": "n",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 9007199254740993
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "1": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          }
+        },
+        "effects": {
+          "1": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "2": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": [],
+        "main": "M"
+      }
+    },
+    {
+      "name": "compile_flattened",
+      "command": "compile",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { var x: int action init=x'=0 action step=x'=x+1 val inv=x>=0 }"
+        }
+      ],
+      "options": {
+        "flatten": true,
+        "invariant": "inv"
+      },
+      "status": 0,
+      "summary": "",
+      "stdout": {
+        "stage": "compiling",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 17,
+            "name": "M",
+            "declarations": [
+              {
+                "kind": "var",
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 1,
+                  "kind": "int"
+                },
+                "id": 2,
+                "depth": 0
+              },
+              {
+                "id": 12,
+                "kind": "def",
+                "name": "step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 9,
+                      "kind": "app",
+                      "opcode": "iadd",
+                      "args": [
+                        {
+                          "id": 7,
+                          "kind": "name",
+                          "name": "x"
+                        },
+                        {
+                          "id": 8,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 16,
+                "kind": "def",
+                "name": "inv",
+                "qualifier": "val",
+                "expr": {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "igte",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 6,
+                "kind": "def",
+                "name": "init",
+                "qualifier": "action",
+                "expr": {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 4,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 21,
+                "kind": "def",
+                "name": "q::init",
+                "qualifier": "action",
+                "expr": {
+                  "id": 20,
+                  "kind": "name",
+                  "name": "init"
+                }
+              },
+              {
+                "id": 23,
+                "kind": "def",
+                "name": "q::step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 22,
+                  "kind": "name",
+                  "name": "step"
+                }
+              },
+              {
+                "id": 26,
+                "kind": "def",
+                "name": "q::inv",
+                "qualifier": "val",
+                "expr": {
+                  "id": 25,
+                  "kind": "app",
+                  "opcode": "and",
+                  "args": [
+                    {
+                      "id": 24,
+                      "kind": "name",
+                      "name": "inv"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "4": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "6": {
+            "id": 6,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "7": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "10": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "12": {
+            "id": 12,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "13": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "16": {
+            "id": 16,
+            "kind": "def",
+            "name": "inv",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "igte",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "20": {
+            "id": 6,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "21": {
+            "id": 21,
+            "kind": "def",
+            "name": "q::init",
+            "qualifier": "action",
+            "expr": {
+              "id": 20,
+              "kind": "name",
+              "name": "init"
+            },
+            "depth": 0
+          },
+          "22": {
+            "id": 12,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "23": {
+            "id": 23,
+            "kind": "def",
+            "name": "q::step",
+            "qualifier": "action",
+            "expr": {
+              "id": 22,
+              "kind": "name",
+              "name": "step"
+            },
+            "depth": 0
+          },
+          "24": {
+            "id": 16,
+            "kind": "def",
+            "name": "inv",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "igte",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "26": {
+            "id": 26,
+            "kind": "def",
+            "name": "q::inv",
+            "qualifier": "val",
+            "expr": {
+              "id": 25,
+              "kind": "app",
+              "opcode": "and",
+              "args": [
+                {
+                  "id": 24,
+                  "kind": "name",
+                  "name": "inv"
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "3": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "4": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "6": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "7": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "8": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "9": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "int"
+            }
+          },
+          "10": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "11": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "12": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "13": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "14": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "15": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "16": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "20": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "21": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "22": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "23": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "24": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "25": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 2,
+              "kind": "bool"
+            }
+          },
+          "26": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 2,
+              "kind": "bool"
+            }
+          }
+        },
+        "effects": {
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "3": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "4": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "5": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "6": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "7": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "8": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "9": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "10": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "11": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "12": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "13": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "14": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "15": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "16": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "errors": [],
+        "main": "M"
+      },
+      "stage": {
+        "stage": "compiling",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 17,
+            "name": "M",
+            "declarations": [
+              {
+                "kind": "var",
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 1,
+                  "kind": "int"
+                },
+                "id": 2,
+                "depth": 0
+              },
+              {
+                "id": 12,
+                "kind": "def",
+                "name": "step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 9,
+                      "kind": "app",
+                      "opcode": "iadd",
+                      "args": [
+                        {
+                          "id": 7,
+                          "kind": "name",
+                          "name": "x"
+                        },
+                        {
+                          "id": 8,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 16,
+                "kind": "def",
+                "name": "inv",
+                "qualifier": "val",
+                "expr": {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "igte",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 6,
+                "kind": "def",
+                "name": "init",
+                "qualifier": "action",
+                "expr": {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 4,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 21,
+                "kind": "def",
+                "name": "q::init",
+                "qualifier": "action",
+                "expr": {
+                  "id": 20,
+                  "kind": "name",
+                  "name": "init"
+                }
+              },
+              {
+                "id": 23,
+                "kind": "def",
+                "name": "q::step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 22,
+                  "kind": "name",
+                  "name": "step"
+                }
+              },
+              {
+                "id": 26,
+                "kind": "def",
+                "name": "q::inv",
+                "qualifier": "val",
+                "expr": {
+                  "id": 25,
+                  "kind": "app",
+                  "opcode": "and",
+                  "args": [
+                    {
+                      "id": 24,
+                      "kind": "name",
+                      "name": "inv"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "4": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "6": {
+            "id": 6,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "7": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "10": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "12": {
+            "id": 12,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "13": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "16": {
+            "id": 16,
+            "kind": "def",
+            "name": "inv",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "igte",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "20": {
+            "id": 6,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "21": {
+            "id": 21,
+            "kind": "def",
+            "name": "q::init",
+            "qualifier": "action",
+            "expr": {
+              "id": 20,
+              "kind": "name",
+              "name": "init"
+            },
+            "depth": 0
+          },
+          "22": {
+            "id": 12,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "23": {
+            "id": 23,
+            "kind": "def",
+            "name": "q::step",
+            "qualifier": "action",
+            "expr": {
+              "id": 22,
+              "kind": "name",
+              "name": "step"
+            },
+            "depth": 0
+          },
+          "24": {
+            "id": 16,
+            "kind": "def",
+            "name": "inv",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "igte",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "26": {
+            "id": 26,
+            "kind": "def",
+            "name": "q::inv",
+            "qualifier": "val",
+            "expr": {
+              "id": 25,
+              "kind": "app",
+              "opcode": "and",
+              "args": [
+                {
+                  "id": 24,
+                  "kind": "name",
+                  "name": "inv"
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "3": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "4": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "6": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "7": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "8": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "9": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "int"
+            }
+          },
+          "10": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "11": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "12": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "13": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "14": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "15": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "16": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "20": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "21": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "22": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "23": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "24": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "25": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 2,
+              "kind": "bool"
+            }
+          },
+          "26": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 2,
+              "kind": "bool"
+            }
+          }
+        },
+        "effects": {
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "3": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "4": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "5": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "6": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "7": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "8": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "9": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "10": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "11": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "12": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "13": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "14": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "15": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "16": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "errors": [],
+        "main": "M"
+      }
+    },
+    {
+      "name": "compile_import",
+      "command": "compile",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { import Lib.* from \"Lib\" action init=begin action step=advance }"
+        },
+        {
+          "name": "Lib.qnt",
+          "source": "module Lib { var x: int action begin=x'=0 action advance=x'=x+1 }"
+        }
+      ],
+      "options": {
+        "flatten": true
+      },
+      "status": 0,
+      "summary": "",
+      "stdout": {
+        "stage": "compiling",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 6,
+            "name": "M",
+            "declarations": [
+              {
+                "kind": "var",
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 7,
+                  "kind": "int"
+                },
+                "id": 8,
+                "depth": 0
+              },
+              {
+                "id": 12,
+                "kind": "def",
+                "name": "begin",
+                "qualifier": "action",
+                "expr": {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 9,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                "depth": 0,
+                "importedFrom": {
+                  "id": 1,
+                  "kind": "import",
+                  "defName": "*",
+                  "protoName": "Lib",
+                  "fromSource": "Lib"
+                },
+                "hidden": true
+              },
+              {
+                "id": 3,
+                "kind": "def",
+                "name": "init",
+                "qualifier": "action",
+                "expr": {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "begin"
+                }
+              },
+              {
+                "id": 18,
+                "kind": "def",
+                "name": "advance",
+                "qualifier": "action",
+                "expr": {
+                  "id": 17,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 16,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 15,
+                      "kind": "app",
+                      "opcode": "iadd",
+                      "args": [
+                        {
+                          "id": 13,
+                          "kind": "name",
+                          "name": "x"
+                        },
+                        {
+                          "id": 14,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "depth": 0,
+                "importedFrom": {
+                  "id": 1,
+                  "kind": "import",
+                  "defName": "*",
+                  "protoName": "Lib",
+                  "fromSource": "Lib"
+                },
+                "hidden": true
+              },
+              {
+                "id": 5,
+                "kind": "def",
+                "name": "step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "advance"
+                }
+              },
+              {
+                "id": 23,
+                "kind": "def",
+                "name": "q::init",
+                "qualifier": "action",
+                "expr": {
+                  "id": 22,
+                  "kind": "name",
+                  "name": "init"
+                }
+              },
+              {
+                "id": 25,
+                "kind": "def",
+                "name": "q::step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 24,
+                  "kind": "name",
+                  "name": "step"
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 12,
+            "kind": "def",
+            "name": "begin",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0,
+            "hidden": true
+          },
+          "3": {
+            "id": 3,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "begin"
+            },
+            "depth": 0
+          },
+          "4": {
+            "id": 18,
+            "kind": "def",
+            "name": "advance",
+            "qualifier": "action",
+            "expr": {
+              "id": 17,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 16,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "depth": 0,
+            "hidden": true
+          },
+          "5": {
+            "id": 5,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 4,
+              "kind": "name",
+              "name": "advance"
+            },
+            "depth": 0
+          },
+          "10": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 7,
+              "kind": "int"
+            },
+            "id": 8,
+            "depth": 0
+          },
+          "12": {
+            "id": 12,
+            "kind": "def",
+            "name": "begin",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0,
+            "importedFrom": {
+              "id": 1,
+              "kind": "import",
+              "defName": "*",
+              "protoName": "Lib",
+              "fromSource": "Lib"
+            },
+            "hidden": true
+          },
+          "13": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 7,
+              "kind": "int"
+            },
+            "id": 8,
+            "depth": 0
+          },
+          "16": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 7,
+              "kind": "int"
+            },
+            "id": 8,
+            "depth": 0
+          },
+          "18": {
+            "id": 18,
+            "kind": "def",
+            "name": "advance",
+            "qualifier": "action",
+            "expr": {
+              "id": 17,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 16,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "depth": 0,
+            "importedFrom": {
+              "id": 1,
+              "kind": "import",
+              "defName": "*",
+              "protoName": "Lib",
+              "fromSource": "Lib"
+            },
+            "hidden": true
+          },
+          "22": {
+            "id": 3,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "begin"
+            },
+            "depth": 0
+          },
+          "23": {
+            "id": 23,
+            "kind": "def",
+            "name": "q::init",
+            "qualifier": "action",
+            "expr": {
+              "id": 22,
+              "kind": "name",
+              "name": "init"
+            },
+            "depth": 0
+          },
+          "24": {
+            "id": 5,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 4,
+              "kind": "name",
+              "name": "advance"
+            },
+            "depth": 0
+          },
+          "25": {
+            "id": 25,
+            "kind": "def",
+            "name": "q::step",
+            "qualifier": "action",
+            "expr": {
+              "id": 24,
+              "kind": "name",
+              "name": "step"
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "3": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "4": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "8": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 7,
+              "kind": "int"
+            }
+          },
+          "9": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "10": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 7,
+              "kind": "int"
+            }
+          },
+          "11": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "12": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "13": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 7,
+              "kind": "int"
+            }
+          },
+          "14": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "15": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "int"
+            }
+          },
+          "16": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 7,
+              "kind": "int"
+            }
+          },
+          "17": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "18": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "22": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "23": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "24": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "25": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          }
+        },
+        "effects": {
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "3": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "4": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "5": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "8": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "9": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "10": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "11": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "12": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "13": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "14": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "15": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "16": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "17": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "18": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "errors": [],
+        "main": "M"
+      },
+      "stage": {
+        "stage": "compiling",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 19,
+            "name": "Lib",
+            "declarations": [
+              {
+                "kind": "var",
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 7,
+                  "kind": "int"
+                },
+                "id": 8,
+                "depth": 0
+              },
+              {
+                "id": 12,
+                "kind": "def",
+                "name": "begin",
+                "qualifier": "action",
+                "expr": {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 9,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 18,
+                "kind": "def",
+                "name": "advance",
+                "qualifier": "action",
+                "expr": {
+                  "id": 17,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 16,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 15,
+                      "kind": "app",
+                      "opcode": "iadd",
+                      "args": [
+                        {
+                          "id": 13,
+                          "kind": "name",
+                          "name": "x"
+                        },
+                        {
+                          "id": 14,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 1,
+                "kind": "import",
+                "defName": "*",
+                "protoName": "Lib",
+                "fromSource": "Lib"
+              },
+              {
+                "id": 3,
+                "kind": "def",
+                "name": "init",
+                "qualifier": "action",
+                "expr": {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "begin"
+                }
+              },
+              {
+                "id": 5,
+                "kind": "def",
+                "name": "step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "advance"
+                }
+              },
+              {
+                "id": 23,
+                "kind": "def",
+                "name": "q::init",
+                "qualifier": "action",
+                "expr": {
+                  "id": 22,
+                  "kind": "name",
+                  "name": "init"
+                }
+              },
+              {
+                "id": 25,
+                "kind": "def",
+                "name": "q::step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 24,
+                  "kind": "name",
+                  "name": "step"
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 12,
+            "kind": "def",
+            "name": "begin",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0,
+            "hidden": true
+          },
+          "3": {
+            "id": 3,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "begin"
+            },
+            "depth": 0
+          },
+          "4": {
+            "id": 18,
+            "kind": "def",
+            "name": "advance",
+            "qualifier": "action",
+            "expr": {
+              "id": 17,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 16,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "depth": 0,
+            "hidden": true
+          },
+          "5": {
+            "id": 5,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 4,
+              "kind": "name",
+              "name": "advance"
+            },
+            "depth": 0
+          },
+          "10": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 7,
+              "kind": "int"
+            },
+            "id": 8,
+            "depth": 0
+          },
+          "12": {
+            "id": 12,
+            "kind": "def",
+            "name": "begin",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0,
+            "importedFrom": {
+              "id": 1,
+              "kind": "import",
+              "defName": "*",
+              "protoName": "Lib",
+              "fromSource": "Lib"
+            },
+            "hidden": true
+          },
+          "13": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 7,
+              "kind": "int"
+            },
+            "id": 8,
+            "depth": 0
+          },
+          "16": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 7,
+              "kind": "int"
+            },
+            "id": 8,
+            "depth": 0
+          },
+          "18": {
+            "id": 18,
+            "kind": "def",
+            "name": "advance",
+            "qualifier": "action",
+            "expr": {
+              "id": 17,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 16,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "depth": 0,
+            "importedFrom": {
+              "id": 1,
+              "kind": "import",
+              "defName": "*",
+              "protoName": "Lib",
+              "fromSource": "Lib"
+            },
+            "hidden": true
+          },
+          "22": {
+            "id": 3,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "begin"
+            },
+            "depth": 0
+          },
+          "23": {
+            "id": 23,
+            "kind": "def",
+            "name": "q::init",
+            "qualifier": "action",
+            "expr": {
+              "id": 22,
+              "kind": "name",
+              "name": "init"
+            },
+            "depth": 0
+          },
+          "24": {
+            "id": 5,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 4,
+              "kind": "name",
+              "name": "advance"
+            },
+            "depth": 0
+          },
+          "25": {
+            "id": 25,
+            "kind": "def",
+            "name": "q::step",
+            "qualifier": "action",
+            "expr": {
+              "id": 24,
+              "kind": "name",
+              "name": "step"
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "3": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "4": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "8": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 7,
+              "kind": "int"
+            }
+          },
+          "9": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "10": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 7,
+              "kind": "int"
+            }
+          },
+          "11": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "12": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "13": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 7,
+              "kind": "int"
+            }
+          },
+          "14": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "15": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "int"
+            }
+          },
+          "16": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 7,
+              "kind": "int"
+            }
+          },
+          "17": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "18": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "22": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "23": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "24": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "25": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          }
+        },
+        "effects": {
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "3": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "4": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "5": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "8": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "9": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "10": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "11": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "12": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "13": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "14": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "15": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "16": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "17": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "18": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 8
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "errors": [],
+        "main": "M"
+      }
+    },
+    {
+      "name": "compile_missing_main",
+      "command": "compile",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { var x: int action init=x'=0 action step=x'=x+1 val inv=x>=0 }"
+        }
+      ],
+      "options": {
+        "flatten": false,
+        "main": "Missing"
+      },
+      "status": 1,
+      "summary": "module Missing does not exist",
+      "stdout": null,
+      "stage": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 17,
+            "name": "M",
+            "declarations": [
+              {
+                "kind": "var",
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 1,
+                  "kind": "int"
+                },
+                "id": 2,
+                "depth": 0
+              },
+              {
+                "id": 12,
+                "kind": "def",
+                "name": "step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 9,
+                      "kind": "app",
+                      "opcode": "iadd",
+                      "args": [
+                        {
+                          "id": 7,
+                          "kind": "name",
+                          "name": "x"
+                        },
+                        {
+                          "id": 8,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 16,
+                "kind": "def",
+                "name": "inv",
+                "qualifier": "val",
+                "expr": {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "igte",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 6,
+                "kind": "def",
+                "name": "init",
+                "qualifier": "action",
+                "expr": {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 4,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "4": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "6": {
+            "id": 6,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "7": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "10": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "12": {
+            "id": 12,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "13": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "16": {
+            "id": 16,
+            "kind": "def",
+            "name": "inv",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "igte",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "3": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "4": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "6": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "7": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "8": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "9": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "int"
+            }
+          },
+          "10": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "11": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "12": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "13": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "14": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "15": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "16": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          }
+        },
+        "effects": {
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "3": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "4": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "5": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "6": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "7": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "8": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "9": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "10": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "11": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "12": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "13": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "14": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "15": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "16": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "errors": []
+      }
+    },
+    {
+      "name": "compile_missing_init",
+      "command": "compile",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { action step=true }"
+        }
+      ],
+      "options": {
+        "flatten": true
+      },
+      "status": 1,
+      "summary": "Argument error",
+      "stdout": null,
+      "stage": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 3,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "def",
+                "name": "step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 1,
+                  "kind": "bool",
+                  "value": true
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 2,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 1,
+              "kind": "bool",
+              "value": true
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "1": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "bool"
+            }
+          },
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "bool"
+            }
+          }
+        },
+        "effects": {
+          "1": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "2": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT404] Name 'init' not found",
+            "locs": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "compile_bad_init_kind",
+      "command": "compile",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { val init=true action step=true }"
+        }
+      ],
+      "options": {
+        "flatten": true
+      },
+      "status": 1,
+      "summary": "Argument error",
+      "stdout": null,
+      "stage": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 5,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "def",
+                "name": "init",
+                "qualifier": "val",
+                "expr": {
+                  "id": 1,
+                  "kind": "bool",
+                  "value": true
+                }
+              },
+              {
+                "id": 4,
+                "kind": "def",
+                "name": "step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 3,
+                  "kind": "bool",
+                  "value": true
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 2,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "bool",
+              "value": true
+            },
+            "depth": 0
+          },
+          "4": {
+            "id": 4,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 3,
+              "kind": "bool",
+              "value": true
+            },
+            "depth": 0
+          },
+          "6": {
+            "id": 2,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "bool",
+              "value": true
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "1": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "bool"
+            }
+          },
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "bool"
+            }
+          },
+          "3": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "bool"
+            }
+          },
+          "4": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "bool"
+            }
+          }
+        },
+        "effects": {
+          "1": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "2": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          },
+          "3": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "4": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT501] default --init action name 'init' is used by a val declaration",
+            "locs": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "compile_bad_invariant",
+      "command": "compile",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { var x: int action init=x'=0 action step=x'=x+1 val inv=x>=0 }"
+        }
+      ],
+      "options": {
+        "flatten": true,
+        "invariant": "missing"
+      },
+      "status": 1,
+      "summary": "name resolution failed",
+      "stdout": null,
+      "stage": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 17,
+            "name": "M",
+            "declarations": [
+              {
+                "kind": "var",
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 1,
+                  "kind": "int"
+                },
+                "id": 2,
+                "depth": 0
+              },
+              {
+                "id": 12,
+                "kind": "def",
+                "name": "step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 9,
+                      "kind": "app",
+                      "opcode": "iadd",
+                      "args": [
+                        {
+                          "id": 7,
+                          "kind": "name",
+                          "name": "x"
+                        },
+                        {
+                          "id": 8,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 16,
+                "kind": "def",
+                "name": "inv",
+                "qualifier": "val",
+                "expr": {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "igte",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 14,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 6,
+                "kind": "def",
+                "name": "init",
+                "qualifier": "action",
+                "expr": {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 4,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 21,
+                "kind": "def",
+                "name": "q::init",
+                "qualifier": "action",
+                "expr": {
+                  "id": 20,
+                  "kind": "name",
+                  "name": "init"
+                }
+              },
+              {
+                "id": 23,
+                "kind": "def",
+                "name": "q::step",
+                "qualifier": "action",
+                "expr": {
+                  "id": 22,
+                  "kind": "name",
+                  "name": "step"
+                }
+              },
+              {
+                "id": 26,
+                "kind": "def",
+                "name": "q::inv",
+                "qualifier": "val",
+                "expr": {
+                  "id": 25,
+                  "kind": "app",
+                  "opcode": "and",
+                  "args": [
+                    {
+                      "id": 24,
+                      "kind": "name",
+                      "name": "missing"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "4": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "6": {
+            "id": 6,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "7": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "10": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "12": {
+            "id": 12,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "13": {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          "16": {
+            "id": 16,
+            "kind": "def",
+            "name": "inv",
+            "qualifier": "val",
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "igte",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "18": {
+            "id": 6,
+            "kind": "def",
+            "name": "init",
+            "qualifier": "action",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "19": {
+            "id": 12,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "3": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "4": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "6": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "7": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "8": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "9": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "int"
+            }
+          },
+          "10": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "11": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "12": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "13": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          "14": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "15": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          },
+          "16": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "id": 3,
+              "kind": "bool"
+            }
+          }
+        },
+        "effects": {
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "3": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "4": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "5": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "6": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "7": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "8": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "9": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "10": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "11": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "12": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "13": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "14": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "15": {
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "16": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "read",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT404] Name 'missing' not found",
+            "locs": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "parse_unknown",
+      "command": "parse",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { val x=missing }"
+        }
+      ],
+      "options": {},
+      "status": 1,
+      "summary": "parsing failed",
+      "stdout": null,
+      "stage": {
+        "stage": "parsing",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 3,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "def",
+                "name": "x",
+                "qualifier": "val",
+                "expr": {
+                  "id": 1,
+                  "kind": "name",
+                  "name": "missing"
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 2,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "name",
+              "name": "missing"
+            },
+            "depth": 0
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT404] Name 'missing' not found",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 17,
+                  "index": 17
+                },
+                "end": {
+                  "line": 0,
+                  "col": 23,
+                  "index": 23
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "typecheck_mismatch",
+      "command": "typecheck",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { pure val x: bool=1 }"
+        }
+      ],
+      "options": {},
+      "status": 1,
+      "summary": "typechecking failed",
+      "stdout": null,
+      "stage": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 4,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 3,
+                "kind": "def",
+                "name": "x",
+                "qualifier": "pureval",
+                "expr": {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                },
+                "typeAnnotation": {
+                  "id": 1,
+                  "kind": "bool"
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "3": {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            },
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "bool"
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "3": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          }
+        },
+        "effects": {
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "3": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT000] Couldn't unify int and bool\nTrying to unify int and bool\n",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 20,
+                  "index": 20
+                },
+                "end": {
+                  "line": 0,
+                  "col": 20,
+                  "index": 20
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "options": [
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity="
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 0,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity=abc"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": "NaN",
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity=-1"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": -1,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity=2.1"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2.1,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity=0x10"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 16,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity=Infinity"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": "Infinity",
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity",
+        "--out=x"
+      ],
+      "out": "x",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--out"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--out="
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "parse",
+      "args": [
+        "--out",
+        "--source-map=x"
+      ],
+      "out": "",
+      "sourceMap": "x",
+      "flatten": true,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "parse",
+      "args": [
+        "--sourceMap=x"
+      ],
+      "out": "",
+      "sourceMap": "x",
+      "flatten": true,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--flatten=garbage"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": false,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--flatten=TRUE"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": false,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--flatten=1"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": false,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--flatten=false"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": false,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--flatten",
+        "false"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": false,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--flatten",
+        "true"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--no-flatten"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": false,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--flatten=false",
+        "--flatten=true"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--flatten",
+        "--no-flatten"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": false,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--out",
+        "-1"
+      ],
+      "out": "-1",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--out",
+        "-.5"
+      ],
+      "out": "-.5",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--out",
+        "-x"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": "Unknown argument: x"
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--main",
+        "-x"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": "Unknown argument: x"
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity",
+        "-1"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": -1,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity",
+        "-.5"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": -0.5,
+      "error": ""
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity",
+        "-Infinity"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": "Unknown arguments: I, n, f, i, t, y"
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity",
+        "-0x10"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": "Unknown arguments: 0, x"
+    },
+    {
+      "command": "compile",
+      "args": [
+        "--verbosity",
+        "-1e3"
+      ],
+      "out": "",
+      "sourceMap": "",
+      "flatten": true,
+      "verbosity": 2,
+      "error": "Unknown arguments: 1, e"
+    }
+  ],
+  "informational": [
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--help",
+        "false"
+      ],
+      "help": false,
+      "version": false
+    },
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--version",
+        "false"
+      ],
+      "help": false,
+      "version": false
+    },
+    {
+      "args": [
+        "parse",
+        "/not-found",
+        "help"
+      ],
+      "help": true,
+      "version": false
+    },
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--init",
+        "help"
+      ],
+      "help": false,
+      "version": false
+    },
+    {
+      "args": [
+        "compile",
+        "--main",
+        "help"
+      ],
+      "help": false,
+      "version": false
+    },
+    {
+      "args": [
+        "parse",
+        "--out",
+        "help"
+      ],
+      "help": false,
+      "version": false
+    },
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--init=help"
+      ],
+      "help": false,
+      "version": false
+    },
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--help",
+        "--help=false"
+      ],
+      "help": false,
+      "version": false
+    },
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--help=false",
+        "--help"
+      ],
+      "help": true,
+      "version": false
+    },
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--version",
+        "--version=false"
+      ],
+      "help": false,
+      "version": false
+    },
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--version=false",
+        "--version"
+      ],
+      "help": false,
+      "version": true
+    },
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--no-help"
+      ],
+      "help": false,
+      "version": false
+    },
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--no-version"
+      ],
+      "help": false,
+      "version": false
+    },
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--help=garbage"
+      ],
+      "help": false,
+      "version": false
+    },
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--version=garbage"
+      ],
+      "help": false,
+      "version": false
+    },
+    {
+      "args": [
+        "compile",
+        "/not-found",
+        "--",
+        "help"
+      ],
+      "help": false,
+      "version": false
+    }
+  ]
+}
