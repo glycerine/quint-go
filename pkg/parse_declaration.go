@@ -38,6 +38,7 @@ func ParseDeclaration(text string) ([]Declaration, error) {
 }
 
 func declarationsFromContext(ctx p.IDeclarationContext, ids parserIDAllocator) ([]Declaration, error) {
+	defer parserScope(ids, ctx)()
 	if oper, ok := ctx.(*p.OperContext); ok {
 		defs, err := destructuredOperators(oper.OperDef(), ids)
 		if err != nil {

@@ -47,7 +47,7 @@ func parseModulesWithIDs(text string, ids parserIDAllocator) ([]Module, error) {
 			docs = nil
 			module.Declarations = append(module.Declarations, decls...)
 		}
-		module.ID = ids.Next()
+		module.ID = parserIDAt(ids, ctx)
 		modules = append(modules, module)
 	}
 	return modules, nil
@@ -126,7 +126,7 @@ func declarationFromContext(ctx p.IDeclarationContext, ids parserIDAllocator) (D
 			if err != nil {
 				return d, err
 			}
-			d.Overrides = append(d.Overrides, Override{Parameter: Parameter{ID: ids.Next(), Name: inst.Name(i).GetText()}, Expr: expr})
+			d.Overrides = append(d.Overrides, Override{Parameter: Parameter{ID: parserIDAt(ids, inst.Name(i)), Name: inst.Name(i).GetText()}, Expr: expr})
 		}
 	case *p.ConstContext:
 		typ, err := typeFromContext(c.Type_())

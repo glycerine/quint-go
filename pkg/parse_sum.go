@@ -41,7 +41,8 @@ func sumDeclarations(ctx *p.TypeSumDefContext, ids parserIDAllocator) ([]Declara
 		}
 	}
 	decls := []Declaration{d}
-	for _, field := range fields {
+	for i, field := range fields {
+		restore := parserScope(ids, sum.TypeSumVariant(i))
 		label := Expr{ID: ids.Next(), Kind: "str", Str: field.Name}
 		payload := Expr{ID: ids.Next(), Kind: "app", Opcode: "Tup", Args: []Expr{}}
 		annotation, qualifier := result, Val
@@ -58,6 +59,7 @@ func sumDeclarations(ctx *p.TypeSumDefContext, ids parserIDAllocator) ([]Declara
 			expr = Expr{ID: ids.Next(), Kind: "lambda", Params: []Parameter{parameter}, Qualifier: Def, Body: &body}
 		}
 		decls = append(decls, Declaration{ID: ids.Next(), Kind: "def", Name: field.Name, Qualifier: qualifier, TypeAnnotation: &annotation, Expr: &expr})
+		restore()
 	}
 	return decls, nil
 }

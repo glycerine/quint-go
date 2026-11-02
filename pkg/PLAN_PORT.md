@@ -901,3 +901,12 @@ word "retained" in the commit message.
   parentheses, all generated/local IDs, and errors without partial source maps.
   P2.5 remains open for precise parameter/synthetic subspans, type IDs, module and
   import integration, and upstream inclusive-location compatibility.
+
+- 2026-11-02: Added ParseModulesWithSource with mapped module/declaration IDs,
+  generated definitions, nested expressions, and import override parameters.
+  Sum constructors use their variant spans; override parameters use their name
+  spans. Tests compare ordinary IR unchanged, recursively check every emitted ID
+  has a source entry, inspect exact source excerpts, and reject invalid inputs
+  without partial maps. Default tests pass within the sub-second target. P2.5
+  remains open for type IDs, finer generated/parameter spans, import source-map
+  merging, and upstream inclusive-location compatibility.

@@ -55,3 +55,27 @@ func ParseExpressionWithSource(name, text string) (Expr, SourceMap, error) {
 	}
 	return expr, ids.sources, nil
 }
+
+func parserIDAt(ids parserIDAllocator, ctx antlr.ParserRuleContext) ID {
+	defer parserScope(ids, ctx)()
+	return ids.Next()
+}
+
+// ParseModulesWithSource records source spans for module/declaration/expression
+// IDs. Type nodes do not yet receive IDs. Errors return no partial module list
+// or source map; use ordinary parsing when source positions are unnecessary.
+func ParseModulesWithSource(name, text string) ([]Module, SourceMap, error) {
+	file, err := NewSourceFile(name, text)
+	if err != nil {
+		return nil, nil, err
+	}
+	ids := &locatedParserIDs{generator: NewIDGenerator(), file: file, sources: SourceMap{}}
+	modules, err := parseModulesWithIDs(text, ids)
+	if err != nil {
+		return nil, nil, err
+	}
+	if ids.err != nil {
+		return nil, nil, ids.err
+	}
+	return modules, ids.sources, nil
+}
