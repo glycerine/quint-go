@@ -94,3 +94,9 @@ for diagnostics is not covered by this comparison.
 `unused.json` records ordered unused-definition queries for all 22 resolution
 cases. It retains upstream IR IDs to distinguish object-identity usage from
 merely referencing another imported copy of the same definition.
+
+
+`type_application.json` records five upstream type-application cases. Original
+IDs are retained; Go resolves lookup payloads first, then compares exact declaration
+IR and ordered error trees. These initial fixtures cover pairs, nested aliases,
+record rows, operator annotations, and too few/many arguments.

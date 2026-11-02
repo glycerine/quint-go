@@ -181,3 +181,21 @@ const unusedFixtures=resolutionCases.map(([name,source])=>{
  return {name,input:parsed.modules,unused:parsed.modules.map(m=>[...result.unusedDefinitions(m.name)].map(d=>({id:String(d.id),name:d.name})))}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/unused.json'),JSONbig.stringify(unusedFixtures,null,2)+'\n')
+
+const {TypeApplicationResolver}=require(path.join(root,'quint/src/types/typeApplicationResolution'))
+const applicationCases=[
+ ['pair','module M { type Pair[a,b]=(a,b) const x:Pair[int,str] }'],
+ ['nested','module M { type Box[a]=List[a] type Twice[a]=Box[Box[a]] const x:Twice[int] }'],
+ ['row','module M { type Add[r]={x:int|r} const x:Add[{y:str}] }'],
+ ['annotations','module M { type Box[a]=List[a] const c:Box[int] def f(x:Box[int]):Box[int]=x val y=f(c) }'],
+ ['arity','module M { type Pair[a,b]=(a,b) const x:Pair[int] const y:Pair[int,str,bool] }'],
+]
+const applicationFixtures=applicationCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ if(parsed.errors.length)throw Error(JSONbig.stringify(parsed.errors))
+ const linked=resolveNames(parsed.modules)
+ const resolver=new TypeApplicationResolver(linked.table)
+ const [errors,output]=resolver.resolveTypeApplications(parsed.modules[0].declarations)
+ return {name,input:parsed.modules,output,errors:[...errors].map(([id,error])=>({id:String(id),error}))}
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/type_application.json'),JSONbig.stringify(applicationFixtures,null,2)+'\n')

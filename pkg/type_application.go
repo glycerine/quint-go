@@ -146,3 +146,30 @@ func (r *TypeApplicationResolver) Resolve(input Type) (Type, error) {
 	}
 	return visit(input)
 }
+
+// ResolveLookupTable replaces lookup payloads in insertion order, as the upstream
+// resolver constructor does. Previously resolved entries are visible to later
+// entries. On structural failure, earlier replacements remain in the table.
+func (r *TypeApplicationResolver) ResolveLookupTable() error {
+	for id, def := range r.Table.All() {
+		if def.Declaration != nil {
+			d, err := TransformDeclarationTypes(*def.Declaration, r.Resolve)
+			if err != nil {
+				return err
+			}
+			def.Declaration = &d
+			def.identity = new(byte)
+		} else if def.Parameter != nil && def.Parameter.TypeAnnotation != nil {
+			p := *def.Parameter
+			t, err := r.Resolve(*p.TypeAnnotation)
+			if err != nil {
+				return err
+			}
+			p.TypeAnnotation = &t
+			def.Parameter = &p
+			def.identity = new(byte)
+		}
+		r.Table.Set(id, def)
+	}
+	return nil
+}

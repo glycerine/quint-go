@@ -1,0 +1,892 @@
+[
+  {
+    "name": "pair",
+    "input": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "typedef",
+            "name": "Pair",
+            "type": {
+              "id": 3,
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  },
+                  {
+                    "fieldName": "1",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "var",
+                      "name": "b"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            },
+            "params": [
+              "a",
+              "b"
+            ],
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 7,
+              "kind": "app",
+              "ctor": {
+                "id": 8,
+                "kind": "const",
+                "name": "Pair"
+              },
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "int"
+                },
+                {
+                  "id": 6,
+                  "kind": "str"
+                }
+              ]
+            },
+            "id": 9,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 4,
+        "kind": "typedef",
+        "name": "Pair",
+        "type": {
+          "id": 3,
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        },
+        "params": [
+          "a",
+          "b"
+        ],
+        "depth": 0
+      },
+      {
+        "kind": "const",
+        "name": "x",
+        "typeAnnotation": {
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 5,
+                  "kind": "int"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 6,
+                  "kind": "str"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          },
+          "id": 3
+        },
+        "id": 9,
+        "depth": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "nested",
+    "input": [
+      {
+        "id": 14,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "typedef",
+            "name": "Box",
+            "type": {
+              "id": 2,
+              "kind": "list",
+              "elem": {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            "params": [
+              "a"
+            ],
+            "depth": 0
+          },
+          {
+            "id": 9,
+            "kind": "typedef",
+            "name": "Twice",
+            "type": {
+              "id": 7,
+              "kind": "app",
+              "ctor": {
+                "id": 8,
+                "kind": "const",
+                "name": "Box"
+              },
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "app",
+                  "ctor": {
+                    "id": 6,
+                    "kind": "const",
+                    "name": "Box"
+                  },
+                  "args": [
+                    {
+                      "id": 4,
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  ]
+                }
+              ]
+            },
+            "params": [
+              "a"
+            ],
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 11,
+              "kind": "app",
+              "ctor": {
+                "id": 12,
+                "kind": "const",
+                "name": "Twice"
+              },
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "int"
+                }
+              ]
+            },
+            "id": 13,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 3,
+        "kind": "typedef",
+        "name": "Box",
+        "type": {
+          "id": 2,
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "var",
+            "name": "a"
+          }
+        },
+        "params": [
+          "a"
+        ],
+        "depth": 0
+      },
+      {
+        "id": 9,
+        "kind": "typedef",
+        "name": "Twice",
+        "type": {
+          "kind": "list",
+          "elem": {
+            "kind": "list",
+            "elem": {
+              "id": 4,
+              "kind": "var",
+              "name": "a"
+            },
+            "id": 2
+          },
+          "id": 2
+        },
+        "params": [
+          "a"
+        ],
+        "depth": 0
+      },
+      {
+        "kind": "const",
+        "name": "x",
+        "typeAnnotation": {
+          "kind": "list",
+          "elem": {
+            "kind": "list",
+            "elem": {
+              "id": 10,
+              "kind": "int"
+            },
+            "id": 2
+          },
+          "id": 2
+        },
+        "id": 13,
+        "depth": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "row",
+    "input": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "typedef",
+            "name": "Add",
+            "type": {
+              "id": 2,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "x",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "int"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "r"
+                }
+              }
+            },
+            "params": [
+              "r"
+            ],
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 6,
+              "kind": "app",
+              "ctor": {
+                "id": 7,
+                "kind": "const",
+                "name": "Add"
+              },
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "rec",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "y",
+                        "fieldType": {
+                          "id": 4,
+                          "kind": "str"
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": 8,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 3,
+        "kind": "typedef",
+        "name": "Add",
+        "type": {
+          "id": 2,
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "x",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "var",
+              "name": "r"
+            }
+          }
+        },
+        "params": [
+          "r"
+        ],
+        "depth": 0
+      },
+      {
+        "kind": "const",
+        "name": "x",
+        "typeAnnotation": {
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "x",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "y",
+                  "fieldType": {
+                    "id": 4,
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          "id": 2
+        },
+        "id": 8,
+        "depth": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "annotations",
+    "input": [
+      {
+        "id": 21,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "typedef",
+            "name": "Box",
+            "type": {
+              "id": 2,
+              "kind": "list",
+              "elem": {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            "params": [
+              "a"
+            ],
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "c",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "app",
+              "ctor": {
+                "id": 6,
+                "kind": "const",
+                "name": "Box"
+              },
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "int"
+                }
+              ]
+            },
+            "id": 7,
+            "depth": 0
+          },
+          {
+            "id": 17,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 16,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 11,
+                  "name": "x",
+                  "typeAnnotation": {
+                    "id": 9,
+                    "kind": "app",
+                    "ctor": {
+                      "id": 10,
+                      "kind": "const",
+                      "name": "Box"
+                    },
+                    "args": [
+                      {
+                        "id": 8,
+                        "kind": "int"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 15,
+                "kind": "name",
+                "name": "x"
+              }
+            },
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "ctor": {
+                    "id": 10,
+                    "kind": "const",
+                    "name": "Box"
+                  },
+                  "args": [
+                    {
+                      "id": 8,
+                      "kind": "int"
+                    }
+                  ]
+                }
+              ],
+              "res": {
+                "id": 13,
+                "kind": "app",
+                "ctor": {
+                  "id": 14,
+                  "kind": "const",
+                  "name": "Box"
+                },
+                "args": [
+                  {
+                    "id": 12,
+                    "kind": "int"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": 20,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 19,
+              "kind": "app",
+              "opcode": "f",
+              "args": [
+                {
+                  "id": 18,
+                  "kind": "name",
+                  "name": "c"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 3,
+        "kind": "typedef",
+        "name": "Box",
+        "type": {
+          "id": 2,
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "var",
+            "name": "a"
+          }
+        },
+        "params": [
+          "a"
+        ],
+        "depth": 0
+      },
+      {
+        "kind": "const",
+        "name": "c",
+        "typeAnnotation": {
+          "kind": "list",
+          "elem": {
+            "id": 4,
+            "kind": "int"
+          },
+          "id": 2
+        },
+        "id": 7,
+        "depth": 0
+      },
+      {
+        "id": 17,
+        "kind": "def",
+        "name": "f",
+        "qualifier": "def",
+        "expr": {
+          "id": 16,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 11,
+              "name": "x",
+              "typeAnnotation": {
+                "kind": "list",
+                "elem": {
+                  "id": 8,
+                  "kind": "int"
+                },
+                "id": 2
+              }
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 15,
+            "kind": "name",
+            "name": "x"
+          }
+        },
+        "typeAnnotation": {
+          "kind": "oper",
+          "args": [
+            {
+              "kind": "list",
+              "elem": {
+                "id": 8,
+                "kind": "int"
+              },
+              "id": 2
+            }
+          ],
+          "res": {
+            "kind": "list",
+            "elem": {
+              "id": 12,
+              "kind": "int"
+            },
+            "id": 2
+          }
+        }
+      },
+      {
+        "id": 20,
+        "kind": "def",
+        "name": "y",
+        "qualifier": "val",
+        "expr": {
+          "id": 19,
+          "kind": "app",
+          "opcode": "f",
+          "args": [
+            {
+              "id": 18,
+              "kind": "name",
+              "name": "c"
+            }
+          ]
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "arity",
+    "input": [
+      {
+        "id": 15,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "typedef",
+            "name": "Pair",
+            "type": {
+              "id": 3,
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  },
+                  {
+                    "fieldName": "1",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "var",
+                      "name": "b"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            },
+            "params": [
+              "a",
+              "b"
+            ],
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 6,
+              "kind": "app",
+              "ctor": {
+                "id": 7,
+                "kind": "const",
+                "name": "Pair"
+              },
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "int"
+                }
+              ]
+            },
+            "id": 8,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 12,
+              "kind": "app",
+              "ctor": {
+                "id": 13,
+                "kind": "const",
+                "name": "Pair"
+              },
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "int"
+                },
+                {
+                  "id": 10,
+                  "kind": "str"
+                },
+                {
+                  "id": 11,
+                  "kind": "bool"
+                }
+              ]
+            },
+            "id": 14,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 4,
+        "kind": "typedef",
+        "name": "Pair",
+        "type": {
+          "id": 3,
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        },
+        "params": [
+          "a",
+          "b"
+        ],
+        "depth": 0
+      },
+      {
+        "kind": "const",
+        "name": "x",
+        "typeAnnotation": {
+          "id": 6,
+          "kind": "app",
+          "ctor": {
+            "id": 7,
+            "kind": "const",
+            "name": "Pair"
+          },
+          "args": [
+            {
+              "id": 5,
+              "kind": "int"
+            }
+          ]
+        },
+        "id": 8,
+        "depth": 0
+      },
+      {
+        "kind": "const",
+        "name": "y",
+        "typeAnnotation": {
+          "id": 12,
+          "kind": "app",
+          "ctor": {
+            "id": 13,
+            "kind": "const",
+            "name": "Pair"
+          },
+          "args": [
+            {
+              "id": 9,
+              "kind": "int"
+            },
+            {
+              "id": 10,
+              "kind": "str"
+            },
+            {
+              "id": 11,
+              "kind": "bool"
+            }
+          ]
+        },
+        "id": 14,
+        "depth": 0
+      }
+    ],
+    "errors": [
+      {
+        "id": "6",
+        "error": {
+          "location": "applying type constructor Pair to arguments int",
+          "message": "too few arguments supplied: Pair only accepts 2 parameters",
+          "children": []
+        }
+      },
+      {
+        "id": "12",
+        "error": {
+          "location": "applying type constructor Pair to arguments int, str, bool",
+          "message": "too many arguments supplied: Pair only accepts 2 parameters",
+          "children": []
+        }
+      }
+    ]
+  }
+]

@@ -228,7 +228,9 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Preserve abstract types and reject cyclic alias expansion.
   - [x] Resolve type-tree applications with fresh type/row parameters and arity errors.
   - [x] Transform declaration annotations and alias bodies, including nested expressions.
-  - [ ] Transform lookup/type tables and validate full application-resolution parity.
+  - [x] Transform lookup payloads in insertion order before declarations.
+  - [x] Compare application expansion and arity errors with initial upstream fixtures.
+  - [ ] Validate remaining application cases and integrate with inferred type tables.
 - [ ] P4.4 Port every builtin type signature and special constraint; maintain
   an opcode-to-signature coverage table to catch omissions.
 - [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
@@ -1210,3 +1212,12 @@ word "retained" in the commit message.
   assumption annotations, input immutability, and callback error propagation.
   Default tests pass (combined execution 0.528s). Lookup-table transformation,
   complete upstream differential checks, and inference integration remain open.
+
+- 2026-11-02: Added ResolveLookupTable, replacing declaration and annotated
+  parameter payloads in insertion order while preserving source IR and lookup
+  metadata. Five generated upstream fixtures now compare exact transformed
+  declarations and ordered arity error trees, including IDs, for pairs, nested
+  constructors, row arguments, annotations, and invalid arities. Unit tests also
+  verify transformed reference payloads and source immutability. Default tests
+  pass (combined execution 0.532s). Broader application parity and inferred-table
+  integration remain pending.

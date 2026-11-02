@@ -2,6 +2,8 @@ package quint
 
 import (
 	"encoding/json"
+	"os"
+	"reflect"
 	"testing"
 )
 
@@ -101,5 +103,84 @@ func TestTypeApplicationInvalidReferences(t *testing.T) {
 	}
 	if _, err = resolver.Resolve(typ); err == nil {
 		t.Fatal("missing IDs accepted")
+	}
+}
+
+func TestResolveApplicationLookupTable(t *testing.T) {
+	ms, err := ParseModules("module M { type Box[a]=List[a] const c:Box[int] def f(x:Box[int]):Box[int]=x val y=f(c) }")
+	if err != nil {
+		t.Fatal(err)
+	}
+	linked, _ := ResolveLinkedModules(ms)
+	before, _ := json.Marshal(ms)
+	resolver := NewTypeApplicationResolver(linked.Table)
+	if err = resolver.ResolveLookupTable(); err != nil {
+		t.Fatal(err)
+	}
+	resolved, err := resolver.ResolveDeclarations(ms[0].Declarations)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, def := range linked.Table.All() {
+		if def.Parameter != nil && def.Parameter.TypeAnnotation != nil && def.Parameter.TypeAnnotation.Kind != "list" {
+			t.Fatal("parameter table annotation")
+		}
+		if def.Declaration != nil && def.Declaration.Kind == "const" && def.Declaration.TypeAnnotation.Kind != "list" {
+			t.Fatal("constant table annotation")
+		}
+	}
+	if resolved[1].TypeAnnotation.Kind != "list" {
+		t.Fatal("declaration annotation")
+	}
+	after, _ := json.Marshal(ms)
+	if string(before) != string(after) {
+		t.Fatal("lookup transformation mutated source IR")
+	}
+}
+
+func TestUpstreamTypeApplications(t *testing.T) {
+	var fixtures []struct {
+		Name   string
+		Input  []Module
+		Output []Declaration
+		Errors []struct {
+			ID    string
+			Error ErrorTree
+		}
+	}
+	data, err := os.ReadFile("testdata/parser/type_application.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = json.Unmarshal(data, &fixtures); err != nil {
+		t.Fatal(err)
+	}
+	for _, f := range fixtures {
+		t.Run(f.Name, func(t *testing.T) {
+			linked, _ := ResolveLinkedModules(f.Input)
+			resolver := NewTypeApplicationResolver(linked.Table)
+			if err = resolver.ResolveLookupTable(); err != nil {
+				t.Fatal(err)
+			}
+			out, err := resolver.ResolveDeclarations(f.Input[0].Declarations)
+			if err != nil {
+				t.Fatal(err)
+			}
+			got, _ := json.Marshal(out)
+			want, _ := json.Marshal(f.Output)
+			if string(got) != string(want) {
+				t.Fatalf("Go %s\nTS %s", got, want)
+			}
+			count := 0
+			for id, e := range resolver.Errors.All() {
+				if count >= len(f.Errors) || id != f.Errors[count].ID || !reflect.DeepEqual(e, f.Errors[count].Error) {
+					t.Fatalf("error %s %+v", id, e)
+				}
+				count++
+			}
+			if count != len(f.Errors) {
+				t.Fatal("error count")
+			}
+		})
 	}
 }
