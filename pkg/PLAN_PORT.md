@@ -675,3 +675,11 @@ word "retained" in the commit message.
   argument order, nested calls, string backslashes, and malformed syntax. Default
   tests pass (core 0.255s). Lambdas, records, bindings, matches, and source mapping
   remain open in P2.4; unsupported conversion continues to return explicit errors.
+
+- 2026-11-02: Added ordinary lambdas (including holes and nested call arguments),
+  record constructors, record spread desugaring to with applications, and
+  QNT012/QNT016 rejection of multiple spreads/duplicate fields. Tests check
+  parameter names, lambda qualifiers, record field/value order, spread placement,
+  spread-only records, and both diagnostics. Default tests pass (core 0.265s).
+  P2.4 remains open for tuple-lambda desugaring, local bindings, matches, source
+  mapping, and recovery/diagnostic parity.

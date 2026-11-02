@@ -66,9 +66,48 @@ func TestCallAndAccessConversion(t *testing.T) {
 	if err != nil || e.Str != `a\nb` {
 		t.Fatalf("upstream string semantics: %q %v", e.Str, err)
 	}
-	for _, s := range []string{"f(", "x.", "x' =", "f(x => x)"} {
+	for _, s := range []string{"f(", "x.", "x' ="} {
 		if _, err := ParseExpression(s); err == nil {
 			t.Errorf("expected syntax or unsupported conversion error: %s", s)
+		}
+	}
+}
+
+func TestLambdaAndRecordConversion(t *testing.T) {
+	e, err := ParseExpression("(x, _) => x + 1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if e.Kind != "lambda" || e.Qualifier != Def || len(e.Params) != 2 || e.Params[0].Name != "x" || e.Params[1].Name != "_" || e.Body.Opcode != "iadd" {
+		t.Fatalf("lambda %+v", e)
+	}
+	e, err = ParseExpression("xs.map(x => x + 1)")
+	if err != nil || e.Args[1].Kind != "lambda" {
+		t.Fatalf("lambda argument: %+v %v", e, err)
+	}
+	e, err = ParseExpression("{ a: 1, b: true }")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if e.Opcode != "Rec" || len(e.Args) != 4 || e.Args[0].Str != "a" || e.Args[2].Str != "b" {
+		t.Fatalf("record %+v", e)
+	}
+	e, err = ParseExpression("{ a: 1, ...r, b: 2 }")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if e.Opcode != "with" || e.Args[1].Str != "b" || e.Args[0].Opcode != "with" || e.Args[0].Args[0].Name != "r" {
+		t.Fatalf("spread %+v", e)
+	}
+	e, err = ParseExpression("{ ...r }")
+	if err != nil || e.Kind != "name" || e.Name != "r" {
+		t.Fatalf("spread only %+v %v", e, err)
+	}
+	for _, c := range [][2]string{{"{a: 1, a: 2}", QNT016}, {"{...a, ...b}", QNT012}} {
+		_, err := ParseExpression(c[0])
+		d, ok := err.(Diagnostic)
+		if !ok || d.Code != c[1] {
+			t.Fatalf("%s: %v", c[0], err)
 		}
 	}
 }

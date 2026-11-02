@@ -51,6 +51,53 @@ func expressionFromContext(ctx p.IExprContext, ids *IDGenerator) (Expr, error) {
 		}
 		return e, nil
 	}
+	if c, ok := ctx.(*p.LambdaConsContext); ok {
+		lambda := c.Lambda().LambdaUnsugared()
+		if lambda == nil {
+			return Expr{}, fmt.Errorf("tuple-destructuring lambda conversion not implemented")
+		}
+		params := []Parameter{}
+		for _, param := range lambda.AllParameter() {
+			params = append(params, Parameter{ID: ids.Next(), Name: param.GetText()})
+		}
+		body, err := expressionFromContext(lambda.Expr(), ids)
+		if err != nil {
+			return Expr{}, err
+		}
+		return Expr{ID: ids.Next(), Kind: "lambda", Params: params, Qualifier: Def, Body: &body}, nil
+	}
+	if c, ok := ctx.(*p.RecordContext); ok {
+		pairs := []Expr{}
+		var spread *Expr
+		seen := map[string]bool{}
+		for _, elem := range c.AllRecElem() {
+			value, err := expressionFromContext(elem.Expr(), ids)
+			if err != nil {
+				return Expr{}, err
+			}
+			if elem.SimpleId() == nil {
+				if spread != nil {
+					return Expr{}, Diagnostic{Code: QNT012, Message: "'...' may be used once in a record"}
+				}
+				spread = &value
+				continue
+			}
+			name := elem.SimpleId().GetText()
+			if seen[name] {
+				return Expr{}, Diagnostic{Code: QNT016, Message: "Duplicated field on record: " + name}
+			}
+			seen[name] = true
+			pairs = append(pairs, Expr{ID: ids.Next(), Kind: "str", Str: name}, value)
+		}
+		if spread == nil {
+			return Expr{ID: ids.Next(), Kind: "app", Opcode: "Rec", Args: pairs}, nil
+		}
+		record := *spread
+		for i := 0; i < len(pairs); i += 2 {
+			record = Expr{ID: ids.Next(), Kind: "app", Opcode: "with", Args: []Expr{record, pairs[i], pairs[i+1]}}
+		}
+		return record, nil
+	}
 	args := []Expr{}
 	for _, child := range ctx.GetChildren() {
 		if ex, ok := child.(p.IExprContext); ok {
