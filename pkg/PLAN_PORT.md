@@ -514,3 +514,11 @@ word "retained" in the commit message.
   for the core and about 0.032s for the adapter (build time is separate).
   Future batches must include unit coverage and a one-sentence Git commit
   after tests pass; keep default test execution below one second where possible.
+
+- 2026-11-02: Added immutable UTF-8 source files, source-map/location structures,
+  and byte/rune/UTF-16 coordinate conversion for P1.2. Unit tests cover every
+  boundary in a mixed ASCII/accented/astral/CRLF source, EOF, empty input,
+  invalid UTF-8, invalid offsets, split surrogate positions, and reversed spans.
+  Locations use half-open spans; parser adapters still need explicit conversion
+  from upstream inclusive token ends. P1.2 remains open for fresh-name generation
+  and parser integration. Default core tests passed in 0.006s.
