@@ -262,6 +262,7 @@ the information required by Go Apalache's importer.
 
 - [ ] P5.1 Port effect expressions/schemes, entities, namespaces, substitutions,
   simplification, unification, and effect printing.
+  - [x] Add effect-scheme instantiation, canonical scheme printing, and state namespace qualification.
   - [x] Port effect-variable occurs checks and recursive entity-union binding rules.
   - [x] Port structural entity unification and compare ordered substitutions/errors with upstream.
   - [x] Implement concrete/arrow effect unification and initial differential fixtures.
@@ -1503,3 +1504,12 @@ word "retained" in the commit message.
   with tracked values, update multiplicity, and expanding update-cycle rejection.
   Public construction-boundary identity and broader cycle semantics still need
   auditing; full default tests remain under one second of combined execution.
+
+- 2026-11-02: Added effect-scheme fresh instantiation, canonical diagnostic
+  printing, and recursive namespace qualification for module-instance state
+  variables. Tests cover repeated freshening, free-name retention, quantifier
+  ordering, same-name effect/entity first-match semantics, nested namespaces,
+  source references, and copied outputs. Default tests pass under one second.
+  Exact helper differential fixtures and integration into effect inference remain
+  open; qualified state names are constructed in IR because signature grammar
+  literals do not accept namespace separators.
