@@ -159,3 +159,6 @@ instantiated state names, and impure instance overrides.
 
 `analyzer_incremental.json` records three upstream split-batch runs; tests
 compare resumed diagnostics, retained effects, and mode suggestions exactly.
+
+`convert_init.json` records six upstream init conversions, with exact transformed
+modules, inferred mode suggestions, and shared-action diagnostics.

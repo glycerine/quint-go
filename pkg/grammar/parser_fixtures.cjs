@@ -450,3 +450,19 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/analyzer_incremental.json')
  const [errors,output]=analyzeInc(previous,linked.table,declarations.slice(split))
  return {name,input:parsed.modules,split,errors,effects:[...output.effects].map(([id,s])=>({id:String(id),scheme:{effect:s.effect,effectVariables:[...s.effectVariables],entityVariables:[...s.entityVariables]}})),modes:[...output.modes].map(([id,qualifier])=>({id:String(id),qualifier}))}
 }),null,2)+'\n')
+
+const {convertInit}=require(path.join(root,'quint/src/ir/initToPredicate'))
+const initCases=[
+ ['direct',"module M { var x:int action q::init=x'=1 action step=x'=2 }"],
+ ['dependency',"module M { var x:int action start=x'=1 action q::init=start }"],
+ ['call',"module M { var x:int action start(n)=x'=n action q::init=start(1) }"],
+ ['shared',"module M { var x:int action start=x'=1 action q::init=start action step=start }"],
+ ['pure-shared',"module M { action start=true action q::init=start action step=start }"],
+ ['missing-init',"module M { var x:int action step=x'=1 }"],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/convert_init.json'),JSONbig.stringify(initCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name),linked=resolveNames(parsed.modules)
+ const [,output]=analyzeModules(linked.table,parsed.modules)
+ const result=convertInit(parsed.modules[0],linked.table,output.modes)
+ return {name,input:parsed.modules[0],modes:[...output.modes].map(([id,qualifier])=>({id:String(id),qualifier})),...(result.isLeft()?{errors:result.value}:{output:result.value})}
+}),null,2)+'\n')

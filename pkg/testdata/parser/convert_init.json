@@ -1,0 +1,623 @@
+[
+  {
+    "name": "direct",
+    "input": {
+      "id": 11,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 10,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 9,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 8,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 7,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [],
+    "output": {
+      "id": 11,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 10,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 9,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 8,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 7,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "dependency",
+    "input": {
+      "id": 9,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "start",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "name",
+            "name": "start"
+          }
+        }
+      ]
+    },
+    "modes": [],
+    "output": {
+      "id": 9,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "start",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "name",
+            "name": "start"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "call",
+    "input": {
+      "id": 12,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "start",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 11,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 10,
+            "kind": "app",
+            "opcode": "start",
+            "args": [
+              {
+                "id": 9,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [],
+    "output": {
+      "id": 12,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "start",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 11,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 10,
+            "kind": "app",
+            "opcode": "start",
+            "args": [
+              {
+                "id": 9,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "shared",
+    "input": {
+      "id": 11,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "start",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "name",
+            "name": "start"
+          }
+        },
+        {
+          "id": 10,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 9,
+            "kind": "name",
+            "name": "start"
+          }
+        }
+      ]
+    },
+    "modes": [],
+    "errors": [
+      {
+        "code": "QNT409",
+        "message": "Action start is used both for init and for step, and therefore can't be converted into TLA+. You can duplicate this with a different name to use on init. Sorry Quint can't do it for you yet.",
+        "reference": 9
+      }
+    ]
+  },
+  {
+    "name": "pure-shared",
+    "input": {
+      "id": 7,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          }
+        },
+        {
+          "id": 4,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 3,
+            "kind": "name",
+            "name": "start"
+          }
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "name",
+            "name": "start"
+          }
+        }
+      ]
+    },
+    "modes": [
+      {
+        "id": "2",
+        "qualifier": "pureval"
+      },
+      {
+        "id": "4",
+        "qualifier": "pureval"
+      },
+      {
+        "id": "6",
+        "qualifier": "pureval"
+      }
+    ],
+    "output": {
+      "id": 7,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          }
+        },
+        {
+          "id": 4,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 3,
+            "kind": "name",
+            "name": "start"
+          }
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "name",
+            "name": "start"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "missing-init",
+    "input": {
+      "id": 7,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [],
+    "output": {
+      "id": 7,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

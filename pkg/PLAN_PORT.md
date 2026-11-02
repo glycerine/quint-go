@@ -1690,3 +1690,10 @@ word "retained" in the commit message.
   and input isolation. Default tests pass under one second. Exact upstream
   transform fixtures, nested-definition discovery auditing, and compilation-path
   integration remain open under P6.5.
+
+- 2026-11-02: Added six exact upstream init-conversion fixtures for direct
+  assignments, named/called dependencies, shared-action failures, inferred-pure
+  shared definitions, and modules without init. Full transformed modules and
+  QNT409 diagnostics match upstream without changes. Default tests pass
+  (combined execution 0.729s). Nested-definition discovery and compilation-path
+  integration remain open under P6.5.
