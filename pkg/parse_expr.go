@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/antlr4-go/antlr/v4"
 	p "github.com/glycerine/quint-go/pkg/internal/quintparser"
+	"math/big"
 	"regexp"
 	"strings"
 )
@@ -37,11 +38,16 @@ func expressionFromContext(ctx p.IExprContext, ids *IDGenerator) (Expr, error) {
 			e.Name = c.GetText()
 		case c.INT() != nil:
 			e.Kind = "int"
-			n, err := ParseInteger(strings.ReplaceAll(c.GetText(), "_", ""))
-			if err != nil {
-				return Expr{}, err
+			literal := strings.ReplaceAll(c.GetText(), "_", "")
+			base := 10
+			if strings.HasPrefix(literal, "0x") {
+				base, literal = 16, literal[2:]
 			}
-			e.Int = n
+			n, ok := new(big.Int).SetString(literal, base)
+			if !ok {
+				return Expr{}, fmt.Errorf("invalid integer literal %q", c.GetText())
+			}
+			e.Int = IntegerFromBig(n)
 		case c.BOOL() != nil:
 			e.Kind = "bool"
 			e.Bool = c.GetText() == "true"

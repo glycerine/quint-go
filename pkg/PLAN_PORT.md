@@ -764,3 +764,11 @@ word "retained" in the commit message.
   IR. Default tests pass (core 0.322s; combined package execution 0.382s). P2.6
   sub-checklists now identify completed entry-point behavior and remaining
   source-map/diagnostic and differential-fixture work.
+
+- 2026-11-02: Audited expression alternatives against the grammar and fixed
+  hexadecimal literal conversion, retaining arbitrary precision, underscore
+  handling, and decimal JSON encoding. Lexical tests cover 128-bit hex values,
+  unary negation, invalid bases/separators/leading zeros, qualified identifiers,
+  reserved identifiers, comments, and module hashbang placement. Default tests
+  pass (core 0.310s; combined package execution 0.370s). P2.2/P2.4 remain open
+  pending full lexical/differential parity and source diagnostic integration.
