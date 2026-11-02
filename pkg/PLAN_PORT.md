@@ -390,6 +390,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     nested rollback, baseline preservation, and upstream error behavior.
   - [x] Randomized actionAny with exact Squares/Fisher-Yates draws, retry
     rollback, metadata reset, nested choices, and explicit caller-owned RNG.
+  - [x] then/reps state transitions, intermediate shifts and metadata clearing,
+    local-value scope preservation, failure diagnostics, and loop cancellation.
   - [ ] Stateful module/instance binding, primed-read support, action composition,
     transactional rollback/commit, and simulation integration.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
@@ -2465,3 +2467,20 @@ word "retained" in the commit message.
   rejection. Full default tests pass (combined package execution 1.036s, near
   the one-second target). Trace callbacks, sequencing/repetition, stateful module
   binding, primed reads, and simulation integration remain open.
+
+- 2026-11-02: Added lazy then/reps state execution. Sequencing shifts only
+  after its first action succeeds; repetition passes zero-based indices, shifts
+  between successful iterations, and leaves the final next state pending.
+  Internal shifts clear metadata like upstream Context.shift. False actions
+  produce upstream QNT513 messages, with then's highlighted source reference;
+  errors retain the reference's intermediate-state behavior. Forty-two full
+  TypeScript transitions match results/errors and current records, including
+  zero/negative counts, nested then, iteration failures, errors before/after
+  shifts, and local values retained across shifts. Investigation distinguished
+  scoped val caches (retained until scope exit) from top-level state-dependent
+  caches (shift-invalidated); storage generations support that distinction and
+  module lowering now retains top-level depth. Unit tests cover metadata clear,
+  cancellation between iterations, invalid calls, and pure-context rejection.
+  Full default tests pass (combined package execution 0.999s). Intermediate
+  trace recording, stateful module orchestration, primed reads, and simulation
+  integration remain open.

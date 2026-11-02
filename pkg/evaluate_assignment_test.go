@@ -8,7 +8,10 @@ import (
 	"testing"
 )
 
-func TestUpstreamAssignments(t *testing.T)       { testStateTransitions(t, "runtime_assignment.json") }
+func TestUpstreamAssignments(t *testing.T) { testStateTransitions(t, "runtime_assignment.json") }
+func TestUpstreamActionSequence(t *testing.T) {
+	testStateTransitions(t, "runtime_action_sequence.json")
+}
 func TestUpstreamActionChoice(t *testing.T)      { testStateTransitions(t, "runtime_action_any.json") }
 func TestUpstreamActionConjunction(t *testing.T) { testStateTransitions(t, "runtime_action_all.json") }
 func testStateTransitions(t *testing.T, filename string) {

@@ -30,6 +30,7 @@ type VariableStorage struct {
 	next        *insdict.Dict[string, *RuntimeRegister]
 	caches      []*RuntimeCache
 	metadata    bool
+	generation  uint64
 	ActionTaken string
 	NondetPicks *insdict.Dict[string, RuntimeValue]
 }
@@ -90,6 +91,7 @@ func (s *VariableStorage) Reset() {
 }
 
 func (s *VariableStorage) clearCaches() {
+	s.generation++
 	for _, cache := range s.caches {
 		cache.Value = RuntimeValue{}
 		cache.Err = nil

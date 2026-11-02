@@ -3,6 +3,7 @@ package quint
 import (
 	"context"
 	"fmt"
+	"math/big"
 
 	"github.com/glycerine/insdict"
 )
@@ -128,14 +129,21 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 			var cached RuntimeValue
 			var cachedErr error
 			evaluated := false
+			var generation uint64
 			thunk := func(arguments []RuntimeValue) (RuntimeValue, error) {
 
+				if storage != nil && e.Opdef.Qualifier == Val && e.Opdef.Depth != nil && *e.Opdef.Depth == 0 && generation != storage.generation {
+					evaluated = false
+				}
 				if !evaluated {
 					saved := scopes
 					scopes = captured
 					cached, cachedErr = eval(*e.Opdef.Expr)
 					scopes = saved
 					evaluated = true
+					if storage != nil {
+						generation = storage.generation
+					}
 				}
 				if cachedErr != nil {
 					return RuntimeValue{}, cachedErr
@@ -184,6 +192,74 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 			return v.expression.Bool, nil
 		}
 		switch e.Opcode {
+		case "then":
+			if storage == nil {
+				return fail(e, "Action sequencing requires variable storage")
+			}
+			if len(e.Args) != 2 {
+				return fail(e, "then requires 2 arguments")
+			}
+			enabled, err := boolean(e.Args[0])
+			if err != nil {
+				return RuntimeValue{}, err
+			}
+			if !enabled {
+				id := e.Args[0].ID
+				if e.Args[0].Kind == "app" && e.Args[0].Opcode == "then" && len(e.Args[0].Args) == 2 {
+					id = e.Args[0].Args[1].ID
+				}
+				return RuntimeValue{}, Diagnostic{Code: "QNT513", Message: "Cannot continue in `then` because the highlighted expression evaluated to false", Reference: &id}
+			}
+			storage.Shift()
+			storage.ClearMetadata()
+			return eval(e.Args[1])
+		case "reps":
+			if storage == nil {
+				return fail(e, "Action repetition requires variable storage")
+			}
+			if len(e.Args) != 2 {
+				return fail(e, "reps requires 2 arguments")
+			}
+			count, err := eval(e.Args[0])
+			if err != nil {
+				return RuntimeValue{}, err
+			}
+			if count.expression.Kind != "int" {
+				return fail(e, "reps requires an integer count")
+			}
+			limit, _ := count.expression.Int.Big().Float64()
+			result, _ := boolValue(true)
+			for i := float64(0); i < limit; i++ {
+				if err := ctx.Err(); err != nil {
+					return RuntimeValue{}, err
+				}
+				callback, err := eval(e.Args[1])
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+				integer, _ := new(big.Float).SetFloat64(i).Int(nil)
+				n := IntegerFromBig(integer)
+				iteration, err := NewRuntimeValue(Expr{Kind: "int", Int: n})
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+				result, err = callback.Apply(ctx, []RuntimeValue{iteration})
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+				if result.expression.Kind != "bool" {
+					return fail(e, "Expected a Boolean action result")
+				}
+				if !result.expression.Bool {
+					id := e.ID
+					return RuntimeValue{}, Diagnostic{Code: "QNT513", Message: fmt.Sprintf("Reps loop could not continue after iteration #%s evaluated to false", runtimeNumberString(i+1)), Reference: &id}
+				}
+				if i < limit-1 {
+					storage.Shift()
+					storage.ClearMetadata()
+				}
+			}
+			return result, nil
 		case "actionAny":
 			if storage == nil || rng == nil {
 				return fail(e, "Action choice requires variable storage and RNG")

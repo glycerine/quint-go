@@ -46,7 +46,8 @@ func EvaluatePureDefinition(ctx context.Context, module Module, name string, arg
 		if d.Kind != "def" {
 			continue
 		}
-		definition := OperatorDef{ID: d.ID, Name: d.Name, Qualifier: d.Qualifier, Expr: d.Expr}
+		depth := 0
+		definition := OperatorDef{Depth: &depth, ID: d.ID, Name: d.Name, Qualifier: d.Qualifier, Expr: d.Expr}
 		nested := body
 		body = Expr{ID: d.ID, Kind: "let", Opdef: &definition, Body: &nested}
 	}

@@ -392,3 +392,11 @@ and exact RNG counters. They cover multiple enabled options, retry rollback,
 all-disabled/empty choices, baseline preservation, single options, nested choice,
 and retained writes on errors. Unit tests verify metadata reset/recovery,
 single-option RNG stability, and missing-context rejection.
+
+`runtime_action_sequence.json` is regenerated with
+`node pkg/grammar/runtime_action_sequence_fixtures.cjs`. Forty-two full
+TypeScript transitions compare then/reps results, failures, and state shifts.
+Cases cover chaining, zero/negative repetition, iteration indices, errors before
+and after shifts, failed repetitions, and local values retained across internal
+shifts. Unit tests also check metadata clearing and cancellation between
+iterations. Simulation trace recording remains separate unfinished integration.
