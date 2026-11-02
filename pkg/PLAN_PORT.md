@@ -227,7 +227,8 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Resolve outer aliases and recursively inline type-tree aliases by lookup ID.
   - [x] Preserve abstract types and reject cyclic alias expansion.
   - [x] Resolve type-tree applications with fresh type/row parameters and arity errors.
-  - [ ] Transform module/type tables and validate full application-resolution parity.
+  - [x] Transform declaration annotations and alias bodies, including nested expressions.
+  - [ ] Transform lookup/type tables and validate full application-resolution parity.
 - [ ] P4.4 Port every builtin type signature and special constraint; maintain
   an opcode-to-signature coverage table to catch omissions.
 - [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
@@ -1200,3 +1201,12 @@ word "retained" in the commit message.
   immutability. Default tests pass under one second. Whole-module and lookup-table
   transformation, upstream differential coverage, and inference integration remain
   open; this is not yet the complete upstream type-application pass.
+
+- 2026-11-02: Added TransformDeclarationTypes and application resolver
+  ResolveDeclarations. Annotation traversal covers top-level declarations, alias
+  bodies, local operator definitions, lambda parameters, assumptions, arguments,
+  and instance override expressions, copying modified nodes and propagating
+  structural failures. Tests cover nested application expansion, override and
+  assumption annotations, input immutability, and callback error propagation.
+  Default tests pass (combined execution 0.528s). Lookup-table transformation,
+  complete upstream differential checks, and inference integration remain open.
