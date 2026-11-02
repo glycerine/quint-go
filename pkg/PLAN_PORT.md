@@ -1369,3 +1369,12 @@ word "retained" in the commit message.
   (combined execution 0.575s). Module/declaration lifecycle, source-accurate
   annotation diagnostics, full upstream generator comparison, and public inference
   integration remain incomplete.
+
+- 2026-11-02: Added declaration constraint traversal for constants, variables,
+  generalized operators, assumptions, and instance overrides. Scope cleanup
+  retains constant/variable schemes while preserving all inferred reference
+  results. Tests cover polymorphic calls across declarations, persistent scopes,
+  overly general/incompatible annotations, override mismatches, and pending
+  boolean assumption constraints. Default tests pass (combined execution 0.582s).
+  Public inference orchestration, pending-constraint finalization policy, exact
+  upstream declaration parity, and generator diagnostic parity remain open.
