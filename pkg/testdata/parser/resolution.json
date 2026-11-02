@@ -1,0 +1,224 @@
+[
+  {
+    "name": "forward",
+    "source": "module M { val x = f(c) def f(a) = a const c: int }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/0",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/0/expr",
+        "definition": "/0/declarations/1",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/0/expr/args/0",
+        "definition": "/0/declarations/2",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/1",
+        "definition": "/0/declarations/1",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/1/expr/expr",
+        "definition": "/0/declarations/1/expr/params/0",
+        "depth": 1
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "shadow",
+    "source": "module M { val x = 1 def f(a) = val x = a; x + f(a) }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/0",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/1",
+        "definition": "/0/declarations/1",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/1/expr/expr/opdef",
+        "definition": "/0/declarations/1/expr/expr/opdef",
+        "depth": 3
+      },
+      {
+        "reference": "/0/declarations/1/expr/expr/opdef/expr",
+        "definition": "/0/declarations/1/expr/params/0",
+        "depth": 1
+      },
+      {
+        "reference": "/0/declarations/1/expr/expr/expr/args/0",
+        "definition": "/0/declarations/1/expr/expr/opdef",
+        "depth": 3
+      },
+      {
+        "reference": "/0/declarations/1/expr/expr/expr/args/1",
+        "definition": "/0/declarations/1",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/1/expr/expr/expr/args/1/args/0",
+        "definition": "/0/declarations/1/expr/params/0",
+        "depth": 1
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "types",
+    "source": "module M { type T = int const c: T val x: T = c }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/1/typeAnnotation",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/2/typeAnnotation",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/2",
+        "definition": "/0/declarations/2",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/2/expr",
+        "definition": "/0/declarations/1",
+        "depth": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "missing",
+    "source": "module M { val x = missing(T) type T = int }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/0",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT404",
+        "message": "Name 'missing' not found",
+        "reference": "/0/declarations/0/expr"
+      },
+      {
+        "code": "QNT404",
+        "message": "Name 'T' not found",
+        "reference": "/0/declarations/0/expr/args/0"
+      }
+    ]
+  },
+  {
+    "name": "duplicate-params",
+    "source": "module M { val f = (a,a) => a }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/0",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/0/expr/expr",
+        "definition": "/0/declarations/0/expr/params/1",
+        "depth": 1
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'a' in module 'M'",
+        "reference": "/0/declarations/0/expr/params/0"
+      },
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'a' in module 'M'",
+        "reference": "/0/declarations/0/expr/params/1"
+      }
+    ]
+  },
+  {
+    "name": "duplicate-defs",
+    "source": "module M { val x = 1 val x = 2 val y = x }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/0",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/1",
+        "definition": "/0/declarations/1",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/2",
+        "definition": "/0/declarations/2",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/2/expr",
+        "definition": "/0/declarations/1",
+        "depth": 0
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'x' in module 'M'",
+        "reference": "/0/declarations/0"
+      },
+      {
+        "code": "QNT101",
+        "message": "Conflicting definitions found for name 'x' in module 'M'",
+        "reference": "/0/declarations/1"
+      }
+    ]
+  },
+  {
+    "name": "local-recursion",
+    "source": "module M { val x = def f(a) = f(a); f(1) }",
+    "bindings": [
+      {
+        "reference": "/0/declarations/0",
+        "definition": "/0/declarations/0",
+        "depth": 0
+      },
+      {
+        "reference": "/0/declarations/0/expr/opdef",
+        "definition": "/0/declarations/0/expr/opdef",
+        "depth": 2
+      },
+      {
+        "reference": "/0/declarations/0/expr/opdef/expr/expr",
+        "definition": "/0/declarations/0/expr/opdef",
+        "depth": 2
+      },
+      {
+        "reference": "/0/declarations/0/expr/opdef/expr/expr/args/0",
+        "definition": "/0/declarations/0/expr/opdef/expr/params/0",
+        "depth": 3
+      },
+      {
+        "reference": "/0/declarations/0/expr/expr",
+        "definition": "/0/declarations/0/expr/opdef",
+        "depth": 2
+      }
+    ],
+    "errors": []
+  }
+]

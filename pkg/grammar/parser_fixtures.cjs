@@ -103,3 +103,23 @@ if(process.argv.includes('--corpus')){
  })
  fs.writeFileSync(path.join(root,'pkg/testdata/parser/corpus.json'),JSONbig.stringify(corpus)+'\n')
 }
+const {resolveNames}=require(path.join(root,'quint/src/names/resolver'))
+const resolutionCases=[
+ ['forward','module M { val x = f(c) def f(a) = a const c: int }'],
+ ['shadow','module M { val x = 1 def f(a) = val x = a; x + f(a) }'],
+ ['types','module M { type T = int const c: T val x: T = c }'],
+ ['missing','module M { val x = missing(T) type T = int }'],
+ ['duplicate-params','module M { val f = (a,a) => a }'],
+ ['duplicate-defs','module M { val x = 1 val x = 2 val y = x }'],
+ ['local-recursion','module M { val x = def f(a) = f(a); f(1) }'],
+]
+const resolutionFixtures=resolutionCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ if(parsed.errors.length)throw Error(JSONbig.stringify(parsed.errors))
+ const paths=new Map()
+ function visit(v,p){if(!v||typeof v!=='object')return;if(v.id!==undefined&&!paths.has(v.id))paths.set(v.id,p);for(const k of Object.keys(v).sort())if(k!=='id')visit(v[k],p+'/'+k)}
+ visit(parsed.modules,'')
+ const result=resolveNames(parsed.modules)
+ return {name,source,bindings:[...result.table].map(([id,def])=>({reference:paths.get(id),definition:paths.get(def.id),depth:def.depth??0})),errors:result.errors.map(e=>({code:e.code,message:e.message,reference:paths.get(e.reference)}))}
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/resolution.json'),JSONbig.stringify(resolutionFixtures,null,2)+'\n')

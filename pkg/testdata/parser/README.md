@@ -62,3 +62,10 @@ Successful phase-one results compare full IR after removing IDs and renaming
 ID-suffixed compiler temporaries consistently (only `name` fields, preserving
 references and distinct identities). Invalid cases currently check rejection,
 not complete error or recovery parity. This broader check is opt-in.
+
+`resolution.json` invokes the TypeScript name resolver on seven local-module
+cases. Numeric IDs are mapped to structural IR paths; the test compares lookup
+insertion order, reference targets, lexical depth, and ordered diagnostics with
+reference paths. Cases cover forward references, shadowing, types, missing names,
+duplicate parameters/definitions, and local recursion. Import linking and unused
+definition identity are outside these initial cases.

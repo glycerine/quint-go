@@ -1051,3 +1051,11 @@ word "retained" in the commit message.
   duplicate parameters, undefined types/names, and explicit rejection of unlinked
   module directives. Default tests pass within the sub-second target. P3.1/P3.2
   remain open for linking, unused definitions, and differential validation.
+
+- 2026-11-02: Added seven TypeScript-generated local name-resolution fixtures.
+  Comparisons use structural paths instead of numeric IDs and verify lookup
+  insertion order, target identity, depth, and ordered diagnostics/references.
+  Forward references, shadowing, type names, undefined names, duplicate parameters
+  and definitions, and local recursion all match. The focused suite takes 0.025s;
+  default tests remain within the sub-second target. P3.1/P3.6 remain open for
+  unused definitions, wider scope edge cases, and linked module resolution.
