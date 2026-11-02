@@ -274,6 +274,8 @@ the information required by Go Apalache's importer.
 - [ ] P5.2 Port builtin effect signatures and effect inference through calls,
   lambdas, local definitions, imports, and instantiated modules.
   - [x] Port all 98 upstream builtin effect signatures, with 142 exact signature fixtures.
+  - [x] Add retained effect signature lookup, constant/state seeding, and instance namespaces.
+  - [ ] Add expression/declaration traversal with substitution and free-name lifecycle.
 - [ ] P5.3 Port qualifier/mode validation for `pure val`, `pure def`, `val`,
   `def`, `nondet`, `action`, `run`, and `temporal`.
 - [ ] P5.4 Port multiple-update detection and nondeterministic-choice checks,
@@ -1522,3 +1524,13 @@ word "retained" in the commit message.
   now preserved alongside upstream actionAll override semantics. Isolation and
   invalid-lookup tests also pass. Default tests pass (combined execution 0.690s).
   Effect-inference traversal and combined analysis remain open.
+
+- 2026-11-02: Added EffectSignatureContext with ordered retained schemes/errors,
+  fresh builtin and user signature lookup, instance-only state qualification,
+  and declaration seeding for constants, operator constants, and state variables.
+  Tests cover parsed/name-resolved references, repeated freshening, state source
+  IDs, imported versus instantiated names, prior-error precedence, missing
+  results, and builtin precedence. Full default tests pass under one second.
+  Missing retained results currently produce structured errors rather than
+  upstream internal exceptions; traversal and effect-inference integration remain
+  pending.
