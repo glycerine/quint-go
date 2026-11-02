@@ -1,0 +1,1249 @@
+[
+  {
+    "operation": [
+      "register",
+      "x"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "register",
+      "y"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "next",
+      "x",
+      "1"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "next",
+      "y",
+      "2"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "key": "y",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "snapshot",
+      "a"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "key": "y",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "next",
+      "x",
+      "3"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        }
+      },
+      {
+        "key": "y",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "recover",
+      "a"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "key": "y",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "shift"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "key": "y",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "y"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "operation": [
+      "next",
+      "x",
+      "4"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "key": "y",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 4
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "y"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "operation": [
+      "snapshot",
+      "b"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "key": "y",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 4
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "y"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "operation": [
+      "next",
+      "y",
+      "5"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "key": "y",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 4
+        }
+      },
+      {
+        "key": "y",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 5
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "y"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "operation": [
+      "recover",
+      "b"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "key": "y",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 4
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "y"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "operation": [
+      "shift"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 4
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 4
+        }
+      ]
+    }
+  },
+  {
+    "operation": [
+      "reset"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "next",
+      "x",
+      "6"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 6
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "snapshot",
+      "c"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 6
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "register",
+      "z"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      },
+      {
+        "key": "z",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable z not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 6
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      },
+      {
+        "key": "z",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable z not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "next",
+      "z",
+      "7"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      },
+      {
+        "key": "z",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable z not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 6
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      },
+      {
+        "key": "z",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 7
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "recover",
+      "c"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      },
+      {
+        "key": "z",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable z not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 6
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      },
+      {
+        "key": "z",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 7
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": [
+      "shift"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 6
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      },
+      {
+        "key": "z",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 7
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      },
+      {
+        "key": "z",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable z not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 6
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "z"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 7
+        }
+      ]
+    }
+  },
+  {
+    "operation": [
+      "recover",
+      "c"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 6
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      },
+      {
+        "key": "z",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 7
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 6
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      },
+      {
+        "key": "z",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable z not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 6
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "z"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 7
+        }
+      ]
+    }
+  },
+  {
+    "operation": [
+      "shift"
+    ],
+    "current": [
+      {
+        "key": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 6
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      },
+      {
+        "key": "z",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable z not set"
+        }
+      }
+    ],
+    "next": [
+      {
+        "key": "x",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable x not set"
+        }
+      },
+      {
+        "key": "y",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable y not set"
+        }
+      },
+      {
+        "key": "z",
+        "error": {
+          "code": "QNT502",
+          "message": "Variable z not set"
+        }
+      }
+    ],
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 6
+        }
+      ]
+    }
+  }
+]

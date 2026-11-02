@@ -380,6 +380,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [ ] Remaining collections/higher-order/symbolic operations.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
   updates, action composition, enabled/disabled actions, rollback, and commit.
+  - [x] Stable named current/next registers, unset diagnostics, shift/reset,
+    next-state snapshots/recovery, current record export, and shift cache reset.
+  - [ ] Runtime metadata/from-record restoration, evaluator variable/assignment
+    integration, and action composition with rollback/commit.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
   empty choices, and bounded sampling of infinite domains.
 - [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
@@ -2383,3 +2387,18 @@ word "retained" in the commit message.
   race tests pass (1.306s instrumented). Full default tests pass (combined package
   execution 1.020s, near the one-second target). Filesystem/CLI wiring, runtime
   state, unbound constants, collection closures, and remaining builtins stay open.
+
+- 2026-11-02: Added VariableStorage, RuntimeRegister, RuntimeCache, and opaque
+  VariableSnapshot as the action runtime's storage foundation. Registers retain
+  stable pointers, separate declaration keys/display names, and upstream QNT502
+  unset diagnostics. Shift commits next values simultaneously, clears next
+  registers and tracked caches, and never silently retains unassigned current
+  values. Reset clears registers without clearing caches, matching upstream.
+  Snapshots own next-value copies; recovery preserves cells/current state and
+  leaves later-registered cells unchanged. Current record export omits unset
+  variables and uses insdict-backed registration. Twenty-two upstream storage
+  transitions match every current/next read and record. Unit tests cover pointer
+  identity, reusable snapshots, cache contracts, diagnostic names, and isolation
+  of current/next state. Full default tests pass (combined package execution
+  0.994s). Metadata, from-record restoration, variable/assignment evaluator
+  integration, action composition, and full rollback remain open under P7.5.

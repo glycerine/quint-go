@@ -352,3 +352,11 @@ re-exports, constant overrides, independent/nested instances, unused failures,
 and imported callbacks. The last case preserves the static effect checker's
 operator-returning-operator rejection instead of bypassing it for runtime
 execution. Go tests also verify unmodified module IR and parser ID state.
+
+`runtime_storage.json` is regenerated with
+`node pkg/grammar/runtime_storage_fixtures.cjs`. Twenty-two transitions from
+upstream VarStorage compare current/next register results and exported records
+after writes, shifts, reset, snapshots, repeated recovery, and late registration.
+Additional unit tests check stable pointer identity, display-name diagnostics,
+cache clearing on shift, cache retention on reset, and reusable snapshots.
+Runtime metadata and action-evaluator integration remain separate work.
