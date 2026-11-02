@@ -1803,3 +1803,10 @@ word "retained" in the commit message.
   pointer isolation, and absent IDs. Default tests pass (combined execution
   0.735s). Full declaration traversal order and instance integration remain open
   under P6.2.
+
+- 2026-11-02: Added complete definition ID refresh traversal combining top-level
+  and local definitions, expression IDs, parameter IDs, and type annotations.
+  Parameter IDs are allocated before their annotations, matching upstream order.
+  Tests cover annotated operators, local definitions, fresh IDs, and unchanged
+  expression meaning. Default tests pass (combined execution 0.713s). Exact ID
+  traversal fixtures and instance integration remain open under P6.2.
