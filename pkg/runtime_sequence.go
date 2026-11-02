@@ -8,7 +8,7 @@ import (
 
 func sequenceBuiltinArity(op string) int {
 	switch op {
-	case "head", "tail", "length", "fieldNames":
+	case "head", "tail", "length", "fieldNames", "indices":
 		return 1
 	case "item", "nth", "append", "concat", "field":
 		return 2
@@ -80,6 +80,13 @@ func EvalSequenceBuiltin(op string, args []RuntimeValue) (RuntimeValue, error) {
 		return fail("QNT501", "Called 'with' with a non-existent field "+name)
 	}
 	switch op {
+	case "indices":
+		indices := make([]Expr, len(elems))
+		for i := range elems {
+			n, _ := ParseInteger(fmt.Sprint(i))
+			indices[i] = Expr{Kind: "int", Int: n}
+		}
+		return makeValue("Set", indices)
 	case "length":
 		n, _ := ParseInteger(fmt.Sprint(len(elems)))
 		return NewRuntimeValue(Expr{Kind: "int", Int: n})

@@ -430,3 +430,11 @@ q::lastTrace read. Tests cover shift extension, repetition, nested expect drops,
 retained traces on errors, and the distinction between raw storage shifts and
 context shifts. Unit tests check trace slice ownership, reset/empty drop, and
 module shifts recording metadata before clearing it.
+
+`runtime_range.json` is regenerated with
+`node pkg/grammar/runtime_range_fixtures.cjs`. Eighteen upstream cases cover
+ascending, descending, equal and negative endpoints, JavaScript Number rounding
+and iterative addition above exact integer precision, empty/nonempty list
+indices, and composition with list folds and indexing. Unit tests validate
+arity/types, cancellation, and reportable non-finite endpoint rejection.
+Unbounded materialization and the reference's uncaught errors remain an audit.

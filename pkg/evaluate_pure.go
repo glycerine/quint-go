@@ -527,6 +527,8 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 			value, err = EvalMapSetBy(ctx, args)
 		} else if listHigherBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalListHigherBuiltin(ctx, e.Opcode, args)
+		} else if e.Opcode == "range" {
+			value, err = EvalRangeBuiltin(ctx, args)
 		} else if sequenceBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalSequenceBuiltin(e.Opcode, args)
 		} else if mapBuiltinArity(e.Opcode) != 0 {

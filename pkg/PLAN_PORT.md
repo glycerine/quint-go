@@ -377,7 +377,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     precedence, immutable updates, and upstream evaluator cases.
   - [x] Lazy variant matching with payload binding, wildcard/source-order
     selection, nested matches, closure branches, and missing-case diagnostics.
-  - [ ] Remaining collections/higher-order/symbolic operations.
+  - [x] Exclusive-end ascending/descending list range with Number-rounded
+    endpoints and iterative steps, and finite list indices.
+  - [ ] Remaining collections/higher-order/symbolic operations, including
+    unbounded range materialization/error behavior.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
   updates, action composition, enabled/disabled actions, rollback, and commit.
   - [x] Stable named current/next registers, unset diagnostics, shift/reset,
@@ -2540,3 +2543,12 @@ word "retained" in the commit message.
   metadata snapshots. Full default tests pass (combined package execution
   1.039s, near the one-second target). Execution-recorder callbacks, trace diff
   rendering, and simulation-level orchestration remain open.
+
+- 2026-11-02: Added exclusive-end list range and list indices. Range matches
+  ascending/descending iteration, negative/equal endpoints, Number endpoint
+  rounding, and repeated rounded additions above JavaScript's exact-integer
+  boundary. Eighteen upstream cases verify concrete results and composition
+  with folds/indexing. Unit tests cover invalid arity/types, cancellation, and
+  structured rejection of non-finite Number endpoints. Unbounded materialization
+  and reference uncaught-error behavior remain explicitly open. Full default
+  tests pass (combined package execution 1.044s, near the one-second target).
