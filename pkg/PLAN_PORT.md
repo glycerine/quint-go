@@ -589,3 +589,10 @@ word "retained" in the commit message.
   from caller mutation. Default tests pass (core 0.008s). P0.2/P7.9 remain open:
   membership is now tracked, but per-opcode implementation coverage is not yet
   complete for typing, effects, runtime evaluation, or checker conversion.
+
+- 2026-11-02: Added concrete/arrow/variable effects, effect components, entity
+  unions/variables/state-variable sets, and effect schemes with tagged JSON
+  encoding. Tests cover all variants, empty arrays, large reference IDs, malformed
+  effects/components/entities, and the upstream simple fixture's effect table.
+  Default tests pass (core 0.007s). P1.4/P5.1 remain open for remaining tables,
+  stricter nested state-variable validation, and effect operations.
