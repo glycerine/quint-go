@@ -332,7 +332,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   ownership without relying on Go map iteration order.
   - [x] Immutable concrete-value ownership, typed structural identity, stable
     Go hashing, canonical IR printing, and upstream equal-type comparisons.
-  - [ ] Closures, symbolic collections, iteration order, and cross-type
+  - [ ] Closures inside collections, symbolic collections, iteration order, and cross-type
     equality audit (TypeScript's set-like fallback equates unlike constructors).
 - [ ] P7.2 Port evaluation/compilation of IR, lexical closures, operator values,
   local bindings, lazy branches, definition caches, and runtime error traces.
@@ -368,8 +368,11 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] Private Immutable.js-compatible concrete hash and constructor-order
     helpers, including UTF-16 strings, nested values, ninth-key HAMT conversion,
     low-to-high hash fragments, and collision order; public Go hash unchanged.
-  - [ ] Persistent mutation histories, full large-map traversal/source-order
-    propagation through nested operations, and higher-order map operations.
+  - [x] Private persistent traversal nodes for array/value/collision/bitmap/dense
+    transitions, deletion swaps/compression, and same-object no-op updates.
+  - [ ] Mutable ownerID constructor batches, child RuntimeValue payloads and
+    normal-form rules, traversal propagation through nested operations, and
+    higher-order map operations.
   - [x] getOnlyElement with singleton deduplication, owned nested values,
     last-equal-element source retention, and exact cardinality diagnostics.
   - [ ] setToMap parity, including its intermediate JS-array identity hashing;
@@ -2651,3 +2654,18 @@ word "retained" in the commit message.
   ownership, and failing-seed replay. Full default tests pass (combined package
   execution 0.946s). JavaScript CLI regexes, project suite/name wiring, execution
   frames/hooks, and assertion rendering remain open.
+
+- 2026-11-02: Added a persistent reference traversal map with real array,
+  value, collision, bitmap, and dense nodes. Updates copy touched nodes and
+  retain prior snapshots; deletion swaps, node expansion/packing, collision
+  collapse, leaf compression, and ninth-insertion ordering match 205 upstream
+  operations across ten scenarios. Runtime values now carry private allocation
+  tokens so reusing the same value object preserves the old key/root, while a
+  fresh structurally equal value can update its source representation. Public
+  equality and hashing are unchanged. Snapshot, validation, lookup, source-order,
+  and ownership tests pass; full default tests pass (combined package execution
+  0.946s). Mutable ownerID constructor batches and runtime payload propagation
+  remain open. Integration must retain child RuntimeValues rather than rebuild
+  them from source IR: Map normalForm rebuilds its traversal, Set normalForm
+  retains its tree, and Variant normalForm retains its payload. Map serialization
+  also passes through a tuple set and cannot stand in for stored traversal.

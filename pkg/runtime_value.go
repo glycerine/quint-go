@@ -6,6 +6,11 @@ import (
 	"fmt"
 )
 
+// Allocation identity is distinct from structural equality. It supports the
+// reference collection no-op rule for reusing the same stored value object.
+// The non-zero-sized token prevents Go from coalescing allocation addresses.
+type runtimeValueAllocation struct{ marker byte }
+
 // RuntimeValue owns a concrete language value or a lexical closure. Its expression form is
 // canonical for display; set/map identity does not depend on display collation.
 // Closures are created by the evaluator; symbolic collections remain separate.
@@ -15,6 +20,7 @@ type RuntimeValue struct {
 	source     Expr
 	identity   string
 	closure    *runtimeClosure
+	allocation *runtimeValueAllocation
 }
 
 // NewRuntimeValue validates and copies a concrete expression, removing source IDs
@@ -24,7 +30,7 @@ func NewRuntimeValue(e Expr) (RuntimeValue, error) {
 	if err != nil {
 		return RuntimeValue{}, err
 	}
-	return RuntimeValue{expression: normalized, source: copyRuntimeExpression(e), identity: normalizedValueKey(normalized)}, nil
+	return RuntimeValue{expression: normalized, source: copyRuntimeExpression(e), identity: normalizedValueKey(normalized), allocation: &runtimeValueAllocation{}}, nil
 }
 
 func (v RuntimeValue) Valid() bool { return v.identity != "" || v.closure != nil }
@@ -100,5 +106,12 @@ func newRuntimeClosure(arity int, apply func(context.Context, []RuntimeValue) (R
 	for i := 0; i < arity; i++ {
 		expression.Params = append(expression.Params, Parameter{Name: fmt.Sprintf("_a%d", i)})
 	}
-	return RuntimeValue{expression: expression, source: expression, closure: &runtimeClosure{apply: apply}}
+	return RuntimeValue{expression: expression, source: expression, closure: &runtimeClosure{apply: apply}, allocation: &runtimeValueAllocation{}}
+}
+
+// sameRuntimeObject follows reference object identity without changing language
+// structural equality. Copies of one RuntimeValue keep the same token.
+func sameRuntimeObject(left, right RuntimeValue) bool {
+	return (left.allocation != nil && left.allocation == right.allocation) ||
+		(left.closure != nil && left.closure == right.closure)
 }

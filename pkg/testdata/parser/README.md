@@ -503,3 +503,14 @@ predicates, and empty-selection messages. The Go helper accepts a predicate;
 JavaScript regex compilation and linking selected entries to prepared evaluator
 names remain CLI orchestration work. Returned declaration/provenance views are
 read-only; selection and namespace slices are owned.
+
+`runtime_reference_map.json` is regenerated with
+`node pkg/grammar/runtime_reference_map_fixtures.cjs`. Ten mutation scenarios
+compare 205 persistent Immutable.Map operations, including each traversal and
+root node class. Tests retain all old snapshots and recheck them after later
+mutations. Coverage includes small-map deletion swaps, ninth insertion, dense
+expansion/packing, collision ordering/collapse, nested keys, lookups, reinsertion,
+and same-object no-op updates preserving key source. Private allocation tokens
+track object reuse without changing public structural equality/hash. This is
+the persistent ownerless primitive; transient ownerID constructor batches and
+propagating retained children/history through runtime operations remain open.
