@@ -134,3 +134,58 @@ func ApplyEffectSubstitution(subs []EffectSubstitution, input Effect) (Effect, e
 	}
 	return effect(input)
 }
+
+// ComposeEffectSubstitutions applies first to second's values and appends first.
+// Duplicate names are retained in that order. Entity values receive one pass;
+// effect values receive transitive substitution and simplification.
+func ComposeEffectSubstitutions(first, second []EffectSubstitution) ([]EffectSubstitution, error) {
+	out := make([]EffectSubstitution, 0, len(first)+len(second))
+	for _, s := range second {
+		switch s.Kind {
+		case "effect":
+			value, err := ApplyEffectSubstitution(first, s.Effect)
+			if err != nil {
+				return nil, err
+			}
+			s.Effect = value
+		case "entity":
+			s.Entity = ApplyEntitySubstitution(first, s.Entity)
+		default:
+			return nil, fmt.Errorf("unknown effect substitution kind %q", s.Kind)
+		}
+		out = append(out, s)
+	}
+	for _, s := range first {
+		switch s.Kind {
+		case "effect":
+			s.Effect = cloneEffectSubstitutionValue(s.Effect)
+		case "entity":
+			s.Entity = cloneEntity(s.Entity)
+		default:
+			return nil, fmt.Errorf("unknown effect substitution kind %q", s.Kind)
+		}
+		out = append(out, s)
+	}
+	return out, nil
+}
+
+func cloneEffectSubstitutionValue(e Effect) Effect {
+	out := e
+	if e.Params != nil {
+		out.Params = make([]Effect, len(e.Params))
+		for i, p := range e.Params {
+			out.Params[i] = cloneEffectSubstitutionValue(p)
+		}
+	}
+	if e.Result != nil {
+		value := cloneEffectSubstitutionValue(*e.Result)
+		out.Result = &value
+	}
+	if e.Components != nil {
+		out.Components = make([]EffectComponent, len(e.Components))
+		for i, c := range e.Components {
+			out.Components[i] = EffectComponent{Kind: c.Kind, Entity: cloneEntity(c.Entity)}
+		}
+	}
+	return out
+}

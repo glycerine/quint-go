@@ -1446,3 +1446,11 @@ word "retained" in the commit message.
   and cyclic replacements. Default tests pass (combined execution 0.640s).
   Effect substitution composition, exact differential parity, unification, and
   inference integration remain pending.
+
+- 2026-11-02: Added effect-substitution composition: transform the second list
+  with the first, then append unchanged copies of the first list. Effect values
+  resolve transitively; entity values use a single pass. Tests cover ordering,
+  duplicate names, independent copied replacements, transitive versus single-pass
+  behavior, cycles, and invalid kinds. Default tests pass (combined execution
+  0.624s). Structured composition error-trace parity, upstream differential
+  coverage, effect unification, and inference remain pending.

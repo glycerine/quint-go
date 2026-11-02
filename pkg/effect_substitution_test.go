@@ -47,3 +47,35 @@ func TestEffectSubstitutionCyclesAndKinds(t *testing.T) {
 		t.Fatal("first-match kind semantics")
 	}
 }
+
+func TestEffectSubstitutionComposition(t *testing.T) {
+	first := []EffectSubstitution{
+		{Kind: "effect", Name: "a", Effect: Effect{Kind: "variable", Name: "b"}},
+		{Kind: "effect", Name: "b", Effect: Effect{Kind: "concrete"}},
+		{Kind: "entity", Name: "r", Entity: Entity{Kind: "variable", Name: "s"}},
+		{Kind: "entity", Name: "s", Entity: Entity{Kind: "concrete", StateVariables: []StateVariable{{Name: "x"}}}},
+	}
+	second := []EffectSubstitution{
+		{Kind: "effect", Name: "target", Effect: Effect{Kind: "variable", Name: "a"}},
+		{Kind: "entity", Name: "entityTarget", Entity: Entity{Kind: "variable", Name: "r"}},
+		{Kind: "effect", Name: "a", Effect: Effect{Kind: "concrete"}},
+	}
+	out, err := ComposeEffectSubstitutions(first, second)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(out) != 7 || out[0].Effect.Kind != "concrete" || out[1].Entity.Name != "s" || out[2].Name != "a" || out[3].Name != "a" {
+		t.Fatal(out)
+	}
+	out[6].Entity.StateVariables[0].Name = "changed"
+	if first[3].Entity.StateVariables[0].Name != "x" {
+		t.Fatal("input aliased")
+	}
+	cycle := []EffectSubstitution{{Kind: "effect", Name: "a", Effect: Effect{Kind: "variable", Name: "b"}}, {Kind: "effect", Name: "b", Effect: Effect{Kind: "variable", Name: "a"}}}
+	if _, err = ComposeEffectSubstitutions(cycle, second[:1]); err == nil {
+		t.Fatal("cycle")
+	}
+	if _, err = ComposeEffectSubstitutions(nil, []EffectSubstitution{{Kind: "invalid"}}); err == nil {
+		t.Fatal("invalid kind")
+	}
+}
