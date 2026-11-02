@@ -221,9 +221,11 @@ analysis, with reproducible errors for invalid module structures.
 - [ ] P4.1 Port type schemes, generalization/instantiation, free variables,
   substitutions, occurs checks, and simplification.
   - [x] Bind type and row variables with separate occurs checks and copied substitutions.
-  - [ ] Integrate binding checks with unification and substitution composition.
+  - [x] Integrate binding checks with structural unification and substitution composition.
 - [ ] P4.2 Port constraint generation/solving for primitive, collection,
   function/operator, tuple, record, row-polymorphic, and sum types.
+  - [x] Implement structural type/row unification and ordered substitution composition.
+  - [ ] Compare exact unification substitutions/errors with upstream and connect constraint solving.
 - [ ] P4.3 Port type aliases, abstract types, type applications, parameter
   substitution, alias inlining, and recursive-alias rejection.
   - [x] Resolve outer aliases and recursively inline type-tree aliases by lookup ID.
@@ -1239,3 +1241,13 @@ word "retained" in the commit message.
   records, application arguments, namespace separation, malformed IR, and copied
   replacement values. Default tests pass (combined execution 0.558s). These are
   unification prerequisites; structural unification and composition remain open.
+
+- 2026-11-02: Added TypeUnifier with primitive/variable, collection,
+  function/operator, tuple/record/sum-row, and alias dispatch; open-row unification
+  reconciles shared fields and disjoint tails. Composition unifies duplicate
+  substitution names and preserves upstream ordering. Tests exercise successful
+  substitution reconciliation, occurs failures, arity/field/tail mismatches,
+  abstract aliases, dependency composition, and conflicting substitutions.
+  Default tests pass (combined execution 0.554s). Inputs require validated IR,
+  acyclic aliases, and resolved applications. Exact upstream differential parity,
+  composition failure formatting, and constraint solver integration remain open.
