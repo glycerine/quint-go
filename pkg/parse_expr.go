@@ -80,9 +80,9 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 					name = variant.GetVariantParam().GetText()
 				}
 			}
-			labelExpr := Expr{ID: ids.Next(), Kind: "str", Str: label}
-			parameter := Parameter{ID: ids.Next(), Name: name}
-			elim := Expr{ID: ids.Next(), Kind: "lambda", Qualifier: Def, Params: []Parameter{parameter}, Body: &body}
+			labelExpr := Expr{ID: parserIDAt(ids, arm), Kind: "str", Str: label}
+			parameter := Parameter{ID: parserIDAt(ids, arm), Name: name}
+			elim := Expr{ID: parserIDAt(ids, arm), Kind: "lambda", Qualifier: Def, Params: []Parameter{parameter}, Body: &body}
 			args = append(args, labelExpr, elim)
 		}
 		return Expr{ID: ids.Next(), Kind: "app", Opcode: "matchVariant", Args: args}, nil
@@ -93,7 +93,7 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 			tuple := c.Lambda().LambdaTupleSugar()
 			params := []Parameter{}
 			for _, param := range tuple.AllParameter() {
-				params = append(params, Parameter{ID: ids.Next(), Name: param.GetText()})
+				params = append(params, Parameter{ID: parserIDAt(ids, param), Name: param.GetText()})
 			}
 			body, err := expressionFromContext(tuple.Expr(), ids)
 			if err != nil {
@@ -115,7 +115,7 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 		}
 		params := []Parameter{}
 		for _, param := range lambda.AllParameter() {
-			params = append(params, Parameter{ID: ids.Next(), Name: param.GetText()})
+			params = append(params, Parameter{ID: parserIDAt(ids, param), Name: param.GetText()})
 		}
 		body, err := expressionFromContext(lambda.Expr(), ids)
 		if err != nil {
@@ -146,7 +146,7 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 				duplicateSet[name] = true
 			}
 			seen[name] = true
-			pairs = append(pairs, Expr{ID: ids.Next(), Kind: "str", Str: name}, value)
+			pairs = append(pairs, Expr{ID: parserIDAt(ids, elem), Kind: "str", Str: name}, value)
 		}
 		if len(duplicates) > 0 {
 			plural := "Field"

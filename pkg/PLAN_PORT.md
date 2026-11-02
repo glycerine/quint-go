@@ -919,3 +919,11 @@ word "retained" in the commit message.
   Default tests pass within the sub-second target. P2.5/P2.7 remain open for type
   IDs, fine-grained spans, inclusive upstream representation, and accumulated
   partial-module results; source-map merging itself is now implemented.
+
+- 2026-11-02: Refined source attribution for ordinary/tuple lambda parameters,
+  annotated operator parameters, generated match labels/eliminators/parameters,
+  and record labels to use the corresponding upstream syntax contexts. Tests
+  assert exact excerpts for holes, tuple bindings, annotations, match arms, and
+  Unicode record fields. Default tests pass within the sub-second target. P2.5
+  remains open for type IDs, other synthesized-span details, and inclusive
+  upstream-location compatibility/differential verification.
