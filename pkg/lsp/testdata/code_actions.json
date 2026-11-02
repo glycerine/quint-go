@@ -1,0 +1,2405 @@
+{
+  "cases": [
+    {
+      "name": "qualifier",
+      "uri": "file:///fixture/M.qnt",
+      "text": "module M {\n  pure val x = 1\n}\n",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 2
+          },
+          "end": {
+            "line": 1,
+            "character": 16
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 2
+                },
+                "end": {
+                  "line": 1,
+                  "character": 16
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 2
+                },
+                "end": {
+                  "line": 1,
+                  "character": 16
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 1,
+                      "character": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "character": 10
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "qualifier_tab_spaces",
+      "uri": "file:///fixture/M.qnt",
+      "text": "module M {\n\tpure\t  def f(x) = x\n}\n",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 1
+          },
+          "end": {
+            "line": 1,
+            "character": 20
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 1
+                },
+                "end": {
+                  "line": 1,
+                  "character": 20
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure def",
+                  "replacement": "def"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure def with def",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 1
+                },
+                "end": {
+                  "line": 1,
+                  "character": 20
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure def",
+                  "replacement": "def"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 1,
+                      "character": 1
+                    },
+                    "end": {
+                      "line": 1,
+                      "character": 11
+                    }
+                  },
+                  "newText": "def"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "qualifier_zero_whitespace",
+      "uri": "file:///fixture/M.qnt",
+      "text": "pureval x = 1",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 13
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 13
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 13
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 7
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "js_whitespace_nbsp_bom_vertical_tab",
+      "uri": "file:///fixture/M.qnt",
+      "text": "\tpure ﻿\u000bval x = 1",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 1
+          },
+          "end": {
+            "line": 0,
+            "character": 17
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 1
+                },
+                "end": {
+                  "line": 0,
+                  "character": 17
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 1
+                },
+                "end": {
+                  "line": 0,
+                  "character": 17
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 1
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 11
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "original_unicode_whitespace",
+      "uri": "file:///fixture/M.qnt",
+      "text": "pure\t val x = 1",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 15
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 15
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 15
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 9
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "map_syntax",
+      "uri": "file:///fixture/M.qnt",
+      "text": "module M {\n  const x: Map[int,\t bool]\n}",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 11
+          },
+          "end": {
+            "line": 1,
+            "character": 26
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 11
+                },
+                "end": {
+                  "line": 1,
+                  "character": 26
+                }
+              },
+              "severity": 1,
+              "code": "QNT015",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "Map[int, bool]",
+                  "replacement": "int -> bool"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace Map[int, bool] with int -> bool",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 11
+                },
+                "end": {
+                  "line": 1,
+                  "character": 26
+                }
+              },
+              "severity": 1,
+              "code": "QNT015",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "Map[int, bool]",
+                  "replacement": "int -> bool"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 1,
+                      "character": 11
+                    },
+                    "end": {
+                      "line": 1,
+                      "character": 26
+                    }
+                  },
+                  "newText": "int -> bool"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "map_extra_unmatched_whitespace",
+      "uri": "file:///fixture/M.qnt",
+      "text": "Map[ int, bool]",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 15
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 15
+                }
+              },
+              "severity": 1,
+              "code": "QNT015",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "Map[int, bool]",
+                  "replacement": "int -> bool"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": []
+    },
+    {
+      "name": "lowercase_type",
+      "uri": "file:///fixture/M.qnt",
+      "text": "module M {\n  type lower = int\n}",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 2
+          },
+          "end": {
+            "line": 1,
+            "character": 18
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 2
+                },
+                "end": {
+                  "line": 1,
+                  "character": 18
+                }
+              },
+              "severity": 1,
+              "code": "QNT007",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "type lower",
+                  "replacement": "type Lower"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace type lower with type Lower",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 2
+                },
+                "end": {
+                  "line": 1,
+                  "character": 18
+                }
+              },
+              "severity": 1,
+              "code": "QNT007",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "type lower",
+                  "replacement": "type Lower"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 1,
+                      "character": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "character": 12
+                    }
+                  },
+                  "newText": "type Lower"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "namespaced_lowercase_type",
+      "uri": "file:///fixture/M.qnt",
+      "text": "type Foo::lower = int",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 21
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 21
+                }
+              },
+              "severity": 1,
+              "code": "QNT007",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "type Foo::lower",
+                  "replacement": "type Foo::Lower"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace type Foo::lower with type Foo::Lower",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 21
+                }
+              },
+              "severity": 1,
+              "code": "QNT007",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "type Foo::lower",
+                  "replacement": "type Foo::Lower"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 15
+                    }
+                  },
+                  "newText": "type Foo::Lower"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "escaped_regex_metacharacters",
+      "uri": "file:///fixture/M.qnt",
+      "text": "  a.*+?^${}()|[]\\b suffix",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 2
+          },
+          "end": {
+            "line": 0,
+            "character": 18
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 2
+                },
+                "end": {
+                  "line": 0,
+                  "character": 18
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "a.*+?^${}()|[]\\b",
+                  "replacement": "literal"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace a.*+?^${}()|[]\\b with literal",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 2
+                },
+                "end": {
+                  "line": 0,
+                  "character": 18
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "a.*+?^${}()|[]\\b",
+                  "replacement": "literal"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 2
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 18
+                    }
+                  },
+                  "newText": "literal"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "supplementary_prefix",
+      "uri": "file:///fixture/M.qnt",
+      "text": "/*😀*/ pure val x = 1",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 7
+          },
+          "end": {
+            "line": 0,
+            "character": 21
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 7
+                },
+                "end": {
+                  "line": 0,
+                  "character": 21
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 7
+                },
+                "end": {
+                  "line": 0,
+                  "character": 21
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 7
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 15
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "supplementary_match_width",
+      "uri": "file:///fixture/M.qnt",
+      "text": "😀 x",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 4
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 4
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "😀",
+                  "replacement": "q"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace 😀 with q",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 4
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "😀",
+                  "replacement": "q"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 2
+                    }
+                  },
+                  "newText": "q"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "crlf_first_line",
+      "uri": "file:///fixture/M.qnt",
+      "text": "pure\r\nval x = 1",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 4
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 4
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 4
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 4
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "multiline_diagnostic",
+      "uri": "file:///fixture/M.qnt",
+      "text": "module M {\n  pure val x =\n    1\n}",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 2
+          },
+          "end": {
+            "line": 2,
+            "character": 5
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 2
+                },
+                "end": {
+                  "line": 2,
+                  "character": 5
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 2
+                },
+                "end": {
+                  "line": 2,
+                  "character": 5
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 1,
+                      "character": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "character": 10
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "request_line_only_no_match",
+      "uri": "file:///fixture/M.qnt",
+      "text": "val x = 1\npure val y = 2",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 1,
+            "character": 9
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 0
+                },
+                "end": {
+                  "line": 1,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": []
+    },
+    {
+      "name": "request_match_not_diagnostic_line",
+      "uri": "file:///fixture/M.qnt",
+      "text": "pure\t  val x = 1\npure val y = 2",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 16
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 0
+                },
+                "end": {
+                  "line": 1,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 1,
+                  "character": 0
+                },
+                "end": {
+                  "line": 1,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 1,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "character": 10
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "first_match_width_diagnostic_start",
+      "uri": "file:///fixture/M.qnt",
+      "text": "pureval x = 1; pure val y = 2",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 15
+          },
+          "end": {
+            "line": 0,
+            "character": 29
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 15
+                },
+                "end": {
+                  "line": 0,
+                  "character": 29
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 15
+                },
+                "end": {
+                  "line": 0,
+                  "character": 29
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 15
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 22
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "multiple_diagnostics_order_duplicates",
+      "uri": "file:///fixture/M.qnt",
+      "text": "pure val x = 1",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 14
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": null
+            },
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {}
+            },
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "insert",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            },
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            },
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "Second replacement",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure",
+                  "replacement": "action"
+                }
+              }
+            },
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 8
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "title": "Replace pure with action",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "Second replacement",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure",
+                  "replacement": "action"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 4
+                    }
+                  },
+                  "newText": "action"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 8
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "missing_original_text",
+      "uri": "file:///fixture/M.qnt",
+      "text": "val x = 1",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 9
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 9
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": []
+    },
+    {
+      "name": "empty_replacement",
+      "uri": "file:///fixture/M.qnt",
+      "text": "pure val x = 1",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 14
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure ",
+                  "replacement": ""
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure  with ",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure ",
+                  "replacement": ""
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 5
+                    }
+                  },
+                  "newText": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "context_only_ignored",
+      "uri": "file:///fixture/M.qnt",
+      "text": "pure val x = 1",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 14
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "only": [
+            "source.organizeImports"
+          ],
+          "triggerKind": 2
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 8
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "uri_preserved_percent_encoded",
+      "uri": "file:///fixture/some%20folder/M%23draft.qnt",
+      "text": "pure val x = 1",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/some%20folder/M%23draft.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 14
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": "QNT200",
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/some%20folder/M%23draft.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 8
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "opaque_diagnostic_round_trip",
+      "uri": "file:///fixture/M.qnt",
+      "text": "pure val x = 1",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 14
+          }
+        },
+        "context": {
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": 200,
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                },
+                "trace": {
+                  "custom": [
+                    "payload",
+                    3
+                  ]
+                }
+              },
+              "codeDescription": {
+                "href": "https://example.invalid/quint/QNT200"
+              },
+              "tags": [
+                1,
+                2
+              ],
+              "relatedInformation": [
+                {
+                  "location": {
+                    "uri": "file:///fixture/Lib.qnt",
+                    "range": {
+                      "start": {
+                        "line": 2,
+                        "character": 3
+                      },
+                      "end": {
+                        "line": 2,
+                        "character": 6
+                      }
+                    }
+                  },
+                  "message": "Related source"
+                }
+              ],
+              "customExtension": {
+                "retained": true
+              }
+            }
+          ]
+        }
+      },
+      "actions": [
+        {
+          "title": "Replace pure val with val",
+          "kind": "quickfix",
+          "isPreferred": true,
+          "diagnostics": [
+            {
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 14
+                }
+              },
+              "severity": 1,
+              "code": 200,
+              "source": "quint",
+              "message": "An upstream replacement diagnostic",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                },
+                "trace": {
+                  "custom": [
+                    "payload",
+                    3
+                  ]
+                }
+              },
+              "codeDescription": {
+                "href": "https://example.invalid/quint/QNT200"
+              },
+              "tags": [
+                1,
+                2
+              ],
+              "relatedInformation": [
+                {
+                  "location": {
+                    "uri": "file:///fixture/Lib.qnt",
+                    "range": {
+                      "start": {
+                        "line": 2,
+                        "character": 3
+                      },
+                      "end": {
+                        "line": 2,
+                        "character": 6
+                      }
+                    }
+                  },
+                  "message": "Related source"
+                }
+              ],
+              "customExtension": {
+                "retained": true
+              }
+            }
+          ],
+          "edit": {
+            "changes": {
+              "file:///fixture/M.qnt": [
+                {
+                  "range": {
+                    "start": {
+                      "line": 0,
+                      "character": 0
+                    },
+                    "end": {
+                      "line": 0,
+                      "character": 8
+                    }
+                  },
+                  "newText": "val"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "empty_diagnostics",
+      "uri": "file:///fixture/M.qnt",
+      "text": "pure val x = 1",
+      "params": {
+        "textDocument": {
+          "uri": "file:///fixture/M.qnt"
+        },
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 14
+          }
+        },
+        "context": {
+          "diagnostics": []
+        }
+      },
+      "actions": []
+    }
+  ]
+}

@@ -1,0 +1,979 @@
+[
+  {
+    "name": "documented-user-operator",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(1, 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 22
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "add",
+          "label": "pure def add: (int, int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "Adds two integers.\nThe result is their sum."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "undocumented-user-operator",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = double(1)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 23
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "double",
+          "label": "pure def double: (int) => int"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "callee-start",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(1, 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 20
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "add",
+          "label": "pure def add: (int, int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "Adds two integers.\nThe result is their sum."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "opening-parenthesis",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(1, 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 23
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "add",
+          "label": "pure def add: (int, int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "Adds two integers.\nThe result is their sum."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "first-literal-argument",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(1, 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 24
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "add",
+          "label": "pure def add: (int, int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "Adds two integers.\nThe result is their sum."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "argument-comma",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(1, 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 25
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "add",
+          "label": "pure def add: (int, int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "Adds two integers.\nThe result is their sum."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "second-literal-argument-still-active-zero",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(1, 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 27
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "add",
+          "label": "pure def add: (int, int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "Adds two integers.\nThe result is their sum."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "closing-parenthesis",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(1, 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 28
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "add",
+          "label": "pure def add: (int, int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "Adds two integers.\nThe result is their sum."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "after-call-is-outside",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(1, 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 29
+    },
+    "result": {
+      "signatures": [],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "argument-identifier-selects-own-value",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(first, second)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 26
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "first",
+          "label": "pure val first"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "second-argument-identifier-selects-own-value",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(first, second)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 34
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "second",
+          "label": "pure val second"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "nested-call-selects-inner-operator",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(double(1), 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 31
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "double",
+          "label": "pure def double: (int) => int"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "nested-call-closing-parenthesis",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(double(1), 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 32
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "double",
+          "label": "pure def double: (int) => int"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "value-reference-also-has-signature",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = first\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 23
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "first",
+          "label": "pure val first"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "unannotated-operator-keeps-raw-signature",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure def identity(value) = value pure val result = identity(1) }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 70
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "identity",
+          "label": "pure def identity"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "constant-reference-signature",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { const limit: int pure val result = limit }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 51
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "limit",
+          "label": "const limit: int"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "variable-reference-signature",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { var count: int val result = count }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 44
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "count",
+          "label": "var count: int"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "local-operator-without-module-documentation",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure val result = { pure def local(value: int): int = value local(1) } }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 77
+    },
+    "result": {
+      "signatures": [],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "declaration-name-has-no-expression",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure def add(x: int): int = x }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 25
+    },
+    "result": {
+      "signatures": [],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "outside-expressions",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 0
+    },
+    "result": {
+      "signatures": [],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "documented-builtin",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure val result = size(Set(1, 2)) }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 34
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "size",
+          "label": "pure def size: (Set[a]) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "`s.size()` is the cardinality of `s`.\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).size() == 3)\n```"
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "builtin-operator-expression",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure val result = 1 + 2 }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 34
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "iadd",
+          "label": "pure def iadd: (int, int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "`a.iadd(b)` is the integer addition of `a` and `b`.\n\nIt can be used in the infix form as `+` or as a named operator `iadd`."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "builtin-conditional-expression",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure val result = if (true) 1 else 2 }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 32
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "ite",
+          "label": "action ite: (bool, a, a) => a",
+          "documentation": {
+            "kind": "markdown",
+            "value": "`ite(c, t, e)` is `t` when `c` is true and `e` when `c` is false.\n\nCan be written as `if (c) t else e`.\n\nCan be used with actions.\n\n### Examples\n\n```quint\npure val m = if (1 == 2) 3 else 4\nassert(m == 4)\n```\n\n```quint\nvar x: int\naction a = if (x == 0) x' = 3 else x' = 4\nrun test = (x' = 0).then(a).then(assert(x == 3))\n```"
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "constructor-without-builtin-documentation",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure val result = Set(1, 2) }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 33
+    },
+    "result": {
+      "signatures": [],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "boolean-operator-without-builtin-documentation",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure val result = true and false }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 37
+    },
+    "result": {
+      "signatures": [],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "unknown-name-without-documentation",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure val result = missing(1) }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 36
+    },
+    "parseDiagnostics": [
+      "QNT404"
+    ],
+    "result": {
+      "signatures": [],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "imported-operator",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { import Library.* from \"library\" pure val result = increment(1) }\n"
+      },
+      {
+        "path": "library.qnt",
+        "text": "module Library {\n  /// Increment an integer.\n  pure def increment(value: int): int = value + 1\n  type Count = int\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 69
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "increment",
+          "label": "pure def increment: (int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "Increment an integer."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "selectively-imported-operator",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { import Library.increment from \"library\" pure val result = increment(1) }\n"
+      },
+      {
+        "path": "library.qnt",
+        "text": "module Library {\n  /// Increment an integer.\n  pure def increment(value: int): int = value + 1\n  type Count = int\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 77
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "increment",
+          "label": "pure def increment: (int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "Increment an integer."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "module-alias-operator",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { import Library as Alias from \"library\" pure val result = Alias::increment(1) }\n"
+      },
+      {
+        "path": "library.qnt",
+        "text": "module Library {\n  /// Increment an integer.\n  pure def increment(value: int): int = value + 1\n  type Count = int\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 83
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "increment",
+          "label": "pure def increment: (int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "Increment an integer."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "instance-constant-override-expression",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Proto { const limit: int }\nmodule Main { pure def value(n: int): int = n import Proto(limit = value(1)) as Inst pure val use = Inst::limit }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 1,
+      "character": 69
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "value",
+          "label": "pure def value: (int) => int"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "instantiated-constant-reference",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Proto { const limit: int }\nmodule Main { pure def value(n: int): int = n import Proto(limit = value(1)) as Inst pure val use = Inst::limit }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 1,
+      "character": 108
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "limit",
+          "label": "const limit: int"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "local-type-alias-reference",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { type Count = int pure def identity(x: Count): Count = x }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 54
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "Count",
+          "label": "type Count = int"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "imported-type-alias-reference",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { import Library.Count from \"library\" pure def identity(x: Count): Count = x }\n"
+      },
+      {
+        "path": "library.qnt",
+        "text": "module Library {\n  /// Increment an integer.\n  pure def increment(value: int): int = value + 1\n  type Count = int\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 73
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "Count",
+          "label": "type Count = int"
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "utf16-astral-comment-before-callee",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = /* 😀 */ add(1, 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 31
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "add",
+          "label": "pure def add: (int, int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "Adds two integers.\nThe result is their sum."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "utf16-astral-documentation",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main {\n  /// 😀 Return the supplied integer.\n  pure def identity(value: int): int = value\n  pure val result = identity(1)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 3,
+      "character": 25
+    },
+    "result": {
+      "signatures": [
+        {
+          "name": "identity",
+          "label": "pure def identity: (int) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "😀 Return the supplied integer."
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "no-parsed-document-state",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(1, 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 22
+    },
+    "parsed": false,
+    "result": {
+      "signatures": [],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "no-user-documentation-state",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Signatures {\n  /// Adds two integers.\n  /// The result is their sum.\n  pure def add(left: int, right: int): int = left + right\n  pure def double(value: int): int = value * 2\n  pure val first = 1\n  pure val second = 2\n  pure val result = add(1, 2)\n}\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 7,
+      "character": 22
+    },
+    "docs": false,
+    "result": {
+      "signatures": [],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "builtin-does-not-need-user-documentation-state",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure val result = size(Set(1, 2)) }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 34
+    },
+    "docs": false,
+    "result": {
+      "signatures": [
+        {
+          "name": "size",
+          "label": "pure def size: (Set[a]) => int",
+          "documentation": {
+            "kind": "markdown",
+            "value": "`s.size()` is the cardinality of `s`.\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).size() == 3)\n```"
+          }
+        }
+      ],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  },
+  {
+    "name": "syntax-error-without-parsed-state",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure val result = add(\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 36
+    },
+    "parsed": false,
+    "parseDiagnostics": [
+      "QNT000",
+      "QNT404"
+    ],
+    "result": {
+      "signatures": [],
+      "activeSignature": 0,
+      "activeParameter": 0
+    }
+  }
+]

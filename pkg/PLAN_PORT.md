@@ -728,7 +728,11 @@ This follows the core CLI milestone but remains tracked for tooling parity.
     completion, and conservative rename with precise UTF-16 ranges.
   - [x] Field/type-directed completion with incomplete current-buffer receivers,
     and selective import/export/alias/type/instance rename with reanalysis.
-  - [ ] Remaining capability audit includes signature help and code actions.
+  - [x] Signature help with source/builtin documentation, imports/instances,
+    enclosing applications and UTF-16 spans; 39 actual upstream fixtures.
+  - [x] Diagnostic quick fixes and protocol dispatch; 24 handler fixtures,
+    current-buffer validation and safe qualifier edits with reanalysis.
+  - [ ] Complete imported diagnostic grouping, recovery and workspace audits.
 - [x] P11.4 Update editor launch/build configuration and run protocol-level
   regressions for edits, imports, incomplete syntax, and cross-file navigation.
   - [x] Protocol tests for edits, imports, malformed input, lifecycle, stale
@@ -3193,3 +3197,13 @@ word "retained" in the commit message.
   Symbolic variant/mixed keys, exported-instance first-compilation contexts and
   actual execution recording remain open. Default integrated suite timing is
   above the one-second target; no tests were gated or removed to change timing.
+
+- 2026-11-02: Added advertised LSP signature help and diagnostic quick fixes.
+  Thirty-nine actual upstream signature cases cover documentation, enclosing
+  applications, imports/instances and UTF-16 spans. Twenty-four action fixtures
+  include two intentional safety corrections, with two natural upstream bug
+  witnesses: QNT200 edits now target verified qualifiers rather than names/bodies.
+  Buffer ownership, stale diagnostics, cancellation, pending analysis and graph
+  reanalysis are tested. Full LSP suite passes0.129s with91.4% coverage; signature
+  helpers have100% coverage, and focused races/vet pass. Imported diagnostics and
+  broader recovery/workspace compatibility remain open.

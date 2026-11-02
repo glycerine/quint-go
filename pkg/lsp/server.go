@@ -220,7 +220,19 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 		s.mu.Lock()
 		s.initialized = true
 		s.mu.Unlock()
-		return respond(send, message.ID, map[string]any{"capabilities": map[string]any{"positionEncoding": "utf-16", "textDocumentSync": map[string]any{"openClose": true, "change": 2, "save": map[string]any{"includeText": false}}, "hoverProvider": true, "definitionProvider": true, "referencesProvider": true, "documentSymbolProvider": true, "completionProvider": map[string]any{"resolveProvider": false, "triggerCharacters": []string{"."}}, "renameProvider": map[string]any{"prepareProvider": true}}, "serverInfo": map[string]any{"name": "quint-go"}}, nil)
+		capabilities := map[string]any{
+			"positionEncoding":       "utf-16",
+			"textDocumentSync":       map[string]any{"openClose": true, "change": 2, "save": map[string]any{"includeText": false}},
+			"hoverProvider":          true,
+			"definitionProvider":     true,
+			"referencesProvider":     true,
+			"documentSymbolProvider": true,
+			"completionProvider":     map[string]any{"resolveProvider": false, "triggerCharacters": []string{"."}},
+			"renameProvider":         map[string]any{"prepareProvider": true},
+			"signatureHelpProvider":  map[string]any{"triggerCharacters": []string{"("}},
+			"codeActionProvider":     true,
+		}
+		return respond(send, message.ID, map[string]any{"capabilities": capabilities, "serverInfo": map[string]any{"name": "quint-go"}}, nil)
 	}
 	if !initialized {
 		return fail(-32002, "Server is not initialized")
@@ -376,7 +388,7 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 			return nil
 		}
 		switch message.Method {
-		case "textDocument/hover", "textDocument/definition", "textDocument/references", "textDocument/documentSymbol", "textDocument/completion", "textDocument/rename", "textDocument/prepareRename":
+		case "textDocument/hover", "textDocument/definition", "textDocument/references", "textDocument/documentSymbol", "textDocument/completion", "textDocument/rename", "textDocument/prepareRename", "textDocument/signatureHelp", "textDocument/codeAction":
 		default:
 			return fail(-32601, "Method not found")
 		}
@@ -392,13 +404,27 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 		state := s.documents.Get(params.TextDocument.URI)
 		var snapshot *Snapshot
 		if state != nil {
-			snapshot = state.snapshot
-			if snapshot != nil && snapshot.Version != state.Version {
-				snapshot = nil
+			if message.Method == "textDocument/codeAction" {
+				// Quick fixes use the current open buffer and client-supplied
+				// diagnostics, including while this version is still analyzing.
+				snapshot = &Snapshot{URI: state.URI, Version: state.Version, Text: state.Text}
+			} else {
+				snapshot = state.snapshot
+				if snapshot != nil && snapshot.Version != state.Version {
+					snapshot = nil
+				}
 			}
 		}
 		s.mu.Unlock()
 		if snapshot == nil {
+			if message.Method == "textDocument/signatureHelp" {
+				result, rpcError := signatureHelpRequest(message.Params, nil)
+				return respond(send, message.ID, result, rpcError)
+			}
+			if message.Method == "textDocument/codeAction" {
+				result, rpcError := codeActionRequest(message.Params, nil)
+				return respond(send, message.ID, result, rpcError)
+			}
 			return respond(send, message.ID, nil, nil)
 		}
 		requestCtx, cancel := context.WithCancel(ctx)
@@ -416,7 +442,16 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 		go func() {
 			defer s.jobs.Done()
 			defer cancel()
-			result, rpcError := semanticRequest(message.Method, message.Params, snapshot)
+			var result any
+			var rpcError *ResponseError
+			switch message.Method {
+			case "textDocument/signatureHelp":
+				result, rpcError = signatureHelpRequest(message.Params, snapshot)
+			case "textDocument/codeAction":
+				result, rpcError = codeActionRequest(message.Params, snapshot)
+			default:
+				result, rpcError = semanticRequest(message.Method, message.Params, snapshot)
+			}
 			if requestCtx.Err() != nil {
 				result = nil
 				rpcError = &ResponseError{Code: -32800, Message: "Request cancelled"}

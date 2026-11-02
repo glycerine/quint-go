@@ -2,6 +2,7 @@ package lsp
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/url"
@@ -21,13 +22,16 @@ type Document struct {
 // Snapshot belongs to one document version. Analysis and semantic requests
 // share it read-only; the server replaces snapshots instead of mutating them.
 type Snapshot struct {
-	URI         string
-	Version     int
-	Text        string
-	Frontend    quint.FrontendResult
-	Analysis    quint.AnalysisResult
-	Sources     *insdict.Dict[string, string]
-	Diagnostics []Diagnostic
+	URI      string
+	Version  int
+	Text     string
+	Frontend quint.FrontendResult
+	Analysis quint.AnalysisResult
+	// Documentation is delivered with analysis, matching upstream signature
+	// help's distinction between parsed text and available source docs.
+	Documentation *insdict.Dict[string, quint.DocumentationEntry]
+	Sources       *insdict.Dict[string, string]
+	Diagnostics   []Diagnostic
 }
 
 func sourceForURI(uri string) (string, error) {
@@ -100,6 +104,14 @@ func analyzeDocument(ctx context.Context, document Document, overlays *insdict.D
 	snapshot.Frontend, err = quint.ParseProject(resolver, main)
 	if err == nil && ctx.Err() == nil && snapshot.Frontend.Table != nil && len(snapshot.Frontend.Diagnostics) == 0 {
 		snapshot.Analysis, err = quint.AnalyzeModules(snapshot.Frontend.Modules, snapshot.Frontend.Table)
+		if err == nil {
+			snapshot.Documentation = insdict.NewDict[string, quint.DocumentationEntry]()
+			for _, module := range snapshot.Frontend.Modules {
+				for id, entry := range quint.ProduceDocsByID(module).All() {
+					snapshot.Documentation.Set(id.String(), entry)
+				}
+			}
+		}
 	}
 	if ctx.Err() != nil {
 		return snapshot, ctx.Err()
@@ -135,6 +147,24 @@ func analyzeDocument(ctx context.Context, document Document, overlays *insdict.D
 func convertDiagnostic(path string, sources quint.SourceMap, diagnostic quint.Diagnostic) Diagnostic {
 	out := Diagnostic{Severity: 1, Code: diagnostic.Code, Source: "quint", Message: diagnostic.Message}
 	resolved := quint.ResolveDiagnostic(sources, diagnostic)
+	if diagnostic.Data != nil {
+		data := diagnostic.Data
+		if data.Fix != nil && (len(resolved.Locations) == 0 || resolved.Locations[0].Source != path) {
+			// Imported errors are currently represented as related information
+			// on the requesting document. Their fixes belong to the origin
+			// source and must never produce an edit against this document.
+			if data.Trace == nil {
+				data = nil
+			} else {
+				copy := *data
+				copy.Fix = nil
+				data = &copy
+			}
+		}
+		if data != nil {
+			out.Data, _ = json.Marshal(data)
+		}
+	}
 	for _, location := range append(resolved.Locations, resolved.TraceLocations...) {
 		span := rangeForLocation(location)
 		if location.Source == path && out.Range == (Range{}) {

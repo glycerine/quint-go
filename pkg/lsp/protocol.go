@@ -40,6 +40,7 @@ type Diagnostic struct {
 	Code               string                         `json:"code,omitempty"`
 	Source             string                         `json:"source"`
 	Message            string                         `json:"message"`
+	Data               json.RawMessage                `json:"data,omitempty"`
 	RelatedInformation []DiagnosticRelatedInformation `json:"relatedInformation,omitempty"`
 }
 

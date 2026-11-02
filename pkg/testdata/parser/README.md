@@ -919,3 +919,13 @@ hashes; default Go tests need neither runtime. All25 Go cases target TypeScript,
 including three newly supported interval picks. Optional live Rust replay passed.
 Documented disagreements include seed66 picks, 2^32 bounds, counter overflow,
 folded traversal, out-of-i64/resource limits and selected error codes.
+
+Language-server `testdata/signature_help.json` has39 actual upstream cases,
+including source/builtin docs, type/const/operator references, enclosing calls,
+UTF-16 positions, unsaved imports and instance overrides. Its matching generator
+lives in the same directory. `grammar/lsp_code_actions_fixtures.cjs` generates
+24 handler cases plus two natural analyzer bug witnesses in
+`lsp/testdata/code_actions*.json`. Go intentionally anchors QNT200 replacements
+to verified qualifier tokens because the reference edits operator names/bodies;
+reanalysis proves valid fixes. Protocol tests cover overlays, pending analysis,
+cancellation, malformed/stale/nonlocal fixes and closed documents.
