@@ -581,3 +581,11 @@ word "retained" in the commit message.
   variants, hidden sum tails, constructors, function/operator parentheses, and
   conjunction separators. Default tests pass (core 0.011s). P1.5/P4.5 remain
   open for expression/declaration printing and canonical scheme rendering.
+
+- 2026-11-02: Added the complete upstream builtin opcode inventory and builtin
+  application classification. Fast tests compare the inventory directly with
+  quintIr.ts, check every opcode, reject unknown/case-altered/user-qualified
+  names, distinguish references from applications, and protect returned slices
+  from caller mutation. Default tests pass (core 0.008s). P0.2/P7.9 remain open:
+  membership is now tracked, but per-opcode implementation coverage is not yet
+  complete for typing, effects, runtime evaluation, or checker conversion.
