@@ -596,3 +596,9 @@ word "retained" in the commit message.
   effects/components/entities, and the upstream simple fixture's effect table.
   Default tests pass (core 0.007s). P1.4/P5.1 remain open for remaining tables,
   stricter nested state-variable validation, and effect operations.
+
+- 2026-11-02: Added effect/component/entity printing and variable-name collection.
+  Tests cover nested unions, repeated entity occurrences, stable deduplication
+  in effect names, all component kinds, empty/pure effects, and arrow formatting.
+  Default tests pass (core 0.008s). P5.1 remains open for effect substitution,
+  simplification, unification, and canonical scheme printing.
