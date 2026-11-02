@@ -260,3 +260,11 @@ results/errors for eleven strict integer operators, sign combinations, zero,
 128/256-bit values, and power edge cases. Integer division truncates toward zero;
 remainder has the dividend's sign. The TypeScript modulo-by-zero exception is
 retained in the fixture; Go deliberately returns QNT503 Division by zero for it.
+
+`evaluate_pure.json` is regenerated with
+`node pkg/grammar/evaluate_pure_fixtures.cjs`. Twenty-five source expressions
+are parsed and evaluated by the full TypeScript evaluator. They cover nested
+integer arithmetic, constructors, equality, assertions, errors, empty Boolean
+folds, and lazy branches containing division by zero. Go compares complete value
+semantics and error codes/messages; source-reference allocation is tested
+separately. Definition/closure/stateful evaluation remains separate work.

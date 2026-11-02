@@ -1,0 +1,972 @@
+[
+  {
+    "source": "1 + 2 * 3",
+    "input": {
+      "id": 5,
+      "kind": "app",
+      "opcode": "iadd",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 4,
+          "kind": "app",
+          "opcode": "imul",
+          "args": [
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 3,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 7
+    }
+  },
+  {
+    "source": "(-7) / 3",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "idiv",
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "opcode": "iuminus",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 7
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "kind": "int",
+          "value": 3
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -2
+    }
+  },
+  {
+    "source": "(-7) % 3",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "imod",
+      "args": [
+        {
+          "id": 2,
+          "kind": "app",
+          "opcode": "iuminus",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 7
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "kind": "int",
+          "value": 3
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -1
+    }
+  },
+  {
+    "source": "2^128",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "ipow",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int",
+          "value": 2
+        },
+        {
+          "id": 2,
+          "kind": "int",
+          "value": 128
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 340282366920938463463374607431768211456
+    }
+  },
+  {
+    "source": "not(false)",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "not",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": false
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "true iff false",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "iff",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": true
+        },
+        {
+          "id": 2,
+          "kind": "bool",
+          "value": false
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "source": "false implies (1/0 == 0)",
+    "input": {
+      "id": 7,
+      "kind": "app",
+      "opcode": "implies",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": false
+        },
+        {
+          "id": 6,
+          "kind": "app",
+          "opcode": "eq",
+          "args": [
+            {
+              "id": 4,
+              "kind": "app",
+              "opcode": "idiv",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "and(false, 1/0 == 0)",
+    "input": {
+      "id": 7,
+      "kind": "app",
+      "opcode": "and",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": false
+        },
+        {
+          "id": 6,
+          "kind": "app",
+          "opcode": "eq",
+          "args": [
+            {
+              "id": 4,
+              "kind": "app",
+              "opcode": "idiv",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "source": "or(true, 1/0 == 0)",
+    "input": {
+      "id": 7,
+      "kind": "app",
+      "opcode": "or",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": true
+        },
+        {
+          "id": 6,
+          "kind": "app",
+          "opcode": "eq",
+          "args": [
+            {
+              "id": 4,
+              "kind": "app",
+              "opcode": "idiv",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "if (true) 17 else 1/0",
+    "input": {
+      "id": 6,
+      "kind": "app",
+      "opcode": "ite",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": true
+        },
+        {
+          "id": 2,
+          "kind": "int",
+          "value": 17
+        },
+        {
+          "id": 5,
+          "kind": "app",
+          "opcode": "idiv",
+          "args": [
+            {
+              "id": 3,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 17
+    }
+  },
+  {
+    "source": "if (false) 1/0 else 19",
+    "input": {
+      "id": 6,
+      "kind": "app",
+      "opcode": "ite",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": false
+        },
+        {
+          "id": 4,
+          "kind": "app",
+          "opcode": "idiv",
+          "args": [
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 3,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "kind": "int",
+          "value": 19
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 19
+    }
+  },
+  {
+    "source": "List(1+2,4*5)",
+    "input": {
+      "id": 7,
+      "kind": "app",
+      "opcode": "List",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "iadd",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "kind": "app",
+          "opcode": "imul",
+          "args": [
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 4
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 5
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "List",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 20
+        }
+      ]
+    }
+  },
+  {
+    "source": "Set(1+1,2,3)",
+    "input": {
+      "id": 6,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "iadd",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "kind": "int",
+          "value": 2
+        },
+        {
+          "id": 5,
+          "kind": "int",
+          "value": 3
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        }
+      ]
+    }
+  },
+  {
+    "source": "Map((1+1,3),(2,4))",
+    "input": {
+      "id": 9,
+      "kind": "app",
+      "opcode": "Map",
+      "args": [
+        {
+          "id": 5,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 3,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 6,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 7,
+              "kind": "int",
+              "value": 4
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Map",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 4
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "source": "Rec(\"x\",1+2,\"y\",not(false))",
+    "input": {
+      "id": 8,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 1,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 4,
+          "kind": "app",
+          "opcode": "iadd",
+          "args": [
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 3,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "kind": "str",
+          "value": "y"
+        },
+        {
+          "id": 7,
+          "kind": "app",
+          "opcode": "not",
+          "args": [
+            {
+              "id": 6,
+              "kind": "bool",
+              "value": false
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "y"
+        },
+        {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        }
+      ]
+    }
+  },
+  {
+    "source": "variant(\"Some\", 2+3)",
+    "input": {
+      "id": 5,
+      "kind": "app",
+      "opcode": "variant",
+      "args": [
+        {
+          "id": 1,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 4,
+          "kind": "app",
+          "opcode": "iadd",
+          "args": [
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 3,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "variant",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "Some"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "source": "Set(2,1) == Set(1,2)",
+    "input": {
+      "id": 7,
+      "kind": "app",
+      "opcode": "eq",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "List(1,2) != List(2,1)",
+    "input": {
+      "id": 7,
+      "kind": "app",
+      "opcode": "neq",
+      "args": [
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "assert(true)",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "assert",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": true
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "assert(false)",
+    "input": {
+      "id": 2,
+      "kind": "app",
+      "opcode": "assert",
+      "args": [
+        {
+          "id": 1,
+          "kind": "bool",
+          "value": false
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT508",
+      "message": "Assertion failed",
+      "reference": 2
+    }
+  },
+  {
+    "source": "1/0",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "idiv",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 2,
+          "kind": "int",
+          "value": 0
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero",
+      "reference": 3
+    }
+  },
+  {
+    "source": "0^0",
+    "input": {
+      "id": 3,
+      "kind": "app",
+      "opcode": "ipow",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int",
+          "value": 0
+        },
+        {
+          "id": 2,
+          "kind": "int",
+          "value": 0
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT503",
+      "message": "0^0 is undefined",
+      "reference": 3
+    }
+  },
+  {
+    "source": "2^(-1)",
+    "input": {
+      "id": 4,
+      "kind": "app",
+      "opcode": "ipow",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int",
+          "value": 2
+        },
+        {
+          "id": 3,
+          "kind": "app",
+          "opcode": "iuminus",
+          "args": [
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT503",
+      "message": "i^j is undefined for j < 0",
+      "reference": 4
+    }
+  },
+  {
+    "source": "and()",
+    "input": {
+      "id": 1,
+      "kind": "app",
+      "opcode": "and",
+      "args": []
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "or()",
+    "input": {
+      "id": 1,
+      "kind": "app",
+      "opcode": "or",
+      "args": []
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  }
+]

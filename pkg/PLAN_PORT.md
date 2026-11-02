@@ -336,11 +336,17 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     equality audit (TypeScript's set-like fallback equates unlike constructors).
 - [ ] P7.2 Port evaluation/compilation of IR, lexical closures, operator values,
   local bindings, lazy branches, definition caches, and runtime error traces.
+  - [x] Pure IR expression evaluation: literals, concrete constructors, explicit
+    value bindings, integer operators, Boolean/equality/assert operators, lazy
+    and/or/implies/ite, cancellation, and source-referenced diagnostics.
+  - [ ] Definition/lookup integration, closures/operator values, local bindings,
+    caching, and complete runtime stack traces.
 - [ ] P7.3 Port arithmetic, Boolean, comparison, string, and conversion
   builtins; test negative division/modulo and integer boundary behavior.
   - [x] Strict integer arithmetic/comparison builtins, arbitrary precision,
     signed division/remainder, power errors, and upstream result/error fixtures.
-  - [ ] Boolean/string/conversion builtins and evaluator dispatch integration.
+  - [x] Boolean/equality/assert builtins and integer dispatch in pure evaluation.
+  - [ ] String/conversion builtins and full evaluator dispatch integration.
 - [ ] P7.4 Port collection, map/function, record, tuple, variant, higher-order,
   fold, indexing, range, and lazy/infinite-set operations.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
@@ -2163,3 +2169,18 @@ word "retained" in the commit message.
   Full default tests pass (combined package execution 0.963s). P7.3 remains open
   for Boolean/string/conversion operators and evaluator integration; resource
   controls for expensive operations remain part of P8.5.
+
+- 2026-11-02: Connected runtime values and integer builtins through
+  EvaluatePureExpression. The pure IR evaluator supports literals, supplied
+  value bindings via insdict, collection/record/variant constructors, equality,
+  strict not/iff/assert, and lazy and/or/implies/ite. It evaluates strict
+  arguments left-to-right, preserves skipped branches, checks cancellation at
+  expression boundaries, and attaches source references to arithmetic/operator
+  diagnostics. Twenty-five parsed-source fixtures run the full TypeScript
+  evaluator and match Go values and error codes/messages, including skipped
+  division-by-zero branches, empty Boolean folds, nested constructors, duplicate
+  map keys, and assertions. Unit tests cover bindings, immutable argument use,
+  cancellation, missing names, malformed arity, and non-Boolean conditions.
+  Full default tests pass (combined package execution 0.983s). P7.2/P7.3 remain
+  open for definition resolution, closures, local bindings, caches, full stack
+  traces, strings/conversions, and stateful evaluator integration.
