@@ -312,6 +312,9 @@ the baseline corpus, including state-transition legality.
     and default flag handling end to end.
 - [ ] P6.5 Port `initToPredicate` and removal of run definitions for the paths
   that require them; preserve the different contracts of checking and TLA output.
+  - [x] Go Apalache TLA API prepares a copied module with run removal and
+    init-to-predicate conversion; checking continues to use assignment IR.
+  - [ ] Complete CLI/TLC path wiring and the recursive conversion audit.
 - [x] P6.6 Produce the single-module typed JSON envelope accepted by Go Apalache,
   with explicit schema adaptation rather than dropping unknown fields blindly.
   MarshalInput validates its projected envelope with the production importer;
@@ -398,6 +401,9 @@ TypeScript or Rust evaluator process.
 - [ ] P9.7 Implement `compile --target=tlaplus` through Go Apalache and port
   `tlaplusPostprocessing.ts`; compare parsed TLA semantics and required textual
   output against reference fixtures.
+  - [x] TLA API through the Go command service, typed preparation/backend
+    failures, cancellation, and all upstream printer-postprocessing examples.
+  - [ ] Wire compile CLI output and complete generated-TLA compatibility tests.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.
@@ -1913,3 +1919,18 @@ word "retained" in the commit message.
   default tests pass (combined execution 0.949s). P6.6 is complete; full JSON CLI
   output, TLA init conversion wiring, backend configuration/result APIs, and
   broader checker language compatibility remain open.
+
+- 2026-11-02: Added Executor.TLA to prepare copied compiled modules with run
+  removal and init-to-predicate conversion, marshal the strict checker input,
+  call the existing Go TLA command, decode its JSON string, and apply printer
+  fixes. PreparationError retains QNT409 source diagnostics; CommandFailure
+  retains backend category and raw failure data. Ported PostprocessTLA and
+  FixAngleActions with comment/string masking, nested comments, balanced
+  parentheses/brackets, and idempotence. Tests include every upstream printer
+  example plus malformed delimiters, escaped strings, Unicode comments, and
+  nested comments. The existing safe source-to-TLA integration now exercises
+  this API and verifies unprimed init equality; unit tests cover shared-action
+  preparation failure, unchanged input, cancellation, malformed/empty command
+  responses, and failure payload preservation. Full default tests pass
+  (combined execution 0.993s). CLI output, TLC preparation wiring, and broader
+  generated-TLA semantic comparisons remain open under P6.5/P9.7.

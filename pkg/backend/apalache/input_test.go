@@ -73,9 +73,12 @@ func TestSourceToGoApalache(t *testing.T) {
 				}
 			}
 			if tc.name == "safe" {
-				response, err = New().Run(context.Background(), cmd.Cmd_TLA, config)
-				if err != nil || !strings.Contains(response.GetSuccess(), "MODULE M") {
-					t.Fatalf("TLA: %v %v", response, err)
+				tla, err := New().TLA(context.Background(), compiled)
+				if err != nil || !strings.Contains(tla, "MODULE M") {
+					t.Fatalf("TLA: %s %v", tla, err)
+				}
+				if !strings.Contains(tla, "x = 0") || strings.Contains(tla, "x' = 0") {
+					t.Fatalf("init not converted: %s", tla)
 				}
 			}
 		})
