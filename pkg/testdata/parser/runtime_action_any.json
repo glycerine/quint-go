@@ -1,0 +1,1135 @@
+[
+  {
+    "operation": "x'=1 and y'=2",
+    "input": {
+      "id": 11,
+      "kind": "app",
+      "opcode": "and",
+      "args": [
+        {
+          "id": 7,
+          "kind": "app",
+          "opcode": "assign",
+          "args": [
+            {
+              "id": 6,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 5,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "kind": "app",
+          "opcode": "assign",
+          "args": [
+            {
+              "id": 9,
+              "kind": "name",
+              "name": "y"
+            },
+            {
+              "id": 8,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    },
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": "shift",
+    "rng": "0",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "y"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "operation": "any { x'=10, x'=20, x'=30 }",
+    "input": {
+      "id": 22,
+      "kind": "app",
+      "opcode": "actionAny",
+      "args": [
+        {
+          "id": 15,
+          "kind": "app",
+          "opcode": "assign",
+          "args": [
+            {
+              "id": 14,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 13,
+              "kind": "int",
+              "value": 10
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "kind": "app",
+          "opcode": "assign",
+          "args": [
+            {
+              "id": 17,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 16,
+              "kind": "int",
+              "value": 20
+            }
+          ]
+        },
+        {
+          "id": 21,
+          "kind": "app",
+          "opcode": "assign",
+          "args": [
+            {
+              "id": 20,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 19,
+              "kind": "int",
+              "value": 30
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    },
+    "rng": "2",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "y"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "operation": "shift",
+    "rng": "2",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 30
+        }
+      ]
+    }
+  },
+  {
+    "operation": "x",
+    "input": {
+      "id": 24,
+      "kind": "name",
+      "name": "x"
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 30
+    },
+    "rng": "2",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 30
+        }
+      ]
+    }
+  },
+  {
+    "operation": "any { all { x'=99, false }, x'=40 }",
+    "input": {
+      "id": 34,
+      "kind": "app",
+      "opcode": "actionAny",
+      "args": [
+        {
+          "id": 30,
+          "kind": "app",
+          "opcode": "actionAll",
+          "args": [
+            {
+              "id": 28,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 27,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 26,
+                  "kind": "int",
+                  "value": 99
+                }
+              ]
+            },
+            {
+              "id": 29,
+              "kind": "bool",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": 33,
+          "kind": "app",
+          "opcode": "assign",
+          "args": [
+            {
+              "id": 32,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 31,
+              "kind": "int",
+              "value": 40
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    },
+    "rng": "3",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 30
+        }
+      ]
+    }
+  },
+  {
+    "operation": "shift",
+    "rng": "3",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 40
+        }
+      ]
+    }
+  },
+  {
+    "operation": "x",
+    "input": {
+      "id": 36,
+      "kind": "name",
+      "name": "x"
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 40
+    },
+    "rng": "3",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 40
+        }
+      ]
+    }
+  },
+  {
+    "operation": "x'=7",
+    "input": {
+      "id": 40,
+      "kind": "app",
+      "opcode": "assign",
+      "args": [
+        {
+          "id": 39,
+          "kind": "name",
+          "name": "x"
+        },
+        {
+          "id": 38,
+          "kind": "int",
+          "value": 7
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    },
+    "rng": "3",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 40
+        }
+      ]
+    }
+  },
+  {
+    "operation": "any { all { x'=99, false }, false }",
+    "input": {
+      "id": 48,
+      "kind": "app",
+      "opcode": "actionAny",
+      "args": [
+        {
+          "id": 46,
+          "kind": "app",
+          "opcode": "actionAll",
+          "args": [
+            {
+              "id": 44,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 43,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 42,
+                  "kind": "int",
+                  "value": 99
+                }
+              ]
+            },
+            {
+              "id": 45,
+              "kind": "bool",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": 47,
+          "kind": "bool",
+          "value": false
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    },
+    "rng": "4",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 40
+        }
+      ]
+    }
+  },
+  {
+    "operation": "shift",
+    "rng": "4",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 7
+        }
+      ]
+    }
+  },
+  {
+    "operation": "x",
+    "input": {
+      "id": 50,
+      "kind": "name",
+      "name": "x"
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 7
+    },
+    "rng": "4",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 7
+        }
+      ]
+    }
+  },
+  {
+    "operation": "actionAny()",
+    "input": {
+      "id": 52,
+      "kind": "app",
+      "opcode": "actionAny",
+      "args": []
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    },
+    "rng": "4",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 7
+        }
+      ]
+    }
+  },
+  {
+    "operation": "any { all { x'=1, false }, all { x'=2, false }, all { x'=3, false } }",
+    "input": {
+      "id": 69,
+      "kind": "app",
+      "opcode": "actionAny",
+      "args": [
+        {
+          "id": 58,
+          "kind": "app",
+          "opcode": "actionAll",
+          "args": [
+            {
+              "id": 56,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 55,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 54,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "id": 57,
+              "kind": "bool",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": 63,
+          "kind": "app",
+          "opcode": "actionAll",
+          "args": [
+            {
+              "id": 61,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 60,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 59,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 62,
+              "kind": "bool",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": 68,
+          "kind": "app",
+          "opcode": "actionAll",
+          "args": [
+            {
+              "id": 66,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 65,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 64,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "id": 67,
+              "kind": "bool",
+              "value": false
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    },
+    "rng": "6",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 7
+        }
+      ]
+    }
+  },
+  {
+    "operation": "shift",
+    "rng": "6",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": "x",
+    "input": {
+      "id": 71,
+      "kind": "name",
+      "name": "x"
+    },
+    "error": {
+      "code": "QNT502",
+      "message": "Variable x not set",
+      "reference": 71
+    },
+    "rng": "6",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": "any { x'=5 }",
+    "input": {
+      "id": 76,
+      "kind": "app",
+      "opcode": "actionAny",
+      "args": [
+        {
+          "id": 75,
+          "kind": "app",
+          "opcode": "assign",
+          "args": [
+            {
+              "id": 74,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 73,
+              "kind": "int",
+              "value": 5
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    },
+    "rng": "6",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    }
+  },
+  {
+    "operation": "shift",
+    "rng": "6",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "operation": "x",
+    "input": {
+      "id": 78,
+      "kind": "name",
+      "name": "x"
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 5
+    },
+    "rng": "6",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "operation": "any { all { x'=8, 1/0==0 }, all { x'=9, 1/0==0 } }",
+    "input": {
+      "id": 98,
+      "kind": "app",
+      "opcode": "actionAny",
+      "args": [
+        {
+          "id": 88,
+          "kind": "app",
+          "opcode": "actionAll",
+          "args": [
+            {
+              "id": 82,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 81,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 80,
+                  "kind": "int",
+                  "value": 8
+                }
+              ]
+            },
+            {
+              "id": 87,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 85,
+                  "kind": "app",
+                  "opcode": "idiv",
+                  "args": [
+                    {
+                      "id": 83,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 84,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 86,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 97,
+          "kind": "app",
+          "opcode": "actionAll",
+          "args": [
+            {
+              "id": 91,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 90,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 89,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            },
+            {
+              "id": 96,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 94,
+                  "kind": "app",
+                  "opcode": "idiv",
+                  "args": [
+                    {
+                      "id": 92,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 93,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 95,
+                  "kind": "int",
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero",
+      "reference": 94
+    },
+    "rng": "7",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "operation": "shift",
+    "rng": "7",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        }
+      ]
+    }
+  },
+  {
+    "operation": "x",
+    "input": {
+      "id": 100,
+      "kind": "name",
+      "name": "x"
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 9
+    },
+    "rng": "7",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        }
+      ]
+    }
+  },
+  {
+    "operation": "any { any { x'=11, x'=12 }, x'=13 }",
+    "input": {
+      "id": 112,
+      "kind": "app",
+      "opcode": "actionAny",
+      "args": [
+        {
+          "id": 108,
+          "kind": "app",
+          "opcode": "actionAny",
+          "args": [
+            {
+              "id": 104,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 103,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 102,
+                  "kind": "int",
+                  "value": 11
+                }
+              ]
+            },
+            {
+              "id": 107,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 106,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 105,
+                  "kind": "int",
+                  "value": 12
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 111,
+          "kind": "app",
+          "opcode": "assign",
+          "args": [
+            {
+              "id": 110,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 109,
+              "kind": "int",
+              "value": 13
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    },
+    "rng": "8",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        }
+      ]
+    }
+  },
+  {
+    "operation": "shift",
+    "rng": "8",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 13
+        }
+      ]
+    }
+  },
+  {
+    "operation": "x",
+    "input": {
+      "id": 114,
+      "kind": "name",
+      "name": "x"
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 13
+    },
+    "rng": "8",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 13
+        }
+      ]
+    }
+  }
+]

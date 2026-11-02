@@ -9,12 +9,14 @@ import (
 )
 
 func TestUpstreamAssignments(t *testing.T)       { testStateTransitions(t, "runtime_assignment.json") }
+func TestUpstreamActionChoice(t *testing.T)      { testStateTransitions(t, "runtime_action_any.json") }
 func TestUpstreamActionConjunction(t *testing.T) { testStateTransitions(t, "runtime_action_all.json") }
 func testStateTransitions(t *testing.T, filename string) {
 	t.Helper()
 	t.Parallel()
 	var fixtures []struct {
 		Operation string
+		RNG       *string
 		Input     *Expr
 		Output    *Expr
 		Error     *Diagnostic
@@ -27,6 +29,7 @@ func testStateTransitions(t *testing.T, filename string) {
 	if err = json.Unmarshal(data, &fixtures); err != nil {
 		t.Fatal(err)
 	}
+	rng := NewRNG(Integer{})
 	storage := NewVariableStorage()
 	storage.Register("x", "x")
 	storage.Register("y", "y")
@@ -34,7 +37,7 @@ func testStateTransitions(t *testing.T, filename string) {
 		if f.Operation == "shift" {
 			storage.Shift()
 		} else {
-			got, err := EvaluateStateExpression(context.Background(), *f.Input, storage)
+			got, err := EvaluateStateExpressionWithRNG(context.Background(), *f.Input, storage, rng)
 			if f.Error != nil {
 				var d Diagnostic
 				if !errors.As(err, &d) || d.Code != f.Error.Code || d.Message != f.Error.Message || d.Reference == nil {
@@ -49,6 +52,9 @@ func testStateTransitions(t *testing.T, filename string) {
 					t.Fatal(index, got.String(), want.String(), err)
 				}
 			}
+		}
+		if f.RNG != nil && rng.State().String() != *f.RNG {
+			t.Fatal(index, "RNG counter", rng.State().String(), *f.RNG)
 		}
 		got, err := storage.Record()
 		want, e := NewRuntimeValue(f.Record)

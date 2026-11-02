@@ -13,7 +13,7 @@ import (
 // Module definition lookup and stateful operations belong
 // to the full evaluator and are not yet handled here.
 func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue]) (RuntimeValue, error) {
-	return evaluateExpression(ctx, expression, bindings, nil)
+	return evaluateExpression(ctx, expression, bindings, nil, nil)
 }
 
 // EvaluateStateExpression adds registered variable reads and assignments to the
@@ -23,10 +23,19 @@ func EvaluateStateExpression(ctx context.Context, expression Expr, storage *Vari
 	if storage == nil {
 		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "State evaluation requires variable storage"}
 	}
-	return evaluateExpression(ctx, expression, nil, storage)
+	return evaluateExpression(ctx, expression, nil, storage, nil)
 }
 
-func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue], storage *VariableStorage) (RuntimeValue, error) {
+// EvaluateStateExpressionWithRNG enables randomized action choice with caller-owned
+// state and RNG. Both retain changes/counter advancement across invocations.
+func EvaluateStateExpressionWithRNG(ctx context.Context, expression Expr, storage *VariableStorage, rng *RNG) (RuntimeValue, error) {
+	if storage == nil {
+		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "State evaluation requires variable storage"}
+	}
+	return evaluateExpression(ctx, expression, nil, storage, rng)
+}
+
+func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue], storage *VariableStorage, rng *RNG) (RuntimeValue, error) {
 	if bindings != nil {
 		owned := insdict.NewDict[string, RuntimeValue]()
 		for name, value := range bindings.All() {
@@ -175,6 +184,41 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 			return v.expression.Bool, nil
 		}
 		switch e.Opcode {
+		case "actionAny":
+			if storage == nil || rng == nil {
+				return fail(e, "Action choice requires variable storage and RNG")
+			}
+			snapshot := storage.Snapshot()
+			indices := make([]int, len(e.Args))
+			for i := range indices {
+				indices[i] = i
+			}
+			for i := len(indices) - 1; i > 0; i-- {
+				bound, _ := ParseInteger(fmt.Sprint(i + 1))
+				draw, err := rng.Next(bound)
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+				j := int(draw.Big().Int64())
+				indices[i], indices[j] = indices[j], indices[i]
+			}
+			for _, index := range indices {
+				storage.ActionTaken = ""
+				for name := range storage.NondetPicks.All() {
+					storage.NondetPicks.Set(name, RuntimeValue{})
+				}
+				enabled, err := boolean(e.Args[index])
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+				if enabled {
+					storage.Recover(storage.Snapshot())
+					return boolValue(true)
+				}
+				storage.Recover(snapshot)
+			}
+			storage.Recover(snapshot)
+			return boolValue(false)
 		case "actionAll":
 			if storage == nil {
 				return fail(e, "Action conjunction requires variable storage")

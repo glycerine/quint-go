@@ -388,6 +388,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     evaluation, including lazy branches and simultaneous next-state updates.
   - [x] actionAll conjunction with snapshot restoration on disabled branches,
     nested rollback, baseline preservation, and upstream error behavior.
+  - [x] Randomized actionAny with exact Squares/Fisher-Yates draws, retry
+    rollback, metadata reset, nested choices, and explicit caller-owned RNG.
   - [ ] Stateful module/instance binding, primed-read support, action composition,
     transactional rollback/commit, and simulation integration.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
@@ -2449,3 +2451,17 @@ word "retained" in the commit message.
   and pure-context rejection. Full default tests pass (combined package execution
   0.976s). Randomized actionAny, then/repetition, stateful module binding, primed
   reads, simulation-level transaction handling, and trace integration remain open.
+
+- 2026-11-02: Added EvaluateStateExpressionWithRNG and lazy randomized
+  actionAny. Choice performs upstream's Fisher-Yates shuffle with the exact
+  Squares draw bounds/counter advancement, clears per-attempt action/pick
+  metadata, retries disabled options after snapshot recovery, and retains the
+  first enabled successor. Empty/all-disabled choices restore the baseline;
+  runtime errors propagate without rollback as upstream. Twenty-five full
+  TypeScript transitions match output/error, post-shift state, and exact RNG
+  counters across enabled/disabled/nested/single/empty choices and errors.
+  Unit tests cover metadata reset even with metadata output disabled, reusable
+  baseline recovery, single-option zero-draw behavior, and missing-context
+  rejection. Full default tests pass (combined package execution 1.036s, near
+  the one-second target). Trace callbacks, sequencing/repetition, stateful module
+  binding, primed reads, and simulation integration remain open.

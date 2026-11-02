@@ -384,3 +384,11 @@ enabled actions, false-branch rollback, baseline preservation, nested failures,
 empty conjunction, skipped later writes, and runtime-error propagation. Upstream
 retains tentative writes on an error; false results restore the snapshot. Unit
 tests also check metadata baseline preservation and pure-context rejection.
+
+`runtime_action_any.json` is regenerated with
+`node pkg/grammar/runtime_action_any_fixtures.cjs`. Twenty-five full TypeScript
+runtime transitions compare action choice outputs/errors, successor records,
+and exact RNG counters. They cover multiple enabled options, retry rollback,
+all-disabled/empty choices, baseline preservation, single options, nested choice,
+and retained writes on errors. Unit tests verify metadata reset/recovery,
+single-option RNG stability, and missing-context rejection.
