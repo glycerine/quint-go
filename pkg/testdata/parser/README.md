@@ -294,3 +294,11 @@ tuple/large-integer keys, nested maps, and missing-key diagnostics. Small-map
 insertion order is checked independently of canonical printed order. Large-map
 Immutable.js hash-trie traversal and traversal retention across every nested
 collection operation remain explicit runtime compatibility audits.
+
+`runtime_let.json` is regenerated with
+`node pkg/grammar/runtime_let_fixtures.cjs`. Twelve source expressions are parsed,
+name-resolved, and evaluated with the TypeScript runtime. They cover lazy local
+values, dependency chains, repeated references, skipped failing initializers,
+constructors, and retained nested map diagnostics. Additional Go tests cover
+lexical capture under shadowing, initializer scope, and cleanup between calls.
+Local operators, closures, and nondeterministic definitions remain unfinished.

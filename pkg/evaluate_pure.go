@@ -9,10 +9,21 @@ import (
 
 // EvaluatePureExpression evaluates concrete constructors, strict integer/Boolean
 // operations, and lazy Boolean/conditional expressions. Bindings contain already
-// evaluated values. Definition lookup, closures, and stateful operations belong
+// evaluated values. Local value definitions are lazy and memoized per scope.
+// Module definition lookup, closures, and stateful operations belong
 // to the full evaluator and are not yet handled here.
 func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue]) (RuntimeValue, error) {
 	var eval func(Expr) (RuntimeValue, error)
+	type localValue func() (RuntimeValue, error)
+	scopes := []*insdict.Dict[string, localValue]{}
+	lookup := func(name string) (localValue, bool) {
+		for i := len(scopes) - 1; i >= 0; i-- {
+			if value, ok := scopes[i].Get2(name); ok {
+				return value, true
+			}
+		}
+		return nil, false
+	}
 	fail := func(e Expr, message string) (RuntimeValue, error) {
 		id := e.ID
 		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: message, Reference: &id}
@@ -26,13 +37,49 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 		case "int", "bool", "str":
 			return NewRuntimeValue(e)
 		case "name":
+			if value, ok := lookup(e.Name); ok {
+				return value()
+			}
 			if bindings != nil {
 				if value, ok := bindings.Get2(e.Name); ok && value.Valid() {
 					return value, nil
 				}
 			}
 			return fail(e, "Unbound runtime name: "+e.Name)
+		case "let":
+			if e.Opdef == nil || e.Opdef.Expr == nil || e.Body == nil {
+				return fail(e, "Malformed local definition")
+			}
+			if e.Opdef.Qualifier == Nondet || e.Opdef.Expr.Kind == "lambda" {
+				return fail(e, "Local nondeterministic definitions and operators require the full evaluator")
+			}
+			captured := append([]*insdict.Dict[string, localValue](nil), scopes...)
+			var cached RuntimeValue
+			var cachedErr error
+			evaluated := false
+			thunk := func() (RuntimeValue, error) {
+				if !evaluated {
+					saved := scopes
+					scopes = captured
+					cached, cachedErr = eval(*e.Opdef.Expr)
+					scopes = saved
+					evaluated = true
+				}
+				return cached, cachedErr
+			}
+			scope := insdict.NewDict[string, localValue]()
+			scope.Set(e.Opdef.Name, thunk)
+			scopes = append(scopes, scope)
+			result, err := eval(*e.Body)
+			scopes = scopes[:len(scopes)-1]
+			return result, err
 		case "app":
+			if value, ok := lookup(e.Opcode); ok {
+				if len(e.Args) != 0 {
+					return fail(e, "Local value does not accept arguments: "+e.Opcode)
+				}
+				return value()
+			}
 		default:
 			return fail(e, "Unsupported pure expression kind: "+e.Kind)
 		}

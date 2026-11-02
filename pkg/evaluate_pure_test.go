@@ -10,8 +10,11 @@ import (
 )
 
 func TestUpstreamPureEvaluation(t *testing.T) { testPureEvaluationFixtures(t, "evaluate_pure.json") }
-func TestUpstreamMapEvaluation(t *testing.T)  { testPureEvaluationFixtures(t, "runtime_map.json") }
-func TestUpstreamSetEvaluation(t *testing.T)  { testPureEvaluationFixtures(t, "runtime_set.json") }
+func TestUpstreamLocalValueEvaluation(t *testing.T) {
+	testPureEvaluationFixtures(t, "runtime_let.json")
+}
+func TestUpstreamMapEvaluation(t *testing.T) { testPureEvaluationFixtures(t, "runtime_map.json") }
+func TestUpstreamSetEvaluation(t *testing.T) { testPureEvaluationFixtures(t, "runtime_set.json") }
 func TestUpstreamSequenceEvaluation(t *testing.T) {
 	testPureEvaluationFixtures(t, "runtime_sequence.json")
 }

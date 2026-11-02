@@ -339,8 +339,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] Pure IR expression evaluation: literals, concrete constructors, explicit
     value bindings, integer operators, Boolean/equality/assert operators, lazy
     and/or/implies/ite, cancellation, and source-referenced diagnostics.
-  - [ ] Definition/lookup integration, closures/operator values, local bindings,
-    caching, and complete runtime stack traces.
+  - [x] Local concrete value definitions with lazy per-scope caching, lexical
+    capture, shadowing, and cleanup between evaluations.
+  - [ ] Module definition/lookup integration, closures/operator values, operator
+    local bindings, remaining caches, and complete runtime stack traces.
 - [ ] P7.3 Port arithmetic, Boolean, comparison, string, and conversion
   builtins; test negative division/modulo and integer boundary behavior.
   - [x] Strict integer arithmetic/comparison builtins, arbitrary precision,
@@ -2249,3 +2251,17 @@ word "retained" in the commit message.
   map access through every strict sequence/record path, and duplicate fields.
   Full default tests pass (combined package execution 0.997s). Large-map
   hash-trie traversal and remaining higher-order/symbolic operations stay open.
+
+- 2026-11-02: Extended EvaluatePureExpression with local concrete value
+  definitions. Initializers are lazy, memoized within their lexical scope, and
+  evaluated in their defining environment rather than the forcing environment.
+  Local names and zero-argument references shadow supplied bindings; scopes and
+  caches are confined to each evaluation. Twelve parsed/name-resolved/full
+  TypeScript evaluator fixtures match, including dependency chains, repeated
+  references, unused arithmetic errors, lazy conditionals, and nested maps.
+  Unit tests cover first forcing under a shadowing name, initializer access to
+  the preceding scope, external-binding preservation, repeated calls, malformed
+  definitions, and explicit rejection of unsupported local lambdas/nondet.
+  Full default tests pass (combined package execution 0.995s). Closures, local
+  operators, module lookup integration, nondeterminism, and full runtime stacks
+  remain open under P7.2/P7.6.

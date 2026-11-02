@@ -1,0 +1,691 @@
+[
+  {
+    "source": "{ val x = 1 + 2; x * x }",
+    "input": {
+      "id": 8,
+      "kind": "let",
+      "opdef": {
+        "id": 4,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 3,
+          "kind": "app",
+          "opcode": "iadd",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 7,
+        "kind": "app",
+        "opcode": "imul",
+        "args": [
+          {
+            "id": 5,
+            "kind": "name",
+            "name": "x"
+          },
+          {
+            "id": 6,
+            "kind": "name",
+            "name": "x"
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 9
+    }
+  },
+  {
+    "source": "{ val x = 1/0; 42 }",
+    "input": {
+      "id": 6,
+      "kind": "let",
+      "opdef": {
+        "id": 4,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 3,
+          "kind": "app",
+          "opcode": "idiv",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 5,
+        "kind": "int",
+        "value": 42
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 42
+    }
+  },
+  {
+    "source": "{ val x = 1/0; x }",
+    "input": {
+      "id": 6,
+      "kind": "let",
+      "opdef": {
+        "id": 4,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 3,
+          "kind": "app",
+          "opcode": "idiv",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 5,
+        "kind": "name",
+        "name": "x"
+      }
+    },
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero",
+      "reference": 3
+    }
+  },
+  {
+    "source": "{ val x = 2; val y = x + 3; y * x }",
+    "input": {
+      "id": 11,
+      "kind": "let",
+      "opdef": {
+        "id": 2,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 1,
+          "kind": "int",
+          "value": 2
+        }
+      },
+      "expr": {
+        "id": 10,
+        "kind": "let",
+        "opdef": {
+          "id": 6,
+          "kind": "def",
+          "name": "y",
+          "qualifier": "val",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 3,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 4,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          }
+        },
+        "expr": {
+          "id": 9,
+          "kind": "app",
+          "opcode": "imul",
+          "args": [
+            {
+              "id": 7,
+              "kind": "name",
+              "name": "y"
+            },
+            {
+              "id": 8,
+              "kind": "name",
+              "name": "x"
+            }
+          ]
+        }
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 10
+    }
+  },
+  {
+    "source": "{ val x = Set(2,1); x.union(x) }",
+    "input": {
+      "id": 8,
+      "kind": "let",
+      "opdef": {
+        "id": 4,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 3,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 7,
+        "kind": "app",
+        "opcode": "union",
+        "args": [
+          {
+            "id": 5,
+            "kind": "name",
+            "name": "x"
+          },
+          {
+            "id": 6,
+            "kind": "name",
+            "name": "x"
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "source": "{ val x = false; x implies (1/0 == 0) }",
+    "input": {
+      "id": 10,
+      "kind": "let",
+      "opdef": {
+        "id": 2,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 1,
+          "kind": "bool",
+          "value": false
+        }
+      },
+      "expr": {
+        "id": 9,
+        "kind": "app",
+        "opcode": "implies",
+        "args": [
+          {
+            "id": 3,
+            "kind": "name",
+            "name": "x"
+          },
+          {
+            "id": 8,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 6,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "{ val x = 2; { val y = x + 1; y } + x }",
+    "input": {
+      "id": 11,
+      "kind": "let",
+      "opdef": {
+        "id": 2,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 1,
+          "kind": "int",
+          "value": 2
+        }
+      },
+      "expr": {
+        "id": 10,
+        "kind": "app",
+        "opcode": "iadd",
+        "args": [
+          {
+            "id": 8,
+            "kind": "let",
+            "opdef": {
+              "id": 6,
+              "kind": "def",
+              "name": "y",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 4,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 7,
+              "kind": "name",
+              "name": "y"
+            }
+          },
+          {
+            "id": 9,
+            "kind": "name",
+            "name": "x"
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 5
+    }
+  },
+  {
+    "source": "{ val x = 2; List(x,x,x).length() }",
+    "input": {
+      "id": 8,
+      "kind": "let",
+      "opdef": {
+        "id": 2,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 1,
+          "kind": "int",
+          "value": 2
+        }
+      },
+      "expr": {
+        "id": 7,
+        "kind": "app",
+        "opcode": "length",
+        "args": [
+          {
+            "id": 6,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 3,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 5,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 3
+    }
+  },
+  {
+    "source": "{ val x = Map((2,20),(1,10)); x.get(3) }",
+    "input": {
+      "id": 12,
+      "kind": "let",
+      "opdef": {
+        "id": 8,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 7,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 3,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 20
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 5,
+                  "kind": "int",
+                  "value": 10
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 11,
+        "kind": "app",
+        "opcode": "get",
+        "args": [
+          {
+            "id": 9,
+            "kind": "name",
+            "name": "x"
+          },
+          {
+            "id": 10,
+            "kind": "int",
+            "value": 3
+          }
+        ]
+      }
+    },
+    "error": {
+      "code": "QNT507",
+      "message": "Called 'get' with a non-existing key. Key is 3. Map has keys: 2, 1",
+      "reference": 11
+    }
+  },
+  {
+    "source": "{ val x = 0^0; if (false) x else 19 }",
+    "input": {
+      "id": 9,
+      "kind": "let",
+      "opdef": {
+        "id": 4,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 3,
+          "kind": "app",
+          "opcode": "ipow",
+          "args": [
+            {
+              "id": 1,
+              "kind": "int",
+              "value": 0
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 0
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 8,
+        "kind": "app",
+        "opcode": "ite",
+        "args": [
+          {
+            "id": 5,
+            "kind": "bool",
+            "value": false
+          },
+          {
+            "id": 6,
+            "kind": "name",
+            "name": "x"
+          },
+          {
+            "id": 7,
+            "kind": "int",
+            "value": 19
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 19
+    }
+  },
+  {
+    "source": "{ pure val x = 7; x + x }",
+    "input": {
+      "id": 6,
+      "kind": "let",
+      "opdef": {
+        "id": 2,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "pureval",
+        "expr": {
+          "id": 1,
+          "kind": "int",
+          "value": 7
+        }
+      },
+      "expr": {
+        "id": 5,
+        "kind": "app",
+        "opcode": "iadd",
+        "args": [
+          {
+            "id": 3,
+            "kind": "name",
+            "name": "x"
+          },
+          {
+            "id": 4,
+            "kind": "name",
+            "name": "x"
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 14
+    }
+  },
+  {
+    "source": "{ val x = 1; val y = x; val z = y + x; z }",
+    "input": {
+      "id": 12,
+      "kind": "let",
+      "opdef": {
+        "id": 2,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 1,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      "expr": {
+        "id": 11,
+        "kind": "let",
+        "opdef": {
+          "id": 4,
+          "kind": "def",
+          "name": "y",
+          "qualifier": "val",
+          "expr": {
+            "id": 3,
+            "kind": "name",
+            "name": "x"
+          }
+        },
+        "expr": {
+          "id": 10,
+          "kind": "let",
+          "opdef": {
+            "id": 8,
+            "kind": "def",
+            "name": "z",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "y"
+                },
+                {
+                  "id": 6,
+                  "kind": "name",
+                  "name": "x"
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 9,
+            "kind": "name",
+            "name": "z"
+          }
+        }
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 2
+    }
+  }
+]
