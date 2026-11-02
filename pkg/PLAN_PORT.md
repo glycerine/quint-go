@@ -536,3 +536,9 @@ word "retained" in the commit message.
   nil roots, missing IDs, and unknown nodes. Default tests pass (core 0.006s).
   P1.5 remains open for full module/declaration visitor hooks, transformations,
   printing, namespacing, and ID/source-reference remapping.
+
+- 2026-11-02: Ported typeNames, rowNames, and rowFieldNames behavior for later
+  inference/substitution work. Tests cover nested record/sum rows, duplicate
+  type names, independent namespaces with identical names, constant constructor
+  exclusion, open/closed tails, field ordering, and invalid type kinds. Default
+  tests pass (core 0.006s); P4.1 remains open for schemes and substitution logic.
