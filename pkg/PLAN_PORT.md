@@ -432,6 +432,13 @@ the compatibility matrix has no unexplained omissions. Scope exclusions must
 be explicit; neither a compiling binary nor a handful of passing examples is
 the completion criterion.
 
+## making git commits after each batch gets to green.
+
+After each batch of work is done, be sure that we have added or obtained
+comprehensive unit test coverage too. when the tests are all green, make a
+git commit with a one sentence summary of this batch. Do not use the
+word "retained" in the commit message.
+
 ## Implementation log
 
 - 2026-11-02: Began P0. Current Quint checkout is
@@ -497,3 +504,13 @@ the completion criterion.
   shadowing/import provenance remain raw JSON pending typed resolver structures.
   Regression and corpus tests pass (`go test ./pkg/...`, 5.956s). P1.1/P1.4
   remain open for remaining schema and analysis-table work.
+
+- 2026-11-02: Added unit tests for all type variants, malformed child types,
+  invalid modules/parameters/definitions/overrides, and failed-decode receiver
+  preservation. Full corpus run passed with 86.5% core statement coverage and
+  100% adapter coverage. Per user request, default tests now use the small
+  upstream fixture plus focused unit tests; set QUINT_CORPUS_TESTS=1 to run
+  the exhaustive fixture corpus. Default uncached test execution took 0.008s
+  for the core and about 0.032s for the adapter (build time is separate).
+  Future batches must include unit coverage and a one-sentence Git commit
+  after tests pass; keep default test execution below one second where possible.

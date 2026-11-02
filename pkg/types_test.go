@@ -10,6 +10,9 @@ import (
 
 func TestUpstreamTypeTables(t *testing.T) {
 	paths, err := filepath.Glob("../evaluator/fixtures/*.json")
+	if os.Getenv("QUINT_CORPUS_TESTS") != "1" {
+		paths = []string{"../evaluator/fixtures/simple.json"}
+	}
 	if err != nil {
 		t.Fatal(err)
 	}

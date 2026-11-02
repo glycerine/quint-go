@@ -10,6 +10,9 @@ import (
 
 func TestUpstreamModules(t *testing.T) {
 	paths, _ := filepath.Glob("../evaluator/fixtures/*.json")
+	if os.Getenv("QUINT_CORPUS_TESTS") != "1" {
+		paths = []string{"../evaluator/fixtures/simple.json"}
+	}
 	count := 0
 	for _, path := range paths {
 		data, err := os.ReadFile(path)
