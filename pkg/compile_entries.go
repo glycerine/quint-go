@@ -34,7 +34,7 @@ func SynthesizeCompilationEntries(options CompilationEntries, ids *IDGenerator) 
 		texts = append(texts, "action q::step = "+*step)
 	}
 	if len(options.Invariants) > 0 {
-		texts = append(texts, "val q::inv = and("+strings.Join(options.Invariants, ",")+")")
+		texts = append(texts, "val q::inv = and("+strings.Join(options.Invariants, " and ")+")")
 	}
 	if options.InductiveInvariant != "" {
 		texts = append(texts, "val q::inductiveInv = "+options.InductiveInvariant)

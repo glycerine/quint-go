@@ -1712,3 +1712,11 @@ word "retained" in the commit message.
   uniqueness, absent wrappers, and syntax rejection. Default tests pass under
   one second. Flag-mode validation, source mapping, main selection, name/analysis
   integration, and flattening remain open under P6.3/P6.4.
+
+- 2026-11-02: Added main-module selection with explicit/default/filename priority
+  and missing-module errors, plus legacy/repeated invariant flag combination.
+  Inspection also corrected synthesized invariant wrappers to use upstream's
+  single combined and-expression argument rather than separate arguments.
+  Tests cover priority, suffix case, missing modules, flag ordering, literal true,
+  and wrapper shape. Default tests pass under one second. CLI wiring, argument
+  mode validation, and full compilation orchestration remain open.

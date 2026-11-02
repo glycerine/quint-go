@@ -17,7 +17,7 @@ func TestCompilationEntries(t *testing.T) {
 			t.Fatal(ds[i])
 		}
 	}
-	if ds[0].Expr.Name != "init" || ds[1].Expr.Name != "step" || ds[2].Expr.Opcode != "and" || len(ds[2].Expr.Args) != 2 {
+	if ds[0].Expr.Name != "init" || ds[1].Expr.Name != "step" || ds[2].Expr.Opcode != "and" || len(ds[2].Expr.Args) != 1 {
 		t.Fatal(ds)
 	}
 	custom := "start"
