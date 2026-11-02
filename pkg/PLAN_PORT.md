@@ -196,6 +196,10 @@ errors without panics or losing subsequent declarations after recoverable errors
   - [ ] Integrate unshadowing into the complete analysis/compilation pipeline.
 - [ ] P3.4 Port call graphs, stable topological sorting, module ordering, and
   recursion/dependency-cycle diagnostics.
+  - [x] Build declaration dependency graphs including types, local bindings,
+    imports, exports, and instance overrides.
+  - [x] Compare graph vertices and edges against upstream fixtures.
+  - [ ] Sort declarations and report residual cycles through the parser pipeline.
 - [ ] P3.5 Preserve definition identity and lookup-table consistency across
   module boundaries and incremental declaration analysis.
 - [ ] P3.6 Run name/static fixtures, including nested instances, collisions,
@@ -1119,3 +1123,11 @@ word "retained" in the commit message.
   Differential fixtures retain upstream IDs and compare exact transformed module
   IR. Default tests pass (combined execution 0.515s). Pipeline integration and
   remaining P3 name-analysis work are still open.
+
+- 2026-11-02: Added BuildCallGraph with ordered dictionaries, shared module
+  context, nested-definition dependencies, type aliases, import prerequisites,
+  export dependencies, and instance override references. Differential tests
+  compare graph vertices and edge sets for all 22 resolution fixtures, including
+  erroneous and recursive inputs; focused tests verify nested type/value
+  dependencies and input immutability. Default tests pass (combined execution
+  0.526s). Declaration sorting and QNT099 cycle reporting remain open.

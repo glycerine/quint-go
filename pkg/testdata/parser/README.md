@@ -78,3 +78,9 @@ is outside these differential comparisons.
 TypeScript unshadower. Inputs retain upstream numeric IDs because generated names
 embed expression IDs. Tests resolve these inputs in Go and compare full transformed
 module IR exactly, without normalizing generated names or identities.
+
+
+`callgraph.json` runs the upstream call-graph visitor on all 22 resolution
+cases, retaining original IDs and including inputs with name errors. Tests compare
+every graph vertex and dependency set; edge order is normalized because the
+upstream graph uses Immutable sets. Go stores discoveries in insertion order.

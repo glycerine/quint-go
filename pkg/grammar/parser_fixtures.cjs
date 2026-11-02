@@ -151,3 +151,17 @@ const unshadowFixtures=resolutionCases.flatMap(([name,source])=>{
  return [{name,input:parsed.modules,output:parsed.modules.map(m=>unshadowNames(m,result.table))}]
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/unshadow.json'),JSONbig.stringify(unshadowFixtures,null,2)+'\n')
+
+const {CallGraphVisitor,mkCallGraphContext}=require(path.join(root,'quint/src/static/callgraph'))
+const {walkModule}=require(path.join(root,'quint/src/ir/IRVisitor'))
+const graphFixtures=resolutionCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ const result=resolveNames(parsed.modules)
+ const context=mkCallGraphContext(parsed.modules)
+ return {name,input:parsed.modules,graphs:parsed.modules.map(m=>{
+  const visitor=new CallGraphVisitor(result.table,context)
+  walkModule(visitor,m)
+  return Object.fromEntries([...visitor.graph].map(([id,uses])=>[id.toString(),[...uses].map(String).sort()]))
+ })}
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/callgraph.json'),JSONbig.stringify(graphFixtures,null,2)+'\n')
