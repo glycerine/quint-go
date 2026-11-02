@@ -222,7 +222,8 @@ analysis, with reproducible errors for invalid module structures.
   substitutions, occurs checks, and simplification.
   - [x] Bind type and row variables with separate occurs checks and copied substitutions.
   - [x] Compute free scheme variables and instantiate quantified variables in order.
-  - [ ] Integrate scope-based generalization with constraint generation.
+  - [x] Compute scope free variables, expand solved bindings, and generalize new variables.
+  - [ ] Integrate scheme/generalization helpers with constraint-generation traversal.
   - [x] Integrate binding checks with structural unification and substitution composition.
 - [ ] P4.2 Port constraint generation/solving for primitive, collection,
   function/operator, tuple, record, row-polymorphic, and sum types.
@@ -1290,3 +1291,12 @@ word "retained" in the commit message.
   variable renaming, diagnostic order, and same-name cross-kind composition.
   Default tests pass under one second. Scope generalization, generator traversal,
   and exact upstream helper diagnostics remain to be integrated/validated.
+
+- 2026-11-02: Added scope free-variable accumulation, substitution-driven
+  expansion of free names, and type generalization from before/after scope
+  snapshots. Ordering follows upstream's later-scheme-first union and separate
+  variable namespaces. Tests cover quantified exclusions, duplicate ordering,
+  chained binding dependencies, row-tail-only expansion, unrelated bindings,
+  generalization ordering, and input/type-tree isolation. Default tests pass
+  (combined execution 0.574s). Constraint-generation traversal and end-to-end
+  inference remain pending.
