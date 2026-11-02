@@ -962,3 +962,11 @@ word "retained" in the commit message.
   ID-free signature parsing unchanged. Updated source-map API comments to reflect
   annotation integration. Default tests pass within the sub-second target;
   broader P2.5/P2.8 source-map and recovery parity remains open.
+
+- 2026-11-02: Added source-aware standalone declaration and combined REPL entry
+  points. REPL commands can share an ID generator while returning per-command
+  maps, including semantic-error reference spans. Tests cover declaration
+  expansion/docs, unchanged IR, exact spans, session ID uniqueness, source names,
+  blank input, nil generators, and syntax/semantic failures. Default tests pass
+  within the sub-second target. P2.6 still requires upstream location/diagnostic
+  parity and expanded differential entry-point fixtures before completion.

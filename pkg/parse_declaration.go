@@ -9,6 +9,9 @@ import (
 // by documentation comments. Sum types and destructuring can expand into several
 // IR declarations. It performs no name resolution or semantic analysis.
 func ParseDeclaration(text string) ([]Declaration, error) {
+	return parseDeclarationWithIDs(text, NewIDGenerator())
+}
+func parseDeclarationWithIDs(text string, ids parserIDAllocator) ([]Declaration, error) {
 	listener := newSyntaxErrors(text)
 	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
@@ -29,7 +32,7 @@ func ParseDeclaration(text string) ([]Declaration, error) {
 	if len(listener.issues) > 0 {
 		return nil, listener.err("declaration")
 	}
-	ds, err := declarationsFromContext(tree, NewIDGenerator())
+	ds, err := declarationsFromContext(tree, ids)
 	if err != nil {
 		return nil, err
 	}

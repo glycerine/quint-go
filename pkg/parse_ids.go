@@ -97,3 +97,44 @@ func ParseTypeWithSource(name, text string) (Type, SourceMap, error) {
 	}
 	return typ, ids.sources, nil
 }
+
+// ParseDeclarationWithSource maps a standalone declaration and its expansions.
+// Errors return no partial IR or map, matching ParseModulesWithSource.
+func ParseDeclarationWithSource(name, text string) ([]Declaration, SourceMap, error) {
+	file, err := NewSourceFile(name, text)
+	if err != nil {
+		return nil, nil, err
+	}
+	ids := &locatedParserIDs{generator: NewIDGenerator(), file: file, sources: SourceMap{}}
+	ds, err := parseDeclarationWithIDs(text, ids)
+	if err != nil {
+		return nil, nil, withSyntaxSource(err, name)
+	}
+	if ids.err != nil {
+		return nil, nil, ids.err
+	}
+	return ds, ids.sources, nil
+}
+
+// ParseREPLWithSource parses one REPL input, optionally extending a caller-owned
+// ID sequence. The returned map contains only this input's spans and is retained
+// on semantic failure for diagnostic references. No partial IR is returned.
+// Callers can merge maps from successive commands using their globally unique IDs.
+func ParseREPLWithSource(name, text string, generator *IDGenerator) (ExpressionOrDeclaration, SourceMap, error) {
+	file, err := NewSourceFile(name, text)
+	if err != nil {
+		return ExpressionOrDeclaration{}, nil, err
+	}
+	if generator == nil {
+		generator = NewIDGenerator()
+	}
+	ids := &locatedParserIDs{generator: generator, file: file, sources: SourceMap{}}
+	result, err := parseREPLWithIDs(text, ids)
+	if err != nil {
+		return ExpressionOrDeclaration{}, ids.sources, withSyntaxSource(err, name)
+	}
+	if ids.err != nil {
+		return ExpressionOrDeclaration{}, ids.sources, ids.err
+	}
+	return result, ids.sources, nil
+}

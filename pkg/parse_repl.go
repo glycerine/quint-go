@@ -17,6 +17,12 @@ type ExpressionOrDeclaration struct {
 // Reusing ids across calls gives a REPL session unique IDs; nil starts a new
 // sequence. Failed conversions may consume IDs. Errors return no partial IR.
 func ParseExpressionOrDeclaration(text string, ids *IDGenerator) (ExpressionOrDeclaration, error) {
+	if ids == nil {
+		ids = NewIDGenerator()
+	}
+	return parseREPLWithIDs(text, ids)
+}
+func parseREPLWithIDs(text string, ids parserIDAllocator) (ExpressionOrDeclaration, error) {
 	listener := newSyntaxErrors(text)
 	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
@@ -27,9 +33,6 @@ func ParseExpressionOrDeclaration(text string, ids *IDGenerator) (ExpressionOrDe
 	tree := parser.DeclarationOrExpr()
 	if len(listener.issues) > 0 {
 		return ExpressionOrDeclaration{}, listener.err("REPL input")
-	}
-	if ids == nil {
-		ids = NewIDGenerator()
 	}
 	if tree.Declaration() != nil {
 		ds, err := declarationsFromContext(tree.Declaration(), ids)
