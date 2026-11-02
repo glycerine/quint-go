@@ -666,3 +666,9 @@ Upstream reuses compiled lambda objects and shared argument cells; Go currently
 uses per-call captured scopes. This is pending parity evidence, not passing Go
 coverage. Fixing allocation tokens alone would leave captured-value behavior
 incorrect.
+
+Expression wire-decoder tests cover all seven tags' required/null fields,
+unknown/mis-cased/wrong-variant fields, nested failure and receiver preservation,
+legacy duplicate-last keys and escaped names, exact integers, and invalid UTF-8
+replacement. Explicit benchmarks compare the strict wire-struct implementation
+with the former map-based decoder; the compatibility suite remains unchanged.

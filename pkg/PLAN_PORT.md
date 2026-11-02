@@ -696,6 +696,8 @@ any remaining TypeScript client code is distinguished from language-server logic
     verified 52 upstream signatures and recorded parser/direct benchmarks.
   - [x] Cache the finite fixed builtin effect strings with owned clones; verify
     parser agreement, bounded storage, absent state occurrences, and concurrency.
+  - [x] Replace per-node expression decoding maps with strict raw-field wire
+    structs, preserving legacy JSON semantics and complete receiver ownership.
 - [ ] P12.6 Add CI jobs that build and test the `pkg/` module with pinned
   dependencies, reproducible grammar generation, and supported OS/architecture
   targets. Keep reference-tool jobs separate from Go-only validation.
@@ -2846,3 +2848,15 @@ word "retained" in the commit message.
   scopes, so this observable identity/capture gap remains explicitly open. The
   pending oracle is evidence for an evaluator-owned execution graph/cache fix,
   not passing Go parity coverage and not resolved by lambda token memoization.
+
+- 2026-11-02: Profiled the expanded core suite: Expr.UnmarshalJSON accounted
+  for 12.85% sampled CPU and 37.54MB allocations. Replaced two per-node maps with
+  a strict raw-field struct using the required Go 1.27 standard JSON APIs. New
+  regressions cover required/absent/null fields across all seven variants,
+  unknown/mis-cased/wrong-variant fields, nested failures, duplicate-last and
+  escaped-key semantics, invalid UTF-8 replacement, exact integers, and receiver
+  preservation. Scalar decoding improves 8438ns/1661B/33 allocations to
+  6853ns/1500B/29, applications 41173ns/5710B/98 to 29674ns/4900B/78, and
+  lambdas 39789ns/5343B/97 to 31720ns/4699B/81. Full default tests and focused
+  race checks pass. Latest combined package execution is 1.031s (core0.639s),
+  close to the one-second target with all new command/editor coverage included.

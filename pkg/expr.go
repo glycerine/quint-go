@@ -2,6 +2,8 @@ package quint
 
 import (
 	"encoding/json"
+	"encoding/json/jsontext"
+	jsonv2 "encoding/json/v2"
 	"fmt"
 )
 
@@ -107,55 +109,84 @@ func (e Expr) MarshalJSON() ([]byte, error) {
 	}
 	return json.Marshal(obj)
 }
+
+// expressionJSON retains raw values until the tag determines their types. A
+// fixed field layout avoids allocating a map and a second dispatch map at every
+// node. The fallback preserves strict rejection of unknown and mis-cased names.
+type expressionJSON struct {
+	ID        json.RawMessage `json:"id"`
+	Kind      json.RawMessage `json:"kind"`
+	Name      json.RawMessage `json:"name"`
+	Value     json.RawMessage `json:"value"`
+	Opcode    json.RawMessage `json:"opcode"`
+	Args      json.RawMessage `json:"args"`
+	Params    json.RawMessage `json:"params"`
+	Qualifier json.RawMessage `json:"qualifier"`
+	Expr      json.RawMessage `json:"expr"`
+	Opdef     json.RawMessage `json:"opdef"`
+	Extra     jsontext.Value  `json:",embed"`
+}
+
+var expressionJSONOptions = jsonv2.JoinOptions(json.DefaultOptionsV1(), jsonv2.MatchCaseInsensitiveNames(false))
+
 func (e *Expr) UnmarshalJSON(data []byte) error {
-	var obj map[string]json.RawMessage
-	if err := json.Unmarshal(data, &obj); err != nil {
+	var wire expressionJSON
+	if err := jsonv2.Unmarshal(data, &wire, expressionJSONOptions); err != nil {
 		return err
 	}
 	var v Expr
-	read := func(key string, target any) error {
-		b, ok := obj[key]
-		if !ok || string(b) == "null" {
+	read := func(key string, value *json.RawMessage, target any) error {
+		data := *value
+		if len(data) == 0 || string(data) == "null" {
 			return fmt.Errorf("expression missing %s", key)
 		}
-		delete(obj, key)
-		return json.Unmarshal(b, target)
+		if err := json.Unmarshal(data, target); err != nil {
+			return err
+		}
+		*value = nil
+		return nil
 	}
-	if err := read("id", &v.ID); err != nil {
+	if err := read("id", &wire.ID, &v.ID); err != nil {
 		return err
 	}
-	if err := read("kind", &v.Kind); err != nil {
+	if err := read("kind", &wire.Kind, &v.Kind); err != nil {
 		return err
 	}
-	fields := map[string]any{}
+	var err error
 	switch v.Kind {
 	case "name":
-		fields["name"] = &v.Name
+		err = read("name", &wire.Name, &v.Name)
 	case "bool":
-		fields["value"] = &v.Bool
+		err = read("value", &wire.Value, &v.Bool)
 	case "int":
-		fields["value"] = &v.Int
+		err = read("value", &wire.Value, &v.Int)
 	case "str":
-		fields["value"] = &v.Str
+		err = read("value", &wire.Value, &v.Str)
 	case "app":
-		fields["opcode"] = &v.Opcode
-		fields["args"] = &v.Args
+		err = read("opcode", &wire.Opcode, &v.Opcode)
+		if err == nil {
+			err = read("args", &wire.Args, &v.Args)
+		}
 	case "lambda":
-		fields["params"] = &v.Params
-		fields["qualifier"] = &v.Qualifier
-		fields["expr"] = &v.Body
+		err = read("params", &wire.Params, &v.Params)
+		if err == nil {
+			err = read("qualifier", &wire.Qualifier, &v.Qualifier)
+		}
+		if err == nil {
+			err = read("expr", &wire.Expr, &v.Body)
+		}
 	case "let":
-		fields["opdef"] = &v.Opdef
-		fields["expr"] = &v.Body
+		err = read("opdef", &wire.Opdef, &v.Opdef)
+		if err == nil {
+			err = read("expr", &wire.Expr, &v.Body)
+		}
 	default:
 		return fmt.Errorf("unknown expression kind %q", v.Kind)
 	}
-	for key, target := range fields {
-		if err := read(key, target); err != nil {
-			return err
-		}
+	if err != nil {
+		return err
 	}
-	if len(obj) != 0 {
+	if len(wire.Name)+len(wire.Value)+len(wire.Opcode)+len(wire.Args)+len(wire.Params)+len(wire.Qualifier)+len(wire.Expr)+len(wire.Opdef)+len(wire.Extra) != 0 {
 		return fmt.Errorf("unexpected fields in %s expression", v.Kind)
 	}
 	if v.Kind == "lambda" && !v.Qualifier.Valid() {
