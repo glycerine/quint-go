@@ -382,7 +382,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     debug serialization and explicit caller/evaluator ownership APIs.
   - [x] Checked symbolic serialization and CLI/debug output share object state;
     context-free Expression/String expose compact structural representations.
-  - [ ] Extend shared state to actual execution-recorder operations.
+  - [x] Recorder snapshots preserve runtime children without materialization;
+    checked frame formatting shares cancellation and serialization state.
 - [ ] P7.2 Port evaluation/compilation of IR, lexical closures, operator values,
   local bindings, lazy branches, definition caches, and runtime error traces.
   - [x] Pure IR expression evaluation: literals, concrete constructors, explicit
@@ -404,7 +405,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] Discover selected-definition variables lazily in compiler order, preserve
     source/import/instance provenance and ITF header order across REPL updates.
   - [ ] Remaining compiler instance contexts, including exported variable aliases
-    whose identity depends on first compilation, and complete recorder traces.
+    whose identity depends on first compilation, and broader runtime-stack audits.
+  - [x] Eight execution-listener hooks, owned frames, verbosity filtering, run
+    ranking, choice pruning, next-state placeholders and captured source calls.
 - [x] P7.3 Port scalar arithmetic, Boolean, and comparison builtins; test
   negative division/modulo and integer boundary behavior. This revision has no
   source-language string/conversion builtin family; internal toStr/toInt helpers
@@ -486,8 +489,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     storage records, metadata, snapshots/recovery, trace reads, and restoration.
   - [x] Direct next()/unbound oneOf() runtime rejection with the reference's
     lazy argument behavior and source-referenced QNT000 diagnostics.
-  - [ ] Simulation-level transaction handling, trace rendering, and execution
-    recorder callbacks.
+  - [x] Simulation/test recorder boundaries, run outcomes and state transitions;
+    exact upstream event streams include rollback and disabled choices.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
   empty choices, and bounded sampling of infinite domains.
   - [x] Finite Set positional/RNG sampling with retained child objects and
@@ -507,7 +510,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     diagnostics with argument-error precedence.
   - [x] q::debug writer hooks and top-level q::test/q::testOnce dispatch with
     arbitrary init/step/invariant expressions through shared simulation.
-  - [ ] Execution recorder callbacks and remaining model-based-testing metadata.
+  - [x] Execution recorder callbacks through expression, test and simulation
+    drivers, including saved closures invoked under later listener contexts.
+  - [ ] Remaining model-based-testing metadata and CLI frame presentation audit.
 - [ ] P7.8 Port RNG state, seed parsing, counter arithmetic, and sampling.
   Choose and document the reference backend for seed-exact reproduction;
   compare RNG vectors and collection traversal order, not just repeatability.
@@ -3232,3 +3237,13 @@ word "retained" in the commit message.
   selection; malformed input, cancellation and ownership tests pass. This library
   API leaves checker outcomes unchanged when reporting fails. CLI wiring and
   richer source rendering remain separate work.
+
+- 2026-11-02: Integrated opt-in execution recording through expressions, cached
+  closures, named calls, actions, tests and simulation. Eight hooks preserve
+  verbosity, owned snapshots, choice pruning, next-state placeholders, RNG seeds
+  and stable trace rankings with a nil-listener fast path. Oracles cover265 direct
+  event snapshots and244 events from43 actual source scenarios, plus saved-closure
+  context changes and13 checked domain-frame cases. Combined tests pass0.123s
+  with100% recorder/public formatter function coverage; focused races pass1.860s.
+  Upstream empty-stack test-driver panic is handled defensively and recorded
+  separately. CLI verbose-frame presentation and remaining source contexts stay open.

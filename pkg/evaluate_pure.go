@@ -118,6 +118,8 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 		return discovery.PrepareWithVariableBindings(ctx, expression, storage, session.variables)
 	}
 	ctx := context.Background()
+	var listener ExecutionListener
+	activeEvaluations := 0
 	if bindings != nil {
 		owned := insdict.NewDict[string, RuntimeValue]()
 		for name, value := range bindings.All() {
@@ -171,7 +173,8 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 			return NewRuntimeValue(e)
 		case "name":
 			if value, ok := lookup(e.Name); ok {
-				return value(nil)
+				result, err := value(nil)
+				return result, runtimeExpressionError(e, err)
 			}
 			if bindings != nil {
 				if value, ok := bindings.Get2(e.Name); ok && value.Valid() {
@@ -269,11 +272,16 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				for i, register := range registers {
 					register.value = arguments[i]
 				}
-				saved, savedContext := scopes, ctx
+				saved, savedContext, savedListener := scopes, ctx, listener
+				if activeEvaluations == 0 {
+					listener = ExecutionListenerFromContext(callContext)
+				}
+				activeEvaluations++
 				scopes = append(append([]*insdict.Dict[string, runtimeLocalValue](nil), captured...), parameterScope)
 				ctx = callContext
 				result, err := eval(*e.Body)
-				scopes, ctx = saved, savedContext
+				scopes, ctx, listener = saved, savedContext, savedListener
+				activeEvaluations--
 				return result, err
 			})
 			lambdas[key] = value
@@ -325,12 +333,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 						return value, err
 					})
 				binding.cache = runtimeLocalCache{}
-				if d, ok := err.(Diagnostic); ok && d.Reference == nil {
-					id := e.ID
-					d.Reference = &id
-					err = d
-				}
-				return value, err
+				return value, runtimeExpressionError(e, err)
 			}
 			definition, exists := definitions[key]
 			topLevel := e.Opdef.Depth != nil && *e.Opdef.Depth == 0
@@ -339,6 +342,13 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				definitions[key] = definition
 				captured := append([]*insdict.Dict[string, runtimeLocalValue](nil), scopes...)
 				definition.value = func(arguments []RuntimeValue) (RuntimeValue, error) {
+					var actionListener ExecutionListener
+					var actionApp Expr
+					if listener != nil && e.Opdef.Qualifier == Action && e.Opdef.Expr.Kind != "lambda" {
+						actionListener = listener
+						actionApp = Expr{ID: e.Opdef.ID, Kind: "app", Opcode: e.Opdef.Name, Args: []Expr{}}
+						actionListener.OnUserOperatorCall(actionApp)
+					}
 					if storage != nil && e.Opdef.Qualifier == Action && storage.ActionTaken == "" {
 						storage.ActionTaken = e.Opdef.Name
 					}
@@ -356,6 +366,9 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 						if storage != nil {
 							cache.generation = storage.generation
 						}
+					}
+					if actionListener != nil {
+						actionListener.OnUserOperatorReturn(actionApp, nil, cache.value, cache.err)
 					}
 					if cache.err != nil {
 						return RuntimeValue{}, cache.err
@@ -385,6 +398,9 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 			return result, err
 		case "app":
 			if value, ok := lookup(e.Opcode); ok {
+				if listener != nil {
+					listener.OnUserOperatorCall(e)
+				}
 				arguments := make([]RuntimeValue, len(e.Args))
 				for i, child := range e.Args {
 					argument, err := eval(child)
@@ -393,7 +409,19 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 					}
 					arguments[i] = argument
 				}
-				result, err := value(arguments)
+				operator, err := value(nil)
+				var result RuntimeValue
+				if err == nil {
+					if operator.closure == nil {
+						// The reference throws while converting a non-function to
+						// an arrow, before issuing the application's return event.
+						return RuntimeValue{}, runtimeExpressionError(e, Diagnostic{Code: "QNT501", Message: "Expected a lambda value"})
+					}
+					result, err = operator.Apply(ctx, arguments)
+				}
+				if listener != nil {
+					listener.OnUserOperatorReturn(e, arguments, result, err)
+				}
 				if diagnostic, ok := err.(Diagnostic); ok && diagnostic.Reference == nil {
 					diagnostic.Reference = &e.ID
 					err = diagnostic
@@ -425,6 +453,14 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 			if len(e.Args) != 2 {
 				return fail(e, "then requires 2 arguments")
 			}
+			var oldState RuntimeValue
+			if listener != nil {
+				var err error
+				oldState, err = storage.Record()
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+			}
 			enabled, err := boolean(e.Args[0])
 			if err != nil {
 				return RuntimeValue{}, err
@@ -438,6 +474,13 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 			}
 			if err := shift(); err != nil {
 				return RuntimeValue{}, err
+			}
+			if listener != nil {
+				newState, err := storage.Record()
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+				listener.OnNextState(oldState, newState)
 			}
 			return eval(e.Args[1])
 		case "reps":
@@ -506,20 +549,36 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				j := int(draw.Big().Int64())
 				indices[i], indices[j] = indices[j], indices[i]
 			}
+			var anyApp Expr
+			if listener != nil {
+				anyApp = Expr{Kind: "app", Opcode: "actionAny", Args: []Expr{}}
+			}
 			for _, index := range indices {
 				storage.ActionTaken = ""
 				for name := range storage.NondetPicks.All() {
 					storage.NondetPicks.Set(name, RuntimeValue{})
 				}
+				if listener != nil {
+					listener.OnAnyOptionCall(anyApp, index)
+				}
 				enabled, err := boolean(e.Args[index])
+				if listener != nil {
+					listener.OnAnyOptionReturn(anyApp, index)
+				}
 				if err != nil {
 					return RuntimeValue{}, err
 				}
 				if enabled {
+					if listener != nil {
+						listener.OnAnyReturn(len(e.Args), index)
+					}
 					storage.Recover(storage.Snapshot())
 					return boolValue(true)
 				}
 				storage.Recover(snapshot)
+			}
+			if listener != nil {
+				listener.OnAnyReturn(len(e.Args), -1)
 			}
 			storage.Recover(snapshot)
 			return boolValue(false)
@@ -764,10 +823,13 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 		return value, runtimeExpressionError(e, err)
 	}
 	session.evaluate = func(callContext context.Context, expression Expr) (RuntimeValue, error) {
-		savedContext := ctx
+		savedContext, savedListener := ctx, listener
 		ctx = callContext
+		listener = ExecutionListenerFromContext(callContext)
+		activeEvaluations++
 		value, err := eval(expression)
-		ctx = savedContext
+		ctx, listener = savedContext, savedListener
+		activeEvaluations--
 		return value, err
 	}
 	return session

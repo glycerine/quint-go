@@ -948,3 +948,14 @@ Default tests also use an actual Go checker counterexample, imported constant
 overrides, a later ITF state, missing values and malformed reporting inputs.
 Reporting uses a fresh transported module and never alters the proof verdict,
 caller compilation or trace. CLI integration is tracked separately.
+
+`execution_recorder.json` replays 265 actual upstream event snapshots across
+17 direct-hook scenarios. `runtime_recorder_source.json` adds 43 real evaluator
+scenarios and 244 hook events (25 expression/module, six test and 12 simulation
+cases). Their matching grammar generators preserve complete current/active/best
+frame trees, values, errors, choices, run outcomes, seeds and rankings. Tests
+cover listener contexts on saved closures and defensive empty-stack recovery;
+the upstream test-driver panic for init.then(step) is a recorded reference bug,
+not a passing oracle. Thirteen checked frame-format cases cover compact domains,
+serialization errors and cancellation. All recorder functions and the checked
+formatter entry point have 100% statement coverage; CLI frame wiring remains open.

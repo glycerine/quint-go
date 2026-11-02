@@ -43,15 +43,25 @@ func (e *ModuleEvaluator) Test(ctx context.Context, name string, maxSamples int)
 		return out, err
 	}
 	e.Trace.Reset()
+	listener := ExecutionListenerFromContext(ctx)
+	if recorder, ok := listener.(interface{ Clear() }); ok {
+		recorder.Clear()
+	}
 	bestLength := -1
 	for out.Samples < maxSamples {
 		if err := ctx.Err(); err != nil {
 			return out, err
 		}
 		out.Seed = e.RNG.State()
+		if listener != nil {
+			listener.OnRunCall()
+		}
 		e.Reset()
 		value, evaluationError := e.Evaluate(ctx, name, nil)
 		if err := ctx.Err(); err != nil {
+			if listener != nil {
+				listener.OnRunReturn(value, err, e.Trace.States())
+			}
 			return out, err
 		}
 		shiftError := e.Shift()
@@ -61,6 +71,9 @@ func (e *ModuleEvaluator) Test(ctx context.Context, name string, maxSamples int)
 		}
 		failed := evaluationError != nil || (value.expression.Kind == "bool" && !value.expression.Bool)
 		states := e.Trace.States()
+		if listener != nil {
+			listener.OnRunReturn(value, evaluationError, states)
+		}
 		if failed || len(states) > bestLength {
 			out.States = states
 			bestLength = len(states)

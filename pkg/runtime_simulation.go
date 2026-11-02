@@ -84,11 +84,20 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 	}
 	best := []rankedTrace{}
 	var failure *Diagnostic
+	listener := ExecutionListenerFromContext(ctx)
+	var initApp, stepApp Expr
+	if listener != nil {
+		initApp = Expr{Kind: "app", Opcode: "q::initAndInvariant", Args: []Expr{}}
+		stepApp = Expr{Kind: "app", Opcode: "q::stepAndInvariant", Args: []Expr{}}
+	}
 	errorsFound := 0
 	lengths := []int{}
 	var interrupted error
+	var lastValue RuntimeValue
+	var lastError error
 	evaluate := func(name string, ignoreFailure bool) bool {
 		value, err := evaluateValue(name)
+		lastValue, lastError = value, err
 		if err != nil {
 			if ctx.Err() != nil {
 				interrupted = ctx.Err()
@@ -113,6 +122,7 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 	}
 	shift := func() bool {
 		if err := e.Shift(); err != nil {
+			lastValue, lastError = RuntimeValue{}, err
 			var diagnostic Diagnostic
 			if !errors.As(err, &diagnostic) {
 				diagnostic = Diagnostic{Code: "QNT501", Message: err.Error()}
@@ -128,20 +138,42 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 			break
 		}
 		seed := e.RNG.State()
+		if listener != nil {
+			listener.OnRunCall()
+		}
 		e.Reset()
 		witnessed := make([]bool, len(options.Witnesses))
+		if listener != nil {
+			listener.OnUserOperatorCall(initApp)
+		}
 		if !evaluate(options.Init, false) {
 			lengths = append(lengths, 0)
+			if listener != nil {
+				listener.OnUserOperatorReturn(initApp, nil, lastValue, lastError)
+			}
 		} else if shift() {
-			if !evaluate(options.Invariant, false) {
+			invariantHolds := evaluate(options.Invariant, false)
+			if listener != nil {
+				listener.OnUserOperatorReturn(initApp, nil, lastValue, lastError)
+			}
+			if !invariantHolds {
 				errorsFound++
 				lengths = append(lengths, len(e.Trace.states))
 			} else {
 				for step := 0; step < options.MaxSteps && errorsFound < options.NumberOfTraces && failure == nil && interrupted == nil; step++ {
+					if listener != nil {
+						listener.OnUserOperatorCall(stepApp)
+					}
 					if !evaluate(options.Step, false) {
+						if listener != nil {
+							listener.OnUserOperatorReturn(stepApp, nil, lastValue, lastError)
+						}
 						break
 					}
 					if !shift() {
+						if listener != nil {
+							listener.OnUserOperatorReturn(stepApp, nil, lastValue, lastError)
+						}
 						break
 					}
 					for i, name := range options.Witnesses {
@@ -152,6 +184,9 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 					if !evaluate(options.Invariant, false) {
 						errorsFound++
 					}
+					if listener != nil {
+						listener.OnUserOperatorReturn(stepApp, nil, lastValue, lastError)
+					}
 				}
 				for i, value := range witnessed {
 					if value {
@@ -160,11 +195,24 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 				}
 				lengths = append(lengths, len(e.Trace.states))
 			}
+		} else if listener != nil {
+			listener.OnUserOperatorReturn(initApp, nil, lastValue, lastError)
 		}
 		if interrupted != nil {
+			if listener != nil {
+				listener.OnRunReturn(RuntimeValue{}, interrupted, e.Trace.States())
+			}
 			break
 		}
 		trace := rankedTrace{trace: SimulationTrace{States: e.Trace.States(), Result: errorsFound == 0, Seed: seed}, failure: failure}
+		if listener != nil {
+			if failure != nil {
+				listener.OnRunReturn(RuntimeValue{}, *failure, trace.trace.States)
+			} else {
+				result, _ := NewRuntimeValue(Expr{Kind: "bool", Bool: errorsFound == 0})
+				listener.OnRunReturn(result, nil, trace.trace.States)
+			}
+		}
 		// Insertion after existing equal-quality traces preserves encounter order.
 		bad := func(t rankedTrace) bool { return t.failure != nil || !t.trace.Result }
 		index := sort.Search(len(best), func(i int) bool {

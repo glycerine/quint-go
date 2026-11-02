@@ -1,6 +1,7 @@
 package quint
 
 import (
+	"context"
 	"fmt"
 	"strings"
 )
@@ -38,16 +39,40 @@ func FormatTraceStateExpression(index int, expression Expr, width int) (string, 
 // branch glyphs and value layout. The returned text ends with a newline. Runtime
 // values are serialized for display; no evaluator state is modified.
 func FormatExecutionFrame(frame ExecutionFrame, width int) (string, error) {
+	return formatExecutionFrame(frame, width, &RuntimeObjectHashState{}, SerializeRuntimeValue, func() error { return nil })
+}
+
+// FormatExecutionFrameContext also formats compact runtime domains using the
+// caller's context. Enumeration errors and cancellation are returned unchanged.
+// An optional object-hash state shares display-order history with evaluation;
+// omitting it starts a fresh history for the whole captured tree.
+func FormatExecutionFrameContext(ctx context.Context, frame ExecutionFrame, width int, states ...*RuntimeObjectHashState) (string, error) {
+	if err := ctx.Err(); err != nil {
+		return "", err
+	}
+	objects := &RuntimeObjectHashState{}
+	if len(states) > 0 && states[0] != nil {
+		objects = states[0]
+	}
+	serialize := func(value RuntimeValue, state *RuntimeObjectHashState) (Expr, error) {
+		return SerializeRuntimeValueContext(ctx, value, state)
+	}
+	return formatExecutionFrame(frame, width, objects, serialize, ctx.Err)
+}
+
+func formatExecutionFrame(frame ExecutionFrame, width int, objects *RuntimeObjectHashState, serialize func(RuntimeValue, *RuntimeObjectHashState) (Expr, error), checkContext func() error) (string, error) {
 	if width < 0 {
 		return "", fmt.Errorf("execution formatting requires a nonnegative width")
 	}
 	var output strings.Builder
-	objects := &RuntimeObjectHashState{}
 	var visit func(ExecutionFrame, []bool) error
 	visit = func(frame ExecutionFrame, last []bool) error {
+		if err := checkContext(); err != nil {
+			return err
+		}
 		args := make([]valueDoc, len(frame.Args))
 		for i, arg := range frame.Args {
-			expression, err := SerializeRuntimeValue(arg, objects)
+			expression, err := serialize(arg, objects)
 			if err != nil {
 				return err
 			}
@@ -58,7 +83,7 @@ func FormatExecutionFrame(frame ExecutionFrame, width int) (string, error) {
 		}
 		result := vdText("none")
 		if frame.Err == nil {
-			expression, err := SerializeRuntimeValue(frame.Result, objects)
+			expression, err := serialize(frame.Result, objects)
 			if err != nil {
 				return err
 			}
