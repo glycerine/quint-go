@@ -152,7 +152,7 @@ without losing semantic information, and diagnostic locations remain stable.
 
 ## P2 — Lexer, parser, and source loading
 
-- [ ] P2.1 Select the parser implementation after a small grammar experiment.
+- [x] P2.1 Select the parser implementation after a small grammar experiment.
   Prefer generating Go from the grammar if practical; `Quint.g4` contains
   TypeScript-specific actions, imports, and rule parameters that require
   adaptation. Pin generation tools and make regeneration reproducible.
@@ -789,3 +789,12 @@ word "retained" in the commit message.
   Default tests pass within the sub-second package-execution target. Conversion
   currently returns the diagnostic without upstream's recovered function-type IR;
   partial-result recovery and source references remain open in P2.8/P2.5.
+
+- 2026-11-02: Completed P2.1: selected generated ANTLR Go parsers and added an
+  offline regeneration/check command with pinned ANTLR 4.13.2 SHA-256 verification,
+  staged generation, fixed relative input paths, and gofmt. Documented prerequisites
+  and maintenance commands. Refactored grammar adaptation into a testable function;
+  four Python tests verify exact grammar reproduction, action drift rejection,
+  and tool checksum validation. Full regeneration reproduces both committed
+  parsers byte-for-byte. Python tests pass in 0.003s; default Go package execution
+  totals 0.399s. Java generation remains a separate maintenance check.
