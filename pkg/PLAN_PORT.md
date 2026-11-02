@@ -3255,3 +3255,11 @@ word "retained" in the commit message.
   primary references, trace IDs, picks and counters; raw Rust response/category
   validation runs without Rust installed. Saved plus live237-response replay
   passes0.029s. No production semantic mismatch was found in this batch.
+
+- 2026-11-02: Reused owned canonical child expressions in concrete List/Tup
+  construction, preserving deep copies, source views, payload identity and
+  closure/domain/serializer-intermediate fallbacks. Old-formula differential
+  tests and focused races pass. Matched nested construction improves17% CPU,
+  30% bytes and72% allocations; wide construction improves20% CPU. Three full
+  isolated suites pass, but aggregate suite timing remains within measurement
+  noise, so this does not close the under-one-second target.

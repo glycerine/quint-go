@@ -964,3 +964,10 @@ callback/control-flow/closure/retry cases: 58 cases agree and 21 record one or
 more differences. Default tests check raw Rust output/error/debug classifications,
 trace IDs and counter data as well as exact Go/TypeScript values, diagnostics,
 debug output and seeded picks. Live replay checks all 237 Rust protocol responses.
+
+`runtime_sequence_cache_test.go` compares List/Tup construction with the complete
+previous normalization formula, including canonical/source views, keys, hashes,
+closure/domain fallbacks, zero-source serializer intermediates, ownership,
+HAMT thresholds and fresh-object history. Its separate benchmark file keeps
+large trees out of the unit cases. Cached child expressions remain deep-copied;
+actual payload objects and allocation identity are preserved.

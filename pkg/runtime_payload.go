@@ -124,7 +124,23 @@ func newRuntimeComposite(op string, args []RuntimeValue) (RuntimeValue, error) {
 	}
 	switch op {
 	case "List", "Tup":
-		return runtimeAssemble(source, &runtimePayload{children: append([]RuntimeValue{}, args...), containsClosure: containsClosure})
+		payload := &runtimePayload{children: append([]RuntimeValue{}, args...), containsClosure: containsClosure}
+		if containsClosure {
+			return runtimeAssemble(source, payload)
+		}
+		for _, child := range args {
+			if child.source.Kind == "" {
+				// Internal serializer intermediates lack validated source values.
+				return runtimeAssemble(source, payload)
+			}
+		}
+		// Evaluated concrete children already have canonical expression views.
+		// Copy those views while retaining the actual child objects in the payload.
+		display := Expr{Kind: "app", Opcode: op, Args: make([]Expr, len(args))}
+		for i, child := range args {
+			display.Args[i] = copyRuntimeExpression(child.expression)
+		}
+		return RuntimeValue{expression: display, source: copyRuntimeExpression(source), identity: normalizedValueKey(display), allocation: &runtimeValueAllocation{}, payload: payload}, nil
 	case "Rec":
 		if len(args)%2 != 0 {
 			return RuntimeValue{}, fmt.Errorf("record requires field/value pairs")
