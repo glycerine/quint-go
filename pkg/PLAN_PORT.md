@@ -341,8 +341,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     and/or/implies/ite, cancellation, and source-referenced diagnostics.
   - [x] Local concrete value definitions with lazy per-scope caching, lexical
     capture, shadowing, and cleanup between evaluations.
-  - [ ] Module definition/lookup integration, closures/operator values, operator
-    local bindings, remaining caches, and complete runtime stack traces.
+  - [x] Direct local operator calls with strict argument evaluation, lexical
+    capture, parameter scopes, and fresh per-call local caches.
+  - [ ] Module definition/lookup integration, first-class closures/operator
+    values, remaining caches, and complete runtime stack traces.
 - [ ] P7.3 Port arithmetic, Boolean, comparison, string, and conversion
   builtins; test negative division/modulo and integer boundary behavior.
   - [x] Strict integer arithmetic/comparison builtins, arbitrary precision,
@@ -2265,3 +2267,18 @@ word "retained" in the commit message.
   Full default tests pass (combined package execution 0.995s). Closures, local
   operators, module lookup integration, nondeterminism, and full runtime stacks
   remain open under P7.2/P7.6.
+
+- 2026-11-02: Added direct local operator evaluation with parameter binding,
+  strict left-to-right argument evaluation, captured lexical scopes, and fresh
+  local-value caches for each call. Operators can call preceding local operators
+  and receive/return concrete collections without losing owned map order.
+  Fifteen parsed/name-resolved/full TypeScript evaluator fixtures match,
+  including repeated calls with different parameters, nested local values,
+  strict unused arguments, captured variables, constructors, and assertions.
+  The reference exposed and corrected the previous batch's acceptance of calling
+  a non-lambda value with empty parentheses: this now returns QNT501 Expected a
+  lambda value. Unit tests cover caller-scope argument evaluation, lexical
+  shadowing, parameter isolation, repeated evaluations, and arity errors.
+  Full default tests pass (combined package execution 1.043s, near the one-second
+  target). First-class operators, higher-order use, module lookup, stateful
+  evaluation, and full runtime stacks remain open.

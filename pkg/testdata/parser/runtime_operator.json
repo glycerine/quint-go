@@ -1,0 +1,1070 @@
+[
+  {
+    "source": "{ def inc(x) = x+1; inc(2) }",
+    "input": {
+      "id": 9,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "inc",
+        "qualifier": "def",
+        "expr": {
+          "id": 5,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 2,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 8,
+        "kind": "app",
+        "opcode": "inc",
+        "args": [
+          {
+            "id": 7,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 3
+    }
+  },
+  {
+    "source": "{ def add(x,y) = x+y; add(2,3) }",
+    "input": {
+      "id": 11,
+      "kind": "let",
+      "opdef": {
+        "id": 7,
+        "kind": "def",
+        "name": "add",
+        "qualifier": "def",
+        "expr": {
+          "id": 6,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            },
+            {
+              "id": 2,
+              "name": "y"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 3,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "y"
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 10,
+        "kind": "app",
+        "opcode": "add",
+        "args": [
+          {
+            "id": 8,
+            "kind": "int",
+            "value": 2
+          },
+          {
+            "id": 9,
+            "kind": "int",
+            "value": 3
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 5
+    }
+  },
+  {
+    "source": "{ val x=10; def add(y)=x+y; add(3) }",
+    "input": {
+      "id": 12,
+      "kind": "let",
+      "opdef": {
+        "id": 2,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 1,
+          "kind": "int",
+          "value": 10
+        }
+      },
+      "expr": {
+        "id": 11,
+        "kind": "let",
+        "opdef": {
+          "id": 8,
+          "kind": "def",
+          "name": "add",
+          "qualifier": "def",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "y"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "y"
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 10,
+          "kind": "app",
+          "opcode": "add",
+          "args": [
+            {
+              "id": 9,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        }
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 13
+    }
+  },
+  {
+    "source": "{ def square(x)=x*x; square(3)+square(4) }",
+    "input": {
+      "id": 12,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "square",
+        "qualifier": "def",
+        "expr": {
+          "id": 5,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "imul",
+            "args": [
+              {
+                "id": 2,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 11,
+        "kind": "app",
+        "opcode": "iadd",
+        "args": [
+          {
+            "id": 8,
+            "kind": "app",
+            "opcode": "square",
+            "args": [
+              {
+                "id": 7,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "kind": "app",
+            "opcode": "square",
+            "args": [
+              {
+                "id": 9,
+                "kind": "int",
+                "value": 4
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 25
+    }
+  },
+  {
+    "source": "{ def inc(x)=x+1; def twice(x)=inc(inc(x)); twice(4) }",
+    "input": {
+      "id": 16,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "inc",
+        "qualifier": "def",
+        "expr": {
+          "id": 5,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 2,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 15,
+        "kind": "let",
+        "opdef": {
+          "id": 12,
+          "kind": "def",
+          "name": "twice",
+          "qualifier": "def",
+          "expr": {
+            "id": 11,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 7,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "inc",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "inc",
+                  "args": [
+                    {
+                      "id": 8,
+                      "kind": "name",
+                      "name": "x"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 14,
+          "kind": "app",
+          "opcode": "twice",
+          "args": [
+            {
+              "id": 13,
+              "kind": "int",
+              "value": 4
+            }
+          ]
+        }
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 6
+    }
+  },
+  {
+    "source": "{ def f(x) = { val y=x+1; y*y }; f(2)+f(3) }",
+    "input": {
+      "id": 17,
+      "kind": "let",
+      "opdef": {
+        "id": 11,
+        "kind": "def",
+        "name": "f",
+        "qualifier": "def",
+        "expr": {
+          "id": 10,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 9,
+            "kind": "let",
+            "opdef": {
+              "id": 5,
+              "kind": "def",
+              "name": "y",
+              "qualifier": "val",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 8,
+              "kind": "app",
+              "opcode": "imul",
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "name",
+                  "name": "y"
+                },
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "y"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "expr": {
+        "id": 16,
+        "kind": "app",
+        "opcode": "iadd",
+        "args": [
+          {
+            "id": 13,
+            "kind": "app",
+            "opcode": "f",
+            "args": [
+              {
+                "id": 12,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "id": 15,
+            "kind": "app",
+            "opcode": "f",
+            "args": [
+              {
+                "id": 14,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 25
+    }
+  },
+  {
+    "source": "{ def f(x)=if(x>0) x else 1/0; f(2) }",
+    "input": {
+      "id": 14,
+      "kind": "let",
+      "opdef": {
+        "id": 11,
+        "kind": "def",
+        "name": "f",
+        "qualifier": "def",
+        "expr": {
+          "id": 10,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 9,
+            "kind": "app",
+            "opcode": "ite",
+            "args": [
+              {
+                "id": 4,
+                "kind": "app",
+                "opcode": "igt",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 8,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 6,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 7,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 13,
+        "kind": "app",
+        "opcode": "f",
+        "args": [
+          {
+            "id": 12,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 2
+    }
+  },
+  {
+    "source": "{ def f(x)=1/0; 42 }",
+    "input": {
+      "id": 8,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "f",
+        "qualifier": "def",
+        "expr": {
+          "id": 5,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "idiv",
+            "args": [
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 7,
+        "kind": "int",
+        "value": 42
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 42
+    }
+  },
+  {
+    "source": "{ def f(x)=42; f(1/0) }",
+    "input": {
+      "id": 9,
+      "kind": "let",
+      "opdef": {
+        "id": 4,
+        "kind": "def",
+        "name": "f",
+        "qualifier": "def",
+        "expr": {
+          "id": 3,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 2,
+            "kind": "int",
+            "value": 42
+          }
+        }
+      },
+      "expr": {
+        "id": 8,
+        "kind": "app",
+        "opcode": "f",
+        "args": [
+          {
+            "id": 7,
+            "kind": "app",
+            "opcode": "idiv",
+            "args": [
+              {
+                "id": 5,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 6,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero",
+      "reference": 7
+    }
+  },
+  {
+    "source": "{ def f(x)=x; f(Map((2,20),(1,10))).get(3) }",
+    "input": {
+      "id": 15,
+      "kind": "let",
+      "opdef": {
+        "id": 4,
+        "kind": "def",
+        "name": "f",
+        "qualifier": "def",
+        "expr": {
+          "id": 3,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 2,
+            "kind": "name",
+            "name": "x"
+          }
+        }
+      },
+      "expr": {
+        "id": 14,
+        "kind": "app",
+        "opcode": "get",
+        "args": [
+          {
+            "id": 12,
+            "kind": "app",
+            "opcode": "f",
+            "args": [
+              {
+                "id": 11,
+                "kind": "app",
+                "opcode": "Map",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "app",
+                    "opcode": "Tup",
+                    "args": [
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 2
+                      },
+                      {
+                        "id": 6,
+                        "kind": "int",
+                        "value": 20
+                      }
+                    ]
+                  },
+                  {
+                    "id": 10,
+                    "kind": "app",
+                    "opcode": "Tup",
+                    "args": [
+                      {
+                        "id": 8,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 9,
+                        "kind": "int",
+                        "value": 10
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 13,
+            "kind": "int",
+            "value": 3
+          }
+        ]
+      }
+    },
+    "error": {
+      "code": "QNT507",
+      "message": "Called 'get' with a non-existing key. Key is 3. Map has keys: 2, 1",
+      "reference": 14
+    }
+  },
+  {
+    "source": "{ def f(x,y)=List(x,y); f(1,2).nth(1) }",
+    "input": {
+      "id": 13,
+      "kind": "let",
+      "opdef": {
+        "id": 7,
+        "kind": "def",
+        "name": "f",
+        "qualifier": "def",
+        "expr": {
+          "id": 6,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            },
+            {
+              "id": 2,
+              "name": "y"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 3,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "y"
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 12,
+        "kind": "app",
+        "opcode": "nth",
+        "args": [
+          {
+            "id": 10,
+            "kind": "app",
+            "opcode": "f",
+            "args": [
+              {
+                "id": 8,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 9,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "id": 11,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 2
+    }
+  },
+  {
+    "source": "{ def f(x)=x; f(Set(2,1)) == Set(1,2) }",
+    "input": {
+      "id": 13,
+      "kind": "let",
+      "opdef": {
+        "id": 4,
+        "kind": "def",
+        "name": "f",
+        "qualifier": "def",
+        "expr": {
+          "id": 3,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 2,
+            "kind": "name",
+            "name": "x"
+          }
+        }
+      },
+      "expr": {
+        "id": 12,
+        "kind": "app",
+        "opcode": "eq",
+        "args": [
+          {
+            "id": 8,
+            "kind": "app",
+            "opcode": "f",
+            "args": [
+              {
+                "id": 7,
+                "kind": "app",
+                "opcode": "Set",
+                "args": [
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 2
+                  },
+                  {
+                    "id": 6,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 11,
+            "kind": "app",
+            "opcode": "Set",
+            "args": [
+              {
+                "id": 9,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 10,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "source": "{ def f(x)=assert(x); f(false) }",
+    "input": {
+      "id": 8,
+      "kind": "let",
+      "opdef": {
+        "id": 5,
+        "kind": "def",
+        "name": "f",
+        "qualifier": "def",
+        "expr": {
+          "id": 4,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 3,
+            "kind": "app",
+            "opcode": "assert",
+            "args": [
+              {
+                "id": 2,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 7,
+        "kind": "app",
+        "opcode": "f",
+        "args": [
+          {
+            "id": 6,
+            "kind": "bool",
+            "value": false
+          }
+        ]
+      }
+    },
+    "error": {
+      "code": "QNT508",
+      "message": "Assertion failed",
+      "reference": 3
+    }
+  },
+  {
+    "source": "{ pure def f(x)=x*2; f(7) }",
+    "input": {
+      "id": 9,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "f",
+        "qualifier": "puredef",
+        "expr": {
+          "id": 5,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "puredef",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "imul",
+            "args": [
+              {
+                "id": 2,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 8,
+        "kind": "app",
+        "opcode": "f",
+        "args": [
+          {
+            "id": 7,
+            "kind": "int",
+            "value": 7
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 14
+    }
+  },
+  {
+    "source": "{ def f()=7; f() }",
+    "input": {
+      "id": 4,
+      "kind": "let",
+      "opdef": {
+        "id": 2,
+        "kind": "def",
+        "name": "f",
+        "qualifier": "def",
+        "expr": {
+          "id": 1,
+          "kind": "int",
+          "value": 7
+        }
+      },
+      "expr": {
+        "id": 3,
+        "kind": "app",
+        "opcode": "f",
+        "args": []
+      }
+    },
+    "error": {
+      "code": "QNT501",
+      "message": "Expected a lambda value",
+      "reference": 3
+    }
+  }
+]

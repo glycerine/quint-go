@@ -10,6 +10,9 @@ import (
 )
 
 func TestUpstreamPureEvaluation(t *testing.T) { testPureEvaluationFixtures(t, "evaluate_pure.json") }
+func TestUpstreamLocalOperatorEvaluation(t *testing.T) {
+	testPureEvaluationFixtures(t, "runtime_operator.json")
+}
 func TestUpstreamLocalValueEvaluation(t *testing.T) {
 	testPureEvaluationFixtures(t, "runtime_let.json")
 }

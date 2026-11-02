@@ -14,7 +14,7 @@ import (
 // to the full evaluator and are not yet handled here.
 func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue]) (RuntimeValue, error) {
 	var eval func(Expr) (RuntimeValue, error)
-	type localValue func() (RuntimeValue, error)
+	type localValue func([]RuntimeValue) (RuntimeValue, error)
 	scopes := []*insdict.Dict[string, localValue]{}
 	lookup := func(name string) (localValue, bool) {
 		for i := len(scopes) - 1; i >= 0; i-- {
@@ -38,7 +38,7 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 			return NewRuntimeValue(e)
 		case "name":
 			if value, ok := lookup(e.Name); ok {
-				return value()
+				return value(nil)
 			}
 			if bindings != nil {
 				if value, ok := bindings.Get2(e.Name); ok && value.Valid() {
@@ -50,14 +50,41 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 			if e.Opdef == nil || e.Opdef.Expr == nil || e.Body == nil {
 				return fail(e, "Malformed local definition")
 			}
-			if e.Opdef.Qualifier == Nondet || e.Opdef.Expr.Kind == "lambda" {
-				return fail(e, "Local nondeterministic definitions and operators require the full evaluator")
+			if e.Opdef.Qualifier == Nondet {
+				return fail(e, "Local nondeterministic definitions require the full evaluator")
 			}
 			captured := append([]*insdict.Dict[string, localValue](nil), scopes...)
 			var cached RuntimeValue
 			var cachedErr error
 			evaluated := false
-			thunk := func() (RuntimeValue, error) {
+			thunk := func(arguments []RuntimeValue) (RuntimeValue, error) {
+				if e.Opdef.Expr.Kind == "lambda" {
+					lambda := e.Opdef.Expr
+					if lambda.Body == nil {
+						return fail(e, "Malformed local operator")
+					}
+					if len(arguments) != len(lambda.Params) {
+						return fail(e, fmt.Sprintf("%s requires %d arguments", e.Opdef.Name, len(lambda.Params)))
+					}
+					parameters := insdict.NewDict[string, localValue]()
+					for i, param := range lambda.Params {
+						value := arguments[i]
+						parameters.Set(param.Name, func(extra []RuntimeValue) (RuntimeValue, error) {
+							if len(extra) != 0 {
+								return fail(e, "Parameter value does not accept arguments")
+							}
+							return value, nil
+						})
+					}
+					saved := scopes
+					scopes = append(append([]*insdict.Dict[string, localValue](nil), captured...), parameters)
+					result, err := eval(*lambda.Body)
+					scopes = saved
+					return result, err
+				}
+				if arguments != nil {
+					return fail(e, "Expected a lambda value")
+				}
 				if !evaluated {
 					saved := scopes
 					scopes = captured
@@ -75,10 +102,15 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 			return result, err
 		case "app":
 			if value, ok := lookup(e.Opcode); ok {
-				if len(e.Args) != 0 {
-					return fail(e, "Local value does not accept arguments: "+e.Opcode)
+				arguments := make([]RuntimeValue, len(e.Args))
+				for i, child := range e.Args {
+					argument, err := eval(child)
+					if err != nil {
+						return RuntimeValue{}, err
+					}
+					arguments[i] = argument
 				}
-				return value()
+				return value(arguments)
 			}
 		default:
 			return fail(e, "Unsupported pure expression kind: "+e.Kind)

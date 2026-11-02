@@ -301,4 +301,12 @@ name-resolved, and evaluated with the TypeScript runtime. They cover lazy local
 values, dependency chains, repeated references, skipped failing initializers,
 constructors, and retained nested map diagnostics. Additional Go tests cover
 lexical capture under shadowing, initializer scope, and cleanup between calls.
-Local operators, closures, and nondeterministic definitions remain unfinished.
+First-class closures and nondeterministic definitions remain unfinished.
+
+`runtime_operator.json` is regenerated with
+`node pkg/grammar/runtime_operator_fixtures.cjs`. Fifteen parsed/name-resolved
+expressions run the full TypeScript evaluator, covering direct local operator
+calls, strict arguments, captured locals, calls between local operators,
+per-call local values, errors, and parameterized constructors. Calling a
+non-lambda value with empty parentheses retains upstream's Expected a lambda
+value error. First-class operator values and higher-order use remain open.

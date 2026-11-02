@@ -35,8 +35,8 @@ func TestPureLocalValueLexicalScopeAndCleanup(t *testing.T) {
 	}
 	e = let("x", literal("8"), Expr{Kind: "app", Opcode: "x"})
 	got, err = EvaluatePureExpression(context.Background(), e, nil)
-	if err != nil || got.String() != "8" {
-		t.Fatal(got.String(), err)
+	if err == nil {
+		t.Fatal("calling a value as an operator was accepted", got.String())
 	}
 }
 func TestPureLocalValueValidation(t *testing.T) {
