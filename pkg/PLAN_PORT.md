@@ -1404,3 +1404,13 @@ word "retained" in the commit message.
   pending assumptions. Default tests pass under one second. Application expansion
   and name resolution remain prerequisites; full analysis-pipeline integration,
   builtin type-ID provenance, and broader inference parity remain pending.
+
+- 2026-11-02: Added AnalyzeModuleTypes to connect lookup application expansion,
+  declaration application expansion, and retained inference across ordered
+  modules. It returns transformed module copies, inferred types, and separate
+  application/type error tables while updating lookup payloads as upstream does.
+  End-to-end tests start at ParseProject and cover cross-file polymorphic calls,
+  imported parameterized annotations, source immutability, and simultaneous
+  application/inference failures with retained partial results. Default tests
+  pass (combined execution 0.589s). This is type-only analysis; effects, modes,
+  remaining static checks, and combined analyzer integration remain open.
