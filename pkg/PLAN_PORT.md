@@ -1221,3 +1221,11 @@ word "retained" in the commit message.
   verify transformed reference payloads and source immutability. Default tests
   pass (combined execution 0.532s). Broader application parity and inferred-table
   integration remain pending.
+
+- 2026-11-02: Expanded type-application differential coverage from five to ten
+  cases with sum constructors, aliases in bodies/arguments, open-row forwarding,
+  and swapped parameters. All fixtures now compare lookup-table annotations and
+  alias types in insertion order as well as declaration IR and error trees.
+  The added cases match upstream without implementation changes. Default tests
+  pass (combined execution 0.557s). Full inference and broader type-system parity
+  remain open.

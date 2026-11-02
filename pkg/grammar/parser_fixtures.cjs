@@ -184,6 +184,12 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/unused.json'),JSONbig.strin
 
 const {TypeApplicationResolver}=require(path.join(root,'quint/src/types/typeApplicationResolution'))
 const applicationCases=[
+ ['alias-body','module M { type T=int type Box[a]=(T,a) const x:Box[str] }'],
+ ['sum','module M { type Result[a,b]=Ok(a)|Err(b)|Pending const x:Result[int,str] }'],
+ ['variable-row','module M { type Add[r]={x:int|r} type Open[s]=Add[s] const x:Open[{y:str}] }'],
+ ['swap','module M { type Pair[a,b]=(a,b) type Swap[a,b]=Pair[b,a] const x:Swap[int,str] }'],
+ ['alias-argument','module M { type T=int type Box[a]=List[a] const x:Box[T] }'],
+
  ['pair','module M { type Pair[a,b]=(a,b) const x:Pair[int,str] }'],
  ['nested','module M { type Box[a]=List[a] type Twice[a]=Box[Box[a]] const x:Twice[int] }'],
  ['row','module M { type Add[r]={x:int|r} const x:Add[{y:str}] }'],
@@ -196,6 +202,6 @@ const applicationFixtures=applicationCases.map(([name,source])=>{
  const linked=resolveNames(parsed.modules)
  const resolver=new TypeApplicationResolver(linked.table)
  const [errors,output]=resolver.resolveTypeApplications(parsed.modules[0].declarations)
- return {name,input:parsed.modules,output,errors:[...errors].map(([id,error])=>({id:String(id),error}))}
+ return {name,input:parsed.modules,output,table:[...linked.table].map(([id,d])=>({id:String(id),annotation:d.typeAnnotation??null,type:d.kind==='typedef'?(d.type??null):null})),errors:[...errors].map(([id,error])=>({id:String(id),error}))}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/type_application.json'),JSONbig.stringify(applicationFixtures,null,2)+'\n')

@@ -139,10 +139,15 @@ func TestResolveApplicationLookupTable(t *testing.T) {
 }
 
 func TestUpstreamTypeApplications(t *testing.T) {
+	type lookupTypes struct {
+		ID               string
+		Annotation, Type *Type
+	}
 	var fixtures []struct {
 		Name   string
 		Input  []Module
 		Output []Declaration
+		Table  []lookupTypes
 		Errors []struct {
 			ID    string
 			Error ErrorTree
@@ -165,6 +170,25 @@ func TestUpstreamTypeApplications(t *testing.T) {
 			out, err := resolver.ResolveDeclarations(f.Input[0].Declarations)
 			if err != nil {
 				t.Fatal(err)
+			}
+			table := []lookupTypes{}
+			for id, d := range linked.Table.All() {
+				entry := lookupTypes{ID: id.String()}
+				if d.Declaration != nil {
+					entry.Annotation = d.Declaration.TypeAnnotation
+					if d.Declaration.Kind == "typedef" {
+						entry.Type = d.Declaration.Type
+					}
+				}
+				if d.Parameter != nil {
+					entry.Annotation = d.Parameter.TypeAnnotation
+				}
+				table = append(table, entry)
+			}
+			a, _ := json.Marshal(table)
+			b, _ := json.Marshal(f.Table)
+			if string(a) != string(b) {
+				t.Fatalf("table Go %s\nTS %s", a, b)
 			}
 			got, _ := json.Marshal(out)
 			want, _ := json.Marshal(f.Output)

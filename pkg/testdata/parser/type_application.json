@@ -1,5 +1,1733 @@
 [
   {
+    "name": "alias-body",
+    "input": [
+      {
+        "id": 11,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "typedef",
+            "name": "T",
+            "type": {
+              "id": 1,
+              "kind": "int"
+            },
+            "depth": 0
+          },
+          {
+            "id": 6,
+            "kind": "typedef",
+            "name": "Box",
+            "type": {
+              "id": 5,
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "id": 3,
+                      "kind": "const",
+                      "name": "T"
+                    }
+                  },
+                  {
+                    "fieldName": "1",
+                    "fieldType": {
+                      "id": 4,
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            },
+            "params": [
+              "a"
+            ],
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 8,
+              "kind": "app",
+              "ctor": {
+                "id": 9,
+                "kind": "const",
+                "name": "Box"
+              },
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "str"
+                }
+              ]
+            },
+            "id": 10,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 2,
+        "kind": "typedef",
+        "name": "T",
+        "type": {
+          "id": 1,
+          "kind": "int"
+        },
+        "depth": 0
+      },
+      {
+        "id": 6,
+        "kind": "typedef",
+        "name": "Box",
+        "type": {
+          "id": 5,
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 3,
+                  "kind": "const",
+                  "name": "T"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 4,
+                  "kind": "var",
+                  "name": "a"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        },
+        "params": [
+          "a"
+        ],
+        "depth": 0
+      },
+      {
+        "kind": "const",
+        "name": "x",
+        "typeAnnotation": {
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 3,
+                  "kind": "const",
+                  "name": "T"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 7,
+                  "kind": "str"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          },
+          "id": 5
+        },
+        "id": 10,
+        "depth": 0
+      }
+    ],
+    "table": [
+      {
+        "id": "3",
+        "annotation": null,
+        "type": {
+          "id": 1,
+          "kind": "int"
+        }
+      },
+      {
+        "id": "9",
+        "annotation": null,
+        "type": {
+          "id": 5,
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 3,
+                  "kind": "const",
+                  "name": "T"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 4,
+                  "kind": "var",
+                  "name": "a"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "sum",
+    "input": [
+      {
+        "id": 29,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "typedef",
+            "name": "Result",
+            "type": {
+              "id": 4,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "Ok",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  },
+                  {
+                    "fieldName": "Err",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "var",
+                      "name": "b"
+                    }
+                  },
+                  {
+                    "fieldName": "Pending",
+                    "fieldType": {
+                      "id": 3,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            },
+            "params": [
+              "a",
+              "b"
+            ],
+            "depth": 0
+          },
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "Ok",
+            "qualifier": "def",
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              ],
+              "res": {
+                "id": 4,
+                "kind": "app",
+                "ctor": {
+                  "id": 5,
+                  "kind": "const",
+                  "name": "Result"
+                },
+                "args": [
+                  {
+                    "id": 6,
+                    "kind": "var",
+                    "name": "a"
+                  },
+                  {
+                    "id": 7,
+                    "kind": "var",
+                    "name": "b"
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 12,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 9,
+                  "name": "__OkParam"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 11,
+                "kind": "app",
+                "opcode": "variant",
+                "args": [
+                  {
+                    "id": 8,
+                    "kind": "str",
+                    "value": "Ok"
+                  },
+                  {
+                    "kind": "name",
+                    "name": "__OkParam",
+                    "id": 10
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": 19,
+            "kind": "def",
+            "name": "Err",
+            "qualifier": "def",
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              ],
+              "res": {
+                "id": 4,
+                "kind": "app",
+                "ctor": {
+                  "id": 5,
+                  "kind": "const",
+                  "name": "Result"
+                },
+                "args": [
+                  {
+                    "id": 6,
+                    "kind": "var",
+                    "name": "a"
+                  },
+                  {
+                    "id": 7,
+                    "kind": "var",
+                    "name": "b"
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 18,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 15,
+                  "name": "__ErrParam"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 17,
+                "kind": "app",
+                "opcode": "variant",
+                "args": [
+                  {
+                    "id": 14,
+                    "kind": "str",
+                    "value": "Err"
+                  },
+                  {
+                    "kind": "name",
+                    "name": "__ErrParam",
+                    "id": 16
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": 23,
+            "kind": "def",
+            "name": "Pending",
+            "qualifier": "val",
+            "typeAnnotation": {
+              "id": 4,
+              "kind": "app",
+              "ctor": {
+                "id": 5,
+                "kind": "const",
+                "name": "Result"
+              },
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "var",
+                  "name": "a"
+                },
+                {
+                  "id": 7,
+                  "kind": "var",
+                  "name": "b"
+                }
+              ]
+            },
+            "expr": {
+              "id": 22,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 20,
+                  "kind": "str",
+                  "value": "Pending"
+                },
+                {
+                  "id": 21,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          },
+          {
+            "kind": "const",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 26,
+              "kind": "app",
+              "ctor": {
+                "id": 27,
+                "kind": "const",
+                "name": "Result"
+              },
+              "args": [
+                {
+                  "id": 24,
+                  "kind": "int"
+                },
+                {
+                  "id": 25,
+                  "kind": "str"
+                }
+              ]
+            },
+            "id": 28,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 4,
+        "kind": "typedef",
+        "name": "Result",
+        "type": {
+          "id": 4,
+          "kind": "sum",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "Ok",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              {
+                "fieldName": "Err",
+                "fieldType": {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              },
+              {
+                "fieldName": "Pending",
+                "fieldType": {
+                  "id": 3,
+                  "kind": "tup",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        },
+        "params": [
+          "a",
+          "b"
+        ],
+        "depth": 0
+      },
+      {
+        "id": 13,
+        "kind": "def",
+        "name": "Ok",
+        "qualifier": "def",
+        "typeAnnotation": {
+          "kind": "oper",
+          "args": [
+            {
+              "id": 1,
+              "kind": "var",
+              "name": "a"
+            }
+          ],
+          "res": {
+            "id": 4,
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "Ok",
+                  "fieldType": {
+                    "id": 6,
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "Err",
+                  "fieldType": {
+                    "id": 7,
+                    "kind": "var",
+                    "name": "b"
+                  }
+                },
+                {
+                  "fieldName": "Pending",
+                  "fieldType": {
+                    "id": 3,
+                    "kind": "tup",
+                    "fields": {
+                      "kind": "row",
+                      "fields": [],
+                      "other": {
+                        "kind": "empty"
+                      }
+                    }
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        },
+        "expr": {
+          "id": 12,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 9,
+              "name": "__OkParam"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "variant",
+            "args": [
+              {
+                "id": 8,
+                "kind": "str",
+                "value": "Ok"
+              },
+              {
+                "kind": "name",
+                "name": "__OkParam",
+                "id": 10
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 19,
+        "kind": "def",
+        "name": "Err",
+        "qualifier": "def",
+        "typeAnnotation": {
+          "kind": "oper",
+          "args": [
+            {
+              "id": 2,
+              "kind": "var",
+              "name": "b"
+            }
+          ],
+          "res": {
+            "id": 4,
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "Ok",
+                  "fieldType": {
+                    "id": 6,
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "Err",
+                  "fieldType": {
+                    "id": 7,
+                    "kind": "var",
+                    "name": "b"
+                  }
+                },
+                {
+                  "fieldName": "Pending",
+                  "fieldType": {
+                    "id": 3,
+                    "kind": "tup",
+                    "fields": {
+                      "kind": "row",
+                      "fields": [],
+                      "other": {
+                        "kind": "empty"
+                      }
+                    }
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        },
+        "expr": {
+          "id": 18,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 15,
+              "name": "__ErrParam"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 17,
+            "kind": "app",
+            "opcode": "variant",
+            "args": [
+              {
+                "id": 14,
+                "kind": "str",
+                "value": "Err"
+              },
+              {
+                "kind": "name",
+                "name": "__ErrParam",
+                "id": 16
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 23,
+        "kind": "def",
+        "name": "Pending",
+        "qualifier": "val",
+        "typeAnnotation": {
+          "id": 4,
+          "kind": "sum",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "Ok",
+                "fieldType": {
+                  "id": 6,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              {
+                "fieldName": "Err",
+                "fieldType": {
+                  "id": 7,
+                  "kind": "var",
+                  "name": "b"
+                }
+              },
+              {
+                "fieldName": "Pending",
+                "fieldType": {
+                  "id": 3,
+                  "kind": "tup",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        },
+        "expr": {
+          "id": 22,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 20,
+              "kind": "str",
+              "value": "Pending"
+            },
+            {
+              "id": 21,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": []
+            }
+          ]
+        }
+      },
+      {
+        "kind": "const",
+        "name": "x",
+        "typeAnnotation": {
+          "id": 4,
+          "kind": "sum",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "Ok",
+                "fieldType": {
+                  "id": 24,
+                  "kind": "int"
+                }
+              },
+              {
+                "fieldName": "Err",
+                "fieldType": {
+                  "id": 25,
+                  "kind": "str"
+                }
+              },
+              {
+                "fieldName": "Pending",
+                "fieldType": {
+                  "id": 3,
+                  "kind": "tup",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        },
+        "id": 28,
+        "depth": 0
+      }
+    ],
+    "table": [
+      {
+        "id": "5",
+        "annotation": null,
+        "type": {
+          "id": 4,
+          "kind": "sum",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "Ok",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              {
+                "fieldName": "Err",
+                "fieldType": {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              },
+              {
+                "fieldName": "Pending",
+                "fieldType": {
+                  "id": 3,
+                  "kind": "tup",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      },
+      {
+        "id": "13",
+        "annotation": {
+          "kind": "oper",
+          "args": [
+            {
+              "id": 1,
+              "kind": "var",
+              "name": "a"
+            }
+          ],
+          "res": {
+            "id": 4,
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "Ok",
+                  "fieldType": {
+                    "id": 6,
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "Err",
+                  "fieldType": {
+                    "id": 7,
+                    "kind": "var",
+                    "name": "b"
+                  }
+                },
+                {
+                  "fieldName": "Pending",
+                  "fieldType": {
+                    "id": 3,
+                    "kind": "tup",
+                    "fields": {
+                      "kind": "row",
+                      "fields": [],
+                      "other": {
+                        "kind": "empty"
+                      }
+                    }
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        },
+        "type": null
+      },
+      {
+        "id": "10",
+        "annotation": null,
+        "type": null
+      },
+      {
+        "id": "19",
+        "annotation": {
+          "kind": "oper",
+          "args": [
+            {
+              "id": 2,
+              "kind": "var",
+              "name": "b"
+            }
+          ],
+          "res": {
+            "id": 4,
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "Ok",
+                  "fieldType": {
+                    "id": 6,
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "Err",
+                  "fieldType": {
+                    "id": 7,
+                    "kind": "var",
+                    "name": "b"
+                  }
+                },
+                {
+                  "fieldName": "Pending",
+                  "fieldType": {
+                    "id": 3,
+                    "kind": "tup",
+                    "fields": {
+                      "kind": "row",
+                      "fields": [],
+                      "other": {
+                        "kind": "empty"
+                      }
+                    }
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        },
+        "type": null
+      },
+      {
+        "id": "16",
+        "annotation": null,
+        "type": null
+      },
+      {
+        "id": "23",
+        "annotation": {
+          "id": 4,
+          "kind": "sum",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "Ok",
+                "fieldType": {
+                  "id": 6,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              {
+                "fieldName": "Err",
+                "fieldType": {
+                  "id": 7,
+                  "kind": "var",
+                  "name": "b"
+                }
+              },
+              {
+                "fieldName": "Pending",
+                "fieldType": {
+                  "id": 3,
+                  "kind": "tup",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        },
+        "type": null
+      },
+      {
+        "id": "27",
+        "annotation": null,
+        "type": {
+          "id": 4,
+          "kind": "sum",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "Ok",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              {
+                "fieldName": "Err",
+                "fieldType": {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              },
+              {
+                "fieldName": "Pending",
+                "fieldType": {
+                  "id": 3,
+                  "kind": "tup",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "variable-row",
+    "input": [
+      {
+        "id": 13,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "typedef",
+            "name": "Add",
+            "type": {
+              "id": 2,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "x",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "int"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "r"
+                }
+              }
+            },
+            "params": [
+              "r"
+            ],
+            "depth": 0
+          },
+          {
+            "id": 7,
+            "kind": "typedef",
+            "name": "Open",
+            "type": {
+              "id": 5,
+              "kind": "app",
+              "ctor": {
+                "id": 6,
+                "kind": "const",
+                "name": "Add"
+              },
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "var",
+                  "name": "s"
+                }
+              ]
+            },
+            "params": [
+              "s"
+            ],
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 10,
+              "kind": "app",
+              "ctor": {
+                "id": 11,
+                "kind": "const",
+                "name": "Open"
+              },
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "rec",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "y",
+                        "fieldType": {
+                          "id": 8,
+                          "kind": "str"
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": 12,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 3,
+        "kind": "typedef",
+        "name": "Add",
+        "type": {
+          "id": 2,
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "x",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "var",
+              "name": "r"
+            }
+          }
+        },
+        "params": [
+          "r"
+        ],
+        "depth": 0
+      },
+      {
+        "id": 7,
+        "kind": "typedef",
+        "name": "Open",
+        "type": {
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "x",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "var",
+              "name": "s"
+            }
+          },
+          "id": 2
+        },
+        "params": [
+          "s"
+        ],
+        "depth": 0
+      },
+      {
+        "kind": "const",
+        "name": "x",
+        "typeAnnotation": {
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "x",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "y",
+                  "fieldType": {
+                    "id": 8,
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          "id": 2
+        },
+        "id": 12,
+        "depth": 0
+      }
+    ],
+    "table": [
+      {
+        "id": "6",
+        "annotation": null,
+        "type": {
+          "id": 2,
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "x",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "var",
+              "name": "r"
+            }
+          }
+        }
+      },
+      {
+        "id": "11",
+        "annotation": null,
+        "type": {
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "x",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "var",
+              "name": "s"
+            }
+          },
+          "id": 2
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "swap",
+    "input": [
+      {
+        "id": 15,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "typedef",
+            "name": "Pair",
+            "type": {
+              "id": 3,
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  },
+                  {
+                    "fieldName": "1",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "var",
+                      "name": "b"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            },
+            "params": [
+              "a",
+              "b"
+            ],
+            "depth": 0
+          },
+          {
+            "id": 9,
+            "kind": "typedef",
+            "name": "Swap",
+            "type": {
+              "id": 7,
+              "kind": "app",
+              "ctor": {
+                "id": 8,
+                "kind": "const",
+                "name": "Pair"
+              },
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "var",
+                  "name": "b"
+                },
+                {
+                  "id": 6,
+                  "kind": "var",
+                  "name": "a"
+                }
+              ]
+            },
+            "params": [
+              "a",
+              "b"
+            ],
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 12,
+              "kind": "app",
+              "ctor": {
+                "id": 13,
+                "kind": "const",
+                "name": "Swap"
+              },
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "int"
+                },
+                {
+                  "id": 11,
+                  "kind": "str"
+                }
+              ]
+            },
+            "id": 14,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 4,
+        "kind": "typedef",
+        "name": "Pair",
+        "type": {
+          "id": 3,
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        },
+        "params": [
+          "a",
+          "b"
+        ],
+        "depth": 0
+      },
+      {
+        "id": 9,
+        "kind": "typedef",
+        "name": "Swap",
+        "type": {
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 5,
+                  "kind": "var",
+                  "name": "b"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 6,
+                  "kind": "var",
+                  "name": "a"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          },
+          "id": 3
+        },
+        "params": [
+          "a",
+          "b"
+        ],
+        "depth": 0
+      },
+      {
+        "kind": "const",
+        "name": "x",
+        "typeAnnotation": {
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 11,
+                  "kind": "str"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 10,
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          },
+          "id": 3
+        },
+        "id": 14,
+        "depth": 0
+      }
+    ],
+    "table": [
+      {
+        "id": "8",
+        "annotation": null,
+        "type": {
+          "id": 3,
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      },
+      {
+        "id": "13",
+        "annotation": null,
+        "type": {
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 5,
+                  "kind": "var",
+                  "name": "b"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 6,
+                  "kind": "var",
+                  "name": "a"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          },
+          "id": 3
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "alias-argument",
+    "input": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "typedef",
+            "name": "T",
+            "type": {
+              "id": 1,
+              "kind": "int"
+            },
+            "depth": 0
+          },
+          {
+            "id": 5,
+            "kind": "typedef",
+            "name": "Box",
+            "type": {
+              "id": 4,
+              "kind": "list",
+              "elem": {
+                "id": 3,
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            "params": [
+              "a"
+            ],
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 7,
+              "kind": "app",
+              "ctor": {
+                "id": 8,
+                "kind": "const",
+                "name": "Box"
+              },
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "const",
+                  "name": "T"
+                }
+              ]
+            },
+            "id": 9,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "output": [
+      {
+        "id": 2,
+        "kind": "typedef",
+        "name": "T",
+        "type": {
+          "id": 1,
+          "kind": "int"
+        },
+        "depth": 0
+      },
+      {
+        "id": 5,
+        "kind": "typedef",
+        "name": "Box",
+        "type": {
+          "id": 4,
+          "kind": "list",
+          "elem": {
+            "id": 3,
+            "kind": "var",
+            "name": "a"
+          }
+        },
+        "params": [
+          "a"
+        ],
+        "depth": 0
+      },
+      {
+        "kind": "const",
+        "name": "x",
+        "typeAnnotation": {
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 4
+        },
+        "id": 9,
+        "depth": 0
+      }
+    ],
+    "table": [
+      {
+        "id": "8",
+        "annotation": null,
+        "type": {
+          "id": 4,
+          "kind": "list",
+          "elem": {
+            "id": 3,
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      {
+        "id": "6",
+        "annotation": null,
+        "type": {
+          "id": 1,
+          "kind": "int"
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
     "name": "pair",
     "input": [
       {
@@ -142,6 +1870,40 @@
         },
         "id": 9,
         "depth": 0
+      }
+    ],
+    "table": [
+      {
+        "id": "8",
+        "annotation": null,
+        "type": {
+          "id": 3,
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
       }
     ],
     "errors": []
@@ -291,6 +2053,51 @@
         "depth": 0
       }
     ],
+    "table": [
+      {
+        "id": "8",
+        "annotation": null,
+        "type": {
+          "id": 2,
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      {
+        "id": "6",
+        "annotation": null,
+        "type": {
+          "id": 2,
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      {
+        "id": "12",
+        "annotation": null,
+        "type": {
+          "kind": "list",
+          "elem": {
+            "kind": "list",
+            "elem": {
+              "id": 4,
+              "kind": "var",
+              "name": "a"
+            },
+            "id": 2
+          },
+          "id": 2
+        }
+      }
+    ],
     "errors": []
   },
   {
@@ -434,6 +2241,32 @@
         },
         "id": 8,
         "depth": 0
+      }
+    ],
+    "table": [
+      {
+        "id": "7",
+        "annotation": null,
+        "type": {
+          "id": 2,
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "x",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "var",
+              "name": "r"
+            }
+          }
+        }
       }
     ],
     "errors": []
@@ -680,6 +2513,106 @@
         }
       }
     ],
+    "table": [
+      {
+        "id": "6",
+        "annotation": null,
+        "type": {
+          "id": 2,
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      {
+        "id": "10",
+        "annotation": null,
+        "type": {
+          "id": 2,
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      {
+        "id": "14",
+        "annotation": null,
+        "type": {
+          "id": 2,
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      {
+        "id": "17",
+        "annotation": {
+          "kind": "oper",
+          "args": [
+            {
+              "kind": "list",
+              "elem": {
+                "id": 8,
+                "kind": "int"
+              },
+              "id": 2
+            }
+          ],
+          "res": {
+            "kind": "list",
+            "elem": {
+              "id": 12,
+              "kind": "int"
+            },
+            "id": 2
+          }
+        },
+        "type": null
+      },
+      {
+        "id": "15",
+        "annotation": {
+          "kind": "list",
+          "elem": {
+            "id": 8,
+            "kind": "int"
+          },
+          "id": 2
+        },
+        "type": null
+      },
+      {
+        "id": "20",
+        "annotation": null,
+        "type": null
+      },
+      {
+        "id": "19",
+        "annotation": null,
+        "type": null
+      },
+      {
+        "id": "18",
+        "annotation": {
+          "kind": "list",
+          "elem": {
+            "id": 4,
+            "kind": "int"
+          },
+          "id": 2
+        },
+        "type": null
+      }
+    ],
     "errors": []
   },
   {
@@ -868,6 +2801,72 @@
         },
         "id": 14,
         "depth": 0
+      }
+    ],
+    "table": [
+      {
+        "id": "7",
+        "annotation": null,
+        "type": {
+          "id": 3,
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      },
+      {
+        "id": "13",
+        "annotation": null,
+        "type": {
+          "id": 3,
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
       }
     ],
     "errors": [
