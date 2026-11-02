@@ -1,0 +1,865 @@
+[
+  {
+    "name": "numbers",
+    "input": {
+      "vars": [
+        "x"
+      ],
+      "states": [
+        {
+          "x": {
+            "#set": [
+              2,
+              10,
+              1,
+              2,
+              -1
+            ]
+          }
+        }
+      ],
+      "loop": 0,
+      "#meta": {
+        "keep": true
+      }
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Set",
+            "args": [
+              {
+                "id": 0,
+                "kind": "int",
+                "value": -1
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 10
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "locale": "en-US"
+  },
+  {
+    "name": "mixed",
+    "input": {
+      "vars": [
+        "x"
+      ],
+      "states": [
+        {
+          "x": {
+            "#set": [
+              "a",
+              "A",
+              "á",
+              "ä",
+              "_",
+              "-",
+              true,
+              3,
+              {
+                "#tup": [
+                  1
+                ]
+              },
+              [
+                1
+              ]
+            ]
+          }
+        }
+      ],
+      "loop": 0,
+      "#meta": {
+        "keep": true
+      }
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Set",
+            "args": [
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "_"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "-"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "a"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "A"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "á"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "ä"
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 3
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "List",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "bool",
+                "value": true
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "locale": "en-US"
+  },
+  {
+    "name": "unicode",
+    "input": {
+      "vars": [
+        "x"
+      ],
+      "states": [
+        {
+          "x": {
+            "#set": [
+              "é",
+              "e",
+              "E",
+              "è",
+              "ê",
+              "😀",
+              "😊",
+              "中文",
+              "λ",
+              "a b",
+              "a-b",
+              "a_b"
+            ]
+          }
+        }
+      ],
+      "loop": 0,
+      "#meta": {
+        "keep": true
+      }
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Set",
+            "args": [
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "😀"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "😊"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "a b"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "a_b"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "a-b"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "e"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "E"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "é"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "è"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "ê"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "λ"
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "中文"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "locale": "en-US"
+  },
+  {
+    "name": "records",
+    "input": {
+      "vars": [
+        "z",
+        "a",
+        "A",
+        "😀",
+        "",
+        "nested"
+      ],
+      "states": [
+        {
+          "z": 1,
+          "a": 2,
+          "A": 3,
+          "😀": 4,
+          "": 5,
+          "nested": {
+            "z": 1,
+            "a": 2
+          }
+        }
+      ],
+      "loop": 0,
+      "#meta": {
+        "keep": true
+      }
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "A"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 3
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "a"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 2
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "nested"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "a"
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 2
+              },
+              {
+                "id": 0,
+                "kind": "str",
+                "value": "z"
+              },
+              {
+                "id": 0,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "z"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 1
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "😀"
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 4
+          },
+          {
+            "id": 0,
+            "kind": "str",
+            "value": ""
+          },
+          {
+            "id": 0,
+            "kind": "int",
+            "value": 5
+          }
+        ]
+      }
+    ],
+    "locale": "en-US"
+  },
+  {
+    "name": "nested-sets",
+    "input": {
+      "vars": [
+        "x"
+      ],
+      "states": [
+        {
+          "x": {
+            "#set": [
+              {
+                "#set": [
+                  2,
+                  1
+                ]
+              },
+              {
+                "#set": [
+                  1,
+                  2
+                ]
+              },
+              {
+                "#set": [
+                  3
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "loop": 0,
+      "#meta": {
+        "keep": true
+      }
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Set",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Set",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Set",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "locale": "en-US"
+  },
+  {
+    "name": "map-keys",
+    "input": {
+      "vars": [
+        "x"
+      ],
+      "states": [
+        {
+          "x": {
+            "#map": [
+              [
+                {
+                  "#set": [
+                    2,
+                    1
+                  ]
+                },
+                "a"
+              ],
+              [
+                {
+                  "#set": [
+                    1,
+                    2
+                  ]
+                },
+                "b"
+              ],
+              [
+                "z",
+                3
+              ],
+              [
+                "a",
+                4
+              ]
+            ]
+          }
+        }
+      ],
+      "loop": 0,
+      "#meta": {
+        "keep": true
+      }
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 4
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "str",
+                    "value": "z"
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 0,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 0,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  },
+                  {
+                    "id": 0,
+                    "kind": "str",
+                    "value": "b"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "locale": "en-US"
+  },
+  {
+    "name": "map-order",
+    "input": {
+      "vars": [
+        "x"
+      ],
+      "states": [
+        {
+          "x": {
+            "#map": [
+              [
+                2,
+                "b"
+              ],
+              [
+                10,
+                "a"
+              ],
+              [
+                "A",
+                1
+              ],
+              [
+                "a",
+                2
+              ]
+            ]
+          }
+        }
+      ],
+      "loop": 0,
+      "#meta": {
+        "keep": true
+      }
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "str",
+                    "value": "A"
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 10
+                  },
+                  {
+                    "id": 0,
+                    "kind": "str",
+                    "value": "a"
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  },
+                  {
+                    "id": 0,
+                    "kind": "str",
+                    "value": "b"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "locale": "en-US"
+  },
+  {
+    "name": "variants",
+    "input": {
+      "vars": [
+        "x"
+      ],
+      "states": [
+        {
+          "x": {
+            "#set": [
+              {
+                "tag": "Some",
+                "value": 2
+              },
+              {
+                "tag": "Some",
+                "value": 1
+              },
+              {
+                "tag": "UNIT"
+              }
+            ]
+          }
+        }
+      ],
+      "loop": 0,
+      "#meta": {
+        "keep": true
+      }
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 0,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 0,
+            "kind": "app",
+            "opcode": "Set",
+            "args": [
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": []
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "variant",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "str",
+                    "value": "Some"
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 0,
+                "kind": "app",
+                "opcode": "variant",
+                "args": [
+                  {
+                    "id": 0,
+                    "kind": "str",
+                    "value": "Some"
+                  },
+                  {
+                    "id": 0,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "locale": "en-US"
+  }
+]

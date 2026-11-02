@@ -462,7 +462,10 @@ Build these items alongside the phases that supply their command behavior.
     sparse diagnostic rows, and five exact upstream fixtures.
   - [x] Header construction and filename substitution with upstream metadata
     precedence; preserve existing loops, parameters, and custom trace fields.
-  - [ ] Implement runtime normalization and CLI trace file/output integration.
+  - [x] Concrete ITF value normalization with eight upstream fixtures: zero IDs,
+    sorted records/sets/maps, set equality, and last-value map replacement.
+  - [ ] Audit collation across upstream locales/Unicode versions; implement
+    symbolic runtime normalization and CLI trace file/output integration.
 - [ ] P10.5 Port pretty printing, source-error rendering, value diffs, execution
   frames, trace display, statistics, and witness/invariant reports.
 - [ ] P10.6 Port documentation extraction and `docs`; embed builtin definitions
@@ -2068,3 +2071,15 @@ word "retained" in the commit message.
   loop/parameter retention, and input isolation. Full default tests pass
   (combined execution 0.922s). Runtime normalization, default CLI clock/date
   presentation, trace file writing, and complete CLI integration remain open.
+
+- 2026-11-02: Added NormalizeValue and DecodeNormalizedITFTrace for concrete
+  upstream ofItfNormalized semantics. Records use UTF-16 field ordering; sets and
+  map pairs use printed-expression en-US collation from pinned x/text. Set/map
+  identity remains exact and independent of collation ties, including nested
+  unordered collections; duplicate map keys retain their last value. Ordered
+  dictionaries use insdict. Eight generated upstream fixtures compare complete
+  expressions, including zero IDs, and tests cover idempotence, malformed values,
+  duplicate fields, canonical-equivalent Unicode strings, input isolation, empty
+  collections, and retained raw trace metadata/loops. Full default tests pass
+  (combined package execution 0.939s). Cross-locale/Unicode-version collation,
+  symbolic runtime collections, and CLI trace output remain open.

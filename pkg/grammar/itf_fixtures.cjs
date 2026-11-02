@@ -46,3 +46,19 @@ const debugCases=[
  ['empty-pending',{vars:[],states:[], '#meta':{pending_diagnostics:''}}],
 ]
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/itf_diagnostics.json'),JSONbig.stringify(debugCases.map(([name,input])=>({name,input,states:diagnosticsOfItf(input),pending:pendingDiagnosticsOfItf(input)})),null,2)+'\n')
+
+const {ofItfNormalized}=require(path.join(root,'quint/src/itf'))
+const normalizationCases=[
+ ['numbers',{x:{'#set':[2,10,1,2,-1]}}],
+ ['mixed',{x:{'#set':['a','A','á','ä','_','-',true,3,{'#tup':[1]},[1]]}}],
+ ['unicode',{x:{'#set':['é','e','E','è','ê','😀','😊','中文','λ','a b','a-b','a_b']}}],
+ ['records',{z:1,a:2,A:3,'😀':4,'\ue000':5,nested:{z:1,a:2}}],
+ ['nested-sets',{x:{'#set':[{'#set':[2,1]},{'#set':[1,2]},{'#set':[3]}]}}],
+ ['map-keys',{x:{'#map':[[{'#set':[2,1]},'a'],[{'#set':[1,2]},'b'],['z',3],['a',4]]}}],
+ ['map-order',{x:{'#map':[[2,'b'],[10,'a'],['A',1],['a',2]]}}],
+ ['variants',{x:{'#set':[{tag:'Some',value:2},{tag:'Some',value:1},{tag:'UNIT'}]}}],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/itf_normalize.json'),JSONbig.stringify(normalizationCases.map(([name,state])=>{
+ const input={vars:Object.keys(state),states:[state],loop:0,'#meta':{keep:true}}
+ return {name,input,output:ofItfNormalized(input),locale:Intl.DateTimeFormat().resolvedOptions().locale}
+}),null,2)+'\n')
