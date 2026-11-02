@@ -954,3 +954,11 @@ word "retained" in the commit message.
   intentionally ID-free generated operator-type wrappers. Default tests pass
   within the sub-second target. P2.5 still needs inclusive-location compatibility
   and differential source-map verification before completion.
+
+- 2026-11-02: Completed file attribution for syntax errors from all source-aware
+  entry points and added source references for QNT015 map-type diagnostics when
+  an allocator is present. Tests resolve an imported map diagnostic to the exact
+  type excerpt, verify source names across expression/module/type APIs, and keep
+  ID-free signature parsing unchanged. Updated source-map API comments to reflect
+  annotation integration. Default tests pass within the sub-second target;
+  broader P2.5/P2.8 source-map and recovery parity remains open.

@@ -1,6 +1,7 @@
 package quint
 
 import (
+	"errors"
 	"fmt"
 	"github.com/antlr4-go/antlr/v4"
 	"strings"
@@ -72,4 +73,12 @@ func (e *effectSyntaxErrors) trailing(token antlr.Token) {
 }
 func (e *effectSyntaxErrors) err(context string) error {
 	return &SyntaxErrors{Context: context, Issues: append([]SyntaxIssue(nil), e.issues...)}
+}
+
+func withSyntaxSource(err error, name string) error {
+	var syntax *SyntaxErrors
+	if errors.As(err, &syntax) {
+		syntax.Source = name
+	}
+	return err
 }

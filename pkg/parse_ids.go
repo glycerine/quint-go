@@ -39,16 +39,16 @@ func parserScope(ids parserIDAllocator, ctx antlr.ParserRuleContext) func() {
 
 // ParseExpressionWithSource returns half-open source spans for expression,
 // parameter, and local-definition IDs. Synthesized nodes inherit the enclosing
-// syntax span. Type IDs and upstream's inclusive span format remain separate.
+// syntax span. Local annotations also carry type IDs; locations are half-open.
 func ParseExpressionWithSource(name, text string) (Expr, SourceMap, error) {
 	file, err := NewSourceFile(name, text)
 	if err != nil {
-		return Expr{}, nil, err
+		return Expr{}, nil, withSyntaxSource(err, name)
 	}
 	ids := &locatedParserIDs{generator: NewIDGenerator(), file: file, sources: SourceMap{}}
 	expr, err := parseExpressionWithIDs(text, ids)
 	if err != nil {
-		return Expr{}, nil, err
+		return Expr{}, nil, withSyntaxSource(err, name)
 	}
 	if ids.err != nil {
 		return Expr{}, nil, ids.err
@@ -62,17 +62,17 @@ func parserIDAt(ids parserIDAllocator, ctx antlr.ParserRuleContext) ID {
 }
 
 // ParseModulesWithSource records source spans for module/declaration/expression
-// IDs. Type nodes do not yet receive IDs. Errors return no partial module list
+// and parsed type IDs. Errors return no partial module list
 // or source map; use ordinary parsing when source positions are unnecessary.
 func ParseModulesWithSource(name, text string) ([]Module, SourceMap, error) {
 	file, err := NewSourceFile(name, text)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, withSyntaxSource(err, name)
 	}
 	ids := &locatedParserIDs{generator: NewIDGenerator(), file: file, sources: SourceMap{}}
 	modules, err := parseModulesWithIDs(text, ids)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, withSyntaxSource(err, name)
 	}
 	if ids.err != nil {
 		return nil, nil, ids.err
@@ -85,12 +85,12 @@ func ParseModulesWithSource(name, text string) ([]Module, SourceMap, error) {
 func ParseTypeWithSource(name, text string) (Type, SourceMap, error) {
 	file, err := NewSourceFile(name, text)
 	if err != nil {
-		return Type{}, nil, err
+		return Type{}, nil, withSyntaxSource(err, name)
 	}
 	ids := &locatedParserIDs{generator: NewIDGenerator(), file: file, sources: SourceMap{}}
 	typ, err := parseTypeWithIDs(text, ids)
 	if err != nil {
-		return Type{}, nil, err
+		return Type{}, nil, withSyntaxSource(err, name)
 	}
 	if ids.err != nil {
 		return Type{}, nil, ids.err

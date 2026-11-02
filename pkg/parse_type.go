@@ -124,7 +124,12 @@ func typeFromContextWithIDs(ctx p.ITypeContext, ids parserIDAllocator) (result T
 			key, value := TypeString(args[0]), TypeString(args[1])
 			original := "Map[" + key + ", " + value + "]"
 			replacement := key + " -> " + value
-			return Type{}, Diagnostic{Code: QNT015, Message: "Use '" + replacement + "' instead of '" + original + "' for map types", Data: &DiagnosticData{Fix: &DiagnosticFix{Kind: "replace", Original: original, Replacement: replacement}}}
+			var reference *ID
+			if ids != nil {
+				id := parserIDAt(ids, ctx)
+				reference = &id
+			}
+			return Type{}, Diagnostic{Reference: reference, Code: QNT015, Message: "Use '" + replacement + "' instead of '" + original + "' for map types", Data: &DiagnosticData{Fix: &DiagnosticFix{Kind: "replace", Original: original, Replacement: replacement}}}
 		}
 		ctor := Type{Kind: "const", Name: app.QualId().GetText()}
 		if ids != nil {

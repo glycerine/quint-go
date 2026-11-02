@@ -1,11 +1,9 @@
 package quint
 
-import "errors"
-
 // LoadModulesWithSource loads and sorts transitive imports with a shared source
 // map. On failure modules are nil, but spans allocated before the error remain
 // available for resolving its reference. SyntaxErrors also identify their file.
-// Locations use half-open UTF-16 spans; type IDs are not yet assigned.
+// Locations use half-open UTF-16 spans, including parsed annotation types.
 func LoadModulesWithSource(resolver SourceResolver, main SourceLookupPath) ([]Module, SourceMap, error) {
 	sources := SourceMap{}
 	generator := NewIDGenerator()
@@ -17,11 +15,7 @@ func LoadModulesWithSource(resolver SourceResolver, main SourceLookupPath) ([]Mo
 		ids := &locatedParserIDs{generator: generator, file: file, sources: sources}
 		modules, err := parseModulesWithIDs(text, ids)
 		if err != nil {
-			var syntax *SyntaxErrors
-			if errors.As(err, &syntax) {
-				syntax.Source = source.SourceName
-			}
-			return nil, err
+			return nil, withSyntaxSource(err, source.SourceName)
 		}
 		if ids.err != nil {
 			return nil, ids.err
