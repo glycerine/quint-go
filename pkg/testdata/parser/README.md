@@ -447,3 +447,32 @@ include zero limits, disabled init/steps, invariant violations, cumulative
 failure results, runtime errors at each stage, choices, metadata, internal
 shifts, and expect. Unit tests add API validation, cancellation during execution,
 reset without RNG rewind, and result ownership. Node is not used by Go tests.
+
+`runtime_reference_hash.json` is regenerated with
+`node pkg/grammar/runtime_reference_hash_fixtures.cjs`. Its 118 cases compare
+runtime hashCode and Immutable.hash before/after normalForm, covering large
+signed integers, UTF-16 strings, nested collections, duplicate fields/keys, and
+variants. These private traversal hashes leave public RuntimeValue.Hash intact.
+
+`runtime_reference_order.json` is regenerated with
+`node pkg/grammar/runtime_reference_order_fixtures.cjs`. Twenty vectors compare
+Immutable.Map constructor traversal: small insertion order, ninth-key HAMT
+conversion, 100-key dense traversal, hash collisions, duplicates, and nested
+keys. The helper covers construction only. Persistent mutation/deletion history
+and the separately audited heterogeneous equality discrepancy remain open.
+
+`runtime_set_conversion.json` is regenerated with
+`node pkg/grammar/runtime_set_conversion_fixtures.cjs`. Twelve supported
+getOnlyElement cases cover cardinality errors, duplicate structural elements,
+nested values, and last-equal-element source retention. Unit tests check
+argument validation and immutable results.
+
+The same script writes `runtime_set_to_map_pending.json`: nineteen oracle
+cases for unfinished setToMap support, including threshold sizes and repeated
+conversions in one evaluator. This is a pending parity corpus, not passing Go
+coverage. Upstream converts pairs into fresh JavaScript arrays, rebuilds an
+Immutable.Set of arrays, then constructs the map. Above eight elements, array
+identity hashes use a process-global UID counter and can change which duplicate
+key wins. Constructor ordering of runtime tuple keys alone does not reproduce
+this behavior. The Go evaluator continues to reject setToMap until its
+compatibility policy and representation are implemented.

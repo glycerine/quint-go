@@ -365,8 +365,15 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     size/isFinite/flatten with structural identity and upstream evaluator cases.
   - [x] Strict map get/set/put/keys, structural keys, immutable updates, and
     small-map diagnostic ordering through pure evaluation with upstream cases.
-  - [ ] Immutable.js large-map traversal and source-order retention through
-    every nested collection operation; higher-order map operations.
+  - [x] Private Immutable.js-compatible concrete hash and constructor-order
+    helpers, including UTF-16 strings, nested values, ninth-key HAMT conversion,
+    low-to-high hash fragments, and collision order; public Go hash unchanged.
+  - [ ] Persistent mutation histories, full large-map traversal/source-order
+    propagation through nested operations, and higher-order map operations.
+  - [x] getOnlyElement with singleton deduplication, owned nested values,
+    last-equal-element source retention, and exact cardinality diagnostics.
+  - [ ] setToMap parity, including its intermediate JS-array identity hashing;
+    pending oracle includes process-history-dependent duplicate-key selection.
   - [x] JavaScript Number coercion/error formatting for extreme sequence
     indices, including rounding, exponent cutoffs, and signed Infinity.
   - [x] Preserve nested map source order through strict sequence/record access
@@ -2591,3 +2598,20 @@ word "retained" in the commit message.
   3355329ns to 1773ns, and setToMap from 3429135ns to 1892ns. Full default
   tests pass with the added simulation/collection corpora (combined package
   execution 0.995s), meeting the one-second target on this run.
+
+- 2026-11-02: Added private Immutable.js-compatible concrete hash and
+  constructor traversal helpers. The hash corpus has 118 raw/normalized
+  hashCode and Immutable.hash vectors across scalars, UTF-16 strings, nested
+  collections, duplicate fields/keys, and variants. Twenty constructor-order
+  vectors cover small insertion order, ninth-key HAMT conversion, dense nodes,
+  collisions, and nested keys. Public structural Go hashing remains unchanged.
+  Added getOnlyElement with exact cardinality diagnostics and last-equal-element
+  source retention; twelve upstream cases plus validation/ownership tests pass.
+  Investigation found that setToMap creates fresh JS pair arrays and rehashes
+  them through an intermediate Set. Above eight entries, Immutable's process-
+  global object UID affects duplicate-key selection; repeated identical
+  conversions can select different values. Nineteen pending oracle cases retain
+  this evidence. setToMap remains unimplemented pending its identity/traversal
+  compatibility work; persistent mutation histories and propagation through
+  all nested operations also remain open. Full default tests pass (combined
+  package execution 0.972s).

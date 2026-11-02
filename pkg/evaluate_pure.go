@@ -533,6 +533,8 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 			value, err = EvalSequenceBuiltin(e.Opcode, args)
 		} else if mapBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalMapBuiltin(e.Opcode, args)
+		} else if setConversionBuiltinArity(e.Opcode) != 0 {
+			value, err = EvalSetConversionBuiltin(e.Opcode, args)
 		} else if setBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalSetBuiltin(e.Opcode, args)
 		} else {
