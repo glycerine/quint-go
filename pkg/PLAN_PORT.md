@@ -596,6 +596,9 @@ any remaining TypeScript client code is distinguished from language-server logic
 - [ ] P12.5 Benchmark parsing, inference, flattening, large collections,
   simulation throughput, and checker handoff; track allocations and peak
   memory against recorded baselines before optimizing.
+  - [x] Profiled the default suite and removed repeated fixed-builtin type
+    parsing with bounded, concurrency-safe templates and caller-owned copies;
+    retained uncached variable arities and recorded warm signature benchmarks.
 - [ ] P12.6 Add CI jobs that build and test the `pkg/` module with pinned
   dependencies, reproducible grammar generation, and supported OS/architecture
   targets. Keep reference-tool jobs separate from Go-only validation.
@@ -2576,3 +2579,15 @@ word "retained" in the commit message.
   target). CLI expression selection/output, execution-recorder callbacks,
   individual invariants, additional resource bounds, and Rust comparison remain
   open.
+
+- 2026-11-02: Profiled the full default suite and found repeated fixed builtin
+  signature parsing accounted for about 15% of sampled CPU. Added a finite,
+  lazy per-signature sync.Once cache; every return clones the type tree and
+  quantifier slices. Variable-arity signatures remain uncached, and validation
+  errors are unchanged. Tests mutate every fixed signature, nested rows and
+  quantified slices, exercise concurrent callers and cache bounds, and pass
+  focused race checking. Warm signature benchmarks improved iadd from
+  396669ns/161226B/2262 allocations to 745ns/320B/2 allocations, foldl from
+  3355329ns to 1773ns, and setToMap from 3429135ns to 1892ns. Full default
+  tests pass with the added simulation/collection corpora (combined package
+  execution 0.995s), meeting the one-second target on this run.

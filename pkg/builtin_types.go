@@ -3,6 +3,7 @@ package quint
 import (
 	"fmt"
 	"strings"
+	"sync"
 )
 
 // Fixed builtin signatures mirror the reference TypeScript table.
@@ -91,52 +92,89 @@ var fixedBuiltinTypes = map[string]string{
 	"apalache::generate": "(int) => a",
 }
 
+// Parsed fixed signatures are immutable cache entries. The finite key set comes
+// only from the builtin table; caller-selected variable arities are never cached.
+// Each result is copied before it leaves BuiltinTypeSignature.
+type builtinTypeCacheEntry struct {
+	once   sync.Once
+	scheme TypeScheme
+	err    error
+}
+
+var fixedBuiltinTypeCache = func() map[string]*builtinTypeCacheEntry {
+	cache := make(map[string]*builtinTypeCacheEntry, len(fixedBuiltinTypes))
+	for name := range fixedBuiltinTypes {
+		cache[name] = &builtinTypeCacheEntry{}
+	}
+	return cache
+}()
+
+func cloneBuiltinTypeScheme(scheme TypeScheme) (TypeScheme, error) {
+	typ, err := ApplySubstitution(nil, scheme.Type)
+	if err != nil {
+		return TypeScheme{}, err
+	}
+	scheme.Type = typ
+	scheme.TypeVariables = append([]string{}, scheme.TypeVariables...)
+	scheme.RowVariables = append([]string{}, scheme.RowVariables...)
+	return scheme, nil
+}
+
 // BuiltinTypeSignature returns the quantified signature for a builtin. Product
 // and variant operations with special constraints are intentionally absent.
 func BuiltinTypeSignature(name string, arity int) (TypeScheme, error) {
 	if arity < 0 {
 		return TypeScheme{}, fmt.Errorf("negative builtin arity")
 	}
-	text, found := fixedBuiltinTypes[name]
-	if !found {
-		arg, result := "", ""
-		switch name {
-		case "List":
-			arg, result = "a", "List[a]"
-		case "Set":
-			arg, result = "a", "Set[a]"
-		case "Map":
-			arg, result = "(a, b)", "a -> b"
-		case "and", "or", "actionAll", "actionAny":
-			arg, result = "bool", "bool"
-		case "matchVariant":
-			if arity < 1 || arity%2 == 0 {
-				return TypeScheme{}, fmt.Errorf("matchVariant requires a value and pattern/function pairs")
-			}
-			args := []string{"a"}
-			for i := 1; i < arity; i += 2 {
-				args = append(args, "str", "(a) => b")
-			}
-			text = "(" + strings.Join(args, ", ") + ") => b"
-		case "tuples":
-			names, args := []string{}, []string{}
-			for i := 0; i < arity; i++ {
-				n := fmt.Sprintf("t%d", i)
-				names = append(names, n)
-				args = append(args, "Set["+n+"]")
-			}
-			text = "(" + strings.Join(args, ", ") + ") => Set[(" + strings.Join(names, ", ") + ")]"
-		default:
-			return TypeScheme{}, fmt.Errorf("no ordinary builtin signature for %q", name)
+	if cached, found := fixedBuiltinTypeCache[name]; found {
+		cached.once.Do(func() { cached.scheme, cached.err = parseBuiltinTypeScheme(fixedBuiltinTypes[name]) })
+		if cached.err != nil {
+			return TypeScheme{}, cached.err
 		}
-		if arg != "" {
-			args := make([]string, arity)
-			for i := range args {
-				args[i] = arg
-			}
-			text = "(" + strings.Join(args, ", ") + ") => " + result
-		}
+		return cloneBuiltinTypeScheme(cached.scheme)
 	}
+	text := ""
+	arg, result := "", ""
+	switch name {
+	case "List":
+		arg, result = "a", "List[a]"
+	case "Set":
+		arg, result = "a", "Set[a]"
+	case "Map":
+		arg, result = "(a, b)", "a -> b"
+	case "and", "or", "actionAll", "actionAny":
+		arg, result = "bool", "bool"
+	case "matchVariant":
+		if arity < 1 || arity%2 == 0 {
+			return TypeScheme{}, fmt.Errorf("matchVariant requires a value and pattern/function pairs")
+		}
+		args := []string{"a"}
+		for i := 1; i < arity; i += 2 {
+			args = append(args, "str", "(a) => b")
+		}
+		text = "(" + strings.Join(args, ", ") + ") => b"
+	case "tuples":
+		names, args := []string{}, []string{}
+		for i := 0; i < arity; i++ {
+			n := fmt.Sprintf("t%d", i)
+			names = append(names, n)
+			args = append(args, "Set["+n+"]")
+		}
+		text = "(" + strings.Join(args, ", ") + ") => Set[(" + strings.Join(names, ", ") + ")]"
+	default:
+		return TypeScheme{}, fmt.Errorf("no ordinary builtin signature for %q", name)
+	}
+	if arg != "" {
+		args := make([]string, arity)
+		for i := range args {
+			args[i] = arg
+		}
+		text = "(" + strings.Join(args, ", ") + ") => " + result
+	}
+	return parseBuiltinTypeScheme(text)
+}
+
+func parseBuiltinTypeScheme(text string) (TypeScheme, error) {
 	typ, err := ParseType(text)
 	if err != nil {
 		return TypeScheme{}, err
