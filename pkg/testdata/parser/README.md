@@ -156,3 +156,6 @@ covered separately by `inference.json` with its documented type-ID limitation.
 
 The analyzer corpus now includes nine runs, adding polymorphic imports,
 instantiated state names, and impure instance overrides.
+
+`analyzer_incremental.json` records three upstream split-batch runs; tests
+compare resumed diagnostics, retained effects, and mode suggestions exactly.

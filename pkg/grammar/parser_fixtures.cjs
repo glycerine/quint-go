@@ -436,3 +436,17 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/analyzer.json'),JSONbig.str
  const [errors,output]=analyzeModules(linked.table,parsed.modules)
  return {name,input:parsed.modules,errors,effects:[...output.effects].map(([id,s])=>({id:String(id),scheme:{effect:s.effect,effectVariables:[...s.effectVariables],entityVariables:[...s.entityVariables]}})),modes:[...output.modes].map(([id,qualifier])=>({id:String(id),qualifier}))}
 }),null,2)+'\n')
+
+const {analyzeInc}=require(path.join(root,'quint/src/quintAnalyzer'))
+const incrementalCases=[
+ ['polymorphic',"module M { def identity(x)=x val a=identity(1) val b=identity(true) }",1],
+ ['state',"module M { var x:int action step=x'=x+1 }",1],
+ ['failure',"module M { val first=1 val bad=1+true }",1],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/analyzer_incremental.json'),JSONbig.stringify(incrementalCases.map(([name,source,split])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name),linked=resolveNames(parsed.modules)
+ const declarations=parsed.modules[0].declarations
+ const [,previous]=analyzeModules(linked.table,[{...parsed.modules[0],declarations:declarations.slice(0,split)}])
+ const [errors,output]=analyzeInc(previous,linked.table,declarations.slice(split))
+ return {name,input:parsed.modules,split,errors,effects:[...output.effects].map(([id,s])=>({id:String(id),scheme:{effect:s.effect,effectVariables:[...s.effectVariables],entityVariables:[...s.entityVariables]}})),modes:[...output.modes].map(([id,qualifier])=>({id:String(id),qualifier}))}
+}),null,2)+'\n')

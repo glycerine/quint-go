@@ -1,0 +1,602 @@
+[
+  {
+    "name": "polymorphic",
+    "input": [
+      {
+        "id": 11,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "identity",
+            "qualifier": "def",
+            "expr": {
+              "id": 3,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 2,
+                "kind": "name",
+                "name": "x"
+              }
+            }
+          },
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "identity",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "identity",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "bool",
+                  "value": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "split": 1,
+    "errors": [],
+    "effects": [
+      {
+        "id": "1",
+        "scheme": {
+          "effect": {
+            "kind": "variable",
+            "name": "e_x_1"
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "effect": {
+            "kind": "variable",
+            "name": "e_x_1"
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "effect": {
+            "kind": "arrow",
+            "params": [
+              {
+                "kind": "variable",
+                "name": "e_x_1"
+              }
+            ],
+            "result": {
+              "kind": "variable",
+              "name": "e_x_1"
+            }
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "effect": {
+            "kind": "arrow",
+            "params": [
+              {
+                "kind": "variable",
+                "name": "e_x_1"
+              }
+            ],
+            "result": {
+              "kind": "variable",
+              "name": "e_x_1"
+            }
+          },
+          "effectVariables": [
+            "e_x_1"
+          ],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "10",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      }
+    ],
+    "modes": [
+      {
+        "id": "4",
+        "qualifier": "puredef"
+      },
+      {
+        "id": "7",
+        "qualifier": "pureval"
+      },
+      {
+        "id": "10",
+        "qualifier": "pureval"
+      }
+    ]
+  },
+  {
+    "name": "state",
+    "input": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "step",
+            "qualifier": "action",
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "split": 1,
+    "errors": [],
+    "effects": [
+      {
+        "id": "2",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 2
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 2
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 2
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 2
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 2
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "update",
+                "entity": {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 2
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 2
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "update",
+                "entity": {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 2
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      }
+    ],
+    "modes": []
+  },
+  {
+    "name": "failure",
+    "input": [
+      {
+        "id": 7,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "first",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          },
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "bool",
+                  "value": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "split": 1,
+    "errors": [
+      {
+        "code": "QNT000",
+        "message": "Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (int, bool) => _t0\n",
+        "reference": 5,
+        "data": {
+          "trace": {
+            "location": "Trying to unify (int, int) => int and (int, bool) => _t0",
+            "children": [
+              {
+                "location": "Trying to unify int and bool",
+                "message": "Couldn't unify int and bool",
+                "children": []
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "effects": [
+      {
+        "id": "1",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": [],
+          "entityVariables": []
+        }
+      }
+    ],
+    "modes": [
+      {
+        "id": "2",
+        "qualifier": "pureval"
+      },
+      {
+        "id": "6",
+        "qualifier": "pureval"
+      }
+    ]
+  }
+]

@@ -1667,3 +1667,10 @@ word "retained" in the commit message.
   exactly without implementation changes. Default tests pass (core 0.670s).
   Incremental differential fixtures and broader instance/type-table parity remain
   open; the full port is still incomplete.
+
+- 2026-11-02: Added three exact upstream incremental-analysis fixtures covering
+  polymorphic definitions reused across batches, state/action inference, and a
+  failing later declaration. Ordered diagnostics, retained effects, and mode
+  suggestions all match upstream without changes. Full default tests pass
+  (combined execution 0.745s). Incremental type-ID provenance, broader instance
+  interactions, and completion audits for P4/P5 remain open.
