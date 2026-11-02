@@ -1704,3 +1704,11 @@ word "retained" in the commit message.
   fixtures; all eight exact conversion cases pass. Default tests pass under one
   second. Compilation-path integration and broader recursive visitor parity
   remain open under P6.5.
+
+- 2026-11-02: Added compilation entry synthesis for q::init/q::step, invariant
+  conjunctions, inductive invariants, and temporal properties. JSON unflattened
+  compilation omits unspecified init/step; other paths default to init/step.
+  Tests cover all wrapper shapes/order, explicit expressions, shared ID-generator
+  uniqueness, absent wrappers, and syntax rejection. Default tests pass under
+  one second. Flag-mode validation, source mapping, main selection, name/analysis
+  integration, and flattening remain open under P6.3/P6.4.
