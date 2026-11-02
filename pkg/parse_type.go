@@ -76,7 +76,7 @@ func typeFromContextWithIDs(ctx p.ITypeContext, ids parserIDAllocator) (result T
 	case *p.TypeListContext:
 		return one("list", c.Type_())
 	case *p.TypeUnitContext:
-		return UnitType(), nil
+		return Type{Kind: "tup", Fields: &Row{Kind: "empty"}}, nil
 	case *p.TypeFunContext:
 		ts, err := many(c.AllType_())
 		if err != nil {

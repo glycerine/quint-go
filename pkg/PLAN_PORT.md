@@ -1006,3 +1006,11 @@ word "retained" in the commit message.
   main-file load failure. Default tests pass within the sub-second target.
   P2.5/P2.7 still require partial-result/error accumulation parity and broader
   source-entry/allocation validation before their completion gates are met.
+
+- 2026-11-02: Added opt-in differential coverage of all 53 upstream parser fixture
+  sources. The corpus exposed and fixed parsed unit types: () uses an empty row,
+  distinct from synthesized concrete-empty unit payloads. Compiler temporary
+  names are normalized consistently in name fields only, retaining reference
+  identity. All corpus cases pass (0.300s); invalid cases verify rejection rather
+  than complete diagnostic recovery parity. Default tests remain under the target
+  (core 0.410s). P2.9 still requires broader examples/error/source-map coverage.

@@ -94,3 +94,12 @@ const spanFixtures=spanCases.map(([name,source])=>{
  return {name,source,spans,upstreamSpans}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/spans.json'),JSONbig.stringify(spanFixtures,null,2)+'\n')
+if(process.argv.includes('--corpus')){
+ const directory=path.join(root,'quint/testFixture')
+ const corpus=fs.readdirSync(directory).filter(name=>name.endsWith('.qnt')).sort().map(name=>{
+  const source=fs.readFileSync(path.join(directory,name),'utf8')
+  const result=parsePhase1fromText(newIdGenerator(),source,name)
+  return {name,source,modules:result.modules,errors:result.errors.map(({code,message})=>({code,message}))}
+ })
+ fs.writeFileSync(path.join(root,'pkg/testdata/parser/corpus.json'),JSONbig.stringify(corpus)+'\n')
+}

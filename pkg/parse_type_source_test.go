@@ -56,3 +56,17 @@ func TestTypeExactSourceSpans(t *testing.T) {
 		}
 	}
 }
+
+func TestParsedUnitTypeRow(t *testing.T) {
+	typ, err := ParseType("()")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if typ.Kind != "tup" || typ.Fields.Kind != "empty" {
+		t.Fatalf("parsed unit %+v", typ)
+	}
+	synthesized := UnitType()
+	if synthesized.Fields.Kind != "row" {
+		t.Fatal("synthesized unit representation changed")
+	}
+}

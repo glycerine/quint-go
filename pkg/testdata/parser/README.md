@@ -54,3 +54,11 @@ The span fixtures also retain `upstreamSpans` without coordinate normalization.
 These are compared against ParseModulesWithLocations's UpstreamSources, including
 source names, code-point indexes, inclusive ends, and the listener's multiline
 end-column calculation. The normalized UTF-16 comparison remains independent.
+
+`corpus.json` covers all 53 top-level `.qnt` files in `quint/testFixture`.
+Regenerate with `node pkg/grammar/parser_fixtures.cjs --corpus`; run with
+`QUINT_CORPUS_TESTS=1 go test ./pkg -run TestUpstreamParserCorpus -count=1`.
+Successful phase-one results compare full IR after removing IDs and renaming
+ID-suffixed compiler temporaries consistently (only `name` fields, preserving
+references and distinct identities). Invalid cases currently check rejection,
+not complete error or recovery parity. This broader check is opt-in.
