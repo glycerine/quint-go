@@ -1454,3 +1454,11 @@ word "retained" in the commit message.
   behavior, cycles, and invalid kinds. Default tests pass (combined execution
   0.624s). Structured composition error-trace parity, upstream differential
   coverage, effect unification, and inference remain pending.
+
+- 2026-11-02: Added six exact upstream effect-substitution fixtures for mixed
+  chains, empty components, repeated union members, nested unions, kind conflicts,
+  and no-op substitutions. They exposed and fixed incomplete normalization after
+  read-union deduplication: substitution now simplifies to a fixed point.
+  Update unions retain duplicate members as upstream requires. Default tests
+  pass under one second. Composition differential coverage and effect unification
+  remain pending.

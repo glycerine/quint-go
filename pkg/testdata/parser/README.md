@@ -124,3 +124,7 @@ absent in Go. Expression/definition IDs and all type-variable names remain exact
 `nondet.json` records eight upstream nondeterminism checks together with the
 upstream inferred types. Go consumes those types and compares full ordered
 diagnostics, isolating checker behavior from inference implementation differences.
+
+
+`effect_substitution.json` contains six upstream substitution outcomes and
+compares exact effect/entity trees, including references and union multiplicity.

@@ -130,7 +130,13 @@ func ApplyEffectSubstitution(subs []EffectSubstitution, input Effect) (Effect, e
 				out.Components = append(out.Components, EffectComponent{Kind: c.Kind, Entity: v})
 			}
 		}
-		return SimplifyEffect(out), nil
+		for {
+			simplified := SimplifyEffect(out)
+			if reflect.DeepEqual(simplified, out) {
+				return simplified, nil
+			}
+			out = simplified
+		}
 	}
 	return effect(input)
 }

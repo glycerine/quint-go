@@ -1,0 +1,356 @@
+[
+  {
+    "name": "chain",
+    "input": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "variable",
+          "name": "e"
+        }
+      ],
+      "result": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "r"
+            }
+          },
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "variable",
+              "name": "w"
+            }
+          }
+        ]
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "effect",
+        "name": "e",
+        "value": {
+          "kind": "variable",
+          "name": "f"
+        }
+      },
+      {
+        "kind": "effect",
+        "name": "f",
+        "value": {
+          "kind": "concrete",
+          "components": []
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "r",
+        "value": {
+          "kind": "variable",
+          "name": "s"
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "s",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": [
+            {
+              "name": "x",
+              "reference": 1
+            }
+          ]
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "w",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": []
+        }
+      }
+    ],
+    "output": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "concrete",
+          "components": []
+        }
+      ],
+      "result": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "empty",
+    "input": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "variable",
+            "name": "r"
+          }
+        },
+        {
+          "kind": "update",
+          "entity": {
+            "kind": "variable",
+            "name": "w"
+          }
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "r",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": []
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "w",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": []
+        }
+      }
+    ],
+    "output": {
+      "kind": "concrete",
+      "components": []
+    }
+  },
+  {
+    "name": "union",
+    "input": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "r"
+              },
+              {
+                "kind": "variable",
+                "name": "s"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "update",
+          "entity": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "r"
+              },
+              {
+                "kind": "variable",
+                "name": "s"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "r",
+        "value": {
+          "kind": "variable",
+          "name": "a"
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "s",
+        "value": {
+          "kind": "variable",
+          "name": "a"
+        }
+      }
+    ],
+    "output": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "variable",
+            "name": "a"
+          }
+        },
+        {
+          "kind": "update",
+          "entity": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "a"
+              },
+              {
+                "kind": "variable",
+                "name": "a"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "nested-union",
+    "input": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "variable",
+            "name": "r"
+          }
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "r",
+        "value": {
+          "kind": "union",
+          "entities": [
+            {
+              "kind": "variable",
+              "name": "s"
+            },
+            {
+              "kind": "concrete",
+              "stateVariables": []
+            }
+          ]
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "s",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": [
+            {
+              "name": "x",
+              "reference": 1
+            }
+          ]
+        }
+      }
+    ],
+    "output": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "x",
+                "reference": 1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "wrong-kind",
+    "input": {
+      "kind": "variable",
+      "name": "e"
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "e",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": []
+        }
+      },
+      {
+        "kind": "effect",
+        "name": "e",
+        "value": {
+          "kind": "concrete",
+          "components": []
+        }
+      }
+    ],
+    "output": {
+      "kind": "variable",
+      "name": "e"
+    }
+  },
+  {
+    "name": "no-substitutions",
+    "input": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        },
+        {
+          "kind": "update",
+          "entity": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ]
+    },
+    "substitutions": [],
+    "output": {
+      "kind": "concrete",
+      "components": []
+    }
+  }
+]

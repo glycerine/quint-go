@@ -295,3 +295,26 @@ const nondetFixtures=nondetCases.map(([name,source])=>{
  return {name,input:parsed.modules,types:[...types].map(([id,s])=>({id:String(id),scheme:{type:s.type,typeVariables:[...s.typeVariables],rowVariables:[...s.rowVariables]}})),errors}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/nondet.json'),JSONbig.stringify(nondetFixtures,null,2)+'\n')
+
+const {parseEffect}=require(path.join(root,'quint/src/effects/parser'))
+const effectSubs=require(path.join(root,'quint/src/effects/substitutions'))
+const ev=name=>({kind:'variable',name})
+const emptyEntity={kind:'concrete',stateVariables:[]}
+const entityX={kind:'concrete',stateVariables:[{name:'x',reference:1n}]}
+const substitutionCases=[
+ ['chain','(e) => Read[r] & Update[w]',[
+  {kind:'effect',name:'e',value:ev('f')},{kind:'effect',name:'f',value:{kind:'concrete',components:[]}},
+  {kind:'entity',name:'r',value:ev('s')},{kind:'entity',name:'s',value:entityX},{kind:'entity',name:'w',value:emptyEntity}]],
+ ['empty','Read[r] & Update[w]',[{kind:'entity',name:'r',value:emptyEntity},{kind:'entity',name:'w',value:emptyEntity}]],
+ ['union','Read[r,s] & Update[r,s]',[{kind:'entity',name:'r',value:ev('a')},{kind:'entity',name:'s',value:ev('a')}]],
+ ['nested-union','Read[r]',[{kind:'entity',name:'r',value:{kind:'union',entities:[ev('s'),emptyEntity]}},{kind:'entity',name:'s',value:entityX}]],
+ ['wrong-kind','e',[{kind:'entity',name:'e',value:emptyEntity},{kind:'effect',name:'e',value:{kind:'concrete',components:[]}}]],
+ ['no-substitutions','Read[] & Update[]',[]],
+]
+const effectSubstitutionFixtures=substitutionCases.map(([name,text,substitutions])=>{
+ const input=parseEffect(text).value
+ const result=effectSubs.applySubstitution(substitutions,input)
+ if(result.isLeft())throw Error(JSONbig.stringify(result.value))
+ return {name,input,substitutions,output:result.value}
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/effect_substitution.json'),JSONbig.stringify(effectSubstitutionFixtures,null,2)+'\n')
