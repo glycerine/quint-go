@@ -279,6 +279,66 @@ func semanticIdentifierPart(b byte) bool {
 	return semanticIdentifierStart(b) || b >= '0' && b <= '9'
 }
 
+// A selective directive has no expression lookup-table entry. Resolve its
+// selected member against the resulting module binding, rather than matching
+// its spelling across unrelated modules. Source aliases can be reused by later
+// modules, so consulting the final global alias scope would be ambiguous. The
+// token is the name after the dot; the prototype may have the same spelling.
+func semanticSelectedMember(snapshot *Snapshot, module string, declaration quint.Declaration) (semanticOccurrence, bool) {
+	if (declaration.Kind != "import" && declaration.Kind != "export") || declaration.DefName == nil || *declaration.DefName == "*" || snapshot.Frontend.Scopes == nil {
+		return semanticOccurrence{}, false
+	}
+	scope, ok := snapshot.Frontend.Scopes.Get2(module)
+	if !ok {
+		return semanticOccurrence{}, false
+	}
+	var target quint.LookupDefinition
+	found := false
+	bindings := scope.Definitions.Get(*declaration.DefName)
+	for _, definition := range bindings {
+		if definition.ImportedFrom != nil && definition.ImportedFrom.ID == declaration.ID {
+			target, found = definition, true
+			break
+		}
+	}
+	// A later directive for this same identity may replace only provenance.
+	if !found && len(bindings) == 1 {
+		target, found = bindings[0], true
+	}
+	if !found {
+		return semanticOccurrence{}, false
+	}
+	span, ok := snapshot.Frontend.Sources[declaration.ID]
+	if !ok || span.End == nil {
+		return semanticOccurrence{}, false
+	}
+	text, ok := semanticSource(snapshot, span.Source)
+	if !ok {
+		return semanticOccurrence{}, false
+	}
+	file, err := quint.NewSourceFile(span.Source, text)
+	if err != nil {
+		return semanticOccurrence{}, false
+	}
+	start, err := file.ByteOffset(span.Start.Line, span.Start.Col)
+	if err != nil {
+		return semanticOccurrence{}, false
+	}
+	end, err := file.ByteOffset(span.End.Line, span.End.Col)
+	if err != nil {
+		return semanticOccurrence{}, false
+	}
+	tokens := semanticNameTokens(text, start, end)
+	if len(tokens) < 3 || tokens[0].text != declaration.Kind || tokens[1].text != declaration.ProtoName || tokens[2].text != *declaration.DefName {
+		return semanticOccurrence{}, false
+	}
+	member, err := file.Location(tokens[2].start, tokens[2].end)
+	if err != nil {
+		return semanticOccurrence{}, false
+	}
+	return semanticOccurrence{ID: declaration.ID, Target: target.ID, Resolved: true, Name: *declaration.DefName, Location: Location{URI: uriForSource(span.Source), Range: semanticRange(member)}}, true
+}
+
 func buildSemanticIndex(snapshot *Snapshot) semanticIndex {
 	index := semanticIndex{definitions: insdict.NewDict[string, semanticDefinition](), occurrences: []semanticOccurrence{}}
 	addDefinition := func(id quint.ID, name, kind string, qualifier quint.Qualifier, doc *string, module string) {
@@ -314,6 +374,9 @@ func buildSemanticIndex(snapshot *Snapshot) semanticIndex {
 	}
 	for _, module := range snapshot.Frontend.Modules {
 		for _, declaration := range module.Declarations {
+			if selected, ok := semanticSelectedMember(snapshot, module.Name, declaration); ok {
+				index.occurrences = append(index.occurrences, selected)
+			}
 			if declaration.Name != "" {
 				addDefinition(declaration.ID, declaration.Name, declaration.Kind, declaration.Qualifier, declaration.Doc, module.Name)
 			}
@@ -345,6 +408,7 @@ func buildSemanticIndex(snapshot *Snapshot) semanticIndex {
 				})
 			}
 			for _, override := range declaration.Overrides {
+				addReference(override.Parameter.ID, override.Parameter.Name)
 				_ = quint.WalkExpr(&override.Expr, func(e *quint.Expr) (bool, error) {
 					if e.Kind == "name" {
 						addReference(e.ID, e.Name)
@@ -505,6 +569,9 @@ func semanticDocumentSymbols(snapshot *Snapshot, index semanticIndex) []semantic
 }
 
 func semanticCompletions(snapshot *Snapshot, index semanticIndex, position Position) semanticCompletionList {
+	if fields, handled := semanticFieldCompletions(snapshot, index, position); handled {
+		return fields
+	}
 	items := insdict.NewDict[string, semanticCompletionItem]()
 	addDefinition := func(name string, id quint.ID) {
 		item := semanticCompletionItem{Label: name, Kind: 6, Detail: semanticTypeDetail(snapshot, id)}
@@ -604,6 +671,9 @@ func semanticRename(snapshot *Snapshot, index semanticIndex, occurrence semantic
 	if !ok {
 		return nil, semanticError("The symbol's declaration is unavailable")
 	}
+	if definition.Kind == "typedef" && newName[0] >= 'a' && newName[0] <= 'z' {
+		return nil, semanticError("Type names must start with an uppercase letter")
+	}
 	// Reject possible capture rather than silently changing binding identity.
 	// This is conservative for unrelated scopes and modules, including imported
 	// bindings whose new spelling could otherwise be captured at a use site.
@@ -615,13 +685,6 @@ func semanticRename(snapshot *Snapshot, index semanticIndex, occurrence semantic
 	for _, other := range index.occurrences {
 		if !other.Resolved && other.Name == newName {
 			return nil, semanticError("The new name could capture an unresolved reference")
-		}
-	}
-	for _, module := range snapshot.Frontend.Modules {
-		for _, declaration := range module.Declarations {
-			if declaration.DefName != nil && *declaration.DefName != "*" && *declaration.DefName == definition.Name && declaration.ProtoName == definition.Module {
-				return nil, semanticError("Renaming selectively imported definitions is not yet supported")
-			}
 		}
 	}
 	changes := insdict.NewDict[string, []semanticTextEdit]()

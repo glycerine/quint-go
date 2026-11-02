@@ -3,6 +3,7 @@ package lsp
 import (
 	"context"
 	"encoding/json"
+	"sort"
 	"strings"
 	"testing"
 
@@ -317,11 +318,16 @@ module Main { import Lib.count pure val result = count + Set(2).getOnlyElement()
 	files.Set("/semantic/main.qnt", text)
 	snapshot := semanticTestSnapshot(t, "/semantic/main.qnt", files)
 	position := semanticTestPosition(t, text, "count +", 0)
-	if _, problem := semanticTestRequest(t, snapshot, "textDocument/rename", position, `,"newName":"renamed"`); problem == nil || !strings.Contains(problem.Message, "selectively") {
-		t.Fatal("selective import rename should be explicit", problem)
+	response, problem := semanticTestRequest(t, snapshot, "textDocument/rename", position, `,"newName":"renamed"`)
+	if problem != nil {
+		t.Fatal(problem)
+	}
+	var changes map[string][]semanticTextEdit
+	if err := json.Unmarshal(response.(semanticWorkspaceEdit).Changes, &changes); err != nil || len(changes[snapshot.URI]) != 3 {
+		t.Fatal(changes, err)
 	}
 	position = semanticTestPosition(t, text, "getOnlyElement", 0)
-	response, problem := semanticTestRequest(t, snapshot, "textDocument/hover", position, "")
+	response, problem = semanticTestRequest(t, snapshot, "textDocument/hover", position, "")
 	if problem != nil || response == nil || !strings.Contains(response.(semanticHover).Contents.Value, "int") {
 		t.Fatal(response, problem)
 	}
@@ -331,5 +337,135 @@ module Main { import Lib.count pure val result = count + Set(2).getOnlyElement()
 	}
 	if _, problem := semanticTestRequest(t, snapshot, "textDocument/rename", position, `,"newName":"renamed"`); problem == nil {
 		t.Fatal("builtin rename accepted")
+	}
+}
+
+func semanticTestApplyRename(t *testing.T, snapshot *Snapshot, files *insdict.Dict[string, string], position Position, newName string) *insdict.Dict[string, string] {
+	t.Helper()
+	nameJSON, _ := json.Marshal(newName)
+	response, problem := semanticTestRequest(t, snapshot, "textDocument/rename", position, `,"newName":`+string(nameJSON))
+	if problem != nil {
+		t.Fatal(problem)
+	}
+	var editsByURI map[string][]semanticTextEdit
+	if err := json.Unmarshal(response.(semanticWorkspaceEdit).Changes, &editsByURI); err != nil {
+		t.Fatal(err)
+	}
+	updated := insdict.NewDict[string, string]()
+	for path, text := range files.All() {
+		edits := editsByURI[uriForSource(path)]
+		sort.Slice(edits, func(i, j int) bool { return semanticPositionLess(edits[j].Range.Start, edits[i].Range.Start) })
+		changes := make([]contentChange, len(edits))
+		for i, edit := range edits {
+			r := edit.Range
+			changes[i] = contentChange{Range: &r, Text: edit.NewText}
+		}
+		result, err := applyChanges(text, changes)
+		if err != nil {
+			t.Fatal(path, err)
+		}
+		updated.Set(path, result)
+	}
+	return updated
+}
+
+func TestSemanticSelectiveRenameRechecksImportsExportsAndAliases(t *testing.T) {
+	t.Parallel()
+	for _, test := range []struct {
+		name, bridge, main, trigger string
+	}{
+		{"direct", "", `module Main { import Lib.limit from "lib" pure val use = limit }`, "limit from"},
+		{"wildcard", "", `module Main { import Lib.* from "lib" pure val use = limit }`, "limit }"},
+		{"reexport", `module Bridge { import Lib from "lib" export Lib.limit }`, `module Main { import Bridge.limit from "bridge" pure val use = limit }`, "limit from"},
+		{"module_alias", `module Bridge { import Lib as Alias from "lib" export Alias.limit }`, `module Main { import Bridge.limit from "bridge" pure val use = limit }`, "limit }"},
+		{"qualified_member", `module Bridge { import Lib from "lib" export Lib as Public }`, `module Main { import Bridge.Public::limit from "bridge" pure val use = Public::limit }`, "Public::limit from"},
+		{"type_alias", "", `module Main { import Lib.Count from "lib" pure def use(x: Count): Count = x }`, "Count from"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			files := insdict.NewDict[string, string]()
+			files.Set("/semantic/lib.qnt", `module Lib { pure val limit = 1 type Count = int }`)
+			if test.bridge != "" {
+				files.Set("/semantic/bridge.qnt", test.bridge)
+			}
+			files.Set("/semantic/main.qnt", test.main)
+			snapshot := semanticTestSnapshot(t, "/semantic/main.qnt", files)
+			position := semanticTestPosition(t, test.main, test.trigger, 0)
+			response, problem := semanticTestRequest(t, snapshot, "textDocument/definition", position, "")
+			if problem != nil || len(response.([]Location)) != 1 || response.([]Location)[0].URI != uriForSource("/semantic/lib.qnt") {
+				t.Fatal(response, problem)
+			}
+			newName := "renamed"
+			if test.name == "type_alias" {
+				if _, problem := semanticTestRequest(t, snapshot, "textDocument/rename", position, `,"newName":"lowercase"`); problem == nil {
+					t.Fatal("lowercase type rename accepted")
+				}
+				newName = "Renamed"
+			}
+			updated := semanticTestApplyRename(t, snapshot, files, position, newName)
+			renamed := semanticTestSnapshot(t, "/semantic/main.qnt", updated)
+			renamedPosition := semanticTestPosition(t, renamed.Text, newName, 0)
+			response, problem = semanticTestRequest(t, renamed, "textDocument/definition", renamedPosition, "")
+			if problem != nil || len(response.([]Location)) != 1 || semanticTestRangeText(t, renamed, response.([]Location)[0]) != newName {
+				t.Fatal(response, problem)
+			}
+			if test.name == "qualified_member" && !strings.Contains(renamed.Text, "Bridge.Public::renamed") {
+				t.Fatal("qualified prefix changed", renamed.Text)
+			}
+		})
+	}
+}
+
+func TestSemanticSelectiveRenameDistinguishesPrototypeAndUnrelatedBindings(t *testing.T) {
+	t.Parallel()
+	text := `module Count { pure val Count = 1 }
+module Other { pure val Count = 2 }
+module Main {
+  import Count.Count
+  import Other as Elsewhere
+  pure val use = Count + Elsewhere::Count
+}`
+	files := insdict.NewDict[string, string]()
+	files.Set("/semantic/main.qnt", text)
+	snapshot := semanticTestSnapshot(t, "/semantic/main.qnt", files)
+	position := semanticTestPosition(t, text, "Count.Count", 0)
+	position.Character += len("Count.")
+	updated := semanticTestApplyRename(t, snapshot, files, position, "renamed")
+	renamed := semanticTestSnapshot(t, "/semantic/main.qnt", updated)
+	if !strings.Contains(renamed.Text, "module Count { pure val renamed") || !strings.Contains(renamed.Text, "import Count.renamed") || !strings.Contains(renamed.Text, "renamed + Elsewhere::Count") || !strings.Contains(renamed.Text, "module Other { pure val Count = 2 }") {
+		t.Fatal(renamed.Text)
+	}
+}
+
+func TestSemanticRenameUpdatesInstanceConstantOverride(t *testing.T) {
+	t.Parallel()
+	text := `module Lib { const limit: int pure val value = limit }
+module Main { import Lib(limit=1) as Inst pure val use = Inst::limit }`
+	files := insdict.NewDict[string, string]()
+	files.Set("/semantic/main.qnt", text)
+	snapshot := semanticTestSnapshot(t, "/semantic/main.qnt", files)
+	position := semanticTestPosition(t, text, "limit:", 0)
+	updated := semanticTestApplyRename(t, snapshot, files, position, "renamed")
+	renamed := semanticTestSnapshot(t, "/semantic/main.qnt", updated)
+	if !strings.Contains(renamed.Text, "Lib(renamed=1)") || !strings.Contains(renamed.Text, "Inst::renamed") {
+		t.Fatal(renamed.Text)
+	}
+}
+
+func TestSemanticSelectedReexportUsesOwnerBindingAfterAliasReuse(t *testing.T) {
+	t.Parallel()
+	text := `module A { pure val selected = 1 }
+module B { pure val selected = 2 }
+module BridgeA { import A as Alias export Alias.selected }
+module BridgeB { import B as Alias export Alias.selected }
+module Main { import BridgeA.selected import BridgeB as Other pure val use = selected + Other::selected }`
+	files := insdict.NewDict[string, string]()
+	files.Set("/semantic/main.qnt", text)
+	snapshot := semanticTestSnapshot(t, "/semantic/main.qnt", files)
+	position := semanticTestPosition(t, text, "BridgeA.selected", 0)
+	position.Character += len("BridgeA.")
+	updated := semanticTestApplyRename(t, snapshot, files, position, "renamed")
+	renamed := semanticTestSnapshot(t, "/semantic/main.qnt", updated)
+	if !strings.Contains(renamed.Text, "module A { pure val renamed") || !strings.Contains(renamed.Text, "import A as Alias export Alias.renamed") || !strings.Contains(renamed.Text, "import B as Alias export Alias.selected") || !strings.Contains(renamed.Text, "renamed + Other::selected") {
+		t.Fatal(renamed.Text)
 	}
 }

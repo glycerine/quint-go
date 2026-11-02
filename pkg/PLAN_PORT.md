@@ -694,8 +694,9 @@ This follows the core CLI milestone but remains tracked for tooling parity.
   rename, and document symbols using the Go IR and lookup tables.
   - [x] Hover/builtin docs, definition/references, document symbols, scoped
     completion, and conservative rename with precise UTF-16 ranges.
-  - [ ] Field completion and selective-import rename; remaining capability
-    audit includes signature help and code actions.
+  - [x] Field/type-directed completion with incomplete current-buffer receivers,
+    and selective import/export/alias/type/instance rename with reanalysis.
+  - [ ] Remaining capability audit includes signature help and code actions.
 - [x] P11.4 Update editor launch/build configuration and run protocol-level
   regressions for edits, imports, incomplete syntax, and cross-file navigation.
   - [x] Protocol tests for edits, imports, malformed input, lifecycle, stale
@@ -2995,3 +2996,13 @@ word "retained" in the commit message.
   pending evidence. Combined recovery tests pass0.071s, focused race1.402s, and
   parser/source corpus checks including 53 files pass0.432s. Default tests need
   no reference runtime; CLI/LSP adoption of the new APIs is separate work.
+
+- 2026-11-02: Added type-directed builtin and record/tuple field completion,
+  preserving current unsaved overlays for trailing dots and typed prefixes.
+  Seventeen upstream helper vectors and 12 editor contexts cover ordering,
+  fields and builtin families. Rename now updates selective imports/exports,
+  aliases, qualified members, types, reexports and instance overrides; edited
+  graphs reanalyze cleanly, including upstream directive-edit omissions. LSP
+  tests pass0.054s, focused race1.192s, coverage89.9%. Arbitrary/chained receiver
+  completion remains outside the inspected upstream support; signature help,
+  code actions and broader workspace references remain separate work.

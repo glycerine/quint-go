@@ -1,0 +1,387 @@
+[
+  {
+    "type": {
+      "kind": "int"
+    },
+    "builtins": [
+      "to"
+    ],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "bool"
+    },
+    "builtins": [
+      "iff",
+      "implies"
+    ],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "str"
+    },
+    "builtins": [],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "set",
+      "elem": {
+        "kind": "int"
+      }
+    },
+    "builtins": [
+      "exists",
+      "forall",
+      "in",
+      "contains",
+      "union",
+      "intersect",
+      "exclude",
+      "subseteq",
+      "filter",
+      "map",
+      "fold",
+      "powerset",
+      "flatten",
+      "allLists",
+      "allListsUpTo",
+      "getOnlyElement",
+      "chooseSome",
+      "oneOf",
+      "isFinite",
+      "size"
+    ],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "list",
+      "elem": {
+        "kind": "str"
+      }
+    },
+    "builtins": [
+      "append",
+      "concat",
+      "head",
+      "tail",
+      "length",
+      "indices",
+      "replaceAt",
+      "slice",
+      "range",
+      "select",
+      "foldl",
+      "foldr"
+    ],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "fun",
+      "arg": {
+        "kind": "int"
+      },
+      "res": {
+        "kind": "bool"
+      }
+    },
+    "builtins": [
+      "get",
+      "keys",
+      "mapBy",
+      "setToMap",
+      "setOfMaps",
+      "set",
+      "setBy",
+      "put"
+    ],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "oper",
+      "args": [
+        {
+          "kind": "int"
+        }
+      ],
+      "res": {
+        "kind": "bool"
+      }
+    },
+    "builtins": [],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "var",
+      "name": "a"
+    },
+    "builtins": [],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "const",
+      "name": "Abstract"
+    },
+    "builtins": [],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "app",
+      "ctor": {
+        "kind": "const",
+        "name": "Alias"
+      },
+      "args": [
+        {
+          "kind": "int"
+        }
+      ]
+    },
+    "builtins": [],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "sum",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "None",
+            "fieldType": {
+              "kind": "tup",
+              "fields": {
+                "kind": "empty"
+              }
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "builtins": [],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "tup",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "arbitrary",
+            "fieldType": {
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "other",
+            "fieldType": {
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "builtins": [],
+    "fields": [
+      {
+        "label": "_1",
+        "kind": 5,
+        "detail": "int"
+      },
+      {
+        "label": "_2",
+        "kind": 5,
+        "detail": "str"
+      }
+    ]
+  },
+  {
+    "type": {
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "z",
+            "fieldType": {
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "a",
+            "fieldType": {
+              "kind": "list",
+              "elem": {
+                "kind": "bool"
+              }
+            }
+          },
+          {
+            "fieldName": "nested",
+            "fieldType": {
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "arbitrary",
+                    "fieldType": {
+                      "kind": "int"
+                    }
+                  },
+                  {
+                    "fieldName": "other",
+                    "fieldType": {
+                      "kind": "str"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "builtins": [
+      "fieldNames",
+      "with"
+    ],
+    "fields": [
+      {
+        "label": "z",
+        "kind": 5,
+        "detail": "int"
+      },
+      {
+        "label": "a",
+        "kind": 5,
+        "detail": "List[bool]"
+      },
+      {
+        "label": "nested",
+        "kind": 5,
+        "detail": "(int, str)"
+      }
+    ]
+  },
+  {
+    "type": {
+      "kind": "tup",
+      "fields": {
+        "kind": "empty"
+      }
+    },
+    "builtins": [],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "builtins": [
+      "fieldNames",
+      "with"
+    ],
+    "fields": []
+  },
+  {
+    "type": {
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "known",
+            "fieldType": {
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "rest"
+        }
+      }
+    },
+    "builtins": [
+      "fieldNames",
+      "with"
+    ],
+    "fields": [
+      {
+        "label": "known",
+        "kind": 5,
+        "detail": "int"
+      }
+    ]
+  },
+  {
+    "type": {
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "with",
+            "fieldType": {
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "é",
+            "fieldType": {
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "builtins": [
+      "fieldNames",
+      "with"
+    ],
+    "fields": [
+      {
+        "label": "with",
+        "kind": 5,
+        "detail": "int"
+      },
+      {
+        "label": "é",
+        "kind": 5,
+        "detail": "str"
+      }
+    ]
+  }
+]

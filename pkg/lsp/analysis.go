@@ -85,6 +85,12 @@ func (r *overlayResolver) Load(path quint.SourceLookupPath) (string, error) {
 
 func analyzeDocument(ctx context.Context, document Document, overlays *insdict.Dict[string, string]) (*Snapshot, error) {
 	snapshot := &Snapshot{URI: document.URI, Version: document.Version, Text: document.Text, Sources: insdict.NewDict[string, string](), Diagnostics: []Diagnostic{}}
+	// Keep current open-buffer imports even if an incomplete main document
+	// prevents ordinary parsing from reaching its imports. Completion recovery
+	// can then analyze the same unsaved source graph without stale snapshots.
+	for name, text := range overlays.All() {
+		snapshot.Sources.Set(name, text)
+	}
 	path, err := sourceForURI(document.URI)
 	if err != nil {
 		return snapshot, err

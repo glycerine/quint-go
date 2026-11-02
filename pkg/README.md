@@ -61,8 +61,9 @@ completion, and conservative rename with UTF-16 ranges. The VSCode extension def
 executable path, its bundled native binary, or `quint-lsp` on PATH. TypeScript is
 an explicit alternative. Its native build/development tasks and client selector
 regressions pass; full extension compilation and host/VSIX packaging remain
-unverified because the extension dependencies are absent locally. Field
-completion, selective-import rename, and additional capabilities remain open.
+unverified because the extension dependencies are absent locally. Type-directed
+field completion and selective-import rename have regression coverage; signature
+help and code actions remain open.
 
 Default tests use saved upstream fixtures and run without the reference tools.
 The fixture manifest is in [testdata/parser/README.md](testdata/parser/README.md).

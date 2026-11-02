@@ -170,8 +170,8 @@ Do not infer complete exit-status parity from the command dispatcher comment.
 | --- | --- |
 | Stdio JSON-RPC lifecycle, initialize/shutdown/exit, document open/change/save/close | Implemented with UTF-16 incremental edits, import overlays, stale-work rejection and cancellation; workspace/didChangeWatchedFiles reanalyzes open documents for changed/created/deleted .qnt imports while preserving unsaved overlays. |
 | Diagnostics, hover/builtin docs, definition, references, document symbols | Implemented in Go; partial behavior for incomplete IR and all upstream navigation shapes remains an audit. |
-| Completion | Partial: names/scopes/builtins; field/type-directed completion remains pending. |
-| Rename/prepareRename | Partial: conservative name validation and source edits; selective-import rename remains pending. |
+| Completion | Implemented for names/scopes/builtins and type-directed fields on identifier receivers, including incomplete current buffers; arbitrary/chained receivers are outside inspected upstream support. |
+| Rename/prepareRename | Implemented with validation and edits across selective imports/exports, aliases, qualified members, types and instance overrides; broader workspace discovery remains an audit. |
 | Signature help and code actions/quick fixes | Pending; present in upstream server, absent from Go advertised capabilities. |
 | Workspace symbols | Not advertised by either inspected server; future capability, not a proven upstream regression. |
 | VSCode Go launch/configuration | Configured: Go stdio is default, TypeScript IPC is explicit; path setting selects command/bundled binary/PATH. Go startup errors do not switch backends. Native build script and development launches exist. |
