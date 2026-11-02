@@ -797,3 +797,11 @@ constructor boundaries, and preserve union shape between substitution passes.
 Separate Go regressions require prompt rejection of expanding/oscillating cycles
 and delayed alias expansions; those safety guards are not counted as terminating
 upstream oracle cases. Native shared occurrences use NewStateVariable.
+
+`value_key_test.go` compares direct identity-key encoding against the exact
+previous JSON-array formula across Unicode, invalid UTF-8, HTML/control escapes,
+nested maps/sets, deep values and large child lists. `integer_decode_test.go`
+compares canonical parsing/ID decoding against the prior big.Int-based behavior,
+including noncanonical accepted forms, huge numbers, malformed raw/outer JSON,
+unchanged failed receivers and input-byte ownership. These fast unit oracles
+require no generator and protect exact existing byte/hash/error contracts.

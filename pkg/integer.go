@@ -10,6 +10,12 @@ import (
 type Integer struct{ decimal string }
 
 func ParseInteger(s string) (Integer, error) {
+	if decimalJSON([]byte(s)) {
+		if s == "0" || s == "-0" {
+			return Integer{}, nil
+		}
+		return Integer{decimal: s}, nil
+	}
 	n, ok := new(big.Int).SetString(s, 10)
 	if !ok {
 		return Integer{}, fmt.Errorf("invalid integer %q", s)
@@ -71,7 +77,7 @@ func ParseID(s string) (ID, error) {
 	if err != nil {
 		return ID{}, err
 	}
-	if n.Big().Sign() < 0 {
+	if n.String()[0] == '-' {
 		return ID{}, fmt.Errorf("negative IR ID %s", s)
 	}
 	if n.String() == "0" {
@@ -86,11 +92,10 @@ func (id *ID) UnmarshalJSON(data []byte) error {
 	if err := n.UnmarshalJSON(data); err != nil {
 		return err
 	}
-	v, err := ParseID(n.String())
-	if err != nil {
-		return err
+	if n.String()[0] == '-' {
+		return fmt.Errorf("negative IR ID %s", n.String())
 	}
-	*id = v
+	*id = ID{value: n}
 	return nil
 }
 func (id ID) MarshalText() ([]byte, error) { return []byte(id.String()), nil }

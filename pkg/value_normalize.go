@@ -1,10 +1,14 @@
 package quint
 
 import (
+	"bytes"
 	"encoding/json"
+	"encoding/json/jsontext"
 	"fmt"
+	"slices"
 	"sort"
 	"unicode/utf16"
+	"unicode/utf8"
 
 	"github.com/glycerine/insdict"
 	"golang.org/x/text/collate"
@@ -149,27 +153,76 @@ func utf16Less(a, b string) bool {
 // Identity is independent of locale-sort ties: distinct Unicode strings may
 // collate equally, but sets/maps still compare by their exact values.
 func normalizedValueKey(value Expr) string {
-	parts := []string{value.Kind, value.Opcode}
+	return string(appendNormalizedValueKey(nil, value))
+}
+
+func appendNormalizedValueKey(dst []byte, value Expr) []byte {
+	var localChildren [8][]byte
+	children := localChildren[:]
+	if len(value.Args) > len(localChildren) {
+		children = make([][]byte, len(value.Args))
+	} else {
+		children = children[:len(value.Args)]
+	}
+	capacity := len(value.Kind) + len(value.Opcode) + 16
+	literal := ""
 	switch value.Kind {
 	case "int":
-		parts = append(parts, value.Int.String())
+		literal = value.Int.String()
 	case "str":
-		parts = append(parts, value.Str)
+		literal = value.Str
 	case "bool":
+		literal = "false"
 		if value.Bool {
-			parts = append(parts, "true")
-		} else {
-			parts = append(parts, "false")
+			literal = "true"
 		}
 	}
-	children := []string{}
-	for _, child := range value.Args {
-		children = append(children, normalizedValueKey(child))
+	capacity += len(literal)
+	for i, child := range value.Args {
+		children[i] = appendNormalizedValueKey(nil, child)
+		// Child keys are already valid JSON with HTML/separators escaped.
+		// Only their quotes and backslashes need another escaping level.
+		capacity += len(children[i]) + 3 + bytes.Count(children[i], []byte{'"'}) + bytes.Count(children[i], []byte{'\\'})
+	}
+	if cap(dst)-len(dst) < capacity {
+		grown := make([]byte, len(dst), len(dst)+capacity)
+		copy(grown, dst)
+		dst = grown
+	}
+	dst = append(dst, '[')
+	dst = appendValueKeyString(dst, value.Kind)
+	dst = append(dst, ',')
+	dst = appendValueKeyString(dst, value.Opcode)
+	switch value.Kind {
+	case "int":
+		dst = append(dst, ',')
+		dst = appendValueKeyString(dst, literal)
+	case "str":
+		dst = append(dst, ',')
+		dst = appendValueKeyString(dst, literal)
+	case "bool":
+		dst = append(dst, ',')
+		dst = appendValueKeyString(dst, literal)
 	}
 	if value.Opcode == "Set" || value.Opcode == "Map" {
-		sort.Strings(children)
+		slices.SortFunc(children, bytes.Compare)
 	}
-	parts = append(parts, children...)
-	encoded, _ := json.Marshal(parts)
-	return string(encoded)
+	for _, child := range children {
+		dst = append(dst, ',')
+		dst, _ = jsontext.AppendQuote(dst, child)
+	}
+	return append(dst, ']')
+}
+
+// Preserve the original json.Marshal([]string) identity bytes, including HTML,
+// JavaScript separator, and invalid UTF-8 escaping. Most keys need only the
+// append-only JSON string encoder; the uncommon escaping cases use v1's exact
+// string representation. Child keys stay byte slices until the final result.
+func appendValueKeyString[T ~string | ~[]byte](dst []byte, value T) []byte {
+	if bytes.IndexAny([]byte(value), "<>&\u2028\u2029") >= 0 || !utf8.Valid([]byte(value)) {
+		encoded, _ := json.Marshal(string(value))
+		return append(dst, encoded...)
+	}
+	encoded, _ := jsontext.AppendQuote(dst, value)
+	return encoded
 }

@@ -742,6 +742,8 @@ any remaining TypeScript client code is distinguished from language-server logic
     parser agreement, bounded storage, absent state occurrences, and concurrency.
   - [x] Replace per-node expression decoding maps with strict raw-field wire
     structs, preserving legacy JSON semantics and complete receiver ownership.
+  - [x] Encode value identity keys directly with identical bytes and use canonical
+    decimal fast paths for integer/ID parsing without repeated big.Int work.
 - [ ] P12.6 Add CI jobs that build and test the `pkg/` module with pinned
   dependencies, reproducible grammar generation, and supported OS/architecture
   targets. Keep reference-tool jobs separate from Go-only validation.
@@ -3046,3 +3048,13 @@ word "retained" in the commit message.
   close a reviewed guard bypass. Public constructor/decoder tests have 100%
   coverage; cycle guards exceed95%. These tests close P5.1 for valid construction
   APIs; raw native literals remain value occurrences unless constructed explicitly.
+
+- 2026-11-02: Optimized identity-key encoding and canonical integer/ID parsing
+  without changing bytes, hashes or accepted inputs. Independent old-formula
+  differential tests cover Unicode/invalid UTF-8/HTML/control escaping, nested
+  ordering, deep/large values, signed zero, plus/leading-zero forms, huge numbers,
+  malformed JSON, receiver atomicity and ownership. Scalar keys improve562ns to
+  323ns (176B to40B), nested keys25.2µs to17.2µs (60 to11 allocations); small raw
+  JSON IDs improve1.01µs to48.6ns. Canonical parsing and ID decoding paths have
+  100% function coverage. Three full core runs pass in2.218s total while a
+  benchmark ran concurrently; default-suite timing remains tracked separately.
