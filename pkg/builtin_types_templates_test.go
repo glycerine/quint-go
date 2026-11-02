@@ -53,8 +53,12 @@ type builtinTypeTemplateFixture struct {
 }
 
 func readBuiltinTypeTemplateFixtures(t *testing.T) []builtinTypeTemplateFixture {
+	return readBuiltinTypeTemplateFixtureFile(t, "builtin_types_fixed.json")
+}
+
+func readBuiltinTypeTemplateFixtureFile(t *testing.T, name string) []builtinTypeTemplateFixture {
 	t.Helper()
-	data, err := os.ReadFile("testdata/parser/builtin_types_fixed.json")
+	data, err := os.ReadFile("testdata/parser/" + name)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -107,6 +111,11 @@ func TestFixedBuiltinTypeTemplatesMatchReference(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
+				// The public signatures now retain upstream provenance IDs. Keep
+				// the original no-ID fixture as an independent structural oracle.
+				if err := WalkType(&got.Type, func(typ *Type) (bool, error) { typ.ID = nil; return true, nil }); err != nil {
+					t.Fatal(err)
+				}
 				if !reflect.DeepEqual(got, fixture.Scheme) {
 					t.Fatalf("%s/%d differs from reference:\n got %#v\nwant %#v", fixture.Name, arity, got, fixture.Scheme)
 				}
@@ -114,6 +123,43 @@ func TestFixedBuiltinTypeTemplatesMatchReference(t *testing.T) {
 					t.Fatal(err)
 				}
 				assertBuiltinTypeTemplateNoIDs(t, got.Type)
+			}
+		})
+	}
+}
+
+func TestFixedBuiltinTypeTemplatesMatchRawReference(t *testing.T) {
+	t.Parallel()
+	fixtures := readBuiltinTypeTemplateFixtureFile(t, "builtin_types_fixed_ids.json")
+	if len(fixtures) != len(fixedBuiltinTypes) {
+		t.Fatalf("raw fixture inventory %d differs from source %d", len(fixtures), len(fixedBuiltinTypes))
+	}
+	seen := map[string]bool{}
+	for _, fixture := range fixtures {
+		if seen[fixture.Name] || fixedBuiltinTypes[fixture.Name] != fixture.Signature {
+			t.Fatalf("raw fixture inventory/source drift for %s", fixture.Name)
+		}
+		seen[fixture.Name] = true
+		t.Run(fixture.Name, func(t *testing.T) {
+			t.Parallel()
+			for _, arity := range []int{0, 999} {
+				got, err := BuiltinTypeSignature(fixture.Name, arity)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if !reflect.DeepEqual(got, fixture.Scheme) {
+					actual, _ := json.Marshal(got)
+					expected, _ := json.Marshal(fixture.Scheme)
+					t.Fatalf("%s/%d differs from raw reference:\n got %s\nwant %s", fixture.Name, arity, actual, expected)
+				}
+				if err := WalkType(&got.Type, func(typ *Type) (bool, error) {
+					if typ.ID == nil {
+						t.Errorf("%s node %s has no parser provenance", fixture.Name, typ.Kind)
+					}
+					return true, nil
+				}); err != nil {
+					t.Fatal(err)
+				}
 			}
 		})
 	}

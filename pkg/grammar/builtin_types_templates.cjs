@@ -1,5 +1,5 @@
 // Regenerate with: go generate ./pkg
-// Both outputs use the reference parser, independently of the Go implementation.
+// All outputs use the reference parser, independently of the Go implementation.
 const crypto = require('crypto')
 const fs = require('fs')
 const path = require('path')
@@ -16,16 +16,17 @@ require(path.join(root, 'quint/node_modules/ts-node')).register({
   transpileOnly: true,
 })
 const { getSignatures } = require(path.join(root, 'quint/src/types/builtinSignatures'))
+const JSONbig = require(path.join(root, 'quint/node_modules/json-bigint'))({ useNativeBigInt: true })
 const signatures = getSignatures()
 const cases = entries.map(({ name, signature }) => {
   const parse = signatures.get(name)
   if (!parse) throw new Error(`Missing reference signature: ${name}`)
   const parsed = parse(0)
-  const scheme = JSON.parse(JSON.stringify({
+  const scheme = {
     type: parsed.type,
     typeVariables: [...parsed.typeVariables],
     rowVariables: [...parsed.rowVariables],
-  }, (key, value) => key === 'id' ? undefined : value))
+  }
   return { name, signature, scheme }
 })
 const hash = crypto.createHash('sha256')
@@ -36,13 +37,17 @@ const stringSlice = strings => `[]string{${strings.map(quote).join(',')}}`
 
 function checkFields(value, allowed) {
   for (const name of Object.keys(value)) {
-    if (!allowed.includes(name)) throw new Error(`Unsupported field ${name} in ${JSON.stringify(value)}`)
+    if (!allowed.includes(name)) throw new Error(`Unsupported field ${name} in ${JSONbig.stringify(value)}`)
   }
 }
 
 function typeLiteral(type) {
-  checkFields(type, ['kind', 'name', 'elem', 'arg', 'res', 'args', 'fields', 'ctor'])
+  checkFields(type, ['id', 'kind', 'name', 'elem', 'arg', 'res', 'args', 'fields', 'ctor'])
   const fields = [`Kind:${quote(type.kind)}`]
+  if (type.id !== undefined) {
+    if (typeof type.id !== 'bigint' || type.id <= 0n) throw new Error('Expected a positive parser type ID')
+    fields.push(`ID:&ID{value:Integer{decimal:${quote(type.id.toString())}}}`)
+  }
   if (type.name !== undefined) fields.push(`Name:${quote(type.name)}`)
   for (const [js, go] of [['elem', 'Elem'], ['arg', 'Arg'], ['res', 'Res'], ['ctor', 'Ctor']]) {
     if (type[js] !== undefined) fields.push(`${go}:&${typeLiteral(type[js])}`)
@@ -80,5 +85,7 @@ const lines = [
   '',
 ]
 fs.writeFileSync(generated, lines.join('\n'))
-fs.writeFileSync(path.join(root, 'pkg/testdata/parser/builtin_types_fixed.json'), JSON.stringify(cases, null, 2) + '\n')
+// Retain the original normalized structural oracle and separately pin raw IDs.
+fs.writeFileSync(path.join(root, 'pkg/testdata/parser/builtin_types_fixed.json'), JSONbig.stringify(cases, (key, value) => key === 'id' ? undefined : value, 2) + '\n')
+fs.writeFileSync(path.join(root, 'pkg/testdata/parser/builtin_types_fixed_ids.json'), JSONbig.stringify(cases, null, 2) + '\n')
 console.log(`Generated ${cases.length} fixed builtin type templates (${digest})`)

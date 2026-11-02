@@ -63,9 +63,8 @@ func ApplySubstitution(subs []Substitution, t Type) (Type, error) {
 		if out.Res, err = cp(t.Res); err != nil {
 			return Type{}, err
 		}
-		if t.Ctor != nil {
-			v := *t.Ctor
-			out.Ctor = &v
+		if out.Ctor, err = cp(t.Ctor); err != nil {
+			return Type{}, err
 		}
 		if t.Args != nil {
 			out.Args = make([]Type, len(t.Args))

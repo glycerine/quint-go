@@ -268,6 +268,8 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Generate match constraints with wildcard and eliminator validation.
   - [x] Dispatch application constraints with upstream special-builtin arity checks.
   - [x] Connect builtin dispatch to expression constraint traversal.
+  - [x] Preserve exact fixed/dynamic builtin type-node IDs with owned copies;
+    compare raw inference and CLI metadata as well as normalized schemes.
   - [ ] Resolve tuple-prefix resource-limit parity and validate full generator parity.
 - [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
   and incremental inference used by the REPL and editor.
@@ -3089,3 +3091,13 @@ word "retained" in the commit message.
   catch overflow beyond int64. Focused domain tests pass0.078s; compound statement
   coverage89.3%. This completes the independent compound library batch; attaching
   compact domains to source RuntimeValue/evaluator operations remains open.
+
+- 2026-11-02: Preserved actual upstream type-node provenance in all 82 static
+  and nine dynamic builtin signatures. The original normalized fixtures remain
+  unchanged; new raw fixtures cover 82 fixed and 52 dynamic cases. Ten saved
+  inference cases and complete CLI stages now compare all type IDs exactly.
+  Deep-copy tests cover every node ID, constructor IDs and concurrent callers;
+  focused race checks pass. Dynamic trees remain direct and uncached, while
+  static lookups still avoid parser startup. Standalone ParseType continues to
+  omit IDs by contract; source type-application allocation order is a separate
+  parser audit. No annotation-propagation change was needed.

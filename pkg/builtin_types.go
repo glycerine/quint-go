@@ -102,8 +102,9 @@ func cloneBuiltinTypeScheme(scheme TypeScheme) (TypeScheme, error) {
 	return scheme, nil
 }
 
-// BuiltinTypeSignature returns the quantified signature for a builtin. Product
-// and variant operations with special constraints are intentionally absent.
+// BuiltinTypeSignature returns a caller-owned quantified signature for a builtin,
+// retaining the reference parser's type-node provenance IDs. Product and variant
+// operations with special constraints are intentionally absent.
 func BuiltinTypeSignature(name string, arity int) (TypeScheme, error) {
 	if arity < 0 {
 		return TypeScheme{}, fmt.Errorf("negative builtin arity")

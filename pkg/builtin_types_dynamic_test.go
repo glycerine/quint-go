@@ -71,6 +71,14 @@ func TestUpstreamDynamicBuiltinTypeTrees(t *testing.T) {
 	for _, fixture := range fixtures {
 		t.Run(fmt.Sprintf("%s/%d", fixture.Name, fixture.Arity), func(t *testing.T) {
 			got, err := BuiltinTypeSignature(fixture.Name, fixture.Arity)
+			if err != nil {
+				t.Fatal(err)
+			}
+			// Preserve the original structural oracle independently of the raw
+			// provenance IDs checked by TestUpstreamDynamicBuiltinTypeIDs.
+			if err = WalkType(&got.Type, func(typ *Type) (bool, error) { typ.ID = nil; return true, nil }); err != nil {
+				t.Fatal(err)
+			}
 			// JSON omitempty removes empty tree slices in both representations.
 			actual, e1 := json.Marshal(got)
 			expected, e2 := json.Marshal(fixture.Scheme)

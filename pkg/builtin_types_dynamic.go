@@ -5,8 +5,11 @@ import (
 	"strconv"
 )
 
+//go:generate node grammar/builtin_types_dynamic_ids.cjs
+
 // dynamicBuiltinTypeScheme builds variable-arity builtin signatures directly.
 // Every argument/result subtree is fresh; no caller-selected arity is cached.
+// IDs follow the reference parser's postorder allocation, starting anew per call.
 func dynamicBuiltinTypeScheme(name string, arity int) (TypeScheme, error) {
 	if arity < 0 {
 		return TypeScheme{}, fmt.Errorf("negative builtin arity")
@@ -19,7 +22,14 @@ func dynamicBuiltinTypeScheme(name string, arity int) (TypeScheme, error) {
 	default:
 		return TypeScheme{}, fmt.Errorf("no ordinary builtin signature for %q", name)
 	}
-	variable := func(name string) Type { return Type{Kind: "var", Name: name} }
+	nextID := 1
+	withID := func(typ Type) Type {
+		id := ID{value: Integer{decimal: strconv.Itoa(nextID)}}
+		nextID++
+		typ.ID = &id
+		return typ
+	}
+	variable := func(name string) Type { return withID(Type{Kind: "var", Name: name}) }
 	arguments := make([]Type, arity)
 	variables := []string{}
 	var result Type
@@ -33,51 +43,56 @@ func dynamicBuiltinTypeScheme(name string, arity int) (TypeScheme, error) {
 		if name == "Set" {
 			kind = "set"
 		}
-		result = Type{Kind: kind, Elem: &element}
+		result = withID(Type{Kind: kind, Elem: &element})
 		variables = []string{"a"}
 	case "Map":
 		for i := range arguments {
-			arguments[i] = Type{Kind: "tup", Fields: &Row{Kind: "row", Fields: []RowField{
+			arguments[i] = withID(Type{Kind: "tup", Fields: &Row{Kind: "row", Fields: []RowField{
 				{Name: "0", Type: variable("a")}, {Name: "1", Type: variable("b")},
-			}, Other: &Row{Kind: "empty"}}}
+			}, Other: &Row{Kind: "empty"}}})
 		}
 		key, value := variable("a"), variable("b")
-		result = Type{Kind: "fun", Arg: &key, Res: &value}
+		result = withID(Type{Kind: "fun", Arg: &key, Res: &value})
 		variables = []string{"a", "b"}
 	case "and", "or", "actionAll", "actionAny":
 		for i := range arguments {
-			arguments[i] = Type{Kind: "bool"}
+			arguments[i] = withID(Type{Kind: "bool"})
 		}
-		result = Type{Kind: "bool"}
+		result = withID(Type{Kind: "bool"})
 	case "matchVariant":
 		arguments[0] = variable("a")
 		for i := 1; i < arity; i += 2 {
-			arguments[i] = Type{Kind: "str"}
+			arguments[i] = withID(Type{Kind: "str"})
+			argument := variable("a")
 			value := variable("b")
-			arguments[i+1] = Type{Kind: "oper", Args: []Type{variable("a")}, Res: &value}
+			arguments[i+1] = withID(Type{Kind: "oper", Args: []Type{argument}, Res: &value})
 		}
 		result = variable("b")
 		variables = []string{"a", "b"}
 	case "tuples":
 		variables = make([]string, arity)
-		fields := make([]RowField, arity)
 		for i := range arguments {
 			variables[i] = "t" + strconv.Itoa(i)
 			element := variable(variables[i])
-			arguments[i] = Type{Kind: "set", Elem: &element}
-			fields[i] = RowField{Name: strconv.Itoa(i), Type: variable(variables[i])}
+			arguments[i] = withID(Type{Kind: "set", Elem: &element})
 		}
-		product := Type{Kind: "tup", Fields: &Row{Kind: "row", Fields: fields, Other: &Row{Kind: "empty"}}}
+		var product Type
 		switch arity {
 		case 0:
-			product.Fields = &Row{Kind: "empty"}
+			product = withID(Type{Kind: "tup", Fields: &Row{Kind: "empty"}})
 		case 1:
 			// The original generated signature Set[(t0)] parses as Set[t0].
 			product = variable("t0")
+		default:
+			fields := make([]RowField, arity)
+			for i := range fields {
+				fields[i] = RowField{Name: strconv.Itoa(i), Type: variable(variables[i])}
+			}
+			product = withID(Type{Kind: "tup", Fields: &Row{Kind: "row", Fields: fields, Other: &Row{Kind: "empty"}}})
 		}
-		result = Type{Kind: "set", Elem: &product}
+		result = withID(Type{Kind: "set", Elem: &product})
 	default:
 		return TypeScheme{}, fmt.Errorf("no ordinary builtin signature for %q", name)
 	}
-	return TypeScheme{Type: Type{Kind: "oper", Args: arguments, Res: &result}, TypeVariables: variables, RowVariables: []string{}}, nil
+	return TypeScheme{Type: withID(Type{Kind: "oper", Args: arguments, Res: &result}), TypeVariables: variables, RowVariables: []string{}}, nil
 }
