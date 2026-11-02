@@ -868,3 +868,11 @@ word "retained" in the commit message.
   Default tests pass within the sub-second target. P2.7 remains open for source
   maps/partial results and differential sorting fixtures; cycle-name order uses
   discovery order and still needs comparison with upstream Immutable.Set ordering.
+
+- 2026-11-02: Added eight upstream phase-two source-resolution fixtures and
+  end-to-end LoadAndSortModules comparisons. Verified exact import-read order,
+  successful module ordering, and error codes/messages for diamond and relative
+  imports, instances, missing files, case conflicts, cycles, unknown modules, and
+  duplicate names. All fixtures match; default tests pass (core 0.371s; combined
+  execution 0.429s). P2.7/P2.9 remain open for source maps, partial results,
+  accumulated diagnostics, and broader cycle/order edge cases.

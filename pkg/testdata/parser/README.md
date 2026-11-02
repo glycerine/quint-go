@@ -28,3 +28,11 @@ unbound variables, deprecated maps, duplicate fields, and multiple record spread
 Reference IDs are omitted because source-map parity is pending. Cases currently
 contain one diagnostic each; they do not establish semantic-error accumulation
 or partial-IR recovery parity.
+
+`imports.json` runs upstream phase two with an in-memory resolver and records
+import-read order, final module order, and diagnostic codes/messages. The Go test
+exercises LoadAndSortModules against the same source graph. Its initial main-file
+read is excluded because upstream phase two receives already-parsed main modules.
+Cases cover diamonds, relative directories, instances, missing files, case
+conflicts, cycles, unknown modules, and duplicate names. Partial modules on error
+and source maps remain outside this comparison.

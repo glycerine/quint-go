@@ -1,0 +1,150 @@
+[
+  {
+    "name": "diamond",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" import B from \"b\" }",
+      "a.qnt": "module A { import C from \"c\" }",
+      "b.qnt": "module B { import C from \"./c\" }",
+      "c.qnt": "module C {}"
+    },
+    "reads": [
+      "a.qnt",
+      "b.qnt",
+      "c.qnt"
+    ],
+    "modules": [
+      "C",
+      "A",
+      "B",
+      "Main"
+    ],
+    "errors": []
+  },
+  {
+    "name": "relative",
+    "sources": {
+      "main.qnt": "module Main { import A from \"sub/a\" }",
+      "sub/a.qnt": "module A { import C from \"../c\" }",
+      "c.qnt": "module C {}"
+    },
+    "reads": [
+      "sub/a.qnt",
+      "c.qnt"
+    ],
+    "modules": [
+      "C",
+      "A",
+      "Main"
+    ],
+    "errors": []
+  },
+  {
+    "name": "instance",
+    "sources": {
+      "main.qnt": "module Main { import A(N=1) as B from \"a\" }",
+      "a.qnt": "module A { const N: int }"
+    },
+    "reads": [
+      "a.qnt"
+    ],
+    "modules": [
+      "A",
+      "Main"
+    ],
+    "errors": []
+  },
+  {
+    "name": "missing",
+    "sources": {
+      "main.qnt": "module Main { import A from \"missing\" }"
+    },
+    "reads": [
+      "missing.qnt"
+    ],
+    "modules": [
+      "Main"
+    ],
+    "errors": [
+      {
+        "code": "QNT013",
+        "message": "import ... from 'missing': could not load"
+      }
+    ]
+  },
+  {
+    "name": "case",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" import A from \"A\" }",
+      "a.qnt": "module A {}"
+    },
+    "reads": [
+      "a.qnt"
+    ],
+    "modules": [
+      "Main"
+    ],
+    "errors": [
+      {
+        "code": "QNT408",
+        "message": "Importing two files that only differ in case: a.qnt vs. A.qnt. Choose one way."
+      }
+    ]
+  },
+  {
+    "name": "cycle",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" }",
+      "a.qnt": "module A { import Main from \"main\" }"
+    },
+    "reads": [
+      "a.qnt"
+    ],
+    "modules": [
+      "Main",
+      "A"
+    ],
+    "errors": [
+      {
+        "code": "QNT098",
+        "message": "Cyclic imports among: Main, A"
+      }
+    ]
+  },
+  {
+    "name": "unknown",
+    "sources": {
+      "main.qnt": "module Main { import Missing }"
+    },
+    "reads": [],
+    "modules": [
+      "Main"
+    ],
+    "errors": [
+      {
+        "code": "QNT405",
+        "message": "Module Main imports an unknown module Missing"
+      }
+    ]
+  },
+  {
+    "name": "duplicate",
+    "sources": {
+      "main.qnt": "module Main { import A from \"a\" } module A {}",
+      "a.qnt": "module A {}"
+    },
+    "reads": [
+      "a.qnt"
+    ],
+    "modules": [
+      "Main",
+      "A",
+      "A"
+    ],
+    "errors": [
+      {
+        "code": "QNT101",
+        "message": "Multiple modules conflict on the same name: A"
+      }
+    ]
+  }
+]

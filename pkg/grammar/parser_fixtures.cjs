@@ -37,3 +37,28 @@ const errorFixtures = errorCases.map(([name,source])=>{
  return {name,source,errors:result.errors.map(({code,message,data})=>({code,message,data}))}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/errors.json'),JSONbig.stringify(errorFixtures,null,2)+'\n')
+const {parsePhase2sourceResolution} = require(path.join(root,'quint/src/parsing/quintParserFrontend'))
+const {right,left} = require(path.join(root,'quint/node_modules/@sweet-monads/either'))
+const importCases = [
+ ['diamond', {'main.qnt':'module Main { import A from "a" import B from "b" }','a.qnt':'module A { import C from "c" }','b.qnt':'module B { import C from "./c" }','c.qnt':'module C {}'}],
+ ['relative', {'main.qnt':'module Main { import A from "sub/a" }','sub/a.qnt':'module A { import C from "../c" }','c.qnt':'module C {}'}],
+ ['instance', {'main.qnt':'module Main { import A(N=1) as B from "a" }','a.qnt':'module A { const N: int }'}],
+ ['missing', {'main.qnt':'module Main { import A from "missing" }'}],
+ ['case', {'main.qnt':'module Main { import A from "a" import A from "A" }','a.qnt':'module A {}'}],
+ ['cycle', {'main.qnt':'module Main { import A from "a" }','a.qnt':'module A { import Main from "main" }'}],
+ ['unknown', {'main.qnt':'module Main { import Missing }'}],
+ ['duplicate', {'main.qnt':'module Main { import A from "a" } module A {}','a.qnt':'module A {}'}],
+]
+const importFixtures=importCases.map(([name,sources])=>{
+ const reads=[]
+ const resolver={
+  lookupPath:(stem,file)=>{const normalizedPath=path.posix.join(stem,file);return {normalizedPath,toSourceName:()=>normalizedPath}},
+  stempath:p=>path.posix.dirname(p.normalizedPath),
+  load:p=>{reads.push(p.normalizedPath);return p.normalizedPath in sources?right(sources[p.normalizedPath]):left('missing')},
+ }
+ const ids=newIdGenerator()
+ const first=parsePhase1fromText(ids,sources['main.qnt'],'main.qnt')
+ const result=parsePhase2sourceResolution(ids,resolver,resolver.lookupPath('.','main.qnt'),first)
+ return {name,sources,reads,modules:result.modules.map(m=>m.name),errors:result.errors.map(({code,message})=>({code,message}))}
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/imports.json'),JSONbig.stringify(importFixtures,null,2)+'\n')
