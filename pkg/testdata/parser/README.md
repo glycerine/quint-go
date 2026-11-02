@@ -939,3 +939,12 @@ checking when inherited settings disable it, validate interior loops, and reject
 missing/parameterized properties. CLI --temporal has real Boolean lasso and
 optional generated-model checks. No successful result is reported for unsupported
 temporal quantifiers or absent lasso metadata. Hard preemption and ITF remain open.
+
+`verification_invariants.json` contains 13 actual TypeScript final-state checks,
+produced by `grammar/verification_invariants_fixtures.cjs`. Go reporting preserves
+individual expression boundaries through optional compilation wrappers, including
+conjunctions, duplicates, lexical dependencies, collections and huge integers.
+Default tests also use an actual Go checker counterexample, imported constant
+overrides, a later ITF state, missing values and malformed reporting inputs.
+Reporting uses a fresh transported module and never alters the proof verdict,
+caller compilation or trace. CLI integration is tracked separately.

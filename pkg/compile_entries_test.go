@@ -30,3 +30,23 @@ func TestCompilationEntries(t *testing.T) {
 		t.Fatal("malformed expression accepted")
 	}
 }
+
+func TestCompilationInvariantReportEntries(t *testing.T) {
+	labels := []string{"x>0 and y>0", "x<2", "x<2"}
+	declarations, err := SynthesizeCompilationEntries(CompilationEntries{Target: "json", Invariants: labels, InvariantReports: true}, NewIDGenerator())
+	if err != nil || len(declarations) != 4 {
+		t.Fatal(declarations, err)
+	}
+	for i := range labels {
+		if declarations[i+1].Name != InvariantReportName(i) || declarations[i+1].Qualifier != Val {
+			t.Fatal(declarations[i+1])
+		}
+	}
+	if declarations[1].Expr.Opcode != "and" || declarations[2].Expr.Opcode != "ilt" || labels[0] != "x>0 and y>0" {
+		t.Fatal("predicate boundaries or input changed", declarations)
+	}
+	empty, err := SynthesizeCompilationEntries(CompilationEntries{Target: "json", InvariantReports: true}, NewIDGenerator())
+	if err != nil || len(empty) != 0 {
+		t.Fatal(empty, err)
+	}
+}

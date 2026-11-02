@@ -1,6 +1,9 @@
 package quint
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 // CompilationEntries describes the extra declarations synthesized by compile.
 // Expression strings are parsed as Quint, as in the upstream CLI.
@@ -10,6 +13,9 @@ type CompilationEntries struct {
 	Init, Step                   *string
 	Invariants                   []string
 	InductiveInvariant, Temporal string
+	// InvariantReports preserves separately flattened predicates for reporting
+	// individual failures at a counterexample's final state.
+	InvariantReports bool
 }
 
 // SynthesizeCompilationEntries parses q::* wrappers using the compilation's ID
@@ -35,6 +41,11 @@ func SynthesizeCompilationEntries(options CompilationEntries, ids *IDGenerator) 
 	}
 	if len(options.Invariants) > 0 {
 		texts = append(texts, "val q::inv = and("+strings.Join(options.Invariants, " and ")+")")
+		if options.InvariantReports {
+			for i, invariant := range options.Invariants {
+				texts = append(texts, "val "+InvariantReportName(i)+" = "+invariant)
+			}
+		}
 	}
 	if options.InductiveInvariant != "" {
 		texts = append(texts, "val q::inductiveInv = "+options.InductiveInvariant)
@@ -54,4 +65,9 @@ func SynthesizeCompilationEntries(options CompilationEntries, ids *IDGenerator) 
 		declarations = append(declarations, parsed.Declarations...)
 	}
 	return declarations, nil
+}
+
+// InvariantReportName identifies a predicate generated with InvariantReports.
+func InvariantReportName(index int) string {
+	return fmt.Sprintf("q::reportInvariant%d", index)
 }

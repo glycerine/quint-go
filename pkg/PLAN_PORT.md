@@ -621,6 +621,9 @@ TypeScript or Rust evaluator process.
     diagnostics, upstream error explanations, proof phases, raw backend data,
     and lossless copied counterexample traces.
   - [x] Lossless ITF file output through verification CLI.
+  - [x] Optional separately compiled invariant predicates and a Go final-state
+    reporting API; exact source oracles and actual checker traces cover individual
+    false indices, inline expressions, imports/overrides and reporting failures.
   - [ ] Individual-invariant violation reporting and variable/source rendering;
     Shai currently omits temporal loop indices from its ITF response.
 - [ ] P9.7 Implement `compile --target=tlaplus` through Go Apalache and port
@@ -3220,3 +3223,12 @@ word "retained" in the commit message.
   properties, unsupported quantifiers and absent loop metadata fail explicitly.
   Default backend tests pass0.151s and CLI0.417s; optional corpus/races/vet pass.
   ITF export, hard preemption and broader native parity remain open.
+
+- 2026-11-02: Added optional separately compiled ordinary-invariant predicates
+  and FindViolatedInvariants for final ITF states. Thirteen actual TypeScript
+  cases cover false indices, grouped/duplicate expressions, cached dependencies,
+  collections, huge integers and runtime errors. Actual checker and imported
+  constant-override tests validate flattened variable restoration and last-state
+  selection; malformed input, cancellation and ownership tests pass. This library
+  API leaves checker outcomes unchanged when reporting fails. CLI wiring and
+  richer source rendering remain separate work.
