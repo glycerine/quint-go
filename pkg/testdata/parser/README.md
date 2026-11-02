@@ -177,3 +177,6 @@ JSON object-key order is ignored; declaration/array order and metadata are exact
 
 `flatten_exports.json` compares complete star/qualified export results after
 export and import expansion, including depth, visibility, and dependency names.
+
+`refresh_ids.json` compares four complete upstream refreshed definitions,
+including exact ID allocation order through annotations and nested expressions.

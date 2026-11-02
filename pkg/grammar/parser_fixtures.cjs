@@ -520,3 +520,17 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/flatten_exports.json'),JSON
  const parsed=parsePhase1fromText(newIdGenerator(),source,name),linked=resolveNames(parsed.modules)
  return {name,input:parsed.modules,output:flattenModule(parsed.modules[1],new Map(parsed.modules.map(m=>[m.name,m])),linked.table)}
 }),null,2)+'\n')
+
+const {generateFreshIds}=require(path.join(root,'quint/src/ir/idRefresher'))
+const refreshCases=[
+ ['annotated',"module M { def f(x:int):int=val local=1; x+local }"],
+ ['record',"module M { const c:{x:List[int],y:Set[bool]} }"],
+ ['alias',"module M { type T = int -> List[bool] }"],
+ ['lambda',"module M { val f=(x,y)=>x+y }"],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/refresh_ids.json'),JSONbig.stringify(refreshCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ const input=parsed.modules[0].declarations[0]
+ const output=generateFreshIds(input,newIdGenerator(),new Map(),{types:new Map(),effects:new Map(),modes:new Map()})
+ return {name,input,output}
+}),null,2)+'\n')

@@ -1,0 +1,342 @@
+[
+  {
+    "name": "annotated",
+    "input": {
+      "id": 11,
+      "kind": "def",
+      "name": "f",
+      "qualifier": "def",
+      "expr": {
+        "id": 10,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 2,
+            "name": "x",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 9,
+          "kind": "let",
+          "opdef": {
+            "id": 5,
+            "kind": "def",
+            "name": "local",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 1
+            }
+          },
+          "expr": {
+            "id": 8,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 6,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 7,
+                "kind": "name",
+                "name": "local"
+              }
+            ]
+          }
+        }
+      },
+      "typeAnnotation": {
+        "kind": "oper",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "id": 3,
+          "kind": "int"
+        }
+      }
+    },
+    "output": {
+      "id": 1,
+      "kind": "def",
+      "name": "f",
+      "qualifier": "def",
+      "expr": {
+        "id": 4,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 5,
+            "name": "x",
+            "typeAnnotation": {
+              "id": 6,
+              "kind": "int"
+            }
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 7,
+          "kind": "let",
+          "opdef": {
+            "id": 8,
+            "kind": "def",
+            "name": "local",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "int",
+              "value": 1
+            }
+          },
+          "expr": {
+            "id": 10,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 11,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 12,
+                "kind": "name",
+                "name": "local"
+              }
+            ]
+          }
+        }
+      },
+      "typeAnnotation": {
+        "kind": "oper",
+        "args": [
+          {
+            "id": 2,
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "id": 3,
+          "kind": "int"
+        }
+      }
+    }
+  },
+  {
+    "name": "record",
+    "input": {
+      "kind": "const",
+      "name": "c",
+      "typeAnnotation": {
+        "id": 5,
+        "kind": "rec",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "id": 2,
+                "kind": "list",
+                "elem": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              }
+            },
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "id": 4,
+                "kind": "set",
+                "elem": {
+                  "id": 3,
+                  "kind": "bool"
+                }
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      },
+      "id": 6
+    },
+    "output": {
+      "kind": "const",
+      "name": "c",
+      "typeAnnotation": {
+        "id": 2,
+        "kind": "rec",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "id": 3,
+                "kind": "list",
+                "elem": {
+                  "id": 4,
+                  "kind": "int"
+                }
+              }
+            },
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "id": 5,
+                "kind": "set",
+                "elem": {
+                  "id": 6,
+                  "kind": "bool"
+                }
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      },
+      "id": 1
+    }
+  },
+  {
+    "name": "alias",
+    "input": {
+      "id": 5,
+      "kind": "typedef",
+      "name": "T",
+      "type": {
+        "id": 4,
+        "kind": "fun",
+        "arg": {
+          "id": 1,
+          "kind": "int"
+        },
+        "res": {
+          "id": 3,
+          "kind": "list",
+          "elem": {
+            "id": 2,
+            "kind": "bool"
+          }
+        }
+      }
+    },
+    "output": {
+      "id": 1,
+      "kind": "typedef",
+      "name": "T",
+      "type": {
+        "id": 2,
+        "kind": "fun",
+        "arg": {
+          "id": 3,
+          "kind": "int"
+        },
+        "res": {
+          "id": 4,
+          "kind": "list",
+          "elem": {
+            "id": 5,
+            "kind": "bool"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "lambda",
+    "input": {
+      "id": 7,
+      "kind": "def",
+      "name": "f",
+      "qualifier": "val",
+      "expr": {
+        "id": 6,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 1,
+            "name": "x"
+          },
+          {
+            "id": 2,
+            "name": "y"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 5,
+          "kind": "app",
+          "opcode": "iadd",
+          "args": [
+            {
+              "id": 3,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 4,
+              "kind": "name",
+              "name": "y"
+            }
+          ]
+        }
+      }
+    },
+    "output": {
+      "id": 1,
+      "kind": "def",
+      "name": "f",
+      "qualifier": "val",
+      "expr": {
+        "id": 2,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 3,
+            "name": "x"
+          },
+          {
+            "id": 4,
+            "name": "y"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 5,
+          "kind": "app",
+          "opcode": "iadd",
+          "args": [
+            {
+              "id": 6,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 7,
+              "kind": "name",
+              "name": "y"
+            }
+          ]
+        }
+      }
+    }
+  }
+]

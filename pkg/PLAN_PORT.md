@@ -1810,3 +1810,10 @@ word "retained" in the commit message.
   Tests cover annotated operators, local definitions, fresh IDs, and unchanged
   expression meaning. Default tests pass (combined execution 0.713s). Exact ID
   traversal fixtures and instance integration remain open under P6.2.
+
+- 2026-11-02: Added four exact upstream definition-ID refresh fixtures covering
+  annotated/local operators, record/collection types, function aliases, and
+  multi-parameter lambdas. All refreshed declarations, including allocation
+  order and optional type IDs, match upstream without changes. Default tests
+  pass (combined execution 0.748s). Analysis/source extension is unit-tested;
+  instance integration and broader metadata differential fixtures remain open.
