@@ -26,13 +26,31 @@ type RuntimeCache struct {
 // declarations; display names are kept separately for diagnostics and records.
 // It is not safe for concurrent use.
 type VariableStorage struct {
-	current *insdict.Dict[string, *RuntimeRegister]
-	next    *insdict.Dict[string, *RuntimeRegister]
-	caches  []*RuntimeCache
+	current     *insdict.Dict[string, *RuntimeRegister]
+	next        *insdict.Dict[string, *RuntimeRegister]
+	caches      []*RuntimeCache
+	metadata    bool
+	ActionTaken string
+	NondetPicks *insdict.Dict[string, RuntimeValue]
 }
 
 func NewVariableStorage() *VariableStorage {
-	return &VariableStorage{current: insdict.NewDict[string, *RuntimeRegister](), next: insdict.NewDict[string, *RuntimeRegister]()}
+	return NewVariableStorageWithMetadata(false)
+}
+
+// NewVariableStorageWithMetadata enables action/pick fields in exported records.
+func NewVariableStorageWithMetadata(enabled bool) *VariableStorage {
+	return &VariableStorage{current: insdict.NewDict[string, *RuntimeRegister](), next: insdict.NewDict[string, *RuntimeRegister](), metadata: enabled, NondetPicks: insdict.NewDict[string, RuntimeValue]()}
+}
+
+// ClearMetadata preserves registered pick names while marking their values unset.
+func (s *VariableStorage) ClearMetadata() {
+	if s.metadata {
+		s.ActionTaken = ""
+		for name := range s.NondetPicks.All() {
+			s.NondetPicks.Set(name, RuntimeValue{})
+		}
+	}
 }
 
 // Register returns the same register pointers on repeated registration of a key.
@@ -57,10 +75,7 @@ func (s *VariableStorage) Shift() {
 	for _, next := range s.next.All() {
 		next.Value = RuntimeValue{}
 	}
-	for _, cache := range s.caches {
-		cache.Value = RuntimeValue{}
-		cache.Err = nil
-	}
+	s.clearCaches()
 }
 
 // Reset clears registers; like upstream reset, it leaves tracked caches alone.
@@ -71,12 +86,22 @@ func (s *VariableStorage) Reset() {
 	for _, register := range s.next.All() {
 		register.Value = RuntimeValue{}
 	}
+	s.ClearMetadata()
 }
 
-// VariableSnapshot stores the next-state values needed for action backtracking.
+func (s *VariableStorage) clearCaches() {
+	for _, cache := range s.caches {
+		cache.Value = RuntimeValue{}
+		cache.Err = nil
+	}
+}
+
+// VariableSnapshot stores next-state values and metadata for action backtracking.
 // It deliberately excludes current registers and caches.
 type VariableSnapshot struct {
-	next *insdict.Dict[string, RuntimeValue]
+	next   *insdict.Dict[string, RuntimeValue]
+	picks  *insdict.Dict[string, RuntimeValue]
+	action string
 }
 
 func (s *VariableStorage) Snapshot() VariableSnapshot {
@@ -84,7 +109,11 @@ func (s *VariableStorage) Snapshot() VariableSnapshot {
 	for key, register := range s.next.All() {
 		values.Set(key, register.Value)
 	}
-	return VariableSnapshot{next: values}
+	picks := insdict.NewDict[string, RuntimeValue]()
+	for name, value := range s.NondetPicks.All() {
+		picks.Set(name, value)
+	}
+	return VariableSnapshot{next: values, picks: picks, action: s.ActionTaken}
 }
 
 // Recover restores values into existing cells, preserving compiled references.
@@ -98,10 +127,16 @@ func (s *VariableStorage) Recover(snapshot VariableSnapshot) {
 			register.Value = value
 		}
 	}
+	s.ActionTaken = snapshot.action
+	s.NondetPicks = insdict.NewDict[string, RuntimeValue]()
+	if snapshot.picks != nil {
+		for name, value := range snapshot.picks.All() {
+			s.NondetPicks.Set(name, value)
+		}
+	}
 }
 
-// Record exports set current variables, omitting unset registers. Runtime
-// metadata is added by the simulation layer separately.
+// Record exports set current variables and optional action/pick metadata.
 func (s *VariableStorage) Record() (RuntimeValue, error) {
 	args := []Expr{}
 	for _, register := range s.current.All() {
@@ -109,5 +144,74 @@ func (s *VariableStorage) Record() (RuntimeValue, error) {
 			args = append(args, Expr{Kind: "str", Str: register.Name}, register.Value.source)
 		}
 	}
+	if s.metadata {
+		picks := []Expr{}
+		for name, value := range s.NondetPicks.All() {
+			label, payload := "None", Expr{Kind: "app", Opcode: "Tup", Args: []Expr{}}
+			if value.Valid() {
+				label, payload = "Some", value.source
+			}
+			picks = append(picks, Expr{Kind: "str", Str: name}, Expr{Kind: "app", Opcode: "variant", Args: []Expr{{Kind: "str", Str: label}, payload}})
+		}
+		args = append(args, Expr{Kind: "str", Str: ITFNondetPicks}, Expr{Kind: "app", Opcode: "Rec", Args: picks}, Expr{Kind: "str", Str: ITFActionTaken}, Expr{Kind: "str", Str: s.ActionTaken})
+	}
 	return NewRuntimeValue(Expr{Kind: "app", Opcode: "Rec", Args: args})
+}
+
+// FromRecord resets registers, restores known variable names and optional
+// metadata, and clears tracked caches. Unknown fields are ignored. As upstream,
+// Some pick values are retained as variants, rather than unwrapped.
+func (s *VariableStorage) FromRecord(record RuntimeValue) error {
+	fail := func(message string) error { return Diagnostic{Code: "QNT501", Message: message} }
+	if !record.Valid() || record.expression.Kind != "app" || record.expression.Opcode != "Rec" {
+		return fail("Expected a record value")
+	}
+	s.Reset()
+	fields := insdict.NewDict[string, Expr]()
+	for i := 0; i < len(record.source.Args); i += 2 {
+		fields.Set(record.source.Args[i].Str, record.source.Args[i+1])
+	}
+	for name, expression := range fields.All() {
+		value, err := NewRuntimeValue(expression)
+		if err != nil {
+			return err
+		}
+		found := false
+		for _, register := range s.current.All() {
+			if register.Name == name {
+				register.Value = value
+				found = true
+				break
+			}
+		}
+		if found || !s.metadata {
+			continue
+		}
+		switch name {
+		case ITFActionTaken:
+			if expression.Kind != "str" {
+				return fail("Expected a string action name")
+			}
+			s.ActionTaken = expression.Str
+		case ITFNondetPicks:
+			if expression.Kind != "app" || expression.Opcode != "Rec" {
+				return fail("Expected a record of nondeterministic picks")
+			}
+			for i := 0; i < len(expression.Args); i += 2 {
+				pick, err := NewRuntimeValue(expression.Args[i+1])
+				if err != nil {
+					return err
+				}
+				if pick.expression.Kind != "app" || pick.expression.Opcode != "variant" {
+					return fail("Expected a variant pick value")
+				}
+				if pick.expression.Args[0].Str == "None" {
+					pick = RuntimeValue{}
+				}
+				s.NondetPicks.Set(expression.Args[i].Str, pick)
+			}
+		}
+	}
+	s.clearCaches()
+	return nil
 }

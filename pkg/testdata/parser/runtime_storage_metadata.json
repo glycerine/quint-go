@@ -1,0 +1,2193 @@
+[
+  {
+    "enabled": false,
+    "op": "register",
+    "name": "x",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "action": "",
+    "picks": []
+  },
+  {
+    "enabled": false,
+    "op": "pick",
+    "name": "p",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "action": "",
+    "picks": [
+      {
+        "name": "p"
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "pick",
+    "name": "q",
+    "value": {
+      "id": 0,
+      "kind": "int",
+      "value": 2
+    },
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "action": "",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "action",
+    "name": "step",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "next",
+    "name": "x",
+    "value": {
+      "id": 0,
+      "kind": "int",
+      "value": 1
+    },
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "snapshot",
+    "name": "a",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "pick",
+    "name": "q",
+    "value": {
+      "id": 0,
+      "kind": "int",
+      "value": 3
+    },
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "action",
+    "name": "changed",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "action": "changed",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "recover",
+    "name": "a",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "shift",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "clear",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "from",
+    "name": "",
+    "value": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "restored"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 7
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "unknown"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 99
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        }
+      ]
+    },
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        }
+      ]
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "snapshot",
+    "name": "b",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        }
+      ]
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "reset",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "recover",
+    "name": "b",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": []
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": false,
+    "op": "from",
+    "name": "",
+    "value": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 10
+        }
+      ]
+    },
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 10
+        }
+      ]
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "register",
+    "name": "x",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": ""
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": []
+        }
+      ]
+    },
+    "action": "",
+    "picks": []
+  },
+  {
+    "enabled": true,
+    "op": "pick",
+    "name": "p",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": ""
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "action": "",
+    "picks": [
+      {
+        "name": "p"
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "pick",
+    "name": "q",
+    "value": {
+      "id": 0,
+      "kind": "int",
+      "value": 2
+    },
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": ""
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "action": "",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "action",
+    "name": "step",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "step"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "next",
+    "name": "x",
+    "value": {
+      "id": 0,
+      "kind": "int",
+      "value": 1
+    },
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "step"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "snapshot",
+    "name": "a",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "step"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "pick",
+    "name": "q",
+    "value": {
+      "id": 0,
+      "kind": "int",
+      "value": 3
+    },
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "step"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        }
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "action",
+    "name": "changed",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "changed"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "action": "changed",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        }
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "recover",
+    "name": "a",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "step"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "shift",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "step"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    "action": "step",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "clear",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": ""
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      ]
+    },
+    "action": "",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q"
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "from",
+    "name": "",
+    "value": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "restored"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 7
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "unknown"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 99
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        }
+      ]
+    },
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "restored"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "variant",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "Some"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        }
+      ]
+    },
+    "action": "restored",
+    "picks": [
+      {
+        "name": "p",
+        "value": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "Some"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 7
+            }
+          ]
+        }
+      },
+      {
+        "name": "q"
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "snapshot",
+    "name": "b",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "restored"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "variant",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "Some"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        }
+      ]
+    },
+    "action": "restored",
+    "picks": [
+      {
+        "name": "p",
+        "value": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "Some"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 7
+            }
+          ]
+        }
+      },
+      {
+        "name": "q"
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "reset",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": ""
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "action": "",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q"
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "recover",
+    "name": "b",
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "restored"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "Some"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "variant",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "Some"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 7
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "action": "restored",
+    "picks": [
+      {
+        "name": "p",
+        "value": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "Some"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 7
+            }
+          ]
+        }
+      },
+      {
+        "name": "q"
+      }
+    ]
+  },
+  {
+    "enabled": true,
+    "op": "from",
+    "name": "",
+    "value": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 10
+        }
+      ]
+    },
+    "record": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::actionTaken"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": ""
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "mbt::nondetPicks"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "p"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "q"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "None"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 10
+        }
+      ]
+    },
+    "action": "",
+    "picks": [
+      {
+        "name": "p"
+      },
+      {
+        "name": "q"
+      }
+    ]
+  }
+]

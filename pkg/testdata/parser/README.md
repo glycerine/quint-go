@@ -359,4 +359,12 @@ upstream VarStorage compare current/next register results and exported records
 after writes, shifts, reset, snapshots, repeated recovery, and late registration.
 Additional unit tests check stable pointer identity, display-name diagnostics,
 cache clearing on shift, cache retention on reset, and reusable snapshots.
-Runtime metadata and action-evaluator integration remain separate work.
+The metadata corpus below extends this coverage; action-evaluator integration remains open.
+
+`runtime_storage_metadata.json` is regenerated with
+`node pkg/grammar/runtime_storage_metadata_fixtures.cjs`. Thirty-two transitions
+compare metadata-enabled/disabled storage records, action names, and pick values
+through snapshots, recovery, shift, clear/reset, and record restoration. The
+reference's retained Some variant on import (and resulting nested Some on
+subsequent export) is captured exactly. Unit tests add cache clearing, reusable
+snapshot ownership, malformed metadata, and variable-name precedence.

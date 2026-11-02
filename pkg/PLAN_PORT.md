@@ -382,8 +382,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   updates, action composition, enabled/disabled actions, rollback, and commit.
   - [x] Stable named current/next registers, unset diagnostics, shift/reset,
     next-state snapshots/recovery, current record export, and shift cache reset.
-  - [ ] Runtime metadata/from-record restoration, evaluator variable/assignment
-    integration, and action composition with rollback/commit.
+  - [x] Optional action/pick metadata, metadata snapshot/reset semantics, and
+    from-record restoration with cache clearing and variable-name precedence.
+  - [ ] Evaluator variable/assignment integration and action composition with
+    rollback/commit.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
   empty choices, and bounded sampling of infinite domains.
 - [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
@@ -2402,3 +2404,16 @@ word "retained" in the commit message.
   of current/next state. Full default tests pass (combined package execution
   0.994s). Metadata, from-record restoration, variable/assignment evaluator
   integration, action composition, and full rollback remain open under P7.5.
+
+- 2026-11-02: Extended VariableStorage with optional action/nondeterministic-pick
+  metadata, metadata-aware record export, reset/clear behavior, and from-record
+  restoration. Snapshots now own metadata copies and remain reusable after
+  recovery. Restoration resets current/next values, ignores unknown fields,
+  respects registered-variable names before metadata names, and clears caches.
+  Thirty-two upstream transitions compare enabled/disabled records, action
+  names, and picks. They retain upstream's Some-variant import quirk, including
+  nested Some on later export. Unit tests cover snapshot alias prevention,
+  missing-field reset, malformed metadata, cache clearing, next-state reset,
+  and variable-name collisions. Full default tests pass (combined package
+  execution 1.045s, near the one-second target). Variable/assignment evaluation,
+  action composition, and transactional rollback/commit remain open under P7.5.
