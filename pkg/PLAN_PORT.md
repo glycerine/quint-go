@@ -246,8 +246,8 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Generate structural constraints for Rec, field, fieldNames, and with.
   - [x] Generate tuple construction and item-access constraints.
   - [x] Generate variant constraints with declared-sum membership checks.
-  - [ ] Resolve tuple-prefix resource-limit parity, port match constraints,
-    and connect generator dispatch.
+  - [x] Generate match constraints with wildcard and eliminator validation.
+  - [ ] Resolve tuple-prefix resource-limit parity and connect generator dispatch.
 - [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
   and incremental inference used by the REPL and editor.
 - [ ] P4.6 Compare inferred schemes modulo type-variable renaming and compare
@@ -1330,3 +1330,12 @@ word "retained" in the commit message.
   Tests also verify constraint order/source IDs and fully resolved sum results.
   Default tests pass (combined execution 0.571s). Match constraints, differential
   special-constraint coverage, and expression-generator integration remain open.
+
+- 2026-11-02: Added match constraint generation, collecting ordered validation
+  errors for nonliteral labels, nonoperator/nonunary eliminators, and misplaced
+  or repeated wildcards. Generated constraints relate scrutinee variants to
+  case payloads and unify all case results, including wildcard results.
+  Tests solve exhaustive and wildcard matches and reject inconsistent results,
+  unknown variants, malformed cases, and invalid arity. Default tests pass
+  (combined execution 0.555s). Differential special-constraint fixtures and
+  expression-generator dispatch remain pending.
