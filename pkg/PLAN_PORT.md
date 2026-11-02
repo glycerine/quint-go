@@ -106,6 +106,9 @@ reporting that evaluates expressions will also depend on P7.
 - [ ] P0.2 Build a compatibility matrix covering every CLI command, flag,
   environment variable, builtin opcode, JSON field, error/status code, and
   editor feature. Distinguish language semantics from incidental formatting.
+  - [x] COMPATIBILITY.md inventories every opcode/builtin value, active command
+    flags/environment settings, major data/status contracts, and editor features.
+  - [ ] Complete field-level wire/transcript and backend semantic coverage audit.
 - [ ] P0.3 Establish reference fixtures from TypeScript tests, Rust tests,
   integration transcripts, and examples. Capture expected successes and
   failures; document disagreements between reference runtimes.
@@ -166,8 +169,10 @@ without losing semantic information, and diagnostic locations remain stable.
 - [x] P2.4 Port expression precedence/associativity, applications, lambdas,
   local definitions, records/tuples, destructuring, matches, action syntax,
   temporal syntax, and parser desugaring into IR.
-- [ ] P2.5 Port the IR listener behavior, IDs, declaration documentation, and
+- [x] P2.5 Port the IR listener behavior, IDs, declaration documentation, and
   locations; preserve intentionally accepted deprecated syntax.
+  Numeric ID allocation order differs intentionally; consistent references and
+  exact source spans are tested, and differential IR tests normalize those IDs.
 - [ ] P2.6 Implement expression/declaration entry points for the REPL and CLI
   expressions, plus the type/effect parsers used by builtin signatures.
   - [x] Syntax-only expression, expanding declaration, type, and effect entry points.
@@ -372,12 +377,16 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [ ] Remaining definition caches and complete runtime stack traces.
   - [ ] Repeated factory-lambda object reuse and shared captured parameter cells;
     TypeScript compiles one closure per AST, while Go currently captures per call.
-- [ ] P7.3 Port arithmetic, Boolean, comparison, string, and conversion
-  builtins; test negative division/modulo and integer boundary behavior.
+- [x] P7.3 Port scalar arithmetic, Boolean, and comparison builtins; test
+  negative division/modulo and integer boundary behavior. This revision has no
+  source-language string/conversion builtin family; internal toStr/toInt helpers
+  are runtime accessors. Inclusive set interval `to` remains under P7.4, and
+  cross-constructor equality remains under P7.1.
   - [x] Strict integer arithmetic/comparison builtins, arbitrary precision,
     signed division/remainder, power errors, and upstream result/error fixtures.
   - [x] Boolean/equality/assert builtins and integer dispatch in pure evaluation.
-  - [ ] String/conversion builtins and full evaluator dispatch integration.
+  - [x] Scalar evaluator dispatch; no string/conversion opcode work is invented
+    beyond this revision's actual inventory.
 - [ ] P7.4 Port collection, map/function, record, tuple, variant, higher-order,
   fold, indexing, range, and lazy/infinite-set operations.
   - [x] Strict head/tail/length/append/concat, nth/item/replaceAt/slice, and
@@ -475,9 +484,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] CLI seed flags/replay output and finite-set sampling/traversal.
   - [ ] Exact default initialization across CLI/REPL and comparison with the
     Rust runtime's seeded behavior.
-- [ ] P7.9 Complete an opcode coverage matrix for evaluation, typing, effects,
+- [x] P7.9 Complete an opcode coverage matrix for evaluation, typing, effects,
   and symbolic conversion, distinguishing supported operations and deliberate
-  context restrictions.
+  context restrictions. COMPATIBILITY.md and its drift test cover every
+  opcode/builtin value; statuses distinguish execution from backend importing.
 - [ ] P7.10 Differential-test pure results, errors, state transitions, rollback,
   and nondeterministic behavior against both reference runtimes. Investigate
   disagreements before assigning a Go expected result.
@@ -2915,3 +2925,17 @@ word "retained" in the commit message.
   rebuild, and actual initialize/shutdown/exit smoke pass. Full extension tsc
   could not run because its VSCode/client dependencies are absent; VSIX/real-host
   and cross-platform checks remain unrun. No dependencies were downloaded.
+
+- 2026-11-02: Added COMPATIBILITY.md with a complete opcode/builtin-value
+  matrix for evaluation, typing, effects and Go importer boundaries, plus active
+  CLI flags/environment settings, wire/status/diagnostic contracts and editor
+  features. A cheap inventory test catches missing/duplicate/unknown opcode rows
+  without pretending to certify their semantics. Explicit-state helper APIs,
+  source runtime gaps, pending oracles, factory closure differences, regex/output
+  limits and unrun packaging checks are visible. Go importer fallback names
+  (including foldr, allListsUpTo, expect/reps and test/debug helpers) are recorded
+  as fallback, not claimed as symbolic backend support. Audited P7.3 against all
+  source inventories: this revision has no string/conversion opcode family;
+  scalar dispatch is complete while set interval `to` stays under P7.4. Full
+  default tests and vet pass; timing varies near the one-second target (latest
+  combined package execution 1.218s). Work continues on measured cold-start cost.

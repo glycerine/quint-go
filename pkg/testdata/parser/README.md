@@ -705,3 +705,10 @@ selector/activation tests run separately from Go tests; they verify configured,
 bundled and PATH Go startup, explicit TypeScript choice, and startup errors.
 Native build and stdio lifecycle smoke pass. Full extension compilation,
 VSIX/real-host installation, and cross-platform checks remain unrun locally.
+
+`TestCompatibilityInventory` checks that every IR opcode and builtin value has
+exactly one row in `COMPATIBILITY.md` with evaluation/type/effect/backend status.
+It catches inventory drift and missing classification; it does not turn a
+written status into semantic coverage. The matrix links actual supported,
+partial, library-only, rejected and pending contracts without counting skipped
+or pending cases as passing implementations.

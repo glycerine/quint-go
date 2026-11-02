@@ -2,8 +2,9 @@
 
 The Go port provides the Quint frontend, analysis and runtime libraries, a `quint`
 command, and a stdio language server. Work still in progress is tracked in
-[PLAN_PORT.md](PLAN_PORT.md); an available command does not imply full upstream
-flag or semantic parity.
+[PLAN_PORT.md](PLAN_PORT.md). [COMPATIBILITY.md](COMPATIBILITY.md) distinguishes
+implemented, partial, library-only, rejected, and pending behavior; an available
+command does not imply full upstream flag or semantic parity.
 
 For local development, use the Go Apalache checkout exposed by `~/apalache`.
 From the repository root, create or extend an ignored Go workspace containing
