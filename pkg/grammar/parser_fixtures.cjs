@@ -418,6 +418,10 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/modes.json'),JSONbig.string
 
 const {analyzeModules}=require(path.join(root,'quint/src/quintAnalyzer'))
 const analyzerCases=[
+ ['cross-module',"module A { def identity(x)=x } module B { import A.* val a=identity(1) }"],
+ ['instance',"module A { const c:int var x:int val read=x } module B { import A(c=1) as I val a=I::read }"],
+ ['override',"module A { const c:int val a=c } module B { var x:int import A(c=x) as I val a=I::a }"],
+
  ['valid',"module M { var x:int action step=x'=x+1 }"],
  ['mode',"module M { var x:int pure val bad=x }"],
  ['nondet',"module M { val bad=Set(1).oneOf() }"],

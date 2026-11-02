@@ -1660,3 +1660,10 @@ word "retained" in the commit message.
   verify retained tables, diagnostics, and previous effect-table isolation.
   Default tests pass under one second. Exact upstream incremental fixtures,
   cross-module/instance parity, and deeper value-isolation auditing remain open.
+
+- 2026-11-02: Expanded full analyzer parity to nine cases with cross-module
+  polymorphic imports, instantiated state namespaces, and stateful instance
+  overrides. Ordered diagnostics, effects, and mode suggestions match upstream
+  exactly without implementation changes. Default tests pass (core 0.670s).
+  Incremental differential fixtures and broader instance/type-table parity remain
+  open; the full port is still incomplete.

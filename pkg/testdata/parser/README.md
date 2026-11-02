@@ -153,3 +153,6 @@ Tests compare full ordered diagnostics, fixes, references, and suggestions.
 `analyzer.json` captures six full upstream analysis runs. Tests compare ordered
 unified diagnostics, effects, and mode suggestions exactly; type table parity is
 covered separately by `inference.json` with its documented type-ID limitation.
+
+The analyzer corpus now includes nine runs, adding polymorphic imports,
+instantiated state names, and impure instance overrides.
