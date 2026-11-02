@@ -498,3 +498,16 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/flatten_dependencies.json')
  const module=parsed.modules[parsed.modules.length-1],expr=module.declarations[module.declarations.length-1].expr
  return {name,input:parsed.modules,expression:expr,output:dependentDefinitions(expr,linked.table)}
 }),null,2)+'\n')
+
+const {flattenModule}=require(path.join(root,'quint/src/flattening/flattener'))
+const flattenModuleCases=[
+ ['local',"module M { val a=1 val b=a+a }"],
+ ['imports',"module A { const c:int def f(x)=x+c val unused=0 } module B { import A as I val use=I::f(1) }"],
+ ['star',"module A { val a=1 } module B { import A.* val b=a+a }"],
+ ['instance',"module A { const c:int val a=c } module B { import A(c=1) as I val use=I::a }"],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/flatten_module.json'),JSONbig.stringify(flattenModuleCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name),linked=resolveNames(parsed.modules)
+ const main=parsed.modules[parsed.modules.length-1]
+ return {name,input:parsed.modules,output:flattenModule(main,new Map(parsed.modules.map(m=>[m.name,m])),linked.table)}
+}),null,2)+'\n')

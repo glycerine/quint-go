@@ -171,3 +171,6 @@ including nested operators, preserved names, and type annotations.
 
 `flatten_dependencies.json` compares four upstream dependency collections,
 including declaration order, namespaced IR, and retained import metadata.
+
+`flatten_module.json` compares four complete upstream import-flattened modules.
+JSON object-key order is ignored; declaration/array order and metadata are exact.

@@ -1759,3 +1759,9 @@ word "retained" in the commit message.
   retained for their separate pass. Default tests pass (combined execution
   0.750s). Export expansion, instance flattening, and exact module differential
   fixtures remain open under P6.1.
+
+- 2026-11-02: Added four upstream module import-flattening fixtures covering
+  local declarations, transitive namespaced imports, star imports, and retained
+  instances. Whole modules match structurally, including order and metadata;
+  JSON object-key order alone is ignored. Default tests pass (combined execution
+  0.726s). Export expansion and actual instance instantiation remain open.
