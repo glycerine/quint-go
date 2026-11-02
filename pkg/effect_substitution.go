@@ -53,127 +53,87 @@ func cloneEntity(e Entity) Entity {
 	return out
 }
 
-// ApplyEffectSubstitution resolves effect/entity chains and simplifies effects.
-// Read/temporal self-unions retain their recursive variable and deduplicate
-// shared occurrences. Non-stabilizing cycles return an error.
+// ApplyEffectSubstitution applies one pass, simplifies, and repeats until the
+// whole effect is unchanged. Simplification must happen between passes: resolving
+// a self-containing union recursively changes both its members and its shape.
 func ApplyEffectSubstitution(subs []EffectSubstitution, input Effect) (Effect, error) {
-	active := map[string]bool{}
-	selfUnion := map[string]bool{}
-	allowSelfUnion := false
 	subs = append([]EffectSubstitution{}, subs...)
 	for i := range subs {
 		if subs[i].Kind == "entity" {
 			subs[i].Entity = cloneEntity(subs[i].Entity)
+		} else if subs[i].Kind == "effect" {
+			subs[i].Effect = cloneEffectSubstitutionValue(subs[i].Effect)
 		}
 	}
-	var effect func(Effect) (Effect, error)
-	var entity func(Entity) (Entity, error)
-	entity = func(e Entity) (Entity, error) {
-		if e.Kind == "variable" {
-			for _, s := range subs {
-				if s.Name == e.Name {
-					if s.Kind == "entity" && !reflect.DeepEqual(s.Entity, e) {
-						// Singleton unions (including nested empty members) can
-						// flatten back to their own variable. Upstream substitution
-						// reaches a fixed point here even for update components.
-						if s.Entity.Kind == "union" {
-							flat := FlattenEntityUnions(s.Entity)
-							if flat.Kind == "variable" && flat.Name == e.Name {
-								return flat, nil
-							}
-						}
-						key := "entity:" + e.Name
-						if active[key] {
-							if selfUnion[key] && allowSelfUnion {
-								return cloneEntity(e), nil
-							}
-							return Entity{}, fmt.Errorf("cyclic entity substitution for %s", e.Name)
-						}
-						active[key] = true
-						if s.Entity.Kind == "union" {
-							for _, childName := range EntityNames(s.Entity) {
-								if childName == e.Name {
-									selfUnion[key] = true
-								}
-							}
-						}
-						v, err := entity(s.Entity)
-						delete(active, key)
-						delete(selfUnion, key)
-						return v, err
-					}
-					break
-				}
-			}
-		}
-		out := cloneEntity(e)
-		for i, v := range out.Entities {
-			x, err := entity(v)
-			if err != nil {
-				return Entity{}, err
-			}
-			out.Entities[i] = x
-		}
-		return out, nil
-	}
-	effect = func(e Effect) (Effect, error) {
-		if e.Kind == "variable" {
-			for _, s := range subs {
-				if s.Name == e.Name {
-					if s.Kind == "effect" && !reflect.DeepEqual(s.Effect, e) {
-						key := "effect:" + e.Name
-						if active[key] {
-							return Effect{}, fmt.Errorf("cyclic effect substitution for %s", e.Name)
-						}
-						active[key] = true
-						v, err := effect(s.Effect)
-						delete(active, key)
-						return v, err
-					}
-					break
-				}
-			}
-		}
-		out := e
-		if e.Kind == "arrow" {
-			out.Params = make([]Effect, len(e.Params))
-			for i, p := range e.Params {
-				v, err := effect(p)
-				if err != nil {
-					return Effect{}, err
-				}
-				out.Params[i] = v
-			}
-			v, err := effect(*e.Result)
-			if err != nil {
-				return Effect{}, err
-			}
-			out.Result = &v
-		}
-		if e.Kind == "concrete" {
-			out.Components = []EffectComponent{}
-			for _, c := range e.Components {
-				allowSelfUnion = c.Kind != "update"
-				v, err := entity(c.Entity)
-				if err != nil {
-					return Effect{}, err
-				}
-				v = FlattenEntityUnions(v)
-				if v.Kind == "concrete" && len(v.StateVariables) == 0 {
-					continue
-				}
-				out.Components = append(out.Components, EffectComponent{Kind: c.Kind, Entity: v})
-			}
-		}
+	var apply func(Effect) (Effect, error)
+	apply = func(input Effect) (Effect, error) {
+		current := cloneEffectSubstitutionValue(input)
+		history := []Effect{}
+		growthChecked := false
 		for {
-			simplified := SimplifyEffect(out)
-			if reflect.DeepEqual(simplified, out) {
-				return simplified, nil
+			next := current
+			switch current.Kind {
+			case "variable":
+				for _, s := range subs {
+					if s.Name == current.Name {
+						if s.Kind == "effect" {
+							next = cloneEffectSubstitutionValue(s.Effect)
+						}
+						break
+					}
+				}
+			case "concrete":
+				next.Components = []EffectComponent{}
+				for _, c := range current.Components {
+					entity := ApplyEntitySubstitution(subs, c.Entity)
+					// Upstream removes empty entities before simplification.
+					if entity.Kind == "concrete" && len(entity.StateVariables) == 0 ||
+						entity.Kind == "union" && len(entity.Entities) == 0 {
+						continue
+					}
+					next.Components = append(next.Components, EffectComponent{Kind: c.Kind, Entity: entity})
+				}
+			case "arrow":
+				next.Params = make([]Effect, len(current.Params))
+				for i, p := range current.Params {
+					v, err := apply(p)
+					if err != nil {
+						return Effect{}, err
+					}
+					next.Params[i] = v
+				}
+				v, err := apply(*current.Result)
+				if err != nil {
+					return Effect{}, err
+				}
+				next.Result = &v
 			}
-			out = simplified
+			next = SimplifyEffect(next)
+			if reflect.DeepEqual(next, current) {
+				return next, nil
+			}
+			for _, previous := range history {
+				if reflect.DeepEqual(next, previous) {
+					return Effect{}, fmt.Errorf("cyclic effect substitution")
+				}
+			}
+			history = append(history, current)
+			current = next
+			// Ordinary substitutions stabilize in a few passes. Only inspect
+			// dependency cycles when repeated passes may expand forever.
+			if len(history) >= 3 && !growthChecked && current.Kind != "variable" {
+				if err := checkEffectSubstitutionGrowth(subs, current); err != nil {
+					return Effect{}, err
+				}
+				growthChecked = true
+			}
 		}
 	}
-	return effect(input)
+	// Check nested effect-variable cycles before recursively visiting arrows.
+	if err := checkEffectArrowCycles(subs, input); err != nil {
+		return Effect{}, err
+	}
+	return apply(input)
 }
 
 // ComposeEffectSubstitutions applies first to second's values and appends first.

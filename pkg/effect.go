@@ -1,6 +1,7 @@
 package quint
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 )
@@ -23,11 +24,35 @@ type Entity struct {
 	Reference      *ID             `json:"reference,omitempty"`
 	Entities       []Entity        `json:"entities,omitempty"`
 }
+
+// StateVariable is a state-variable occurrence. Use NewStateVariable when
+// programmatically constructing an occurrence that will be shared or copied.
 type StateVariable struct {
 	identity  *int   // Preserves occurrence identity across internal copies; never serialized.
 	Name      string `json:"name"`
 	Reference ID     `json:"reference"`
 }
+
+// NewStateVariable creates a distinct state-variable occurrence. Copies retain
+// its identity, while separate calls remain distinct even for equal references.
+func NewStateVariable(name string, reference ID) StateVariable {
+	return StateVariable{identity: new(int), Name: name, Reference: reference}
+}
+
+func (s *StateVariable) UnmarshalJSON(data []byte) error {
+	if bytes.Equal(bytes.TrimSpace(data), []byte("null")) {
+		return nil
+	}
+	type plain StateVariable
+	v := plain(*s)
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	v.identity = new(int)
+	*s = StateVariable(v)
+	return nil
+}
+
 type EffectScheme struct {
 	Effect          Effect   `json:"effect"`
 	EffectVariables []string `json:"effectVariables"`

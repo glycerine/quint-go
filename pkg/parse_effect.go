@@ -31,7 +31,7 @@ func ParseEffect(text string) (Effect, error) {
 		}
 		vars := []StateVariable{}
 		for _, v := range ctx.AllStateVarRef() {
-			vars = append(vars, StateVariable{Name: v.IDENTIFIER().GetText(), Reference: ids.Next()})
+			vars = append(vars, NewStateVariable(v.IDENTIFIER().GetText(), ids.Next()))
 		}
 		if len(vars) > 0 {
 			parts = append(parts, Entity{Kind: "concrete", StateVariables: vars})

@@ -284,7 +284,7 @@ the information required by Go Apalache's importer.
 
 ## P5 — Effects, modes, and combined analysis
 
-- [ ] P5.1 Port effect expressions/schemes, entities, namespaces, substitutions,
+- [x] P5.1 Port effect expressions/schemes, entities, namespaces, substitutions,
   simplification, unification, and effect printing.
   - [x] Add effect-scheme instantiation, canonical scheme printing, and state namespace qualification.
   - [x] Port effect-variable occurs checks and recursive entity-union binding rules.
@@ -294,8 +294,8 @@ the information required by Go Apalache's importer.
     enable the `hash-concrete` effect-unification fixture.
   - [x] Accept terminating self-bindings through singleton/empty entity unions
     without weakening rejection of expanding or oscillating cycles.
-  - [ ] Audit occurrence identity at all public construction boundaries and broader
-    cyclic substitution behavior against upstream, including retained union shape.
+  - [x] Audit occurrence identity at parser/JSON/native constructor boundaries
+    and cyclic substitution behavior, including upstream union shape.
   - [x] Integrate binding rules into structural effect/entity unification and validate initial upstream fixtures.
 - [x] P5.2 Port builtin effect signatures and effect inference through calls,
   lambdas, local definitions, imports, and instantiated modules.
@@ -3035,3 +3035,14 @@ word "retained" in the commit message.
   The exact clean local checker commit cannot currently resolve from its public
   module (unknown revision), so public module pinning and automatic release CI
   remain open. No checker repository was pushed or modified.
+
+- 2026-11-02: Matched effect substitution's pass/simplify/fixed-point order,
+  preserving terminating self-union shapes and mutual aliases. Parser/JSON
+  occurrences now establish object identity, with NewStateVariable for explicitly
+  shared native occurrences. Fifty-nine actual upstream cases cover substitution,
+  composition, unification and shared/distinct construction origins; focused
+  effect tests pass0.078s. Graph-based cycle guards reject expanding updates and
+  arrow cycles without an arbitrary iteration cap; six delayed-alias regressions
+  close a reviewed guard bypass. Public constructor/decoder tests have 100%
+  coverage; cycle guards exceed95%. These tests close P5.1 for valid construction
+  APIs; raw native literals remain value occurrences unless constructed explicitly.

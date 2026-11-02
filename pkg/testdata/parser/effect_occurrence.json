@@ -1,0 +1,4666 @@
+{
+  "substitutions": [
+    {
+      "name": "read-repeated-self",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "v"
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "read-nested-repeated-self",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "concrete",
+                "stateVariables": []
+              },
+              {
+                "kind": "union",
+                "entities": [
+                  {
+                    "kind": "variable",
+                    "name": "v"
+                  },
+                  {
+                    "kind": "union",
+                    "entities": [
+                      {
+                        "kind": "variable",
+                        "name": "v"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": []
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "read-mutual-union",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "read-mutual-union-both",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "read-self-and-state",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "read-alias-to-self-and-state",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "variable",
+            "name": "w"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "w"
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "w"
+                },
+                {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "read-self-and-distinct-equal-states",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  },
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 1
+                    },
+                    {
+                      "name": "x",
+                      "reference": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "read-self-with-vanishing-branch",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "read-self-with-vanishing-chain",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "variable",
+            "name": "z"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "z",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w"
+                },
+                {
+                  "kind": "variable",
+                  "name": "z"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "read-self-with-long-vanishing-chain",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w0"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w0",
+          "value": {
+            "kind": "variable",
+            "name": "w1"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w1",
+          "value": {
+            "kind": "variable",
+            "name": "w2"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w2",
+          "value": {
+            "kind": "variable",
+            "name": "w3"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w3",
+          "value": {
+            "kind": "variable",
+            "name": "w4"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w4",
+          "value": {
+            "kind": "variable",
+            "name": "w5"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w5",
+          "value": {
+            "kind": "variable",
+            "name": "w6"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w6",
+          "value": {
+            "kind": "variable",
+            "name": "w7"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w7",
+          "value": {
+            "kind": "variable",
+            "name": "w8"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w8",
+          "value": {
+            "kind": "variable",
+            "name": "w9"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w9",
+          "value": {
+            "kind": "variable",
+            "name": "w10"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w10",
+          "value": {
+            "kind": "variable",
+            "name": "w11"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w11",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w0"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w1"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w2"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w3"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w4"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w5"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w6"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w7"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w8"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w9"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w10"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w11"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "read-long-alias-to-self-and-state",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "variable",
+            "name": "w1"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w1",
+          "value": {
+            "kind": "variable",
+            "name": "w2"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w2",
+          "value": {
+            "kind": "variable",
+            "name": "w3"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w3",
+          "value": {
+            "kind": "variable",
+            "name": "w4"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w4",
+          "value": {
+            "kind": "variable",
+            "name": "w5"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w5",
+          "value": {
+            "kind": "variable",
+            "name": "w6"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w6",
+          "value": {
+            "kind": "variable",
+            "name": "w7"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w7",
+          "value": {
+            "kind": "variable",
+            "name": "w8"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w8",
+          "value": {
+            "kind": "variable",
+            "name": "w9"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w9",
+          "value": {
+            "kind": "variable",
+            "name": "w10"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w10",
+          "value": {
+            "kind": "variable",
+            "name": "w11"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w11",
+          "value": {
+            "kind": "variable",
+            "name": "w12"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w12",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "w12"
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "w12"
+                },
+                {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "temporal-repeated-self",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "v"
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "temporal-nested-repeated-self",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "concrete",
+                "stateVariables": []
+              },
+              {
+                "kind": "union",
+                "entities": [
+                  {
+                    "kind": "variable",
+                    "name": "v"
+                  },
+                  {
+                    "kind": "union",
+                    "entities": [
+                      {
+                        "kind": "variable",
+                        "name": "v"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": []
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "temporal-mutual-union",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "temporal-mutual-union-both",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "temporal-self-and-state",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "temporal-alias-to-self-and-state",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "variable",
+            "name": "w"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "w"
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "w"
+                },
+                {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "temporal-self-and-distinct-equal-states",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  },
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 1
+                    },
+                    {
+                      "name": "x",
+                      "reference": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "temporal-self-with-vanishing-branch",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "temporal-self-with-vanishing-chain",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "variable",
+            "name": "z"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "z",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w"
+                },
+                {
+                  "kind": "variable",
+                  "name": "z"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "temporal-self-with-long-vanishing-chain",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w0"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w0",
+          "value": {
+            "kind": "variable",
+            "name": "w1"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w1",
+          "value": {
+            "kind": "variable",
+            "name": "w2"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w2",
+          "value": {
+            "kind": "variable",
+            "name": "w3"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w3",
+          "value": {
+            "kind": "variable",
+            "name": "w4"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w4",
+          "value": {
+            "kind": "variable",
+            "name": "w5"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w5",
+          "value": {
+            "kind": "variable",
+            "name": "w6"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w6",
+          "value": {
+            "kind": "variable",
+            "name": "w7"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w7",
+          "value": {
+            "kind": "variable",
+            "name": "w8"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w8",
+          "value": {
+            "kind": "variable",
+            "name": "w9"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w9",
+          "value": {
+            "kind": "variable",
+            "name": "w10"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w10",
+          "value": {
+            "kind": "variable",
+            "name": "w11"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w11",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w0"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w1"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w2"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w3"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w4"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w5"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w6"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w7"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w8"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w9"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w10"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w11"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "temporal-long-alias-to-self-and-state",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "variable",
+            "name": "w1"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w1",
+          "value": {
+            "kind": "variable",
+            "name": "w2"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w2",
+          "value": {
+            "kind": "variable",
+            "name": "w3"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w3",
+          "value": {
+            "kind": "variable",
+            "name": "w4"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w4",
+          "value": {
+            "kind": "variable",
+            "name": "w5"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w5",
+          "value": {
+            "kind": "variable",
+            "name": "w6"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w6",
+          "value": {
+            "kind": "variable",
+            "name": "w7"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w7",
+          "value": {
+            "kind": "variable",
+            "name": "w8"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w8",
+          "value": {
+            "kind": "variable",
+            "name": "w9"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w9",
+          "value": {
+            "kind": "variable",
+            "name": "w10"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w10",
+          "value": {
+            "kind": "variable",
+            "name": "w11"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w11",
+          "value": {
+            "kind": "variable",
+            "name": "w12"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w12",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "w12"
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "w12"
+                },
+                {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "update-self-with-vanishing-branch",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "update-self-with-vanishing-chain",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "variable",
+            "name": "z"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "z",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w"
+                },
+                {
+                  "kind": "variable",
+                  "name": "z"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "update-self-with-long-vanishing-chain",
+      "input": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w0"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w0",
+          "value": {
+            "kind": "variable",
+            "name": "w1"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w1",
+          "value": {
+            "kind": "variable",
+            "name": "w2"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w2",
+          "value": {
+            "kind": "variable",
+            "name": "w3"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w3",
+          "value": {
+            "kind": "variable",
+            "name": "w4"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w4",
+          "value": {
+            "kind": "variable",
+            "name": "w5"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w5",
+          "value": {
+            "kind": "variable",
+            "name": "w6"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w6",
+          "value": {
+            "kind": "variable",
+            "name": "w7"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w7",
+          "value": {
+            "kind": "variable",
+            "name": "w8"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w8",
+          "value": {
+            "kind": "variable",
+            "name": "w9"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w9",
+          "value": {
+            "kind": "variable",
+            "name": "w10"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w10",
+          "value": {
+            "kind": "variable",
+            "name": "w11"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w11",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w0"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w1"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w2"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w3"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w4"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w5"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w6"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w7"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w8"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w9"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w10"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w11"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "arrow-retains-union-shape",
+      "input": {
+        "kind": "arrow",
+        "params": [
+          {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "variable",
+                  "name": "v"
+                }
+              }
+            ]
+          },
+          {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "temporal",
+                "entity": {
+                  "kind": "variable",
+                  "name": "v"
+                }
+              }
+            ]
+          }
+        ],
+        "result": {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "update",
+              "entity": {
+                "kind": "variable",
+                "name": "v"
+              }
+            }
+          ]
+        }
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "arrow",
+        "params": [
+          {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "union",
+                  "entities": [
+                    {
+                      "kind": "variable",
+                      "name": "v"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "temporal",
+                "entity": {
+                  "kind": "union",
+                  "entities": [
+                    {
+                      "kind": "variable",
+                      "name": "v"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "result": {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "update",
+              "entity": {
+                "kind": "union",
+                "entities": [
+                  {
+                    "kind": "variable",
+                    "name": "v"
+                  },
+                  {
+                    "kind": "variable",
+                    "name": "w"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "entities": [
+    {
+      "name": "repeated-self",
+      "input": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "v"
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "variable",
+            "name": "v"
+          }
+        ]
+      }
+    },
+    {
+      "name": "nested-repeated-self",
+      "input": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "concrete",
+                "stateVariables": []
+              },
+              {
+                "kind": "union",
+                "entities": [
+                  {
+                    "kind": "variable",
+                    "name": "v"
+                  },
+                  {
+                    "kind": "union",
+                    "entities": [
+                      {
+                        "kind": "variable",
+                        "name": "v"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": []
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "concrete",
+            "stateVariables": []
+          },
+          {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "union",
+                "entities": [
+                  {
+                    "kind": "variable",
+                    "name": "v"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "mutual-union",
+      "input": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        }
+      ],
+      "output": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "variable",
+            "name": "w"
+          }
+        ]
+      }
+    },
+    {
+      "name": "mutual-union-both",
+      "input": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "variable",
+            "name": "w"
+          }
+        ]
+      }
+    },
+    {
+      "name": "self-and-state",
+      "input": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "x",
+                "reference": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "alias-to-self-and-state",
+      "input": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "variable",
+            "name": "w"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "w"
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "variable",
+        "name": "w"
+      }
+    },
+    {
+      "name": "self-and-distinct-equal-states",
+      "input": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  },
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "x",
+                "reference": 1
+              },
+              {
+                "name": "x",
+                "reference": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "self-with-vanishing-branch",
+      "input": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "variable",
+            "name": "w"
+          }
+        ]
+      }
+    },
+    {
+      "name": "self-with-vanishing-chain",
+      "input": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "variable",
+            "name": "z"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "z",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "variable",
+            "name": "w"
+          }
+        ]
+      }
+    },
+    {
+      "name": "self-with-long-vanishing-chain",
+      "input": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w0"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w0",
+          "value": {
+            "kind": "variable",
+            "name": "w1"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w1",
+          "value": {
+            "kind": "variable",
+            "name": "w2"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w2",
+          "value": {
+            "kind": "variable",
+            "name": "w3"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w3",
+          "value": {
+            "kind": "variable",
+            "name": "w4"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w4",
+          "value": {
+            "kind": "variable",
+            "name": "w5"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w5",
+          "value": {
+            "kind": "variable",
+            "name": "w6"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w6",
+          "value": {
+            "kind": "variable",
+            "name": "w7"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w7",
+          "value": {
+            "kind": "variable",
+            "name": "w8"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w8",
+          "value": {
+            "kind": "variable",
+            "name": "w9"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w9",
+          "value": {
+            "kind": "variable",
+            "name": "w10"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w10",
+          "value": {
+            "kind": "variable",
+            "name": "w11"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w11",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "output": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "variable",
+            "name": "w0"
+          }
+        ]
+      }
+    },
+    {
+      "name": "long-alias-to-self-and-state",
+      "input": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "variable",
+            "name": "w1"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w1",
+          "value": {
+            "kind": "variable",
+            "name": "w2"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w2",
+          "value": {
+            "kind": "variable",
+            "name": "w3"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w3",
+          "value": {
+            "kind": "variable",
+            "name": "w4"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w4",
+          "value": {
+            "kind": "variable",
+            "name": "w5"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w5",
+          "value": {
+            "kind": "variable",
+            "name": "w6"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w6",
+          "value": {
+            "kind": "variable",
+            "name": "w7"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w7",
+          "value": {
+            "kind": "variable",
+            "name": "w8"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w8",
+          "value": {
+            "kind": "variable",
+            "name": "w9"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w9",
+          "value": {
+            "kind": "variable",
+            "name": "w10"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w10",
+          "value": {
+            "kind": "variable",
+            "name": "w11"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w11",
+          "value": {
+            "kind": "variable",
+            "name": "w12"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w12",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "w12"
+              },
+              {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output": {
+        "kind": "variable",
+        "name": "w1"
+      }
+    }
+  ],
+  "compositions": [
+    {
+      "name": "repeated-self",
+      "first": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "v"
+              }
+            ]
+          }
+        }
+      ],
+      "second": [
+        {
+          "kind": "effect",
+          "name": "target",
+          "value": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "variable",
+                  "name": "v"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "targetEntity",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        }
+      ],
+      "output": [
+        {
+          "kind": "effect",
+          "name": "target",
+          "value": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "union",
+                  "entities": [
+                    {
+                      "kind": "variable",
+                      "name": "v"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "targetEntity",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "v"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "mutual-union",
+      "first": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        }
+      ],
+      "second": [
+        {
+          "kind": "effect",
+          "name": "target",
+          "value": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "variable",
+                  "name": "v"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "targetEntity",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        }
+      ],
+      "output": [
+        {
+          "kind": "effect",
+          "name": "target",
+          "value": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "union",
+                  "entities": [
+                    {
+                      "kind": "variable",
+                      "name": "v"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "targetEntity",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        }
+      ]
+    },
+    {
+      "name": "self-with-vanishing-branch",
+      "first": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "second": [
+        {
+          "kind": "effect",
+          "name": "target",
+          "value": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "variable",
+                  "name": "v"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "targetEntity",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        }
+      ],
+      "output": [
+        {
+          "kind": "effect",
+          "name": "target",
+          "value": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "union",
+                  "entities": [
+                    {
+                      "kind": "variable",
+                      "name": "v"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "targetEntity",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "self-with-long-vanishing-chain",
+      "first": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w0"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w0",
+          "value": {
+            "kind": "variable",
+            "name": "w1"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w1",
+          "value": {
+            "kind": "variable",
+            "name": "w2"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w2",
+          "value": {
+            "kind": "variable",
+            "name": "w3"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w3",
+          "value": {
+            "kind": "variable",
+            "name": "w4"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w4",
+          "value": {
+            "kind": "variable",
+            "name": "w5"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w5",
+          "value": {
+            "kind": "variable",
+            "name": "w6"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w6",
+          "value": {
+            "kind": "variable",
+            "name": "w7"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w7",
+          "value": {
+            "kind": "variable",
+            "name": "w8"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w8",
+          "value": {
+            "kind": "variable",
+            "name": "w9"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w9",
+          "value": {
+            "kind": "variable",
+            "name": "w10"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w10",
+          "value": {
+            "kind": "variable",
+            "name": "w11"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w11",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ],
+      "second": [
+        {
+          "kind": "effect",
+          "name": "target",
+          "value": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "variable",
+                  "name": "v"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "targetEntity",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        }
+      ],
+      "output": [
+        {
+          "kind": "effect",
+          "name": "target",
+          "value": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "union",
+                  "entities": [
+                    {
+                      "kind": "variable",
+                      "name": "v"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w0"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w1"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w2"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w3"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w4"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w5"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w6"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w7"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w8"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w9"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w10"
+                    },
+                    {
+                      "kind": "variable",
+                      "name": "w11"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "targetEntity",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w0"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "v"
+              },
+              {
+                "kind": "variable",
+                "name": "w0"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w0",
+          "value": {
+            "kind": "variable",
+            "name": "w1"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w1",
+          "value": {
+            "kind": "variable",
+            "name": "w2"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w2",
+          "value": {
+            "kind": "variable",
+            "name": "w3"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w3",
+          "value": {
+            "kind": "variable",
+            "name": "w4"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w4",
+          "value": {
+            "kind": "variable",
+            "name": "w5"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w5",
+          "value": {
+            "kind": "variable",
+            "name": "w6"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w6",
+          "value": {
+            "kind": "variable",
+            "name": "w7"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w7",
+          "value": {
+            "kind": "variable",
+            "name": "w8"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w8",
+          "value": {
+            "kind": "variable",
+            "name": "w9"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w9",
+          "value": {
+            "kind": "variable",
+            "name": "w10"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w10",
+          "value": {
+            "kind": "variable",
+            "name": "w11"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "w11",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": []
+          }
+        }
+      ]
+    }
+  ],
+  "unification": [
+    {
+      "name": "self-repeated",
+      "a": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "b": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "variable",
+            "name": "v"
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        }
+      ]
+    },
+    {
+      "name": "nested-self-repeated",
+      "a": {
+        "kind": "variable",
+        "name": "v"
+      },
+      "b": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "union",
+            "entities": [
+              {
+                "kind": "variable",
+                "name": "w"
+              },
+              {
+                "kind": "variable",
+                "name": "v"
+              }
+            ]
+          },
+          {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "x",
+                "reference": 1
+              }
+            ]
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "variable",
+            "name": "w"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "variable",
+            "name": "v"
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "x",
+                "reference": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "repeated-common-members",
+      "a": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "variable",
+            "name": "w"
+          }
+        ]
+      },
+      "b": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "variable",
+            "name": "z"
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "w",
+          "value": {
+            "kind": "variable",
+            "name": "z"
+          }
+        }
+      ]
+    },
+    {
+      "name": "repeated-with-concrete",
+      "a": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "x",
+                "reference": 1
+              }
+            ]
+          }
+        ]
+      },
+      "b": {
+        "kind": "concrete",
+        "stateVariables": [
+          {
+            "name": "x",
+            "reference": 1
+          },
+          {
+            "name": "y",
+            "reference": 2
+          }
+        ]
+      },
+      "substitutions": [
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "y",
+                "reference": 2
+              }
+            ]
+          }
+        },
+        {
+          "kind": "entity",
+          "name": "v",
+          "value": {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "y",
+                "reference": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "distinct-equal-concrete-members",
+      "a": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "x",
+                "reference": 1
+              }
+            ]
+          }
+        ]
+      },
+      "b": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v"
+          },
+          {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "x",
+                "reference": 1
+              }
+            ]
+          }
+        ]
+      },
+      "substitutions": []
+    },
+    {
+      "name": "repeated-reference-mismatch",
+      "a": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v",
+            "reference": 1
+          },
+          {
+            "kind": "variable",
+            "name": "w"
+          }
+        ]
+      },
+      "b": {
+        "kind": "union",
+        "entities": [
+          {
+            "kind": "variable",
+            "name": "v",
+            "reference": 2
+          },
+          {
+            "kind": "variable",
+            "name": "w"
+          }
+        ]
+      },
+      "substitutions": []
+    }
+  ],
+  "occurrences": [
+    {
+      "name": "json-read",
+      "origin": "json",
+      "kind": "read",
+      "seed": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "json-temporal",
+      "origin": "json",
+      "kind": "temporal",
+      "seed": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "json-update",
+      "origin": "json",
+      "kind": "update",
+      "seed": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "parser-read",
+      "origin": "parser",
+      "kind": "read",
+      "seed": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "parser-temporal",
+      "origin": "parser",
+      "kind": "temporal",
+      "seed": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "parser-update",
+      "origin": "parser",
+      "kind": "update",
+      "seed": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "state-json-read",
+      "origin": "state-json",
+      "kind": "read",
+      "seed": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "state-json-temporal",
+      "origin": "state-json",
+      "kind": "temporal",
+      "seed": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "state-json-update",
+      "origin": "state-json",
+      "kind": "update",
+      "seed": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "native-read",
+      "origin": "native",
+      "kind": "read",
+      "seed": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "native-temporal",
+      "origin": "native",
+      "kind": "temporal",
+      "seed": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "native-update",
+      "origin": "native",
+      "kind": "update",
+      "seed": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "output": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                },
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
