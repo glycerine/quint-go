@@ -529,3 +529,10 @@ word "retained" in the commit message.
   missing first frames), retained frame order, empty messages, nested branches,
   and JSON tree round trips. Default tests pass (core 0.007s). P1.6 remains open
   for source excerpts, diagnostic-code inventory, and complete error-data schemas.
+
+- 2026-11-02: Added preorder expression/type traversal and expression lookup by
+  ID. Tests check nested let/lambda/application order, constructor/argument/result
+  and row-field order, subtree pruning, error propagation at every visited kind,
+  nil roots, missing IDs, and unknown nodes. Default tests pass (core 0.006s).
+  P1.5 remains open for full module/declaration visitor hooks, transformations,
+  printing, namespacing, and ID/source-reference remapping.
