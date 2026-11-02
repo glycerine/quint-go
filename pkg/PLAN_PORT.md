@@ -997,3 +997,12 @@ word "retained" in the commit message.
   Default tests pass within the sub-second target. P2.5 remains open for broader
   missing/generated source-entry and allocation-order parity, not coordinates
   alone; imported raw-map export is not yet exposed.
+
+- 2026-11-02: Added LoadModulesWithLocations exposing both source-coordinate
+  formats across imported files, while keeping the existing UTF-16-only loader
+  free of raw-map allocation. Both maps survive failures for diagnostic lookup.
+  Tests verify unchanged module/editor-map results, matching ID/file coverage,
+  imported Unicode spans, retained import/type/cycle diagnostic references, and
+  main-file load failure. Default tests pass within the sub-second target.
+  P2.5/P2.7 still require partial-result/error accumulation parity and broader
+  source-entry/allocation validation before their completion gates are met.
