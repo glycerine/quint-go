@@ -1395,3 +1395,12 @@ word "retained" in the commit message.
   using the annotation ID when available. Default tests pass (combined execution
   0.618s). Type-node ID normalization remains documented; broader inference
   coverage and orchestration remain open.
+
+- 2026-11-02: Added public TypeInferrer/TypeInferenceResult orchestration with
+  retained state across declaration batches, optional seeded type tables, and
+  simplification of newly inferred entries. The ten upstream inference fixtures
+  now exercise this API. Tests cover incremental polymorphism, shared result
+  dictionaries, resumed tables, row simplification, and explicit solving of
+  pending assumptions. Default tests pass under one second. Application expansion
+  and name resolution remain prerequisites; full analysis-pipeline integration,
+  builtin type-ID provenance, and broader inference parity remain pending.

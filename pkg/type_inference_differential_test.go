@@ -32,15 +32,13 @@ func TestUpstreamTypeInference(t *testing.T) {
 	for _, f := range fixtures {
 		t.Run(f.Name, func(t *testing.T) {
 			linked, _ := ResolveLinkedModules(f.Input)
-			g := NewTypeConstraintGenerator(TypeUnifier{Table: linked.Table})
-			for _, d := range f.Input[0].Declarations {
-				if err = g.GenerateDeclaration(d); err != nil {
-					t.Fatal(err)
-				}
+			g := NewTypeInferrer(linked.Table, nil)
+			if _, err = g.InferTypes(f.Input[0].Declarations); err != nil {
+				t.Fatal(err)
 			}
+
 			got := []entry{}
 			for id, s := range g.Context.Types.All() {
-				s.Type = SimplifyType(s.Type)
 				_ = WalkType(&s.Type, func(t *Type) (bool, error) { t.ID = nil; return true, nil })
 				got = append(got, entry{id, s})
 			}
