@@ -618,3 +618,12 @@ word "retained" in the commit message.
   empty/singleton/nested unions, grouping, reference and slice isolation, arrow
   recursion, and update preservation. Default tests pass (core 0.012s). P5.1
   remains open for substitution/unification and shared-object identity auditing.
+
+- 2026-11-02: Probed ANTLR Go generation using the upstream Effect.g4 grammar.
+  Generated lexer/parser/listener/visitor code with ANTLR 4.13.2 and pinned
+  github.com/antlr4-go/antlr/v4 v4.13.1. Regeneration command from repository root:
+  `java -jar /path/to/antlr-4.13.2-complete.jar -Dlanguage=Go -package effectparser
+  -visitor -Xexact-output-dir -o pkg/internal/effectparser quint/src/generated/Effect.g4`.
+  Grammar tests exercise concrete, arrow, temporal, nullary, malformed, illegal
+  token, and trailing-input cases. P2.1 remains open for full Quint grammar
+  adaptation and reproducible generator setup; P2.6 needs effect-to-IR conversion.
