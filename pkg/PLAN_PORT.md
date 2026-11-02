@@ -270,9 +270,10 @@ the information required by Go Apalache's importer.
     enable the `hash-concrete` effect-unification fixture.
   - [ ] Audit occurrence identity at all public construction boundaries and broader
     cyclic substitution behavior against upstream.
-  - [ ] Integrate binding rules into structural effect/entity unification and validate against upstream fixtures.
+  - [x] Integrate binding rules into structural effect/entity unification and validate initial upstream fixtures.
 - [ ] P5.2 Port builtin effect signatures and effect inference through calls,
   lambdas, local definitions, imports, and instantiated modules.
+  - [x] Port all 98 upstream builtin effect signatures, with 142 exact signature fixtures.
 - [ ] P5.3 Port qualifier/mode validation for `pure val`, `pure def`, `val`,
   `def`, `nondet`, `action`, `run`, and `temporal`.
 - [ ] P5.4 Port multiple-update detection and nondeterministic-choice checks,
@@ -1513,3 +1514,11 @@ word "retained" in the commit message.
   Exact helper differential fixtures and integration into effect inference remain
   open; qualified state names are constructed in IR because signature grammar
   literals do not accept namespace separators.
+
+- 2026-11-02: Added all 98 upstream builtin effect signatures, including
+  higher-order propagation, action/temporal operators, match branches, and
+  variadic constructors. All 142 differential cases compare complete trees and
+  ordered quantifiers. They caught the zero-arity matchVariant range edge case,
+  now preserved alongside upstream actionAll override semantics. Isolation and
+  invalid-lookup tests also pass. Default tests pass (combined execution 0.690s).
+  Effect-inference traversal and combined analysis remain open.

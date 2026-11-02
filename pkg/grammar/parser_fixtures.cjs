@@ -364,3 +364,12 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/effect_unify.json'),JSONbig
  const a=parseEffect(x).value,b=parseEffect(y).value,result=unifyEffects(a,b)
  return {name,a,b,...(result.isLeft()?{error:result.value}:{substitutions:result.value})}
 }),null,2)+'\n')
+
+const {getSignatures:getEffectSignatures}=require(path.join(root,'quint/src/effects/builtinSignatures'))
+const dynamicEffectNames=new Set(['List','Set','Map','Rec','Tup','tuples','and','or','matchVariant','actionAll','actionAny'])
+const builtinEffectFixtures=[...getEffectSignatures()].flatMap(([name,signature])=>
+ (dynamicEffectNames.has(name)?[0,1,2,3,5]:[2]).map(arity=>{
+  const s=signature(arity)
+  return {name,arity,scheme:{effect:s.effect,effectVariables:[...s.effectVariables],entityVariables:[...s.entityVariables]}}
+ }))
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/builtin_effects.json'),JSONbig.stringify(builtinEffectFixtures,null,2)+'\n')

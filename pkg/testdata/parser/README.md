@@ -138,3 +138,7 @@ error trees are compared without normalization.
 All eighteen compare full substitutions and errors exactly, including
 `hash-concrete`, which exercises self-containing substitutions and preservation
 of state-variable occurrence identity during internal transformations.
+
+`builtin_effects.json` covers all 98 upstream builtin effect signatures with
+142 cases, including arities 0, 1, 2, 3, and 5 for every variadic signature.
+Complete effect trees and ordered quantifiers are compared without normalization.
