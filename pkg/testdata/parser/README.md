@@ -913,9 +913,9 @@ two REPL tests protect cells and source ownership. The matching variable-context
 pending fixture records exported instance aliases whose first compile context
 still differs; it is evidence of a remaining gap, not a passing source claim.
 
-`rust_comparison_runtime.json` records75 responses across25 actual locked Rust
+`rust_comparison_runtime.json` records237 responses across79 actual locked Rust
 and TypeScript comparisons. The matching generator records executable/source/lock
-hashes; default Go tests need neither runtime. All25 Go cases target TypeScript,
+hashes; default Go tests need neither runtime. All79 Go cases target TypeScript,
 including three newly supported interval picks. Optional live Rust replay passed.
 Documented disagreements include seed66 picks, 2^32 bounds, counter overflow,
 folded traversal, out-of-i64/resource limits and selected error codes.
@@ -959,3 +959,8 @@ the upstream test-driver panic for init.then(step) is a recorded reference bug,
 not a passing oracle. Thirteen checked frame-format cases cover compact domains,
 serialization errors and cancellation. All recorder functions and the checked
 formatter entry point have 100% statement coverage; CLI frame wiring remains open.
+The expanded Rust corpus preserves the original 25 responses and adds 54
+callback/control-flow/closure/retry cases: 58 cases agree and 21 record one or
+more differences. Default tests check raw Rust output/error/debug classifications,
+trace IDs and counter data as well as exact Go/TypeScript values, diagnostics,
+debug output and seeded picks. Live replay checks all 237 Rust protocol responses.

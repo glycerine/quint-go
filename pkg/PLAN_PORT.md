@@ -521,7 +521,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] CLI-compatible explicit seed parsing with JavaScript BigInt syntax,
     ECMAScript whitespace, exact error messages, and reference fixtures.
   - [x] CLI seed flags/replay output and finite-set sampling/traversal.
-  - [x] Compare actual locked Rust evaluator with TypeScript and Go on 25 cases;
+  - [x] Compare actual locked Rust evaluator with TypeScript and Go on 79 cases;
     preserve TypeScript picks/counters and record Rust differences explicitly.
   - [ ] Complete default initialization and wider seeded behavior audits.
 - [x] P7.9 Complete an opcode coverage matrix for evaluation, typing, effects,
@@ -531,8 +531,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
 - [ ] P7.10 Differential-test pure results, errors, state transitions, rollback,
   and nondeterministic behavior against both reference runtimes. Investigate
   disagreements before assigning a Go expected result.
-  - [x] Build and execute the actual locked Rust evaluator; save 75 responses
-    across 25 arithmetic, collection, domain, error and seeded comparison cases.
+  - [x] Build and execute the actual locked Rust evaluator; save 237 responses
+    across 79 arithmetic, callback, closure, error and seeded comparison cases.
   - [ ] Expand comparison across remaining callbacks and stateful operations.
 
 Exit gate: Go evaluation reproduces reference semantics on the runtime corpus,
@@ -3247,3 +3247,11 @@ word "retained" in the commit message.
   with100% recorder/public formatter function coverage; focused races pass1.860s.
   Upstream empty-stack test-driver panic is handled defensively and recorded
   separately. CLI verbose-frame presentation and remaining source contexts stay open.
+
+- 2026-11-02: Expanded actual Rust/TypeScript comparison25→79 cases while
+  preserving the original responses. New callback, lexical closure, lazy-control,
+  diagnostic and nondet retry cases yield58 agreements and21 documented
+  differences. Default Go assertions also check exact TypeScript debug output,
+  primary references, trace IDs, picks and counters; raw Rust response/category
+  validation runs without Rust installed. Saved plus live237-response replay
+  passes0.029s. No production semantic mismatch was found in this batch.

@@ -30,15 +30,18 @@ type rustComparisonResponse struct {
 }
 
 type rustComparisonCase struct {
+	Differences                        []string
+	RustDebugOutput                    string
 	Name, Source, Seed, Policy, Reason string
 	GoSourceStatus                     string
 	Input                              Expr
 	Typescript                         struct {
-		Output *Expr
-		Error  *Diagnostic
-		Thrown string
-		Seed   string
-		Picks  []struct {
+		DebugOutput string
+		Output      *Expr
+		Error       *Diagnostic
+		Thrown      string
+		Seed        string
+		Picks       []struct {
 			Name  string
 			Value *Expr
 		}
@@ -90,7 +93,8 @@ func TestRustComparisonRuntimeCorpus(t *testing.T) {
 				t.Fatal(err)
 			}
 			rng, storage := NewRNG(seed), NewVariableStorageWithMetadata(true)
-			ctx := WithRuntimeHooks(context.Background(), RuntimeHooks{DebugWriter: io.Discard})
+			var debug bytes.Buffer
+			ctx := WithRuntimeHooks(context.Background(), RuntimeHooks{DebugWriter: &debug, DebugWidth: 80})
 			got, err := EvaluateStateExpressionWithRNG(ctx, f.Input, storage, rng)
 			if f.GoSourceStatus != "covered" {
 				t.Fatal("unknown source comparison status", f.GoSourceStatus)
@@ -99,12 +103,15 @@ func TestRustComparisonRuntimeCorpus(t *testing.T) {
 			if f.Policy == "structured-error" {
 				// The TS evaluator wraps its BigInt remainder exception in QNT501;
 				// Go deliberately returns the same QNT503 as the Rust reference.
-				wantError = &Diagnostic{Code: "QNT503", Message: "Division by zero"}
+				wantError = &Diagnostic{Code: "QNT503", Message: "Division by zero", Reference: f.Typescript.Error.Reference}
 			}
 			if wantError != nil {
 				var d Diagnostic
 				if !errors.As(err, &d) || d.Code != wantError.Code || d.Message != wantError.Message {
 					t.Fatal("Go diagnostic", err, "want", wantError)
+				}
+				if wantError.Reference != nil && (d.Reference == nil || *d.Reference != *wantError.Reference) {
+					t.Fatal("Go diagnostic reference", d.Reference, "TypeScript", wantError.Reference)
 				}
 			} else {
 				if err != nil || f.Typescript.Output == nil || f.Typescript.Thrown != "" {
@@ -122,20 +129,32 @@ func TestRustComparisonRuntimeCorpus(t *testing.T) {
 			if rng.State().String() != f.Typescript.Seed {
 				t.Fatal("Go counter", rng.State(), "TypeScript", f.Typescript.Seed)
 			}
+			if debug.String() != f.Typescript.DebugOutput {
+				t.Fatalf("Go callback/debug output %q\nTypeScript %q", debug.String(), f.Typescript.DebugOutput)
+			}
 			for _, pick := range f.Typescript.Picks {
 				value, ok := storage.NondetPicks.Get2(pick.Name)
-				if !ok || pick.Value == nil {
+				if !ok {
 					t.Fatal("missing nondeterministic pick", pick.Name)
 				}
+				if pick.Value == nil {
+					if value.Valid() {
+						t.Fatal("exhausted or empty nondeterministic pick retained a value", pick.Name)
+					}
+					continue
+				}
 				want, err := NewRuntimeValue(*pick.Value)
-				if err != nil || !value.Equal(want) {
+				equal, compareErr := value.EqualContext(ctx, want)
+				if err != nil || compareErr != nil || !equal {
 					t.Fatal("Go pick", value.String(), "TypeScript", want.String(), err)
 				}
 			}
+			checkRustComparisonDifferences(t, ctx, f, got)
 			switch f.Policy {
 			case "shared", "unordered-value":
 				want := decodeRustComparisonValue(t, f.Rust.OK)
-				if !got.Equal(want) {
+				equal, compareErr := got.EqualContext(ctx, want)
+				if compareErr != nil || !equal {
 					t.Fatal("Go value", got.String(), "Rust", want.String())
 				}
 			case "shared-error", "structured-error":
@@ -154,7 +173,8 @@ func TestRustComparisonRuntimeCorpus(t *testing.T) {
 					t.Fatal("expected documented diagnostic policy difference")
 				}
 			case "typescript-order":
-				if got.Equal(decodeRustComparisonValue(t, f.Rust.OK)) {
+				equal, compareErr := got.EqualContext(ctx, decodeRustComparisonValue(t, f.Rust.OK))
+				if compareErr != nil || equal {
 					t.Fatal("expected documented backend iteration difference")
 				}
 			case "typescript-seed":
@@ -164,10 +184,76 @@ func TestRustComparisonRuntimeCorpus(t *testing.T) {
 				for _, diagnostic := range f.Rust.Diagnostics {
 					_ = decodeRustComparisonValue(t, diagnostic.Value)
 				}
+			case "callback-policy":
+				// The source behavior and backend differences were checked above.
 			default:
 				t.Fatal("unrecognized comparison policy", f.Policy)
 			}
 		})
+	}
+}
+
+func checkRustComparisonDifferences(t *testing.T, ctx context.Context, f rustComparisonCase, got RuntimeValue) {
+	t.Helper()
+	known := map[string]bool{"value": true, "outcome": true, "error-code": true, "error-message": true, "trace": true, "debug": true, "counter": true}
+	seen := make(map[string]bool, len(f.Differences))
+	for _, kind := range f.Differences {
+		if !known[kind] || seen[kind] {
+			t.Fatal("unknown or duplicate backend difference", kind)
+		}
+		seen[kind] = true
+	}
+	has := func(kind string) bool {
+		return seen[kind]
+	}
+	var rustValue RuntimeValue
+	if len(f.Rust.OK) > 0 {
+		rustValue = decodeRustComparisonValue(t, f.Rust.OK)
+	}
+	var debug strings.Builder
+	for _, diagnostic := range f.Rust.Diagnostics {
+		value, err := DecodeITFValue(diagnostic.Value, NewIDGenerator())
+		if err != nil {
+			t.Fatal("invalid Rust callback diagnostic", err)
+		}
+		formatted, err := FormatValueExpression(value, 80, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		debug.WriteString("> " + diagnostic.Label + " " + formatted + "\n")
+	}
+	if debug.String() != f.RustDebugOutput {
+		t.Fatal("saved Rust callback diagnostics do not match their formatted output")
+	}
+	if (f.Typescript.Seed != f.RustSeed) != has("counter") || (f.Typescript.DebugOutput != f.RustDebugOutput) != has("debug") {
+		t.Fatal("saved callback or counter difference classification is inconsistent")
+	}
+	switch {
+	case f.Typescript.Output != nil && len(f.Rust.OK) > 0:
+		equal, err := got.EqualContext(ctx, rustValue)
+		if err != nil || equal == has("value") || has("outcome") {
+			t.Fatal("saved value difference classification is inconsistent", err)
+		}
+	case f.Typescript.Error != nil && f.Rust.Err != nil:
+		if (f.Typescript.Error.Code != f.Rust.Err.Code) != has("error-code") || (f.Typescript.Error.Message != f.Rust.Err.Message) != has("error-message") || has("outcome") {
+			t.Fatal("saved diagnostic difference classification is inconsistent")
+		}
+		traceDiffers := len(f.Rust.Err.Trace) != 1 || f.Typescript.Error.Reference == nil || f.Rust.Err.Trace[0] != *f.Typescript.Error.Reference
+		if traceDiffers != has("trace") {
+			t.Fatal("saved trace difference classification is inconsistent")
+		}
+		if len(f.Rust.Err.Trace) == 0 || f.Typescript.Error.Reference == nil || f.Rust.Err.Trace[0] != *f.Typescript.Error.Reference {
+			t.Fatal("Rust primary error location differs from the TypeScript source reference")
+		}
+		for _, id := range f.Rust.Err.Trace {
+			if FindExpr(&f.Input, id) == nil {
+				t.Fatal("Rust call trace references an absent source expression", id)
+			}
+		}
+	default:
+		if !has("outcome") || f.Typescript.Output == nil && f.Typescript.Error == nil || len(f.Rust.OK) == 0 && f.Rust.Err == nil {
+			t.Fatal("missing expected reference outcome difference")
+		}
 	}
 }
 
