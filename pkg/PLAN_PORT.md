@@ -252,7 +252,8 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Solve equality/conjunction/defined-type constraints and collect source-keyed errors.
   - [x] Compare initial constraint-solving substitutions and ordered diagnostics with upstream.
   - [x] Integrate constraint generation with ordered solving and inference.
-  - [ ] Expand remaining composition-failure coverage.
+  - [x] Expand composition failures with 22 exact type/row overlap, occurs,
+    mixed-kind and first-name cases, including discarded partial output.
 - [ ] P4.3 Port type aliases, abstract types, type applications, parameter
   substitution, alias inlining, and recursive-alias rejection.
   - [x] Resolve outer aliases and recursively inline type-tree aliases by lookup ID.
@@ -263,7 +264,8 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Compare application expansion and arity errors with initial upstream fixtures.
   - [x] Integrate application/declaration resolution with inferred type tables;
     replay all 29 cases from the upstream inferrer test suite.
-  - [ ] Validate broader example/application edge cases beyond the saved suite.
+  - [x] Validate 36 broader application/annotation/alias cases with raw IDs,
+    including duplicate parameter allocation/order and arity behavior.
 - [ ] P4.4 Port every builtin type signature and special constraint; maintain
   an opcode-to-signature coverage table to catch omissions.
   - [x] Generate structural constraints for Rec, field, fieldNames, and with.
@@ -282,7 +284,7 @@ analysis, with reproducible errors for invalid module structures.
 - [ ] P4.6 Compare inferred schemes modulo type-variable renaming and compare
   rejection cases against the upstream type suite and example corpus.
   - [x] Replay the full 29-case upstream inferrer suite, comparing ordered
-    schemes/quantifiers, resolved declarations and errors (type-node IDs removed).
+    schemes/quantifiers, resolved declarations and errors, including raw type IDs.
   - [ ] Broader examples and Rust/reference-runtime disagreement audit.
 
 Exit gate: analyzed fixtures carry complete, consistent type tables, including
@@ -3320,3 +3322,11 @@ word "retained" in the commit message.
   and cached errors retain source references. Invalid startup settings are safely
   returned on evaluation. Focused tests0.082s, full core0.938s and vet pass; P7.6
   is complete for the implemented source/compiler boundary.
+
+- 2026-11-02: Fixed duplicate type-alias parameters using insdict first-position/
+  last-value semantics while consuming every fresh name. Thirty-six raw-ID
+  application/annotation cases,22 exact composition cases and11 tuple boundary
+  cases pass; the original29-case inferrer suite now checks all type-node IDs.
+  Focused69 new plus29 existing cases pass0.077s. Actual TypeScript allocates a
+  1,000,002-field tuple prefix; Go's explicit allocation bound remains a documented
+  resource policy. Wider generator/example parity is still open.

@@ -1017,3 +1017,14 @@ capture; context-local overrides remove global Setenv dependencies from existing
 unit tests. Non-Diagnostic exceptions/cancellation leave pick metadata untouched,
 while returned diagnostics preserve the reference's metadata behavior. Invalid
 startup values become a stored evaluation SyntaxError instead of a Go import panic.
+
+`type_application_edges.json` contains 36 actual TypeScript cases with 172 raw-ID
+schemes, six application errors and 17 inference errors. `type_composition.json`
+adds 22 exact success/exception cases, including type/row overlaps, occurs checks,
+name precedence, mixed kinds and partial-output rejection. `type_tuple_prefix.json`
+records 11 exact small/extreme/resource cases; the generator obtains an actual
+1,000,002-field TypeScript success as a compact summary. Go keeps an explicit
+allocation bound instead of claiming reference resource parity. Matching generators
+live in grammar/. The existing opt-in 29-case inferrer suite now compares raw type
+IDs too. Duplicate alias parameters consume fresh names for every occurrence but
+use ordered first-position/last-value parameter entries, matching TypeScript Map.

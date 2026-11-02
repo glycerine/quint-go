@@ -1,0 +1,2639 @@
+{
+  "metadata": {
+    "referenceSource": "quint/src/types/specialConstraints.ts",
+    "referenceSHA256": "2820d0df511e16ea77e4ca1fdfd397d827beddbc5b3946429b3a7a799f0a62b0",
+    "lodashVersion": "4.17.23",
+    "policy": "Materialized results and diagnostic IDs match upstream below the bound. Go intentionally caps explicit prefix allocation; indices whose Number-converted preceding count exceeds MAX_SAFE_INTEGER have an empty preceding prefix upstream and bypass that allocation guard.",
+    "unsafeReferenceBoundary": "index 9007199254740992 requests MAX_SAFE_INTEGER preceding fields. It is intentionally not evaluated: lodash would attempt an impractical array allocation. The next index is evaluated and returns one field."
+  },
+  "cases": [
+    {
+      "name": "first",
+      "index": "1",
+      "id": 17,
+      "args": [
+        {
+          "expr": {
+            "id": 11,
+            "kind": "name",
+            "name": "tuple"
+          },
+          "type": {
+            "kind": "var",
+            "name": "tupleType"
+          }
+        },
+        {
+          "expr": {
+            "id": 12,
+            "kind": "int",
+            "value": 1
+          },
+          "type": {
+            "kind": "int"
+          }
+        }
+      ],
+      "result": {
+        "kind": "var",
+        "name": "result"
+      },
+      "constraints": [
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "kind": "var",
+              "name": "tupleType"
+            },
+            {
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "result"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "tail_result"
+                }
+              }
+            }
+          ],
+          "sourceId": 17
+        }
+      ]
+    },
+    {
+      "name": "second",
+      "index": "2",
+      "id": 17,
+      "args": [
+        {
+          "expr": {
+            "id": 11,
+            "kind": "name",
+            "name": "tuple"
+          },
+          "type": {
+            "kind": "var",
+            "name": "tupleType"
+          }
+        },
+        {
+          "expr": {
+            "id": 12,
+            "kind": "int",
+            "value": 2
+          },
+          "type": {
+            "kind": "int"
+          }
+        }
+      ],
+      "result": {
+        "kind": "var",
+        "name": "result"
+      },
+      "constraints": [
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "kind": "var",
+              "name": "tupleType"
+            },
+            {
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_0"
+                    }
+                  },
+                  {
+                    "fieldName": "1",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "result"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "tail_result"
+                }
+              }
+            }
+          ],
+          "sourceId": 17
+        }
+      ]
+    },
+    {
+      "name": "seventeenth",
+      "index": "17",
+      "id": 17,
+      "args": [
+        {
+          "expr": {
+            "id": 11,
+            "kind": "name",
+            "name": "tuple"
+          },
+          "type": {
+            "kind": "var",
+            "name": "tupleType"
+          }
+        },
+        {
+          "expr": {
+            "id": 12,
+            "kind": "int",
+            "value": 17
+          },
+          "type": {
+            "kind": "int"
+          }
+        }
+      ],
+      "result": {
+        "kind": "var",
+        "name": "result"
+      },
+      "constraints": [
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "kind": "var",
+              "name": "tupleType"
+            },
+            {
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_0"
+                    }
+                  },
+                  {
+                    "fieldName": "1",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_1"
+                    }
+                  },
+                  {
+                    "fieldName": "2",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_2"
+                    }
+                  },
+                  {
+                    "fieldName": "3",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_3"
+                    }
+                  },
+                  {
+                    "fieldName": "4",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_4"
+                    }
+                  },
+                  {
+                    "fieldName": "5",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_5"
+                    }
+                  },
+                  {
+                    "fieldName": "6",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_6"
+                    }
+                  },
+                  {
+                    "fieldName": "7",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_7"
+                    }
+                  },
+                  {
+                    "fieldName": "8",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_8"
+                    }
+                  },
+                  {
+                    "fieldName": "9",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_9"
+                    }
+                  },
+                  {
+                    "fieldName": "10",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_10"
+                    }
+                  },
+                  {
+                    "fieldName": "11",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_11"
+                    }
+                  },
+                  {
+                    "fieldName": "12",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_12"
+                    }
+                  },
+                  {
+                    "fieldName": "13",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_13"
+                    }
+                  },
+                  {
+                    "fieldName": "14",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_14"
+                    }
+                  },
+                  {
+                    "fieldName": "15",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_15"
+                    }
+                  },
+                  {
+                    "fieldName": "16",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "result"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "tail_result"
+                }
+              }
+            }
+          ],
+          "sourceId": 17
+        }
+      ]
+    },
+    {
+      "name": "moderate-prefix",
+      "index": "257",
+      "id": 17,
+      "args": [
+        {
+          "expr": {
+            "id": 11,
+            "kind": "name",
+            "name": "tuple"
+          },
+          "type": {
+            "kind": "var",
+            "name": "tupleType"
+          }
+        },
+        {
+          "expr": {
+            "id": 12,
+            "kind": "int",
+            "value": 257
+          },
+          "type": {
+            "kind": "int"
+          }
+        }
+      ],
+      "result": {
+        "kind": "var",
+        "name": "result"
+      },
+      "constraints": [
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "kind": "var",
+              "name": "tupleType"
+            },
+            {
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_0"
+                    }
+                  },
+                  {
+                    "fieldName": "1",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_1"
+                    }
+                  },
+                  {
+                    "fieldName": "2",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_2"
+                    }
+                  },
+                  {
+                    "fieldName": "3",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_3"
+                    }
+                  },
+                  {
+                    "fieldName": "4",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_4"
+                    }
+                  },
+                  {
+                    "fieldName": "5",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_5"
+                    }
+                  },
+                  {
+                    "fieldName": "6",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_6"
+                    }
+                  },
+                  {
+                    "fieldName": "7",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_7"
+                    }
+                  },
+                  {
+                    "fieldName": "8",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_8"
+                    }
+                  },
+                  {
+                    "fieldName": "9",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_9"
+                    }
+                  },
+                  {
+                    "fieldName": "10",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_10"
+                    }
+                  },
+                  {
+                    "fieldName": "11",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_11"
+                    }
+                  },
+                  {
+                    "fieldName": "12",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_12"
+                    }
+                  },
+                  {
+                    "fieldName": "13",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_13"
+                    }
+                  },
+                  {
+                    "fieldName": "14",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_14"
+                    }
+                  },
+                  {
+                    "fieldName": "15",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_15"
+                    }
+                  },
+                  {
+                    "fieldName": "16",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_16"
+                    }
+                  },
+                  {
+                    "fieldName": "17",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_17"
+                    }
+                  },
+                  {
+                    "fieldName": "18",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_18"
+                    }
+                  },
+                  {
+                    "fieldName": "19",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_19"
+                    }
+                  },
+                  {
+                    "fieldName": "20",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_20"
+                    }
+                  },
+                  {
+                    "fieldName": "21",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_21"
+                    }
+                  },
+                  {
+                    "fieldName": "22",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_22"
+                    }
+                  },
+                  {
+                    "fieldName": "23",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_23"
+                    }
+                  },
+                  {
+                    "fieldName": "24",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_24"
+                    }
+                  },
+                  {
+                    "fieldName": "25",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_25"
+                    }
+                  },
+                  {
+                    "fieldName": "26",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_26"
+                    }
+                  },
+                  {
+                    "fieldName": "27",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_27"
+                    }
+                  },
+                  {
+                    "fieldName": "28",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_28"
+                    }
+                  },
+                  {
+                    "fieldName": "29",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_29"
+                    }
+                  },
+                  {
+                    "fieldName": "30",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_30"
+                    }
+                  },
+                  {
+                    "fieldName": "31",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_31"
+                    }
+                  },
+                  {
+                    "fieldName": "32",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_32"
+                    }
+                  },
+                  {
+                    "fieldName": "33",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_33"
+                    }
+                  },
+                  {
+                    "fieldName": "34",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_34"
+                    }
+                  },
+                  {
+                    "fieldName": "35",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_35"
+                    }
+                  },
+                  {
+                    "fieldName": "36",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_36"
+                    }
+                  },
+                  {
+                    "fieldName": "37",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_37"
+                    }
+                  },
+                  {
+                    "fieldName": "38",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_38"
+                    }
+                  },
+                  {
+                    "fieldName": "39",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_39"
+                    }
+                  },
+                  {
+                    "fieldName": "40",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_40"
+                    }
+                  },
+                  {
+                    "fieldName": "41",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_41"
+                    }
+                  },
+                  {
+                    "fieldName": "42",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_42"
+                    }
+                  },
+                  {
+                    "fieldName": "43",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_43"
+                    }
+                  },
+                  {
+                    "fieldName": "44",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_44"
+                    }
+                  },
+                  {
+                    "fieldName": "45",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_45"
+                    }
+                  },
+                  {
+                    "fieldName": "46",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_46"
+                    }
+                  },
+                  {
+                    "fieldName": "47",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_47"
+                    }
+                  },
+                  {
+                    "fieldName": "48",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_48"
+                    }
+                  },
+                  {
+                    "fieldName": "49",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_49"
+                    }
+                  },
+                  {
+                    "fieldName": "50",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_50"
+                    }
+                  },
+                  {
+                    "fieldName": "51",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_51"
+                    }
+                  },
+                  {
+                    "fieldName": "52",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_52"
+                    }
+                  },
+                  {
+                    "fieldName": "53",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_53"
+                    }
+                  },
+                  {
+                    "fieldName": "54",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_54"
+                    }
+                  },
+                  {
+                    "fieldName": "55",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_55"
+                    }
+                  },
+                  {
+                    "fieldName": "56",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_56"
+                    }
+                  },
+                  {
+                    "fieldName": "57",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_57"
+                    }
+                  },
+                  {
+                    "fieldName": "58",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_58"
+                    }
+                  },
+                  {
+                    "fieldName": "59",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_59"
+                    }
+                  },
+                  {
+                    "fieldName": "60",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_60"
+                    }
+                  },
+                  {
+                    "fieldName": "61",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_61"
+                    }
+                  },
+                  {
+                    "fieldName": "62",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_62"
+                    }
+                  },
+                  {
+                    "fieldName": "63",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_63"
+                    }
+                  },
+                  {
+                    "fieldName": "64",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_64"
+                    }
+                  },
+                  {
+                    "fieldName": "65",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_65"
+                    }
+                  },
+                  {
+                    "fieldName": "66",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_66"
+                    }
+                  },
+                  {
+                    "fieldName": "67",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_67"
+                    }
+                  },
+                  {
+                    "fieldName": "68",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_68"
+                    }
+                  },
+                  {
+                    "fieldName": "69",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_69"
+                    }
+                  },
+                  {
+                    "fieldName": "70",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_70"
+                    }
+                  },
+                  {
+                    "fieldName": "71",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_71"
+                    }
+                  },
+                  {
+                    "fieldName": "72",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_72"
+                    }
+                  },
+                  {
+                    "fieldName": "73",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_73"
+                    }
+                  },
+                  {
+                    "fieldName": "74",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_74"
+                    }
+                  },
+                  {
+                    "fieldName": "75",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_75"
+                    }
+                  },
+                  {
+                    "fieldName": "76",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_76"
+                    }
+                  },
+                  {
+                    "fieldName": "77",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_77"
+                    }
+                  },
+                  {
+                    "fieldName": "78",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_78"
+                    }
+                  },
+                  {
+                    "fieldName": "79",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_79"
+                    }
+                  },
+                  {
+                    "fieldName": "80",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_80"
+                    }
+                  },
+                  {
+                    "fieldName": "81",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_81"
+                    }
+                  },
+                  {
+                    "fieldName": "82",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_82"
+                    }
+                  },
+                  {
+                    "fieldName": "83",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_83"
+                    }
+                  },
+                  {
+                    "fieldName": "84",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_84"
+                    }
+                  },
+                  {
+                    "fieldName": "85",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_85"
+                    }
+                  },
+                  {
+                    "fieldName": "86",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_86"
+                    }
+                  },
+                  {
+                    "fieldName": "87",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_87"
+                    }
+                  },
+                  {
+                    "fieldName": "88",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_88"
+                    }
+                  },
+                  {
+                    "fieldName": "89",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_89"
+                    }
+                  },
+                  {
+                    "fieldName": "90",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_90"
+                    }
+                  },
+                  {
+                    "fieldName": "91",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_91"
+                    }
+                  },
+                  {
+                    "fieldName": "92",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_92"
+                    }
+                  },
+                  {
+                    "fieldName": "93",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_93"
+                    }
+                  },
+                  {
+                    "fieldName": "94",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_94"
+                    }
+                  },
+                  {
+                    "fieldName": "95",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_95"
+                    }
+                  },
+                  {
+                    "fieldName": "96",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_96"
+                    }
+                  },
+                  {
+                    "fieldName": "97",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_97"
+                    }
+                  },
+                  {
+                    "fieldName": "98",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_98"
+                    }
+                  },
+                  {
+                    "fieldName": "99",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_99"
+                    }
+                  },
+                  {
+                    "fieldName": "100",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_100"
+                    }
+                  },
+                  {
+                    "fieldName": "101",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_101"
+                    }
+                  },
+                  {
+                    "fieldName": "102",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_102"
+                    }
+                  },
+                  {
+                    "fieldName": "103",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_103"
+                    }
+                  },
+                  {
+                    "fieldName": "104",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_104"
+                    }
+                  },
+                  {
+                    "fieldName": "105",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_105"
+                    }
+                  },
+                  {
+                    "fieldName": "106",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_106"
+                    }
+                  },
+                  {
+                    "fieldName": "107",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_107"
+                    }
+                  },
+                  {
+                    "fieldName": "108",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_108"
+                    }
+                  },
+                  {
+                    "fieldName": "109",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_109"
+                    }
+                  },
+                  {
+                    "fieldName": "110",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_110"
+                    }
+                  },
+                  {
+                    "fieldName": "111",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_111"
+                    }
+                  },
+                  {
+                    "fieldName": "112",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_112"
+                    }
+                  },
+                  {
+                    "fieldName": "113",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_113"
+                    }
+                  },
+                  {
+                    "fieldName": "114",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_114"
+                    }
+                  },
+                  {
+                    "fieldName": "115",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_115"
+                    }
+                  },
+                  {
+                    "fieldName": "116",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_116"
+                    }
+                  },
+                  {
+                    "fieldName": "117",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_117"
+                    }
+                  },
+                  {
+                    "fieldName": "118",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_118"
+                    }
+                  },
+                  {
+                    "fieldName": "119",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_119"
+                    }
+                  },
+                  {
+                    "fieldName": "120",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_120"
+                    }
+                  },
+                  {
+                    "fieldName": "121",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_121"
+                    }
+                  },
+                  {
+                    "fieldName": "122",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_122"
+                    }
+                  },
+                  {
+                    "fieldName": "123",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_123"
+                    }
+                  },
+                  {
+                    "fieldName": "124",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_124"
+                    }
+                  },
+                  {
+                    "fieldName": "125",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_125"
+                    }
+                  },
+                  {
+                    "fieldName": "126",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_126"
+                    }
+                  },
+                  {
+                    "fieldName": "127",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_127"
+                    }
+                  },
+                  {
+                    "fieldName": "128",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_128"
+                    }
+                  },
+                  {
+                    "fieldName": "129",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_129"
+                    }
+                  },
+                  {
+                    "fieldName": "130",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_130"
+                    }
+                  },
+                  {
+                    "fieldName": "131",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_131"
+                    }
+                  },
+                  {
+                    "fieldName": "132",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_132"
+                    }
+                  },
+                  {
+                    "fieldName": "133",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_133"
+                    }
+                  },
+                  {
+                    "fieldName": "134",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_134"
+                    }
+                  },
+                  {
+                    "fieldName": "135",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_135"
+                    }
+                  },
+                  {
+                    "fieldName": "136",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_136"
+                    }
+                  },
+                  {
+                    "fieldName": "137",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_137"
+                    }
+                  },
+                  {
+                    "fieldName": "138",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_138"
+                    }
+                  },
+                  {
+                    "fieldName": "139",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_139"
+                    }
+                  },
+                  {
+                    "fieldName": "140",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_140"
+                    }
+                  },
+                  {
+                    "fieldName": "141",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_141"
+                    }
+                  },
+                  {
+                    "fieldName": "142",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_142"
+                    }
+                  },
+                  {
+                    "fieldName": "143",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_143"
+                    }
+                  },
+                  {
+                    "fieldName": "144",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_144"
+                    }
+                  },
+                  {
+                    "fieldName": "145",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_145"
+                    }
+                  },
+                  {
+                    "fieldName": "146",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_146"
+                    }
+                  },
+                  {
+                    "fieldName": "147",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_147"
+                    }
+                  },
+                  {
+                    "fieldName": "148",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_148"
+                    }
+                  },
+                  {
+                    "fieldName": "149",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_149"
+                    }
+                  },
+                  {
+                    "fieldName": "150",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_150"
+                    }
+                  },
+                  {
+                    "fieldName": "151",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_151"
+                    }
+                  },
+                  {
+                    "fieldName": "152",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_152"
+                    }
+                  },
+                  {
+                    "fieldName": "153",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_153"
+                    }
+                  },
+                  {
+                    "fieldName": "154",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_154"
+                    }
+                  },
+                  {
+                    "fieldName": "155",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_155"
+                    }
+                  },
+                  {
+                    "fieldName": "156",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_156"
+                    }
+                  },
+                  {
+                    "fieldName": "157",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_157"
+                    }
+                  },
+                  {
+                    "fieldName": "158",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_158"
+                    }
+                  },
+                  {
+                    "fieldName": "159",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_159"
+                    }
+                  },
+                  {
+                    "fieldName": "160",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_160"
+                    }
+                  },
+                  {
+                    "fieldName": "161",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_161"
+                    }
+                  },
+                  {
+                    "fieldName": "162",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_162"
+                    }
+                  },
+                  {
+                    "fieldName": "163",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_163"
+                    }
+                  },
+                  {
+                    "fieldName": "164",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_164"
+                    }
+                  },
+                  {
+                    "fieldName": "165",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_165"
+                    }
+                  },
+                  {
+                    "fieldName": "166",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_166"
+                    }
+                  },
+                  {
+                    "fieldName": "167",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_167"
+                    }
+                  },
+                  {
+                    "fieldName": "168",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_168"
+                    }
+                  },
+                  {
+                    "fieldName": "169",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_169"
+                    }
+                  },
+                  {
+                    "fieldName": "170",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_170"
+                    }
+                  },
+                  {
+                    "fieldName": "171",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_171"
+                    }
+                  },
+                  {
+                    "fieldName": "172",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_172"
+                    }
+                  },
+                  {
+                    "fieldName": "173",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_173"
+                    }
+                  },
+                  {
+                    "fieldName": "174",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_174"
+                    }
+                  },
+                  {
+                    "fieldName": "175",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_175"
+                    }
+                  },
+                  {
+                    "fieldName": "176",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_176"
+                    }
+                  },
+                  {
+                    "fieldName": "177",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_177"
+                    }
+                  },
+                  {
+                    "fieldName": "178",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_178"
+                    }
+                  },
+                  {
+                    "fieldName": "179",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_179"
+                    }
+                  },
+                  {
+                    "fieldName": "180",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_180"
+                    }
+                  },
+                  {
+                    "fieldName": "181",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_181"
+                    }
+                  },
+                  {
+                    "fieldName": "182",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_182"
+                    }
+                  },
+                  {
+                    "fieldName": "183",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_183"
+                    }
+                  },
+                  {
+                    "fieldName": "184",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_184"
+                    }
+                  },
+                  {
+                    "fieldName": "185",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_185"
+                    }
+                  },
+                  {
+                    "fieldName": "186",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_186"
+                    }
+                  },
+                  {
+                    "fieldName": "187",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_187"
+                    }
+                  },
+                  {
+                    "fieldName": "188",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_188"
+                    }
+                  },
+                  {
+                    "fieldName": "189",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_189"
+                    }
+                  },
+                  {
+                    "fieldName": "190",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_190"
+                    }
+                  },
+                  {
+                    "fieldName": "191",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_191"
+                    }
+                  },
+                  {
+                    "fieldName": "192",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_192"
+                    }
+                  },
+                  {
+                    "fieldName": "193",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_193"
+                    }
+                  },
+                  {
+                    "fieldName": "194",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_194"
+                    }
+                  },
+                  {
+                    "fieldName": "195",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_195"
+                    }
+                  },
+                  {
+                    "fieldName": "196",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_196"
+                    }
+                  },
+                  {
+                    "fieldName": "197",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_197"
+                    }
+                  },
+                  {
+                    "fieldName": "198",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_198"
+                    }
+                  },
+                  {
+                    "fieldName": "199",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_199"
+                    }
+                  },
+                  {
+                    "fieldName": "200",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_200"
+                    }
+                  },
+                  {
+                    "fieldName": "201",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_201"
+                    }
+                  },
+                  {
+                    "fieldName": "202",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_202"
+                    }
+                  },
+                  {
+                    "fieldName": "203",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_203"
+                    }
+                  },
+                  {
+                    "fieldName": "204",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_204"
+                    }
+                  },
+                  {
+                    "fieldName": "205",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_205"
+                    }
+                  },
+                  {
+                    "fieldName": "206",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_206"
+                    }
+                  },
+                  {
+                    "fieldName": "207",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_207"
+                    }
+                  },
+                  {
+                    "fieldName": "208",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_208"
+                    }
+                  },
+                  {
+                    "fieldName": "209",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_209"
+                    }
+                  },
+                  {
+                    "fieldName": "210",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_210"
+                    }
+                  },
+                  {
+                    "fieldName": "211",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_211"
+                    }
+                  },
+                  {
+                    "fieldName": "212",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_212"
+                    }
+                  },
+                  {
+                    "fieldName": "213",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_213"
+                    }
+                  },
+                  {
+                    "fieldName": "214",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_214"
+                    }
+                  },
+                  {
+                    "fieldName": "215",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_215"
+                    }
+                  },
+                  {
+                    "fieldName": "216",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_216"
+                    }
+                  },
+                  {
+                    "fieldName": "217",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_217"
+                    }
+                  },
+                  {
+                    "fieldName": "218",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_218"
+                    }
+                  },
+                  {
+                    "fieldName": "219",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_219"
+                    }
+                  },
+                  {
+                    "fieldName": "220",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_220"
+                    }
+                  },
+                  {
+                    "fieldName": "221",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_221"
+                    }
+                  },
+                  {
+                    "fieldName": "222",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_222"
+                    }
+                  },
+                  {
+                    "fieldName": "223",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_223"
+                    }
+                  },
+                  {
+                    "fieldName": "224",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_224"
+                    }
+                  },
+                  {
+                    "fieldName": "225",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_225"
+                    }
+                  },
+                  {
+                    "fieldName": "226",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_226"
+                    }
+                  },
+                  {
+                    "fieldName": "227",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_227"
+                    }
+                  },
+                  {
+                    "fieldName": "228",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_228"
+                    }
+                  },
+                  {
+                    "fieldName": "229",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_229"
+                    }
+                  },
+                  {
+                    "fieldName": "230",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_230"
+                    }
+                  },
+                  {
+                    "fieldName": "231",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_231"
+                    }
+                  },
+                  {
+                    "fieldName": "232",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_232"
+                    }
+                  },
+                  {
+                    "fieldName": "233",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_233"
+                    }
+                  },
+                  {
+                    "fieldName": "234",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_234"
+                    }
+                  },
+                  {
+                    "fieldName": "235",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_235"
+                    }
+                  },
+                  {
+                    "fieldName": "236",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_236"
+                    }
+                  },
+                  {
+                    "fieldName": "237",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_237"
+                    }
+                  },
+                  {
+                    "fieldName": "238",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_238"
+                    }
+                  },
+                  {
+                    "fieldName": "239",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_239"
+                    }
+                  },
+                  {
+                    "fieldName": "240",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_240"
+                    }
+                  },
+                  {
+                    "fieldName": "241",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_241"
+                    }
+                  },
+                  {
+                    "fieldName": "242",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_242"
+                    }
+                  },
+                  {
+                    "fieldName": "243",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_243"
+                    }
+                  },
+                  {
+                    "fieldName": "244",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_244"
+                    }
+                  },
+                  {
+                    "fieldName": "245",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_245"
+                    }
+                  },
+                  {
+                    "fieldName": "246",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_246"
+                    }
+                  },
+                  {
+                    "fieldName": "247",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_247"
+                    }
+                  },
+                  {
+                    "fieldName": "248",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_248"
+                    }
+                  },
+                  {
+                    "fieldName": "249",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_249"
+                    }
+                  },
+                  {
+                    "fieldName": "250",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_250"
+                    }
+                  },
+                  {
+                    "fieldName": "251",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_251"
+                    }
+                  },
+                  {
+                    "fieldName": "252",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_252"
+                    }
+                  },
+                  {
+                    "fieldName": "253",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_253"
+                    }
+                  },
+                  {
+                    "fieldName": "254",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_254"
+                    }
+                  },
+                  {
+                    "fieldName": "255",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "tup_result_255"
+                    }
+                  },
+                  {
+                    "fieldName": "256",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "result"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "tail_result"
+                }
+              }
+            }
+          ],
+          "sourceId": 17
+        }
+      ]
+    },
+    {
+      "name": "zero",
+      "index": "0",
+      "id": 17,
+      "args": [
+        {
+          "expr": {
+            "id": 11,
+            "kind": "name",
+            "name": "tuple"
+          },
+          "type": {
+            "kind": "var",
+            "name": "tupleType"
+          }
+        },
+        {
+          "expr": {
+            "id": 12,
+            "kind": "int",
+            "value": 0
+          },
+          "type": {
+            "kind": "int"
+          }
+        }
+      ],
+      "result": {
+        "kind": "var",
+        "name": "result"
+      },
+      "constraints": [
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "kind": "var",
+              "name": "tupleType"
+            },
+            {
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "-1",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "result"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "tail_result"
+                }
+              }
+            }
+          ],
+          "sourceId": 17
+        }
+      ]
+    },
+    {
+      "name": "negative",
+      "index": "-3",
+      "id": 17,
+      "args": [
+        {
+          "expr": {
+            "id": 11,
+            "kind": "name",
+            "name": "tuple"
+          },
+          "type": {
+            "kind": "var",
+            "name": "tupleType"
+          }
+        },
+        {
+          "expr": {
+            "id": 12,
+            "kind": "int",
+            "value": -3
+          },
+          "type": {
+            "kind": "int"
+          }
+        }
+      ],
+      "result": {
+        "kind": "var",
+        "name": "result"
+      },
+      "constraints": [
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "kind": "var",
+              "name": "tupleType"
+            },
+            {
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "-4",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "result"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "tail_result"
+                }
+              }
+            }
+          ],
+          "sourceId": 17
+        }
+      ]
+    },
+    {
+      "name": "first-empty-safe-integer-prefix",
+      "index": "9007199254740993",
+      "id": 17,
+      "args": [
+        {
+          "expr": {
+            "id": 11,
+            "kind": "name",
+            "name": "tuple"
+          },
+          "type": {
+            "kind": "var",
+            "name": "tupleType"
+          }
+        },
+        {
+          "expr": {
+            "id": 12,
+            "kind": "int",
+            "value": 9007199254740993
+          },
+          "type": {
+            "kind": "int"
+          }
+        }
+      ],
+      "result": {
+        "kind": "var",
+        "name": "result"
+      },
+      "constraints": [
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "kind": "var",
+              "name": "tupleType"
+            },
+            {
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "9007199254740992",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "result"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "tail_result"
+                }
+              }
+            }
+          ],
+          "sourceId": 17
+        }
+      ]
+    },
+    {
+      "name": "rounded-empty-prefix",
+      "index": "9007199254740994",
+      "id": 17,
+      "args": [
+        {
+          "expr": {
+            "id": 11,
+            "kind": "name",
+            "name": "tuple"
+          },
+          "type": {
+            "kind": "var",
+            "name": "tupleType"
+          }
+        },
+        {
+          "expr": {
+            "id": 12,
+            "kind": "int",
+            "value": 9007199254740994
+          },
+          "type": {
+            "kind": "int"
+          }
+        }
+      ],
+      "result": {
+        "kind": "var",
+        "name": "result"
+      },
+      "constraints": [
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "kind": "var",
+              "name": "tupleType"
+            },
+            {
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "9007199254740993",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "result"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "tail_result"
+                }
+              }
+            }
+          ],
+          "sourceId": 17
+        }
+      ]
+    },
+    {
+      "name": "positive-number-infinity",
+      "index": "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "id": 17,
+      "args": [
+        {
+          "expr": {
+            "id": 11,
+            "kind": "name",
+            "name": "tuple"
+          },
+          "type": {
+            "kind": "var",
+            "name": "tupleType"
+          }
+        },
+        {
+          "expr": {
+            "id": 12,
+            "kind": "int",
+            "value": 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+          },
+          "type": {
+            "kind": "int"
+          }
+        }
+      ],
+      "result": {
+        "kind": "var",
+        "name": "result"
+      },
+      "constraints": [
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "kind": "var",
+              "name": "tupleType"
+            },
+            {
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "result"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "tail_result"
+                }
+              }
+            }
+          ],
+          "sourceId": 17
+        }
+      ]
+    },
+    {
+      "name": "negative-number-infinity",
+      "index": "-10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "id": 17,
+      "args": [
+        {
+          "expr": {
+            "id": 11,
+            "kind": "name",
+            "name": "tuple"
+          },
+          "type": {
+            "kind": "var",
+            "name": "tupleType"
+          }
+        },
+        {
+          "expr": {
+            "id": 12,
+            "kind": "int",
+            "value": -10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+          },
+          "type": {
+            "kind": "int"
+          }
+        }
+      ],
+      "result": {
+        "kind": "var",
+        "name": "result"
+      },
+      "constraints": [
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "kind": "var",
+              "name": "tupleType"
+            },
+            {
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "-10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001",
+                    "fieldType": {
+                      "kind": "var",
+                      "name": "result"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "tail_result"
+                }
+              }
+            }
+          ],
+          "sourceId": 17
+        }
+      ]
+    },
+    {
+      "name": "go-resource-limit",
+      "index": "1000002",
+      "id": 17,
+      "args": [
+        {
+          "expr": {
+            "id": 11,
+            "kind": "name",
+            "name": "tuple"
+          },
+          "type": {
+            "kind": "var",
+            "name": "tupleType"
+          }
+        },
+        {
+          "expr": {
+            "id": 12,
+            "kind": "int",
+            "value": 1000002
+          },
+          "type": {
+            "kind": "int"
+          }
+        }
+      ],
+      "result": {
+        "kind": "var",
+        "name": "result"
+      },
+      "resourcePolicy": "Go rejects a prefix above 1000000 preceding fields before allocating it; upstream has no corresponding bound and this actual 1000002-field result succeeds.",
+      "goError": {
+        "location": "Generating record constraints for tuple,1000002",
+        "message": "Tuple projection exceeds the supported inference prefix of 1000000 fields",
+        "children": []
+      },
+      "referenceSummary": {
+        "fieldCount": 1000002,
+        "samples": [
+          {
+            "position": 0,
+            "field": {
+              "fieldName": "0",
+              "fieldType": {
+                "kind": "var",
+                "name": "tup_result_0"
+              }
+            }
+          },
+          {
+            "position": 500000,
+            "field": {
+              "fieldName": "500000",
+              "fieldType": {
+                "kind": "var",
+                "name": "tup_result_500000"
+              }
+            }
+          },
+          {
+            "position": 1000000,
+            "field": {
+              "fieldName": "1000000",
+              "fieldType": {
+                "kind": "var",
+                "name": "tup_result_1000000"
+              }
+            }
+          },
+          {
+            "position": 1000001,
+            "field": {
+              "fieldName": "1000001",
+              "fieldType": {
+                "kind": "var",
+                "name": "result"
+              }
+            }
+          }
+        ],
+        "tail": {
+          "kind": "var",
+          "name": "tail_result"
+        }
+      }
+    }
+  ]
+}

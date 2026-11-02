@@ -76,17 +76,21 @@ func (r *TypeApplicationResolver) Resolve(input Type) (Type, error) {
 		if err != nil {
 			return Type{}, err
 		}
-		names := map[string]string{}
-		params := []string{}
+		names := insdict.NewDict[string, string]()
 		for _, p := range d.Params {
 			fresh := r.fresh.Next(p)
-			names[p] = fresh
+			names.Set(p, fresh)
+		}
+		// Upstream constructs a Map from all parameters: duplicates consume
+		// fresh names, retain their first position, and keep their last value.
+		params := []string{}
+		for _, fresh := range names.All() {
 			params = append(params, fresh)
 		}
 		// Rename both variable sorts while retaining annotation IDs.
 		_ = WalkType(&body, func(t *Type) (bool, error) {
 			if t.Kind == "var" {
-				if n, ok := names[t.Name]; ok {
+				if n, ok := names.Get2(t.Name); ok {
 					t.Name = n
 				}
 			}
@@ -96,7 +100,7 @@ func (r *TypeApplicationResolver) Resolve(input Type) (Type, error) {
 					return
 				}
 				if row.Kind == "var" {
-					if n, ok := names[row.Name]; ok {
+					if n, ok := names.Get2(row.Name); ok {
 						row.Name = n
 					}
 				}

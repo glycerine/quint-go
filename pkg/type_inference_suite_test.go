@@ -72,23 +72,11 @@ func TestUpstreamTypeInferenceSuite(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			// Generated builtin type-node IDs are not assigned by the Go port.
-			// Keep all inferred structure, quantifiers, insertion order and errors.
-			clean := func(s TypeScheme) TypeScheme {
-				v, err := ApplySubstitution(nil, s.Type)
-				if err != nil {
-					t.Fatal(err)
-				}
-				_ = WalkType(&v, func(typ *Type) (bool, error) { typ.ID = nil; return true, nil })
-				s.Type = v
-				return s
-			}
+			// Compare complete type-node provenance as well as scheme structure,
+			// quantifiers, insertion order and diagnostics.
 			got := []entry{}
 			for id, s := range result.Types.All() {
-				got = append(got, entry{id, clean(s)})
-			}
-			for i := range f.Types {
-				f.Types[i].Scheme = clean(f.Types[i].Scheme)
+				got = append(got, entry{id, s})
 			}
 			if !reflect.DeepEqual(got, f.Types) {
 				a, _ := json.Marshal(got)

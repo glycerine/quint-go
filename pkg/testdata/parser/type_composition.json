@@ -1,0 +1,1083 @@
+[
+  {
+    "name": "disjoint-type-chain",
+    "first": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "kind": "list",
+          "elem": {
+            "kind": "int"
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ]
+  },
+  {
+    "name": "disjoint-row-chain",
+    "first": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "row",
+        "name": "s",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "kind": "bool"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "r"
+          }
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "s",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "kind": "bool"
+              }
+            }
+          ],
+          "other": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "x",
+                "fieldType": {
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      },
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "type-in-row-field",
+    "first": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "var",
+                "name": "a"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ]
+  },
+  {
+    "name": "row-in-type",
+    "first": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "str"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "rec",
+          "fields": {
+            "kind": "var",
+            "name": "r"
+          }
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "x",
+                "fieldType": {
+                  "kind": "str"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      },
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "str"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "overlap-equal-type",
+    "first": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ]
+  },
+  {
+    "name": "overlap-variable-type",
+    "first": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "var",
+          "name": "b"
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ]
+  },
+  {
+    "name": "overlap-structured-type",
+    "first": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "list",
+          "elem": {
+            "kind": "int"
+          }
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "list",
+          "elem": {
+            "kind": "int"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "overlap-primitive-conflict",
+    "first": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "bool"
+        }
+      }
+    ],
+    "thrown": "Unifying substitutions with same name: a, Couldn't unify bool and int\nTrying to unify bool and int\n",
+    "conflictingName": "a",
+    "error": {
+      "location": "Trying to unify bool and int",
+      "message": "Couldn't unify bool and int",
+      "children": []
+    }
+  },
+  {
+    "name": "overlap-nested-conflict",
+    "first": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "list",
+          "elem": {
+            "kind": "int"
+          }
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "list",
+          "elem": {
+            "kind": "str"
+          }
+        }
+      }
+    ],
+    "thrown": "Unifying substitutions with same name: a, Couldn't unify str and int\nTrying to unify str and int\n",
+    "conflictingName": "a",
+    "error": {
+      "location": "Trying to unify str and int",
+      "message": "Couldn't unify str and int",
+      "children": []
+    }
+  },
+  {
+    "name": "overlap-operator-conflict",
+    "first": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "oper",
+          "args": [
+            {
+              "kind": "int"
+            }
+          ],
+          "res": {
+            "kind": "bool"
+          }
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "oper",
+          "args": [
+            {
+              "kind": "int"
+            },
+            {
+              "kind": "int"
+            }
+          ],
+          "res": {
+            "kind": "bool"
+          }
+        }
+      }
+    ],
+    "thrown": "Unifying substitutions with same name: a, Expected 2 arguments, got 1\nTrying to unify (int, int) => bool and (int) => bool\n",
+    "conflictingName": "a",
+    "error": {
+      "location": "Trying to unify (int, int) => bool and (int) => bool",
+      "message": "Expected 2 arguments, got 1",
+      "children": []
+    }
+  },
+  {
+    "name": "overlap-type-occurs-check",
+    "first": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "list",
+          "elem": {
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "var",
+          "name": "b"
+        }
+      }
+    ],
+    "thrown": "Unifying substitutions with same name: a, Can't bind b to List[b]: cyclical binding\nTrying to unify b and List[b]\n",
+    "conflictingName": "a",
+    "error": {
+      "location": "Trying to unify b and List[b]",
+      "message": "Can't bind b to List[b]: cyclical binding",
+      "children": []
+    }
+  },
+  {
+    "name": "overlap-equal-row",
+    "first": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "overlap-row-variable",
+    "first": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "var",
+          "name": "s"
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "s",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      },
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "overlap-row-field-conflict",
+    "first": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "str"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "thrown": "Unifying substitutions with same name: r, Couldn't unify str and int\nTrying to unify str and int\nTrying to unify { x: str } and { x: int }\n",
+    "conflictingName": "r",
+    "error": {
+      "location": "Trying to unify { x: str } and { x: int }",
+      "children": [
+        {
+          "location": "Trying to unify str and int",
+          "message": "Couldn't unify str and int",
+          "children": []
+        }
+      ]
+    }
+  },
+  {
+    "name": "overlap-closed-row-conflict",
+    "first": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "thrown": "Unifying substitutions with same name: r, Incompatible tails for rows with disjoint fields: {} and {}\nTrying to unify { y: int } and { x: int }\n",
+    "conflictingName": "r",
+    "error": {
+      "location": "Trying to unify { y: int } and { x: int }",
+      "message": "Incompatible tails for rows with disjoint fields: {} and {}",
+      "children": []
+    }
+  },
+  {
+    "name": "overlap-row-occurs-check",
+    "first": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "s"
+          }
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "var",
+          "name": "s"
+        }
+      }
+    ],
+    "thrown": "Unifying substitutions with same name: r, Can't bind s to { x: int | s }: cyclical binding\nTrying to unify { | s } and { x: int | s }\n",
+    "conflictingName": "r",
+    "error": {
+      "location": "Trying to unify { | s } and { x: int | s }",
+      "message": "Can't bind s to { x: int | s }: cyclical binding",
+      "children": []
+    }
+  },
+  {
+    "name": "overlap-row-open-tail-join",
+    "first": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "left"
+          }
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "kind": "bool"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "right"
+          }
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "left",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "kind": "bool"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "$right$left"
+          }
+        }
+      },
+      {
+        "kind": "row",
+        "name": "right",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "$right$left"
+          }
+        }
+      },
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "left"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "incompatible-type-row",
+    "first": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "row",
+        "name": "a",
+        "value": {
+          "kind": "empty"
+        }
+      }
+    ],
+    "thrown": "Substitutions with same name (a) but incompatible kinds: [ a |-> int, a |-> {} ]",
+    "conflictingName": "a",
+    "incompatibleKinds": true
+  },
+  {
+    "name": "incompatible-row-type",
+    "first": [
+      {
+        "kind": "row",
+        "name": "a",
+        "value": {
+          "kind": "empty"
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ],
+    "thrown": "Substitutions with same name (a) but incompatible kinds: [ a |-> {}, a |-> int ]",
+    "conflictingName": "a",
+    "incompatibleKinds": true
+  },
+  {
+    "name": "first-duplicate-type-wins",
+    "first": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "bool"
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "bool"
+        }
+      }
+    ]
+  },
+  {
+    "name": "first-duplicate-kind-wins",
+    "first": [
+      {
+        "kind": "row",
+        "name": "a",
+        "value": {
+          "kind": "empty"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ],
+    "thrown": "Substitutions with same name (a) but incompatible kinds: [ a |-> {}, a |-> int ]",
+    "conflictingName": "a",
+    "incompatibleKinds": true
+  },
+  {
+    "name": "discard-success-before-conflict",
+    "first": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "kind": "bool"
+        }
+      }
+    ],
+    "second": [
+      {
+        "kind": "type",
+        "name": "fresh",
+        "value": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "kind": "str"
+        }
+      }
+    ],
+    "thrown": "Unifying substitutions with same name: b, Couldn't unify str and bool\nTrying to unify str and bool\n",
+    "conflictingName": "b",
+    "error": {
+      "location": "Trying to unify str and bool",
+      "message": "Couldn't unify str and bool",
+      "children": []
+    }
+  }
+]

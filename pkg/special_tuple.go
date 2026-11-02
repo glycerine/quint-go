@@ -17,8 +17,10 @@ func TupleConstructorConstraints(id ID, args []TypedExpression, result Type) []C
 }
 
 // TupleItemConstraints describes a tuple prefix ending at the one-based literal
-// index. Its open tail permits additional fields. Prefixes above one million
-// fields return a resource-limit diagnostic instead of allocating unbounded memory.
+// index. Its open tail permits additional fields. Prefixes with more than one
+// million preceding fields return a resource-limit diagnostic instead of
+// allocating unbounded memory. Upstream eagerly allocates these fields without
+// a resource bound; this diagnostic is an explicit Go resource policy.
 func TupleItemConstraints(id ID, args []TypedExpression, result Type) ([]Constraint, *ErrorTree) {
 	fail := func(message string) ([]Constraint, *ErrorTree) {
 		printed := []string{}
