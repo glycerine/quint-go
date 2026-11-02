@@ -26,13 +26,23 @@ type RuntimeCache struct {
 // declarations; display names are kept separately for diagnostics and records.
 // It is not safe for concurrent use.
 type VariableStorage struct {
-	current     *insdict.Dict[string, *RuntimeRegister]
-	next        *insdict.Dict[string, *RuntimeRegister]
-	caches      []*RuntimeCache
-	metadata    bool
-	generation  uint64
-	ActionTaken string
-	NondetPicks *insdict.Dict[string, RuntimeValue]
+	current      *insdict.Dict[string, *RuntimeRegister]
+	next         *insdict.Dict[string, *RuntimeRegister]
+	caches       []*RuntimeCache
+	metadata     bool
+	generation   uint64
+	ActionTaken  string
+	NondetPicks  *insdict.Dict[string, RuntimeValue]
+	objectHashes *RuntimeObjectHashState
+}
+
+// ObjectHashState owns the reference's object-hash sequence for this execution.
+// State shifts, resets and rollback do not rewind the sequence.
+func (s *VariableStorage) ObjectHashState() *RuntimeObjectHashState {
+	if s.objectHashes == nil {
+		s.objectHashes = &RuntimeObjectHashState{}
+	}
+	return s.objectHashes
 }
 
 func NewVariableStorage() *VariableStorage {

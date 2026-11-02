@@ -86,6 +86,10 @@ const sources=[
  '{ nondet p=Set(1,2).oneOf(); 1/0==p }',
  '{ nondet p=Set(3,1,2).oneOf(); val q=p; q==2 }',
  '{ nondet p=Set(3,1,2).oneOf(); val q=p; q==p and p==2 }',
+ '{ nondet p=Set(3,1,2).oneOf(); def f(x)=p; f(0)==2 }',
+ '{ nondet p=Set(3,1,2).oneOf(); val q=p; def f(x)=q; f(0)==2 }',
+ '{ nondet p=Set(3,1,2).oneOf(); val q=p; val r=q; r==2 }',
+ '{ nondet p=Set(3,1,2).oneOf(); nondet q=Set(p,p+1).oneOf(); q==3 and p==2 }',
  '{ nondet p=Set(1,2).oneOf(); true }',
  '{ nondet p=Set(3,1,2).oneOf(); if(p==2) x\'=p else false }',
 ]

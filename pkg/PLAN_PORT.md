@@ -371,8 +371,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
       product, powerset and map-set domains without eager display/identity trees.
   - [x] Explicit-state TypeScript-compatible serialization, including transient
     tuple sets, fresh-object hashing, Unicode ties, and repeated-call UID history.
-  - [ ] Wire shared object-hash state through all evaluator operations and
-    diagnostics; public Expression/String intentionally remain canonical.
+  - [x] Share object-hash state through implemented evaluator collection operations,
+    debug serialization and explicit caller/evaluator ownership APIs.
+  - [ ] Extend shared state to remaining symbolic/recorder operations;
+    public Expression/String intentionally remain canonical.
 - [ ] P7.2 Port evaluation/compilation of IR, lexical closures, operator values,
   local bindings, lazy branches, definition caches, and runtime error traces.
   - [x] Pure IR expression evaluation: literals, concrete constructors, explicit
@@ -381,7 +383,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] Local concrete value definitions with lazy per-scope caching, lexical
     capture, shadowing, and cleanup between evaluations.
   - [x] Direct local operator calls with strict argument evaluation, lexical
-    capture, parameter scopes, and fresh per-call local caches.
+    capture, parameter scopes, and per-invocation scoped cache lifecycle.
   - [x] First-class lambdas, local operator values, higher-order parameter
     invocation, returned closures, and caller-context cancellation via Apply.
   - [x] Standalone/flattened module definition evaluation with name resolution,
@@ -389,9 +391,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] Parsed-project pure evaluation through module sorting, resolution,
     static analysis, and full import/export/instance flattening with overrides.
   - [x] Filesystem/CLI evaluation through run/test and incremental REPL sessions.
-  - [ ] Remaining definition caches and complete runtime stack traces.
-  - [ ] Repeated factory-lambda object reuse and shared captured parameter cells;
-    TypeScript compiles one closure per AST, while Go currently captures per call.
+  - [x] Compiled factory-lambda reuse, shared parameter cells, scoped value-cache
+    save/clear/restore, persistent module/REPL identity and compiled literals.
+  - [ ] Remaining compiler instance contexts, eager variable registration and
+    complete runtime stack/recorder traces.
 - [x] P7.3 Port scalar arithmetic, Boolean, and comparison builtins; test
   negative division/modulo and integer boundary behavior. This revision has no
   source-language string/conversion builtin family; internal toStr/toInt helpers
@@ -426,8 +429,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     last-equal-element source retention, and exact cardinality diagnostics.
   - [x] Explicit-state EvalSetToMapBuiltin with intermediate JS-array identity
     hashing, duplicate selection, nested payloads, and repeated-call UID history.
-  - [ ] Source evaluator setToMap dispatch/shared identity ownership; the older
-    process-history corpus is not yet an end-to-end passing source corpus.
+  - [x] Source evaluator setToMap dispatch/shared identity ownership, including
+    all 19 historical process-history cases replayed through source evaluation.
   - [x] JavaScript Number coercion/error formatting for extreme sequence
     indices, including rounding, exponent cutoffs, and signed Infinity.
   - [x] Preserve nested map source order through strict sequence/record access
@@ -442,7 +445,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     endpoints and iterative steps, and finite list indices.
   - [x] Explicit-state allListsUpTo materialization with raw-object identity
     sets, repeated-call traversal, normalization, and exact UID rollover.
-  - [ ] Evaluator ownership/dispatch for allListsUpTo and shared identity state.
+  - [x] Evaluator ownership/dispatch for allListsUpTo and shared identity state.
   - [ ] Remaining collections/higher-order/symbolic operations, including
     unbounded range materialization/error behavior.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
@@ -479,16 +482,19 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     reference traversal, bounds, empty-set errors, and exact counter advancement.
   - [x] Bound nondet/oneOf evaluation, cyclic retries, configurable thresholds,
     nested bindings, cache refresh, metadata, and no extra random retry draws.
-  - [ ] Compiler-time discovery of picks in lazy branches, symbolic/infinite
-    bounds, and import-time versus per-call retry environment semantics.
+  - [x] Compiler-time pick discovery in lazy branches/lambda bodies and selected
+    definition dependencies, with persistent registration and lexical ordering.
+  - [ ] Symbolic/infinite source bounds and import-time versus per-call retry
+    environment semantics.
 - [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
   model-based-testing metadata. Explicitly reject non-executable temporal
   constructs where the reference runtime does.
   - [x] Bool runtime value, strict fail/assert Boolean behavior, temporal
     rejection messages, direct lazy next/oneOf restrictions, and unknown-opcode
     diagnostics with argument-error precedence.
-  - [ ] Run/test combinator expression dispatch, tracing/debug output hooks,
-    and remaining model-based-testing metadata integration.
+  - [x] q::debug writer hooks and top-level q::test/q::testOnce dispatch with
+    arbitrary init/step/invariant expressions through shared simulation.
+  - [ ] Execution recorder callbacks and remaining model-based-testing metadata.
 - [ ] P7.8 Port RNG state, seed parsing, counter arithmetic, and sampling.
   Choose and document the reference backend for seed-exact reproduction;
   compare RNG vectors and collection traversal order, not just repeatability.
@@ -3058,3 +3064,17 @@ word "retained" in the commit message.
   JSON IDs improve1.01µs to48.6ns. Canonical parsing and ID decoding paths have
   100% function coverage. Three full core runs pass in2.218s total while a
   benchmark ran concurrently; default-suite timing remains tracked separately.
+
+- 2026-11-02: Added persistent compiled evaluation sessions: shared factory
+  closures/parameter cells, scoped val-cache lifecycle, literal reuse, stable IR-ID
+  memoization across REPL updates, exact QNT506 arity and action-name metadata.
+  Active lifetime fixtures cover 48 expression runs, 40 factory steps and repeated
+  module requests; independent review adds 18 identity/arity/metadata checks.
+  Nondet coverage now includes 23 helper scenarios, 16 expressions and 31 compiler
+  discovery operations, including lazy branches and retry cache refresh.
+  Source allListsUpTo/setToMap dispatch shares explicit object state across pure
+  calls, closures, storage and modules: 25 calls, 11 closure invocations, 57 module
+  steps and all 19 historical setToMap cases pass (final UID151). Debug and
+  top-level test combinators have 32 upstream output/simulation cases. Focused
+  integrated tests pass0.145s and race1.794s. Eager variable registration, compiler
+  instance contexts and actual execution-frame recording remain open.

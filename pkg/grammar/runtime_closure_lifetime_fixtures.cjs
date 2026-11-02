@@ -1,6 +1,5 @@
-// Pending parity evidence: lambdas are compilation-time objects using shared
-// parameter registers, rather than fresh lexical closures at each evaluation.
-// No default Go test consumes this corpus until allocation/lifetime is ported.
+// Compiled lambda identity, shared parameter registers and scoped cache lifetime.
+// The default Go tests consume this saved TypeScript compatibility corpus.
 const path=require('path'),fs=require('fs'),root=path.resolve(__dirname,'../..')
 require(path.join(root,'quint/node_modules/ts-node')).register({project:path.join(root,'quint/tsconfig.json'),transpileOnly:true})
 const {Builder,buildExpr}=require(path.join(root,'quint/src/runtime/impl/builder'))
@@ -110,9 +109,9 @@ for(const name of ['first','second','first','second']){
 const secondRng=newRng(0n),secondEvaluator=new Evaluator(parsedModule.table,newTraceRecorder(0,secondRng),secondRng)
 const firstInput=repeatedEvaluations[0].input,secondFirst=buildExpr(secondEvaluator.builder,firstInput)(secondEvaluator.ctx).value
 const out={
- status:'pending',
- reason:'Go currently creates per-call lexical closures; TypeScript creates one closure per compiled lambda AST and shares parameter registers without save/restore.',
+ status:'supported',
+ contract:'One closure per compiled lambda AST and evaluator; shared parameter registers without save/restore; compiled let cache cells save, clear and restore around scope entry.',
  expressionCases,sessions,
  moduleEvaluations:{source:moduleSource,module:parsedModule.module,evaluations:repeatedEvaluations,separateEvaluator:{differentClosure:secondFirst!==firstModuleClosure,newInvokeWithOne:result(secondFirst.toArrow()(secondEvaluator.ctx,[rv.mkInt(1n)])),oldInvokeWithOne:result(firstModuleClosure.toArrow()(evaluator.ctx,[rv.mkInt(1n)]))}},
 }
-fs.writeFileSync(path.join(root,'pkg/testdata/parser/runtime_closure_lifetime_pending.json'),JSONbig.stringify(out,null,2)+'\n')
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/runtime_closure_lifetime.json'),JSONbig.stringify(out,null,2)+'\n')

@@ -87,6 +87,9 @@ func assertNondetOutcome(t *testing.T, got RuntimeValue, err error, output *Expr
 		if !errors.As(err, &gotDiagnostic) || gotDiagnostic.Code != diagnostic.Code || gotDiagnostic.Message != diagnostic.Message {
 			t.Fatal("diagnostic", err, diagnostic)
 		}
+		if diagnostic.Reference != nil && (gotDiagnostic.Reference == nil || *gotDiagnostic.Reference != *diagnostic.Reference) {
+			t.Fatal("diagnostic reference", gotDiagnostic.Reference, diagnostic.Reference)
+		}
 		return
 	}
 	if err != nil {

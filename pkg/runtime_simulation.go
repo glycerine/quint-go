@@ -53,6 +53,10 @@ func (e *ModuleEvaluator) Reset() { e.Trace.Reset(); e.Storage.Reset() }
 // Witnesses are checked after successful steps only; their runtime errors are
 // ignored. Each witness counts at most once per sample.
 func (e *ModuleEvaluator) Simulate(ctx context.Context, options SimulationOptions) (SimulationOutcome, error) {
+	return e.simulate(ctx, options, nil)
+}
+
+func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOptions, evaluateValue func(string) (RuntimeValue, error)) (SimulationOutcome, error) {
 	out := SimulationOutcome{Status: "ok", Errors: []Diagnostic{}, BestTraces: []SimulationTrace{}, WitnessingTraces: make([]int, len(options.Witnesses)), ViolatedInvariants: []int{}, TraceStatistics: SimulationTraceStatistics{AverageTraceLength: math.NaN(), MinTraceLength: math.Inf(1)}}
 	if err := ctx.Err(); err != nil {
 		return out, err
@@ -60,10 +64,13 @@ func (e *ModuleEvaluator) Simulate(ctx context.Context, options SimulationOption
 	if options.MaxSamples < 0 || options.MaxSteps < 0 || options.NumberOfTraces < 0 {
 		return out, fmt.Errorf("simulation limits must be nonnegative")
 	}
-	for _, name := range append([]string{options.Init, options.Step, options.Invariant}, options.Witnesses...) {
-		if _, ok := e.definitions.Get2(name); !ok {
-			return out, Diagnostic{Code: "QNT501", Message: "Definition not found: " + name}
+	if evaluateValue == nil {
+		for _, name := range append([]string{options.Init, options.Step, options.Invariant}, options.Witnesses...) {
+			if _, ok := e.definitions.Get2(name); !ok {
+				return out, Diagnostic{Code: "QNT501", Message: "Definition not found: " + name}
+			}
 		}
+		evaluateValue = func(name string) (RuntimeValue, error) { return e.Evaluate(ctx, name, nil) }
 	}
 	type rankedTrace struct {
 		trace   SimulationTrace
@@ -75,7 +82,7 @@ func (e *ModuleEvaluator) Simulate(ctx context.Context, options SimulationOption
 	lengths := []int{}
 	var interrupted error
 	evaluate := func(name string, ignoreFailure bool) bool {
-		value, err := e.Evaluate(ctx, name, nil)
+		value, err := evaluateValue(name)
 		if err != nil {
 			if ctx.Err() != nil {
 				interrupted = ctx.Err()

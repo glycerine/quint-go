@@ -657,15 +657,14 @@ concurrent mutation isolation, finite bounds, dynamic exclusions, and errors.
 Benchmarks retain uncached parsing as an explicit baseline; ordinary repeated
 signature lookup only clones the finite templates.
 
-`runtime_closure_lifetime_pending.json` is regenerated with
-`node pkg/grammar/runtime_closure_lifetime_pending_fixtures.cjs`. Sixteen
+`runtime_closure_lifetime.json` is regenerated with
+`node pkg/grammar/runtime_closure_lifetime_fixtures.cjs`. Sixteen
 expression scenarios (48 evaluations), forty raw factory operations, and four
 persistent module evaluations record closure-object labels, capture results,
 parameter cells, scoped cache effects, repeated builds, and separate builders.
-Upstream reuses compiled lambda objects and shared argument cells; Go currently
-uses per-call captured scopes. This is pending parity evidence, not passing Go
-coverage. Fixing allocation tokens alone would leave captured-value behavior
-incorrect.
+The active Go tests now match compiled lambda reuse, shared argument cells and
+scoped cache behavior. These files were promoted from their former pending names
+after the complete oracle passed; capture results and identities are both checked.
 
 Expression wire-decoder tests cover all seven tags' required/null fields,
 unknown/mis-cased/wrong-variant fields, nested failure and receiver preservation,
@@ -805,3 +804,18 @@ compares canonical parsing/ID decoding against the prior big.Int-based behavior,
 including noncanonical accepted forms, huge numbers, malformed raw/outer JSON,
 unchanged failed receivers and input-byte ownership. These fast unit oracles
 require no generator and protect exact existing byte/hash/error contracts.
+
+`runtime_closure_lifetime.json` and its generator now use active names (the
+previous pending names are removed): all 48 repeated expression evaluations,
+40 factory steps and repeated module requests pass. `runtime_session_review.json`
+adds 18 independent IR-ID memo/literal reuse/arity/action-metadata checks.
+`runtime_nondet.json` now contains 23 helper scenarios and 16 expressions;
+`runtime_nondet_discovery.json` adds 25 expression and six module registration
+operations. Matching generators live under `pkg/grammar/` with the same stem.
+`runtime_object_evaluation.json` covers 25 pure calls, 11 closure calls and 57
+module lifecycle steps; the 19-case historical `runtime_set_to_map_pending.json`
+also now runs as passing source evaluation with one shared state (final UID151).
+`runtime_hooks.json` covers 15 debug outputs and 17 real simulation scenarios,
+including arbitrary init/step/invariant expressions and top-level-only test
+combinators. All run by default without reference tools. Frame recording,
+symbolic source operations and eager variable registration remain separate gaps.

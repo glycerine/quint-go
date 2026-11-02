@@ -48,8 +48,8 @@ operator/name, so successful decoding must not be counted as builtin support.
 | `get`, `keys`, `set`, `put`, `setBy` | implemented: concrete maps and retained children | signature | rule | translated |
 | `matchVariant` | implemented: lazy selected branch, wildcard, payload | special | rule | translated |
 | `getOnlyElement` | implemented: exact singleton/cardinality behavior | signature | rule | fallback |
-| `allListsUpTo` | library: `EvalAllListsBuiltin` with shared object-hash state | signature | rule | fallback |
-| `setToMap` | library: `EvalSetToMapBuiltin` with shared object-hash state | signature | rule | translated |
+| `allListsUpTo` | implemented: source dispatch with shared object-hash state | signature | rule | fallback |
+| `setToMap` | implemented: source dispatch with shared object-hash state | signature | rule | translated |
 | `to` | pending: inclusive integer interval/runtime set | signature | rule | translated |
 | `powerset`, `tuples`, `setOfMaps` | pending: symbolic collection representations/iteration | signature | rule | translated |
 | `allLists`, `chooseSome` | rejected: QNT501, as in the TypeScript simulator | signature | rule | translated |
@@ -59,8 +59,8 @@ operator/name, so successful decoding must not be counted as builtin support.
 | `apalache::generate` | pending: bound runtime generation; standalone QNT000 | signature | rule | context: nondet let; otherwise fallback |
 | `next` | rejected: QNT000 before evaluating child expressions | signature | rule | translated |
 | `always`, `eventually`, `enabled`, `orKeep`, `mustChange`, `weakFair`, `strongFair`, `leadsTo` | rejected: strict QNT501 unsupported fallback | signature | rule | translated |
-| `q::debug` | pending: expression dispatch/output sink | signature | rule | fallback |
-| `q::test`, `q::testOnce` | pending: builtin dispatch; named test/simulation library APIs exist | signature | rule | fallback |
+| `q::debug` | implemented: strict output hook and preserved returned object | signature | rule | fallback |
+| `q::test`, `q::testOnce` | implemented: top-level EvaluateExpression dispatch; nested calls reject as upstream | signature | rule | fallback |
 | `Bool` | implemented: explicit false/true set | signature | rule | translated builtin value |
 | `Int`, `Nat` | pending: currently unbound-runtime-name QNT501 | signature | rule | translated builtin values |
 | `q::lastTrace` | implemented: stored states; empty list without trace context | signature | rule | fallback name |
@@ -72,14 +72,17 @@ operator/name, so successful decoding must not be counted as builtin support.
 builtin signature or evaluator dispatch; reserving a name does not implement it.
 
 Concrete collections preserve child object identity and persistent/transient
-hash-tree traversal. Callable values can occur in collections. Factory-lambda
-object reuse/captured cells still differ from TypeScript in repeated calls.
+hash-tree traversal. Callable values can occur in collections. Compiled
+factory-lambda reuse, shared captured parameter cells, scoped caches and literal
+identity now match the saved lifetime and incremental-session cases.
 `RuntimeValue.Expression()`/`String()` provide the Go canonical boundary;
 `SerializeRuntimeValue(value, state)` separately models TypeScript serialization
-and history-dependent fresh-object hashes. Sharing that state across evaluator
-operations, diagnostics, and CLI formatting remains pending. The explicit-state
-setToMap/allListsUpTo helpers must not be advertised as working source-language
-calls yet. Range materialization, general symbolic iteration, exhaustive
+and history-dependent fresh-object hashes. Implemented evaluator collection and
+debug operations share that state; callers may explicitly share it across
+evaluators to reproduce the reference process history. Source setToMap and
+allListsUpTo, including the historical UID corpus, now pass. Remaining compiler
+instance contexts, eager variable registration, symbolic source operations,
+general symbolic iteration, exhaustive
 cross-type equality, and locale/version-wide collation parity remain open.
 
 Rejection is observable behavior: next/standalone oneOf reject lazily, whereas
@@ -104,7 +107,7 @@ options; commented-out `--timeout` is not an upstream implemented option.
 | `compile` | `--out`, `--main`, `--target=json/tlaplus`, `--flatten`, `--no-flatten`, `--init`, `--step`, `--invariant`, `--temporal`, `--verbosity` | `--apalache-version`, `--server-endpoint` explicitly rejected; in-process Go backend. `--out` suppresses stdout; upstream also prints the target. |
 | `run` | `--out`, `--main`, `--out-itf`, `--max-samples`, `--n-traces`, `--max-steps`, `--init`, `--step`, `--invariants`, `--invariant`, `--witnesses`, `--hide`, `--seed`, `--verbosity`, `--mbt`, `--no-mbt` | `--backend=go` only; TypeScript/Rust rejected. `--n-threads=1` only; parallel simulation pending. Display/trace ranking/format coverage is partial. |
 | `test` | `--out`, `--main`, `--out-itf`, hidden alias `--output`, `--max-samples`, `--seed`, `--verbosity`, `--match` | `--backend=go` only. Match uses shared JavaScript/RE2 subset; unsupported JavaScript regex forms rejected. Full reference transcript parity pending. |
-| `verify` | `--out`, `--main`, `--init`, `--step`, `--invariant`, `--invariants`, `--inductive-invariant`, `--temporal`, `--out-itf`, `--max-steps`, `--random-transitions`, `--no-random-transitions`, `--apalache-config`, `--verbosity` | `--backend=apalache/apalache-go` uses Go. `--backend=tlc`, `--tlc-config`, `--apalache-version`, `--server-endpoint` rejected. TLC integration decision remains pending. |
+| `verify` | `--out`, `--main`, `--init`, `--step`, `--invariant`, `--invariants`, `--inductive-invariant`, `--temporal`, `--out-itf`, `--max-steps`, `--random-transitions`, `--no-random-transitions`, `--apalache-config`, `--tlc-config`, `--verbosity` | `--backend=apalache/apalache-go` uses Go Apalache. `--backend=tlc/tlc-go` uses native Go TLC for exhaustive finite-state safety checks; explicit max-steps, random transitions, induction, temporal properties, Apalache config, and ITF export are rejected for TLC. Scala version/server flags remain rejected. |
 | `repl` / default | `--require`/`-r`, `--quiet`/`-q`, `--verbosity`, `--seed` | `--backend=go` only. Flags after the first positional command are not normalized like yargs. Readline/history persistence and full terminal parity pending. |
 | `docs` | `--out` | Embedded builtin docs and source Markdown generation implemented. |
 
@@ -134,6 +137,20 @@ packaging remains separate validation work.
 
 ## Data, statuses, and diagnostics
 
+Native Go TLC uses the Go Apalache TLA printer and `tlago/tlc` directly, with
+bundled `Variants.tla`; it has no Java/JAR/Scala fallback. `--tlc-config` accepts
+positive integer or `"auto"` workers, Boolean `checkDeadlock`, and nonnegative
+integer `timeoutMillis`; JVM heap/stack and unknown settings are errors. Workers
+default to `GOMAXPROCS`, and deadlock checking defaults off as upstream Quint does.
+TLC calls through this adapter serialize native global state, force breadth-first
+search, disable continuation after violations, and reject probabilistic sampling.
+`timeoutMillis`/API `MaxDuration` is a **soft cooperative deadline**, including TLA
+generation. State enumeration and expression evaluation check cancellation, but
+synchronous parsing, tool construction (including constant next-state quantifier
+expansion), and individual native builtins may exceed the deadline. Expiry returns
+an error with `complete=false` and no safe outcome. Hard preemption and the broader
+TLC semantic/value/temporal parity audit remain open.
+
 | Contract | Implemented boundary | Partial/pending distinctions |
 | --- | --- | --- |
 | IR expressions | `id`, `kind`; names, literal `value`, app `opcode/args`, lambda `params/qualifier/expr`, let `opdef/expr` | Arbitrary integers/IDs remain lossless. Full malformed/tagged-union acceptance/unknown-field audit remains open. |
@@ -141,7 +158,7 @@ packaging remains separate validation work.
 | Types/effects/modes | Recursive types/rows/schemes and analysis tables | Special constraints differ from ordinary signature lookup; runtime support is independent. CLI intentionally omits `modes`, matching the actual upstream pickOutputStage function despite its broader OutputStage interface. |
 | Frontend CLI stage JSON | `stage`, `warnings`, `errors`, `modules`, `table`, `types`, `effects`, `main` as relevant | Complete per-stage field presence/order parity pending; sourceCode is internal in upstream output. |
 | Run/test/docs stage JSON | Run/test extend shared frontend fields with `stage/status/errors/trace/seed` or `stage/errors/passed/failed/ignored`; docs `stage/warnings/errors/documentation` | Run/test preserve parsed/analyzed modules and tables via coreStageFields/coreMarshalStage. Exact per-path defaults, optional fields, presentation, and timing details remain an audit. |
-| Verify result JSON | Go result `status/input/main/outcome/explanation/errors/trace/phases/maxSteps/backendData` | Deliberately explicit Go bounded result shape; does not yet match upstream `stage=verifying` envelope. |
+| Verify result JSON | Go result `status/input/main/outcome/explanation/errors/trace/phases/maxSteps/backendData`, plus `tlc` statistics/messages/log/concrete trace for TLC | Apalache reports its transition bound. TLC omits `maxSteps`, reports exhaustive safety success, and stores concrete TLA values as strings rather than ITF. Does not yet match upstream `stage=verifying` envelope. |
 | Checker input | Projected `stage=compiling`, exactly one module, `types`, empty `table`; validated by production importer | Removes frontend namespace/shadowing/import metadata and module docs, omits inlined typedefs; unresolved imports/type applications and compilation diagnostics rejected. Do not feed arbitrary CLI JSON through unchanged. |
 | Checker config | Source `{kind:string,format:qnt,content:<typed JSON>}`; checker length/init/next/inv/temporal and tuning `search.simulation` overrides | Raw `.qnt` is not source.content. Additional keys reach the Go checker for validation. No Scala service download/fallback. Complete config/solver feature coverage pending. |
 | ITF | Big ints, sets/maps/tuples, records/variants, indexed states, metadata, naming substitutions, MBT, lossless raw trace fields/loop preservation | Concrete normalization implemented. Symbolic runtime values and locale-wide display parity pending; Go Shai currently omits temporal loop index in generated counterexamples. |

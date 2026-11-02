@@ -10,11 +10,18 @@ import (
 
 // EvaluatePureExpression evaluates concrete constructors, strict integer/Boolean
 // operations, and lazy Boolean/conditional expressions. Bindings contain already
-// evaluated values. Local value definitions are lazy and memoized per scope.
-// Module definition lookup and stateful operations belong
-// to the full evaluator and are not yet handled here.
+// evaluated values. Local definitions use compiled lambda objects, shared
+// parameter cells, and scoped value caches. ModuleEvaluator adds persistent
+// module definitions, state storage, RNG, and traces.
 func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue]) (RuntimeValue, error) {
 	return evaluateExpression(ctx, expression, bindings, nil, nil)
+}
+
+// EvaluatePureExpressionWithRuntimeState shares the reference's object-hash
+// sequence with other evaluations and explicit runtime serialization. A nil
+// state starts a fresh sequence. Returned closures retain this execution state.
+func EvaluatePureExpressionWithRuntimeState(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue], state *RuntimeObjectHashState) (RuntimeValue, error) {
+	return newRuntimeEvaluation(bindings, nil, nil, nil, state).evaluateOwned(ctx, copyRuntimeExpression(expression))
 }
 
 // EvaluateStateExpression adds registered variable reads and assignments to the
@@ -37,16 +44,68 @@ func EvaluateStateExpressionWithRNG(ctx context.Context, expression Expr, storag
 }
 
 func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue], storage *VariableStorage, rng *RNG, traces ...*RuntimeTrace) (RuntimeValue, error) {
+	var trace *RuntimeTrace
+	if len(traces) > 0 {
+		trace = traces[0]
+	}
+	var objects *RuntimeObjectHashState
+	if storage != nil {
+		objects = storage.ObjectHashState()
+	}
+	return newRuntimeEvaluation(bindings, storage, rng, trace, objects).evaluateOwned(ctx, copyRuntimeExpression(expression))
+}
+
+type runtimeLocalValue func([]RuntimeValue) (RuntimeValue, error)
+type runtimeEvaluation struct {
+	evaluate  func(context.Context, Expr) (RuntimeValue, error)
+	prepare   func(context.Context, Expr) error
+	objects   *RuntimeObjectHashState
+	constants *insdict.Dict[string, ID]
+}
+
+func (e *runtimeEvaluation) evaluateOwned(ctx context.Context, expression Expr) (RuntimeValue, error) {
+	if err := e.prepare(ctx, expression); err != nil {
+		return RuntimeValue{}, err
+	}
+	return e.evaluate(ctx, expression)
+}
+
+type runtimeParameter struct{ value RuntimeValue }
+type runtimeLocalCache struct {
+	value      RuntimeValue
+	err        error
+	evaluated  bool
+	generation uint64
+}
+type runtimeLocalDefinition struct {
+	cache runtimeLocalCache
+	scope *insdict.Dict[string, runtimeLocalValue]
+}
+type runtimeLambdaKey struct {
+	id   ID
+	body *Expr
+}
+type runtimeDefinitionKey struct {
+	id         ID
+	definition *OperatorDef
+}
+
+func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage *VariableStorage, rng *RNG, trace *RuntimeTrace, objects *RuntimeObjectHashState) *runtimeEvaluation {
+	if objects == nil {
+		objects = &RuntimeObjectHashState{}
+	}
+	session := &runtimeEvaluation{objects: objects}
+	discovery := &RuntimeNondetDiscovery{}
+	session.prepare = func(ctx context.Context, expression Expr) error {
+		return discovery.Prepare(ctx, expression, storage)
+	}
+	ctx := context.Background()
 	if bindings != nil {
 		owned := insdict.NewDict[string, RuntimeValue]()
 		for name, value := range bindings.All() {
 			owned.Set(name, value)
 		}
 		bindings = owned
-	}
-	var trace *RuntimeTrace
-	if len(traces) > 0 {
-		trace = traces[0]
 	}
 	shift := func() error {
 		if trace != nil {
@@ -57,9 +116,12 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 		return nil
 	}
 	var eval func(Expr) (RuntimeValue, error)
-	type localValue func([]RuntimeValue) (RuntimeValue, error)
-	scopes := []*insdict.Dict[string, localValue]{}
-	lookup := func(name string) (localValue, bool) {
+	scopes := []*insdict.Dict[string, runtimeLocalValue]{}
+	lambdas := map[runtimeLambdaKey]RuntimeValue{}
+	literals := map[ID]RuntimeValue{}
+	parameters := map[ID]*runtimeParameter{}
+	definitions := map[runtimeDefinitionKey]*runtimeLocalDefinition{}
+	lookup := func(name string) (runtimeLocalValue, bool) {
 		for i := len(scopes) - 1; i >= 0; i-- {
 			if value, ok := scopes[i].Get2(name); ok {
 				return value, true
@@ -78,6 +140,16 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 		}
 		switch e.Kind {
 		case "int", "bool", "str":
+			if e.ID != (ID{}) {
+				if value, exists := literals[e.ID]; exists {
+					return value, nil
+				}
+				value, err := NewRuntimeValue(e)
+				if err == nil {
+					literals[e.ID] = value
+				}
+				return value, err
+			}
 			return NewRuntimeValue(e)
 		case "name":
 			if value, ok := lookup(e.Name); ok {
@@ -86,6 +158,11 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 			if bindings != nil {
 				if value, ok := bindings.Get2(e.Name); ok && value.Valid() {
 					return value, nil
+				}
+			}
+			if session.constants != nil {
+				if _, exists := session.constants.Get2(e.Name); exists {
+					return RuntimeValue{}, Diagnostic{Code: "QNT500", Message: "Uninitialized const " + e.Name + ". Use: import <moduleName>(" + e.Name + "=<value>).*", Reference: &e.ID}
 				}
 			}
 			if storage != nil {
@@ -113,40 +190,82 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 			}
 			return fail(e, "Unbound runtime name: "+e.Name)
 		case "lambda":
-			e = copyRuntimeExpression(e)
 			if e.Body == nil {
 				return fail(e, "Malformed local operator")
 			}
-			captured := append([]*insdict.Dict[string, localValue](nil), scopes...)
-			return newRuntimeClosure(len(e.Params), func(callContext context.Context, arguments []RuntimeValue) (RuntimeValue, error) {
-				if len(arguments) != len(e.Params) {
-					return fail(e, fmt.Sprintf("lambda requires %d arguments", len(e.Params)))
+			key := runtimeLambdaKey{id: e.ID}
+			if e.ID == (ID{}) {
+				key.body = e.Body
+			}
+			if value, ok := lambdas[key]; ok {
+				return value, nil
+			}
+			captured := append([]*insdict.Dict[string, runtimeLocalValue](nil), scopes...)
+			parameterScope := insdict.NewDict[string, runtimeLocalValue]()
+			registers := make([]*runtimeParameter, len(e.Params))
+			for i, param := range e.Params {
+				register := parameters[param.ID]
+				// Syntax APIs also accept hand-built IR with omitted IDs. Keep
+				// those independent rather than alias every unnamed parameter.
+				if register == nil || param.ID == (ID{}) {
+					register = &runtimeParameter{}
+					if param.ID != (ID{}) {
+						parameters[param.ID] = register
+					}
 				}
-				parameters := insdict.NewDict[string, localValue]()
-				for i, param := range e.Params {
-					value := arguments[i]
-					parameters.Set(param.Name, func(extra []RuntimeValue) (RuntimeValue, error) {
-						if extra != nil {
-							return value.Apply(ctx, extra)
-						}
-						return value, nil
-					})
+				registers[i] = register
+				parameterScope.Set(param.Name, func(extra []RuntimeValue) (RuntimeValue, error) {
+					if !register.value.Valid() {
+						return fail(e, "Parameter "+param.Name+" not set")
+					}
+					if extra != nil {
+						return register.value.Apply(ctx, extra)
+					}
+					return register.value, nil
+				})
+			}
+			value := newRuntimeClosure(len(e.Params), func(callContext context.Context, arguments []RuntimeValue) (RuntimeValue, error) {
+				if len(arguments) != len(e.Params) {
+					return RuntimeValue{}, Diagnostic{Code: "QNT506", Message: fmt.Sprintf("Lambda expects %d arguments, but got %d", len(e.Params), len(arguments))}
+				}
+				for i, register := range registers {
+					register.value = arguments[i]
 				}
 				saved, savedContext := scopes, ctx
-				scopes = append(append([]*insdict.Dict[string, localValue](nil), captured...), parameters)
+				scopes = append(append([]*insdict.Dict[string, runtimeLocalValue](nil), captured...), parameterScope)
 				ctx = callContext
 				result, err := eval(*e.Body)
 				scopes, ctx = saved, savedContext
 				return result, err
-			}), nil
+			})
+			lambdas[key] = value
+			return value, nil
 
 		case "let":
 			if e.Opdef == nil || e.Opdef.Expr == nil || e.Body == nil {
 				return fail(e, "Malformed local definition")
 			}
+			key := runtimeDefinitionKey{id: e.Opdef.ID}
+			if e.Opdef.ID == (ID{}) {
+				key.definition = e.Opdef
+			}
 			if e.Opdef.Qualifier == Nondet {
 				if e.Opdef.Expr.Kind != "app" || e.Opdef.Expr.Opcode != "oneOf" || len(e.Opdef.Expr.Args) != 1 {
 					return fail(e, "Nondeterministic definitions require a oneOf application")
+				}
+				binding, exists := definitions[key]
+				if !exists {
+					binding = &runtimeLocalDefinition{scope: insdict.NewDict[string, runtimeLocalValue]()}
+					definitions[key] = binding
+					binding.scope.Set(e.Opdef.Name, func(arguments []RuntimeValue) (RuntimeValue, error) {
+						if binding.cache.err != nil {
+							return RuntimeValue{}, binding.cache.err
+						}
+						if arguments != nil {
+							return binding.cache.value.Apply(ctx, arguments)
+						}
+						return binding.cache.value, nil
+					})
 				}
 				value, err := EvalNondet(ctx, e.Opdef.Name, storage, rng,
 					func(callContext context.Context) (RuntimeValue, error) {
@@ -157,24 +276,16 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 						return value, err
 					},
 					func(callContext context.Context, picked RuntimeValue, pickErr error) (RuntimeValue, error) {
-						scope := insdict.NewDict[string, localValue]()
-						scope.Set(e.Opdef.Name, func(arguments []RuntimeValue) (RuntimeValue, error) {
-							if pickErr != nil {
-								return RuntimeValue{}, pickErr
-							}
-							if arguments != nil {
-								return picked.Apply(ctx, arguments)
-							}
-							return picked, nil
-						})
+						binding.cache.value, binding.cache.err = picked, pickErr
 						saved := ctx
 						ctx = callContext
-						scopes = append(scopes, scope)
+						scopes = append(scopes, binding.scope)
 						value, err := eval(*e.Body)
 						scopes = scopes[:len(scopes)-1]
 						ctx = saved
 						return value, err
 					})
+				binding.cache = runtimeLocalCache{}
 				if d, ok := err.(Diagnostic); ok && d.Reference == nil {
 					id := e.ID
 					d.Reference = &id
@@ -182,57 +293,53 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 				}
 				return value, err
 			}
-			captured := append([]*insdict.Dict[string, localValue](nil), scopes...)
-			var cached RuntimeValue
-			var cachedErr error
-			evaluated := false
-			var generation uint64
-			thunk := func(arguments []RuntimeValue) (RuntimeValue, error) {
-
-				if storage != nil && e.Opdef.Qualifier == Val && e.Opdef.Depth != nil && *e.Opdef.Depth == 0 && generation != storage.generation {
-					evaluated = false
-				}
-				if !evaluated || (e.Opdef.Qualifier == Action && e.Opdef.Expr.Kind != "lambda") {
-					if storage != nil && e.Opdef.Qualifier == Action && e.Opdef.Expr.Kind != "lambda" && storage.ActionTaken == "" {
+			definition, exists := definitions[key]
+			topLevel := e.Opdef.Depth != nil && *e.Opdef.Depth == 0
+			if !exists {
+				definition = &runtimeLocalDefinition{scope: insdict.NewDict[string, runtimeLocalValue]()}
+				definitions[key] = definition
+				captured := append([]*insdict.Dict[string, runtimeLocalValue](nil), scopes...)
+				definition.scope.Set(e.Opdef.Name, func(arguments []RuntimeValue) (RuntimeValue, error) {
+					if storage != nil && e.Opdef.Qualifier == Action && storage.ActionTaken == "" {
 						storage.ActionTaken = e.Opdef.Name
 					}
-					saved := scopes
-					scopes = captured
-					cached, cachedErr = eval(*e.Opdef.Expr)
-					if cachedErr == nil && storage != nil && e.Opdef.Qualifier == Action && cached.closure != nil {
-						original := cached
-						cached = newRuntimeClosure(len(e.Opdef.Expr.Params), func(callContext context.Context, values []RuntimeValue) (RuntimeValue, error) {
-							if storage.ActionTaken == "" {
-								storage.ActionTaken = e.Opdef.Name
-							}
-							return original.Apply(callContext, values)
-						})
+					cache := &definition.cache
+					if storage != nil && topLevel && e.Opdef.Qualifier == Val && cache.generation != storage.generation {
+						cache.evaluated = false
 					}
-					scopes = saved
-					evaluated = true
-					if storage != nil {
-						generation = storage.generation
+					cacheValue := e.Opdef.Expr.Kind == "lambda" || (e.Opdef.Qualifier != Action && (!topLevel || e.Opdef.Qualifier == Val || e.Opdef.Qualifier == PureVal))
+					if !cache.evaluated || !cacheValue {
+						saved := scopes
+						scopes = captured
+						cache.value, cache.err = eval(*e.Opdef.Expr)
+						scopes = saved
+						cache.evaluated = true
+						if storage != nil {
+							cache.generation = storage.generation
+						}
 					}
-				}
-				if cachedErr != nil {
-					return RuntimeValue{}, cachedErr
-				}
-				if arguments != nil {
-					result, err := cached.Apply(ctx, arguments)
-					if d, ok := err.(Diagnostic); ok && d.Reference == nil {
-						id := e.ID
-						d.Reference = &id
-						err = d
+					if cache.err != nil {
+						return RuntimeValue{}, cache.err
 					}
-					return result, err
-				}
-				return cached, nil
+					if arguments != nil {
+						return cache.value.Apply(ctx, arguments)
+					}
+					return cache.value, nil
+				})
 			}
-			scope := insdict.NewDict[string, localValue]()
-			scope.Set(e.Opdef.Name, thunk)
-			scopes = append(scopes, scope)
+			// Scoped value cells belong to the compiled definition. Each let
+			// invocation temporarily clears its cache, then restores the saved
+			// value even when a returned lambda still refers to that cell.
+			savedCache := definition.cache
+			if !topLevel && e.Opdef.Expr.Kind != "lambda" {
+				definition.cache = runtimeLocalCache{}
+			}
+			scopes = append(scopes, definition.scope)
 			result, err := eval(*e.Body)
 			scopes = scopes[:len(scopes)-1]
+			if !topLevel && e.Opdef.Expr.Kind != "lambda" {
+				definition.cache = savedCache
+			}
 			return result, err
 		case "app":
 			if value, ok := lookup(e.Opcode); ok {
@@ -244,7 +351,12 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 					}
 					arguments[i] = argument
 				}
-				return value(arguments)
+				result, err := value(arguments)
+				if diagnostic, ok := err.(Diagnostic); ok && diagnostic.Reference == nil {
+					diagnostic.Reference = &e.ID
+					err = diagnostic
+				}
+				return result, err
 			}
 		default:
 			return fail(e, "Unsupported pure expression kind: "+e.Kind)
@@ -559,7 +671,13 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 		}
 		var value RuntimeValue
 		var err error
-		if e.Opcode == "setBy" {
+		if e.Opcode == "q::debug" {
+			value, err = EvalDebugBuiltin(ctx, args, session.objects)
+		} else if e.Opcode == "allListsUpTo" {
+			value, err = EvalAllListsBuiltin(ctx, e.Opcode, args, session.objects)
+		} else if e.Opcode == "setToMap" {
+			value, err = EvalSetToMapBuiltin(ctx, args, session.objects)
+		} else if e.Opcode == "setBy" {
 			value, err = EvalMapSetBy(ctx, args)
 		} else if listHigherBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalListHigherBuiltin(ctx, e.Opcode, args)
@@ -576,7 +694,7 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 		} else if setBuiltinArity(e.Opcode) != 0 {
 			value, err = EvalSetBuiltin(e.Opcode, args)
 		} else {
-			if e.Opcode == "apalache::generate" || !IsBuiltinOpcode(e.Opcode) {
+			if e.Opcode == "apalache::generate" || RuntimeCombinatorArity(e.Opcode) != 0 || !IsBuiltinOpcode(e.Opcode) {
 				err = Diagnostic{Code: "QNT000", Message: "Unknown builtin " + e.Opcode}
 			} else {
 				value, err = EvalIntegerBuiltin(e.Opcode, args)
@@ -591,5 +709,12 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 		}
 		return value, err
 	}
-	return eval(expression)
+	session.evaluate = func(callContext context.Context, expression Expr) (RuntimeValue, error) {
+		savedContext := ctx
+		ctx = callContext
+		value, err := eval(expression)
+		ctx = savedContext
+		return value, err
+	}
+	return session
 }
