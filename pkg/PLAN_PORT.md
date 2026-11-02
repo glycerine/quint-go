@@ -987,3 +987,13 @@ word "retained" in the commit message.
   match. Default tests pass within the sub-second target. Raw upstream coordinate
   export and line/column quirks remain open; normalized interval parity does not
   establish byte-for-byte source-map compatibility.
+
+- 2026-11-02: Added an explicit upstream source-coordinate representation and
+  ParseModulesWithLocations returning both UTF-16 half-open and upstream raw maps.
+  Raw coordinates preserve code-point indexes, inclusive ends, and ToIrListener's
+  multiline end-column calculation. All nine source-span fixtures now compare
+  raw locations as well as normalized intervals. Tests also cover retained
+  diagnostic maps, invalid input, and distinct Unicode coordinate conventions.
+  Default tests pass within the sub-second target. P2.5 remains open for broader
+  missing/generated source-entry and allocation-order parity, not coordinates
+  alone; imported raw-map export is not yet exposed.

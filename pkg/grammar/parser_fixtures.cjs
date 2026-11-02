@@ -79,9 +79,11 @@ const spanFixtures=spanCases.map(([name,source])=>{
  const parsed=parsePhase1fromText(newIdGenerator(),source,name)
  if(parsed.errors.length)throw Error(JSONbig.stringify(parsed.errors))
  const spans={}
+ const upstreamSpans={}
  function visit(value,key){
   if(!value||typeof value!=='object')return
   if(value.id!==undefined){const loc=parsed.sourceMap.get(value.id);if(loc){
+    upstreamSpans[key]=loc
     // antlr4ts indexes Unicode code points; Go's public locations use UTF-16.
     const utf16=index=>Array.from(source).slice(0,index).join('').length
     spans[key]={start:utf16(loc.start.index),end:utf16(loc.end.index+1)}
@@ -89,6 +91,6 @@ const spanFixtures=spanCases.map(([name,source])=>{
   for(const [field,child] of Object.entries(value))if(field!=='id')visit(child,key+'/'+field)
  }
  visit(parsed.modules,'')
- return {name,source,spans}
+ return {name,source,spans,upstreamSpans}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/spans.json'),JSONbig.stringify(spanFixtures,null,2)+'\n')

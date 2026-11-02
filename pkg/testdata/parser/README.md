@@ -49,3 +49,8 @@ records, matches, types, sum constructors, tuple lambdas, import overrides, and
 multiline supplementary Unicode. Only absolute start/end indexes are compared;
 upstream line/column quirks and missing source entries need broader fixtures
 before claiming complete source-map compatibility.
+
+The span fixtures also retain `upstreamSpans` without coordinate normalization.
+These are compared against ParseModulesWithLocations's UpstreamSources, including
+source names, code-point indexes, inclusive ends, and the listener's multiline
+end-column calculation. The normalized UTF-16 comparison remains independent.

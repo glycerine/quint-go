@@ -5,17 +5,22 @@ import "github.com/antlr4-go/antlr/v4"
 type parserIDAllocator interface{ Next() ID }
 
 type locatedParserIDs struct {
-	generator *IDGenerator
-	file      *SourceFile
-	sources   SourceMap
-	current   *Location
-	err       error
+	generator       *IDGenerator
+	file            *SourceFile
+	sources         SourceMap
+	current         *Location
+	upstreamSources UpstreamSourceMap
+	upstreamCurrent *UpstreamLocation
+	err             error
 }
 
 func (p *locatedParserIDs) Next() ID {
 	id := p.generator.Next()
 	if p.current != nil {
 		p.sources[id] = *p.current
+		if p.upstreamSources != nil && p.upstreamCurrent != nil {
+			p.upstreamSources[id] = *p.upstreamCurrent
+		}
 	}
 	return id
 }
@@ -25,16 +30,22 @@ func parserScope(ids parserIDAllocator, ctx antlr.ParserRuleContext) func() {
 		return func() {}
 	}
 	previous := p.current
+	previousUpstream := p.upstreamCurrent
 	loc, err := parserLocation(p.file, ctx)
 	if err != nil {
 		if p.err == nil {
 			p.err = err
 		}
 		p.current = nil
+		p.upstreamCurrent = nil
 	} else {
 		p.current = &loc
+		if p.upstreamSources != nil {
+			legacy := upstreamParserLocation(p.file, ctx)
+			p.upstreamCurrent = &legacy
+		}
 	}
-	return func() { p.current = previous }
+	return func() { p.current = previous; p.upstreamCurrent = previousUpstream }
 }
 
 // ParseExpressionWithSource returns half-open source spans for expression,

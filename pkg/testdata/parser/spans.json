@@ -99,6 +99,320 @@
         "start": 39,
         "end": 43
       }
+    },
+    "upstreamSpans": {
+      "/0": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        }
+      },
+      "/0/declarations/0": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "/0/declarations/0/type": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "/0/declarations/0/type/fields/fields/0/fieldType": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "/0/declarations/0/type/fields/fields/0/fieldType/elem": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "/0/declarations/0/type/fields/fields/1/fieldType": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "/0/declarations/1": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "/0/declarations/1/typeAnnotation/args/0": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "/0/declarations/1/typeAnnotation/args/0/elem": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "/0/declarations/1/typeAnnotation/res": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "/0/declarations/1/typeAnnotation/res/ctor": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "/0/declarations/1/typeAnnotation/res/args/0": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "/0/declarations/1/expr": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "/0/declarations/1/expr/params/0": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "/0/declarations/1/expr/expr": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "/0/declarations/1/expr/expr/args/0": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "/0/declarations/1/expr/expr/args/1": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "/0/declarations/2": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "/0/declarations/2/typeAnnotation": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "/0/declarations/2/typeAnnotation/ctor": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "/0/declarations/2/typeAnnotation/args/0": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "/0/declarations/2/expr": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "/0/declarations/2/expr/args/0": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "/0/declarations/2/expr/args/1": {
+        "source": "sum-spans",
+        "start": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      }
     }
   },
   {
@@ -173,6 +487,229 @@
         "start": 32,
         "end": 33
       }
+    },
+    "upstreamSpans": {
+      "/0": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "/0/declarations/0": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "/0/declarations/0/expr": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "/0/declarations/0/expr/params/0": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "/0/declarations/0/expr/expr": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "/0/declarations/0/expr/expr/opdef": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "/0/declarations/0/expr/expr/opdef/expr": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "/0/declarations/0/expr/expr/opdef/expr/args/0": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "/0/declarations/0/expr/expr/opdef/expr/args/1": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "/0/declarations/0/expr/expr/expr": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "/0/declarations/0/expr/expr/expr/opdef": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "/0/declarations/0/expr/expr/expr/opdef/expr": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "/0/declarations/0/expr/expr/expr/opdef/expr/args/0": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "/0/declarations/0/expr/expr/expr/opdef/expr/args/1": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "/0/declarations/0/expr/expr/expr/expr": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "/0/declarations/0/expr/expr/expr/expr/args/0": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "/0/declarations/0/expr/expr/expr/expr/args/1": {
+        "source": "tuple-lambda-spans",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      }
     }
   },
   {
@@ -194,6 +731,60 @@
       "/0/declarations/0/overrides/0/1": {
         "start": 22,
         "end": 23
+      }
+    },
+    "upstreamSpans": {
+      "/0": {
+        "source": "import-spans",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 39,
+          "index": 39
+        }
+      },
+      "/0/declarations/0": {
+        "source": "import-spans",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        }
+      },
+      "/0/declarations/0/overrides/0/0": {
+        "source": "import-spans",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "/0/declarations/0/overrides/0/1": {
+        "source": "import-spans",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
       }
     }
   },
@@ -221,6 +812,73 @@
         "start": 28,
         "end": 31
       }
+    },
+    "upstreamSpans": {
+      "/0": {
+        "source": "unicode-spans",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 3,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "/0/declarations/0": {
+        "source": "unicode-spans",
+        "start": {
+          "line": 1,
+          "col": 5,
+          "index": 16
+        },
+        "end": {
+          "line": 1,
+          "col": 5,
+          "index": 16
+        }
+      },
+      "/0/declarations/0/expr": {
+        "source": "unicode-spans",
+        "start": {
+          "line": 1,
+          "col": 9,
+          "index": 20
+        },
+        "end": {
+          "line": 2,
+          "col": 18,
+          "index": 29
+        }
+      },
+      "/0/declarations/0/expr/args/0": {
+        "source": "unicode-spans",
+        "start": {
+          "line": 1,
+          "col": 9,
+          "index": 20
+        },
+        "end": {
+          "line": 1,
+          "col": 11,
+          "index": 22
+        }
+      },
+      "/0/declarations/0/expr/args/1": {
+        "source": "unicode-spans",
+        "start": {
+          "line": 2,
+          "col": 1,
+          "index": 27
+        },
+        "end": {
+          "line": 2,
+          "col": 3,
+          "index": 29
+        }
+      }
     }
   },
   {
@@ -246,6 +904,73 @@
       "/0/declarations/0/expr/args/1": {
         "start": 23,
         "end": 24
+      }
+    },
+    "upstreamSpans": {
+      "/0": {
+        "source": "simple",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "/0/declarations/0": {
+        "source": "simple",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "/0/declarations/0/expr": {
+        "source": "simple",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "/0/declarations/0/expr/args/0": {
+        "source": "simple",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "/0/declarations/0/expr/args/1": {
+        "source": "simple",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
       }
     }
   },
@@ -293,6 +1018,138 @@
         "start": 26,
         "end": 29
       }
+    },
+    "upstreamSpans": {
+      "/0": {
+        "source": "parameters",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        }
+      },
+      "/0/declarations/0": {
+        "source": "parameters",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "/0/declarations/0/expr": {
+        "source": "parameters",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "/0/declarations/0/expr/params/0": {
+        "source": "parameters",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "/0/declarations/0/expr/params/0/typeAnnotation": {
+        "source": "parameters",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "/0/declarations/0/expr/expr": {
+        "source": "parameters",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "/0/declarations/0/expr/expr/args/0": {
+        "source": "parameters",
+        "start": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        },
+        "end": {
+          "line": 0,
+          "col": 32,
+          "index": 32
+        }
+      },
+      "/0/declarations/0/expr/expr/args/1": {
+        "source": "parameters",
+        "start": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "/0/declarations/0/typeAnnotation/args/0": {
+        "source": "parameters",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "/0/declarations/0/typeAnnotation/res": {
+        "source": "parameters",
+        "start": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      }
     }
   },
   {
@@ -326,6 +1183,99 @@
       "/0/declarations/0/expr/args/3": {
         "start": 30,
         "end": 34
+      }
+    },
+    "upstreamSpans": {
+      "/0": {
+        "source": "records",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        }
+      },
+      "/0/declarations/0": {
+        "source": "records",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "/0/declarations/0/expr": {
+        "source": "records",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 35,
+          "index": 35
+        }
+      },
+      "/0/declarations/0/expr/args/0": {
+        "source": "records",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "/0/declarations/0/expr/args/1": {
+        "source": "records",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "/0/declarations/0/expr/args/2": {
+        "source": "records",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "/0/declarations/0/expr/args/3": {
+        "source": "records",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
       }
     }
   },
@@ -381,6 +1331,164 @@
         "start": 41,
         "end": 47
       }
+    },
+    "upstreamSpans": {
+      "/0": {
+        "source": "match",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 50,
+          "index": 50
+        }
+      },
+      "/0/declarations/0": {
+        "source": "match",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "/0/declarations/0/expr": {
+        "source": "match",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      },
+      "/0/declarations/0/expr/args/0": {
+        "source": "match",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "/0/declarations/0/expr/args/1": {
+        "source": "match",
+        "start": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        },
+        "end": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        }
+      },
+      "/0/declarations/0/expr/args/2": {
+        "source": "match",
+        "start": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        },
+        "end": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        }
+      },
+      "/0/declarations/0/expr/args/2/expr": {
+        "source": "match",
+        "start": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        },
+        "end": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        }
+      },
+      "/0/declarations/0/expr/args/2/params/0": {
+        "source": "match",
+        "start": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        },
+        "end": {
+          "line": 0,
+          "col": 37,
+          "index": 37
+        }
+      },
+      "/0/declarations/0/expr/args/3": {
+        "source": "match",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "/0/declarations/0/expr/args/4": {
+        "source": "match",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "/0/declarations/0/expr/args/4/expr": {
+        "source": "match",
+        "start": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "/0/declarations/0/expr/args/4/params/0": {
+        "source": "match",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      }
     }
   },
   {
@@ -414,6 +1522,99 @@
       "/0/declarations/1/type/elem": {
         "start": 44,
         "end": 45
+      }
+    },
+    "upstreamSpans": {
+      "/0": {
+        "source": "types",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 47,
+          "index": 47
+        }
+      },
+      "/0/declarations/0": {
+        "source": "types",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "/0/declarations/0/typeAnnotation": {
+        "source": "types",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      },
+      "/0/declarations/0/typeAnnotation/elem": {
+        "source": "types",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "/0/declarations/1": {
+        "source": "types",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      },
+      "/0/declarations/1/type": {
+        "source": "types",
+        "start": {
+          "line": 0,
+          "col": 40,
+          "index": 40
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      },
+      "/0/declarations/1/type/elem": {
+        "source": "types",
+        "start": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        },
+        "end": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        }
       }
     }
   }
