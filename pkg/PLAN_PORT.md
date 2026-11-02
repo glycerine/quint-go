@@ -456,8 +456,10 @@ Build these items alongside the phases that supply their command behavior.
   substitutions. Preserve user-field names that overlap metadata terminology.
   - [x] ITF-to-Quint decoding with exact upstream ID allocation, lossless
     integers/raw metadata, JavaScript record key order, and seven fixtures.
-  - [ ] Implement writing, runtime normalization, diagnostics extraction, and
-    trace filename/output integration.
+  - [x] Concrete-value ITF writing, indexed state envelopes, and MBT variable
+    metadata with eleven upstream encoding/error fixtures.
+  - [ ] Implement headers/loop output, runtime normalization, diagnostics
+    extraction, and trace filename/output integration.
 - [ ] P10.5 Port pretty printing, source-error rendering, value diffs, execution
   frames, trace display, statistics, and witness/invariant reports.
 - [ ] P10.6 Port documentation extraction and `docs`; embed builtin definitions
@@ -2019,3 +2021,18 @@ word "retained" in the commit message.
   tests pass (combined execution 0.982s); final malformed-value tests also pass.
   P10.4/P9.6 remain open for encoding/normalization, metadata diagnostics,
   individual-invariant evaluation, and CLI trace output.
+
+- 2026-11-02: Added EncodeITFValue/EncodeITFTrace for the upstream toItf path:
+  decimal #bigint values, primitive values, lists/sets/tuples/maps, records,
+  variants, state-index metadata, and optional MBT variable names. Output uses
+  insdict.Dict and JavaScript numeric-key ordering; duplicate field replacement,
+  existing state metadata overrides, collection ordering, and empty collections
+  match upstream. Eleven generated upstream fixtures cover full value records,
+  variants/unit tuples, multiple states, MBT metadata, numeric fields, array
+  states, and symbolic/operator/primitive-state errors. Unit tests cover exact
+  large integers, output ordering, duplicate MBT names, input isolation, and
+  malformed constructors. Malformed record fields/map pairs/variant arities are
+  rejected explicitly rather than reproducing upstream's unchecked behavior.
+  Full default tests pass (combined execution 1.005s, approximately the one-second
+  target). P10.4 remains open for trace headers/loop output, runtime normalization,
+  metadata diagnostics, filename substitution, and CLI integration.

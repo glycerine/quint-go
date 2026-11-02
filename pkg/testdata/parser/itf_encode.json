@@ -1,0 +1,641 @@
+[
+  {
+    "name": "empty",
+    "input": [],
+    "vars": [],
+    "mbt": false,
+    "output": {
+      "vars": [],
+      "states": []
+    }
+  },
+  {
+    "name": "values",
+    "input": [
+      {
+        "id": 25,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 2,
+            "kind": "str",
+            "value": "b"
+          },
+          {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          {
+            "id": 4,
+            "kind": "str",
+            "value": "n"
+          },
+          {
+            "id": 3,
+            "kind": "int",
+            "value": 9007199254740993123456789
+          },
+          {
+            "id": 8,
+            "kind": "str",
+            "value": "list"
+          },
+          {
+            "id": 7,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 5,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 6,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "kind": "str",
+            "value": "set"
+          },
+          {
+            "id": 11,
+            "kind": "app",
+            "opcode": "Set",
+            "args": [
+              {
+                "id": 9,
+                "kind": "int",
+                "value": 3
+              },
+              {
+                "id": 10,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": 16,
+            "kind": "str",
+            "value": "tuple"
+          },
+          {
+            "id": 15,
+            "kind": "app",
+            "opcode": "Tup",
+            "args": [
+              {
+                "id": 13,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 14,
+                "kind": "bool",
+                "value": false
+              }
+            ]
+          },
+          {
+            "id": 24,
+            "kind": "str",
+            "value": "map"
+          },
+          {
+            "id": 23,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 19,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 17,
+                    "kind": "str",
+                    "value": "x"
+                  },
+                  {
+                    "id": 18,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 22,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 20,
+                    "kind": "str",
+                    "value": "y"
+                  },
+                  {
+                    "id": 21,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "vars": [
+      "b",
+      "n",
+      "list",
+      "set",
+      "tuple",
+      "map"
+    ],
+    "mbt": false,
+    "output": {
+      "vars": [
+        "b",
+        "n",
+        "list",
+        "set",
+        "tuple",
+        "map"
+      ],
+      "states": [
+        {
+          "#meta": {
+            "index": 0
+          },
+          "b": true,
+          "n": {
+            "#bigint": "9007199254740993123456789"
+          },
+          "list": [
+            {
+              "#bigint": "1"
+            },
+            {
+              "#bigint": "2"
+            }
+          ],
+          "set": {
+            "#set": [
+              {
+                "#bigint": "3"
+              },
+              {
+                "#bigint": "1"
+              }
+            ]
+          },
+          "tuple": {
+            "#tup": [
+              {
+                "#bigint": "1"
+              },
+              false
+            ]
+          },
+          "map": {
+            "#map": [
+              [
+                "x",
+                {
+                  "#bigint": "1"
+                }
+              ],
+              [
+                "y",
+                {
+                  "#bigint": "2"
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "variant",
+    "input": [
+      {
+        "id": 7,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 2,
+            "kind": "str",
+            "value": "unit"
+          },
+          {
+            "id": 1,
+            "kind": "app",
+            "opcode": "Tup",
+            "args": []
+          },
+          {
+            "id": 6,
+            "kind": "str",
+            "value": "v"
+          },
+          {
+            "id": 5,
+            "kind": "app",
+            "opcode": "variant",
+            "args": [
+              {
+                "id": 3,
+                "kind": "str",
+                "value": "Some"
+              },
+              {
+                "id": 4,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "vars": [
+      "unit",
+      "v"
+    ],
+    "mbt": false,
+    "output": {
+      "vars": [
+        "unit",
+        "v"
+      ],
+      "states": [
+        {
+          "#meta": {
+            "index": 0
+          },
+          "unit": {
+            "#tup": []
+          },
+          "v": {
+            "tag": "Some",
+            "value": {
+              "#bigint": "1"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "indices",
+    "input": [
+      {
+        "id": 3,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 2,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 6,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 5,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      }
+    ],
+    "vars": [
+      "x"
+    ],
+    "mbt": false,
+    "output": {
+      "vars": [
+        "x"
+      ],
+      "states": [
+        {
+          "#meta": {
+            "index": 0
+          },
+          "x": {
+            "#bigint": "1"
+          }
+        },
+        {
+          "#meta": {
+            "index": 1
+          },
+          "x": {
+            "#bigint": "2"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "mbt",
+    "input": [
+      {
+        "id": 3,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 2,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "vars": [
+      "x"
+    ],
+    "mbt": true,
+    "output": {
+      "vars": [
+        "x",
+        "mbt::actionTaken",
+        "mbt::nondetPicks"
+      ],
+      "states": [
+        {
+          "#meta": {
+            "index": 0
+          },
+          "x": {
+            "#bigint": "1"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "metadata",
+    "input": [
+      {
+        "id": 7,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 1,
+            "kind": "str",
+            "value": "#meta"
+          },
+          {
+            "id": 4,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 2,
+                "kind": "str",
+                "value": "index"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 99
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 6,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "vars": [
+      "x"
+    ],
+    "mbt": false,
+    "output": {
+      "vars": [
+        "x"
+      ],
+      "states": [
+        {
+          "#meta": {
+            "index": {
+              "#bigint": "99"
+            }
+          },
+          "x": {
+            "#bigint": "1"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "array-state",
+    "input": [
+      {
+        "id": 3,
+        "kind": "app",
+        "opcode": "List",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      }
+    ],
+    "vars": [],
+    "mbt": false,
+    "output": {
+      "vars": [],
+      "states": [
+        {
+          "0": {
+            "#bigint": "1"
+          },
+          "1": {
+            "#bigint": "2"
+          },
+          "#meta": {
+            "index": 0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "numeric-fields",
+    "input": [
+      {
+        "id": 9,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 1,
+            "kind": "str",
+            "value": "b"
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 0
+          },
+          {
+            "id": 3,
+            "kind": "str",
+            "value": "10"
+          },
+          {
+            "id": 4,
+            "kind": "int",
+            "value": 1
+          },
+          {
+            "id": 5,
+            "kind": "str",
+            "value": "2"
+          },
+          {
+            "id": 6,
+            "kind": "int",
+            "value": 2
+          },
+          {
+            "id": 7,
+            "kind": "str",
+            "value": "a"
+          },
+          {
+            "id": 8,
+            "kind": "int",
+            "value": 3
+          }
+        ]
+      }
+    ],
+    "vars": [],
+    "mbt": false,
+    "output": {
+      "vars": [],
+      "states": [
+        {
+          "2": {
+            "#bigint": "2"
+          },
+          "10": {
+            "#bigint": "1"
+          },
+          "#meta": {
+            "index": 0
+          },
+          "b": {
+            "#bigint": "0"
+          },
+          "a": {
+            "#bigint": "3"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "symbolic",
+    "input": [
+      {
+        "id": 1,
+        "kind": "name",
+        "name": "unknown"
+      }
+    ],
+    "vars": [],
+    "mbt": false,
+    "error": "Unexpected expression kind: name"
+  },
+  {
+    "name": "operator",
+    "input": [
+      {
+        "id": 3,
+        "kind": "app",
+        "opcode": "iadd",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      }
+    ],
+    "vars": [],
+    "mbt": false,
+    "error": "Unexpected operator type: iadd"
+  },
+  {
+    "name": "primitive-state",
+    "input": [
+      {
+        "id": 1,
+        "kind": "bool",
+        "value": true
+      }
+    ],
+    "vars": [],
+    "mbt": false,
+    "error": "Expected a valid ITF state, but found true"
+  }
+]

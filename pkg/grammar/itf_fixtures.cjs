@@ -12,3 +12,27 @@ const cases=[
  ['precedence',{vars:[],states:[{x:{'#bigint':'2','#set':[1]},y:{'#tup':[1],'#set':[2]}}]}],
 ]
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/itf_decode.json'),JSONbig.stringify(cases.map(([name,input])=>({name,input,output:ofItf(input)})),null,2)+'\n')
+
+const {toItf}=require(path.join(root,'quint/src/itf'))
+const {parsePhase1fromText}=require(path.join(root,'quint/src/parsing/quintParserFrontend'))
+const {newIdGenerator}=require(path.join(root,'quint/src/idGenerator'))
+const encodingCases=[
+ ['empty','module M {}',[],false],
+ ['values','module M { val state={b:true,n:9007199254740993123456789,list:[1,2],set:Set(3,1),tuple:(1,false),map:Map(("x",1),("y",2))} }',['b','n','list','set','tuple','map'],false],
+ ['variant','module M { val state={unit:(),v:variant("Some",1)} }',['unit','v'],false],
+ ['indices','module M { val a={x:1} val b={x:2} }',['x'],false],
+ ['mbt','module M { val state={x:1} }',['x'],true],
+ ['metadata','module M { val state=Rec("#meta",Rec("index",99),"x",1) }',['x'],false],
+ ['array-state','module M { val state=[1,2] }',[],false],
+ ['numeric-fields','module M { val state=Rec("b",0,"10",1,"2",2,"a",3) }',[],false],
+ ['symbolic','module M { val state=unknown }',[],false],
+ ['operator','module M { val state=1+2 }',[],false],
+ ['primitive-state','module M { val state=true }',[],false],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/itf_encode.json'),JSONbig.stringify(encodingCases.map(([name,source,vars,mbt])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ if(parsed.errors.length)throw Error(JSONbig.stringify(parsed.errors))
+ const input=parsed.modules[0].declarations.map(d=>d.expr)
+ const result=toItf(vars,input,mbt)
+ return {name,input,vars,mbt,...(result.isRight()?{output:result.value}:{error:result.value})}
+}),null,2)+'\n')
