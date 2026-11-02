@@ -346,6 +346,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
 - [ ] P7.8 Port RNG state, seed parsing, counter arithmetic, and sampling.
   Choose and document the reference backend for seed-exact reproduction;
   compare RNG vectors and collection traversal order, not just repeatability.
+  - [x] TypeScript Squares RNG core, arbitrary-precision bounded draws, exact
+    constructor/reset semantics, state restoration, and 120 upstream vectors.
+  - [ ] CLI seed parsing/default initialization, collection sampling/traversal,
+    and comparison with the Rust runtime's seeded behavior.
 - [ ] P7.9 Complete an opcode coverage matrix for evaluation, typing, effects,
   and symbolic conversion, distinguishing supported operations and deliberate
   context restrictions.
@@ -2097,3 +2101,17 @@ word "retained" in the commit message.
   and missing-directory errors with errors.Is support. Full default tests pass
   (combined package execution 0.920s). CLI command wiring, default clock/date
   presentation, trace rendering, and individual-invariant evaluation remain open.
+
+- 2026-11-02: Added the evaluator's RNG core, using TypeScript rng.ts as the
+  seed-exact reference. Squares rounds use native uint64 modular arithmetic for
+  ordinary states and signed BigInt-compatible arithmetic for explicit negative
+  initial states. Bounded draws retain the reference's chunk construction and
+  modulo bias; counter advancement includes the extra draw at exact 32-bit
+  boundaries. Constructor seeds remain exact, while SetState takes absolute
+  value modulo 2^64. Ten generated scenarios cover 120 output/state pairs,
+  wraparound, oversized/negative seeds, reset behavior, and bounds through
+  256 bits. Tests also cover exact published upstream sequence, replay, invalid
+  bounds without state advancement, bound-one advancement, and immutable state
+  ownership. Full default tests pass (combined package execution 0.964s).
+  P7.8 remains open for seed parsing/default initialization, collection sampling,
+  traversal order, and Rust-runtime comparisons; the evaluator is not yet wired.
