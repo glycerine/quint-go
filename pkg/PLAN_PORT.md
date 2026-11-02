@@ -400,8 +400,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     tree snapshots; empty folds preserve their initial object.
   - [x] getOnlyElement with singleton deduplication, owned nested values,
     last-equal-element source retention, and exact cardinality diagnostics.
-  - [ ] setToMap parity, including its intermediate JS-array identity hashing;
-    pending oracle includes process-history-dependent duplicate-key selection.
+  - [x] Explicit-state EvalSetToMapBuiltin with intermediate JS-array identity
+    hashing, duplicate selection, nested payloads, and repeated-call UID history.
+  - [ ] Source evaluator setToMap dispatch/shared identity ownership; the older
+    process-history corpus is not yet an end-to-end passing source corpus.
   - [x] JavaScript Number coercion/error formatting for extreme sequence
     indices, including rounding, exponent cutoffs, and signed Infinity.
   - [x] Preserve nested map source order through strict sequence/record access
@@ -2872,3 +2874,12 @@ word "retained" in the commit message.
   and 139 declarations still round-trip in the optional corpus. Actual adapter,
   full default tests, and unrestricted vet pass. Latest combined execution is
   1.029s across core/backend/CLI/parser/LSP packages, near the one-second target.
+
+- 2026-11-02: Added EvalSetToMapBuiltin with explicit shared object-hash
+  state. Fresh pair-array identity sets, transient map construction, key
+  normalization, retained values, duplicate winners and UID rollover match 35
+  upstream scenarios/45 calls; nested map history and callable values are
+  covered. Validation/cancellation/ownership tests and full default tests pass
+  (89.6% helper statement coverage), as does vet. Source-language dispatch and
+  shared evaluator identity ownership remain open; the older 19-case pending
+  process-history corpus has not been relabeled as passing end-to-end coverage.

@@ -679,3 +679,12 @@ large/zero/null IDs, nil/empty arrays, escaped keys, and prior partial RowField
 behavior. The existing optional corpus additionally round-trips 9,587 upstream
 type schemes, 6,255 expression roots and 139 declarations; no valid fixture
 needed an extraneous field exception.
+
+`runtime_set_to_map.json` is regenerated with
+`node pkg/grammar/runtime_set_to_map_fixtures.cjs`. Thirty-five explicit-counter
+scenarios (45 calls) compare duplicate winners at constructor thresholds,
+repeated calls, UID offsets/rollover, tuple/list pairs, composite keys, nested
+payload history, and malformed-pair errors/counters. Tests check copied results,
+callable value identity, cancellation, and invalid inputs. This covers the
+explicit-state library helper; source evaluator dispatch/shared state is still
+pending, and the historical `runtime_set_to_map_pending.json` stays pending.
