@@ -1549,3 +1549,12 @@ word "retained" in the commit message.
   and empty constructors. Full default tests pass (combined execution 0.692s).
   This is the application-exit operation; recursive expression traversal,
   lambda free-name updates, and declaration lifecycle remain pending under P5.2.
+
+- 2026-11-02: Added lambda effect entry/exit operations and nested free-name
+  frames. Parameters receive stable named effects or fresh underscore effects;
+  exit applies bindings to parameters/body and rejects operator-valued results
+  at the body ID. Tests cover parameter propagation, inherited free names,
+  underscore freshening, frame cleanup, retained successful lambda results after
+  body diagnostics, and upstream frame retention after prior errors. Default
+  tests pass under one second. Recursive traversal, declaration lifecycle, and
+  exact upstream inference-table differential tests remain open under P5.2.
