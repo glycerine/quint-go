@@ -24,7 +24,7 @@ func sumDeclarations(ctx *p.TypeSumDefContext, ids parserIDAllocator) ([]Declara
 	d.Type = &Type{ID: &d.ID, Kind: "sum", Fields: &Row{Kind: "row", Fields: fields, Other: &Row{Kind: "empty"}}}
 	// Upstream checks sum parameters, but applies its uppercase-name check only
 	// to abstract and alias declarations.
-	if err := checkTypeDeclaration(d, false); err != nil {
+	if err := checkParsedTypeDeclaration(d, false, ids); err != nil {
 		return nil, err
 	}
 	if len(fields) == 1 && isUnitType(fields[0].Type) && sum.GetSeparator() == nil {

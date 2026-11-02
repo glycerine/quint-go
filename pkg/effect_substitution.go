@@ -73,6 +73,15 @@ func ApplyEffectSubstitution(subs []EffectSubstitution, input Effect) (Effect, e
 			for _, s := range subs {
 				if s.Name == e.Name {
 					if s.Kind == "entity" && !reflect.DeepEqual(s.Entity, e) {
+						// Singleton unions (including nested empty members) can
+						// flatten back to their own variable. Upstream substitution
+						// reaches a fixed point here even for update components.
+						if s.Entity.Kind == "union" {
+							flat := FlattenEntityUnions(s.Entity)
+							if flat.Kind == "variable" && flat.Name == e.Name {
+								return flat, nil
+							}
+						}
 						key := "entity:" + e.Name
 						if active[key] {
 							if selfUnion[key] && allowSelfUnion {

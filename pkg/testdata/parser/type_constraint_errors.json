@@ -1,0 +1,1394 @@
+[
+  {
+    "name": "multiple-match-labels",
+    "source": "module M { val result=matchVariant(0, true, 1, false, 2) }",
+    "input": [
+      {
+        "id": 8,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "matchVariant",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 0
+                },
+                {
+                  "id": 2,
+                  "kind": "bool",
+                  "value": true
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "bool",
+                  "value": false
+                },
+                {
+                  "id": 5,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "errors": [
+      {
+        "id": "6",
+        "error": {
+          "location": "Generating constraints for 2",
+          "children": [
+            {
+              "location": "Generating match constraints for true,1,false,2",
+              "message": "Match variant name must be a string literal but it is a bool: true",
+              "children": []
+            },
+            {
+              "location": "Generating match constraints for true,1,false,2",
+              "message": "Match variant name must be a string literal but it is a bool: false",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "multiple-match-eliminators",
+    "source": "module M { val result=matchVariant(0, \"A\", 1, \"B\", false) }",
+    "input": [
+      {
+        "id": 8,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "matchVariant",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 0
+                },
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "A"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "B"
+                },
+                {
+                  "id": 5,
+                  "kind": "bool",
+                  "value": false
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "errors": [
+      {
+        "id": "6",
+        "error": {
+          "location": "Generating constraints for false",
+          "children": [
+            {
+              "location": "Generating match constraints for \"A\",1,\"B\",false",
+              "message": "Match case eliminator must be an operator expression but it is a int: 1",
+              "children": []
+            },
+            {
+              "location": "Generating match constraints for \"A\",1,\"B\",false",
+              "message": "Match case eliminator must be an operator expression but it is a bool: false",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "mixed-match-errors",
+    "source": "module M { val result=matchVariant(0, 1, (x)=>x, \"A\", 4, \"B\", (x,y)=>x) }",
+    "input": [
+      {
+        "id": 15,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 14,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 13,
+              "kind": "app",
+              "opcode": "matchVariant",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 0
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 5,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 3,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                },
+                {
+                  "id": 6,
+                  "kind": "str",
+                  "value": "A"
+                },
+                {
+                  "id": 7,
+                  "kind": "int",
+                  "value": 4
+                },
+                {
+                  "id": 8,
+                  "kind": "str",
+                  "value": "B"
+                },
+                {
+                  "id": 12,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 9,
+                      "name": "x"
+                    },
+                    {
+                      "id": 10,
+                      "name": "y"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 11,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12"
+    ],
+    "errors": [
+      {
+        "id": "13",
+        "error": {
+          "location": "Generating constraints for x",
+          "children": [
+            {
+              "location": "Generating match constraints for 1,((x) => x),\"A\",4,\"B\",((x, y) => x)",
+              "message": "Match variant name must be a string literal but it is a int: 1",
+              "children": []
+            },
+            {
+              "location": "Generating match constraints for 1,((x) => x),\"A\",4,\"B\",((x, y) => x)",
+              "message": "Match case eliminator must be an operator expression but it is a int: 4",
+              "children": []
+            },
+            {
+              "location": "Generating match constraints for 1,((x) => x),\"A\",4,\"B\",((x, y) => x)",
+              "message": "Match case eliminator must be a unary operator but it is an operator of 2 arguments: ((x, y) => x)",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "cases-after-wildcard",
+    "source": "module M { val result=matchVariant(0, \"_\", (x)=>x, \"A\", (x)=>x, \"B\", (x)=>x) }",
+    "input": [
+      {
+        "id": 16,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 15,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 14,
+              "kind": "app",
+              "opcode": "matchVariant",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 0
+                },
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "_"
+                },
+                {
+                  "id": 5,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 3,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                },
+                {
+                  "id": 6,
+                  "kind": "str",
+                  "value": "A"
+                },
+                {
+                  "id": 9,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 7,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 8,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                },
+                {
+                  "id": 10,
+                  "kind": "str",
+                  "value": "B"
+                },
+                {
+                  "id": 13,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 11,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 12,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "errors": [
+      {
+        "id": "14",
+        "error": {
+          "location": "Generating constraints for x",
+          "children": [
+            {
+              "location": "Generating match constraints for \"_\",((x) => x),\"A\",((x) => x),\"B\",((x) => x)",
+              "message": "Invalid wildcard match ('_') in match expression: ((x) => x). Only one wildcard can appear and it must be the final case of a match.",
+              "children": []
+            },
+            {
+              "location": "Generating match constraints for \"_\",((x) => x),\"A\",((x) => x),\"B\",((x) => x)",
+              "message": "Invalid wildcard match ('_') in match expression: ((x) => x). Only one wildcard can appear and it must be the final case of a match.",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "repeated-wildcard-cases",
+    "source": "module M { val result=matchVariant(0, \"_\", (x)=>x, \"_\", (x)=>x, \"_\", (x)=>x) }",
+    "input": [
+      {
+        "id": 16,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 15,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 14,
+              "kind": "app",
+              "opcode": "matchVariant",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 0
+                },
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "_"
+                },
+                {
+                  "id": 5,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 3,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                },
+                {
+                  "id": 6,
+                  "kind": "str",
+                  "value": "_"
+                },
+                {
+                  "id": 9,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 7,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 8,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                },
+                {
+                  "id": 10,
+                  "kind": "str",
+                  "value": "_"
+                },
+                {
+                  "id": 13,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 11,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 12,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "errors": [
+      {
+        "id": "14",
+        "error": {
+          "location": "Generating constraints for x",
+          "children": [
+            {
+              "location": "Generating match constraints for \"_\",((x) => x),\"_\",((x) => x),\"_\",((x) => x)",
+              "message": "Invalid wildcard match ('_') in match expression: ((x) => x). Only one wildcard can appear and it must be the final case of a match.",
+              "children": []
+            },
+            {
+              "location": "Generating match constraints for \"_\",((x) => x),\"_\",((x) => x),\"_\",((x) => x)",
+              "message": "Invalid wildcard match ('_') in match expression: ((x) => x). Only one wildcard can appear and it must be the final case of a match.",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "label-before-wildcard-precedence",
+    "source": "module M { val result=matchVariant(0, \"_\", (x)=>x, true, 4, \"B\", (x)=>x) }",
+    "input": [
+      {
+        "id": 14,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "matchVariant",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 0
+                },
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "_"
+                },
+                {
+                  "id": 5,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 3,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                },
+                {
+                  "id": 6,
+                  "kind": "bool",
+                  "value": true
+                },
+                {
+                  "id": 7,
+                  "kind": "int",
+                  "value": 4
+                },
+                {
+                  "id": 8,
+                  "kind": "str",
+                  "value": "B"
+                },
+                {
+                  "id": 11,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 9,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 10,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11"
+    ],
+    "errors": [
+      {
+        "id": "12",
+        "error": {
+          "location": "Generating constraints for x",
+          "children": [
+            {
+              "location": "Generating match constraints for \"_\",((x) => x),true,4,\"B\",((x) => x)",
+              "message": "Match variant name must be a string literal but it is a bool: true",
+              "children": []
+            },
+            {
+              "location": "Generating match constraints for \"_\",((x) => x),true,4,\"B\",((x) => x)",
+              "message": "Invalid wildcard match ('_') in match expression: ((x) => x). Only one wildcard can appear and it must be the final case of a match.",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "invalid-wildcard-does-not-match",
+    "source": "module M { val result=matchVariant(0, \"_\", 1, \"A\", (x)=>x, \"B\", 2) }",
+    "input": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "matchVariant",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 0
+                },
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "_"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "A"
+                },
+                {
+                  "id": 7,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 5,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 6,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                },
+                {
+                  "id": 8,
+                  "kind": "str",
+                  "value": "B"
+                },
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    "errors": [
+      {
+        "id": "10",
+        "error": {
+          "location": "Generating constraints for 2",
+          "children": [
+            {
+              "location": "Generating match constraints for \"_\",1,\"A\",((x) => x),\"B\",2",
+              "message": "Match case eliminator must be an operator expression but it is a int: 1",
+              "children": []
+            },
+            {
+              "location": "Generating match constraints for \"_\",1,\"A\",((x) => x),\"B\",2",
+              "message": "Match case eliminator must be an operator expression but it is a int: 2",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "match-arity-precedence",
+    "source": "module M { val result=matchVariant(0, 1, 2, 3) }",
+    "input": [
+      {
+        "id": 7,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "matchVariant",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 0
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "errors": [
+      {
+        "id": "5",
+        "error": {
+          "location": "Generating constraints for 3",
+          "children": [
+            {
+              "location": "Checking arity for application of matchVariant",
+              "message": "Operator expects odd number of arguments but was given 4",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "all-record-fields-invalid",
+    "source": "module M { val result=Rec(1, 2, true, 3) }",
+    "input": [
+      {
+        "id": 7,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 3,
+                  "kind": "bool",
+                  "value": true
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "errors": [
+      {
+        "id": "5",
+        "error": {
+          "location": "Generating constraints for 3",
+          "children": [
+            {
+              "location": "Generating record constraints for 1,2,true,3",
+              "message": "Record field name must be a name expression but is int: 1",
+              "children": []
+            },
+            {
+              "location": "Generating record constraints for 1,2,true,3",
+              "message": "Record field name must be a name expression but is bool: true",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "mixed-record-fields",
+    "source": "module M { val result=Rec(\"ok\", 1, false, 2, 7, 3) }",
+    "input": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "str",
+                  "value": "ok"
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 3,
+                  "kind": "bool",
+                  "value": false
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 5,
+                  "kind": "int",
+                  "value": 7
+                },
+                {
+                  "id": 6,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "errors": [
+      {
+        "id": "7",
+        "error": {
+          "location": "Generating constraints for 3",
+          "children": [
+            {
+              "location": "Generating record constraints for \"ok\",1,false,2,7,3",
+              "message": "Record field name must be a name expression but is bool: false",
+              "children": []
+            },
+            {
+              "location": "Generating record constraints for \"ok\",1,false,2,7,3",
+              "message": "Record field name must be a name expression but is int: 7",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "repeated-record-errors",
+    "source": "module M { val result=Rec(1, true, 1, false) }",
+    "input": [
+      {
+        "id": 7,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 2,
+                  "kind": "bool",
+                  "value": true
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "bool",
+                  "value": false
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "errors": [
+      {
+        "id": "5",
+        "error": {
+          "location": "Generating constraints for false",
+          "children": [
+            {
+              "location": "Generating record constraints for 1,true,1,false",
+              "message": "Record field name must be a name expression but is int: 1",
+              "children": []
+            },
+            {
+              "location": "Generating record constraints for 1,true,1,false",
+              "message": "Record field name must be a name expression but is int: 1",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "record-arity-precedence",
+    "source": "module M { val result=Rec(1, 2, true) }",
+    "input": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 3,
+                  "kind": "bool",
+                  "value": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3"
+    ],
+    "errors": [
+      {
+        "id": "4",
+        "error": {
+          "location": "Generating constraints for true",
+          "children": [
+            {
+              "location": "Checking arity for application of Rec",
+              "message": "Operator expects even number of arguments but was given 3",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "single-record-error",
+    "source": "module M { val result=Rec(1, 2) }",
+    "input": [
+      {
+        "id": 5,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2"
+    ],
+    "errors": [
+      {
+        "id": "3",
+        "error": {
+          "location": "Generating constraints for 2",
+          "children": [
+            {
+              "location": "Generating record constraints for 1,2",
+              "message": "Record field name must be a name expression but is int: 1",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "record-expression-fields",
+    "source": "module M { val result=Rec(1+2, 3, not(false), 4) }",
+    "input": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 3
+                },
+                {
+                  "id": 6,
+                  "kind": "app",
+                  "opcode": "not",
+                  "args": [
+                    {
+                      "id": 5,
+                      "kind": "bool",
+                      "value": false
+                    }
+                  ]
+                },
+                {
+                  "id": 7,
+                  "kind": "int",
+                  "value": 4
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "errors": [
+      {
+        "id": "8",
+        "error": {
+          "location": "Generating constraints for 4",
+          "children": [
+            {
+              "location": "Generating record constraints for iadd(1, 2),3,not(false),4",
+              "message": "Record field name must be a name expression but is app: iadd(1, 2)",
+              "children": []
+            },
+            {
+              "location": "Generating record constraints for iadd(1, 2),3,not(false),4",
+              "message": "Record field name must be a name expression but is app: not(false)",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "record-name-fields",
+    "source": "module M { def result(a,b)=Rec(a, 1, b, 2) }",
+    "input": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "def",
+            "expr": {
+              "id": 8,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "a"
+                },
+                {
+                  "id": 2,
+                  "name": "b"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 7,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "name",
+                    "name": "a"
+                  },
+                  {
+                    "id": 4,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 5,
+                    "kind": "name",
+                    "name": "b"
+                  },
+                  {
+                    "id": 6,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "errors": [
+      {
+        "id": "7",
+        "error": {
+          "location": "Generating constraints for 2",
+          "children": [
+            {
+              "location": "Generating record constraints for a,1,b,2",
+              "message": "Record field name must be a name expression but is name: a",
+              "children": []
+            },
+            {
+              "location": "Generating record constraints for a,1,b,2",
+              "message": "Record field name must be a name expression but is name: b",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "valid-record-control",
+    "source": "module M { val result=Rec(\"a\", 1, \"b\", true) }",
+    "input": [
+      {
+        "id": 7,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "result",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 3,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 4,
+                  "kind": "bool",
+                  "value": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "typeIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "errors": []
+  }
+]

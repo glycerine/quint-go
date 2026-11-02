@@ -100,8 +100,11 @@ func (g *TypeConstraintGenerator) Generate(e *Expr) error {
 			return nil
 		}
 		cs, errors := ApplicationConstraints(e.Opcode, e.ID, args, result, signature)
-		for _, err := range errors {
-			g.record(e.ID, &err)
+		if len(errors) > 0 {
+			// Special constraints can reject several independent fields/cases.
+			// Preserve all leaves under the application instead of replacing an
+			// earlier failure at the same expression ID with a later one.
+			g.Context.Errors.Set(e.ID.String(), ErrorTree{Location: g.Context.Location, Children: errors})
 		}
 		if len(errors) == 0 {
 			g.Constraints = append(g.Constraints, cs...)
@@ -158,21 +161,25 @@ func (g *TypeConstraintGenerator) Generate(e *Expr) error {
 			if err != nil {
 				return err
 			}
-			if g.failed() {
+			if !g.failed() {
+				before, err = ExpandFreeVariables(before, subs)
+				if err != nil {
+					return err
+				}
+				if d.TypeAnnotation != nil {
+					reference := d.ID
+					if d.TypeAnnotation.ID != nil {
+						reference = *d.TypeAnnotation.ID
+					}
+					if failure := CheckAnnotationGenerality(subs, *d.TypeAnnotation); failure != nil {
+						g.Context.Errors.Set(reference.String(), *failure)
+					}
+				}
+			}
+			// Keep an available outer scheme after a descendant constraint fails,
+			// matching the partial table exposed by upstream local definitions.
+			if _, failed := g.Context.Errors.Get2(d.Expr.ID.String()); failed {
 				goto localBody
-			}
-			before, err = ExpandFreeVariables(before, subs)
-			if err != nil {
-				return err
-			}
-			if d.TypeAnnotation != nil {
-				reference := d.ID
-				if d.TypeAnnotation.ID != nil {
-					reference = *d.TypeAnnotation.ID
-				}
-				if failure := CheckAnnotationGenerality(subs, *d.TypeAnnotation); failure != nil {
-					g.Context.Errors.Set(reference.String(), *failure)
-				}
 			}
 			schemes = nil
 			for _, s := range g.Scope.All() {

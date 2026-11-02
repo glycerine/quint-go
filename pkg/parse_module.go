@@ -175,7 +175,7 @@ func declarationFromContext(ctx p.IDeclarationContext, ids parserIDAllocator) (D
 	}
 	d.ID = ids.Next()
 	if d.Kind == "typedef" {
-		if err := checkTypeDeclaration(d, true); err != nil {
+		if err := checkParsedTypeDeclaration(d, true, ids); err != nil {
 			return Declaration{}, err
 		}
 	}

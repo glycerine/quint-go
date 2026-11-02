@@ -1,0 +1,1160 @@
+[
+  {
+    "name": "valid",
+    "source": "module M { val x=1 type T[a] = List[a] }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          },
+          {
+            "id": 5,
+            "kind": "typedef",
+            "name": "T",
+            "type": {
+              "id": 4,
+              "kind": "list",
+              "elem": {
+                "id": 3,
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            "params": [
+              "a"
+            ]
+          }
+        ]
+      }
+    ],
+    "diagnostics": []
+  },
+  {
+    "name": "independent-declarations",
+    "source": "module M { type lower = int val a = 1 type Upper = List[a] val b = 2 }",
+    "modules": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "typedef",
+            "name": "lower",
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "int",
+              "value": 1
+            }
+          },
+          {
+            "id": 7,
+            "kind": "typedef",
+            "name": "Upper",
+            "type": {
+              "id": 6,
+              "kind": "list",
+              "elem": {
+                "id": 5,
+                "kind": "var",
+                "name": "a"
+              }
+            }
+          },
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT007",
+        "message": "type names must start with an uppercase letter",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "type lower",
+            "replacement": "type Lower"
+          }
+        },
+        "span": {
+          "start": 11,
+          "end": 27
+        }
+      },
+      {
+        "code": "QNT014",
+        "message": "the type variables a are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+        "data": {},
+        "span": {
+          "start": 38,
+          "end": 58
+        }
+      }
+    ]
+  },
+  {
+    "name": "lowercase-and-unbound",
+    "source": "module M { type lower = {x:a | r} val next = true }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "typedef",
+            "name": "lower",
+            "type": {
+              "id": 2,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "x",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "r"
+                }
+              }
+            }
+          },
+          {
+            "id": 5,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT007",
+        "message": "type names must start with an uppercase letter",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "type lower",
+            "replacement": "type Lower"
+          }
+        },
+        "span": {
+          "start": 11,
+          "end": 33
+        }
+      },
+      {
+        "code": "QNT014",
+        "message": "the type variables a, r are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+        "data": {},
+        "span": {
+          "start": 11,
+          "end": 33
+        }
+      }
+    ]
+  },
+  {
+    "name": "nested-map-types",
+    "source": "module M { var x: Map[Map[int,str], Map[bool,int]] val next = true }",
+    "modules": [
+      {
+        "id": 14,
+        "name": "M",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 9,
+              "kind": "fun",
+              "arg": {
+                "id": 3,
+                "kind": "fun",
+                "arg": {
+                  "id": 1,
+                  "kind": "int"
+                },
+                "res": {
+                  "id": 2,
+                  "kind": "str"
+                }
+              },
+              "res": {
+                "id": 7,
+                "kind": "fun",
+                "arg": {
+                  "id": 5,
+                  "kind": "bool"
+                },
+                "res": {
+                  "id": 6,
+                  "kind": "int"
+                }
+              }
+            },
+            "id": 11
+          },
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 12,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT015",
+        "message": "Use 'int -> str' instead of 'Map[int, str]' for map types",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[int, str]",
+            "replacement": "int -> str"
+          }
+        },
+        "span": {
+          "start": 22,
+          "end": 34
+        }
+      },
+      {
+        "code": "QNT015",
+        "message": "Use 'bool -> int' instead of 'Map[bool, int]' for map types",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[bool, int]",
+            "replacement": "bool -> int"
+          }
+        },
+        "span": {
+          "start": 36,
+          "end": 49
+        }
+      },
+      {
+        "code": "QNT015",
+        "message": "Use '(int -> str) -> (bool -> int)' instead of 'Map[(int -> str), (bool -> int)]' for map types",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[(int -> str), (bool -> int)]",
+            "replacement": "(int -> str) -> (bool -> int)"
+          }
+        },
+        "span": {
+          "start": 18,
+          "end": 50
+        }
+      }
+    ]
+  },
+  {
+    "name": "map-alias-name-and-free",
+    "source": "module M { type lower = Map[a, List[b]] val next = true }",
+    "modules": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "typedef",
+            "name": "lower",
+            "type": {
+              "id": 4,
+              "kind": "fun",
+              "arg": {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              },
+              "res": {
+                "id": 3,
+                "kind": "list",
+                "elem": {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              }
+            }
+          },
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT015",
+        "message": "Use 'a -> List[b]' instead of 'Map[a, List[b]]' for map types",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[a, List[b]]",
+            "replacement": "a -> List[b]"
+          }
+        },
+        "span": {
+          "start": 24,
+          "end": 39
+        }
+      },
+      {
+        "code": "QNT007",
+        "message": "type names must start with an uppercase letter",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "type lower",
+            "replacement": "type Lower"
+          }
+        },
+        "span": {
+          "start": 11,
+          "end": 39
+        }
+      },
+      {
+        "code": "QNT014",
+        "message": "the type variables a, b are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+        "data": {},
+        "span": {
+          "start": 11,
+          "end": 39
+        }
+      }
+    ]
+  },
+  {
+    "name": "duplicate-fields",
+    "source": "module M { val r = {a:1,b:2,b:3,a:4,b:5} val next = true }",
+    "modules": [
+      {
+        "id": 16,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 6,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 5,
+                  "kind": "int",
+                  "value": 3
+                },
+                {
+                  "id": 8,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 7,
+                  "kind": "int",
+                  "value": 4
+                },
+                {
+                  "id": 10,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 9,
+                  "kind": "int",
+                  "value": 5
+                }
+              ]
+            }
+          },
+          {
+            "id": 15,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 14,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT016",
+        "message": "Fields b, a cannot be defined more than once",
+        "data": {},
+        "span": {
+          "start": 19,
+          "end": 40
+        }
+      }
+    ]
+  },
+  {
+    "name": "nested-duplicates",
+    "source": "module M { val r = {a:{b:1,b:2},a:3} val next = true }",
+    "modules": [
+      {
+        "id": 15,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 6,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": [
+                    {
+                      "id": 2,
+                      "kind": "str",
+                      "value": "b"
+                    },
+                    {
+                      "id": 1,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 4,
+                      "kind": "str",
+                      "value": "b"
+                    },
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 9,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 8,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            }
+          },
+          {
+            "id": 14,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 13,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT016",
+        "message": "Field b cannot be defined more than once",
+        "data": {},
+        "span": {
+          "start": 22,
+          "end": 31
+        }
+      },
+      {
+        "code": "QNT016",
+        "message": "Field a cannot be defined more than once",
+        "data": {},
+        "span": {
+          "start": 19,
+          "end": 36
+        }
+      }
+    ]
+  },
+  {
+    "name": "multiple-spreads",
+    "source": "module M { val r = {...a,...b} val next = true }",
+    "modules": [
+      {
+        "id": 11,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 4,
+              "kind": "let",
+              "opdef": {
+                "id": 5,
+                "kind": "def",
+                "qualifier": "val",
+                "name": "__undefinedExprGenerated",
+                "expr": {
+                  "id": 6,
+                  "kind": "bool",
+                  "value": true
+                }
+              },
+              "expr": {
+                "id": 7,
+                "kind": "name",
+                "name": "__undefinedExprGenerated"
+              }
+            }
+          },
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT012",
+        "message": "... may be used once in { ...record, <fields> }",
+        "data": {},
+        "span": {
+          "start": 19,
+          "end": 30
+        }
+      }
+    ]
+  },
+  {
+    "name": "duplicate-and-spreads",
+    "source": "module M { val r = {...a,x:1,x:2,...b} val next = true }",
+    "modules": [
+      {
+        "id": 16,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "let",
+              "opdef": {
+                "id": 10,
+                "kind": "def",
+                "qualifier": "val",
+                "name": "__undefinedExprGenerated",
+                "expr": {
+                  "id": 11,
+                  "kind": "bool",
+                  "value": true
+                }
+              },
+              "expr": {
+                "id": 12,
+                "kind": "name",
+                "name": "__undefinedExprGenerated"
+              }
+            }
+          },
+          {
+            "id": 15,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 14,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT016",
+        "message": "Field x cannot be defined more than once",
+        "data": {},
+        "span": {
+          "start": 19,
+          "end": 38
+        }
+      },
+      {
+        "code": "QNT012",
+        "message": "... may be used once in { ...record, <fields> }",
+        "data": {},
+        "span": {
+          "start": 19,
+          "end": 38
+        }
+      }
+    ]
+  },
+  {
+    "name": "sum-unbound",
+    "source": "module M { type T[a] = A(a) | B(b) | C val next = true }",
+    "modules": [
+      {
+        "id": 25,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "typedef",
+            "name": "T",
+            "type": {
+              "id": 4,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "A",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  },
+                  {
+                    "fieldName": "B",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "var",
+                      "name": "b"
+                    }
+                  },
+                  {
+                    "fieldName": "C",
+                    "fieldType": {
+                      "id": 3,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            },
+            "params": [
+              "a"
+            ]
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "A",
+            "qualifier": "def",
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              ],
+              "res": {
+                "id": 4,
+                "kind": "app",
+                "ctor": {
+                  "id": 5,
+                  "kind": "const",
+                  "name": "T"
+                },
+                "args": [
+                  {
+                    "id": 6,
+                    "kind": "var",
+                    "name": "a"
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 11,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 8,
+                  "name": "__AParam"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 10,
+                "kind": "app",
+                "opcode": "variant",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "str",
+                    "value": "A"
+                  },
+                  {
+                    "kind": "name",
+                    "name": "__AParam",
+                    "id": 9
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": 18,
+            "kind": "def",
+            "name": "B",
+            "qualifier": "def",
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "b"
+                }
+              ],
+              "res": {
+                "id": 4,
+                "kind": "app",
+                "ctor": {
+                  "id": 5,
+                  "kind": "const",
+                  "name": "T"
+                },
+                "args": [
+                  {
+                    "id": 6,
+                    "kind": "var",
+                    "name": "a"
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 17,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 14,
+                  "name": "__BParam"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 16,
+                "kind": "app",
+                "opcode": "variant",
+                "args": [
+                  {
+                    "id": 13,
+                    "kind": "str",
+                    "value": "B"
+                  },
+                  {
+                    "kind": "name",
+                    "name": "__BParam",
+                    "id": 15
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": 22,
+            "kind": "def",
+            "name": "C",
+            "qualifier": "val",
+            "typeAnnotation": {
+              "id": 4,
+              "kind": "app",
+              "ctor": {
+                "id": 5,
+                "kind": "const",
+                "name": "T"
+              },
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "var",
+                  "name": "a"
+                }
+              ]
+            },
+            "expr": {
+              "id": 21,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 19,
+                  "kind": "str",
+                  "value": "C"
+                },
+                {
+                  "id": 20,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": []
+                }
+              ]
+            }
+          },
+          {
+            "id": 24,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 23,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT014",
+        "message": "the type variables b are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+        "data": {},
+        "span": {
+          "start": 11,
+          "end": 38
+        }
+      }
+    ]
+  },
+  {
+    "name": "multiple-modules",
+    "source": "module M { type lower type T = a } module N { var x: Map[int,str] val r={a:1,a:2} }",
+    "modules": [
+      {
+        "id": 6,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 1,
+            "kind": "typedef",
+            "name": "lower"
+          },
+          {
+            "id": 3,
+            "kind": "typedef",
+            "name": "T",
+            "type": {
+              "id": 5,
+              "kind": "const",
+              "name": "a"
+            }
+          }
+        ]
+      },
+      {
+        "id": 19,
+        "name": "N",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "x",
+            "typeAnnotation": {
+              "id": 9,
+              "kind": "fun",
+              "arg": {
+                "id": 7,
+                "kind": "int"
+              },
+              "res": {
+                "id": 8,
+                "kind": "str"
+              }
+            },
+            "id": 11
+          },
+          {
+            "id": 18,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 17,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 12,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 15,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT007",
+        "message": "type names must start with an uppercase letter",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "type lower",
+            "replacement": "type Lower"
+          }
+        },
+        "span": {
+          "start": 11,
+          "end": 21
+        }
+      },
+      {
+        "code": "QNT015",
+        "message": "Use 'int -> str' instead of 'Map[int, str]' for map types",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[int, str]",
+            "replacement": "int -> str"
+          }
+        },
+        "span": {
+          "start": 53,
+          "end": 65
+        }
+      },
+      {
+        "code": "QNT016",
+        "message": "Field a cannot be defined more than once",
+        "data": {},
+        "span": {
+          "start": 72,
+          "end": 81
+        }
+      }
+    ]
+  },
+  {
+    "name": "unicode-and-docs",
+    "source": "/// Module\nmodule M { val emoji=\"😀\"\n /// Broken\n type lower = List[a]\n /// Next\n val next = true }",
+    "modules": [
+      {
+        "id": 8,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "str",
+              "value": "😀"
+            }
+          },
+          {
+            "doc": "Broken",
+            "id": 5,
+            "kind": "typedef",
+            "name": "lower",
+            "type": {
+              "id": 4,
+              "kind": "list",
+              "elem": {
+                "id": 3,
+                "kind": "var",
+                "name": "a"
+              }
+            }
+          },
+          {
+            "doc": "Next",
+            "id": 7,
+            "kind": "def",
+            "name": "next",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ],
+        "doc": "Module"
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT007",
+        "message": "type names must start with an uppercase letter",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "type lower",
+            "replacement": "type Lower"
+          }
+        },
+        "span": {
+          "start": 50,
+          "end": 70
+        }
+      },
+      {
+        "code": "QNT014",
+        "message": "the type variables a are unbound.\nE.g., in\n\n   type T = List[a]\n\ntype variable 'a' is unbound. To fix it, write\n\n   type T[a] = List[a]",
+        "data": {},
+        "span": {
+          "start": 50,
+          "end": 70
+        }
+      }
+    ]
+  }
+]

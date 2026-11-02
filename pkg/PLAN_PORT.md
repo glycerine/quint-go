@@ -130,9 +130,9 @@ boundary, with concrete gaps listed before frontend implementation starts.
 
 ## P1 — IR, identity, serialization, and diagnostics
 
-- [ ] P1.1 Define all expression, declaration, module, qualifier, type, and row
+- [x] P1.1 Define all expression, declaration, module, qualifier, type, and row
   variants, preserving optional annotations and documentation.
-- [ ] P1.2 Implement IDs, fresh names, source maps, spans, and source-file
+- [x] P1.2 Implement IDs, fresh names, source maps, spans, and source-file
   identity. Specify byte/rune/UTF-16 conversions for parser and editor clients.
 - [x] P1.3 Preserve arbitrary-precision language integers with `math/big.Int`;
   prevent mutable-value aliasing. Choose a lossless ID representation and
@@ -142,7 +142,7 @@ boundary, with concrete gaps listed before frontend implementation starts.
   empty, and null fields where the upstream contract does.
 - [ ] P1.5 Port visitors, transformers, finders, IR printers, ID refreshing,
   namespacing, and source-reference preservation.
-- [ ] P1.6 Port structured errors, error trees, codes, source excerpts, and
+- [x] P1.6 Port structured errors, error trees, codes, source excerpts, and
   related locations; keep diagnostics independent of terminal formatting.
 - [ ] P1.7 Validate tagged-union round trips, large integers/IDs, malformed
   JSON, transformation identity, and source mapping against upstream fixtures.
@@ -156,11 +156,11 @@ without losing semantic information, and diagnostic locations remain stable.
   Prefer generating Go from the grammar if practical; `Quint.g4` contains
   TypeScript-specific actions, imports, and rule parameters that require
   adaptation. Pin generation tools and make regeneration reproducible.
-- [ ] P2.2 Implement tokens, comments/doc comments, strings/escapes, integers,
+- [x] P2.2 Implement tokens, comments/doc comments, strings/escapes, integers,
   qualified names, reserved words, and hashbang handling.
-- [ ] P2.3 Port all module/declaration forms, imports/exports/instances,
+- [x] P2.3 Port all module/declaration forms, imports/exports/instances,
   operator signatures, type syntax, row types, and sum types.
-- [ ] P2.4 Port expression precedence/associativity, applications, lambdas,
+- [x] P2.4 Port expression precedence/associativity, applications, lambdas,
   local definitions, records/tuples, destructuring, matches, action syntax,
   temporal syntax, and parser desugaring into IR.
 - [ ] P2.5 Port the IR listener behavior, IDs, declaration documentation, and
@@ -170,11 +170,15 @@ without losing semantic information, and diagnostic locations remain stable.
   - [x] Syntax-only expression, expanding declaration, type, and effect entry points.
   - [x] Combined declaration-or-expression selection, empty/comment input, and
     shared REPL-session ID allocation.
-  - [ ] Source-map/diagnostic integration and differential entry-point fixtures.
-- [ ] P2.7 Port source resolution, relative imports, file caching, duplicate
+  - [x] Source-map and diagnostic integration for expression/declaration/REPL input.
+  - [ ] Dedicated upstream differential entry-point fixtures.
+- [x] P2.7 Port source resolution, relative imports, file caching, duplicate
   loading behavior, import-cycle errors, and missing-file diagnostics.
 - [ ] P2.8 Match syntax-error recovery and useful partial results; test Unicode,
   malformed declarations, incomplete editor input, and diagnostic positions.
+  - [x] ParseModulesRecovering accumulates semantic conversion diagnostics and
+    preserves corrected partial IR, declaration order, docs, and UTF-16 spans.
+  - [ ] Lexical/syntax AST recovery and project-loader diagnostic accumulation.
 - [ ] P2.9 Differential-test parsed IR and error codes across parser fixtures
   and the repository's `.qnt` corpus; normalize only documented ID differences.
 
@@ -183,17 +187,17 @@ errors without panics or losing subsequent declarations after recoverable errors
 
 ## P3 — Name resolution and module dependencies
 
-- [ ] P3.1 Port declaration collection, lexical scopes, lookup tables, builtin
+- [x] P3.1 Port declaration collection, lexical scopes, lookup tables, builtin
   lookup, duplicate/undefined-name checks, and shadowing rules.
-- [ ] P3.2 Resolve selective/wildcard imports, aliases, qualified references,
+- [x] P3.2 Resolve selective/wildcard imports, aliases, qualified references,
   exports/re-exports, and parameterized module instances with overrides.
   - [x] Link ordered module imports, aliases, exports, and instance overrides.
   - [x] Compare instance reference targets and diagnostics with TypeScript fixtures.
   - [x] Validate nested instance provenance, collisions, and broader linking fixtures.
-- [ ] P3.3 Port unshadowing and fresh-name handling without capturing variables.
+- [x] P3.3 Port unshadowing and fresh-name handling without capturing variables.
   - [x] Port ID-based lambda/let unshadowing and reference-table updates.
   - [x] Compare transformed modules against upstream unshadowing fixtures.
-  - [ ] Integrate unshadowing into the complete analysis/compilation pipeline.
+  - [x] Integrate unshadowing into the complete analysis/compilation pipeline.
 - [ ] P3.4 Port call graphs, stable topological sorting, module ordering, and
   recursion/dependency-cycle diagnostics.
   - [x] Build declaration dependency graphs including types, local bindings,
@@ -210,7 +214,7 @@ errors without panics or losing subsequent declarations after recoverable errors
   - [x] Compare unused definitions against upstream module-resolution fixtures.
   - [x] Support module switching and shared-table incremental expression analysis.
   - [ ] Integrate declaration reanalysis and expression sessions with the REPL.
-- [ ] P3.6 Run name/static fixtures, including nested instances, collisions,
+- [x] P3.6 Run name/static fixtures, including nested instances, collisions,
   export visibility, import cycles, and deterministic ordering.
 
 Exit gate: every supported reference resolves to the correct declaration before
@@ -252,6 +256,8 @@ analysis, with reproducible errors for invalid module structures.
   - [ ] Resolve tuple-prefix resource-limit parity and validate full generator parity.
 - [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
   and incremental inference used by the REPL and editor.
+  - [x] Preserve available provisional schemes after descendant constraint
+    failures; aggregate every invalid match case and record field in order.
 - [ ] P4.6 Compare inferred schemes modulo type-variable renaming and compare
   rejection cases against the upstream type suite and example corpus.
 
@@ -268,21 +274,23 @@ the information required by Go Apalache's importer.
   - [x] Implement concrete/arrow effect unification and initial differential fixtures.
   - [x] Preserve internal state-variable occurrence identity during substitution and
     enable the `hash-concrete` effect-unification fixture.
+  - [x] Accept terminating self-bindings through singleton/empty entity unions
+    without weakening rejection of expanding or oscillating cycles.
   - [ ] Audit occurrence identity at all public construction boundaries and broader
-    cyclic substitution behavior against upstream.
+    cyclic substitution behavior against upstream, including retained union shape.
   - [x] Integrate binding rules into structural effect/entity unification and validate initial upstream fixtures.
-- [ ] P5.2 Port builtin effect signatures and effect inference through calls,
+- [x] P5.2 Port builtin effect signatures and effect inference through calls,
   lambdas, local definitions, imports, and instantiated modules.
   - [x] Port all 98 upstream builtin effect signatures, with 142 exact signature fixtures.
   - [x] Add retained effect signature lookup, constant/state seeding, and instance namespaces.
-  - [ ] Add expression/declaration traversal with substitution and free-name lifecycle.
-- [ ] P5.3 Port qualifier/mode validation for `pure val`, `pure def`, `val`,
+  - [x] Add expression/declaration traversal with substitution and free-name lifecycle.
+- [x] P5.3 Port qualifier/mode validation for `pure val`, `pure def`, `val`,
   `def`, `nondet`, `action`, `run`, and `temporal`.
-- [ ] P5.4 Port multiple-update detection and nondeterministic-choice checks,
+- [x] P5.4 Port multiple-update detection and nondeterministic-choice checks,
   preserving distinctions between reads, updates, and temporal effects.
-- [ ] P5.5 Implement whole-module and incremental analyzer orchestration;
+- [x] P5.5 Implement whole-module and incremental analyzer orchestration;
   make updates to IR, lookup tables, types, effects, and modes explicit.
-- [ ] P5.6 Validate positive and negative type/effect interactions, especially
+- [x] P5.6 Validate positive and negative type/effect interactions, especially
   duplicate updates, illegal state access, and malformed nondeterminism.
 
 Exit gate: `typecheck` matches the reference's accepted/rejected programs for
@@ -299,7 +307,7 @@ the baseline corpus, including state-transition legality.
     fixtures cover ordinary, imported/exported, shadowed, and nested instances.
   - [ ] Complete the flattening compatibility audit for remaining upstream
     fixtures, recursive export aliases, and capture-avoiding substitutions.
-- [ ] P6.2 Refresh IDs and remap source locations, references, type/effect
+- [x] P6.2 Refresh IDs and remap source locations, references, type/effect
   schemes, and modes together during transformations.
 - [x] P6.3 Port main-module selection and synthesis of `q::init`, `q::step`,
   `q::inv`, `q::inductiveInv`, and `q::temporalProps`; analyze added definitions.
@@ -589,8 +597,12 @@ Build these items alongside the phases that supply their command behavior.
     symbolic runtime normalization and CLI trace file/output integration.
 - [ ] P10.5 Port pretty printing, source-error rendering, value diffs, execution
   frames, trace display, statistics, and witness/invariant reports.
+  - [x] Plain source excerpts and ordered multi-source/runtime callstack rendering
+    with Unicode UTF-16, CRLF/tabs, offsets, REPL formatting, and source fallback.
 - [ ] P10.6 Port documentation extraction and `docs`; embed builtin definitions
   and necessary runtime assets so the binary works outside the checkout.
+  - [x] Reusable documentation extraction/Markdown rendering and embedded
+    generated builtin documentation with copied results; no runtime parser/assets.
 - [ ] P10.7 Define idiomatic exported APIs corresponding to `quint/src/index.ts`,
   including parsing, analysis, IR access, formatting, and source resolution.
   Document ownership, incremental state, concurrency, and cancellation.
@@ -2710,3 +2722,16 @@ word "retained" in the commit message.
   dictionaries use insdict.Dict. Closures inside collections, symbolic values,
   heterogeneous equality, setToMap's JS-array identity hashing, and a confirmed
   Unicode collation-tie map serialization discrepancy remain open.
+
+- 2026-11-02: Parallel frontend work added semantic parser recovery with partial
+  corrected IR and ordered UTF-16 diagnostics, preserved provisional type schemes
+  after descendant failures, accumulated all invalid match/record constraints,
+  and accepted terminating entity self-bindings through singleton/empty unions.
+  Twelve parser, thirty-four type, and eight effect oracle cases cover these
+  changes. Added reusable plain source/callstack rendering with 32 exact upstream
+  outputs and documentation extraction/Markdown plus embedded generated builtin
+  docs (30 source definitions and all 78 builtin entries). Full default tests
+  pass; focused ownership, source, and concurrency checks pass. Audited earlier
+  P1-P6 implementations against their fixture families and checked completed
+  items; schema losslessness, syntax recovery, full corpus/cycle order, and
+  broader cyclic-effect shape audits remain open.

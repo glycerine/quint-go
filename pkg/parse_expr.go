@@ -154,11 +154,18 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 				plural = "Fields"
 			}
 			id := ids.Next()
-			return Expr{}, Diagnostic{Code: QNT016, Message: plural + " " + strings.Join(duplicates, ", ") + " cannot be defined more than once", Reference: &id, Data: &DiagnosticData{}}
+			diagnostic := Diagnostic{Code: QNT016, Message: plural + " " + strings.Join(duplicates, ", ") + " cannot be defined more than once", Reference: &id, Data: &DiagnosticData{}}
+			if !reportParserDiagnostic(ids, diagnostic) {
+				return Expr{}, diagnostic
+			}
 		}
 		if spreadCount > 1 {
 			id := ids.Next()
-			return Expr{}, Diagnostic{Code: QNT012, Message: "... may be used once in { ...record, <fields> }", Reference: &id, Data: &DiagnosticData{}}
+			diagnostic := Diagnostic{Code: QNT012, Message: "... may be used once in { ...record, <fields> }", Reference: &id, Data: &DiagnosticData{}}
+			if reportParserDiagnostic(ids, diagnostic) {
+				return parserUndefinedExpression(ids), nil
+			}
+			return Expr{}, diagnostic
 		}
 		if spread == nil {
 			return Expr{ID: ids.Next(), Kind: "app", Opcode: "Rec", Args: pairs}, nil

@@ -44,22 +44,27 @@ func (g *TypeConstraintGenerator) GenerateDeclaration(d Declaration) error {
 				if err != nil {
 					return err
 				}
-				if g.failed() {
-					goto cleanup
-				}
-				before, err = ExpandFreeVariables(before, subs)
-				if err != nil {
-					return err
-				}
-				if d.TypeAnnotation != nil {
-					reference := d.ID
-					if d.TypeAnnotation.ID != nil {
-						reference = *d.TypeAnnotation.ID
+				if !g.failed() {
+					before, err = ExpandFreeVariables(before, subs)
+					if err != nil {
+						return err
 					}
-					if e := CheckAnnotationGenerality(subs, *d.TypeAnnotation); e != nil {
-						g.Context.Errors.Set(reference.String(), *e)
+					if d.TypeAnnotation != nil {
+						reference := d.ID
+						if d.TypeAnnotation.ID != nil {
+							reference = *d.TypeAnnotation.ID
+						}
+						if e := CheckAnnotationGenerality(subs, *d.TypeAnnotation); e != nil {
+							g.Context.Errors.Set(reference.String(), *e)
+						}
 					}
 				}
+			}
+			// A failed descendant constraint does not discard the outer
+			// expression's provisional scheme. Only a failure on that expression
+			// prevents upstream fetchResult from generalizing the definition.
+			if _, failed := g.Context.Errors.Get2(d.Expr.ID.String()); failed {
+				goto cleanup
 			}
 			after, err := g.scopeVariables()
 			if err != nil {

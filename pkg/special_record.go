@@ -10,16 +10,48 @@ type TypedExpression struct {
 	Type Type
 }
 
+func recordConstraintLocation(args []TypedExpression) string {
+	printed := make([]string, len(args))
+	for index, arg := range args {
+		printed[index] = ExpressionString(arg.Expr)
+	}
+	return "Generating record constraints for " + strings.Join(printed, ",")
+}
+
+// RecordConstructorConstraints validates every field name, retaining all
+// failures in argument order. No partial constraints are returned on failure.
+func RecordConstructorConstraints(id ID, args []TypedExpression, result Type) ([]Constraint, []ErrorTree) {
+	errors := []ErrorTree{}
+	fail := func(message string) {
+		errors = append(errors, ErrorLeaf(recordConstraintLocation(args), message))
+	}
+	if len(args)%2 != 0 {
+		fail("Record constructor requires field/value pairs")
+		return nil, errors
+	}
+	fields := make([]RowField, 0, len(args)/2)
+	for index := 0; index < len(args); index += 2 {
+		key := args[index].Expr
+		if key.Kind != "str" {
+			fail("Record field name must be a name expression but is " + key.Kind + ": " + ExpressionString(key))
+		} else {
+			fields = append(fields, RowField{Name: key.Str, Type: args[index+1].Type})
+		}
+	}
+	if len(errors) > 0 {
+		return nil, errors
+	}
+	record := Type{Kind: "rec", Fields: &Row{Kind: "row", Fields: fields, Other: &Row{Kind: "empty"}}}
+	return []Constraint{{Kind: "eq", SourceID: id, Types: [2]Type{record, result}}}, errors
+}
+
 // RecordConstraints generates structural constraints for Rec, field,
-// fieldNames, and with. Arguments must already have inferred types.
+// fieldNames, and with. Arguments must already have inferred types. Multiple
+// invalid constructor fields are returned as children of one error tree.
 func RecordConstraints(op string, id ID, args []TypedExpression, result Type) ([]Constraint, *ErrorTree) {
 	eq := func(a, b Type) Constraint { return Constraint{Kind: "eq", SourceID: id, Types: [2]Type{a, b}} }
 	fail := func(message string) ([]Constraint, *ErrorTree) {
-		printed := []string{}
-		for _, a := range args {
-			printed = append(printed, ExpressionString(a.Expr))
-		}
-		e := ErrorLeaf("Generating record constraints for "+strings.Join(printed, ","), message)
+		e := ErrorLeaf(recordConstraintLocation(args), message)
 		return nil, &e
 	}
 	rowType := func(fields []RowField, tail Row) Type {
@@ -30,18 +62,13 @@ func RecordConstraints(op string, id ID, args []TypedExpression, result Type) ([
 		return fail(fmt.Sprintf("%s expects %d arguments", op, n))
 	}
 	if op == "Rec" {
-		if len(args)%2 != 0 {
-			return fail("Record constructor requires field/value pairs")
+		constraints, errors := RecordConstructorConstraints(id, args, result)
+		if len(errors) == 1 {
+			return nil, &errors[0]
+		} else if len(errors) > 1 {
+			return nil, &ErrorTree{Location: recordConstraintLocation(args), Children: errors}
 		}
-		fields := []RowField{}
-		for i := 0; i < len(args); i += 2 {
-			key := args[i].Expr
-			if key.Kind != "str" {
-				return fail("Record field name must be a name expression but is " + key.Kind + ": " + ExpressionString(key))
-			}
-			fields = append(fields, RowField{Name: key.Str, Type: args[i+1].Type})
-		}
-		return []Constraint{eq(rowType(fields, Row{Kind: "empty"}), result)}, nil
+		return constraints, nil
 	}
 	if op == "fieldNames" {
 		str := Type{Kind: "str"}

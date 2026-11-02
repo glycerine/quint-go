@@ -25,6 +25,9 @@ func (p *locatedParserIDs) Next() ID {
 	return id
 }
 func parserScope(ids parserIDAllocator, ctx antlr.ParserRuleContext) func() {
+	if recovery, ok := ids.(*recoveringParserIDs); ok {
+		ids = recovery.parserIDAllocator
+	}
 	p, ok := ids.(*locatedParserIDs)
 	if !ok {
 		return func() {}

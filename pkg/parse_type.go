@@ -129,7 +129,11 @@ func typeFromContextWithIDs(ctx p.ITypeContext, ids parserIDAllocator) (result T
 				id := parserIDAt(ids, ctx)
 				reference = &id
 			}
-			return Type{}, Diagnostic{Reference: reference, Code: QNT015, Message: "Use '" + replacement + "' instead of '" + original + "' for map types", Data: &DiagnosticData{Fix: &DiagnosticFix{Kind: "replace", Original: original, Replacement: replacement}}}
+			diagnostic := Diagnostic{Reference: reference, Code: QNT015, Message: "Use '" + replacement + "' instead of '" + original + "' for map types", Data: &DiagnosticData{Fix: &DiagnosticFix{Kind: "replace", Original: original, Replacement: replacement}}}
+			if reportParserDiagnostic(ids, diagnostic) {
+				return Type{ID: reference, Kind: "fun", Arg: &args[0], Res: &args[1]}, nil
+			}
+			return Type{}, diagnostic
 		}
 		ctor := Type{Kind: "const", Name: app.QualId().GetText()}
 		if ids != nil {

@@ -562,3 +562,34 @@ including collisions, large sets, nested values, callback failures, and fold
 argument order. Direct tests cover eager quantifier callbacks, Boolean reduction
 order, cancellation, empty-fold callback laziness, and retained child identity.
 Closures inside collections and symbolic-set operations remain unfinished.
+
+`parser_recovery.json` is regenerated with
+`node pkg/grammar/parser_recovery_fixtures.cjs`. Twelve semantic-recovery cases
+compare partial IR, declaration/documentation order, corrected nested types,
+ordered diagnostics/data, and UTF-16 diagnostic spans. Existing fail-fast entry
+points remain available. Lexer/syntax AST recovery and project-loader diagnostic
+accumulation remain unfinished.
+
+`type_partial_inference.json` and `type_constraint_errors.json` are regenerated
+with their matching `pkg/grammar/*_fixtures.cjs` scripts. Eighteen partial-table
+cases compare provisional definition schemes, quantifiers, scope cleanup, and
+complete error trees after descendant failures. Sixteen constraint-error cases
+compare every invalid match case/record field in argument order, including
+arity precedence. The effect substitution identity test additionally embeds eight
+saved TypeScript results for terminating singleton/empty-union self-bindings;
+expanding/oscillating cycles still reject. Broader cyclic union-shape parity
+remains open.
+
+`diagnostic_render.json` is regenerated with
+`node pkg/grammar/diagnostic_render_fixtures.cjs`. Thirty-two exact upstream
+outputs cover source excerpts, multiple sources/callstack frames, offsets,
+REPL line labels, tabs/CRLF, UTF-16 astral characters, EOF, and source fallback.
+Direct tests cover the Go half-open span convention and diagnostic resolution.
+
+`documentation.json` is regenerated with
+`node pkg/grammar/documentation_fixtures.cjs`. Four source examples cover six
+modules and thirty definitions, including duplicate replacement, expanded
+constructors, annotations, ordering, and Markdown. The same oracle verifies all
+78 builtin documentation entries against generated embedded JSON; loading docs
+requires no runtime parser, Node, or repository-relative assets. CLI docs tests
+exercise Markdown, stage JSON, write errors, and source errors.

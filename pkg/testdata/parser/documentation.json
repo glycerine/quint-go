@@ -1,0 +1,575 @@
+{
+  "cases": [
+    {
+      "source": "/// Module docs are omitted from the rendered title.\nmodule A {\n  /// value documentation\n  pure val foo: int = 1\n  pure def bar(x: int): bool = x > 0\n  const LIMIT: int\n  var x: int\n  assume positive = LIMIT > 0\n  type Pair[a] = (a, a)\n  type Abstract\n  import B.*\n  export B.*\n}\nmodule B { val hidden = true }\n",
+      "modules": [
+        {
+          "name": "A",
+          "entries": [
+            {
+              "name": "foo",
+              "signature": "pure val foo: int",
+              "documentation": "value documentation"
+            },
+            {
+              "name": "bar",
+              "signature": "pure def bar: (int) => bool"
+            },
+            {
+              "name": "LIMIT",
+              "signature": "const LIMIT: int"
+            },
+            {
+              "name": "x",
+              "signature": "var x: int"
+            },
+            {
+              "name": "positive",
+              "signature": "assume positive = igt(LIMIT, 0)"
+            },
+            {
+              "name": "Pair",
+              "signature": "type Pair[a] = (a, a)"
+            },
+            {
+              "name": "Abstract",
+              "signature": "type Abstract"
+            }
+          ],
+          "markdown": "# Documentation for A\n\n## foo\n\nSignature: `pure val foo: int`\n\nvalue documentation\n\n## bar\n\nSignature: `pure def bar: (int) => bool`\n\n\n\n## LIMIT\n\nSignature: `const LIMIT: int`\n\n\n\n## x\n\nSignature: `var x: int`\n\n\n\n## positive\n\nSignature: `assume positive = igt(LIMIT, 0)`\n\n\n\n## Pair\n\nSignature: `type Pair[a] = (a, a)`\n\n\n\n## Abstract\n\nSignature: `type Abstract`\n\n\n"
+        },
+        {
+          "name": "B",
+          "entries": [
+            {
+              "name": "hidden",
+              "signature": "val hidden"
+            }
+          ],
+          "markdown": "# Documentation for B\n\n## hidden\n\nSignature: `val hidden`\n\n\n"
+        }
+      ]
+    },
+    {
+      "source": "module Empty {} module More {\n  /// This includes **Markdown** and a blank line.\n  ///\n  /// - alpha\n  /// - beta\n  def repeat(x): (int) => int = x\n  /// first doc\n  val repeat = 1\n  /// last doc\n  val other = 2\n  val repeat = 3\n}\n",
+      "modules": [
+        {
+          "name": "Empty",
+          "entries": [],
+          "markdown": "# Documentation for Empty\n\n\n"
+        },
+        {
+          "name": "More",
+          "entries": [
+            {
+              "name": "repeat",
+              "signature": "val repeat"
+            },
+            {
+              "name": "other",
+              "signature": "val other",
+              "documentation": "last doc"
+            }
+          ],
+          "markdown": "# Documentation for More\n\n## repeat\n\nSignature: `val repeat`\n\n\n\n## other\n\nSignature: `val other`\n\nlast doc\n"
+        }
+      ]
+    },
+    {
+      "source": "module Qualifiers {\n  pure def p = 1\n  pure val pv = true\n  val v = 1\n  def d = 1\n  nondet n = Set(1).oneOf()\n  action a = true\n  run r = true\n  temporal t = true\n  type Choice = A | B(int)\n}\n",
+      "modules": [
+        {
+          "name": "Qualifiers",
+          "entries": [
+            {
+              "name": "p",
+              "signature": "pure def p"
+            },
+            {
+              "name": "pv",
+              "signature": "pure val pv"
+            },
+            {
+              "name": "v",
+              "signature": "val v"
+            },
+            {
+              "name": "d",
+              "signature": "def d"
+            },
+            {
+              "name": "n",
+              "signature": "nondet n"
+            },
+            {
+              "name": "a",
+              "signature": "action a"
+            },
+            {
+              "name": "r",
+              "signature": "run r"
+            },
+            {
+              "name": "t",
+              "signature": "temporal t"
+            },
+            {
+              "name": "Choice",
+              "signature": "type Choice = (A | B(int))"
+            },
+            {
+              "name": "A",
+              "signature": "val A: Choice"
+            },
+            {
+              "name": "B",
+              "signature": "def B: (int) => Choice"
+            }
+          ],
+          "markdown": "# Documentation for Qualifiers\n\n## p\n\nSignature: `pure def p`\n\n\n\n## pv\n\nSignature: `pure val pv`\n\n\n\n## v\n\nSignature: `val v`\n\n\n\n## d\n\nSignature: `def d`\n\n\n\n## n\n\nSignature: `nondet n`\n\n\n\n## a\n\nSignature: `action a`\n\n\n\n## r\n\nSignature: `run r`\n\n\n\n## t\n\nSignature: `temporal t`\n\n\n\n## Choice\n\nSignature: `type Choice = (A | B(int))`\n\n\n\n## A\n\nSignature: `val A: Choice`\n\n\n\n## B\n\nSignature: `def B: (int) => Choice`\n\n\n"
+        }
+      ]
+    },
+    {
+      "source": "module Shape {\n  type Named[a] = { name: str, value: a }\n  val (left, right) = (1, 2)\n  /// docs attach to the final expanded declaration\n  val {foo, bar} = {foo: 1, bar: 2}\n  /// Unicode 😀 and reserved JSON names.\n  val constructor = \"<tag>&\"\n  val __proto__ = 1\n}\n",
+      "modules": [
+        {
+          "name": "Shape",
+          "entries": [
+            {
+              "name": "Named",
+              "signature": "type Named[a] = { name: str, value: a }"
+            },
+            {
+              "name": "quintDestructTemp8",
+              "signature": "val quintDestructTemp8"
+            },
+            {
+              "name": "left",
+              "signature": "val left"
+            },
+            {
+              "name": "right",
+              "signature": "val right"
+            },
+            {
+              "name": "quintDestructTemp22",
+              "signature": "val quintDestructTemp22"
+            },
+            {
+              "name": "foo",
+              "signature": "val foo"
+            },
+            {
+              "name": "bar",
+              "signature": "val bar",
+              "documentation": "docs attach to the final expanded declaration"
+            },
+            {
+              "name": "constructor",
+              "signature": "val constructor",
+              "documentation": "Unicode 😀 and reserved JSON names."
+            },
+            {
+              "name": "__proto__",
+              "signature": "val __proto__"
+            }
+          ],
+          "markdown": "# Documentation for Shape\n\n## Named\n\nSignature: `type Named[a] = { name: str, value: a }`\n\n\n\n## quintDestructTemp8\n\nSignature: `val quintDestructTemp8`\n\n\n\n## left\n\nSignature: `val left`\n\n\n\n## right\n\nSignature: `val right`\n\n\n\n## quintDestructTemp22\n\nSignature: `val quintDestructTemp22`\n\n\n\n## foo\n\nSignature: `val foo`\n\n\n\n## bar\n\nSignature: `val bar`\n\ndocs attach to the final expanded declaration\n\n## constructor\n\nSignature: `val constructor`\n\nUnicode 😀 and reserved JSON names.\n\n## __proto__\n\nSignature: `val __proto__`\n\n\n"
+        }
+      ]
+    }
+  ],
+  "builtin": [
+    {
+      "name": "Nat",
+      "signature": "pure val Nat: Set[int]",
+      "documentation": "The infinite set of all natural numbers.\n\nInfinite sets cannot be enumerated. Hence some operators\nthat require iteration may be unsupported."
+    },
+    {
+      "name": "Int",
+      "signature": "pure val Int: Set[int]",
+      "documentation": "The infinite set of all integers.\n\nInfinite sets cannot be enumerated. Hence some operators\nthat require iteration may be unsupported."
+    },
+    {
+      "name": "Bool",
+      "signature": "pure val Bool: Set[bool]",
+      "documentation": "The set of all booleans\n\nThat is, Set(false, true)"
+    },
+    {
+      "name": "eq",
+      "signature": "pure def eq: (t, t) => bool",
+      "documentation": "`a.eq(b)` is `true` when `a` and `b` are equal values of the same type.\n\nIt can be used in the infix form as `==` or as a named operator `eq`."
+    },
+    {
+      "name": "neq",
+      "signature": "pure def neq: (t, t) => bool",
+      "documentation": "`a.neq(b)` is `true` when `a` and `b` are not equal values of the same type.\n\nIt can be used in the infix form as `!=` or as a named operator `neq`."
+    },
+    {
+      "name": "iff",
+      "signature": "pure def iff: (bool, bool) => bool",
+      "documentation": "`p.iff(q)` is `true` when `p` and `q` are equal values of the bool type.\n\nThis is the logical equivalence operator.\n\n### Examples\n\n```quint\nassert(iff(true, true))\nassert(iff(false, false))\nassert(not(iff(true, false)))\nassert(not(iff(false, true)))\n```"
+    },
+    {
+      "name": "implies",
+      "signature": "pure def implies: (bool, bool) => bool",
+      "documentation": "`p.implies(q)` is true when `not(p) or q` is true.\n\nThis is the material implication operator.\n\n### Examples\n\n```quint\nassert(true.implies(true))\nassert(false.implies(false))\nassert(not(true.implies(false)))\nassert(not(false.implies(true)))\n```"
+    },
+    {
+      "name": "not",
+      "signature": "pure def not: (bool) => bool",
+      "documentation": "`not(p)` is `true` when `p` is `false`.\n\nThis is the negation operator."
+    },
+    {
+      "name": "exists",
+      "signature": "pure def exists: (Set[a], (a) => bool) => bool",
+      "documentation": "`s.exists(p)` is true when there is an element in `s` that satisfies `p`.\n\nThis is the existential quantifier.\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).exists(n => n == 2))\nassert(not(Set(1, 2, 3).exists(n => n == 4)))\n```"
+    },
+    {
+      "name": "forall",
+      "signature": "pure def forall: (Set[a], (a) => bool) => bool",
+      "documentation": "`s.forall(p)` is true when all elements in `s` satisfy `p`.\n\nThis is the universal quantifier.\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).forall(n => n > 0))\nassert(not(Set(1, 2, 3).forall(n => n > 1)))\n```"
+    },
+    {
+      "name": "in",
+      "signature": "pure def in: (a, Set[a]) => bool",
+      "documentation": "`e.in(s)` is true when the element `e` is in the set `s`.\n\nThis is the set membership relation.\n\nSee also: `contains`\n\n### Examples\n\n```quint\nassert(1.in(Set(1, 2, 3)))\nassert(not(4.in(Set(1, 2, 3))))\n```"
+    },
+    {
+      "name": "contains",
+      "signature": "pure def contains: (Set[a], a) => bool",
+      "documentation": "`s.contains(e)` is true when the element `e` is in the set `s`.\n\nThis is the set membership relation.\n\nSee also: `in`\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).contains(1))\nassert(not(Set(1, 2, 3).contains(4)))\n```"
+    },
+    {
+      "name": "union",
+      "signature": "pure def union: (Set[a], Set[a]) => Set[a]",
+      "documentation": "`s1.union(s2)` is the set of elements that are in `s1` or in `s2`.\n\nThis is the set union operator.\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).union(Set(2, 3, 4)) == Set(1, 2, 3, 4))\n```"
+    },
+    {
+      "name": "intersect",
+      "signature": "pure def intersect: (Set[a], Set[a]) => Set[a]",
+      "documentation": "`s1.intersect(s2)` is the set of elements that are in both sets `s1` and `s2`.\n\nThis is the set intersection operator.\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).intersect(Set(2, 3, 4)) == Set(2, 3))\n```"
+    },
+    {
+      "name": "exclude",
+      "signature": "pure def exclude: (Set[a], Set[a]) => Set[a]",
+      "documentation": "`s1.exclude(s2)` is the set of elements in `s1` that are not in `s2`.\n\nThis is the set difference operator.\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).exclude(Set(2, 3, 4)) == Set(1))\n```"
+    },
+    {
+      "name": "subseteq",
+      "signature": "pure def subseteq: (Set[a], Set[a]) => bool",
+      "documentation": "`s1.subseteq(s2)` is true when all elements in `s1` are also in `s2`.\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).subseteq(Set(1, 2, 3, 4)))\nassert(not(Set(1, 2, 3).subseteq(Set(1, 2))))\n```"
+    },
+    {
+      "name": "filter",
+      "signature": "pure def filter: (Set[a], (a) => bool) => Set[a]",
+      "documentation": "`s.filter(p)` is the set of elements in `s` that satisfy `p`.\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).filter(n => n > 1) == Set(2, 3))\n```"
+    },
+    {
+      "name": "map",
+      "signature": "pure def map: (Set[a], (a) => b) => Set[b]",
+      "documentation": "`s.map(f)` is the set of elements obtained by applying `f` to\n\nto each element in `s`. I.e., `{ f(x) : x \\in s}`.\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).map(n => n > 1) == Set(false, true, true))\n```"
+    },
+    {
+      "name": "fold",
+      "signature": "pure def fold: (Set[a], b, (b, a) => b) => b",
+      "documentation": "`l.fold(z, f)` reduces the elements in `s` using `f`, starting with `z`.\n\nI.e., `f(...f(f(z, x0), x1)..., xn)`.\n\nThe order in which the elements are combined is unspecified, so\nthe operator must be associative and commutative or else it has undefined behavior.\n\n### Examples\n\n```quint\nval sum = Set(1, 2, 3, 4).fold(0, (x, y) => x + y)\nassert(sum == 10)\nval mul = Set(1, 2, 3, 4).fold(1, (x, y) => x * y)\nassert(mul == 24)\n```"
+    },
+    {
+      "name": "powerset",
+      "signature": "pure def powerset: (Set[a]) => Set[Set[a]]",
+      "documentation": "`s.powerset()` is the set of all subsets of `s`,\nincluding the empty set and the set itself.\n\n### Examples\n\n```quint\nassert(Set(1, 2).powerset() == Set(\n  Set(),\n  Set(1),\n  Set(2),\n  Set(1, 2)\n))\n```"
+    },
+    {
+      "name": "flatten",
+      "signature": "pure def flatten: (Set[Set[a]]) => Set[a]",
+      "documentation": "`s.flatten()` is the set of all elements in the sets in `s`.\n\n### Examples\n\n```quint\nassert(Set(Set(1, 2), Set(3, 4)).flatten() == Set(1, 2, 3, 4))\n```"
+    },
+    {
+      "name": "allLists",
+      "signature": "pure def allLists: (Set[a]) => Set[List[a]]",
+      "documentation": "`s.allLists()` is the set of all lists containing elements in `s`.\nThis is an infinite set unless `s` is the empty set.\n\nLike other infinite sets, this is not supported in any execution/verification form.\n\n### Examples\n\n```quint\nassert(Set(1, 2).allLists().contains([]))\nassert(Set(1, 2).allLists().contains([1, 1, 1, 1, 2, 1]))\n```"
+    },
+    {
+      "name": "allListsUpTo",
+      "signature": "pure def allListsUpTo: (Set[a], int) => Set[List[a]]",
+      "documentation": "`s.allListsUpTo(l)` is the set of all lists of elements in `s` with length <= `l`\n\n```quint\nassert(Set(1, 2).allListsUpTo(1) == Set([], [1], [2]))\nassert(Set(1).allListsUpTo(2) == Set([], [1], [1, 1]))\n```"
+    },
+    {
+      "name": "getOnlyElement",
+      "signature": "pure def getOnlyElement: (Set[a]) => a",
+      "documentation": "`s.getOnlyElement()` is, deterministically, the only element of `s`.\nIf the size of `s` is not 1, this operator has undefined behavior.\n\n### Examples\n\n```quint\nassert(Set(5).getOnlyElement() == 5)\n```"
+    },
+    {
+      "name": "chooseSome",
+      "signature": "pure def chooseSome: (Set[a]) => a",
+      "documentation": "`s.chooseSome()` is, deterministically, one element of `s`.\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).chooseSome() == 1)\nassert(Set(1, 2, 3).filter(x => x > 2).chooseSome() == 3)\n```"
+    },
+    {
+      "name": "oneOf",
+      "signature": "pure def oneOf: (Set[a]) => a",
+      "documentation": "`s.oneOf()` is, non-deterministically, one element of `s`.\n\n### Examples\n\n```quint\nnondet x = oneOf(Set(1, 2, 3))\nassert(x.in(Set(1, 2, 3)))\n```"
+    },
+    {
+      "name": "isFinite",
+      "signature": "pure def isFinite: (Set[a]) => bool",
+      "documentation": "`s.isFinite()` is true when `s` is a finite set\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).isFinite())\nassert(!Nat.isFinite())\n```"
+    },
+    {
+      "name": "size",
+      "signature": "pure def size: (Set[a]) => int",
+      "documentation": "`s.size()` is the cardinality of `s`.\n\n### Examples\n\n```quint\nassert(Set(1, 2, 3).size() == 3)\n```"
+    },
+    {
+      "name": "get",
+      "signature": "pure def get: ((a -> b), a) => b",
+      "documentation": "`m.get(k)` is the value for `k` in `m`.\n\nIf `k` is not in `m` then the behavior is undefined.\n\n### Examples\n\n```quint\npure val m = Map(1 -> true, 2 -> false)\nassert(m.get(1) == true)\n```"
+    },
+    {
+      "name": "keys",
+      "signature": "pure def keys: ((a -> b)) => Set[a]",
+      "documentation": "`m.keys()` is the set of keys in the map `m`.\n\n### Examples\n\n```quint\npure val m = Map(1 -> true, 2 -> false)\nassert(m.keys() == Set(1, 2))\n```"
+    },
+    {
+      "name": "mapBy",
+      "signature": "pure def mapBy: (Set[a], (a) => b) => (a -> b)",
+      "documentation": "`s.mapBy(f)` is the map from `x` to `f(x)` for each element `x` in `s`.\n\n### Examples\n\n```quint\npure val m = Set(1, 2, 3).mapBy(x => x * x)\nassert(m == Map(1 -> 1, 2 -> 4, 3 -> 9))\n```"
+    },
+    {
+      "name": "setToMap",
+      "signature": "pure def setToMap: (Set[(a, b)]) => (a -> b)",
+      "documentation": "`s.setToMap()` for a set of pairs `s` is the map\nfrom the first element of each pair to the second.\n\n### Examples\n\n```quint\npure val m = Set((1, true), (2, false)).setToMap()\nassert(m == Map(1 -> true, 2 -> false))\n```"
+    },
+    {
+      "name": "setOfMaps",
+      "signature": "pure def setOfMaps: (Set[a], Set[b]) => Set[(a -> b)]",
+      "documentation": "`keys.setOfMaps(values)` is the set of all maps from `keys` to `values`.\n\n### Examples\n\n```quint\npure val s = Set(1, 2).setOfMaps(set(true, false))\nassert(s == Set(\n  Map(1 -> true, 2 -> true),\n  Map(1 -> true, 2 -> false),\n  Map(1 -> false, 2 -> true),\n  Map(1 -> false, 2 -> false),\n))\n```"
+    },
+    {
+      "name": "set",
+      "signature": "pure def set: ((a -> b), a, b) => (a -> b)",
+      "documentation": "`m.set(k, v)` is the map `m` but with the key `k` mapped to `v` if `k.in(keys(m))`\n\nIf `k` is not a key in `m`, this operator has undefined behavior.\n\n### Examples\n\n```quint\npure val m = Map(1 -> true, 2 -> false)\npure val m2 = m.set(2, true)\nassert(m == Map(1 -> true, 2 -> false))\nassert(m2 == Map(1 -> true, 2 -> true))\n```"
+    },
+    {
+      "name": "setBy",
+      "signature": "pure def setBy: ((a -> b), a, (b) => b) => (a -> b)",
+      "documentation": "`m.setBy(k, f)` is a map with the same keys as `m` but with `k` set to `f(m.get(k))`.\n\nIf `k` is not present in `m`, this operator has undefined behavior.\n\n### Examples\n\n```quint\npure val m = Map(1 -> true, 2 -> false)\npure val m2 = m.setBy(2, x => !x)\nassert(m == Map(1 -> true, 2 -> false))\nassert(m2 == Map(1 -> true, 2 -> true))\n```"
+    },
+    {
+      "name": "put",
+      "signature": "pure def put: ((a -> b), a, b) => (a -> b)",
+      "documentation": "`m.put(k, v)` is the map `m` but with the key `k` mapped to `v`.\n\n### Examples\n\n```quint\npure val m = Map(1 -> true, 2 -> false)\npure val m2 = m.put(2, true)\npure val m3 = m.put(3, true)\nassert(m == Map(1 -> true, 2 -> false))\nassert(m2 == Map(1 -> true, 2 -> true))\nassert(m3 == Map(1 -> true, 2 -> false, 3 -> true))\n```"
+    },
+    {
+      "name": "append",
+      "signature": "pure def append: (List[a], a) => List[a]",
+      "documentation": "`l.append(e)` is the list `l` with the element `e` appended.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).append(4) == List(1, 2, 3, 4))\n```"
+    },
+    {
+      "name": "concat",
+      "signature": "pure def concat: (List[a], List[a]) => List[a]",
+      "documentation": "`l1.concat(l2)` is the list `l1` with `l2` concatenated at the end.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).append(List(4, 5, 6)) == List(1, 2, 3, 4, 5, 6))\n```"
+    },
+    {
+      "name": "head",
+      "signature": "pure def head: (List[a]) => a",
+      "documentation": "`l.head()` is the first element of `l`.\n\nIf `l` is empty, the behavior is undefined.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).head() == 1)\n```"
+    },
+    {
+      "name": "tail",
+      "signature": "pure def tail: (List[a]) => List[a]",
+      "documentation": "`l.tail()` is the list `l` without the first element.\n\nIf `l` is empty, the behavior is undefined.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).tail() == List(2, 3))\n```"
+    },
+    {
+      "name": "length",
+      "signature": "pure def length: (List[a]) => int",
+      "documentation": "`l.length()` is the length of the list `l`.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).length() == 3)\n```"
+    },
+    {
+      "name": "nth",
+      "signature": "pure def nth: (List[a], int) => a",
+      "documentation": "`l.nth(i)` is the `i+1`th element of the list `l`.\n\nIf `i` is negative or greater than or equal to `l.length()`, the behavior is undefined.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).nth(1) == 2)\n```"
+    },
+    {
+      "name": "indices",
+      "signature": "pure def indices: (List[a]) => Set[int]",
+      "documentation": "`l.indices()` is the set of indices of `l`.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).indices() == Set(0, 1, 2))\n```"
+    },
+    {
+      "name": "replaceAt",
+      "signature": "pure def replaceAt: (List[a], int, a) => List[a]",
+      "documentation": "`l.replaceAt(i, e)` is the list `l` with the `i+1`th element replaced by `e`.\n\nIf `i` is negative or greater than or equal to `l.length()`, the behavior is undefined.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).replaceAt(1, 4) == List(1, 4, 3))\n```"
+    },
+    {
+      "name": "slice",
+      "signature": "pure def slice: (List[a], int, int) => List[a]",
+      "documentation": "`l.slice(i, j)` is the list of elements of `l` between indices `i` and `j`.\n\n`i` is inclusive and `j` is exclusive.\n\nThe behavior is undefined when:\n\n- `i` is negative or greater than or equal to `l.length()`.\n- `j` is negative or greater than `l.length()`.\n- `i` is greater than `j`.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3, 4, 5).slice(1, 3) == List(2, 3))\n```"
+    },
+    {
+      "name": "range",
+      "signature": "pure def range: (int, int) => List[int]",
+      "documentation": "`range(i, j)` is the list of integers between `i` and `j`.\n\n`i` is inclusive and `j` is exclusive.\n\nThe behavior is undefined when `i` is greater than `j`.\n\n### Examples\n\n```quint\nassert(range(1, 3) == List(1, 2))\n```"
+    },
+    {
+      "name": "select",
+      "signature": "pure def select: (List[a], (a) => bool) => List[a]",
+      "documentation": "`l.select(p)` is the list of elements of `l` that satisfy the predicate `p`.\n\nPreserves the order of the elements.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).select(x => x % 2 == 0) == List(2))\n```"
+    },
+    {
+      "name": "foldl",
+      "signature": "pure def foldl: (List[a], b, (b, a) => b) => b",
+      "documentation": "`l.foldl(z, f)` reduces the elements in `l` using `f`,\nstarting with `z` from the left.\n\nI.e., `f(f(f(z, x0), x1)..., xn)`.\n\n### Examples\n\n```quint\npure val sum = List(1, 2, 3, 4).foldl(0, (x, y) => x + y)\nassert(sum == 10)\npure val l = List(1, 2, 3, 4).foldl(List(), (l, e) => l.append(e))\nassert(l == List(1, 2, 3, 4))\n```"
+    },
+    {
+      "name": "iadd",
+      "signature": "pure def iadd: (int, int) => int",
+      "documentation": "`a.iadd(b)` is the integer addition of `a` and `b`.\n\nIt can be used in the infix form as `+` or as a named operator `iadd`."
+    },
+    {
+      "name": "isub",
+      "signature": "pure def isub: (int, int) => int",
+      "documentation": "`a.isub(b)` is the integer subtraction of `b` from `a`.\n\nIt can be used in the infix form as `-` or as a named operator `isub`."
+    },
+    {
+      "name": "imul",
+      "signature": "pure def imul: (int, int) => int",
+      "documentation": "`a.imul(b)` is the integer multiplication of `a` and `b`.\n\nIt can be used in the infix form as `*` or as a named operator `imul`."
+    },
+    {
+      "name": "idiv",
+      "signature": "pure def idiv: (int, int) => int",
+      "documentation": "`a.idiv(b)` is the integer division of `a` by `b`.\n\nIt can be used in the infix form as `/` or as a named operator `idiv`."
+    },
+    {
+      "name": "imod",
+      "signature": "pure def imod: (int, int) => int",
+      "documentation": "`a.imod(b)` is the integer modulus of `a` and `b`.\n\nIt can be used in the infix form as `%` or as a named operator `imod`."
+    },
+    {
+      "name": "ipow",
+      "signature": "pure def ipow: (int, int) => int",
+      "documentation": "`a.ipow(b)` is the integer exponentiation of `a` by `b`.\n\nIt can be used in the infix form as `^` or as a named operator `ipow`."
+    },
+    {
+      "name": "ilt",
+      "signature": "pure def ilt: (int, int) => bool",
+      "documentation": "`a.ilt(b)` is the integer less than comparison of `a` and `b`.\n\nIt can be used in the infix form as `<` or as a named operator `ilt`."
+    },
+    {
+      "name": "igt",
+      "signature": "pure def igt: (int, int) => bool",
+      "documentation": "`a.igt(b)` is the integer greater than comparison of `a` and `b`.\n\nIt can be used in the infix form as `>` or as a named operator `igt`."
+    },
+    {
+      "name": "ilte",
+      "signature": "pure def ilte: (int, int) => bool",
+      "documentation": "`a.ilte(b)` is the integer less than or equal to comparison of `a` and `b`.\n\nIt can be used in the infix form as `<=` or as a named operator `ilte`."
+    },
+    {
+      "name": "igte",
+      "signature": "pure def igte: (int, int) => bool",
+      "documentation": "`a.igte(b)` is the integer greater than or equal to comparison of `a` and `b`.\n\nIt can be used in the infix form as `>=` or as a named operator `igte`."
+    },
+    {
+      "name": "iuminus",
+      "signature": "pure def iuminus: (int) => int",
+      "documentation": "`iuminus(a)` is `-1 * a`.\n\nThis is the unary minus operator"
+    },
+    {
+      "name": "to",
+      "signature": "pure def to: (int, int) => Set[int]",
+      "documentation": "`i.to(j)` is the set of integers between `i` and `j`.\n\n`i` is inclusive and `j` is inclusive.\n\nThe behavior is undefined when `i` is greater than `j`.\n\n### Examples\n\n```quint\nassert(1.to(3) == Set(1, 2, 3))\n```"
+    },
+    {
+      "name": "always",
+      "signature": "temporal always: (bool) => bool",
+      "documentation": "`always(p)` is true when `p` is true for every transition of the system.\n\n### Examples\n\n```quint\nvar x: int\naction Init = x' = 0\naction Next = x' = x + 1\ntemporal Property = always(next(x) > x)\n```"
+    },
+    {
+      "name": "eventually",
+      "signature": "temporal eventually: (bool) => bool",
+      "documentation": "`eventually(p)` is true when `p` is true for some transition of the system.\n\n`eventually(p)` is equivalent to `not(always(not(p)))`.\n\n### Examples\n\n```quint\nvar x: int\naction Init = x' = 0\naction Next = x' = x + 1\ntemporal Property = eventually(x == 10)\n```"
+    },
+    {
+      "name": "next",
+      "signature": "temporal next: (a) => a",
+      "documentation": "`next(a)` is the value of `a` in the next state of a transition.\n\n### Examples\n\n```quint\nvar x: int\naction Init = x' = 0\naction Next = x' = x + 1\ntemporal Property = next(x) == x + 1\n```"
+    },
+    {
+      "name": "orKeep",
+      "signature": "temporal orKeep: (bool, a) => bool",
+      "documentation": "`orKeep(a, v)` is true when `a` is true or the values\nfor the set of variables `v` are unchanged.\n\n`orKeep(a, v)` is equivalent to `a or v.map(x => next(x) == x)`.\n\nThis is the stuttering operator.\n\n### Examples\n\n```quint\nvar x: int\naction Init = x' = 0\naction Next =  x' = x + 1\ntemporal Spec = Init and always(Next.orKeep(Set(x)))\n```"
+    },
+    {
+      "name": "mustChange",
+      "signature": "temporal mustChange: (bool, a) => bool",
+      "documentation": "`mustChange(a, v)` is true when `a` is true and the values for the\nset of variables `v` are changed.\n\n`mustChange(a, v)` is equivalent to `a and v.map(x => next(x) != x)`.\n\nThis is the no-stuttering operator.\n\n### Examples\n\n```quint\nvar x: int\naction Init = x' = 0\naction Next = any {\n  x' = x + 1,\n  x' = x,\n}\ntemporal Spec = Init and always(Next.mustChange(Set(x)))\ntemporal Property = Spec.implies(always(next(x) > x))\n```"
+    },
+    {
+      "name": "enabled",
+      "signature": "temporal enabled: (bool) => bool",
+      "documentation": "`enabled(a)` is true when the action `a` is enabled in the current state.\n\nAn action is enabled when all its preconditions are satisfied\nand it's postcontitions are satisfiable.\n\n### Examples\n\n```quint\nvar x: int\naction Init = x' = 0\naction Under10 = all {\n  x < 10,\n  x' = x + 1,\n}\naction Over10 = all {\n  x >= 10,\n  x' = x + 1,\n}\ntemporal Property = always(and {\n  enabled(Under10) iff x < 10,\n  enabled(Over10) iff x >=10,\n})\n```\n\n```quint\nvar x: int\naction Init = x' = 0\naction impossible = {\n  nondet i = Set().oneOf()\n  x' = i\n}\ntemporal Property = always(not(enabled(impossible)))\n```"
+    },
+    {
+      "name": "weakFair",
+      "signature": "temporal weakFair: (bool, a) => bool",
+      "documentation": "`weakFair(a, v)` is true when\n`eventually(always(a.mustChange(v).enabled())).implies(always(eventually(a.mustChange(v))))`\nis true.\n\nThis is the weak fairness condition.\n\nThe weak fairness condition can be expressed in English as (from Specifying Systems):\n\n1. It's always the case that, if A is enabled forever, then an A step eventually occurs.\n1. A is infinitely often disabled, or infinitely many A steps occur.\n1. If A is eventually enabled forever, then infinitely many A steps occur.\n\n### Examples\n\n```quint\nvar x: int\naction Init = x' = 0\naction Next = any {\n  x' = x + 1,\n  x' = x,\n}\n\ntemporal Property = Next.weakFair(Set(x)).implies(eventually(x == 10))\n```"
+    },
+    {
+      "name": "leadsTo",
+      "signature": "temporal leadsTo: (bool, bool) => bool",
+      "documentation": "`leadsTo(p, q)` is the TLA+ leads-to operator `p ~> q`.\n\nIt is equivalent to `always(p implies eventually(q))`: whenever `p` holds,\n`q` must eventually hold.\n\n### Examples\n\n```quint\nvar active: int -> bool\nvar terminationDetected: bool\n\ntemporal Property = NODES.forall(i => not(active.get(i))) leadsTo terminationDetected\n```"
+    },
+    {
+      "name": "strongFair",
+      "signature": "temporal strongFair: (bool, a) => bool",
+      "documentation": "`strongFair(a, v)` is true when\n`always(eventually(a.mustChange(v).enabled())).implies(always(eventually(a.mustChange(v))))`\n is true.\n\nThis is the strong fairness condition.\n\nThe strong fairness condition can be expressed in English as (from Specifying Systems):\n\n1. A is eventually disabled forever, or infinitely many A steps occur.\n1. If A is infinitely often enabled, then infinitely many A steps occur.\n\n### Examples\n\n```quint\nvar x: int\naction Init = x' = 0\naction cycleTo1 = all { x == 0, x' = 1 },\naction cycleTo0 = all { x == 1, x' = 0 },\naction breakCycle = all { x == 0, x' = 2 },\n\naction Next = any {\n cycleTo1,\n cycleTo0,\n breakCycle,\n x' = x,\n}\n\n// Strong fairness can be used to ensure breakCycle happens\ntemporal Property = breakCycle.strongFair(Set(x)).implies(eventually(x == 2))\n```"
+    },
+    {
+      "name": "assign",
+      "signature": "action assign: (a, a) => bool",
+      "documentation": "`assign(n, v)` is true when the state variable named `n` has the value `v`\nin the next state of a transition.\n\nThis operator is used to define transitions by specifying how the state variables change\n\nCan be written as `n' = v`.\n\n### Examples\n\n```quint\nvar x: int\naction Init = x' = 0\n// Next defines all transitions from a number to its successor.\naction Next = x' = x + 1\n```"
+    },
+    {
+      "name": "ite",
+      "signature": "action ite: (bool, a, a) => a",
+      "documentation": "`ite(c, t, e)` is `t` when `c` is true and `e` when `c` is false.\n\nCan be written as `if (c) t else e`.\n\nCan be used with actions.\n\n### Examples\n\n```quint\npure val m = if (1 == 2) 3 else 4\nassert(m == 4)\n```\n\n```quint\nvar x: int\naction a = if (x == 0) x' = 3 else x' = 4\nrun test = (x' = 0).then(a).then(assert(x == 3))\n```"
+    },
+    {
+      "name": "then",
+      "signature": "action then: (bool, bool) => bool",
+      "documentation": "`a.then(b)` is true for a step from `s1` to `s2` if there is a state `t` such that\n\n`a` is true for a step from `s1` to `t` and `b` is true for a step from `t` to `s2`.\n\nThis is the action composition operator. If `a` evaluates to `false`, then\n`a.then(b)` reports an error. If `b` evaluates to `false` after `a`, then\n`a.then(b)` returns `false`.\n\n### Examples\n\n```quint\nvar x: int\nrun test = (x' = 1).then(x' = 2).then(x' = 3).then(assert(x == 3))\n```"
+    },
+    {
+      "name": "expect",
+      "signature": "action expect: (bool, bool) => bool",
+      "documentation": "`a.expect(b)` is true for a step from `s1` to `s2` if\n\n - `a` is true for a step from `s1` to `s2`, and\n - `b` holds true in `s2`.\n\nIf `a` evaluates to `false`, evaluation of `a.expect(b)`\nfails with an error message. If `b` evaluates to `false`,\nevaluation of `a.expect(b)` fails with an error message.\n\n### Examples\n\n```quint\nvar n: int\nrun expectConditionOkTest = (n' = 0).then(n' = 3).expect(n == 3)\nrun expectConditionFailsTest = (n' = 0).then(n' = 3).expect(n == 4)\nrun expectRunFailsTest = (n' = 0).then(all { n == 2, n' = 3 }).expect(n == 4)\n```"
+    },
+    {
+      "name": "reps",
+      "signature": "action reps: (int, (int) => bool) => bool",
+      "documentation": "`n.reps(i => A(i))` or `n.reps(A)` the action `A`, `n` times.\nThe iteration number, starting with 0, is passed as an argument of `A`.\nAs actions are usually not parameterized by the iteration number,\nthe most common form looks like: `n.reps(i => A)`.\n\nThe semantics of this operator is as follows:\n\n- When `n <= 0`, this operator does not change the state.\n- When `n = 1`, `n.reps(A)` is equivalent to `A(0)`.\n- When `n > 1`, `n.reps(A)`, is equivalent to\n  `A(0).then((n - 1).reps(i => A(1 + i)))`.\n\n### Examples\n\n```quint\nvar x: int\nrun test = (x' = 0).then(3.reps(i => x' = x + 1)).then(assert(x == 3))\n```"
+    },
+    {
+      "name": "fail",
+      "signature": "action fail: (bool) => bool",
+      "documentation": "`a.fail()` evaluates to `true` if and only if action `a` evaluates to `false`.\n\nThis operator is good for writing tests that expect an action to fail."
+    },
+    {
+      "name": "assert",
+      "signature": "action assert: (bool) => bool",
+      "documentation": "`assert(p)` is an action that is true when `p` is true.\n\nIt does not change the state.\n\n### Examples\n\n```quint\nvar x: int\nrun test = (x' = 0).then(3.reps(x' = x + 1)).then(assert(x == 3))\n```quint\n\n```quint\nvar x: int\naction Init = x' = 0\naction Next = x' = x + 1\n\nrun test = Init.then(all { Next, assert(x > 0) })\n```"
+    },
+    {
+      "name": "q::debug",
+      "signature": "pure def q::debug: (str, a) => a",
+      "documentation": "`q::debug(msg, value)` prints the given message and value to the console,\nseparated by a space.\n\nIt also returns the given value unchanged,\nso that it can be used directly within expressions.\n\nWhen called with a single argument as `q::debug(expr)`, it prints the\nexpression itself as the message, followed by its value.\n\n### Examples\n\n```quint\nvar x: int\n>>> (x' = 0).then(3.reps(i => x' = q::debug(\"new x:\", x + 1)))\n> new x: 1\n> new x: 2\n> new x: 3\ntrue\n```\n\n```quint\nvar x: int\n>>> (x' = 0).then(x' = q::debug(x + 1))\n> x + 1: 1\ntrue\n```"
+    },
+    {
+      "name": "apalache::generate",
+      "signature": "pure def apalache::generate: (int) => a",
+      "documentation": "`apalache::generate(n)` generates a value of type `a` while constraining\nall of its children collections to have at most `n` elements. This operator\nmust be used together with `nondet`, similar to `oneOf`.\n\n### Examples\n\n```quint\nnondet S: Set({ a: int, b: Set({ c: str, d: bool }) }) = apalache::generate(4)\n```\n\nIn the above example, `S` has up to 4 elements, and for each `x` in `S`,\n`x.b` has up to 4 elements."
+    }
+  ]
+}

@@ -31,7 +31,9 @@ func ApplicationConstraints(op string, id ID, args []TypedExpression, result Typ
 	var constraints []Constraint
 	var failure *ErrorTree
 	switch op {
-	case "Rec", "field", "fieldNames", "with":
+	case "Rec":
+		return RecordConstructorConstraints(id, args, result)
+	case "field", "fieldNames", "with":
 		constraints, failure = RecordConstraints(op, id, args, result)
 	case "Tup":
 		constraints = TupleConstructorConstraints(id, args, result)

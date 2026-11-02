@@ -1,0 +1,3214 @@
+[
+  {
+    "name": "operator-body-failure",
+    "source": "module M { def f(x)=x+true }",
+    "input": [
+      {
+        "id": 7,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 5,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "bool",
+                    "value": true
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [
+            "t_x_1",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "4",
+        "error": {
+          "location": "Trying to unify (int, int) => int and (t_x_1, bool) => _t0",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "annotated-operand-failure",
+    "source": "module M { def f(x:bool):int=x+1 }",
+    "input": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 7,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "x",
+                  "typeAnnotation": {
+                    "id": 1,
+                    "kind": "bool"
+                  }
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 6,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "bool"
+                }
+              ],
+              "res": {
+                "id": 3,
+                "kind": "int"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_2"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_2"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_2"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [
+            "t_x_2",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "6",
+        "error": {
+          "location": "Trying to unify (int, int) => int and (bool, int) => _t0",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "result-annotation-failure",
+    "source": "module M { def f(x:int):bool=x+1 }",
+    "input": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 7,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "x",
+                  "typeAnnotation": {
+                    "id": 1,
+                    "kind": "int"
+                  }
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 6,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int"
+                }
+              ],
+              "res": {
+                "id": 3,
+                "kind": "bool"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_2"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_2"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_2"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [
+            "t_x_2",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "8",
+        "error": {
+          "location": "Trying to unify (int) => int and (int) => bool",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "lambda-value-failure",
+    "source": "module M { val f=(x)=>x+true }",
+    "input": [
+      {
+        "id": 7,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "bool",
+                    "value": true
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [
+            "t_x_1",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "4",
+        "error": {
+          "location": "Trying to unify (int, int) => int and (t_x_1, bool) => _t0",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "local-operator-body-failure",
+    "source": "module M { val z={ def f(x)=x+true; 1 } }",
+    "input": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "z",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "let",
+              "opdef": {
+                "id": 6,
+                "kind": "def",
+                "name": "f",
+                "qualifier": "def",
+                "expr": {
+                  "id": 5,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 1,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 2,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 3,
+                        "kind": "bool",
+                        "value": true
+                      }
+                    ]
+                  }
+                }
+              },
+              "expr": {
+                "id": 7,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [
+            "t_x_1",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "4",
+        "error": {
+          "location": "Trying to unify (int, int) => int and (t_x_1, bool) => _t0",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "local-result-annotation-failure",
+    "source": "module M { val z={ def f(x:int):bool=x+1; 1 } }",
+    "input": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "z",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "let",
+              "opdef": {
+                "id": 8,
+                "kind": "def",
+                "name": "f",
+                "qualifier": "def",
+                "expr": {
+                  "id": 7,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 2,
+                      "name": "x",
+                      "typeAnnotation": {
+                        "id": 1,
+                        "kind": "int"
+                      }
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 6,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                },
+                "typeAnnotation": {
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "int"
+                    }
+                  ],
+                  "res": {
+                    "id": 3,
+                    "kind": "bool"
+                  }
+                }
+              },
+              "expr": {
+                "id": 9,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_2"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_2"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_2"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [
+            "t_x_2",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "8",
+        "error": {
+          "location": "Trying to unify (int) => int and (int) => bool",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "local-lambda-value-failure",
+    "source": "module M { val z={ val f=(x)=>x+true; 1 } }",
+    "input": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "z",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "let",
+              "opdef": {
+                "id": 6,
+                "kind": "def",
+                "name": "f",
+                "qualifier": "val",
+                "expr": {
+                  "id": 5,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 1,
+                      "name": "x"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 2,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 3,
+                        "kind": "bool",
+                        "value": true
+                      }
+                    ]
+                  }
+                }
+              },
+              "expr": {
+                "id": 7,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [
+            "t_x_1",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "4",
+        "error": {
+          "location": "Trying to unify (int, int) => int and (t_x_1, bool) => _t0",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "failed-body-type-is-not-generalized",
+    "source": "module M { def f(x)=val y=x+true; x }",
+    "input": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 8,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 7,
+                "kind": "let",
+                "opdef": {
+                  "id": 5,
+                  "kind": "def",
+                  "name": "y",
+                  "qualifier": "val",
+                  "expr": {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 2,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 3,
+                        "kind": "bool",
+                        "value": true
+                      }
+                    ]
+                  }
+                },
+                "expr": {
+                  "id": 6,
+                  "kind": "name",
+                  "name": "x"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "4",
+        "error": {
+          "location": "Trying to unify (int, int) => int and (t_x_1, bool) => _t0",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "failed-application-type-is-not-generalized",
+    "source": "module M { val f=1+true }",
+    "input": [
+      {
+        "id": 5,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 2,
+                  "kind": "bool",
+                  "value": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "3",
+        "error": {
+          "location": "Trying to unify (int, int) => int and (int, bool) => _t0",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "continuing-literals-after-failure",
+    "source": "module M { def f(x)=x+true val later=3 }",
+    "input": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 5,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "bool",
+                    "value": true
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "later",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "int",
+              "value": 3
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [
+            "t_x_1",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "4",
+        "error": {
+          "location": "Trying to unify (int, int) => int and (t_x_1, bool) => _t0",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "continuing-declarations-after-failure",
+    "source": "module M { def f(x)=x+true def later(y)=y val answer=2 }",
+    "input": [
+      {
+        "id": 13,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 5,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "bool",
+                    "value": true
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "later",
+            "qualifier": "def",
+            "expr": {
+              "id": 9,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 7,
+                  "name": "y"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 8,
+                "kind": "name",
+                "name": "y"
+              }
+            }
+          },
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "answer",
+            "qualifier": "val",
+            "expr": {
+              "id": 11,
+              "kind": "int",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [
+            "t_x_1",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_y_7"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "11",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "4",
+        "error": {
+          "location": "Trying to unify (int, int) => int and (t_x_1, bool) => _t0",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "captured-free-variable-failure",
+    "source": "module M { def f(x)=val bad=(y)=>x+true; 1 }",
+    "input": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 10,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 9,
+                "kind": "let",
+                "opdef": {
+                  "id": 7,
+                  "kind": "def",
+                  "name": "bad",
+                  "qualifier": "val",
+                  "expr": {
+                    "id": 6,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 2,
+                        "name": "y"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 5,
+                      "kind": "app",
+                      "opcode": "iadd",
+                      "args": [
+                        {
+                          "id": 3,
+                          "kind": "name",
+                          "name": "x"
+                        },
+                        {
+                          "id": 4,
+                          "kind": "bool",
+                          "value": true
+                        }
+                      ]
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 8,
+                  "kind": "int",
+                  "value": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_y_2"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_y_2"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_y_2"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [
+            "t_y_2",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "5",
+        "error": {
+          "location": "Trying to unify (int, int) => int and (t_x_1, bool) => _t0",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "row-annotation-failure",
+    "source": "module M { def f(x:{a:int}):{a:bool}=x }",
+    "input": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 7,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 3,
+                  "name": "x",
+                  "typeAnnotation": {
+                    "id": 2,
+                    "kind": "rec",
+                    "fields": {
+                      "kind": "row",
+                      "fields": [
+                        {
+                          "fieldName": "a",
+                          "fieldType": {
+                            "id": 1,
+                            "kind": "int"
+                          }
+                        }
+                      ],
+                      "other": {
+                        "kind": "empty"
+                      }
+                    }
+                  }
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 6,
+                "kind": "name",
+                "name": "x"
+              }
+            },
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "rec",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "a",
+                        "fieldType": {
+                          "id": 1,
+                          "kind": "int"
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              ],
+              "res": {
+                "id": 5,
+                "kind": "rec",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "a",
+                      "fieldType": {
+                        "id": 4,
+                        "kind": "bool"
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_3"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 2,
+            "kind": "rec",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "a",
+                  "fieldType": {
+                    "id": 1,
+                    "kind": "int"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_3"
+              }
+            ],
+            "res": {
+              "id": 2,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "a",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "int"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_3"
+              }
+            ],
+            "res": {
+              "id": 2,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "a",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "int"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          "typeVariables": [
+            "t_x_3"
+          ],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "8",
+        "error": {
+          "location": "Trying to unify ({ a: int }) => { a: int } and ({ a: int }) => { a: bool }",
+          "children": [
+            {
+              "location": "Trying to unify { a: int } and { a: bool }",
+              "children": [
+                {
+                  "location": "Trying to unify int and bool",
+                  "message": "Couldn't unify int and bool",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "tuple-annotation-failure",
+    "source": "module M { def f(x:(int,bool)):(str,bool)=x }",
+    "input": [
+      {
+        "id": 11,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 9,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 4,
+                  "name": "x",
+                  "typeAnnotation": {
+                    "id": 3,
+                    "kind": "tup",
+                    "fields": {
+                      "kind": "row",
+                      "fields": [
+                        {
+                          "fieldName": "0",
+                          "fieldType": {
+                            "id": 1,
+                            "kind": "int"
+                          }
+                        },
+                        {
+                          "fieldName": "1",
+                          "fieldType": {
+                            "id": 2,
+                            "kind": "bool"
+                          }
+                        }
+                      ],
+                      "other": {
+                        "kind": "empty"
+                      }
+                    }
+                  }
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 8,
+                "kind": "name",
+                "name": "x"
+              }
+            },
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "tup",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "0",
+                        "fieldType": {
+                          "id": 1,
+                          "kind": "int"
+                        }
+                      },
+                      {
+                        "fieldName": "1",
+                        "fieldType": {
+                          "id": 2,
+                          "kind": "bool"
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              ],
+              "res": {
+                "id": 7,
+                "kind": "tup",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "0",
+                      "fieldType": {
+                        "id": 5,
+                        "kind": "str"
+                      }
+                    },
+                    {
+                      "fieldName": "1",
+                      "fieldType": {
+                        "id": 6,
+                        "kind": "bool"
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_4"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "id": 1,
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "id": 2,
+                    "kind": "bool"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_4"
+              }
+            ],
+            "res": {
+              "id": 3,
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "int"
+                    }
+                  },
+                  {
+                    "fieldName": "1",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "bool"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "10",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_4"
+              }
+            ],
+            "res": {
+              "id": 3,
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "int"
+                    }
+                  },
+                  {
+                    "fieldName": "1",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "bool"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          "typeVariables": [
+            "t_x_4"
+          ],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "10",
+        "error": {
+          "location": "Trying to unify ((int, bool)) => (int, bool) and ((int, bool)) => (str, bool)",
+          "children": [
+            {
+              "location": "Trying to unify (int, bool) and (str, bool)",
+              "children": [
+                {
+                  "location": "Trying to unify { 0: int, 1: bool } and { 0: str, 1: bool }",
+                  "children": [
+                    {
+                      "location": "Trying to unify int and str",
+                      "message": "Couldn't unify int and str",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "general-annotation-failure",
+    "source": "module M { def f(x:a):a=x+1 }",
+    "input": [
+      {
+        "id": 9,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 7,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 2,
+                  "name": "x",
+                  "typeAnnotation": {
+                    "id": 1,
+                    "kind": "var",
+                    "name": "a"
+                  }
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 6,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "typeAnnotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              ],
+              "res": {
+                "id": 3,
+                "kind": "var",
+                "name": "a"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int"
+              }
+            ],
+            "res": {
+              "id": 3,
+              "kind": "int"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int"
+              }
+            ],
+            "res": {
+              "id": 3,
+              "kind": "int"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "8",
+        "error": {
+          "location": "Checking type annotation (a) => a",
+          "children": [
+            {
+              "location": "Checking variable a",
+              "message": "Type annotation is too general: a should be int",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "local-general-annotation-failure",
+    "source": "module M { val z={ def f(x:a):a=x+1; 1 } }",
+    "input": [
+      {
+        "id": 12,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "z",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "let",
+              "opdef": {
+                "id": 8,
+                "kind": "def",
+                "name": "f",
+                "qualifier": "def",
+                "expr": {
+                  "id": 7,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 2,
+                      "name": "x",
+                      "typeAnnotation": {
+                        "id": 1,
+                        "kind": "var",
+                        "name": "a"
+                      }
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 6,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                },
+                "typeAnnotation": {
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  ],
+                  "res": {
+                    "id": 3,
+                    "kind": "var",
+                    "name": "a"
+                  }
+                }
+              },
+              "expr": {
+                "id": 9,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int"
+              }
+            ],
+            "res": {
+              "id": 3,
+              "kind": "int"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int"
+              }
+            ],
+            "res": {
+              "id": 3,
+              "kind": "int"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "8",
+        "error": {
+          "location": "Checking type annotation (a) => a",
+          "children": [
+            {
+              "location": "Checking variable a",
+              "message": "Type annotation is too general: a should be int",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "multiple-constraint-errors",
+    "source": "module M { def f(x)=(x+true,not(1)) }",
+    "input": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 8,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 7,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 2,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 3,
+                        "kind": "bool",
+                        "value": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": 6,
+                    "kind": "app",
+                    "opcode": "not",
+                    "args": [
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t2"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t2"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t2"
+            }
+          },
+          "typeVariables": [
+            "t_x_1",
+            "_t2",
+            "_t1",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "4",
+        "error": {
+          "location": "Trying to unify (int, int) => int and (t_x_1, bool) => _t0",
+          "children": [
+            {
+              "location": "Trying to unify int and bool",
+              "message": "Couldn't unify int and bool",
+              "children": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "6",
+        "error": {
+          "location": "Trying to unify (bool) => bool and (int) => _t1",
+          "children": [
+            {
+              "location": "Trying to unify bool and int",
+              "message": "Couldn't unify bool and int",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "successful-polymorphic-control",
+    "source": "module M { def f(x)=x val a=f(1) val b=f(true) }",
+    "input": [
+      {
+        "id": 11,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 3,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 2,
+                "kind": "name",
+                "name": "x"
+              }
+            }
+          },
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "f",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "f",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "bool",
+                  "value": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "1",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_1"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "3",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "t_x_1"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_1"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "t_x_1"
+            }
+          },
+          "typeVariables": [
+            "t_x_1"
+          ],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "5",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "10",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": []
+  }
+]
