@@ -1609,3 +1609,11 @@ word "retained" in the commit message.
   missing inference entries, and mixed pure/stateful overrides with exact
   messages and references. Default tests pass under one second. Action-as-temporal
   explanations and exact upstream mode-check differential fixtures remain open.
+
+- 2026-11-02: Added per-definition tracking of the first application that
+  promotes action updates to temporal effects, with upstream QNT200 explanations
+  and and/or/exists action hints. Explicit temporal operators are exempt, and
+  nested definitions maintain separate tracking frames. A parsed/inferred test
+  checks exact action-combination wording and permits the temporal counterpart.
+  Full default tests pass under one second. Broader nested/lambda diagnostic
+  differential coverage and combined analyzer integration remain open.

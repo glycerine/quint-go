@@ -52,3 +52,23 @@ func TestModeInstancePurity(t *testing.T) {
 		t.Fatal(got)
 	}
 }
+
+func TestActionAsTemporalDiagnostic(t *testing.T) {
+	ms, err := ParseModules("module M { var x:int action step=x'=x+1 action bad=step and step temporal good=step and step }")
+	if err != nil {
+		t.Fatal(err)
+	}
+	linked, _ := ResolveLinkedModules(ms)
+	inf := NewEffectInferrer(linked.Table)
+	inf.InferEffects(ms[0].Declarations)
+	c := NewModeChecker()
+	if err = c.CheckModes(ms[0].Declarations, inf.Effects); err != nil {
+		t.Fatal(err)
+	}
+	app := ms[0].Declarations[2].Expr
+	d, ok := c.Errors.Get2(app.ID.String())
+	want := "Using an action as an argument of `and` is only allowed in temporal definitions, but it is used in action `bad`. To combine actions, use `all { ... }` instead."
+	if !ok || d.Message != want || c.Errors.Len() != 1 {
+		t.Fatal(d, c.Errors)
+	}
+}
