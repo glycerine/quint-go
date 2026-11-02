@@ -51,6 +51,32 @@ func expressionFromContext(ctx p.IExprContext, ids *IDGenerator) (Expr, error) {
 		}
 		return e, nil
 	}
+	if c, ok := ctx.(*p.MatchContext); ok {
+		match := c.MatchSumExpr()
+		scrutinee, err := expressionFromContext(match.Expr(), ids)
+		if err != nil {
+			return Expr{}, err
+		}
+		args := []Expr{scrutinee}
+		for _, arm := range match.AllMatchSumCase() {
+			body, err := expressionFromContext(arm.Expr(), ids)
+			if err != nil {
+				return Expr{}, err
+			}
+			label, name := "_", "_"
+			if variant := arm.GetVariantMatch(); variant != nil {
+				label = variant.GetVariantLabel().GetText()
+				if variant.GetVariantParam() != nil {
+					name = variant.GetVariantParam().GetText()
+				}
+			}
+			labelExpr := Expr{ID: ids.Next(), Kind: "str", Str: label}
+			parameter := Parameter{ID: ids.Next(), Name: name}
+			elim := Expr{ID: ids.Next(), Kind: "lambda", Qualifier: Def, Params: []Parameter{parameter}, Body: &body}
+			args = append(args, labelExpr, elim)
+		}
+		return Expr{ID: ids.Next(), Kind: "app", Opcode: "matchVariant", Args: args}, nil
+	}
 	if c, ok := ctx.(*p.LambdaConsContext); ok {
 		lambda := c.Lambda().LambdaUnsugared()
 		if lambda == nil {

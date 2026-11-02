@@ -717,3 +717,12 @@ word "retained" in the commit message.
   remains open for destructuring declarations, semantic declaration diagnostics,
   and exact documentation/source mapping parity; synthesized type IDs remain
   part of the pending source-mapping work.
+
+- 2026-11-02: Added match-expression conversion to matchVariant applications with
+  ordered label/eliminator pairs, payload bindings, unit cases, holes, and wildcard
+  cases. Tests cover optional leading pipes, nested matches, module integration
+  with sum constructors, unique expression/parameter IDs, and malformed cases.
+  Default tests pass (core 0.284s; combined package execution under one second).
+  P2.4 remains open for tuple-lambda/destructuring conversion, source mapping, and
+  diagnostic parity; exhaustiveness and duplicate-case checking belong to the
+  pending semantic passes.
