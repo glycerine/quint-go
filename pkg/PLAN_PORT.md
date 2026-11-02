@@ -354,6 +354,11 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     Set elements and Map keys, with reference object identity and hash behavior.
   - [ ] Symbolic collections, remaining iteration behavior, and cross-type
     equality audit (TypeScript's set-like fallback equates unlike constructors).
+    - [x] Independent immutable RuntimeDomain APIs for explicit sets, inclusive
+      intervals, Int/Nat, cardinality/membership, iteration, equality/subset,
+      positional picks and exact finite/infinite RNG sampling.
+    - [ ] Attach compact domains to RuntimeValue and source evaluation; implement
+      product, powerset and map-set domains without eager display/identity trees.
   - [x] Explicit-state TypeScript-compatible serialization, including transient
     tuple sets, fresh-object hashing, Unicode ties, and repeated-call UID history.
   - [ ] Wire shared object-hash state through all evaluator operations and
@@ -2949,3 +2954,14 @@ word "retained" in the commit message.
   optional corpus. Generation is reproducible and focused race checks pass.
   Cold lookup now takes roughly 0.8–2.1µs instead of 0.46–3.40ms of parsing;
   full default tests pass in 0.992s combined package execution in the latest run.
+
+- 2026-11-02: Added immutable RuntimeDomain primitives for explicit sets,
+  inclusive intervals, Int and Nat. Huge intervals remain compact through
+  cardinality, membership and positional sampling; iteration checks context per
+  element. Six saved upstream scenarios and 96 exact RNG draws cover bounds,
+  normalization/display, equality/subset quirks, exceptions and diagnostics;
+  cancellation/ownership/validation checks pass (focused tests0.026s). These are
+  independent library APIs, not source evaluator support. A separate 26-case
+  compound-domain pending oracle records product/powerset/map-set cursor,
+  empty-product and V8 resource exceptions without huge allocations; it is not
+  counted as passing implementation coverage.
