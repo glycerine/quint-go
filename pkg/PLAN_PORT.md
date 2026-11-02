@@ -798,3 +798,12 @@ word "retained" in the commit message.
   and tool checksum validation. Full regeneration reproduces both committed
   parsers byte-for-byte. Python tests pass in 0.003s; default Go package execution
   totals 0.399s. Java generation remains a separate maintenance check.
+
+- 2026-11-02: Added structured SyntaxErrors/SyntaxIssue results across all parser
+  entry points, retaining accumulated lexer/parser issues, grammar diagnostic
+  codes, and zero-based UTF-16 positions. Explicit trailing-input errors now carry
+  the offending token position too. Tests cover supplementary Unicode, LF/CRLF,
+  EOF, lexer errors, grammar-action codes, accumulation, and every entry point.
+  Default tests pass within the sub-second execution target. P2.8 remains open
+  for upstream recovery/partial IR and semantic-error accumulation; source names,
+  token spans, and IR source-map integration remain pending in P2.5.

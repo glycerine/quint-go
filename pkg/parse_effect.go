@@ -1,25 +1,14 @@
 package quint
 
 import (
-	"fmt"
 	"github.com/antlr4-go/antlr/v4"
 	p "github.com/glycerine/quint-go/pkg/internal/effectparser"
-	"strings"
 )
-
-type effectSyntaxErrors struct {
-	*antlr.DefaultErrorListener
-	messages []string
-}
-
-func (e *effectSyntaxErrors) SyntaxError(_ antlr.Recognizer, _ interface{}, line, column int, message string, _ antlr.RecognitionException) {
-	e.messages = append(e.messages, fmt.Sprintf("%d:%d: %s", line, column, message))
-}
 
 // ParseEffect parses a complete effect signature, assigning state occurrence
 // references from one in encounter order, independently for each parse.
 func ParseEffect(text string) (Effect, error) {
-	listener := &effectSyntaxErrors{DefaultErrorListener: antlr.NewDefaultErrorListener()}
+	listener := newSyntaxErrors(text)
 	lexer := p.NewEffectLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
 	lexer.AddErrorListener(listener)
@@ -29,10 +18,10 @@ func ParseEffect(text string) (Effect, error) {
 	parser.AddErrorListener(listener)
 	tree := parser.Effect()
 	if tokens.LA(1) != antlr.TokenEOF {
-		listener.messages = append(listener.messages, "unexpected trailing input")
+		listener.trailing(tokens.LT(1))
 	}
-	if len(listener.messages) > 0 {
-		return Effect{}, fmt.Errorf("invalid effect: %s", strings.Join(listener.messages, "; "))
+	if len(listener.issues) > 0 {
+		return Effect{}, listener.err("effect")
 	}
 	ids := NewIDGenerator()
 	entity := func(ctx p.IEntityContext) Entity {

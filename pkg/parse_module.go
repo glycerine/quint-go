@@ -10,7 +10,7 @@ import (
 // ParseModules performs syntax parsing and IR conversion only; imports, names,
 // types, and effects are resolved by subsequent passes.
 func ParseModules(text string) ([]Module, error) {
-	listener := &effectSyntaxErrors{DefaultErrorListener: antlr.NewDefaultErrorListener()}
+	listener := newSyntaxErrors(text)
 	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
 	lexer.AddErrorListener(listener)
@@ -18,8 +18,8 @@ func ParseModules(text string) ([]Module, error) {
 	parser.RemoveErrorListeners()
 	parser.AddErrorListener(listener)
 	tree := parser.Modules()
-	if len(listener.messages) > 0 {
-		return nil, fmt.Errorf("invalid module: %s", strings.Join(listener.messages, "; "))
+	if len(listener.issues) > 0 {
+		return nil, listener.err("module")
 	}
 	ids := NewIDGenerator()
 	modules := []Module{}

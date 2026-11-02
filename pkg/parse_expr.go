@@ -12,7 +12,7 @@ import (
 // ParseExpression parses a complete expression. Conversion support is added
 // incrementally; unsupported syntax returns an explicit error, never partial IR.
 func ParseExpression(text string) (Expr, error) {
-	listener := &effectSyntaxErrors{DefaultErrorListener: antlr.NewDefaultErrorListener()}
+	listener := newSyntaxErrors(text)
 	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
 	lexer.AddErrorListener(listener)
@@ -22,10 +22,10 @@ func ParseExpression(text string) (Expr, error) {
 	parser.AddErrorListener(listener)
 	tree := parser.Expr()
 	if tokens.LA(1) != antlr.TokenEOF {
-		listener.messages = append(listener.messages, "unexpected trailing input")
+		listener.trailing(tokens.LT(1))
 	}
-	if len(listener.messages) > 0 {
-		return Expr{}, fmt.Errorf("invalid expression: %s", strings.Join(listener.messages, "; "))
+	if len(listener.issues) > 0 {
+		return Expr{}, listener.err("expression")
 	}
 	return expressionFromContext(tree, NewIDGenerator())
 }

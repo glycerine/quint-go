@@ -1,17 +1,15 @@
 package quint
 
 import (
-	"fmt"
 	"github.com/antlr4-go/antlr/v4"
 	p "github.com/glycerine/quint-go/pkg/internal/quintparser"
-	"strings"
 )
 
 // ParseDeclaration parses one complete source declaration, optionally preceded
 // by documentation comments. Sum types and destructuring can expand into several
 // IR declarations. It performs no name resolution or semantic analysis.
 func ParseDeclaration(text string) ([]Declaration, error) {
-	listener := &effectSyntaxErrors{DefaultErrorListener: antlr.NewDefaultErrorListener()}
+	listener := newSyntaxErrors(text)
 	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
 	lexer.AddErrorListener(listener)
@@ -26,10 +24,10 @@ func ParseDeclaration(text string) ([]Declaration, error) {
 	}
 	tree := parser.Declaration()
 	if tokens.LA(1) != antlr.TokenEOF {
-		listener.messages = append(listener.messages, "unexpected trailing input")
+		listener.trailing(tokens.LT(1))
 	}
-	if len(listener.messages) > 0 {
-		return nil, fmt.Errorf("invalid declaration: %s", strings.Join(listener.messages, "; "))
+	if len(listener.issues) > 0 {
+		return nil, listener.err("declaration")
 	}
 	ds, err := declarationsFromContext(tree, NewIDGenerator())
 	if err != nil {

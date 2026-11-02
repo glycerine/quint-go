@@ -5,13 +5,12 @@ import (
 	"github.com/antlr4-go/antlr/v4"
 	p "github.com/glycerine/quint-go/pkg/internal/quintparser"
 	"strconv"
-	"strings"
 )
 
 // ParseType parses one complete Quint type. IDs are deliberately absent: the
 // module parser will assign source identities when constructing annotated IR.
 func ParseType(text string) (Type, error) {
-	listener := &effectSyntaxErrors{DefaultErrorListener: antlr.NewDefaultErrorListener()}
+	listener := newSyntaxErrors(text)
 	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
 	lexer.AddErrorListener(listener)
@@ -21,10 +20,10 @@ func ParseType(text string) (Type, error) {
 	parser.AddErrorListener(listener)
 	tree := parser.Type_()
 	if tokens.LA(1) != antlr.TokenEOF {
-		listener.messages = append(listener.messages, "unexpected trailing input")
+		listener.trailing(tokens.LT(1))
 	}
-	if len(listener.messages) > 0 {
-		return Type{}, fmt.Errorf("invalid type: %s", strings.Join(listener.messages, "; "))
+	if len(listener.issues) > 0 {
+		return Type{}, listener.err("type")
 	}
 	return typeFromContext(tree)
 }

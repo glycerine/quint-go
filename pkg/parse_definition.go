@@ -4,11 +4,10 @@ import (
 	"fmt"
 	"github.com/antlr4-go/antlr/v4"
 	p "github.com/glycerine/quint-go/pkg/internal/quintparser"
-	"strings"
 )
 
 func ParseOperatorDefinition(text string) (OperatorDef, error) {
-	listener := &effectSyntaxErrors{DefaultErrorListener: antlr.NewDefaultErrorListener()}
+	listener := newSyntaxErrors(text)
 	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
 	lexer.AddErrorListener(listener)
@@ -18,10 +17,10 @@ func ParseOperatorDefinition(text string) (OperatorDef, error) {
 	parser.AddErrorListener(listener)
 	tree := parser.OperDef()
 	if tokens.LA(1) != antlr.TokenEOF {
-		listener.messages = append(listener.messages, "unexpected trailing input")
+		listener.trailing(tokens.LT(1))
 	}
-	if len(listener.messages) > 0 {
-		return OperatorDef{}, fmt.Errorf("invalid definition: %s", strings.Join(listener.messages, "; "))
+	if len(listener.issues) > 0 {
+		return OperatorDef{}, listener.err("definition")
 	}
 	return operatorFromContext(tree, NewIDGenerator())
 }
