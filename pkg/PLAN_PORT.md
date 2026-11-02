@@ -1765,3 +1765,11 @@ word "retained" in the commit message.
   instances. Whole modules match structurally, including order and metadata;
   JSON object-key order alone is ignored. Default tests pass (combined execution
   0.726s). Export expansion and actual instance instantiation remain open.
+
+- 2026-11-02: Added initial export expansion using ordered module/lookup
+  dictionaries, referenced top-level selection, alias tracking, namespacing, and
+  metadata reset. A linked multi-module test verifies star-export inclusion,
+  removed directives, visible output, and source isolation. Default tests pass
+  (combined execution 0.748s). Nested export dependency namespaces, deduplication,
+  exact upstream export fixtures, and integration with import expansion remain
+  open; P6.1 is incomplete.
