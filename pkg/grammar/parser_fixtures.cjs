@@ -342,3 +342,25 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/entity_unify.json'),JSONbig
  const result=unifyEntities(a,b)
  return {name,a,b,...(result.isLeft()?{error:result.value}:{substitutions:result.value})}
 }),null,2)+'\n')
+
+const {unify:unifyEffects}=require(path.join(root,'quint/src/effects/base'))
+const effectUnifyCases=[
+ ['equal','Read[r]','Read[r]'],['variable','e','Read[r]'],['reverse-variable','Pure','e'],
+ ['occurs','e','(e) => Pure'],['different','Pure','() => Pure'],
+ ['arity','(e) => e','(a,b) => a'],['concrete','Read[r]','Read[s]'],
+ ['pure','Read[r] & Update[w]','Pure'],
+ ['concrete-failure',"Read['x']","Read['y']"],
+ ['unmatched-failure',"Read['x']",'Pure'],
+ ['mixed','Read[r] & Update[w]','Read[s] & Temporal[t]'],
+ ['arrow','(e) => e','(Read[r]) => Read[s]'],
+ ['arrow-failure',"(Read['x']) => Pure","(Read['y']) => Pure"],
+ ['chain','(e,e) => e','(Read[r],Read[s]) => Read[t]'],
+ ['hash','(Read[r,s]) => Read[r,s]','(Read[t]) => Read[t]'],
+ ['hash-concrete',"(Read[r,s,'x']) => Read[r,s,'x']","(Read[t,'x']) => Read[t,'x']"],
+ ['result-failure','() => Pure',"() => Update['x']"],
+ ['priority',"Read['x'] & Update['z']","Read['y']"],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/effect_unify.json'),JSONbig.stringify(effectUnifyCases.map(([name,x,y])=>{
+ const a=parseEffect(x).value,b=parseEffect(y).value,result=unifyEffects(a,b)
+ return {name,a,b,...(result.isLeft()?{error:result.value}:{substitutions:result.value})}
+}),null,2)+'\n')

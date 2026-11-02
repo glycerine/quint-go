@@ -264,6 +264,9 @@ the information required by Go Apalache's importer.
   simplification, unification, and effect printing.
   - [x] Port effect-variable occurs checks and recursive entity-union binding rules.
   - [x] Port structural entity unification and compare ordered substitutions/errors with upstream.
+  - [x] Implement concrete/arrow effect unification and initial differential fixtures.
+  - [ ] Preserve state-variable occurrence identity during substitution; enable the
+    skipped `hash-concrete` effect-unification fixture (currently rejected as cyclic).
   - [ ] Integrate binding rules into structural effect/entity unification and validate against upstream fixtures.
 - [ ] P5.2 Port builtin effect signatures and effect inference through calls,
   lambdas, local definitions, imports, and instantiated modules.
@@ -1480,3 +1483,12 @@ word "retained" in the commit message.
   compare substitutions, source references, and diagnostic trees exactly; tests
   also check input isolation. Default tests pass (combined execution 0.635s).
   Effect-level concrete/arrow unification and inference remain pending.
+
+- 2026-11-02: Added concrete and arrow effect unification, including component
+  nullification, substitution composition order, occurs checks, arity errors,
+  and propagation-arrow entity hashing. Seventeen exact upstream cases pass;
+  an eighteenth (`hash-concrete`) is retained but explicitly skipped because
+  current substitution cycle rejection does not implement upstream's stable
+  self-containing unions and state-variable occurrence identity. This is an
+  open compatibility defect, not a supported case. Full default tests pass;
+  effect inference and structured substitution-exception parity remain open.

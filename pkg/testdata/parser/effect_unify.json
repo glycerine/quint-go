@@ -1,0 +1,1056 @@
+[
+  {
+    "name": "equal",
+    "a": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "variable",
+            "name": "r"
+          }
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "variable",
+            "name": "r"
+          }
+        }
+      ]
+    },
+    "substitutions": []
+  },
+  {
+    "name": "variable",
+    "a": {
+      "kind": "variable",
+      "name": "e"
+    },
+    "b": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "variable",
+            "name": "r"
+          }
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "effect",
+        "name": "e",
+        "value": {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "read",
+              "entity": {
+                "kind": "variable",
+                "name": "r"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "reverse-variable",
+    "a": {
+      "kind": "concrete",
+      "components": []
+    },
+    "b": {
+      "kind": "variable",
+      "name": "e"
+    },
+    "substitutions": [
+      {
+        "kind": "effect",
+        "name": "e",
+        "value": {
+          "kind": "concrete",
+          "components": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "occurs",
+    "a": {
+      "kind": "variable",
+      "name": "e"
+    },
+    "b": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "variable",
+          "name": "e"
+        }
+      ],
+      "result": {
+        "kind": "concrete",
+        "components": []
+      }
+    },
+    "error": {
+      "location": "Trying to unify e and (e) => Pure",
+      "message": "Can't bind e to (e) => Pure: cyclical binding",
+      "children": []
+    }
+  },
+  {
+    "name": "different",
+    "a": {
+      "kind": "concrete",
+      "components": []
+    },
+    "b": {
+      "kind": "arrow",
+      "params": [],
+      "result": {
+        "kind": "concrete",
+        "components": []
+      }
+    },
+    "error": {
+      "location": "Trying to unify Pure and () => Pure",
+      "message": "Can't unify different types of effects",
+      "children": []
+    }
+  },
+  {
+    "name": "arity",
+    "a": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "variable",
+          "name": "e"
+        }
+      ],
+      "result": {
+        "kind": "variable",
+        "name": "e"
+      }
+    },
+    "b": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "variable",
+          "name": "b"
+        }
+      ],
+      "result": {
+        "kind": "variable",
+        "name": "a"
+      }
+    },
+    "error": {
+      "location": "Trying to unify (e) => e and (a, b) => a",
+      "message": "Expected 1 arguments, got 2",
+      "children": []
+    }
+  },
+  {
+    "name": "concrete",
+    "a": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "variable",
+            "name": "r"
+          }
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "variable",
+            "name": "s"
+          }
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "r",
+        "value": {
+          "kind": "variable",
+          "name": "s"
+        }
+      }
+    ]
+  },
+  {
+    "name": "pure",
+    "a": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "variable",
+            "name": "r"
+          }
+        },
+        {
+          "kind": "update",
+          "entity": {
+            "kind": "variable",
+            "name": "w"
+          }
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "components": []
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "w",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": []
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "r",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "concrete-failure",
+    "a": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "x",
+                "reference": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "y",
+                "reference": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "error": {
+      "location": "Trying to unify Read['x'] and Read['y']",
+      "children": [
+        {
+          "location": "Trying to unify entities ['x'] and ['y']",
+          "message": "Expected [x] and [y] to be the same",
+          "children": []
+        }
+      ]
+    }
+  },
+  {
+    "name": "unmatched-failure",
+    "a": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "x",
+                "reference": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "components": []
+    },
+    "error": {
+      "location": "Trying to unify Read['x'] and Pure",
+      "children": [
+        {
+          "location": "Trying to unify entities ['x'] and []",
+          "message": "Expected [x] and [] to be the same",
+          "children": []
+        }
+      ]
+    }
+  },
+  {
+    "name": "mixed",
+    "a": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "variable",
+            "name": "r"
+          }
+        },
+        {
+          "kind": "update",
+          "entity": {
+            "kind": "variable",
+            "name": "w"
+          }
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "variable",
+            "name": "s"
+          }
+        },
+        {
+          "kind": "temporal",
+          "entity": {
+            "kind": "variable",
+            "name": "t"
+          }
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "r",
+        "value": {
+          "kind": "variable",
+          "name": "s"
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "t",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": []
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "w",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "arrow",
+    "a": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "variable",
+          "name": "e"
+        }
+      ],
+      "result": {
+        "kind": "variable",
+        "name": "e"
+      }
+    },
+    "b": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "read",
+              "entity": {
+                "kind": "variable",
+                "name": "r"
+              }
+            }
+          ]
+        }
+      ],
+      "result": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "s"
+            }
+          }
+        ]
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "effect",
+        "name": "e",
+        "value": {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "read",
+              "entity": {
+                "kind": "variable",
+                "name": "s"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "r",
+        "value": {
+          "kind": "variable",
+          "name": "s"
+        }
+      }
+    ]
+  },
+  {
+    "name": "arrow-failure",
+    "a": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "read",
+              "entity": {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 1
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "result": {
+        "kind": "concrete",
+        "components": []
+      }
+    },
+    "b": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "read",
+              "entity": {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "y",
+                    "reference": 1
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "result": {
+        "kind": "concrete",
+        "components": []
+      }
+    },
+    "error": {
+      "location": "Trying to unify (Read['x']) => Pure and (Read['y']) => Pure",
+      "children": [
+        {
+          "location": "Trying to unify Read['x'] and Read['y']",
+          "children": [
+            {
+              "location": "Trying to unify entities ['x'] and ['y']",
+              "message": "Expected [x] and [y] to be the same",
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "chain",
+    "a": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "variable",
+          "name": "e"
+        },
+        {
+          "kind": "variable",
+          "name": "e"
+        }
+      ],
+      "result": {
+        "kind": "variable",
+        "name": "e"
+      }
+    },
+    "b": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "read",
+              "entity": {
+                "kind": "variable",
+                "name": "r"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "read",
+              "entity": {
+                "kind": "variable",
+                "name": "s"
+              }
+            }
+          ]
+        }
+      ],
+      "result": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "t"
+            }
+          }
+        ]
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "effect",
+        "name": "e",
+        "value": {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "read",
+              "entity": {
+                "kind": "variable",
+                "name": "t"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "r",
+        "value": {
+          "kind": "variable",
+          "name": "t"
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "s",
+        "value": {
+          "kind": "variable",
+          "name": "t"
+        }
+      }
+    ]
+  },
+  {
+    "name": "hash",
+    "a": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "read",
+              "entity": {
+                "kind": "union",
+                "entities": [
+                  {
+                    "kind": "variable",
+                    "name": "r"
+                  },
+                  {
+                    "kind": "variable",
+                    "name": "s"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "result": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "r"
+                },
+                {
+                  "kind": "variable",
+                  "name": "s"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "b": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "read",
+              "entity": {
+                "kind": "variable",
+                "name": "t"
+              }
+            }
+          ]
+        }
+      ],
+      "result": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "t"
+            }
+          }
+        ]
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "t",
+        "value": {
+          "kind": "variable",
+          "name": "t"
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "r",
+        "value": {
+          "kind": "variable",
+          "name": "t"
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "s",
+        "value": {
+          "kind": "variable",
+          "name": "t"
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "r#s",
+        "value": {
+          "kind": "variable",
+          "name": "t"
+        }
+      }
+    ]
+  },
+  {
+    "name": "hash-concrete",
+    "a": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "read",
+              "entity": {
+                "kind": "union",
+                "entities": [
+                  {
+                    "kind": "variable",
+                    "name": "r"
+                  },
+                  {
+                    "kind": "variable",
+                    "name": "s"
+                  },
+                  {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 1
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "result": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "r"
+                },
+                {
+                  "kind": "variable",
+                  "name": "s"
+                },
+                {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "b": {
+      "kind": "arrow",
+      "params": [
+        {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "read",
+              "entity": {
+                "kind": "union",
+                "entities": [
+                  {
+                    "kind": "variable",
+                    "name": "t"
+                  },
+                  {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "x",
+                        "reference": 1
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "result": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "t"
+                },
+                {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "t",
+        "value": {
+          "kind": "union",
+          "entities": [
+            {
+              "kind": "variable",
+              "name": "t"
+            },
+            {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "r",
+        "value": {
+          "kind": "union",
+          "entities": [
+            {
+              "kind": "variable",
+              "name": "t"
+            },
+            {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "s",
+        "value": {
+          "kind": "union",
+          "entities": [
+            {
+              "kind": "variable",
+              "name": "t"
+            },
+            {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "r#s",
+        "value": {
+          "kind": "variable",
+          "name": "t"
+        }
+      }
+    ]
+  },
+  {
+    "name": "result-failure",
+    "a": {
+      "kind": "arrow",
+      "params": [],
+      "result": {
+        "kind": "concrete",
+        "components": []
+      }
+    },
+    "b": {
+      "kind": "arrow",
+      "params": [],
+      "result": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "error": {
+      "location": "Trying to unify () => Pure and () => Update['x']",
+      "children": [
+        {
+          "location": "Trying to unify Pure and Update['x']",
+          "children": [
+            {
+              "location": "Trying to unify entities ['x'] and []",
+              "message": "Expected [x] and [] to be the same",
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "priority",
+    "a": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "x",
+                "reference": 1
+              }
+            ]
+          }
+        },
+        {
+          "kind": "update",
+          "entity": {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "z",
+                "reference": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "components": [
+        {
+          "kind": "read",
+          "entity": {
+            "kind": "concrete",
+            "stateVariables": [
+              {
+                "name": "y",
+                "reference": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "error": {
+      "location": "Trying to unify Read['x'] & Update['z'] and Read['y']",
+      "children": [
+        {
+          "location": "Trying to unify entities ['z'] and []",
+          "message": "Expected [z] and [] to be the same",
+          "children": []
+        }
+      ]
+    }
+  }
+]

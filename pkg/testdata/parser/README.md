@@ -133,3 +133,8 @@ compares exact effect/entity trees, including references and union multiplicity.
 concrete sets, variable bindings, nested/self-containing unions, covered states,
 intersection removal, and rejected unions. Substitution order, references, and
 error trees are compared without normalization.
+
+`effect_unify.json` records eighteen upstream concrete/arrow unifications.
+Seventeen compare full substitutions and errors exactly. `hash-concrete` is
+explicitly skipped pending occurrence-identity-aware substitution stabilization;
+it records a known Go incompatibility, not an accepted alternative result.
