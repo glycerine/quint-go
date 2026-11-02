@@ -323,6 +323,32 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 				}
 			}
 			return boolValue(true)
+		case "expect":
+			if storage == nil {
+				return fail(e, "Expect requires variable storage")
+			}
+			if len(e.Args) != 2 {
+				return fail(e, "Expect requires an action and condition")
+			}
+			enabled, err := boolean(e.Args[0])
+			if err != nil {
+				return RuntimeValue{}, err
+			}
+			if !enabled {
+				return RuntimeValue{}, Diagnostic{Code: "QNT508", Message: "Cannot continue to \"expect\"", Reference: &e.ID}
+			}
+			snapshot := storage.Snapshot()
+			storage.Shift()
+			storage.ClearMetadata()
+			condition, err := boolean(e.Args[1])
+			if err != nil {
+				return RuntimeValue{}, err
+			}
+			storage.Recover(snapshot)
+			if !condition {
+				return RuntimeValue{}, Diagnostic{Code: "QNT508", Message: "Expect condition does not hold true", Reference: &e.ID}
+			}
+			return boolValue(true)
 		case "assign":
 			if storage == nil {
 				return fail(e, "Assignment requires variable storage")

@@ -415,3 +415,10 @@ projects compare 27 named operations and shifts against TypeScript, including
 current records, action metadata, and RNG counters. Imports, independent
 instances with distinct constant overrides, and nested instances retain state
 across calls. Tests also check caller module/ID ownership and invalid projects.
+
+`runtime_expect.json` is regenerated with
+`node pkg/grammar/runtime_expect_fixtures.cjs`. Thirty transitions compare
+expect results/errors and current records: successful and false conditions,
+disabled actions, action/condition errors, condition writes, nested expect,
+and sequencing. The reference restores next registers after a condition value,
+while retaining shifted current registers; condition errors bypass recovery.

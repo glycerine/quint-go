@@ -396,8 +396,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     registers/RNG, named/parameterized actions, action metadata, and val refresh.
   - [x] Checked stateful project preparation with imports, independent constant-
     overridden instances, nested instances, and preserved caller modules/IDs.
-  - [ ] Primed-read support, simulation-level transaction handling, and trace
-    integration.
+  - [x] expect action/condition evaluation with upstream shifts, next-state
+    recovery, metadata restoration, false diagnostics, and error behavior.
+  - [ ] Audit primed-expression restrictions, simulation-level transaction
+    handling, and trace integration.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
   empty choices, and bounded sampling of infinite domains.
 - [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
@@ -2514,3 +2516,13 @@ word "retained" in the commit message.
   project evaluation uses the same preparation helper. Full default tests pass
   (combined package execution 1.049s, slightly above the one-second target).
   Primed reads, simulation transactions, and trace integration remain open.
+
+- 2026-11-02: Ported lazy expect action checks with QNT508 diagnostics for
+  disabled actions and false conditions. Like TypeScript, successful action
+  evaluation snapshots next registers, shifts current state and clears metadata;
+  condition values recover next registers/metadata, while condition errors skip
+  recovery. Thirty upstream transitions cover success, false/disabled results,
+  action/condition errors, condition writes, nesting, and sequencing. Unit tests
+  add action metadata recovery, pending-state preservation, and context/arity
+  validation. Full default tests pass (combined package execution 1.045s, near
+  the one-second target). Trace extension/drop integration remains open.
