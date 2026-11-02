@@ -221,6 +221,8 @@ analysis, with reproducible errors for invalid module structures.
 - [ ] P4.1 Port type schemes, generalization/instantiation, free variables,
   substitutions, occurs checks, and simplification.
   - [x] Bind type and row variables with separate occurs checks and copied substitutions.
+  - [x] Compute free scheme variables and instantiate quantified variables in order.
+  - [ ] Integrate scope-based generalization with constraint generation.
   - [x] Integrate binding checks with structural unification and substitution composition.
 - [ ] P4.2 Port constraint generation/solving for primitive, collection,
   function/operator, tuple, record, row-polymorphic, and sum types.
@@ -1280,3 +1282,11 @@ word "retained" in the commit message.
   Default tests pass (combined execution 0.563s). Defined-type success with alias
   contexts remains unit-tested; broader differential contexts, composition
   exception parity, and constraint generation remain open.
+
+- 2026-11-02: Added free-scheme-variable calculation, fresh type/row scheme
+  instantiation, and annotation-generality checks used by constraint generation.
+  Tests cover independent repeated instantiations, retained free variables,
+  distinct namespaces, output-tree isolation, concrete annotation restrictions,
+  variable renaming, diagnostic order, and same-name cross-kind composition.
+  Default tests pass under one second. Scope generalization, generator traversal,
+  and exact upstream helper diagnostics remain to be integrated/validated.
