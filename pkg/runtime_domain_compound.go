@@ -231,6 +231,9 @@ func (d RuntimeDomain) compoundContains(ctx context.Context, value RuntimeValue)
 		}
 		return true, nil
 	case runtimePowersetDomain:
+		if value.domain != nil {
+			return d.ContainsDomain(ctx, *value.domain)
+		}
 		if value.expression.Kind != "app" {
 			return false, nil
 		}
@@ -271,7 +274,7 @@ func (d RuntimeDomain) compoundContains(ctx context.Context, value RuntimeValue)
 		for i, entry := range entries {
 			keys[i] = entry.Key
 		}
-		keySet, err := newRuntimeComposite("Set", keys)
+		keySet, err := NewRuntimeCompositeContext(ctx, "Set", keys)
 		if err != nil {
 			return false, err
 		}
@@ -284,7 +287,7 @@ func (d RuntimeDomain) compoundContains(ctx context.Context, value RuntimeValue)
 			return false, err
 		}
 		for _, entry := range entries {
-			normal, err := runtimeNormalForm(entry.Value)
+			normal, err := runtimeNormalFormContext(ctx, entry.Value)
 			if err != nil {
 				return false, err
 			}
@@ -306,10 +309,10 @@ func runtimeDomainValues(ctx context.Context, domain RuntimeDomain) ([]RuntimeVa
 	return values, err
 }
 
-func runtimeDomainMap(keys, values []RuntimeValue) (RuntimeValue, error) {
+func runtimeDomainMap(ctx context.Context, keys, values []RuntimeValue) (RuntimeValue, error) {
 	entries := make([]runtimeReferenceEntry, len(keys))
 	for i, key := range keys {
-		normal, err := runtimeNormalForm(key)
+		normal, err := runtimeKeyNormalFormContext(ctx, key)
 		if err != nil {
 			return RuntimeValue{}, err
 		}
@@ -319,7 +322,7 @@ func runtimeDomainMap(keys, values []RuntimeValue) (RuntimeValue, error) {
 	if err != nil {
 		return RuntimeValue{}, err
 	}
-	return runtimeWithEntries("Map", mapValue)
+	return runtimeWithEntriesContext(ctx, "Map", mapValue)
 }
 
 func (d RuntimeDomain) powersetFromIndex(ctx context.Context, index Integer) (RuntimeValue, error) {
@@ -335,7 +338,7 @@ func (d RuntimeDomain) powersetFromIndex(ctx context.Context, index Integer) (Ru
 	if err != nil {
 		return RuntimeValue{}, err
 	}
-	return newRuntimeComposite("Set", values)
+	return NewRuntimeCompositeContext(ctx, "Set", values)
 }
 
 func (d RuntimeDomain) compoundForEach(ctx context.Context, yield func(RuntimeValue) (bool, error)) error {
@@ -384,7 +387,7 @@ func (d RuntimeDomain) compoundForEach(ctx context.Context, yield func(RuntimeVa
 			for i := range arrays {
 				children[i] = arrays[i][indices[i]]
 			}
-			value, err := newRuntimeComposite("Tup", children)
+			value, err := NewRuntimeCompositeContext(ctx, "Tup", children)
 			if err != nil {
 				return err
 			}
@@ -415,7 +418,7 @@ func (d RuntimeDomain) compoundForEach(ctx context.Context, yield func(RuntimeVa
 			return err
 		}
 		if len(keys) == 0 {
-			value, err := runtimeDomainMap(nil, nil)
+			value, err := runtimeDomainMap(ctx, nil, nil)
 			if err != nil {
 				return err
 			}
@@ -439,7 +442,7 @@ func (d RuntimeDomain) compoundForEach(ctx context.Context, yield func(RuntimeVa
 				values[i] = rangeValues[int(math.Mod(remaining, base))]
 				remaining = math.Floor(remaining / base)
 			}
-			value, err := runtimeDomainMap(keys, values)
+			value, err := runtimeDomainMap(ctx, keys, values)
 			if err != nil {
 				return err
 			}
@@ -543,7 +546,7 @@ func (d RuntimeDomain) pickPosition(ctx context.Context, positions *runtimeDomai
 		if err := runtimeDomainMergedErrors(errs); err != nil {
 			return RuntimeValue{}, err
 		}
-		return newRuntimeComposite("Tup", values)
+		return NewRuntimeCompositeContext(ctx, "Tup", values)
 	}
 	if d.kind == runtimeMapSetDomain {
 		return d.pickMap(ctx, positions)
@@ -586,7 +589,7 @@ func (d RuntimeDomain) pickMap(ctx context.Context, positions *runtimeDomainPosi
 		return RuntimeValue{}, domainErr
 	}
 	if domainSize.Big().Sign() == 0 {
-		return runtimeDomainMap(nil, nil)
+		return runtimeDomainMap(ctx, nil, nil)
 	}
 	if rangeErr == nil && rangeSize.Big().Sign() == 0 {
 		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Empty set of maps"}
@@ -608,7 +611,7 @@ func (d RuntimeDomain) pickMap(ctx context.Context, positions *runtimeDomainPosi
 			if err != nil {
 				return false, err
 			}
-			value, err := runtimeWithEntries("Set", set)
+			value, err := runtimeWithEntriesContext(ctx, "Set", set)
 			if err != nil {
 				return false, err
 			}
@@ -627,7 +630,7 @@ func (d RuntimeDomain) pickMap(ctx context.Context, positions *runtimeDomainPosi
 	if err != nil {
 		return RuntimeValue{}, err
 	}
-	return runtimeDomainMap(keys, values)
+	return runtimeDomainMap(ctx, keys, values)
 }
 
 func (d RuntimeDomain) compoundReferenceHashCode() (float64, error) {

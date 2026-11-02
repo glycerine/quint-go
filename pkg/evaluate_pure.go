@@ -61,6 +61,7 @@ type runtimeEvaluation struct {
 	prepare   func(context.Context, Expr) error
 	objects   *RuntimeObjectHashState
 	constants *insdict.Dict[string, ID]
+	variables *insdict.Dict[string, RuntimeVariableBinding]
 }
 
 func (e *runtimeEvaluation) evaluateOwned(ctx context.Context, expression Expr) (RuntimeValue, error) {
@@ -80,6 +81,7 @@ type runtimeLocalCache struct {
 type runtimeLocalDefinition struct {
 	cache runtimeLocalCache
 	scope *insdict.Dict[string, runtimeLocalValue]
+	value runtimeLocalValue
 }
 type runtimeLambdaKey struct {
 	id   ID
@@ -90,6 +92,22 @@ type runtimeDefinitionKey struct {
 	definition *OperatorDef
 }
 
+// The reference catches domain exceptions at the expression that invokes an
+// operation. Checked value/serialization APIs retain those exceptions directly.
+func runtimeExpressionError(expression Expr, err error) error {
+	if exception, ok := err.(RuntimeDomainException); ok {
+		err = Diagnostic{Code: "QNT501", Message: exception.Message}
+	}
+	if diagnostic, ok := err.(Diagnostic); ok {
+		if diagnostic.Reference == nil {
+			id := expression.ID
+			diagnostic.Reference = &id
+		}
+		return diagnostic
+	}
+	return err
+}
+
 func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage *VariableStorage, rng *RNG, trace *RuntimeTrace, objects *RuntimeObjectHashState) *runtimeEvaluation {
 	if objects == nil {
 		objects = &RuntimeObjectHashState{}
@@ -97,7 +115,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 	session := &runtimeEvaluation{objects: objects}
 	discovery := &RuntimeNondetDiscovery{}
 	session.prepare = func(ctx context.Context, expression Expr) error {
-		return discovery.Prepare(ctx, expression, storage)
+		return discovery.PrepareWithVariableBindings(ctx, expression, storage, session.variables)
 	}
 	ctx := context.Background()
 	if bindings != nil {
@@ -166,20 +184,40 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				}
 			}
 			if storage != nil {
-				for _, register := range storage.current.All() {
-					if register.Name == e.Name {
-						value, err := register.Read()
-						if d, ok := err.(Diagnostic); ok {
-							id := e.ID
-							d.Reference = &id
-							err = d
+				var register *RuntimeRegister
+				binding, bound := RuntimeVariableBinding{}, false
+				if session.variables != nil {
+					binding, bound = session.variables.Get2(e.Name)
+				}
+				if bound {
+					register, _ = storage.current.Get2(binding.Key)
+				} else {
+					for _, candidate := range storage.current.All() {
+						if candidate.Name == e.Name {
+							register = candidate
+							break
 						}
-						return value, err
 					}
+				}
+				if register != nil {
+					value, err := register.Read()
+					if d, ok := err.(Diagnostic); ok {
+						id := e.ID
+						d.Reference = &id
+						err = d
+					}
+					return value, err
 				}
 			}
 			if e.Name == "Bool" {
 				return NewRuntimeValue(Expr{Kind: "app", Opcode: "Set", Args: []Expr{{Kind: "bool", Bool: false}, {Kind: "bool", Bool: true}}})
+			}
+			if e.Name == "Int" || e.Name == "Nat" {
+				domain, err := NewRuntimeInfiniteSet(e.Name)
+				if err != nil {
+					return RuntimeValue{}, runtimeExpressionError(e, err)
+				}
+				return RuntimeValueFromDomain(domain)
 			}
 			if e.Name == "q::lastTrace" {
 				args := []RuntimeValue{}
@@ -257,7 +295,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				if !exists {
 					binding = &runtimeLocalDefinition{scope: insdict.NewDict[string, runtimeLocalValue]()}
 					definitions[key] = binding
-					binding.scope.Set(e.Opdef.Name, func(arguments []RuntimeValue) (RuntimeValue, error) {
+					binding.value = func(arguments []RuntimeValue) (RuntimeValue, error) {
 						if binding.cache.err != nil {
 							return RuntimeValue{}, binding.cache.err
 						}
@@ -265,8 +303,9 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 							return binding.cache.value.Apply(ctx, arguments)
 						}
 						return binding.cache.value, nil
-					})
+					}
 				}
+				binding.scope.Set(e.Opdef.Name, binding.value)
 				value, err := EvalNondet(ctx, e.Opdef.Name, storage, rng,
 					func(callContext context.Context) (RuntimeValue, error) {
 						saved := ctx
@@ -299,7 +338,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				definition = &runtimeLocalDefinition{scope: insdict.NewDict[string, runtimeLocalValue]()}
 				definitions[key] = definition
 				captured := append([]*insdict.Dict[string, runtimeLocalValue](nil), scopes...)
-				definition.scope.Set(e.Opdef.Name, func(arguments []RuntimeValue) (RuntimeValue, error) {
+				definition.value = func(arguments []RuntimeValue) (RuntimeValue, error) {
 					if storage != nil && e.Opdef.Qualifier == Action && storage.ActionTaken == "" {
 						storage.ActionTaken = e.Opdef.Name
 					}
@@ -325,8 +364,11 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 						return cache.value.Apply(ctx, arguments)
 					}
 					return cache.value, nil
-				})
+				}
 			}
+			// Ordinary import aliases share the compiled definition ID and
+			// cache, but each flattened name must resolve to that same getter.
+			definition.scope.Set(e.Opdef.Name, definition.value)
 			// Scoped value cells belong to the compiled definition. Each let
 			// invocation temporarily clears its cache, then restores the saved
 			// value even when a returned lambda still refers to that cell.
@@ -537,15 +579,28 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 			if _, local := lookup(e.Args[0].Name); local {
 				return fail(e, "Assignment target is a local binding")
 			}
-			for key, register := range storage.current.All() {
-				if register.Name == e.Args[0].Name {
-					value, err := eval(e.Args[1])
-					if err != nil {
-						return RuntimeValue{}, err
+			var target *RuntimeRegister
+			binding, bound := RuntimeVariableBinding{}, false
+			if session.variables != nil {
+				binding, bound = session.variables.Get2(e.Args[0].Name)
+			}
+			if bound {
+				target, _ = storage.next.Get2(binding.Key)
+			} else {
+				for key, register := range storage.current.All() {
+					if register.Name == e.Args[0].Name {
+						target = storage.next.Get(key)
+						break
 					}
-					storage.next.Get(key).Value = value
-					return boolValue(true)
 				}
+			}
+			if target != nil {
+				value, err := eval(e.Args[1])
+				if err != nil {
+					return RuntimeValue{}, err
+				}
+				target.Value = value
+				return boolValue(true)
 			}
 			return fail(e, "Unknown assignment variable: "+e.Args[0].Name)
 		case "matchVariant":
@@ -638,7 +693,8 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 		}
 		switch e.Opcode {
 		case "List", "Tup", "Set", "Map", "Rec", "variant":
-			return newRuntimeComposite(e.Opcode, args)
+			value, err := NewRuntimeCompositeContext(ctx, e.Opcode, args)
+			return value, runtimeExpressionError(e, err)
 		case "not", "fail", "iff", "eq", "neq", "assert":
 			arity := 2
 			if e.Opcode == "not" || e.Opcode == "fail" || e.Opcode == "assert" {
@@ -648,7 +704,10 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				return fail(e, fmt.Sprintf("%s requires %d arguments", e.Opcode, arity))
 			}
 			if e.Opcode == "eq" || e.Opcode == "neq" {
-				equal := args[0].Equal(args[1])
+				equal, err := args[0].EqualContext(ctx, args[1])
+				if err != nil {
+					return RuntimeValue{}, runtimeExpressionError(e, err)
+				}
 				return boolValue(equal == (e.Opcode == "eq"))
 			}
 			for _, arg := range args {
@@ -671,28 +730,30 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 		}
 		var value RuntimeValue
 		var err error
-		if e.Opcode == "q::debug" {
+		if SymbolicBuiltinArity(e.Opcode) != 0 {
+			value, err = EvalSymbolicBuiltin(ctx, e.Opcode, args)
+		} else if e.Opcode == "q::debug" {
 			value, err = EvalDebugBuiltin(ctx, args, session.objects)
 		} else if e.Opcode == "allListsUpTo" {
-			value, err = EvalAllListsBuiltin(ctx, e.Opcode, args, session.objects)
+			value, err = EvalAllListsBuiltinContext(ctx, e.Opcode, args, session.objects)
 		} else if e.Opcode == "setToMap" {
-			value, err = EvalSetToMapBuiltin(ctx, args, session.objects)
+			value, err = EvalSetToMapBuiltinContext(ctx, args, session.objects)
 		} else if e.Opcode == "setBy" {
-			value, err = EvalMapSetBy(ctx, args)
+			value, err = EvalMapSetByContext(ctx, args)
 		} else if listHigherBuiltinArity(e.Opcode) != 0 {
-			value, err = EvalListHigherBuiltin(ctx, e.Opcode, args)
+			value, err = EvalListHigherBuiltinContext(ctx, e.Opcode, args)
 		} else if setHigherBuiltinArity(e.Opcode) != 0 {
-			value, err = EvalSetHigherBuiltin(ctx, e.Opcode, args)
+			value, err = EvalSetHigherBuiltinContext(ctx, e.Opcode, args)
 		} else if e.Opcode == "range" {
 			value, err = EvalRangeBuiltin(ctx, args)
 		} else if sequenceBuiltinArity(e.Opcode) != 0 {
-			value, err = EvalSequenceBuiltin(e.Opcode, args)
+			value, err = EvalSequenceBuiltinContext(ctx, e.Opcode, args)
 		} else if mapBuiltinArity(e.Opcode) != 0 {
-			value, err = EvalMapBuiltin(e.Opcode, args)
+			value, err = EvalMapBuiltinContext(ctx, e.Opcode, args)
 		} else if setConversionBuiltinArity(e.Opcode) != 0 {
-			value, err = EvalSetConversionBuiltin(e.Opcode, args)
+			value, err = EvalSetConversionBuiltinContext(ctx, e.Opcode, args)
 		} else if setBuiltinArity(e.Opcode) != 0 {
-			value, err = EvalSetBuiltin(e.Opcode, args)
+			value, err = EvalSetBuiltinContext(ctx, e.Opcode, args)
 		} else {
 			if e.Opcode == "apalache::generate" || RuntimeCombinatorArity(e.Opcode) != 0 || !IsBuiltinOpcode(e.Opcode) {
 				err = Diagnostic{Code: "QNT000", Message: "Unknown builtin " + e.Opcode}
@@ -700,14 +761,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				value, err = EvalIntegerBuiltin(e.Opcode, args)
 			}
 		}
-		if d, ok := err.(Diagnostic); ok {
-			if d.Reference == nil {
-				id := e.ID
-				d.Reference = &id
-			}
-			err = d
-		}
-		return value, err
+		return value, runtimeExpressionError(e, err)
 	}
 	session.evaluate = func(callContext context.Context, expression Expr) (RuntimeValue, error) {
 		savedContext := ctx

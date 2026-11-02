@@ -65,9 +65,15 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 		return out, fmt.Errorf("simulation limits must be nonnegative")
 	}
 	if evaluateValue == nil {
-		for _, name := range append([]string{options.Init, options.Step, options.Invariant}, options.Witnesses...) {
-			if _, ok := e.definitions.Get2(name); !ok {
+		selected := append([]string{options.Init, options.Step, options.Invariant}, options.Witnesses...)
+		for _, name := range selected {
+			if _, found := e.definitions.Get2(name); !found {
 				return out, Diagnostic{Code: "QNT501", Message: "Definition not found: " + name}
+			}
+		}
+		for _, name := range selected {
+			if err := e.PrepareDefinition(ctx, name); err != nil {
+				return out, err
 			}
 		}
 		evaluateValue = func(name string) (RuntimeValue, error) { return e.Evaluate(ctx, name, nil) }

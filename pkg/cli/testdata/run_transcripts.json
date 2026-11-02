@@ -1,5 +1,444 @@
 [
   {
+    "name": "interval_stage",
+    "source": "module Counter { var x:Set[int] action init=x'=9.to(12) action step=x'=x }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=0",
+      "--max-steps=0",
+      "--out=${STAGE}"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "stage": {
+      "stage": "running",
+      "status": "ok",
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 11
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 12
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "seed": 18,
+      "errors": []
+    }
+  },
+  {
+    "name": "interval_itf",
+    "source": "module Counter { var x:Set[int] action init=x'=9.to(12) action step=x'=x }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=0",
+      "--max-steps=0",
+      "--out-itf=${TRACE}"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "traces": [
+      {
+        "filename": "trace-0.itf.json",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "${SOURCE}",
+            "status": "ok",
+            "description": "Created by Quint on ${CREATED}",
+            "timestamp": 0
+          },
+          "vars": [
+            "x"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "x": {
+                "#set": [
+                  {
+                    "#bigint": "9"
+                  },
+                  {
+                    "#bigint": "10"
+                  },
+                  {
+                    "#bigint": "11"
+                  },
+                  {
+                    "#bigint": "12"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "powerset_stage",
+    "source": "module Counter { var x:Set[Set[int]] action init=x'=1.to(2).powerset() action step=x'=x }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=0",
+      "--max-steps=0",
+      "--out=${STAGE}"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "stage": {
+      "stage": "running",
+      "status": "ok",
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": []
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "seed": 18,
+      "errors": []
+    }
+  },
+  {
+    "name": "powerset_itf",
+    "source": "module Counter { var x:Set[Set[int]] action init=x'=1.to(2).powerset() action step=x'=x }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=0",
+      "--max-steps=0",
+      "--out-itf=${TRACE}"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "traces": [
+      {
+        "filename": "trace-0.itf.json",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "${SOURCE}",
+            "status": "ok",
+            "description": "Created by Quint on ${CREATED}",
+            "timestamp": 0
+          },
+          "vars": [
+            "x"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "x": {
+                "#set": [
+                  {
+                    "#set": []
+                  },
+                  {
+                    "#set": [
+                      {
+                        "#bigint": "1"
+                      }
+                    ]
+                  },
+                  {
+                    "#set": [
+                      {
+                        "#bigint": "2"
+                      }
+                    ]
+                  },
+                  {
+                    "#set": [
+                      {
+                        "#bigint": "1"
+                      },
+                      {
+                        "#bigint": "2"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "nested_domains_stage",
+    "source": "module Counter { var x:{a:Set[int],b:Set[Set[int]]} action init=x'={a:9.to(12),b:1.to(2).powerset()} action step=x'=x }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=0",
+      "--max-steps=0",
+      "--out=${STAGE}"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "stage": {
+      "stage": "running",
+      "status": "ok",
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 10
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 11
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": []
+                    },
+                    {
+                      "id": 0,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": [
+                        {
+                          "id": 0,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    },
+                    {
+                      "id": 0,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": [
+                        {
+                          "id": 0,
+                          "kind": "int",
+                          "value": 2
+                        }
+                      ]
+                    },
+                    {
+                      "id": 0,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": [
+                        {
+                          "id": 0,
+                          "kind": "int",
+                          "value": 1
+                        },
+                        {
+                          "id": 0,
+                          "kind": "int",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "seed": 18,
+      "errors": []
+    }
+  },
+  {
+    "name": "infinite_name_stage",
+    "source": "module Counter { var x:Set[int] action init=x'=Int action step=x'=x }",
+    "args": [
+      "--seed=0x12",
+      "--verbosity=0",
+      "--max-steps=0",
+      "--out=${STAGE}"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "stage": {
+      "stage": "running",
+      "status": "ok",
+      "trace": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "name",
+              "name": "Int"
+            }
+          ]
+        }
+      ],
+      "seed": 18,
+      "errors": []
+    }
+  },
+  {
     "name": "quiet_debug",
     "source": "module Counter { var x:int action init=x'=q::debug(\"init\",0) action step=x'=q::debug(\"step\",x+1) }",
     "args": [

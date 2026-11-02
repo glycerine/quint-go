@@ -45,7 +45,7 @@ func EvalDebugBuiltin(ctx context.Context, args []RuntimeValue, states ...*Runti
 	if len(states) > 0 {
 		state = states[0]
 	}
-	expression, err := SerializeRuntimeValue(args[1], state)
+	expression, err := SerializeRuntimeValueContext(ctx, args[1], state)
 	if err != nil {
 		return RuntimeValue{}, err
 	}

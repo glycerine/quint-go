@@ -1,0 +1,5513 @@
+{
+  "metadata": {
+    "rustPackage": "quint_evaluator 0.2.0",
+    "rustBinarySHA256": "864938c679f2dba954ae6f3eb23dd624f1e5f303f7f48f763b408e51d3582b1a",
+    "cargoLockSHA256": "4c5ad5810aae1abf654d1ea5037ad4ed8920dcc3769f8c04fddf6e7e1853e92e",
+    "rustSourcesSHA256": {
+      "src/main.rs": "076a4e5785d99735100b8a47ae6661d8ebafa7510cd9433e28b4612910d28af1",
+      "src/repl.rs": "36f527c9da089c9cb81ce21b05678210a842d4027f232a4e8e23065dea1a7dd2",
+      "src/rand.rs": "aa200ec97ff3c2746d2a42411f4f82750666d54c77642740cd35588d2fd53355",
+      "src/value.rs": "c90c3e692a0184367392385e0984983a5ce4ed8ac6e176100010cfbdabe6565d",
+      "src/builtins.rs": "4d628a4189827f29190f965c881ba8d28d82c62855d557b183153943c6cca483"
+    },
+    "protocol": "repl-from-stdin NDJSON: Initialize, Evaluate, GetSeed; one process, isolated initialization per case",
+    "rustGoldenSources": [
+      "evaluator/tests/evaluation_tests.rs",
+      "evaluator/tests/picker_tests.rs"
+    ],
+    "coverage": {
+      "categories": [
+        "numerics",
+        "lazy-errors",
+        "collection-order",
+        "seeded-picks",
+        "counter-wrap",
+        "domain-limits"
+      ],
+      "existingTypeScriptCases": 9
+    },
+    "policy": "Go follows the TypeScript reference for seeded sampling, traversal, domain limits and diagnostics; modulo-by-zero deliberately returns a structured QNT503. Raw Rust values and traces are preserved."
+  },
+  "cases": [
+    {
+      "name": "division",
+      "source": "7 / 2",
+      "seed": "0",
+      "policy": "shared",
+      "reason": "Both references truncate integer division toward zero.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 3,
+        "kind": "app",
+        "opcode": "idiv",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 7
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "4": {
+              "id": 4,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 7
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 3,
+            "kind": "app",
+            "opcode": "idiv",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 7
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": 3,
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "negative-division",
+      "source": "(-7) / 3",
+      "seed": "0",
+      "policy": "shared",
+      "reason": "Negative division truncates toward zero.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [
+        "pkg/testdata/parser/evaluate_pure.json"
+      ],
+      "input": {
+        "id": 4,
+        "kind": "app",
+        "opcode": "idiv",
+        "args": [
+          {
+            "id": 2,
+            "kind": "app",
+            "opcode": "iuminus",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 7
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "kind": "int",
+            "value": 3
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": -2
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "5": {
+              "id": 5,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "app",
+                    "opcode": "iuminus",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 7
+                      }
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "idiv",
+            "args": [
+              {
+                "id": 2,
+                "kind": "app",
+                "opcode": "iuminus",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 7
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": -2,
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "negative-remainder",
+      "source": "(-7) % 3",
+      "seed": "0",
+      "policy": "shared",
+      "reason": "Remainder follows the dividend sign.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [
+        "pkg/testdata/parser/evaluate_pure.json"
+      ],
+      "input": {
+        "id": 4,
+        "kind": "app",
+        "opcode": "imod",
+        "args": [
+          {
+            "id": 2,
+            "kind": "app",
+            "opcode": "iuminus",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 7
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "kind": "int",
+            "value": 3
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": -1
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "5": {
+              "id": 5,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "imod",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "app",
+                    "opcode": "iuminus",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 7
+                      }
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "imod",
+            "args": [
+              {
+                "id": 2,
+                "kind": "app",
+                "opcode": "iuminus",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 7
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": -1,
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "past-i64",
+      "source": "9223372036854775807 + 1",
+      "seed": "0",
+      "policy": "shared",
+      "reason": "Current Rust uses BigInt fallback; arithmetic is not limited to i64.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 3,
+        "kind": "app",
+        "opcode": "iadd",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 9223372036854775807
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 1
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 9223372036854775808
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "4": {
+              "id": 4,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 9223372036854775807
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 3,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 9223372036854775807
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": {
+          "#bigint": "9223372036854775808"
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "large-power",
+      "source": "2^128",
+      "seed": "0",
+      "policy": "shared",
+      "reason": "Arbitrary precision arithmetic agrees.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [
+        "pkg/testdata/parser/evaluate_pure.json"
+      ],
+      "input": {
+        "id": 3,
+        "kind": "app",
+        "opcode": "ipow",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 2
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 128
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 340282366920938463463374607431768211456
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "4": {
+              "id": 4,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "app",
+                "opcode": "ipow",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 2
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 128
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 3,
+            "kind": "app",
+            "opcode": "ipow",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 2
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 128
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": {
+          "#bigint": "340282366920938463463374607431768211456"
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "large-literal-wire",
+      "source": "184467440737095516160000",
+      "seed": "0",
+      "policy": "shared",
+      "reason": "Rust IR transports large integer literals as decimal strings.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 1,
+        "kind": "int",
+        "value": 184467440737095516160000
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 184467440737095516160000
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "2": {
+              "id": 2,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 1,
+                "kind": "int",
+                "value": "184467440737095516160000"
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 1,
+            "kind": "int",
+            "value": "184467440737095516160000"
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": {
+          "#bigint": "184467440737095516160000"
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "short-circuit",
+      "source": "false implies (1 / 0 == 0)",
+      "seed": "0",
+      "policy": "shared",
+      "reason": "Both references skip the failing branch.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [
+        "pkg/testdata/parser/evaluate_pure.json"
+      ],
+      "input": {
+        "id": 7,
+        "kind": "app",
+        "opcode": "implies",
+        "args": [
+          {
+            "id": 1,
+            "kind": "bool",
+            "value": false
+          },
+          {
+            "id": 6,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 4,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "8": {
+              "id": 8,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 7,
+                "kind": "app",
+                "opcode": "implies",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "bool",
+                    "value": false
+                  },
+                  {
+                    "id": 6,
+                    "kind": "app",
+                    "opcode": "eq",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "app",
+                        "opcode": "idiv",
+                        "args": [
+                          {
+                            "id": 2,
+                            "kind": "int",
+                            "value": 1
+                          },
+                          {
+                            "id": 3,
+                            "kind": "int",
+                            "value": 0
+                          }
+                        ]
+                      },
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 0
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 7,
+            "kind": "app",
+            "opcode": "implies",
+            "args": [
+              {
+                "id": 1,
+                "kind": "bool",
+                "value": false
+              },
+              {
+                "id": 6,
+                "kind": "app",
+                "opcode": "eq",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "idiv",
+                    "args": [
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 3,
+                        "kind": "int",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": true,
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "division-zero",
+      "source": "1 / 0",
+      "seed": "0",
+      "policy": "shared-error",
+      "reason": "Both references report QNT503.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [
+        "pkg/testdata/parser/evaluate_pure.json"
+      ],
+      "input": {
+        "id": 3,
+        "kind": "app",
+        "opcode": "idiv",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      "typescript": {
+        "error": {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 3
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "4": {
+              "id": 4,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 3,
+            "kind": "app",
+            "opcode": "idiv",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "err": {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "#trace": [
+            3
+          ]
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "remainder-zero",
+      "source": "5 % 0",
+      "seed": "0",
+      "policy": "structured-error",
+      "reason": "The TypeScript evaluator wraps the builtin RangeError as QNT501; Go deliberately reports Rust-compatible QNT503.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 3,
+        "kind": "app",
+        "opcode": "imod",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 5
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      "typescript": {
+        "error": {
+          "code": "QNT501",
+          "message": "Division by zero",
+          "reference": 3
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "4": {
+              "id": 4,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "app",
+                "opcode": "imod",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 5
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 3,
+            "kind": "app",
+            "opcode": "imod",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 5
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "err": {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "#trace": [
+            3
+          ]
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "zero-power-zero",
+      "source": "0^0",
+      "seed": "0",
+      "policy": "shared-error",
+      "reason": "Both references reject undefined powers.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [
+        "pkg/testdata/parser/evaluate_pure.json"
+      ],
+      "input": {
+        "id": 3,
+        "kind": "app",
+        "opcode": "ipow",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 0
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      "typescript": {
+        "error": {
+          "code": "QNT503",
+          "message": "0^0 is undefined",
+          "reference": 3
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "4": {
+              "id": 4,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "app",
+                "opcode": "ipow",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 3,
+            "kind": "app",
+            "opcode": "ipow",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 0
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "err": {
+          "code": "QNT503",
+          "message": "0^0 is undefined",
+          "#trace": [
+            3
+          ]
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "negative-exponent",
+      "source": "2^(-1)",
+      "seed": "0",
+      "policy": "shared-error",
+      "reason": "Both references reject negative integer exponents.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [
+        "pkg/testdata/parser/evaluate_pure.json"
+      ],
+      "input": {
+        "id": 4,
+        "kind": "app",
+        "opcode": "ipow",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 2
+          },
+          {
+            "id": 3,
+            "kind": "app",
+            "opcode": "iuminus",
+            "args": [
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      "typescript": {
+        "error": {
+          "code": "QNT503",
+          "message": "i^j is undefined for j < 0",
+          "reference": 4
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "5": {
+              "id": 5,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "ipow",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 2
+                  },
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "iuminus",
+                    "args": [
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "ipow",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 2
+              },
+              {
+                "id": 3,
+                "kind": "app",
+                "opcode": "iuminus",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "err": {
+          "code": "QNT503",
+          "message": "i^j is undefined for j < 0",
+          "#trace": [
+            4
+          ]
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "empty-head",
+      "source": "List().head()",
+      "seed": "0",
+      "policy": "shared-error",
+      "reason": "Both references reject an empty head.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [
+        "pkg/testdata/parser/runtime_sequence.json"
+      ],
+      "input": {
+        "id": 2,
+        "kind": "app",
+        "opcode": "head",
+        "args": [
+          {
+            "id": 1,
+            "kind": "app",
+            "opcode": "List",
+            "args": []
+          }
+        ]
+      },
+      "typescript": {
+        "error": {
+          "code": "QNT505",
+          "message": "Called 'head' on an empty list",
+          "reference": 2
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "3": {
+              "id": 3,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "app",
+                "opcode": "head",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "app",
+                    "opcode": "List",
+                    "args": []
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 2,
+            "kind": "app",
+            "opcode": "head",
+            "args": [
+              {
+                "id": 1,
+                "kind": "app",
+                "opcode": "List",
+                "args": []
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "err": {
+          "code": "QNT505",
+          "message": "Called 'head' on an empty list",
+          "#trace": [
+            2
+          ]
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "out-of-range-index",
+      "source": "List(1).nth(5)",
+      "seed": "0",
+      "policy": "shared-error",
+      "reason": "Both references reject an invalid index; messages can differ.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 4,
+        "kind": "app",
+        "opcode": "nth",
+        "args": [
+          {
+            "id": 2,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "kind": "int",
+            "value": 5
+          }
+        ]
+      },
+      "typescript": {
+        "error": {
+          "code": "QNT510",
+          "message": "Out of bounds, nth(5)",
+          "reference": 4
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "5": {
+              "id": 5,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "nth",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "app",
+                    "opcode": "List",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 5
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "nth",
+            "args": [
+              {
+                "id": 2,
+                "kind": "app",
+                "opcode": "List",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 5
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "err": {
+          "code": "QNT510",
+          "message": "Out of bounds, nth(5)",
+          "#trace": [
+            4
+          ]
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "large-interval",
+      "source": "(2^64).to(2^64 + 2)",
+      "seed": "0",
+      "policy": "typescript-domain",
+      "reason": "Go follows TypeScript arbitrary precision interval bounds; Rust rejects bounds outside i64 with QNT601.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 9,
+        "kind": "app",
+        "opcode": "to",
+        "args": [
+          {
+            "id": 3,
+            "kind": "app",
+            "opcode": "ipow",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 2
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 64
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 6,
+                "kind": "app",
+                "opcode": "ipow",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "int",
+                    "value": 2
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 64
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 18446744073709551616
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 18446744073709551617
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 18446744073709551618
+            }
+          ]
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "10": {
+              "id": 10,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 9,
+                "kind": "app",
+                "opcode": "to",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "ipow",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 2
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 64
+                      }
+                    ]
+                  },
+                  {
+                    "id": 8,
+                    "kind": "app",
+                    "opcode": "iadd",
+                    "args": [
+                      {
+                        "id": 6,
+                        "kind": "app",
+                        "opcode": "ipow",
+                        "args": [
+                          {
+                            "id": 4,
+                            "kind": "int",
+                            "value": 2
+                          },
+                          {
+                            "id": 5,
+                            "kind": "int",
+                            "value": 64
+                          }
+                        ]
+                      },
+                      {
+                        "id": 7,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 9,
+            "kind": "app",
+            "opcode": "to",
+            "args": [
+              {
+                "id": 3,
+                "kind": "app",
+                "opcode": "ipow",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 2
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 64
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 6,
+                    "kind": "app",
+                    "opcode": "ipow",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 2
+                      },
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 64
+                      }
+                    ]
+                  },
+                  {
+                    "id": 7,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "err": {
+          "code": "QNT601",
+          "message": "Interval bounds must fit in 64-bit integers in the Rust backend: 18446744073709551616.to(18446744073709551618)",
+          "#trace": [
+            9
+          ]
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "large-cardinality",
+      "source": "1.to(80).powerset().size()",
+      "seed": "0",
+      "policy": "typescript-domain",
+      "reason": "Go follows TypeScript exact cardinality; Rust caps cardinality and reports QNT601.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 5,
+        "kind": "app",
+        "opcode": "size",
+        "args": [
+          {
+            "id": 4,
+            "kind": "app",
+            "opcode": "powerset",
+            "args": [
+              {
+                "id": 3,
+                "kind": "app",
+                "opcode": "to",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 80
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1208925819614629174706176
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "6": {
+              "id": 6,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "size",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "powerset",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "app",
+                        "opcode": "to",
+                        "args": [
+                          {
+                            "id": 1,
+                            "kind": "int",
+                            "value": 1
+                          },
+                          {
+                            "id": 2,
+                            "kind": "int",
+                            "value": 80
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "size",
+            "args": [
+              {
+                "id": 4,
+                "kind": "app",
+                "opcode": "powerset",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 80
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "err": {
+          "code": "QNT601",
+          "message": "Integer overflow in cardinality computation: powerset size 2^80 exceeds the maximum supported size",
+          "#trace": [
+            5
+          ]
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "infinite-cardinality",
+      "source": "Int.size()",
+      "seed": "0",
+      "policy": "typescript-error",
+      "reason": "Go follows TypeScript QNT514; Rust reports non-enumerability as QNT501.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 2,
+        "kind": "app",
+        "opcode": "size",
+        "args": [
+          {
+            "id": 1,
+            "kind": "name",
+            "name": "Int"
+          }
+        ]
+      },
+      "typescript": {
+        "error": {
+          "code": "QNT514",
+          "message": "Cardinality of Int is infinite",
+          "reference": 2
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "3": {
+              "id": 3,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "app",
+                "opcode": "size",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "name",
+                    "name": "Int"
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 2,
+            "kind": "app",
+            "opcode": "size",
+            "args": [
+              {
+                "id": 1,
+                "kind": "name",
+                "name": "Int"
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "err": {
+          "code": "QNT501",
+          "message": "Infinite set Int is non-enumerable",
+          "#trace": [
+            2
+          ]
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "set-order-small",
+      "source": "Set(3,1,2)",
+      "seed": "0",
+      "policy": "unordered-value",
+      "reason": "Set equality is extensional; the separate fold case captures runtime iteration.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 4,
+        "kind": "app",
+        "opcode": "Set",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 3
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 1
+          },
+          {
+            "id": 3,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "5": {
+              "id": 5,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "Set",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 3
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "Set",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 3
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": {
+          "#set": [
+            1,
+            2,
+            3
+          ]
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "set-order-hashed",
+      "source": "Set(17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0)",
+      "seed": "0",
+      "policy": "unordered-value",
+      "reason": "Serialized set order differs; observable fold cases distinguish iteration from canonical serialization.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [
+        "pkg/testdata/parser/runtime_pick.json"
+      ],
+      "input": {
+        "id": 19,
+        "kind": "app",
+        "opcode": "Set",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 17
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 16
+          },
+          {
+            "id": 3,
+            "kind": "int",
+            "value": 15
+          },
+          {
+            "id": 4,
+            "kind": "int",
+            "value": 14
+          },
+          {
+            "id": 5,
+            "kind": "int",
+            "value": 13
+          },
+          {
+            "id": 6,
+            "kind": "int",
+            "value": 12
+          },
+          {
+            "id": 7,
+            "kind": "int",
+            "value": 11
+          },
+          {
+            "id": 8,
+            "kind": "int",
+            "value": 10
+          },
+          {
+            "id": 9,
+            "kind": "int",
+            "value": 9
+          },
+          {
+            "id": 10,
+            "kind": "int",
+            "value": 8
+          },
+          {
+            "id": 11,
+            "kind": "int",
+            "value": 7
+          },
+          {
+            "id": 12,
+            "kind": "int",
+            "value": 6
+          },
+          {
+            "id": 13,
+            "kind": "int",
+            "value": 5
+          },
+          {
+            "id": 14,
+            "kind": "int",
+            "value": 4
+          },
+          {
+            "id": 15,
+            "kind": "int",
+            "value": 3
+          },
+          {
+            "id": 16,
+            "kind": "int",
+            "value": 2
+          },
+          {
+            "id": 17,
+            "kind": "int",
+            "value": 1
+          },
+          {
+            "id": 18,
+            "kind": "int",
+            "value": 0
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 0
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 13
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 14
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 15
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 16
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 17
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 3
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 4
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 5
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 6
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 7
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 8
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "20": {
+              "id": 20,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 19,
+                "kind": "app",
+                "opcode": "Set",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 17
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 16
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 15
+                  },
+                  {
+                    "id": 4,
+                    "kind": "int",
+                    "value": 14
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 13
+                  },
+                  {
+                    "id": 6,
+                    "kind": "int",
+                    "value": 12
+                  },
+                  {
+                    "id": 7,
+                    "kind": "int",
+                    "value": 11
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 10
+                  },
+                  {
+                    "id": 9,
+                    "kind": "int",
+                    "value": 9
+                  },
+                  {
+                    "id": 10,
+                    "kind": "int",
+                    "value": 8
+                  },
+                  {
+                    "id": 11,
+                    "kind": "int",
+                    "value": 7
+                  },
+                  {
+                    "id": 12,
+                    "kind": "int",
+                    "value": 6
+                  },
+                  {
+                    "id": 13,
+                    "kind": "int",
+                    "value": 5
+                  },
+                  {
+                    "id": 14,
+                    "kind": "int",
+                    "value": 4
+                  },
+                  {
+                    "id": 15,
+                    "kind": "int",
+                    "value": 3
+                  },
+                  {
+                    "id": 16,
+                    "kind": "int",
+                    "value": 2
+                  },
+                  {
+                    "id": 17,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 18,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 19,
+            "kind": "app",
+            "opcode": "Set",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 17
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 16
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 15
+              },
+              {
+                "id": 4,
+                "kind": "int",
+                "value": 14
+              },
+              {
+                "id": 5,
+                "kind": "int",
+                "value": 13
+              },
+              {
+                "id": 6,
+                "kind": "int",
+                "value": 12
+              },
+              {
+                "id": 7,
+                "kind": "int",
+                "value": 11
+              },
+              {
+                "id": 8,
+                "kind": "int",
+                "value": 10
+              },
+              {
+                "id": 9,
+                "kind": "int",
+                "value": 9
+              },
+              {
+                "id": 10,
+                "kind": "int",
+                "value": 8
+              },
+              {
+                "id": 11,
+                "kind": "int",
+                "value": 7
+              },
+              {
+                "id": 12,
+                "kind": "int",
+                "value": 6
+              },
+              {
+                "id": 13,
+                "kind": "int",
+                "value": 5
+              },
+              {
+                "id": 14,
+                "kind": "int",
+                "value": 4
+              },
+              {
+                "id": 15,
+                "kind": "int",
+                "value": 3
+              },
+              {
+                "id": 16,
+                "kind": "int",
+                "value": 2
+              },
+              {
+                "id": 17,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 18,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": {
+          "#set": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ]
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "map-order",
+      "source": "Map((3,30),(1,10),(2,20))",
+      "seed": "0",
+      "policy": "unordered-value",
+      "reason": "Map equality is extensional; serialized entry order and runtime key iteration are checked separately.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 10,
+        "kind": "app",
+        "opcode": "Map",
+        "args": [
+          {
+            "id": 3,
+            "kind": "app",
+            "opcode": "Tup",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 3
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 30
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "kind": "app",
+            "opcode": "Tup",
+            "args": [
+              {
+                "id": 4,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 5,
+                "kind": "int",
+                "value": 10
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "kind": "app",
+            "opcode": "Tup",
+            "args": [
+              {
+                "id": 7,
+                "kind": "int",
+                "value": 2
+              },
+              {
+                "id": 8,
+                "kind": "int",
+                "value": 20
+              }
+            ]
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 20
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 3
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 30
+                }
+              ]
+            }
+          ]
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "11": {
+              "id": 11,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 10,
+                "kind": "app",
+                "opcode": "Map",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "Tup",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 3
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 30
+                      }
+                    ]
+                  },
+                  {
+                    "id": 6,
+                    "kind": "app",
+                    "opcode": "Tup",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 10
+                      }
+                    ]
+                  },
+                  {
+                    "id": 9,
+                    "kind": "app",
+                    "opcode": "Tup",
+                    "args": [
+                      {
+                        "id": 7,
+                        "kind": "int",
+                        "value": 2
+                      },
+                      {
+                        "id": 8,
+                        "kind": "int",
+                        "value": 20
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 10,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 3,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 3
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 30
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 10
+                  }
+                ]
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "int",
+                    "value": 2
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 20
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": {
+          "#map": [
+            [
+              1,
+              10
+            ],
+            [
+              2,
+              20
+            ],
+            [
+              3,
+              30
+            ]
+          ]
+        },
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "observable-set-order",
+      "source": "Set(17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0).fold(List(), (acc,x)=>acc.append(x))",
+      "seed": "0",
+      "policy": "typescript-order",
+      "reason": "A fold exposes runtime iteration order, independently of value serialization.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 27,
+        "kind": "app",
+        "opcode": "fold",
+        "args": [
+          {
+            "id": 19,
+            "kind": "app",
+            "opcode": "Set",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 17
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 16
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 15
+              },
+              {
+                "id": 4,
+                "kind": "int",
+                "value": 14
+              },
+              {
+                "id": 5,
+                "kind": "int",
+                "value": 13
+              },
+              {
+                "id": 6,
+                "kind": "int",
+                "value": 12
+              },
+              {
+                "id": 7,
+                "kind": "int",
+                "value": 11
+              },
+              {
+                "id": 8,
+                "kind": "int",
+                "value": 10
+              },
+              {
+                "id": 9,
+                "kind": "int",
+                "value": 9
+              },
+              {
+                "id": 10,
+                "kind": "int",
+                "value": 8
+              },
+              {
+                "id": 11,
+                "kind": "int",
+                "value": 7
+              },
+              {
+                "id": 12,
+                "kind": "int",
+                "value": 6
+              },
+              {
+                "id": 13,
+                "kind": "int",
+                "value": 5
+              },
+              {
+                "id": 14,
+                "kind": "int",
+                "value": 4
+              },
+              {
+                "id": 15,
+                "kind": "int",
+                "value": 3
+              },
+              {
+                "id": 16,
+                "kind": "int",
+                "value": 2
+              },
+              {
+                "id": 17,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 18,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "id": 20,
+            "kind": "app",
+            "opcode": "List",
+            "args": []
+          },
+          {
+            "id": 26,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 21,
+                "name": "acc"
+              },
+              {
+                "id": 22,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 25,
+              "kind": "app",
+              "opcode": "append",
+              "args": [
+                {
+                  "id": 23,
+                  "kind": "name",
+                  "name": "acc"
+                },
+                {
+                  "id": 24,
+                  "kind": "name",
+                  "name": "x"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 0
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 3
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 4
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 5
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 6
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 7
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 8
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 13
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 14
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 15
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 16
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 17
+            }
+          ]
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "23": {
+              "id": 21,
+              "name": "acc",
+              "kind": "param",
+              "depth": 1
+            },
+            "24": {
+              "id": 22,
+              "name": "x",
+              "kind": "param",
+              "depth": 1
+            },
+            "28": {
+              "id": 28,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 27,
+                "kind": "app",
+                "opcode": "fold",
+                "args": [
+                  {
+                    "id": 19,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 17
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 16
+                      },
+                      {
+                        "id": 3,
+                        "kind": "int",
+                        "value": 15
+                      },
+                      {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 14
+                      },
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 13
+                      },
+                      {
+                        "id": 6,
+                        "kind": "int",
+                        "value": 12
+                      },
+                      {
+                        "id": 7,
+                        "kind": "int",
+                        "value": 11
+                      },
+                      {
+                        "id": 8,
+                        "kind": "int",
+                        "value": 10
+                      },
+                      {
+                        "id": 9,
+                        "kind": "int",
+                        "value": 9
+                      },
+                      {
+                        "id": 10,
+                        "kind": "int",
+                        "value": 8
+                      },
+                      {
+                        "id": 11,
+                        "kind": "int",
+                        "value": 7
+                      },
+                      {
+                        "id": 12,
+                        "kind": "int",
+                        "value": 6
+                      },
+                      {
+                        "id": 13,
+                        "kind": "int",
+                        "value": 5
+                      },
+                      {
+                        "id": 14,
+                        "kind": "int",
+                        "value": 4
+                      },
+                      {
+                        "id": 15,
+                        "kind": "int",
+                        "value": 3
+                      },
+                      {
+                        "id": 16,
+                        "kind": "int",
+                        "value": 2
+                      },
+                      {
+                        "id": 17,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 18,
+                        "kind": "int",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "id": 20,
+                    "kind": "app",
+                    "opcode": "List",
+                    "args": []
+                  },
+                  {
+                    "id": 26,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 21,
+                        "name": "acc"
+                      },
+                      {
+                        "id": 22,
+                        "name": "x"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 25,
+                      "kind": "app",
+                      "opcode": "append",
+                      "args": [
+                        {
+                          "id": 23,
+                          "kind": "name",
+                          "name": "acc"
+                        },
+                        {
+                          "id": 24,
+                          "kind": "name",
+                          "name": "x"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 27,
+            "kind": "app",
+            "opcode": "fold",
+            "args": [
+              {
+                "id": 19,
+                "kind": "app",
+                "opcode": "Set",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 17
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 16
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 15
+                  },
+                  {
+                    "id": 4,
+                    "kind": "int",
+                    "value": 14
+                  },
+                  {
+                    "id": 5,
+                    "kind": "int",
+                    "value": 13
+                  },
+                  {
+                    "id": 6,
+                    "kind": "int",
+                    "value": 12
+                  },
+                  {
+                    "id": 7,
+                    "kind": "int",
+                    "value": 11
+                  },
+                  {
+                    "id": 8,
+                    "kind": "int",
+                    "value": 10
+                  },
+                  {
+                    "id": 9,
+                    "kind": "int",
+                    "value": 9
+                  },
+                  {
+                    "id": 10,
+                    "kind": "int",
+                    "value": 8
+                  },
+                  {
+                    "id": 11,
+                    "kind": "int",
+                    "value": 7
+                  },
+                  {
+                    "id": 12,
+                    "kind": "int",
+                    "value": 6
+                  },
+                  {
+                    "id": 13,
+                    "kind": "int",
+                    "value": 5
+                  },
+                  {
+                    "id": 14,
+                    "kind": "int",
+                    "value": 4
+                  },
+                  {
+                    "id": 15,
+                    "kind": "int",
+                    "value": 3
+                  },
+                  {
+                    "id": 16,
+                    "kind": "int",
+                    "value": 2
+                  },
+                  {
+                    "id": 17,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 18,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 20,
+                "kind": "app",
+                "opcode": "List",
+                "args": []
+              },
+              {
+                "id": 26,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 21,
+                    "name": "acc"
+                  },
+                  {
+                    "id": 22,
+                    "name": "x"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "id": 25,
+                  "kind": "app",
+                  "opcode": "append",
+                  "args": [
+                    {
+                      "id": 23,
+                      "kind": "name",
+                      "name": "acc"
+                    },
+                    {
+                      "id": 24,
+                      "kind": "name",
+                      "name": "x"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": [
+          0,
+          17,
+          14,
+          11,
+          8,
+          5,
+          2,
+          16,
+          13,
+          10,
+          7,
+          4,
+          1,
+          15,
+          12,
+          9,
+          6,
+          3
+        ],
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "observable-map-order",
+      "source": "Map((3,30),(1,10),(2,20)).keys().fold(List(), (acc,x)=>acc.append(x))",
+      "seed": "0",
+      "policy": "typescript-order",
+      "reason": "Map key iteration follows the selected backend.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 19,
+        "kind": "app",
+        "opcode": "fold",
+        "args": [
+          {
+            "id": 11,
+            "kind": "app",
+            "opcode": "keys",
+            "args": [
+              {
+                "id": 10,
+                "kind": "app",
+                "opcode": "Map",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "Tup",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 3
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 30
+                      }
+                    ]
+                  },
+                  {
+                    "id": 6,
+                    "kind": "app",
+                    "opcode": "Tup",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 10
+                      }
+                    ]
+                  },
+                  {
+                    "id": 9,
+                    "kind": "app",
+                    "opcode": "Tup",
+                    "args": [
+                      {
+                        "id": 7,
+                        "kind": "int",
+                        "value": 2
+                      },
+                      {
+                        "id": 8,
+                        "kind": "int",
+                        "value": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "kind": "app",
+            "opcode": "List",
+            "args": []
+          },
+          {
+            "id": 18,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 13,
+                "name": "acc"
+              },
+              {
+                "id": 14,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 17,
+              "kind": "app",
+              "opcode": "append",
+              "args": [
+                {
+                  "id": 15,
+                  "kind": "name",
+                  "name": "acc"
+                },
+                {
+                  "id": 16,
+                  "kind": "name",
+                  "name": "x"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 3
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        },
+        "seed": "0",
+        "picks": []
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "15": {
+              "id": 13,
+              "name": "acc",
+              "kind": "param",
+              "depth": 1
+            },
+            "16": {
+              "id": 14,
+              "name": "x",
+              "kind": "param",
+              "depth": 1
+            },
+            "20": {
+              "id": 20,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 19,
+                "kind": "app",
+                "opcode": "fold",
+                "args": [
+                  {
+                    "id": 11,
+                    "kind": "app",
+                    "opcode": "keys",
+                    "args": [
+                      {
+                        "id": 10,
+                        "kind": "app",
+                        "opcode": "Map",
+                        "args": [
+                          {
+                            "id": 3,
+                            "kind": "app",
+                            "opcode": "Tup",
+                            "args": [
+                              {
+                                "id": 1,
+                                "kind": "int",
+                                "value": 3
+                              },
+                              {
+                                "id": 2,
+                                "kind": "int",
+                                "value": 30
+                              }
+                            ]
+                          },
+                          {
+                            "id": 6,
+                            "kind": "app",
+                            "opcode": "Tup",
+                            "args": [
+                              {
+                                "id": 4,
+                                "kind": "int",
+                                "value": 1
+                              },
+                              {
+                                "id": 5,
+                                "kind": "int",
+                                "value": 10
+                              }
+                            ]
+                          },
+                          {
+                            "id": 9,
+                            "kind": "app",
+                            "opcode": "Tup",
+                            "args": [
+                              {
+                                "id": 7,
+                                "kind": "int",
+                                "value": 2
+                              },
+                              {
+                                "id": 8,
+                                "kind": "int",
+                                "value": 20
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": 12,
+                    "kind": "app",
+                    "opcode": "List",
+                    "args": []
+                  },
+                  {
+                    "id": 18,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 13,
+                        "name": "acc"
+                      },
+                      {
+                        "id": 14,
+                        "name": "x"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 17,
+                      "kind": "app",
+                      "opcode": "append",
+                      "args": [
+                        {
+                          "id": 15,
+                          "kind": "name",
+                          "name": "acc"
+                        },
+                        {
+                          "id": 16,
+                          "kind": "name",
+                          "name": "x"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "depth": 0
+            }
+          },
+          "seed": 0,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 19,
+            "kind": "app",
+            "opcode": "fold",
+            "args": [
+              {
+                "id": 11,
+                "kind": "app",
+                "opcode": "keys",
+                "args": [
+                  {
+                    "id": 10,
+                    "kind": "app",
+                    "opcode": "Map",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "app",
+                        "opcode": "Tup",
+                        "args": [
+                          {
+                            "id": 1,
+                            "kind": "int",
+                            "value": 3
+                          },
+                          {
+                            "id": 2,
+                            "kind": "int",
+                            "value": 30
+                          }
+                        ]
+                      },
+                      {
+                        "id": 6,
+                        "kind": "app",
+                        "opcode": "Tup",
+                        "args": [
+                          {
+                            "id": 4,
+                            "kind": "int",
+                            "value": 1
+                          },
+                          {
+                            "id": 5,
+                            "kind": "int",
+                            "value": 10
+                          }
+                        ]
+                      },
+                      {
+                        "id": 9,
+                        "kind": "app",
+                        "opcode": "Tup",
+                        "args": [
+                          {
+                            "id": 7,
+                            "kind": "int",
+                            "value": 2
+                          },
+                          {
+                            "id": 8,
+                            "kind": "int",
+                            "value": 20
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 12,
+                "kind": "app",
+                "opcode": "List",
+                "args": []
+              },
+              {
+                "id": 18,
+                "kind": "lambda",
+                "params": [
+                  {
+                    "id": 13,
+                    "name": "acc"
+                  },
+                  {
+                    "id": 14,
+                    "name": "x"
+                  }
+                ],
+                "qualifier": "def",
+                "expr": {
+                  "id": 17,
+                  "kind": "app",
+                  "opcode": "append",
+                  "args": [
+                    {
+                      "id": 15,
+                      "kind": "name",
+                      "name": "acc"
+                    },
+                    {
+                      "id": 16,
+                      "kind": "name",
+                      "name": "x"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": [
+          2,
+          1,
+          3
+        ],
+        "diagnostics": []
+      },
+      "rustSeed": "0"
+    },
+    {
+      "name": "seeded-interval",
+      "source": "{ nondet p=5.to(8).oneOf(); q::debug(\"p\",p)==p }",
+      "seed": "66",
+      "policy": "typescript-seed",
+      "reason": "Go reproduces TypeScript Squares32 draws; Rust uses rand64 modulo the bound.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 11,
+        "kind": "let",
+        "opdef": {
+          "id": 5,
+          "kind": "def",
+          "name": "p",
+          "qualifier": "nondet",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "oneOf",
+            "args": [
+              {
+                "id": 3,
+                "kind": "app",
+                "opcode": "to",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 5
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 8
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "expr": {
+          "id": 10,
+          "kind": "app",
+          "opcode": "eq",
+          "args": [
+            {
+              "id": 8,
+              "kind": "app",
+              "opcode": "q::debug",
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "str",
+                  "value": "p"
+                },
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "p"
+                }
+              ]
+            },
+            {
+              "id": 9,
+              "kind": "name",
+              "name": "p"
+            }
+          ]
+        }
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "seed": "67",
+        "picks": [
+          {
+            "name": "p",
+            "value": {
+              "id": 0,
+              "kind": "int",
+              "value": 6
+            }
+          }
+        ]
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "5": {
+              "id": 5,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 5
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 8
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 2
+            },
+            "7": {
+              "id": 5,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 5
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 8
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 2
+            },
+            "9": {
+              "id": 5,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 5
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 8
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 2
+            },
+            "12": {
+              "id": 12,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 11,
+                "kind": "let",
+                "opdef": {
+                  "id": 5,
+                  "kind": "def",
+                  "name": "p",
+                  "qualifier": "nondet",
+                  "expr": {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "oneOf",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "app",
+                        "opcode": "to",
+                        "args": [
+                          {
+                            "id": 1,
+                            "kind": "int",
+                            "value": 5
+                          },
+                          {
+                            "id": 2,
+                            "kind": "int",
+                            "value": 8
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "expr": {
+                  "id": 10,
+                  "kind": "app",
+                  "opcode": "eq",
+                  "args": [
+                    {
+                      "id": 8,
+                      "kind": "app",
+                      "opcode": "q::debug",
+                      "args": [
+                        {
+                          "id": 6,
+                          "kind": "str",
+                          "value": "p"
+                        },
+                        {
+                          "id": 7,
+                          "kind": "name",
+                          "name": "p"
+                        }
+                      ]
+                    },
+                    {
+                      "id": 9,
+                      "kind": "name",
+                      "name": "p"
+                    }
+                  ]
+                }
+              },
+              "depth": 0
+            }
+          },
+          "seed": 66,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 11,
+            "kind": "let",
+            "opdef": {
+              "id": 5,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 5
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 8
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "app",
+                  "opcode": "q::debug",
+                  "args": [
+                    {
+                      "id": 6,
+                      "kind": "str",
+                      "value": "p"
+                    },
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "p"
+                    }
+                  ]
+                },
+                {
+                  "id": 9,
+                  "kind": "name",
+                  "name": "p"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": true,
+        "diagnostics": [
+          {
+            "label": "p",
+            "value": 5
+          }
+        ]
+      },
+      "rustSeed": "67"
+    },
+    {
+      "name": "seeded-set",
+      "source": "{ nondet p=Set(1,2,3).oneOf(); q::debug(\"p\",p)==p }",
+      "seed": "66",
+      "policy": "typescript-seed",
+      "reason": "Seeded values depend on both RNG algorithm and set traversal order.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 12,
+        "kind": "let",
+        "opdef": {
+          "id": 6,
+          "kind": "def",
+          "name": "p",
+          "qualifier": "nondet",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "oneOf",
+            "args": [
+              {
+                "id": 4,
+                "kind": "app",
+                "opcode": "Set",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 2
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "expr": {
+          "id": 11,
+          "kind": "app",
+          "opcode": "eq",
+          "args": [
+            {
+              "id": 9,
+              "kind": "app",
+              "opcode": "q::debug",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "str",
+                  "value": "p"
+                },
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "p"
+                }
+              ]
+            },
+            {
+              "id": 10,
+              "kind": "name",
+              "name": "p"
+            }
+          ]
+        }
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "seed": "67",
+        "picks": [
+          {
+            "name": "p",
+            "value": {
+              "id": 0,
+              "kind": "int",
+              "value": 3
+            }
+          }
+        ]
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "6": {
+              "id": 6,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 2
+                      },
+                      {
+                        "id": 3,
+                        "kind": "int",
+                        "value": 3
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 2
+            },
+            "8": {
+              "id": 6,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 2
+                      },
+                      {
+                        "id": 3,
+                        "kind": "int",
+                        "value": 3
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 2
+            },
+            "10": {
+              "id": 6,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 2
+                      },
+                      {
+                        "id": 3,
+                        "kind": "int",
+                        "value": 3
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 2
+            },
+            "13": {
+              "id": 13,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 12,
+                "kind": "let",
+                "opdef": {
+                  "id": 6,
+                  "kind": "def",
+                  "name": "p",
+                  "qualifier": "nondet",
+                  "expr": {
+                    "id": 5,
+                    "kind": "app",
+                    "opcode": "oneOf",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "app",
+                        "opcode": "Set",
+                        "args": [
+                          {
+                            "id": 1,
+                            "kind": "int",
+                            "value": 1
+                          },
+                          {
+                            "id": 2,
+                            "kind": "int",
+                            "value": 2
+                          },
+                          {
+                            "id": 3,
+                            "kind": "int",
+                            "value": 3
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "expr": {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "eq",
+                  "args": [
+                    {
+                      "id": 9,
+                      "kind": "app",
+                      "opcode": "q::debug",
+                      "args": [
+                        {
+                          "id": 7,
+                          "kind": "str",
+                          "value": "p"
+                        },
+                        {
+                          "id": 8,
+                          "kind": "name",
+                          "name": "p"
+                        }
+                      ]
+                    },
+                    {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "p"
+                    }
+                  ]
+                }
+              },
+              "depth": 0
+            }
+          },
+          "seed": 66,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 12,
+            "kind": "let",
+            "opdef": {
+              "id": 6,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 2
+                      },
+                      {
+                        "id": 3,
+                        "kind": "int",
+                        "value": 3
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "q::debug",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "str",
+                      "value": "p"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "name",
+                      "name": "p"
+                    }
+                  ]
+                },
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "p"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": true,
+        "diagnostics": [
+          {
+            "label": "p",
+            "value": 3
+          }
+        ]
+      },
+      "rustSeed": "67"
+    },
+    {
+      "name": "seeded-wide-interval",
+      "source": "{ nondet p=0.to(4294967295).oneOf(); q::debug(\"p\",p)==p }",
+      "seed": "66",
+      "policy": "typescript-seed",
+      "reason": "TypeScript consumes two counter words at bound 2^32; Rust consumes one.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 11,
+        "kind": "let",
+        "opdef": {
+          "id": 5,
+          "kind": "def",
+          "name": "p",
+          "qualifier": "nondet",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "oneOf",
+            "args": [
+              {
+                "id": 3,
+                "kind": "app",
+                "opcode": "to",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 4294967295
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "expr": {
+          "id": 10,
+          "kind": "app",
+          "opcode": "eq",
+          "args": [
+            {
+              "id": 8,
+              "kind": "app",
+              "opcode": "q::debug",
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "str",
+                  "value": "p"
+                },
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "p"
+                }
+              ]
+            },
+            {
+              "id": 9,
+              "kind": "name",
+              "name": "p"
+            }
+          ]
+        }
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "seed": "68",
+        "picks": [
+          {
+            "name": "p",
+            "value": {
+              "id": 0,
+              "kind": "int",
+              "value": 2518093085
+            }
+          }
+        ]
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "5": {
+              "id": 5,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 0
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 4294967295
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 2
+            },
+            "7": {
+              "id": 5,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 0
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 4294967295
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 2
+            },
+            "9": {
+              "id": 5,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 0
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 4294967295
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 2
+            },
+            "12": {
+              "id": 12,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 11,
+                "kind": "let",
+                "opdef": {
+                  "id": 5,
+                  "kind": "def",
+                  "name": "p",
+                  "qualifier": "nondet",
+                  "expr": {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "oneOf",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "app",
+                        "opcode": "to",
+                        "args": [
+                          {
+                            "id": 1,
+                            "kind": "int",
+                            "value": 0
+                          },
+                          {
+                            "id": 2,
+                            "kind": "int",
+                            "value": 4294967295
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "expr": {
+                  "id": 10,
+                  "kind": "app",
+                  "opcode": "eq",
+                  "args": [
+                    {
+                      "id": 8,
+                      "kind": "app",
+                      "opcode": "q::debug",
+                      "args": [
+                        {
+                          "id": 6,
+                          "kind": "str",
+                          "value": "p"
+                        },
+                        {
+                          "id": 7,
+                          "kind": "name",
+                          "name": "p"
+                        }
+                      ]
+                    },
+                    {
+                      "id": 9,
+                      "kind": "name",
+                      "name": "p"
+                    }
+                  ]
+                }
+              },
+              "depth": 0
+            }
+          },
+          "seed": 66,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 11,
+            "kind": "let",
+            "opdef": {
+              "id": 5,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 0
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 4294967295
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "app",
+                  "opcode": "q::debug",
+                  "args": [
+                    {
+                      "id": 6,
+                      "kind": "str",
+                      "value": "p"
+                    },
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "p"
+                    }
+                  ]
+                },
+                {
+                  "id": 9,
+                  "kind": "name",
+                  "name": "p"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": true,
+        "diagnostics": [
+          {
+            "label": "p",
+            "value": 4234440068
+          }
+        ]
+      },
+      "rustSeed": "67"
+    },
+    {
+      "name": "seed-counter-limit",
+      "source": "{ nondet p=5.to(8).oneOf(); nondet q=5.to(8).oneOf(); q::debug(\"p\",p)==p and q::debug(\"q\",q)==q }",
+      "seed": "18446744073709551615",
+      "policy": "typescript-seed",
+      "reason": "TypeScript wraps its counter modulo 2^64; Rust saturates at u64::MAX.",
+      "goSourceStatus": "covered",
+      "savedTypeScriptFixtures": [],
+      "input": {
+        "id": 23,
+        "kind": "let",
+        "opdef": {
+          "id": 5,
+          "kind": "def",
+          "name": "p",
+          "qualifier": "nondet",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "oneOf",
+            "args": [
+              {
+                "id": 3,
+                "kind": "app",
+                "opcode": "to",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 5
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 8
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "expr": {
+          "id": 22,
+          "kind": "let",
+          "opdef": {
+            "id": 10,
+            "kind": "def",
+            "name": "q",
+            "qualifier": "nondet",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "oneOf",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "app",
+                  "opcode": "to",
+                  "args": [
+                    {
+                      "id": 6,
+                      "kind": "int",
+                      "value": 5
+                    },
+                    {
+                      "id": 7,
+                      "kind": "int",
+                      "value": 8
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 21,
+            "kind": "app",
+            "opcode": "and",
+            "args": [
+              {
+                "id": 15,
+                "kind": "app",
+                "opcode": "eq",
+                "args": [
+                  {
+                    "id": 13,
+                    "kind": "app",
+                    "opcode": "q::debug",
+                    "args": [
+                      {
+                        "id": 11,
+                        "kind": "str",
+                        "value": "p"
+                      },
+                      {
+                        "id": 12,
+                        "kind": "name",
+                        "name": "p"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 14,
+                    "kind": "name",
+                    "name": "p"
+                  }
+                ]
+              },
+              {
+                "id": 20,
+                "kind": "app",
+                "opcode": "eq",
+                "args": [
+                  {
+                    "id": 18,
+                    "kind": "app",
+                    "opcode": "q::debug",
+                    "args": [
+                      {
+                        "id": 16,
+                        "kind": "str",
+                        "value": "q"
+                      },
+                      {
+                        "id": 17,
+                        "kind": "name",
+                        "name": "q"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 19,
+                    "kind": "name",
+                    "name": "q"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "typescript": {
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "seed": "1",
+        "picks": [
+          {
+            "name": "p",
+            "value": {
+              "id": 0,
+              "kind": "int",
+              "value": 5
+            }
+          },
+          {
+            "name": "q",
+            "value": {
+              "id": 0,
+              "kind": "int",
+              "value": 5
+            }
+          }
+        ]
+      },
+      "rustInput": [
+        {
+          "cmd": "Initialize",
+          "table": {
+            "5": {
+              "id": 5,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 5
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 8
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 2
+            },
+            "10": {
+              "id": 10,
+              "kind": "def",
+              "name": "q",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 9,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 8,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 6,
+                        "kind": "int",
+                        "value": 5
+                      },
+                      {
+                        "id": 7,
+                        "kind": "int",
+                        "value": 8
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 3
+            },
+            "12": {
+              "id": 5,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 5
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 8
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 2
+            },
+            "14": {
+              "id": 5,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 5
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 8
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 2
+            },
+            "17": {
+              "id": 10,
+              "kind": "def",
+              "name": "q",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 9,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 8,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 6,
+                        "kind": "int",
+                        "value": 5
+                      },
+                      {
+                        "id": 7,
+                        "kind": "int",
+                        "value": 8
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 3
+            },
+            "19": {
+              "id": 10,
+              "kind": "def",
+              "name": "q",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 9,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 8,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 6,
+                        "kind": "int",
+                        "value": 5
+                      },
+                      {
+                        "id": 7,
+                        "kind": "int",
+                        "value": 8
+                      }
+                    ]
+                  }
+                ]
+              },
+              "depth": 3
+            },
+            "24": {
+              "id": 24,
+              "kind": "def",
+              "name": "result",
+              "qualifier": "val",
+              "expr": {
+                "id": 23,
+                "kind": "let",
+                "opdef": {
+                  "id": 5,
+                  "kind": "def",
+                  "name": "p",
+                  "qualifier": "nondet",
+                  "expr": {
+                    "id": 4,
+                    "kind": "app",
+                    "opcode": "oneOf",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "app",
+                        "opcode": "to",
+                        "args": [
+                          {
+                            "id": 1,
+                            "kind": "int",
+                            "value": 5
+                          },
+                          {
+                            "id": 2,
+                            "kind": "int",
+                            "value": 8
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "expr": {
+                  "id": 22,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 10,
+                    "kind": "def",
+                    "name": "q",
+                    "qualifier": "nondet",
+                    "expr": {
+                      "id": 9,
+                      "kind": "app",
+                      "opcode": "oneOf",
+                      "args": [
+                        {
+                          "id": 8,
+                          "kind": "app",
+                          "opcode": "to",
+                          "args": [
+                            {
+                              "id": 6,
+                              "kind": "int",
+                              "value": 5
+                            },
+                            {
+                              "id": 7,
+                              "kind": "int",
+                              "value": 8
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "expr": {
+                    "id": 21,
+                    "kind": "app",
+                    "opcode": "and",
+                    "args": [
+                      {
+                        "id": 15,
+                        "kind": "app",
+                        "opcode": "eq",
+                        "args": [
+                          {
+                            "id": 13,
+                            "kind": "app",
+                            "opcode": "q::debug",
+                            "args": [
+                              {
+                                "id": 11,
+                                "kind": "str",
+                                "value": "p"
+                              },
+                              {
+                                "id": 12,
+                                "kind": "name",
+                                "name": "p"
+                              }
+                            ]
+                          },
+                          {
+                            "id": 14,
+                            "kind": "name",
+                            "name": "p"
+                          }
+                        ]
+                      },
+                      {
+                        "id": 20,
+                        "kind": "app",
+                        "opcode": "eq",
+                        "args": [
+                          {
+                            "id": 18,
+                            "kind": "app",
+                            "opcode": "q::debug",
+                            "args": [
+                              {
+                                "id": 16,
+                                "kind": "str",
+                                "value": "q"
+                              },
+                              {
+                                "id": 17,
+                                "kind": "name",
+                                "name": "q"
+                              }
+                            ]
+                          },
+                          {
+                            "id": 19,
+                            "kind": "name",
+                            "name": "q"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              "depth": 0
+            }
+          },
+          "seed": 18446744073709551615,
+          "verbosity": 3
+        },
+        {
+          "cmd": "Evaluate",
+          "expr": {
+            "id": 23,
+            "kind": "let",
+            "opdef": {
+              "id": 5,
+              "kind": "def",
+              "name": "p",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "to",
+                    "args": [
+                      {
+                        "id": 1,
+                        "kind": "int",
+                        "value": 5
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 8
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 22,
+              "kind": "let",
+              "opdef": {
+                "id": 10,
+                "kind": "def",
+                "name": "q",
+                "qualifier": "nondet",
+                "expr": {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "oneOf",
+                  "args": [
+                    {
+                      "id": 8,
+                      "kind": "app",
+                      "opcode": "to",
+                      "args": [
+                        {
+                          "id": 6,
+                          "kind": "int",
+                          "value": 5
+                        },
+                        {
+                          "id": 7,
+                          "kind": "int",
+                          "value": 8
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 21,
+                "kind": "app",
+                "opcode": "and",
+                "args": [
+                  {
+                    "id": 15,
+                    "kind": "app",
+                    "opcode": "eq",
+                    "args": [
+                      {
+                        "id": 13,
+                        "kind": "app",
+                        "opcode": "q::debug",
+                        "args": [
+                          {
+                            "id": 11,
+                            "kind": "str",
+                            "value": "p"
+                          },
+                          {
+                            "id": 12,
+                            "kind": "name",
+                            "name": "p"
+                          }
+                        ]
+                      },
+                      {
+                        "id": 14,
+                        "kind": "name",
+                        "name": "p"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 20,
+                    "kind": "app",
+                    "opcode": "eq",
+                    "args": [
+                      {
+                        "id": 18,
+                        "kind": "app",
+                        "opcode": "q::debug",
+                        "args": [
+                          {
+                            "id": 16,
+                            "kind": "str",
+                            "value": "q"
+                          },
+                          {
+                            "id": 17,
+                            "kind": "name",
+                            "name": "q"
+                          }
+                        ]
+                      },
+                      {
+                        "id": 19,
+                        "kind": "name",
+                        "name": "q"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "cmd": "GetSeed"
+        }
+      ],
+      "rust": {
+        "response": "EvaluationResult",
+        "ok": true,
+        "diagnostics": [
+          {
+            "label": "p",
+            "value": 6
+          },
+          {
+            "label": "q",
+            "value": 6
+          }
+        ]
+      },
+      "rustSeed": "18446744073709551615"
+    }
+  ]
+}

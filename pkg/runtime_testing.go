@@ -39,6 +39,9 @@ func (e *ModuleEvaluator) Test(ctx context.Context, name string, maxSamples int)
 	if !found {
 		return out, Diagnostic{Code: "QNT501", Message: "Definition not found: " + name}
 	}
+	if err := e.PrepareDefinition(ctx, name); err != nil {
+		return out, err
+	}
 	e.Trace.Reset()
 	bestLength := -1
 	for out.Samples < maxSamples {

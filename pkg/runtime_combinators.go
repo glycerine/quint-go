@@ -50,6 +50,11 @@ func (e *ModuleEvaluator) SimulateExpressions(ctx context.Context, call RuntimeS
 			return SimulationOutcome{}, err
 		}
 	}
+	for _, name := range options.Witnesses {
+		if err := e.PrepareDefinition(ctx, name); err != nil {
+			return SimulationOutcome{}, err
+		}
+	}
 	// These names cannot collide with names written in Quint source.
 	options.Init, options.Step, options.Invariant = "\x00init", "\x00step", "\x00invariant"
 	return e.simulate(ctx, options, func(name string) (RuntimeValue, error) {

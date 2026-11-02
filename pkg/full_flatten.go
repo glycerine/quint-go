@@ -22,9 +22,17 @@ func FlattenModules(modules []Module, table *insdict.Dict[ID, LookupDefinition],
 	unique := make([]Module, len(modules))
 	workingTable := NewExpressionNameResolver(nil).Table
 	for id, def := range table.All() {
+		if def.Declaration != nil && def.Declaration.Kind == "var" {
+			declaration := seedRuntimeVariableProvenance(*def.Declaration)
+			def.Declaration = &declaration
+		}
 		workingTable.Set(id, def)
 	}
 	for i, m := range modules {
+		m.Declarations = append([]Declaration{}, m.Declarations...)
+		for j, declaration := range m.Declarations {
+			m.Declarations[j] = seedRuntimeVariableProvenance(declaration)
+		}
 		unique[i] = UnshadowNames(m, workingTable)
 	}
 	inlined, err := InlineTypeAliases(unique, workingTable, analysis)

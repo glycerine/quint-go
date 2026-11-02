@@ -1,6 +1,7 @@
 package quint
 
 import (
+	"context"
 	"fmt"
 	"sort"
 
@@ -17,7 +18,11 @@ import (
 //
 // This explicit compatibility operation is separate from RuntimeValue.Expression,
 // whose deterministic canonical representation defines the public Go boundary.
+// Values retaining compact domains require SerializeRuntimeValueContext.
 func SerializeRuntimeValue(value RuntimeValue, state *RuntimeObjectHashState) (Expr, error) {
+	if value.containsDomain {
+		return Expr{}, Diagnostic{Code: "QNT501", Message: "Symbolic runtime serialization requires a context"}
+	}
 	if state == nil {
 		state = &RuntimeObjectHashState{}
 	}
@@ -29,12 +34,35 @@ func runtimeSerialize(value RuntimeValue) (Expr, error) {
 	return SerializeRuntimeValue(value, nil)
 }
 
+// SerializeRuntimeValueContext serializes compact runtime values with the
+// caller's context and object-hash sequence. Enumeration and cancellation errors
+// are returned unchanged; Int and Nat serialize as builtin names.
+func SerializeRuntimeValueContext(ctx context.Context, value RuntimeValue, state *RuntimeObjectHashState) (Expr, error) {
+	if err := ctx.Err(); err != nil {
+		return Expr{}, err
+	}
+	if state == nil {
+		state = &RuntimeObjectHashState{}
+	}
+	serializer := runtimeSerialization{objects: state, ctx: ctx}
+	return serializer.expression(value)
+}
+
 type runtimeSerialization struct {
+	ctx        context.Context
 	objects    *RuntimeObjectHashState
 	comparison *collate.Collator
 }
 
 func (s *runtimeSerialization) expression(value RuntimeValue) (Expr, error) {
+	if s.ctx != nil {
+		if err := s.ctx.Err(); err != nil {
+			return Expr{}, err
+		}
+		if value.domain != nil {
+			return value.domain.Serialize(s.ctx, s.objects)
+		}
+	}
 	if !value.Valid() {
 		return Expr{}, fmt.Errorf("cannot serialize an invalid runtime value")
 	}
@@ -87,6 +115,15 @@ func (s *runtimeSerialization) expression(value RuntimeValue) (Expr, error) {
 		// These have structural hashes and retain their actual child values.
 		pairs := make([]runtimeReferenceEntry, len(entries))
 		for i, entry := range entries {
+			if s.ctx != nil && (entry.Key.containsDomain || entry.Value.containsDomain) {
+				pair, err := NewRuntimeCompositeContext(s.ctx, "Tup", []RuntimeValue{entry.Key, entry.Value})
+				if err != nil {
+					return Expr{}, err
+				}
+				pairs[i] = runtimeReferenceEntry{Key: pair, Value: pair}
+				continue
+			}
+
 			expression := Expr{Kind: "app", Opcode: "Tup", Args: []Expr{entry.Key.expression, entry.Value.expression}}
 			containsClosure := entry.Key.containsClosure || entry.Value.containsClosure
 			pair := RuntimeValue{
@@ -131,6 +168,11 @@ func (s *runtimeSerialization) setElements(values []RuntimeValue) ([]Expr, error
 	}
 	var printed runtimeObjectSet[printedExpression]
 	for _, entry := range expressions.Entries() {
+		if s.ctx != nil {
+			if err := s.ctx.Err(); err != nil {
+				return nil, err
+			}
+		}
 		expression := entry.Value
 		printed.Add(s.objects, &runtimeObjectIdentity{}, printedExpression{expression, ExpressionString(expression)})
 	}
@@ -145,7 +187,17 @@ func (s *runtimeSerialization) setElements(values []RuntimeValue) ([]Expr, error
 	}
 	args := make([]Expr, len(entries))
 	for i, entry := range entries {
+		if s.ctx != nil {
+			if err := s.ctx.Err(); err != nil {
+				return nil, err
+			}
+		}
 		args[i] = entry.Value.expression
+	}
+	if s.ctx != nil {
+		if err := s.ctx.Err(); err != nil {
+			return nil, err
+		}
 	}
 	return args, nil
 }

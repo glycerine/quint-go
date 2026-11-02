@@ -12,9 +12,10 @@ import (
 type runtimeValueAllocation struct{ marker byte }
 
 // RuntimeValue owns a language value, a lexical closure, or a collection retaining
-// such values. Its expression form is canonical for display; set/map identity
-// does not depend on display collation. Closures are created by the evaluator;
-// symbolic collections remain separate.
+// such values, including compact symbolic domains. Its context-free expression
+// is a structural view; ExpressionContext supplies checked language display.
+// Set/map identity does not depend on display collation. Closures are created
+// by the evaluator.
 // The zero value is invalid, rather than an implicit language value.
 type RuntimeValue struct {
 	expression Expr
@@ -26,6 +27,12 @@ type RuntimeValue struct {
 	// containsClosure separates executable payload identity from the mock lambda
 	// expressions that the reference emits solely for display.
 	containsClosure bool
+	// Compact domains and their containing values keep executable payloads
+	// separately from this context-free structural view. Checked operations
+	// expose extensional semantics and errors without eager materialization.
+	domain         *RuntimeDomain
+	containsDomain bool
+	referenceCode  *float64
 }
 
 // NewRuntimeValue validates and copies a concrete expression, removing source IDs
@@ -49,9 +56,15 @@ func NewRuntimeValue(e Expr) (RuntimeValue, error) {
 }
 
 func (v RuntimeValue) Valid() bool { return v.identity != "" || v.closure != nil }
+
+// Equal compares concrete values or compact structural representations. Use
+// EqualContext for extensional language equality involving symbolic domains.
 func (v RuntimeValue) Equal(other RuntimeValue) bool {
 	if !v.Valid() || !other.Valid() || v.closure != nil || other.closure != nil {
 		return false
+	}
+	if v.domain != nil || other.domain != nil {
+		return v.domain != nil && other.domain != nil && runtimeDomainStructuralEqual(*v.domain, *other.domain)
 	}
 	if !v.containsClosure && !other.containsClosure {
 		return v.identity == other.identity
@@ -106,10 +119,13 @@ func runtimeCollectionEqual(left, right RuntimeValue) bool {
 // values always hash equally, even when display strings have collation ties.
 // Mock lambda expressions may collide; executable closure identity is compared
 // separately when collections contain closures.
+// Compact domains use structural identity; HashContext supplies an extensional
+// hash and exposes enumeration failures and cancellation.
 func (v RuntimeValue) Hash() [32]byte { return sha256.Sum256([]byte(v.identity)) }
 
 // Expression returns a deep copy, so changing its argument slices cannot mutate
-// the runtime value. Integer values are already immutable.
+// the runtime value. Integer values are already immutable. Compact domains keep
+// constructor IR here; ExpressionContext supplies checked language display.
 func (v RuntimeValue) Expression() Expr { return copyRuntimeExpression(v.expression) }
 func (v RuntimeValue) String() string {
 	if !v.Valid() {

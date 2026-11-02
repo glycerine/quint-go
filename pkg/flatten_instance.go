@@ -39,6 +39,7 @@ func InstantiateModule(owner string, instance Declaration, prototype Module, tab
 			declarations = append(declarations, d)
 			continue
 		}
+		d = instantiateRuntimeVariableProvenance(d, name)
 		copied, err := AddNamespaceToDefinition(d, name, builtinResolutionNames)
 		if err != nil {
 			return Module{}, Declaration{}, err

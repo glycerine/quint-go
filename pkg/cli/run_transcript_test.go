@@ -148,7 +148,7 @@ func TestRunOutputNumbersAndDiagnosticDeduplication(t *testing.T) {
 	if len(got) != 2 || got[0].Explanation != "first" || got[1].Explanation != "second" {
 		t.Fatal(got)
 	}
-	if _, err := runExpressions([]quint.RuntimeValue{{}}, &quint.RuntimeObjectHashState{}); err == nil {
+	if _, err := runExpressions(context.Background(), []quint.RuntimeValue{{}}, &quint.RuntimeObjectHashState{}); err == nil {
 		t.Fatal("invalid state serialization accepted")
 	}
 }

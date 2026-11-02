@@ -21,6 +21,12 @@ func runtimeReferenceHash(value RuntimeValue) (int32, error) {
 	if !value.Valid() {
 		return 0, fmt.Errorf("reference hashing requires a concrete runtime value")
 	}
+	if value.referenceCode != nil {
+		return runtimeReferenceNumberSMI(*value.referenceCode), nil
+	}
+	if value.containsDomain {
+		return 0, fmt.Errorf("symbolic runtime reference hashing requires a context")
+	}
 	code, err := runtimeReferenceHashCode(value.expression)
 	return runtimeReferenceSMI(uint32(code)), err
 }

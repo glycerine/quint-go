@@ -63,7 +63,11 @@ func testPureEvaluationFixtures(t *testing.T, filename string) {
 				t.Fatal(err)
 			}
 			want, err := NewRuntimeValue(*f.Output)
-			if err != nil || !got.Equal(want) {
+			if err != nil {
+				t.Fatal(err)
+			}
+			equal, err := got.EqualContext(context.Background(), want)
+			if err != nil || !equal {
 				t.Fatal(got.String(), want.String(), err)
 			}
 		})

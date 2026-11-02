@@ -42,6 +42,9 @@ add('assignment_rhs_first_itf', "module M { var a:int var b:int action assignmen
 add('application_argument_order_itf', "module M { var a:int var b:int action assignA(v)=a'=v action orderTest=all{assignA(if(false)b else 1),b'=1} }", {itf:true})
 add('lazy_branch_variable_itf', 'module M { var a:int val coldTest=if(false) a==1 else true }', {itf:true})
 add('instance_variable_order_itf', "module A { const N:int var x:int action importedTest=x'=N } module M { import A(N=1) as I import A(N=2) as J }", {main:'M',itf:true})
+add('interval_state_itf', "module M { var x:Set[int] action sampleTest=x'=9.to(12) }", {itf:true})
+add('powerset_state_itf', "module M { var x:Set[Set[int]] action sampleTest=x'=1.to(2).powerset() }", {itf:true})
+add('nested_domain_state_itf', "module M { var x:{a:Set[int],b:Set[Set[int]]} action sampleTest=x'={a:9.to(12),b:1.to(2).powerset()} }", {itf:true})
 
 const stripANSI = text => text.replace(/\u001b\[[0-?]*[ -/]*[@-~]/g, '')
 

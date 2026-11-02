@@ -164,7 +164,6 @@ func testMatcher(pattern string) (func(string) bool, error) {
 type testSelection struct {
 	definition             quint.LookupDefinition
 	reference, name, entry string
-	variables              []string
 }
 
 func testSelections(front quint.FrontendResult, main string, match func(string) bool) ([]testSelection, error) {
@@ -252,86 +251,9 @@ func testPrepareEvaluator(ctx context.Context, front quint.FrontendResult, main 
 		if module.Name != main {
 			continue
 		}
-		testVariableOrder(module, flat.Table, selections)
 		return quint.NewModuleEvaluator(module, rng, false)
 	}
 	return nil, fmt.Errorf("flattened module %s does not exist", main)
-}
-
-// The reference's builder registers variables while compiling each selected
-// definition, rather than enumerating module declarations. Registrations
-// accumulate across the test suite, including variables in unevaluated branches.
-// Application arguments compile before the operator body; assignment targets
-// compile after the right-hand side. Retain that order in each ITF header.
-func testVariableOrder(module quint.Module, table *insdict.Dict[quint.ID, quint.LookupDefinition], selections []testSelection) {
-	definitions := insdict.NewDict[string, quint.Declaration]()
-	for _, declaration := range module.Declarations {
-		if declaration.Kind == "def" {
-			definitions.Set(declaration.Name, declaration)
-		}
-	}
-	seenDefinitions := map[quint.ID]bool{}
-	variables := insdict.NewDict[string, string]()
-	var expression func(quint.Expr)
-	var definition func(quint.LookupDefinition)
-	definition = func(lookup quint.LookupDefinition) {
-		if lookup.Declaration == nil {
-			return
-		}
-		declaration := lookup.Declaration
-		if declaration.Kind == "var" {
-			variables.Set(declaration.ID.String(), declaration.Name)
-			return
-		}
-		if seenDefinitions[declaration.ID] {
-			return
-		}
-		seenDefinitions[declaration.ID] = true
-		if declaration.Expr != nil {
-			expression(*declaration.Expr)
-		}
-	}
-	reference := func(id quint.ID) {
-		if lookup, found := table.Get2(id); found {
-			definition(lookup)
-		}
-	}
-	expression = func(value quint.Expr) {
-		switch value.Kind {
-		case "name":
-			reference(value.ID)
-		case "app":
-			if value.Opcode == "assign" && len(value.Args) == 2 {
-				expression(value.Args[1])
-				reference(value.Args[0].ID)
-				return
-			}
-			for _, argument := range value.Args {
-				expression(argument)
-			}
-			reference(value.ID)
-		case "lambda":
-			if value.Body != nil {
-				expression(*value.Body)
-			}
-		case "let":
-			if value.Opdef != nil && value.Opdef.Expr != nil {
-				expression(*value.Opdef.Expr)
-			}
-			if value.Body != nil {
-				expression(*value.Body)
-			}
-		}
-	}
-	for i := range selections {
-		if declaration, found := definitions.Get2(selections[i].entry); found && declaration.Expr != nil {
-			expression(*declaration.Expr)
-		}
-		selections[i].variables = make([]string, 0, variables.Len())
-		for _, name := range variables.All() {
-			selections[i].variables = append(selections[i].variables, name)
-		}
-	}
 }
 
 func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) int {
@@ -520,11 +442,14 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 		if options.itf != "" && (result.Status == "passed" || (result.Status == "failed" && len(result.Errors) > 0 && result.Errors[0].Code == "QNT511")) {
 			states := make([]quint.Expr, len(result.States))
 			for i, state := range result.States {
-				states[i] = state.Expression()
+				states[i], err = quint.SerializeRuntimeValueContext(ctx, state, evaluator.ObjectHashState())
+				if err != nil {
+					return fail(err)
+				}
 			}
 			now := time.Now()
 			writer := quint.TraceWriter{Template: options.itf, Header: quint.ITFHeader{Source: options.input, CreatedAt: now.Format(time.RFC1123Z), Timestamp: now.UnixMilli()}}
-			if _, err = writer.Write(index, result.Status, selection.variables, states, result.Name); err != nil {
+			if _, err = writer.Write(index, result.Status, evaluator.Storage.VarNames(), states, result.Name); err != nil {
 				return fail(err)
 			}
 		}

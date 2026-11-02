@@ -6,7 +6,8 @@ import (
 	"github.com/glycerine/insdict"
 )
 
-// RuntimeNondetDiscovery models the compiler's registration of pick names.
+// RuntimeNondetDiscovery models the compiler's registration of variable cells
+// and nondeterministic pick names.
 // Keep it with one evaluator so compiling a new nondet binding registers an
 // unset pick, while revisiting already compiled bindings preserves their picks.
 // Input IDs must be unique within the evaluator, as for reference compilation.
@@ -27,6 +28,31 @@ type runtimeDiscoveryDefinition struct {
 // under its lexical scope; application arguments precede the operator's body.
 // storage may be nil when metadata is not needed by a pure evaluation.
 func (d *RuntimeNondetDiscovery) Prepare(ctx context.Context, expression Expr, storage *VariableStorage) error {
+	return d.PrepareWithVariables(ctx, expression, storage, nil)
+}
+
+// PrepareWithVariables also discovers registered current/next variable cells.
+// variables maps the enclosing module's declared variable names to their IDs;
+// local definitions and parameters shadow those declarations. Discovery follows
+// the same compilation traversal as pick registration, including assignment
+// right-hand sides before their targets.
+func (d *RuntimeNondetDiscovery) PrepareWithVariables(ctx context.Context, expression Expr, storage *VariableStorage, variables *insdict.Dict[string, ID]) error {
+	if err := ctx.Err(); err != nil {
+		return err
+	}
+	var bindings *insdict.Dict[string, RuntimeVariableBinding]
+	if variables != nil {
+		bindings = insdict.NewDict[string, RuntimeVariableBinding]()
+		for name, id := range variables.All() {
+			bindings.Set(name, RuntimeVariableBinding{Key: id.String(), Name: name})
+		}
+	}
+	return d.PrepareWithVariableBindings(ctx, expression, storage, bindings)
+}
+
+// PrepareWithVariableBindings retains source cell identities and display names
+// when compilation has flattened imported definitions and instance namespaces.
+func (d *RuntimeNondetDiscovery) PrepareWithVariableBindings(ctx context.Context, expression Expr, storage *VariableStorage, variables *insdict.Dict[string, RuntimeVariableBinding]) error {
 	if err := ctx.Err(); err != nil {
 		return err
 	}
@@ -52,6 +78,17 @@ func (d *RuntimeNondetDiscovery) Prepare(ctx context.Context, expression Expr, s
 		definition.visited = true
 		return visit(definition.expression, definition.scopes)
 	}
+	reference := func(name string, scopes []*insdict.Dict[string, *runtimeDiscoveryDefinition]) error {
+		if definition := lookup(name, scopes); definition != nil {
+			return compile(definition)
+		}
+		if variables != nil {
+			if binding, exists := variables.Get2(name); exists {
+				storage.Register(binding.Key, binding.Name)
+			}
+		}
+		return nil
+	}
 	visit = func(expression *Expr, scopes []*insdict.Dict[string, *runtimeDiscoveryDefinition]) error {
 		if err := ctx.Err(); err != nil {
 			return err
@@ -61,7 +98,7 @@ func (d *RuntimeNondetDiscovery) Prepare(ctx context.Context, expression Expr, s
 		}
 		switch expression.Kind {
 		case "name":
-			return compile(lookup(expression.Name, scopes))
+			return reference(expression.Name, scopes)
 		case "lambda":
 			parameters := insdict.NewDict[string, *runtimeDiscoveryDefinition]()
 			for _, parameter := range expression.Params {
@@ -69,11 +106,16 @@ func (d *RuntimeNondetDiscovery) Prepare(ctx context.Context, expression Expr, s
 			}
 			return visit(expression.Body, append(append([]*insdict.Dict[string, *runtimeDiscoveryDefinition](nil), scopes...), parameters))
 		case "app":
-			// Assignment compiles only its RHS; the left name is a variable
-			// reference, not an operator/value dependency.
+			// Assignment compiles its RHS in the caller's scope before
+			// discovering the target variable's current/next cells.
 			if expression.Opcode == "assign" {
 				if len(expression.Args) > 1 {
-					return visit(&expression.Args[1], scopes)
+					if err := visit(&expression.Args[1], scopes); err != nil {
+						return err
+					}
+				}
+				if len(expression.Args) > 0 {
+					return reference(expression.Args[0].Name, scopes)
 				}
 				return nil
 			}
@@ -82,7 +124,7 @@ func (d *RuntimeNondetDiscovery) Prepare(ctx context.Context, expression Expr, s
 					return err
 				}
 			}
-			return compile(lookup(expression.Opcode, scopes))
+			return reference(expression.Opcode, scopes)
 		case "let":
 			if expression.Opdef == nil {
 				return nil

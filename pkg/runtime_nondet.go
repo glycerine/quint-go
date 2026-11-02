@@ -8,7 +8,8 @@ import (
 
 // RuntimeNondetOptions controls retrying a false nondeterministic body. Every
 // position bound must be strictly smaller than RetrySmallerThan to allow a
-// retry. A zero or negative limit disables retries for nonempty finite sets.
+// retry. Infinite bounds disable retries. A zero or negative limit disables
+// retries when at least one finite bound is present.
 type RuntimeNondetOptions struct {
 	RetrySmallerThan Integer
 }
@@ -36,8 +37,8 @@ func EvalNondet(ctx context.Context, name string, storage *VariableStorage, rng 
 
 // EvalNondetWithOptions uses an explicit retry limit for an execution. The
 // caller owns storage, RNG, and callback scopes and must use them sequentially.
-// Bounds and position selection are supplied by the runtime picking helpers;
-// unsupported symbolic/infinite domains are reported by those helpers.
+// Bounds and position selection use checked runtime picking helpers, including
+// compact, compound, and infinite domains.
 func EvalNondetWithOptions(ctx context.Context, name string, storage *VariableStorage, rng *RNG,
 	setEval func(context.Context) (RuntimeValue, error),
 	bodyEval func(context.Context, RuntimeValue, error) (RuntimeValue, error),
@@ -64,30 +65,50 @@ func EvalNondetWithOptions(ctx context.Context, name string, storage *VariableSt
 	if !set.Valid() {
 		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Invalid runtime value"}
 	}
-	if set.expression.Kind == "app" && set.expression.Opcode == "Set" {
-		entries, err := runtimeMap(set)
-		if err != nil {
-			return RuntimeValue{}, err
-		}
-		if entries.Len() == 0 {
-			return NewRuntimeValue(Expr{Kind: "bool", Bool: false})
-		}
+	domain, err := RuntimeDomainFromValue(set)
+	if err != nil {
+		return RuntimeValue{}, err
 	}
-	bounds, err := RuntimePickBounds(set)
+	cardinality, cardinalityErr := domain.Cardinality(ctx)
+	if cardinalityErr == nil && cardinality.Big().Sign() == 0 {
+		return NewRuntimeValue(Expr{Kind: "bool", Bool: false})
+	}
+	if cardinalityErr != nil && !runtimeDomainIsDiagnostic(cardinalityErr) {
+		return RuntimeValue{}, cardinalityErr
+	}
+	bounds, err := RuntimePickBoundsContext(ctx, set)
 	if err != nil {
 		return RuntimeValue{}, err
 	}
 	positions := make([]Integer, len(bounds))
+	finiteBounds := make([]Integer, len(bounds))
 	retry := true
 	for i, bound := range bounds {
 		if err := ctx.Err(); err != nil {
 			return RuntimeValue{}, err
 		}
-		positions[i], err = rng.Next(bound)
+		limit := bound.Value
+		if bound.Finite {
+			if limit.Big().Sign() <= 0 {
+				// The nondeterministic evaluator draws in bound order. Unlike
+				// standalone sampling, an erroneous zero bound may follow draws
+				// from earlier infinite factors and must retain their RNG state.
+				return RuntimeValue{}, RuntimeDomainException{Name: "AssertionError", Message: "The expression evaluated to a falsy value:\n\n  (bound > 0n)\n"}
+			}
+			finiteBounds[i] = bound.Value
+		} else {
+			limit = IntegerFromBig(new(big.Int).Lsh(big.NewInt(1), 256))
+			retry = false
+		}
+		positions[i], err = rng.Next(limit)
 		if err != nil {
 			return RuntimeValue{}, err
 		}
-		if bound.Big().Cmp(options.RetrySmallerThan.Big()) >= 0 {
+		if !bound.Finite {
+			position := positions[i].Big()
+			position.Sub(position, new(big.Int).Lsh(big.NewInt(1), 255))
+			positions[i] = IntegerFromBig(position)
+		} else if bound.Value.Big().Cmp(options.RetrySmallerThan.Big()) >= 0 {
 			retry = false
 		}
 	}
@@ -96,7 +117,12 @@ func EvalNondetWithOptions(ctx context.Context, name string, storage *VariableSt
 		if err := ctx.Err(); err != nil {
 			return RuntimeValue{}, err
 		}
-		picked, pickErr := PickRuntimePosition(ctx, set, positions)
+		picked, pickErr := PickRuntimePositionContext(ctx, set, positions)
+		if pickErr != nil && !runtimeDomainIsDiagnostic(pickErr) {
+			// A thrown pick exception occurs before the reference fills the
+			// binding cache or calls its body. Returned diagnostics stay lazy.
+			return RuntimeValue{}, pickErr
+		}
 		result, bodyErr := bodyEval(ctx, picked, pickErr)
 		if bodyErr == nil && result.expression.Kind != "bool" {
 			bodyErr = Diagnostic{Code: "QNT501", Message: "Expected a Boolean value"}
@@ -107,7 +133,7 @@ func EvalNondetWithOptions(ctx context.Context, name string, storage *VariableSt
 			}
 			return result, bodyErr
 		}
-		incrementRuntimePositions(positions, bounds)
+		incrementRuntimePositions(positions, finiteBounds)
 		exhausted := true
 		for i, position := range positions {
 			if position.Big().Cmp(original[i].Big()) != 0 {

@@ -19,13 +19,16 @@ func RuntimePickBounds(value RuntimeValue) ([]Integer, error) {
 	return []Integer{IntegerFromBig(new(big.Int).SetUint64(uint64(entries.Len())))}, nil
 }
 
-// PickRuntimePosition follows the reference's explicit Set.pick traversal.
-// It uses the first position and ignores extra positions; a nonpositive
-// position selects the first element. Returned values retain their stored
-// object identity and nested collection history.
+// PickRuntimePosition selects from an explicit set or compact domain. Explicit
+// sets use the first position and ignore extras; a nonpositive position selects
+// the first element. Compact domains use their recursive positional protocol.
+// Returned stored elements retain their identity and nested collection history.
 func PickRuntimePosition(ctx context.Context, value RuntimeValue, positions []Integer) (RuntimeValue, error) {
 	if err := ctx.Err(); err != nil {
 		return RuntimeValue{}, err
+	}
+	if value.domain != nil {
+		return PickRuntimePositionContext(ctx, value, positions)
 	}
 	if _, err := RuntimePickBounds(value); err != nil {
 		return RuntimeValue{}, err
@@ -50,12 +53,16 @@ func PickRuntimePosition(ctx context.Context, value RuntimeValue, positions []In
 	return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Index out of bounds"}
 }
 
-// PickRuntimeValue samples an explicit finite set using the caller's RNG.
+// PickRuntimeValue samples an explicit finite set or compact domain using the
+// caller's RNG.
 // Empty sets return the reference picking diagnostic without advancing RNG;
 // nondeterministic bindings handle their empty-set false result separately.
 func PickRuntimeValue(ctx context.Context, value RuntimeValue, rng *RNG) (RuntimeValue, error) {
 	if err := ctx.Err(); err != nil {
 		return RuntimeValue{}, err
+	}
+	if value.domain != nil {
+		return PickRuntimeValueContext(ctx, value, rng)
 	}
 	bounds, err := RuntimePickBounds(value)
 	if err != nil {

@@ -132,7 +132,7 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 		case "declaration":
 			out("\n")
 		case "value":
-			formatted, err := session.FormatValue(result.Value, 80)
+			formatted, err := session.FormatValueContext(ctx, result.Value, 80)
 			if err != nil {
 				report(err)
 				return
@@ -213,7 +213,12 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 				if err != nil {
 					report(err)
 				} else {
-					out(state.String() + "\n")
+					formatted, err := session.FormatValueContext(ctx, state, 80)
+					if err != nil {
+						report(err)
+					} else {
+						out(formatted + "\n")
+					}
 				}
 			case ".history":
 				for _, text := range session.History() {

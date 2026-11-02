@@ -11,7 +11,17 @@ const JSONbig = require(path.join(root, 'quint/node_modules/json-bigint'))({ use
 const counter = "module Counter { var x:int action init=x'=0 action step=x'=x+1 val safe=x<2 val positive=x>=0 val boom=assert(false) }"
 const pair = "module Counter { var x:int var y:int action init=all { x'=0, y'=2 } action step=all { x'=x+1, y'=y+2 } }"
 const debugging = 'module Counter { var x:int action init=x\'=q::debug("init",0) action step=x\'=q::debug("step",x+1) }'
+const interval = "module Counter { var x:Set[int] action init=x'=9.to(12) action step=x'=x }"
+const powerset = "module Counter { var x:Set[Set[int]] action init=x'=1.to(2).powerset() action step=x'=x }"
+const nested = "module Counter { var x:{a:Set[int],b:Set[Set[int]]} action init=x'={a:9.to(12),b:1.to(2).powerset()} action step=x'=x }"
+const infinite = "module Counter { var x:Set[int] action init=x'=Int action step=x'=x }"
 const cases = [
+  ['interval_stage', interval, ['--verbosity=0', '--max-steps=0', '--out=${STAGE}']],
+  ['interval_itf', interval, ['--verbosity=0', '--max-steps=0', '--out-itf=${TRACE}']],
+  ['powerset_stage', powerset, ['--verbosity=0', '--max-steps=0', '--out=${STAGE}']],
+  ['powerset_itf', powerset, ['--verbosity=0', '--max-steps=0', '--out-itf=${TRACE}']],
+  ['nested_domains_stage', nested, ['--verbosity=0', '--max-steps=0', '--out=${STAGE}']],
+  ['infinite_name_stage', infinite, ['--verbosity=0', '--max-steps=0', '--out=${STAGE}']],
   ['quiet_debug', debugging, ['--verbosity=0', '--max-steps=1']],
   ['out_debug', debugging, ['--verbosity=0', '--max-steps=1', '--out=${STAGE}']],
   ['quiet_success', counter, ['--verbosity=0', '--max-steps=1']],

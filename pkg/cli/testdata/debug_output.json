@@ -168,5 +168,59 @@
     "status": 0,
     "stdout": "> long [\n  \"alpha-alpha-alpha\",\n  \"beta-beta-beta\",\n  \"gamma-gamma-gamma\",\n  \"delta-delta-delta\",\n  \"epsilon-epsilon\"\n]\n[\n  \"alpha-alpha-alpha\",\n  \"beta-beta-beta\",\n  \"gamma-gamma-gamma\",\n  \"delta-delta-delta\",\n  \"epsilon-epsilon\"\n]\n",
     "stderr": ""
+  },
+  {
+    "name": "repl_interval",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "q::debug(\"interval\",9.to(12))\n.exit\n",
+    "status": 0,
+    "stdout": "> interval Set(9, 10, 11, 12)\nSet(9, 10, 11, 12)\n",
+    "stderr": ""
+  },
+  {
+    "name": "repl_empty_interval",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "q::debug(\"empty\",5.to(3))\n.exit\n",
+    "status": 0,
+    "stdout": "> empty Set()\nSet()\n",
+    "stderr": ""
+  },
+  {
+    "name": "repl_powerset",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "q::debug(\"powerset\",1.to(2).powerset())\n.exit\n",
+    "status": 0,
+    "stdout": "> powerset Set(Set(), Set(1), Set(2), Set(1, 2))\nSet(Set(), Set(1), Set(2), Set(1, 2))\n",
+    "stderr": ""
+  },
+  {
+    "name": "repl_nested_domains",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "q::debug(\"nested\",{range:9.to(12),subsets:Set(1).powerset()})\n.exit\n",
+    "status": 0,
+    "stdout": "> nested { range: Set(9, 10, 11, 12), subsets: Set(Set(), Set(1)) }\n{ range: Set(9, 10, 11, 12), subsets: Set(Set(), Set(1)) }\n",
+    "stderr": ""
+  },
+  {
+    "name": "repl_infinite_names",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "q::debug(\"names\",List(Int,Nat))\n.exit\n",
+    "status": 0,
+    "stdout": "> names [unsupported operator: name, unsupported operator: name]\n[unsupported operator: name, unsupported operator: name]\n",
+    "stderr": ""
+  },
+  {
+    "name": "repl_symbolic_state",
+    "command": "repl",
+    "verbosity": 0,
+    "input": "var x:Set[int]\nx'=9.to(12)\nx\n.exit\n",
+    "status": 0,
+    "stdout": "\ntrue\nSet(9, 10, 11, 12)\n",
+    "stderr": ""
   }
 ]

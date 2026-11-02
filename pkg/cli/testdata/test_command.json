@@ -1314,5 +1314,230 @@
         }
       }
     ]
+  },
+  {
+    "name": "interval_state_itf",
+    "source": "module M { var x:Set[int] action sampleTest=x'=9.to(12) }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  M\n    ok sampleTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "sampleTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "sampleTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "x"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "x": {
+                "#set": [
+                  {
+                    "#bigint": "9"
+                  },
+                  {
+                    "#bigint": "10"
+                  },
+                  {
+                    "#bigint": "11"
+                  },
+                  {
+                    "#bigint": "12"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "powerset_state_itf",
+    "source": "module M { var x:Set[Set[int]] action sampleTest=x'=1.to(2).powerset() }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  M\n    ok sampleTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "sampleTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "sampleTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "x"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "x": {
+                "#set": [
+                  {
+                    "#set": []
+                  },
+                  {
+                    "#set": [
+                      {
+                        "#bigint": "1"
+                      }
+                    ]
+                  },
+                  {
+                    "#set": [
+                      {
+                        "#bigint": "2"
+                      }
+                    ]
+                  },
+                  {
+                    "#set": [
+                      {
+                        "#bigint": "1"
+                      },
+                      {
+                        "#bigint": "2"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "nested_domain_state_itf",
+    "source": "module M { var x:{a:Set[int],b:Set[Set[int]]} action sampleTest=x'={a:9.to(12),b:1.to(2).powerset()} }",
+    "main": "",
+    "match": "",
+    "verbosity": 2,
+    "maxSamples": 1,
+    "seed": "1",
+    "itf": true,
+    "status": 0,
+    "stdout": "\n  M\n    ok sampleTest passed 1 test(s)\n\n  1 passing (0ms)\n",
+    "stderr": "",
+    "passed": [
+      "sampleTest"
+    ],
+    "failed": [],
+    "ignored": [],
+    "errors": [],
+    "traces": [
+      {
+        "index": 0,
+        "name": "sampleTest",
+        "trace": {
+          "#meta": {
+            "format": "ITF",
+            "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+            "source": "fixture.qnt",
+            "status": "passed"
+          },
+          "vars": [
+            "x"
+          ],
+          "states": [
+            {
+              "#meta": {
+                "index": 0
+              },
+              "x": {
+                "a": {
+                  "#set": [
+                    {
+                      "#bigint": "9"
+                    },
+                    {
+                      "#bigint": "10"
+                    },
+                    {
+                      "#bigint": "11"
+                    },
+                    {
+                      "#bigint": "12"
+                    }
+                  ]
+                },
+                "b": {
+                  "#set": [
+                    {
+                      "#set": []
+                    },
+                    {
+                      "#set": [
+                        {
+                          "#bigint": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "#set": [
+                        {
+                          "#bigint": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "#set": [
+                        {
+                          "#bigint": "1"
+                        },
+                        {
+                          "#bigint": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
   }
 ]

@@ -40,6 +40,18 @@ cases.push({name:'repl_quiet_lambda', command:'repl', verbosity:0,
   input:'q::debug("answer",42)\nx=>x+1\n.exit\n'})
 cases.push({name:'repl_quiet_wrapping', command:'repl', verbosity:0,
   input:'q::debug("long",List("alpha-alpha-alpha","beta-beta-beta","gamma-gamma-gamma","delta-delta-delta","epsilon-epsilon"))\n.exit\n'})
+cases.push({name:'repl_interval', command:'repl', verbosity:0,
+  input:'q::debug("interval",9.to(12))\n.exit\n'})
+cases.push({name:'repl_empty_interval', command:'repl', verbosity:0,
+  input:'q::debug("empty",5.to(3))\n.exit\n'})
+cases.push({name:'repl_powerset', command:'repl', verbosity:0,
+  input:'q::debug("powerset",1.to(2).powerset())\n.exit\n'})
+cases.push({name:'repl_nested_domains', command:'repl', verbosity:0,
+  input:'q::debug("nested",{range:9.to(12),subsets:Set(1).powerset()})\n.exit\n'})
+cases.push({name:'repl_infinite_names', command:'repl', verbosity:0,
+  input:'q::debug("names",List(Int,Nat))\n.exit\n'})
+cases.push({name:'repl_symbolic_state', command:'repl', verbosity:0,
+  input:'var x:Set[int]\nx\'=9.to(12)\nx\n.exit\n'})
 
 async function captureTest(input) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(),'quint-debug-cli-'))

@@ -371,14 +371,18 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
       positional picks and exact finite/infinite RNG sampling.
     - [x] Independent compact product, powerset and map-set domains, shared
       positional cursors, zero/multiple bounds and normalization/serialization.
-    - [ ] Attach compact domains to RuntimeValue and source evaluation without
-      eager display/identity trees.
+    - [x] Attach compact domains to RuntimeValue and source evaluation without
+      eager display/identity trees; checked context APIs provide extensional
+      equality, hashing, serialization and nested collection operations.
+    - [ ] Complete symbolic collection-key equality for variant payloads and
+      mixed representations; these paths currently return explicit QNT501.
   - [x] Explicit-state TypeScript-compatible serialization, including transient
     tuple sets, fresh-object hashing, Unicode ties, and repeated-call UID history.
   - [x] Share object-hash state through implemented evaluator collection operations,
     debug serialization and explicit caller/evaluator ownership APIs.
-  - [ ] Extend shared state to remaining symbolic/recorder operations;
-    public Expression/String intentionally remain canonical.
+  - [x] Checked symbolic serialization and CLI/debug output share object state;
+    context-free Expression/String expose compact structural representations.
+  - [ ] Extend shared state to actual execution-recorder operations.
 - [ ] P7.2 Port evaluation/compilation of IR, lexical closures, operator values,
   local bindings, lazy branches, definition caches, and runtime error traces.
   - [x] Pure IR expression evaluation: literals, concrete constructors, explicit
@@ -397,8 +401,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] Filesystem/CLI evaluation through run/test and incremental REPL sessions.
   - [x] Compiled factory-lambda reuse, shared parameter cells, scoped value-cache
     save/clear/restore, persistent module/REPL identity and compiled literals.
-  - [ ] Remaining compiler instance contexts, eager variable registration and
-    complete runtime stack/recorder traces.
+  - [x] Discover selected-definition variables lazily in compiler order, preserve
+    source/import/instance provenance and ITF header order across REPL updates.
+  - [ ] Remaining compiler instance contexts, including exported variable aliases
+    whose identity depends on first compilation, and complete recorder traces.
 - [x] P7.3 Port scalar arithmetic, Boolean, and comparison builtins; test
   negative division/modulo and integer boundary behavior. This revision has no
   source-language string/conversion builtin family; internal toStr/toInt helpers
@@ -450,8 +456,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] Explicit-state allListsUpTo materialization with raw-object identity
     sets, repeated-call traversal, normalization, and exact UID rollover.
   - [x] Evaluator ownership/dispatch for allListsUpTo and shared identity state.
-  - [ ] Remaining collections/higher-order/symbolic operations, including
-    unbounded range materialization/error behavior.
+  - [x] Compact interval/Int/Nat/product/powerset/map-set source constructors,
+    membership/cardinality, iteration, higher-order callbacks, access and display;
+    150 exact source cases cover large compact queries and resource errors.
+  - [ ] Complete remaining mixed symbolic-key and cross-constructor audits.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
   updates, action composition, enabled/disabled actions, rollback, and commit.
   - [x] Stable named current/next registers, unset diagnostics, shift/reset,
@@ -488,8 +496,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     nested bindings, cache refresh, metadata, and no extra random retry draws.
   - [x] Compiler-time pick discovery in lazy branches/lambda bodies and selected
     definition dependencies, with persistent registration and lexical ordering.
-  - [ ] Symbolic/infinite source bounds and import-time versus per-call retry
-    environment semantics.
+  - [x] Symbolic/infinite source bounds, shared nested positional cursors, ordered
+    multidimensional draws and retry odometers, including empty/zero bounds.
+  - [ ] Import-time versus per-call retry environment semantics.
 - [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
   model-based-testing metadata. Explicitly reject non-executable temporal
   constructs where the reference runtime does.
@@ -507,8 +516,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] CLI-compatible explicit seed parsing with JavaScript BigInt syntax,
     ECMAScript whitespace, exact error messages, and reference fixtures.
   - [x] CLI seed flags/replay output and finite-set sampling/traversal.
-  - [ ] Exact default initialization across CLI/REPL and comparison with the
-    Rust runtime's seeded behavior.
+  - [x] Compare actual locked Rust evaluator with TypeScript and Go on 25 cases;
+    preserve TypeScript picks/counters and record Rust differences explicitly.
+  - [ ] Complete default initialization and wider seeded behavior audits.
 - [x] P7.9 Complete an opcode coverage matrix for evaluation, typing, effects,
   and symbolic conversion, distinguishing supported operations and deliberate
   context restrictions. COMPATIBILITY.md and its drift test cover every
@@ -516,6 +526,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
 - [ ] P7.10 Differential-test pure results, errors, state transitions, rollback,
   and nondeterministic behavior against both reference runtimes. Investigate
   disagreements before assigning a Go expected result.
+  - [x] Build and execute the actual locked Rust evaluator; save 75 responses
+    across 25 arithmetic, collection, domain, error and seeded comparison cases.
+  - [ ] Expand comparison across remaining callbacks and stateful operations.
 
 Exit gate: Go evaluation reproduces reference semantics on the runtime corpus,
 including failed actions that must not leak partially updated state.
@@ -3165,3 +3178,18 @@ word "retained" in the commit message.
   allocations fall8→1, nested allocations451→309 (221KB→132KB), with matched
   nested time120µs→92µs. Default scheduling remained faster than bounded runner
   alternatives; no tests or coverage were removed to change timing.
+
+- 2026-11-02: Integrated compact domains with RuntimeValue and source evaluation:
+  checked equality/hash/access/constructors/serialization preserve extensional
+  semantics, closure identity, cancellation and shared object history. All150
+  symbolic source cases pass, including43 historical pending expressions.
+  Domain picking adds55 helper scenarios and12 source cases with exact nested
+  cursors, infinite bounds and retry draws. Checked CLI/debug display extends
+  saved transcripts to20 run,38 test and20 debug/REPL cases. Selected variable
+  discovery/provenance adds41 scenarios,19 real CLI headers, six provenance and
+  two REPL regressions; explicit flattened IR keeps its separate original corpus.
+  The actual locked Rust evaluator was built and executed for25 cases/75 responses;
+  Go follows TypeScript where picks/counters/traversal/resource errors differ.
+  Symbolic variant/mixed keys, exported-instance first-compilation contexts and
+  actual execution recording remain open. Default integrated suite timing is
+  above the one-second target; no tests were gated or removed to change timing.

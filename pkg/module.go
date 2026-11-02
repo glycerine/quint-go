@@ -15,6 +15,10 @@ type Module struct {
 // Declaration holds the fields of Quint's top-level tagged declaration union.
 // Optional strings use pointers to preserve present-but-empty documentation.
 type Declaration struct {
+	// Runtime provenance survives in-memory flattening and ID refreshes. It is
+	// deliberately absent from the transport IR and its custom JSON encoding.
+	runtimeVariable *RuntimeVariableBinding
+
 	Hidden       *bool           `json:"hidden,omitempty"`
 	Namespaces   []string        `json:"namespaces,omitempty"`
 	Shadowing    json.RawMessage `json:"shadowing,omitempty"`

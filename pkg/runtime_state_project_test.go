@@ -10,6 +10,16 @@ import (
 
 func TestUpstreamStatefulProjects(t *testing.T) {
 	t.Parallel()
+	testUpstreamStatefulProjects(t, "testdata/parser/runtime_state_project.json", false)
+}
+
+func TestUpstreamSourceStatefulProjects(t *testing.T) {
+	t.Parallel()
+	testUpstreamStatefulProjects(t, "testdata/parser/runtime_state_project_source.json", true)
+}
+
+func testUpstreamStatefulProjects(t *testing.T, fixtureFile string, sourceRuntime bool) {
+	t.Helper()
 	var fixtures []struct {
 		Name   string
 		Source string
@@ -21,7 +31,7 @@ func TestUpstreamStatefulProjects(t *testing.T) {
 			RNG       string
 		}
 	}
-	data, err := os.ReadFile("testdata/parser/runtime_state_project.json")
+	data, err := os.ReadFile(fixtureFile)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -38,7 +48,26 @@ func TestUpstreamStatefulProjects(t *testing.T) {
 			}
 			before, _ := json.Marshal(modules)
 			next := ids.next.String()
-			evaluator, err := NewProjectEvaluator(context.Background(), modules, ids, "M", NewRNG(Integer{}), true)
+			var evaluator *ModuleEvaluator
+			if sourceRuntime {
+				evaluator, err = NewProjectEvaluator(context.Background(), modules, ids, "M", NewRNG(Integer{}), true)
+			} else {
+				// This original oracle explicitly flattens TypeScript IR before
+				// evaluation. Transport drops private source provenance, keeping
+				// that boundary distinct from source project runtime semantics.
+				var flat Module
+				flat, err = prepareEvaluationProject(context.Background(), modules, ids, "M")
+				if err == nil {
+					var data []byte
+					data, err = json.Marshal(flat)
+					if err == nil {
+						err = json.Unmarshal(data, &flat)
+					}
+					if err == nil {
+						evaluator, err = NewModuleEvaluator(flat, NewRNG(Integer{}), true)
+					}
+				}
+			}
 			if err != nil {
 				t.Fatal(err)
 			}

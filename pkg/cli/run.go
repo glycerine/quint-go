@@ -326,7 +326,7 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 	serializedTraces := make([][]quint.Expr, len(outcome.BestTraces))
 	hashes := evaluator.ObjectHashState()
 	for i, trace := range outcome.BestTraces {
-		serializedTraces[i], err = runExpressions(trace.States, hashes)
+		serializedTraces[i], err = runExpressions(ctx, trace.States, hashes)
 		if err != nil {
 			return fail(err)
 		}
@@ -345,7 +345,7 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 			if !trace.Result {
 				status = "violation"
 			}
-			if _, err = writer.Write(i, status, runVariables(states, o.metadata), states, ""); err != nil {
+			if _, err = writer.Write(i, status, evaluator.Storage.VarNames(), states, ""); err != nil {
 				return fail(err)
 			}
 		}
@@ -446,10 +446,13 @@ func runValidateAction(frontend quint.FrontendResult, main, flag, text string) e
 	return nil
 }
 
-func runExpressions(values []quint.RuntimeValue, hashes *quint.RuntimeObjectHashState) ([]quint.Expr, error) {
+func runExpressions(ctx context.Context, values []quint.RuntimeValue, hashes *quint.RuntimeObjectHashState) ([]quint.Expr, error) {
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
 	result := make([]quint.Expr, len(values))
 	for i, value := range values {
-		expression, err := quint.SerializeRuntimeValue(value, hashes)
+		expression, err := quint.SerializeRuntimeValueContext(ctx, value, hashes)
 		if err != nil {
 			return nil, err
 		}

@@ -35,10 +35,10 @@ const (
 	runtimeMapSetDomain
 )
 
-// RuntimeDomain is an immutable explicit finite set, inclusive integer
-// interval, or Int/Nat domain. Compact domains do not materialize their elements
+// RuntimeDomain is an immutable explicit finite set, inclusive integer interval,
+// Int/Nat domain, product, powerset, or map set. Compact domains do not materialize their elements
 // when constructed, queried for membership/cardinality, or sampled. Its zero
-// value is invalid. RuntimeValue integration is separate from this domain API.
+// value is invalid. RuntimeValueFromDomain retains this compact representation.
 type RuntimeDomain struct {
 	kind        runtimeDomainKind
 	first, last Integer
@@ -49,8 +49,12 @@ type RuntimeDomain struct {
 	rangeSet    *RuntimeDomain
 }
 
-// RuntimeDomainFromValue retains an explicit finite set and its traversal.
+// RuntimeDomainFromValue retains an explicit finite set and its traversal, or
+// unwraps a compact runtime domain without enumerating it.
 func RuntimeDomainFromValue(value RuntimeValue) (RuntimeDomain, error) {
+	if value.Valid() && value.domain != nil {
+		return *value.domain, nil
+	}
 	if !value.Valid() || value.expression.Kind != "app" || value.expression.Opcode != "Set" {
 		return RuntimeDomain{}, Diagnostic{Code: "QNT501", Message: "Expected an explicit finite Set value"}
 	}
@@ -161,7 +165,7 @@ func (d RuntimeDomain) Contains(ctx context.Context, value RuntimeValue) (bool, 
 		return d.compoundContains(ctx, value)
 	}
 	if d.kind == runtimeExplicitDomain {
-		normal, err := runtimeNormalForm(value)
+		normal, err := runtimeKeyNormalFormContext(ctx, value)
 		if err != nil {
 			return false, err
 		}
@@ -275,7 +279,7 @@ func (d RuntimeDomain) Equal(ctx context.Context, other RuntimeDomain) (bool, er
 		return d.first == other.first && d.last == other.last, nil
 	}
 	if d.kind == runtimeExplicitDomain && other.kind == runtimeExplicitDomain {
-		return d.explicit.Equal(other.explicit), nil
+		return d.explicit.EqualContext(ctx, other.explicit)
 	}
 	if d.compound() || other.compound() {
 		if d.kind == other.kind {
@@ -286,7 +290,10 @@ func (d RuntimeDomain) Equal(ctx context.Context, other RuntimeDomain) (bool, er
 			return false, err
 		}
 		right, err := other.Materialize(ctx)
-		return left.Equal(right), err
+		if err != nil {
+			return false, err
+		}
+		return left.EqualContext(ctx, right)
 	}
 	leftSize, err := d.Cardinality(ctx)
 	if err != nil {
@@ -356,7 +363,7 @@ func (d RuntimeDomain) Materialize(ctx context.Context) (RuntimeValue, error) {
 		return RuntimeValue{}, err
 	}
 	if d.kind == runtimeExplicitDomain {
-		return runtimeNormalForm(d.explicit)
+		return runtimeNormalFormContext(ctx, d.explicit)
 	}
 	values := []RuntimeValue{}
 	err := d.ForEach(ctx, func(value RuntimeValue) (bool, error) {
@@ -366,7 +373,7 @@ func (d RuntimeDomain) Materialize(ctx context.Context) (RuntimeValue, error) {
 	if err != nil {
 		return RuntimeValue{}, err
 	}
-	return newRuntimeComposite("Set", values)
+	return NewRuntimeCompositeContext(ctx, "Set", values)
 }
 
 // Expression returns the reference's direct domain display. Intervals preserve
@@ -383,7 +390,7 @@ func (d RuntimeDomain) Serialize(ctx context.Context, state *RuntimeObjectHashSt
 		return Expr{}, err
 	}
 	if d.kind == runtimeExplicitDomain {
-		return SerializeRuntimeValue(d.explicit, state)
+		return SerializeRuntimeValueContext(ctx, d.explicit, state)
 	}
 	if d.infinite() {
 		return Expr{Kind: "name", Name: d.infiniteName()}, nil
@@ -393,7 +400,7 @@ func (d RuntimeDomain) Serialize(ctx context.Context, state *RuntimeObjectHashSt
 	}
 	result := Expr{Kind: "app", Opcode: "Set", Args: []Expr{}}
 	err := d.ForEach(ctx, func(value RuntimeValue) (bool, error) {
-		expression, err := SerializeRuntimeValue(value, state)
+		expression, err := SerializeRuntimeValueContext(ctx, value, state)
 		if err == nil {
 			result.Args = append(result.Args, expression)
 		}

@@ -20,8 +20,8 @@ Evaluation statuses: **implemented** is wired to expression evaluation within
 the stated domain; **partial** has an identified semantic limit;
 **library** requires an explicit API and is pending evaluator integration;
 **rejected** reports unsupported behavior; **pending** lacks the upstream
-implementation. Collection rows concern explicit finite values. Infinite and
-symbolic collections remain pending throughout.
+implementation. Collection rows include compact symbolic domains where stated;
+checked context APIs handle enumeration, extensional identity and cancellation.
 
 The backend column concerns the Go Apalache **import boundary** used by CHECK
 and TLA. **Translated** identifies an explicit conversion; **fallback** means
@@ -41,8 +41,8 @@ operator/name, so successful decoding must not be counted as builtin support.
 | `append`, `concat`, `head`, `tail`, `length`, `nth`, `replaceAt`, `slice`, `indices` | implemented: finite sequences and index diagnostics | signature | rule | translated |
 | `range` | implemented: exclusive list range with Number rounding | signature | rule | translated |
 | `item`, `field`, `fieldNames`, `with` | implemented: tuple/record access and updates | special | rule | translated |
-| `contains`, `in`, `subseteq`, `union`, `intersect`, `exclude`, `size`, `isFinite`, `flatten` | implemented: explicit finite sets | signature | rule | translated |
-| `exists`, `forall`, `map`, `filter`, `fold`, `mapBy` | implemented: finite sets, lexical callbacks, reference traversal | signature | rule | translated |
+| `contains`, `in`, `subseteq`, `union`, `intersect`, `exclude`, `size`, `isFinite`, `flatten` | partial: explicit and compact domains; mixed symbolic-key audit open | signature | rule | translated |
+| `exists`, `forall`, `map`, `filter`, `fold`, `mapBy` | partial: finite/compact domains, lexical callbacks; symbolic-key audit open | signature | rule | translated |
 | `select`, `foldl` | implemented: list callbacks | signature | rule | translated |
 | `foldr` | implemented: list callbacks | signature | rule | fallback |
 | `get`, `keys`, `set`, `put`, `setBy` | implemented: concrete maps and retained children | signature | rule | translated |
@@ -50,19 +50,19 @@ operator/name, so successful decoding must not be counted as builtin support.
 | `getOnlyElement` | implemented: exact singleton/cardinality behavior | signature | rule | fallback |
 | `allListsUpTo` | implemented: source dispatch with shared object-hash state | signature | rule | fallback |
 | `setToMap` | implemented: source dispatch with shared object-hash state | signature | rule | translated |
-| `to` | pending: inclusive integer interval/runtime set | signature | rule | translated |
-| `powerset`, `tuples`, `setOfMaps` | pending: symbolic collection representations/iteration | signature | rule | translated |
+| `to` | implemented: compact inclusive integer interval | signature | rule | translated |
+| `powerset`, `tuples`, `setOfMaps` | implemented: compact domains, checked iteration/identity/display | signature | rule | translated |
 | `allLists`, `chooseSome` | rejected: QNT501, as in the TypeScript simulator | signature | rule | translated |
 | `assign`, `actionAll`, `actionAny`, `then` | implemented: requires storage; choice also requires RNG | signature | rule | translated |
 | `expect`, `reps` | implemented: state/trace sequencing and repetition | signature | rule | fallback |
-| `oneOf` | partial: bound nondet let on finite sets; standalone QNT000 | signature | rule | context: nondet let; standalone rejected |
-| `apalache::generate` | pending: bound runtime generation; standalone QNT000 | signature | rule | context: nondet let; otherwise fallback |
+| `oneOf` | implemented: bound finite/compact/infinite nondet; standalone QNT000 | signature | rule | context: nondet let; standalone rejected |
+| `apalache::generate` | implemented: bound runtime generation; standalone QNT000 | signature | rule | context: nondet let; otherwise fallback |
 | `next` | rejected: QNT000 before evaluating child expressions | signature | rule | translated |
 | `always`, `eventually`, `enabled`, `orKeep`, `mustChange`, `weakFair`, `strongFair`, `leadsTo` | rejected: strict QNT501 unsupported fallback | signature | rule | translated |
 | `q::debug` | implemented: strict output hook and preserved returned object | signature | rule | fallback |
 | `q::test`, `q::testOnce` | implemented: top-level EvaluateExpression dispatch; nested calls reject as upstream | signature | rule | fallback |
 | `Bool` | implemented: explicit false/true set | signature | rule | translated builtin value |
-| `Int`, `Nat` | pending: currently unbound-runtime-name QNT501 | signature | rule | translated builtin values |
+| `Int`, `Nat` | implemented: compact infinite integer domains and bounded sampling | signature | rule | translated builtin values |
 | `q::lastTrace` | implemented: stored states; empty list without trace context | signature | rule | fallback name |
 <!-- opcode-matrix:end -->
 
@@ -75,15 +75,18 @@ Concrete collections preserve child object identity and persistent/transient
 hash-tree traversal. Callable values can occur in collections. Compiled
 factory-lambda reuse, shared captured parameter cells, scoped caches and literal
 identity now match the saved lifetime and incremental-session cases.
-`RuntimeValue.Expression()`/`String()` provide the Go canonical boundary;
-`SerializeRuntimeValue(value, state)` separately models TypeScript serialization
-and history-dependent fresh-object hashes. Implemented evaluator collection and
-debug operations share that state; callers may explicitly share it across
-evaluators to reproduce the reference process history. Source setToMap and
-allListsUpTo, including the historical UID corpus, now pass. Remaining compiler
-instance contexts, eager variable registration, symbolic source operations,
-general symbolic iteration, exhaustive
-cross-type equality, and locale/version-wide collation parity remain open.
+Context-free `RuntimeValue.Expression()`/`String()` expose concrete canonical
+values or compact symbolic structure. Checked `ExpressionContext`, `EqualContext`,
+`HashContext` and `SerializeRuntimeValueContext` expose source extensional semantics,
+errors and cancellation. Serialization preserves history-dependent fresh-object
+hashes shared by evaluator collections, CLI and debug output. Source setToMap,
+allListsUpTo and 150 symbolic source cases pass. Selected variables preserve
+source/import/instance discovery order and persistent REPL cells. Exported aliases
+inside instances can still require first-compilation contexts beyond declaration
+provenance. Symbolic variant keys and mixed symbolic callback-key representations
+currently return QNT501. Exhaustive cross-type equality and locale-wide collation
+remain open. Actual Rust comparison records differences in seeded picks, counter
+overflow, folded traversal, resource bounds and error codes; Go targets TypeScript.
 
 Rejection is observable behavior: next/standalone oneOf reject lazily, whereas
 other unsupported temporal operators evaluate their arguments first. Saved

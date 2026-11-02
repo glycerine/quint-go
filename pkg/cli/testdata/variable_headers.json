@@ -1,0 +1,481 @@
+[
+  {
+    "command": "test",
+    "name": "unused_local_definition",
+    "source": "module M {var unused:int var x:int action sampleTest={val hidden=unused; x'=1}}",
+    "headers": [
+      {
+        "filename": "trace_0_sampleTest.itf.json",
+        "vars": [
+          "x"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "test",
+    "name": "unused_local_operator",
+    "source": "module M {var unused:int var x:int action sampleTest={def hidden(p)=unused+p; x'=1}}",
+    "headers": [
+      {
+        "filename": "trace_0_sampleTest.itf.json",
+        "vars": [
+          "x"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "test",
+    "name": "trie_8",
+    "source": "module M {var v0:int var v1:int var v2:int var v3:int var v4:int var v5:int var v6:int var v7:int action sampleTest=all{v7'=0,v6'=1,v5'=2,v4'=3,v3'=4,v2'=5,v1'=6,v0'=7}}",
+    "headers": [
+      {
+        "filename": "trace_0_sampleTest.itf.json",
+        "vars": [
+          "v7",
+          "v6",
+          "v5",
+          "v4",
+          "v3",
+          "v2",
+          "v1",
+          "v0"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "run",
+    "name": "trie_8",
+    "source": "module M {var v0:int var v1:int var v2:int var v3:int var v4:int var v5:int var v6:int var v7:int action init=all{v7'=0,v6'=1,v5'=2,v4'=3,v3'=4,v2'=5,v1'=6,v0'=7} action step=all{v7'=0,v6'=1,v5'=2,v4'=3,v3'=4,v2'=5,v1'=6,v0'=7}}",
+    "headers": [
+      {
+        "filename": "trace_0_{test}.itf.json",
+        "vars": [
+          "v7",
+          "v6",
+          "v5",
+          "v4",
+          "v3",
+          "v2",
+          "v1",
+          "v0"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "test",
+    "name": "trie_9",
+    "source": "module M {var v0:int var v1:int var v2:int var v3:int var v4:int var v5:int var v6:int var v7:int var v8:int action sampleTest=all{v8'=0,v7'=1,v6'=2,v5'=3,v4'=4,v3'=5,v2'=6,v1'=7,v0'=8}}",
+    "headers": [
+      {
+        "filename": "trace_0_sampleTest.itf.json",
+        "vars": [
+          "v5",
+          "v6",
+          "v7",
+          "v8",
+          "v0",
+          "v1",
+          "v2",
+          "v3",
+          "v4"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "run",
+    "name": "trie_9",
+    "source": "module M {var v0:int var v1:int var v2:int var v3:int var v4:int var v5:int var v6:int var v7:int var v8:int action init=all{v8'=0,v7'=1,v6'=2,v5'=3,v4'=4,v3'=5,v2'=6,v1'=7,v0'=8} action step=all{v8'=0,v7'=1,v6'=2,v5'=3,v4'=4,v3'=5,v2'=6,v1'=7,v0'=8}}",
+    "headers": [
+      {
+        "filename": "trace_0_{test}.itf.json",
+        "vars": [
+          "v5",
+          "v6",
+          "v7",
+          "v8",
+          "v0",
+          "v1",
+          "v2",
+          "v3",
+          "v4"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "test",
+    "name": "trie_17",
+    "source": "module M {var v0:int var v1:int var v2:int var v3:int var v4:int var v5:int var v6:int var v7:int var v8:int var v9:int var v10:int var v11:int var v12:int var v13:int var v14:int var v15:int var v16:int action sampleTest=all{v16'=0,v15'=1,v14'=2,v13'=3,v12'=4,v11'=5,v10'=6,v9'=7,v8'=8,v7'=9,v6'=10,v5'=11,v4'=12,v3'=13,v2'=14,v1'=15,v0'=16}}",
+    "headers": [
+      {
+        "filename": "trace_0_sampleTest.itf.json",
+        "vars": [
+          "v10",
+          "v5",
+          "v16",
+          "v11",
+          "v6",
+          "v12",
+          "v7",
+          "v13",
+          "v8",
+          "v0",
+          "v1",
+          "v2",
+          "v3",
+          "v14",
+          "v9",
+          "v4",
+          "v15"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "run",
+    "name": "trie_17",
+    "source": "module M {var v0:int var v1:int var v2:int var v3:int var v4:int var v5:int var v6:int var v7:int var v8:int var v9:int var v10:int var v11:int var v12:int var v13:int var v14:int var v15:int var v16:int action init=all{v16'=0,v15'=1,v14'=2,v13'=3,v12'=4,v11'=5,v10'=6,v9'=7,v8'=8,v7'=9,v6'=10,v5'=11,v4'=12,v3'=13,v2'=14,v1'=15,v0'=16} action step=all{v16'=0,v15'=1,v14'=2,v13'=3,v12'=4,v11'=5,v10'=6,v9'=7,v8'=8,v7'=9,v6'=10,v5'=11,v4'=12,v3'=13,v2'=14,v1'=15,v0'=16}}",
+    "headers": [
+      {
+        "filename": "trace_0_{test}.itf.json",
+        "vars": [
+          "v10",
+          "v5",
+          "v16",
+          "v11",
+          "v6",
+          "v12",
+          "v7",
+          "v13",
+          "v8",
+          "v0",
+          "v1",
+          "v2",
+          "v3",
+          "v14",
+          "v9",
+          "v4",
+          "v15"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "test",
+    "name": "trie_40",
+    "source": "module M {var v0:int var v1:int var v2:int var v3:int var v4:int var v5:int var v6:int var v7:int var v8:int var v9:int var v10:int var v11:int var v12:int var v13:int var v14:int var v15:int var v16:int var v17:int var v18:int var v19:int var v20:int var v21:int var v22:int var v23:int var v24:int var v25:int var v26:int var v27:int var v28:int var v29:int var v30:int var v31:int var v32:int var v33:int var v34:int var v35:int var v36:int var v37:int var v38:int var v39:int action sampleTest=all{v39'=0,v38'=1,v37'=2,v36'=3,v35'=4,v34'=5,v33'=6,v32'=7,v31'=8,v30'=9,v29'=10,v28'=11,v27'=12,v26'=13,v25'=14,v24'=15,v23'=16,v22'=17,v21'=18,v20'=19,v19'=20,v18'=21,v17'=22,v16'=23,v15'=24,v14'=25,v13'=26,v12'=27,v11'=28,v10'=29,v9'=30,v8'=31,v7'=32,v6'=33,v5'=34,v4'=35,v3'=36,v2'=37,v1'=38,v0'=39}}",
+    "headers": [
+      {
+        "filename": "trace_0_sampleTest.itf.json",
+        "vars": [
+          "v10",
+          "v21",
+          "v32",
+          "v5",
+          "v16",
+          "v27",
+          "v38",
+          "v11",
+          "v22",
+          "v33",
+          "v6",
+          "v17",
+          "v28",
+          "v12",
+          "v23",
+          "v7",
+          "v18",
+          "v13",
+          "v8",
+          "v0",
+          "v1",
+          "v2",
+          "v3",
+          "v39",
+          "v34",
+          "v29",
+          "v24",
+          "v35",
+          "v19",
+          "v30",
+          "v14",
+          "v25",
+          "v36",
+          "v9",
+          "v20",
+          "v31",
+          "v4",
+          "v15",
+          "v26",
+          "v37"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "test",
+    "name": "cumulative_trie",
+    "source": "module M {var a:int var b:int var c:int var d:int var e:int var f:int var g:int var h:int var i:int action firstTest=all{i'=0,h'=0,g'=0,f'=0} action secondTest=all{e'=0,d'=0,c'=0,b'=0,a'=0}}",
+    "headers": [
+      {
+        "filename": "trace_0_firstTest.itf.json",
+        "vars": [
+          "i",
+          "h",
+          "g",
+          "f"
+        ]
+      },
+      {
+        "filename": "trace_1_secondTest.itf.json",
+        "vars": [
+          "f",
+          "g",
+          "h",
+          "i",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "test",
+    "name": "imported_trie",
+    "source": "module A {var v0:int var v1:int var v2:int var v3:int var v4:int var v5:int var v6:int var v7:int var v8:int action sampleTest=all{v8'=0,v7'=1,v6'=2,v5'=3,v4'=4,v3'=5,v2'=6,v1'=7,v0'=8}} module M {import A as I}",
+    "main": "M",
+    "headers": [
+      {
+        "filename": "trace_0_I::sampleTest.itf.json",
+        "vars": [
+          "v5",
+          "v6",
+          "v7",
+          "v8",
+          "v0",
+          "v1",
+          "v2",
+          "v3",
+          "v4"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "test",
+    "name": "instances_trie",
+    "source": "module A {const N:int var x:int action sampleTest=x'=N} module M {import A(N=0) as I0 import A(N=1) as I1 import A(N=2) as I2 import A(N=3) as I3 import A(N=4) as I4 import A(N=5) as I5 import A(N=6) as I6 import A(N=7) as I7 import A(N=8) as I8}",
+    "main": "M",
+    "headers": [
+      {
+        "filename": "trace_0_M::I0::sampleTest.itf.json",
+        "vars": [
+          "M::I0::x"
+        ]
+      },
+      {
+        "filename": "trace_1_M::I1::sampleTest.itf.json",
+        "vars": [
+          "M::I0::x",
+          "M::I1::x"
+        ]
+      },
+      {
+        "filename": "trace_2_M::I2::sampleTest.itf.json",
+        "vars": [
+          "M::I0::x",
+          "M::I1::x",
+          "M::I2::x"
+        ]
+      },
+      {
+        "filename": "trace_3_M::I3::sampleTest.itf.json",
+        "vars": [
+          "M::I0::x",
+          "M::I1::x",
+          "M::I2::x",
+          "M::I3::x"
+        ]
+      },
+      {
+        "filename": "trace_4_M::I4::sampleTest.itf.json",
+        "vars": [
+          "M::I0::x",
+          "M::I1::x",
+          "M::I2::x",
+          "M::I3::x",
+          "M::I4::x"
+        ]
+      },
+      {
+        "filename": "trace_5_M::I5::sampleTest.itf.json",
+        "vars": [
+          "M::I0::x",
+          "M::I1::x",
+          "M::I2::x",
+          "M::I3::x",
+          "M::I4::x",
+          "M::I5::x"
+        ]
+      },
+      {
+        "filename": "trace_6_M::I6::sampleTest.itf.json",
+        "vars": [
+          "M::I0::x",
+          "M::I1::x",
+          "M::I2::x",
+          "M::I3::x",
+          "M::I4::x",
+          "M::I5::x",
+          "M::I6::x"
+        ]
+      },
+      {
+        "filename": "trace_7_M::I7::sampleTest.itf.json",
+        "vars": [
+          "M::I0::x",
+          "M::I1::x",
+          "M::I2::x",
+          "M::I3::x",
+          "M::I4::x",
+          "M::I5::x",
+          "M::I6::x",
+          "M::I7::x"
+        ]
+      },
+      {
+        "filename": "trace_8_M::I8::sampleTest.itf.json",
+        "vars": [
+          "M::I0::x",
+          "M::I1::x",
+          "M::I2::x",
+          "M::I3::x",
+          "M::I4::x",
+          "M::I5::x",
+          "M::I6::x",
+          "M::I7::x",
+          "M::I8::x"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "test",
+    "name": "shared_import_aliases",
+    "source": "module A {var x:int action sampleTest=x'=1} module M {import A as I import A as J}",
+    "main": "M",
+    "headers": [
+      {
+        "filename": "trace_0_I::sampleTest.itf.json",
+        "vars": [
+          "x"
+        ]
+      },
+      {
+        "filename": "trace_1_J::sampleTest.itf.json",
+        "vars": [
+          "x"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "test",
+    "name": "nested_instances",
+    "source": "module A {const N:int var x:int action update=x'=N} module B {const C:int import A(N=C) as Inner action sampleTest=Inner::update} module M {import B(C=1) as Outer}",
+    "main": "M",
+    "headers": [
+      {
+        "filename": "trace_0_M::Outer::sampleTest.itf.json",
+        "vars": [
+          "B::Inner::x"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "test",
+    "name": "import_inside_instance",
+    "source": "module A {var x:int} module B {const C:int import A as Shared action sampleTest=Shared::x'=C} module M {import B(C=1) as Outer}",
+    "main": "M",
+    "headers": [
+      {
+        "filename": "trace_0_M::Outer::sampleTest.itf.json",
+        "vars": [
+          "M::Outer::x"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "run",
+    "name": "insertion_order",
+    "source": "module M {var a:int var b:int var unused:int action init=all{b'=0,a'=1} action step=all{b'=b+1,a'=a+1}}",
+    "headers": [
+      {
+        "filename": "trace_0_{test}.itf.json",
+        "vars": [
+          "b",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "run",
+    "name": "metadata_order",
+    "source": "module M {var a:int var b:int var unused:int action init=all{b'=0,a'=1} action step=all{b'=b+1,a'=a+1}}",
+    "metadata": true,
+    "headers": [
+      {
+        "filename": "trace_0_{test}.itf.json",
+        "vars": [
+          "b",
+          "a",
+          "mbt::actionTaken",
+          "mbt::nondetPicks"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "run",
+    "name": "lazy_invariant",
+    "source": "module M {var z:int var a:int action init=z'=0 action step=z'=z+1 val safe=if(false)a==1 else true}",
+    "invariant": "safe",
+    "headers": [
+      {
+        "filename": "trace_0_{test}.itf.json",
+        "vars": [
+          "z",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "command": "run",
+    "name": "witness",
+    "source": "module M {var z:int var a:int action init=z'=0 action step=z'=z+1 val witness=if(false)a==1 else true}",
+    "witnesses": [
+      "witness"
+    ],
+    "headers": [
+      {
+        "filename": "trace_0_{test}.itf.json",
+        "vars": [
+          "z",
+          "a"
+        ]
+      }
+    ]
+  }
+]

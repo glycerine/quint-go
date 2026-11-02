@@ -1,6 +1,7 @@
 package quint
 
 import (
+	"context"
 	"fmt"
 	"sort"
 
@@ -104,6 +105,14 @@ func runtimeWithEntries(op string, m runtimeReferenceMap) (RuntimeValue, error) 
 // newRuntimeComposite implements runtime constructors on evaluated children.
 // Child objects remain immutable and can be returned directly by accessors.
 func newRuntimeComposite(op string, args []RuntimeValue) (RuntimeValue, error) {
+	if runtimeHasDomain(args) {
+		switch op {
+		case "List", "Tup", "Rec", "variant":
+			return NewRuntimeCompositeContext(context.Background(), op, args)
+		default:
+			return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Symbolic runtime collection construction requires a context"}
+		}
+	}
 	source := Expr{Kind: "app", Opcode: op, Args: make([]Expr, len(args))}
 	containsClosure := false
 	for i, arg := range args {
@@ -192,6 +201,9 @@ func newRuntimeComposite(op string, args []RuntimeValue) (RuntimeValue, error) {
 // differs from canonical display sorting. In particular a map rebuilds its
 // tree, a set keeps its tree, and a variant keeps its payload untouched.
 func runtimeNormalForm(value RuntimeValue) (RuntimeValue, error) {
+	if value.containsDomain {
+		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Symbolic runtime normalization requires a context"}
+	}
 	if !value.Valid() {
 		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Invalid runtime value"}
 	}
