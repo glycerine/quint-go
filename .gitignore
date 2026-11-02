@@ -10,3 +10,8 @@ _build
 _apalache-out/
 # Intellij stuff
 .idea
+
+# Local development workspace
+go.work
+go.work.sum
+*~

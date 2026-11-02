@@ -1,6 +1,6 @@
 # Quint Go port plan
 
-Status: planning; implementation work below is unchecked. The Go port lives in
+Status: implementation started; unchecked items remain incomplete. The Go port lives in
 `pkg/`, whose module is `github.com/glycerine/quint-go/pkg`. This plan is based
 on repository revision `f3ab817eb8d8a02701727ba5aa3cab788b3ad230` (Quint package
 version `0.33.1`) and inspection of `~/apalache/pkg` on 2026-11-02.
@@ -115,7 +115,7 @@ reporting that evaluates expressions will also depend on P7.
 - [ ] P0.5 Feed an existing flattened, typed Quint fixture through the Go
   checker's importer, production checking path, and TLA output path. Establish
   safe, violating, and malformed-input cases without writing a new parser.
-- [ ] P0.6 Inspect the Go checker's exported entry points and Shai implementation;
+- [x] P0.6 Inspect the Go checker's exported entry points and Shai implementation;
   choose the smallest reusable production boundary for checking and TLA output.
   Identify any required upstream API exposure as a separate dependency task.
 - [ ] P0.7 Compare accepted JSON envelopes, types, opcodes, and configuration
@@ -134,7 +134,7 @@ boundary, with concrete gaps listed before frontend implementation starts.
   variants, preserving optional annotations and documentation.
 - [ ] P1.2 Implement IDs, fresh names, source maps, spans, and source-file
   identity. Specify byte/rune/UTF-16 conversions for parser and editor clients.
-- [ ] P1.3 Preserve arbitrary-precision language integers with `math/big.Int`;
+- [x] P1.3 Preserve arbitrary-precision language integers with `math/big.Int`;
   prevent mutable-value aliasing. Choose a lossless ID representation and
   diagnose overflow rather than silently truncating imported IDs.
 - [ ] P1.4 Implement lossless JSON encoding/decoding for IR and analysis tables;
@@ -431,3 +431,42 @@ Apalache boundary, normal workflows run from the shipped Go deliverables, and
 the compatibility matrix has no unexplained omissions. Scope exclusions must
 be explicit; neither a compiling binary nor a handful of passing examples is
 the completion criterion.
+
+## Implementation log
+
+- 2026-11-02: Began P0. Current Quint checkout is
+  `853d76a2eeb893aa05e26db1ac023a0ad6bfedd3`; inspected Go Apalache
+  `d6f72f4268f9c285440ef8155e77b0b1e47ff655` with Go 1.27.3 linux/amd64.
+  Added `backend/apalache` using the exported Shai command service directly
+  in-process. This reuses production command configuration and dispatch without
+  a network server. Added malformed-config and pre-cancellation tests.
+  Local `go.work` links `pkg` and `~/apalache/pkg` and is ignored by Git;
+  release dependency pinning and end-to-end Quint fixture probes remain open.
+  Validation command: `GOCACHE=/mnt/oldrog/tmp/quint-go-build GOPROXY=off
+  go test ./backend/apalache` from `pkg/`.
+
+- 2026-11-02: P0.6 complete. The exported
+  `shai.NewCmdExecutorService().Run` accepts the same command/configuration
+  contract in-process; no upstream API exposure is needed for this boundary.
+  `TestTypedQuintCommands` passes safe and violating bound-zero checks and TLA
+  generation using typed Quint declarations and synthesized `q::` names.
+  `TestRejectInvalidConfigAndCancellation` passes. The adapter test command
+  above completed successfully (0.040s). P0.5 remains open until existing
+  upstream fixtures and malformed IR are exercised as well.
+
+- 2026-11-02: P1.3 complete. `integer.go` provides immutable arbitrary-precision
+  integer values, lossless nonnegative IDs usable as map keys, and a compilation
+  ID generator. JSON numbers never pass through float64. Tests cover values
+  beyond 128 bits, map-key round trips, mutable big.Int isolation, malformed
+  numeric input, and negative ID rejection. `go test ./pkg/...` passed with
+  the local workspace. P1.1/P1.2/P1.4 remain open for full IR, locations, and
+  analysis-table schemas.
+
+- 2026-11-02: Added the complete type/row shape inventory from `quintTypes.ts`,
+  type schemes, recursive validation, unit-type helpers, and JSON handling that
+  preserves required empty arrays. `TestUpstreamTypeTables` round-trips the type
+  tables in every `evaluator/fixtures/*.json` file; invalid type structures and
+  unit-tuple serialization have separate checks. `go test ./pkg/...` passes.
+  P1.1 and P1.4 remain open: expression/declaration IR and other analysis tables
+  still need implementation, and strict rejection of extraneous variant fields
+  remains to be addressed.
