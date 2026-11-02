@@ -884,3 +884,11 @@ word "retained" in the commit message.
   valid characters, plus a file-load/source-indexing integration test. Default
   tests pass within the sub-second target. Remaining P2.7 work is source-map and
   partial-result integration rather than raw-file decoding.
+
+- 2026-11-02: Added rune-offset source spans and an ANTLR context adapter that
+  converts inclusive token ends into the port's half-open UTF-16 locations.
+  Tests use actual parse trees with supplementary Unicode, multiline expressions,
+  skipped whitespace, last-token versus explicit EOF boundaries, missing tokens,
+  and invalid ranges. Default tests pass within the sub-second target. This is
+  groundwork for P2.5: parser IDs are not yet connected to these spans, and the
+  upstream inclusive-location compatibility representation remains to be added.
