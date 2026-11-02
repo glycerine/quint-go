@@ -45,6 +45,8 @@ func ExpandModuleExports(module Module, modules *insdict.Dict[string, Module], t
 				continue
 			}
 			copied := *def.Declaration
+			depth := def.Depth
+			copied.Depth = &depth
 			copied.Name = def.Name
 			if namespace != "" && !strings.HasPrefix(copied.Name, namespace+"::") {
 				var err error

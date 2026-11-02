@@ -511,3 +511,12 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/flatten_module.json'),JSONb
  const main=parsed.modules[parsed.modules.length-1]
  return {name,input:parsed.modules,output:flattenModule(main,new Map(parsed.modules.map(m=>[m.name,m])),linked.table)}
 }),null,2)+'\n')
+
+const exportCases=[
+ ['star',"module A { val a=1 val unused=2 } module B { import A.* export A.* } module C { import B.* val c=a }"],
+ ['qualified',"module A { val base=1 val a=base+1 } module B { import A as I export I } module C { import B.* val c=I::a }"],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/flatten_exports.json'),JSONbig.stringify(exportCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name),linked=resolveNames(parsed.modules)
+ return {name,input:parsed.modules,output:flattenModule(parsed.modules[1],new Map(parsed.modules.map(m=>[m.name,m])),linked.table)}
+}),null,2)+'\n')

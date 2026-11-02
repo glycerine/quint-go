@@ -174,3 +174,6 @@ including declaration order, namespaced IR, and retained import metadata.
 
 `flatten_module.json` compares four complete upstream import-flattened modules.
 JSON object-key order is ignored; declaration/array order and metadata are exact.
+
+`flatten_exports.json` compares complete star/qualified export results after
+export and import expansion, including depth, visibility, and dependency names.

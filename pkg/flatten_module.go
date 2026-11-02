@@ -3,6 +3,7 @@ package quint
 import (
 	"fmt"
 	"github.com/glycerine/insdict"
+	"strings"
 )
 
 // FlattenModuleImports expands referenced imports into dependency-ordered
@@ -23,8 +24,9 @@ func FlattenModuleImports(module Module, table *insdict.Dict[ID, LookupDefinitio
 		}
 		out.Declarations = append(out.Declarations, d)
 	}
+	namespace := ""
 	collect := func(e Expr) error {
-		ds, err := DependentDefinitions(e, table)
+		ds, err := dependentDefinitionsInNamespace(e, table, namespace)
 		if err != nil {
 			return err
 		}
@@ -34,6 +36,10 @@ func FlattenModuleImports(module Module, table *insdict.Dict[ID, LookupDefinitio
 		return nil
 	}
 	for _, d := range module.Declarations {
+		namespace = ""
+		if index := strings.LastIndex(d.Name, "::"); index >= 0 {
+			namespace = d.Name[:index]
+		}
 		if d.Kind == "export" {
 			return Module{}, fmt.Errorf("export expansion is required before FlattenModuleImports")
 		}

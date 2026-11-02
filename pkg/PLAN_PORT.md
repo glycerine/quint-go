@@ -1781,3 +1781,10 @@ word "retained" in the commit message.
   fixtures remain green. Default tests pass (combined execution 0.768s).
   Export deduplication/full upstream fixtures and unified flattening traversal
   remain open under P6.1.
+
+- 2026-11-02: Added complete upstream star/qualified-export flattening fixtures.
+  They exposed missing lookup depth on exports and namespace loss when import
+  expansion revisits qualified exported bodies; both are corrected. Combined
+  export/import output now matches both upstream fixtures exactly structurally.
+  Default tests pass (combined execution 0.731s). Broader nested aliases,
+  duplicate export dependencies, and instance flattening remain open under P6.1.
