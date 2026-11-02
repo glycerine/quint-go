@@ -37,7 +37,7 @@ func ParseDeclaration(text string) ([]Declaration, error) {
 	return ds, nil
 }
 
-func declarationsFromContext(ctx p.IDeclarationContext, ids *IDGenerator) ([]Declaration, error) {
+func declarationsFromContext(ctx p.IDeclarationContext, ids parserIDAllocator) ([]Declaration, error) {
 	if oper, ok := ctx.(*p.OperContext); ok {
 		defs, err := destructuredOperators(oper.OperDef(), ids)
 		if err != nil {

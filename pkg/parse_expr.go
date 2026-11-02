@@ -12,6 +12,9 @@ import (
 // ParseExpression parses a complete expression. Conversion support is added
 // incrementally; unsupported syntax returns an explicit error, never partial IR.
 func ParseExpression(text string) (Expr, error) {
+	return parseExpressionWithIDs(text, NewIDGenerator())
+}
+func parseExpressionWithIDs(text string, ids parserIDAllocator) (Expr, error) {
 	listener := newSyntaxErrors(text)
 	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
@@ -27,9 +30,10 @@ func ParseExpression(text string) (Expr, error) {
 	if len(listener.issues) > 0 {
 		return Expr{}, listener.err("expression")
 	}
-	return expressionFromContext(tree, NewIDGenerator())
+	return expressionFromContext(tree, ids)
 }
-func expressionFromContext(ctx p.IExprContext, ids *IDGenerator) (Expr, error) {
+func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, error) {
+	defer parserScope(ids, ctx)()
 	if c, ok := ctx.(*p.LiteralOrIdContext); ok {
 		e := Expr{ID: ids.Next()}
 		switch {

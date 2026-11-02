@@ -3,7 +3,7 @@ package quint
 import p "github.com/glycerine/quint-go/pkg/internal/quintparser"
 
 // sumDeclarations expands a sum declaration into its type and variant operators.
-func sumDeclarations(ctx *p.TypeSumDefContext, ids *IDGenerator) ([]Declaration, error) {
+func sumDeclarations(ctx *p.TypeSumDefContext, ids parserIDAllocator) ([]Declaration, error) {
 	head, sum := ctx.TypeDefHead(), ctx.SumTypeDefinition()
 	d := Declaration{ID: ids.Next(), Kind: "typedef", Name: head.GetTypeName().GetText()}
 	for _, param := range head.AllLOW_ID() {

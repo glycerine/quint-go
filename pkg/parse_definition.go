@@ -24,7 +24,8 @@ func ParseOperatorDefinition(text string) (OperatorDef, error) {
 	}
 	return operatorFromContext(tree, NewIDGenerator())
 }
-func operatorFromContext(ctx p.IOperDefContext, ids *IDGenerator) (OperatorDef, error) {
+func operatorFromContext(ctx p.IOperDefContext, ids parserIDAllocator) (OperatorDef, error) {
+	defer parserScope(ids, ctx)()
 	var name string
 	var qualifier Qualifier
 	var expr p.IExprContext

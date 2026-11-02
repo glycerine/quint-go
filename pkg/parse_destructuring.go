@@ -6,7 +6,8 @@ import (
 )
 
 // destructuredOperators returns nil for ordinary operator definitions.
-func destructuredOperators(ctx p.IOperDefContext, ids *IDGenerator) ([]OperatorDef, error) {
+func destructuredOperators(ctx p.IOperDefContext, ids parserIDAllocator) ([]OperatorDef, error) {
+	defer parserScope(ids, ctx)()
 	var pattern p.IDestructuringPatternContext
 	var rhs p.IExprContext
 	qualifier := Val

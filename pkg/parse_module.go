@@ -13,7 +13,7 @@ func ParseModules(text string) ([]Module, error) {
 	return parseModulesWithIDs(text, NewIDGenerator())
 }
 
-func parseModulesWithIDs(text string, ids *IDGenerator) ([]Module, error) {
+func parseModulesWithIDs(text string, ids parserIDAllocator) ([]Module, error) {
 	listener := newSyntaxErrors(text)
 	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
@@ -71,7 +71,7 @@ func joinedDocs(lines []string) *string {
 	}
 	return &text
 }
-func declarationFromContext(ctx p.IDeclarationContext, ids *IDGenerator) (Declaration, error) {
+func declarationFromContext(ctx p.IDeclarationContext, ids parserIDAllocator) (Declaration, error) {
 	d := Declaration{}
 	switch c := ctx.(type) {
 	case *p.OperContext:

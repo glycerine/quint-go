@@ -892,3 +892,12 @@ word "retained" in the commit message.
   and invalid ranges. Default tests pass within the sub-second target. This is
   groundwork for P2.5: parser IDs are not yet connected to these spans, and the
   upstream inclusive-location compatibility representation remains to be added.
+
+- 2026-11-02: Added ParseExpressionWithSource and a scoped parser ID allocator
+  that records half-open UTF-16 spans without changing ordinary IR/ID allocation.
+  Recursive expressions retain their own spans; synthesized nodes inherit their
+  enclosing syntax, and local definitions receive their definition span. Tests
+  cover exact supplementary-Unicode offsets, IR equality with ordinary parsing,
+  parentheses, all generated/local IDs, and errors without partial source maps.
+  P2.5 remains open for precise parameter/synthetic subspans, type IDs, module and
+  import integration, and upstream inclusive-location compatibility.
