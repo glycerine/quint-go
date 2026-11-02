@@ -1,6 +1,7 @@
 package quint
 
 import (
+	"encoding/json"
 	"reflect"
 	"testing"
 )
@@ -58,7 +59,9 @@ func TestBindEntityVariable(t *testing.T) {
 			}
 			got = append(got, s.Entity)
 		}
-		if !reflect.DeepEqual(got, tc.want) {
+		ga, _ := json.Marshal(got)
+		wa, _ := json.Marshal(tc.want)
+		if string(ga) != string(wa) {
 			t.Fatalf("%+v: got %+v want %+v", tc.input, got, tc.want)
 		}
 	}

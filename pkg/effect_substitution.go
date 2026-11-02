@@ -38,6 +38,11 @@ func cloneEntity(e Entity) Entity {
 	}
 	if e.StateVariables != nil {
 		out.StateVariables = append([]StateVariable{}, e.StateVariables...)
+		for i := range out.StateVariables {
+			if out.StateVariables[i].identity == nil {
+				out.StateVariables[i].identity = new(int)
+			}
+		}
 	}
 	if e.Entities != nil {
 		out.Entities = make([]Entity, len(e.Entities))
@@ -49,9 +54,18 @@ func cloneEntity(e Entity) Entity {
 }
 
 // ApplyEffectSubstitution resolves effect/entity chains and simplifies effects.
-// Cyclic replacements return an error instead of diverging.
+// Read/temporal self-unions retain their recursive variable and deduplicate
+// shared occurrences. Non-stabilizing cycles return an error.
 func ApplyEffectSubstitution(subs []EffectSubstitution, input Effect) (Effect, error) {
 	active := map[string]bool{}
+	selfUnion := map[string]bool{}
+	allowSelfUnion := false
+	subs = append([]EffectSubstitution{}, subs...)
+	for i := range subs {
+		if subs[i].Kind == "entity" {
+			subs[i].Entity = cloneEntity(subs[i].Entity)
+		}
+	}
 	var effect func(Effect) (Effect, error)
 	var entity func(Entity) (Entity, error)
 	entity = func(e Entity) (Entity, error) {
@@ -61,11 +75,22 @@ func ApplyEffectSubstitution(subs []EffectSubstitution, input Effect) (Effect, e
 					if s.Kind == "entity" && !reflect.DeepEqual(s.Entity, e) {
 						key := "entity:" + e.Name
 						if active[key] {
+							if selfUnion[key] && allowSelfUnion {
+								return cloneEntity(e), nil
+							}
 							return Entity{}, fmt.Errorf("cyclic entity substitution for %s", e.Name)
 						}
 						active[key] = true
+						if s.Entity.Kind == "union" {
+							for _, childName := range EntityNames(s.Entity) {
+								if childName == e.Name {
+									selfUnion[key] = true
+								}
+							}
+						}
 						v, err := entity(s.Entity)
 						delete(active, key)
+						delete(selfUnion, key)
 						return v, err
 					}
 					break
@@ -119,6 +144,7 @@ func ApplyEffectSubstitution(subs []EffectSubstitution, input Effect) (Effect, e
 		if e.Kind == "concrete" {
 			out.Components = []EffectComponent{}
 			for _, c := range e.Components {
+				allowSelfUnion = c.Kind != "update"
 				v, err := entity(c.Entity)
 				if err != nil {
 					return Effect{}, err

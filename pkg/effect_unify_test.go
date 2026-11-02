@@ -26,9 +26,6 @@ func TestUpstreamEffectUnification(t *testing.T) {
 	}
 	for _, f := range fixtures {
 		t.Run(f.Name, func(t *testing.T) {
-			if f.Name == "hash-concrete" {
-				t.Skip("P5.1: self-containing entity substitutions require stable occurrence identity")
-			}
 			beforeA, _ := json.Marshal(f.A)
 			beforeB, _ := json.Marshal(f.B)
 			subs, err := UnifyEffects(f.A, f.B)

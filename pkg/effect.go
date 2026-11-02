@@ -24,6 +24,7 @@ type Entity struct {
 	Entities       []Entity        `json:"entities,omitempty"`
 }
 type StateVariable struct {
+	identity  *int   // Preserves occurrence identity across internal copies; never serialized.
 	Name      string `json:"name"`
 	Reference ID     `json:"reference"`
 }

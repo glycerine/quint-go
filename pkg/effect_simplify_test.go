@@ -1,6 +1,7 @@
 package quint
 
 import (
+	"encoding/json"
 	"reflect"
 	"testing"
 )
@@ -19,7 +20,9 @@ func TestFlattenEntityUnions(t *testing.T) {
 	}
 	for _, c := range cases {
 		got := FlattenEntityUnions(c.in)
-		if !reflect.DeepEqual(got, c.want) {
+		ga, _ := json.Marshal(got)
+		wa, _ := json.Marshal(c.want)
+		if string(ga) != string(wa) {
 			t.Fatalf("flatten %+v: %+v want %+v", c.in, got, c.want)
 		}
 	}

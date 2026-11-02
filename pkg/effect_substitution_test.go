@@ -79,3 +79,51 @@ func TestEffectSubstitutionComposition(t *testing.T) {
 		t.Fatal("invalid kind")
 	}
 }
+
+func TestEffectSubstitutionSelfUnion(t *testing.T) {
+	v := Entity{Kind: "variable", Name: "r"}
+	x := Entity{Kind: "concrete", StateVariables: []StateVariable{{Name: "x"}}}
+	subs := []EffectSubstitution{{Kind: "entity", Name: "r", Entity: cloneEntity(Entity{Kind: "union", Entities: []Entity{v, x}})}}
+	for _, kind := range []string{"read", "temporal", "update"} {
+		input := Effect{Kind: "concrete", Components: []EffectComponent{{Kind: kind, Entity: v}}}
+		out, err := ApplyEffectSubstitution(subs, input)
+		if kind == "update" {
+			if err == nil {
+				t.Fatal("expanding update cycle accepted")
+			}
+			continue
+		}
+		if err != nil {
+			t.Fatal(err)
+		}
+		if EntityString(out.Components[0].Entity) != "r, 'x'" {
+			t.Fatal(out)
+		}
+		again, err := ApplyEffectSubstitution(subs, out)
+		if err != nil || EntityString(again.Components[0].Entity) != "r, 'x'" {
+			// Tracked occurrences remain stable across repeated application.
+			t.Fatalf("separate occurrences: %+v %v", again, err)
+		}
+	}
+}
+
+func TestSimplifyStateOccurrenceIdentity(t *testing.T) {
+	shared := cloneEntity(Entity{Kind: "concrete", StateVariables: []StateVariable{{Name: "x"}}})
+	distinct := cloneEntity(Entity{Kind: "concrete", StateVariables: []StateVariable{{Name: "x"}}})
+	union := Entity{Kind: "union", Entities: []Entity{shared, shared, distinct}}
+	for _, kind := range []string{"read", "temporal", "update"} {
+		input := Effect{Kind: "concrete", Components: []EffectComponent{{Kind: kind, Entity: union}}}
+		out := SimplifyEffect(input)
+		want := 2
+		if kind == "update" {
+			want = 3
+		}
+		if len(out.Components[0].Entity.StateVariables) != want {
+			t.Fatalf("%s: %+v", kind, out)
+		}
+		out.Components[0].Entity.StateVariables[0].Name = "changed"
+		if shared.StateVariables[0].Name != "x" {
+			t.Fatal("mutated input")
+		}
+	}
+}

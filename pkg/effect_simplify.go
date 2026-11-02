@@ -6,15 +6,7 @@ import "reflect"
 // state-variable occurrences retain their references, including repeated names.
 func FlattenEntityUnions(e Entity) Entity {
 	if e.Kind != "union" {
-		out := e
-		if e.Reference != nil {
-			id := *e.Reference
-			out.Reference = &id
-		}
-		if e.StateVariables != nil {
-			out.StateVariables = append([]StateVariable{}, e.StateVariables...)
-		}
-		return out
+		return cloneEntity(e)
 	}
 	entities := []Entity{}
 	vars := []StateVariable{}
@@ -41,6 +33,18 @@ func FlattenEntityUnions(e Entity) Entity {
 	return Entity{Kind: "union", Entities: entities}
 }
 func deduplicateEffectEntity(e Entity) Entity {
+	if e.Kind == "concrete" {
+		out := cloneEntity(e)
+		out.StateVariables = []StateVariable{}
+		seen := map[*int]bool{}
+		for _, v := range e.StateVariables {
+			if v.identity == nil || !seen[v.identity] {
+				out.StateVariables = append(out.StateVariables, v)
+				seen[v.identity] = true
+			}
+		}
+		return out
+	}
 	if e.Kind != "union" {
 		return e
 	}
@@ -64,8 +68,8 @@ func deduplicateEffectEntity(e Entity) Entity {
 
 // SimplifyEffect removes structurally repeated union members for reads and
 // temporal effects. Updates retain every occurrence for multiple-update checks.
-// Concrete state occurrences are values in Go; unlike JS object-identity Sets,
-// distinct occurrences are never collapsed merely because fields are equal.
+// Internal occurrence tokens preserve JS object-identity Set behavior: copied
+// occurrences deduplicate, while distinct equal-valued occurrences remain.
 func SimplifyEffect(e Effect) Effect {
 	out := e
 	switch e.Kind {
