@@ -50,7 +50,7 @@ func (r *FileSourceResolver) Load(p SourceLookupPath) (string, error) {
 	if err != nil {
 		return "", &SourceLoadError{Path: p.NormalizedPath, Cause: err}
 	}
-	text := strings.ReplaceAll(strings.ReplaceAll(string(data), "\r\n", "\n"), "\r", "\n")
+	text := strings.ReplaceAll(strings.ReplaceAll(decodeSourceUTF8(data), "\r\n", "\n"), "\r", "\n")
 	r.sourceCode[p.NormalizedPath] = text
 	return text, nil
 }

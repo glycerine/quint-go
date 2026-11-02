@@ -36,3 +36,8 @@ read is excluded because upstream phase two receives already-parsed main modules
 Cases cover diamonds, relative directories, instances, missing files, case
 conflicts, cycles, unknown modules, and duplicate names. Partial modules on error
 and source maps remain outside this comparison.
+
+`utf8.json` records Node's source-file decoding for malformed sequences and every
+possible leading byte with EOF/ASCII/continuation suffixes. Regenerate with
+`node pkg/grammar/source_decode_fixtures.cjs`. It tests replacement grouping,
+Unicode range boundaries, BOM preservation, and valid multi-byte characters.
