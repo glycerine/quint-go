@@ -667,3 +667,11 @@ word "retained" in the commit message.
   and syntax failures. Default tests pass (core 0.230s). P2.4/P2.6 remain open:
   calls, lambdas, records, assignments, local bindings, matches, literal edge
   semantics, and source-map integration still require conversion work.
+
+- 2026-11-02: Added ordinary/nested calls, dot-call receiver insertion, field and
+  tuple projection, list indexing, and primed assignment conversion. Corrected
+  string literals to match upstream's quote-stripping semantics rather than JSON
+  escape decoding. Tests cover call arities, tuple projection limits, assignment
+  argument order, nested calls, string backslashes, and malformed syntax. Default
+  tests pass (core 0.255s). Lambdas, records, bindings, matches, and source mapping
+  remain open in P2.4; unsupported conversion continues to return explicit errors.

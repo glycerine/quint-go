@@ -1,10 +1,10 @@
 package quint
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/antlr4-go/antlr/v4"
 	p "github.com/glycerine/quint-go/pkg/internal/quintparser"
+	"regexp"
 	"strings"
 )
 
@@ -47,9 +47,7 @@ func expressionFromContext(ctx p.IExprContext, ids *IDGenerator) (Expr, error) {
 			e.Bool = c.GetText() == "true"
 		case c.STRING() != nil:
 			e.Kind = "str"
-			if err := json.Unmarshal([]byte(c.GetText()), &e.Str); err != nil {
-				return Expr{}, err
-			}
+			e.Str = c.GetText()[1 : len(c.GetText())-1]
 		}
 		return e, nil
 	}
@@ -63,10 +61,53 @@ func expressionFromContext(ctx p.IExprContext, ids *IDGenerator) (Expr, error) {
 			args = append(args, v)
 		}
 	}
+	appendArgs := func(list p.IArgListContext) error {
+		if list == nil {
+			return nil
+		}
+		for _, ctx := range list.AllExpr() {
+			v, err := expressionFromContext(ctx, ids)
+			if err != nil {
+				return err
+			}
+			args = append(args, v)
+		}
+		return nil
+	}
 	opcode := ""
 	switch c := ctx.(type) {
 	case *p.ParenContext, *p.BracesContext:
 		return args[0], nil
+	case *p.OperAppContext:
+		opcode = c.NormalCallName().GetText()
+		if err := appendArgs(c.ArgList()); err != nil {
+			return Expr{}, err
+		}
+	case *p.DotCallContext:
+		name := c.NameAfterDot().GetText()
+		if c.LPAREN() != nil {
+			opcode = name
+			if err := appendArgs(c.ArgList()); err != nil {
+				return Expr{}, err
+			}
+		} else {
+			index := tupleFieldPattern.FindStringSubmatch(name)
+			field := Expr{ID: ids.Next(), Kind: "str", Str: name}
+			opcode = "field"
+			if index != nil {
+				n, _ := ParseInteger(index[1])
+				field.Kind = "int"
+				field.Int = n
+				field.Str = ""
+				opcode = "item"
+			}
+			args = append(args, field)
+		}
+	case *p.ListAppContext:
+		opcode = "nth"
+	case *p.AsgnContext:
+		opcode = "assign"
+		args = append([]Expr{{ID: ids.Next(), Kind: "name", Name: c.QualId().GetText()}}, args...)
 	case *p.UminusContext:
 		opcode = "iuminus"
 	case *p.PowContext:
@@ -102,3 +143,5 @@ func expressionFromContext(ctx p.IExprContext, ids *IDGenerator) (Expr, error) {
 	}
 	return Expr{ID: ids.Next(), Kind: "app", Opcode: opcode, Args: args}, nil
 }
+
+var tupleFieldPattern = regexp.MustCompile(`^_([1-9][0-9]?)$`)
