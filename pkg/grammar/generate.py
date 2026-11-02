@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 from pathlib import Path
+import re
 import subprocess
 import tempfile
 
@@ -16,6 +17,27 @@ ROOT = Path(__file__).resolve().parents[2]
 def verify_jar(path):
     if hashlib.sha256(path.read_bytes()).hexdigest() != SHA256:
         raise ValueError(f'ANTLR jar must be version {VERSION}, SHA-256 {SHA256}')
+
+
+def fix_go_parser(source):
+    """Keep ANTLR's dummy label use reachable without executing the jump.
+
+    ANTLR 4.13.2 appends a goto after each rule's return to suppress Go's
+    unused-label error. go vet correctly rejects that unreachable statement.
+    A constant-false branch before the return serves the same compiler purpose
+    and does not change execution. Fail on changed generator templates instead
+    of silently publishing a partially transformed parser.
+    """
+    marker = 'goto errorExit // Trick to prevent compiler error if the label is not used'
+    tail = re.compile(r'(?m)^([ \t]*)return localctx\r?\n[ \t]*' + re.escape(marker) + r'\r?\n')
+    def replace(match):
+        indent = match[1]
+        return (indent + 'if false {\n' + indent + '\tgoto errorExit // Keep the generated error label in use.\n'
+                + indent + '}\n' + indent + 'return localctx\n')
+    result, count = tail.subn(replace, source)
+    if count == 0 or count != source.count(marker) or re.search(r'return localctx\s+goto errorExit', result):
+        raise ValueError('ANTLR Go parser rule tail changed; update fix_go_parser')
+    return result
 
 
 def main():
@@ -39,6 +61,9 @@ def main():
             subprocess.run(['java', '-jar', str(jar), '-Dlanguage=Go', '-package', package,
                             '-visitor', '-Xexact-output-dir', '-o', target, relative], cwd=stage, check=True)
             go_files = sorted((stage / target).glob('*.go'))
+            for path in go_files:
+                if path.name.endswith('_parser.go'):
+                    path.write_text(fix_go_parser(path.read_text()))
             subprocess.run(['gofmt', '-w', *map(str, go_files)], check=True)
             for path in sorted((stage / target).iterdir()):
                 outputs[str(path.relative_to(stage))] = path.read_bytes()

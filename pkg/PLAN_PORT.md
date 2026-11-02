@@ -676,6 +676,10 @@ any remaining TypeScript client code is distinguished from language-server logic
   count skipped fixtures as passes.
 - [ ] P12.2 Run `go test ./...` and `go vet ./...` from `pkg/`; run race checks
   on concurrent library, simulation, editor, and checker integration paths.
+  - [x] Full default tests and all vet analyzers pass; reproducible generator
+    postprocessing removes ANTLR unreachable tail jumps. Focused runtime,
+    documentation/cache, and LSP race checks pass.
+  - [ ] Complete race/cancellation audit across every public integration path.
 - [ ] P12.3 Add targeted property/fuzz checks for parsers, JSON/ITF decoders,
   type/effect substitution, flattening, and evaluation rollback. Retain
   minimized regressions for discovered failures.
@@ -2825,3 +2829,10 @@ word "retained" in the commit message.
   suite remains near the one-second target; the latest isolated full run totals
   1.082s of package execution, so profiling/optimization continues without
   reducing coverage.
+
+- 2026-11-02: Fixed all 58 ANTLR generated parser tail warnings reproducibly
+  in grammar/generate.py. Constant-false references before each return preserve
+  the unused-label workaround without unreachable statements; changed generator
+  templates fail explicitly. Regeneration with the pinned 4.13.2 jar and --check,
+  six Python tests, focused parser tests, full default tests, and unrestricted
+  go vet ./pkg/... pass. Generated files were regenerated, not hand-edited.

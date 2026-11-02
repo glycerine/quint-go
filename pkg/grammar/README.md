@@ -25,5 +25,11 @@ ANTLR's generated headers are reproducible. Both parsers are generated and
 formatted successfully before any repository file is changed. `--check` compares
 all generated outputs without writing to the repository. Generation takes several
 seconds and is a maintenance check, not part of the fast default Go test suite.
-The Python unit tests verify adaptation drift detection and jar verification;
+The generator replaces ANTLR's unused-label jump after each rule's return with
+a constant-false jump before the return. This preserves rule behavior and Go's
+label-use requirement while allowing `go vet` to check the generated packages
+without disabling unreachable-code analysis. The transformation fails if the
+pinned generator's rule-tail template changes.
+The Python unit tests verify adaptation drift detection, rule-tail conversion,
+and jar verification;
 Go parser tests exercise the generated grammar and translated diagnostic actions.

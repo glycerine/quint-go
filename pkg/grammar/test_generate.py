@@ -4,7 +4,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from adapt import adapt
-from generate import ROOT, SHA256, verify_jar
+from generate import ROOT, SHA256, fix_go_parser, verify_jar
 
 
 class GenerationTests(unittest.TestCase):
@@ -30,6 +30,22 @@ class GenerationTests(unittest.TestCase):
             digest.return_value.hexdigest.return_value = SHA256
             with patch.object(Path, 'read_bytes', return_value=b'jar'):
                 verify_jar(Path('tool.jar'))
+
+    def test_parser_dummy_label_precedes_return(self):
+        tail = '\treturn localctx\n\tgoto errorExit // Trick to prevent compiler error if the label is not used\n'
+        expected = '\tif false {\n\t\tgoto errorExit // Keep the generated error label in use.\n\t}\n\treturn localctx\n'
+        source = 'errorExit:\n\tp.ExitRule()\n' + tail
+        self.assertEqual(fix_go_parser(source), 'errorExit:\n\tp.ExitRule()\n' + expected)
+        self.assertEqual(fix_go_parser(source + source), ('errorExit:\n\tp.ExitRule()\n' + expected) * 2)
+        self.assertEqual(fix_go_parser(source.replace('\n', '\r\n')), 'errorExit:\r\n\tp.ExitRule()\r\n' + expected)
+
+    def test_changed_parser_tail_fails_loudly(self):
+        tail = '\treturn localctx\n\tgoto errorExit // Trick to prevent compiler error if the label is not used\n'
+        for source in ['', tail.replace('return localctx', 'return context'),
+                       tail + tail.replace('return localctx', 'return context'),
+                       tail + tail.replace('Trick to prevent', 'Changed comment to prevent')]:
+            with self.subTest(source=source), self.assertRaisesRegex(ValueError, 'parser rule tail changed'):
+                fix_go_parser(source)
 
 
 if __name__ == '__main__':

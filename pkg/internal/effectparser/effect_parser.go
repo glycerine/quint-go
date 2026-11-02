@@ -500,8 +500,10 @@ errorExit:
 		p.SetError(nil)
 	}
 	p.ExitRule()
+	if false {
+		goto errorExit // Keep the generated error label in use.
+	}
 	return localctx
-	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IReadContext is an interface to support dynamic dispatch.
@@ -638,8 +640,10 @@ errorExit:
 		p.SetError(nil)
 	}
 	p.ExitRule()
+	if false {
+		goto errorExit // Keep the generated error label in use.
+	}
 	return localctx
-	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IUpdateContext is an interface to support dynamic dispatch.
@@ -776,8 +780,10 @@ errorExit:
 		p.SetError(nil)
 	}
 	p.ExitRule()
+	if false {
+		goto errorExit // Keep the generated error label in use.
+	}
 	return localctx
-	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ITemporalContext is an interface to support dynamic dispatch.
@@ -914,8 +920,10 @@ errorExit:
 		p.SetError(nil)
 	}
 	p.ExitRule()
+	if false {
+		goto errorExit // Keep the generated error label in use.
+	}
 	return localctx
-	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IConcreteContext is an interface to support dynamic dispatch.
@@ -1167,8 +1175,10 @@ errorExit:
 		p.SetError(nil)
 	}
 	p.ExitRule()
+	if false {
+		goto errorExit // Keep the generated error label in use.
+	}
 	return localctx
-	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IComponentContext is an interface to support dynamic dispatch.
@@ -1441,8 +1451,10 @@ errorExit:
 		p.SetError(nil)
 	}
 	p.ExitRule()
+	if false {
+		goto errorExit // Keep the generated error label in use.
+	}
 	return localctx
-	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IEntityContext is an interface to support dynamic dispatch.
@@ -1677,8 +1689,10 @@ errorExit:
 		p.SetError(nil)
 	}
 	p.ExitRule()
+	if false {
+		goto errorExit // Keep the generated error label in use.
+	}
 	return localctx
-	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IStateVarRefContext is an interface to support dynamic dispatch.
@@ -1799,6 +1813,8 @@ errorExit:
 		p.SetError(nil)
 	}
 	p.ExitRule()
+	if false {
+		goto errorExit // Keep the generated error label in use.
+	}
 	return localctx
-	goto errorExit // Trick to prevent compiler error if the label is not used
 }
