@@ -522,3 +522,10 @@ word "retained" in the commit message.
   Locations use half-open spans; parser adapters still need explicit conversion
   from upstream inclusive token ends. P1.2 remains open for fresh-name generation
   and parser integration. Default core tests passed in 0.006s.
+
+- 2026-11-02: Added structured diagnostics, source/trace resolution, nested error
+  trees, duplicate-context elimination, and upstream-compatible error-tree
+  formatting. Unit tests cover missing references, trace precedence (including
+  missing first frames), retained frame order, empty messages, nested branches,
+  and JSON tree round trips. Default tests pass (core 0.007s). P1.6 remains open
+  for source excerpts, diagnostic-code inventory, and complete error-data schemas.
