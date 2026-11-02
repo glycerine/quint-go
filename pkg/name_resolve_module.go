@@ -14,6 +14,10 @@ func ResolveLocalModule(module Module) (*ExpressionNameResolver, error) {
 	collection := CollectLocalNames([]Module{module})
 	resolver := NewExpressionNameResolver(collection.Modules.Get(module.Name))
 	resolver.Errors = append(resolver.Errors, collection.Errors...)
+	resolver.resolveModuleBody(module)
+	return resolver, nil
+}
+func (resolver *ExpressionNameResolver) resolveModuleBody(module Module) {
 	for i := range module.Declarations {
 		d := module.Declarations[i]
 		resolver.resolveType(d.TypeAnnotation)
@@ -28,5 +32,4 @@ func ResolveLocalModule(module Module) (*ExpressionNameResolver, error) {
 			resolver.Resolve(d.Assumption, 0)
 		}
 	}
-	return resolver, nil
 }

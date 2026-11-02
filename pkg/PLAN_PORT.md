@@ -1075,3 +1075,12 @@ word "retained" in the commit message.
   diagnostics. Default tests pass within the sub-second target. P3.2 remains open
   for alias registration, ordered whole-module linking, and instance overrides;
   these collection primitives do not yet implement a complete linker.
+
+- 2026-11-02: Connected imports/exports to ordered module name resolution with a
+  shared lookup table and alias scope registration. Declarations collect in source
+  order before body resolution, preserving forward references and conflict order.
+  Tests cover qualified value/type references, alias re-exports, nontransitive
+  visibility, cross-module identity, missing modules/names, and explicit instance
+  rejection. Default tests pass (combined execution 0.479s). P3.2 remains open for
+  instances and differential linked visibility/provenance validation; callers
+  currently supply dependency-ordered modules.
