@@ -408,3 +408,10 @@ names in metadata, current-state records, and RNG counters. They cover init/
 step calls, choices, disabled actions, parameterized actions, sequencing,
 repetition, and state-dependent module values across internal shifts. Unit tests
 also verify owned module IR, direct operator invocation, errors, and cancellation.
+
+`runtime_state_project.json` is regenerated with
+`node pkg/grammar/runtime_state_project_fixtures.cjs`. Three checked, flattened
+projects compare 27 named operations and shifts against TypeScript, including
+current records, action metadata, and RNG counters. Imports, independent
+instances with distinct constant overrides, and nested instances retain state
+across calls. Tests also check caller module/ID ownership and invalid projects.

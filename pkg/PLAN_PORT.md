@@ -394,8 +394,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     local-value scope preservation, failure diagnostics, and loop cancellation.
   - [x] Stateful standalone/flattened module definitions with persistent
     registers/RNG, named/parameterized actions, action metadata, and val refresh.
-  - [ ] Stateful project/instance orchestration, primed-read support,
-    simulation-level transaction handling, and trace integration.
+  - [x] Checked stateful project preparation with imports, independent constant-
+    overridden instances, nested instances, and preserved caller modules/IDs.
+  - [ ] Primed-read support, simulation-level transaction handling, and trace
+    integration.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
   empty choices, and bounded sampling of infinite domains.
 - [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
@@ -2501,3 +2503,14 @@ word "retained" in the commit message.
   and cancellation. Full default tests pass (combined package execution 1.005s,
   near the one-second target). Stateful project flattening, trace recording,
   simulation-level transactions, and remaining runtime builtins stay open.
+
+- 2026-11-02: Added NewProjectEvaluator using the shared checked project
+  preparation pipeline: resolve, sort, analyze, and flatten with private IDs.
+  Stateful projects retain registers and RNG across calls, including imported
+  definitions, separate constant-overridden instances, and nested instances.
+  Three upstream projects compare 27 operations/shifts, current records, action
+  metadata, and RNG counters. Tests verify unchanged caller modules/IDs and
+  reject static errors, missing main/IDs, and canceled contexts. Existing pure
+  project evaluation uses the same preparation helper. Full default tests pass
+  (combined package execution 1.049s, slightly above the one-second target).
+  Primed reads, simulation transactions, and trace integration remain open.

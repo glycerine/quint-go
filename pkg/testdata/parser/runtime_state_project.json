@@ -1,0 +1,1330 @@
+[
+  {
+    "name": "import",
+    "source": "module A { var x:int action init=x'=0 action step=x'=x+1 } module M { import A as I action init=I::init action step=I::step val read=I::x }",
+    "steps": [
+      {
+        "operation": "init",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "shift",
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 0
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "read",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 0
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 0
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "step",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 0
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "step"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "shift",
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "read",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "step",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "step"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "shift",
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "read",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      }
+    ]
+  },
+  {
+    "name": "instances",
+    "source": "module A { const c:int var x:int action init=x'=c action step=x'=x+1 } module M { import A(c=1) as I import A(c=10) as J action init=all { I::init,J::init } action left=all { I::step,J::x'=J::x } action right=all { J::step,I::x'=I::x } val read=(I::x,J::x) }",
+    "steps": [
+      {
+        "operation": "init",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "shift",
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "read",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            }
+          ]
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "left",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "left"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "shift",
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "read",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            }
+          ]
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "right",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "right"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "shift",
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "read",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            }
+          ]
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      }
+    ]
+  },
+  {
+    "name": "nested",
+    "source": "module A { const c:int var x:int action init=x'=c action step=x'=x+1 } module B { const d:int import A(c=d) as I action init=I::init action step=I::step val read=I::x } module M { import B(d=40) as J action init=J::init action step=J::step val read=J::read }",
+    "steps": [
+      {
+        "operation": "init",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "init"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "shift",
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::B::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 40
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "read",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 40
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::B::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 40
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "step",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::B::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 40
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "step"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "shift",
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::B::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 41
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "read",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 41
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::B::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 41
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "step",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::B::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 41
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "step"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "shift",
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::B::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 42
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      },
+      {
+        "operation": "read",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 42
+        },
+        "record": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "M::J::B::I::x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 42
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::actionTaken"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "mbt::nondetPicks"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": []
+            }
+          ]
+        },
+        "rng": "0"
+      }
+    ]
+  }
+]
