@@ -454,6 +454,10 @@ Build these items alongside the phases that supply their command behavior.
 - [ ] P10.4 Port ITF read/write/normalization, big integers, sets/maps/tuples,
   records/variants, metadata, loops, hidden variables, and trace filename
   substitutions. Preserve user-field names that overlap metadata terminology.
+  - [x] ITF-to-Quint decoding with exact upstream ID allocation, lossless
+    integers/raw metadata, JavaScript record key order, and seven fixtures.
+  - [ ] Implement writing, runtime normalization, diagnostics extraction, and
+    trace filename/output integration.
 - [ ] P10.5 Port pretty printing, source-error rendering, value diffs, execution
   frames, trace display, statistics, and witness/invariant reports.
 - [ ] P10.6 Port documentation extraction and `docs`; embed builtin definitions
@@ -2000,3 +2004,18 @@ word "retained" in the commit message.
   final report-schema tests pass, and backend race tests pass (2.528s with
   instrumentation). P9.6 remains open for ITF interpretation/output, individual
   invariant reporting, source/variable mapping, and CLI presentation.
+
+- 2026-11-02: Added DecodeITFTrace/DecodeITFValue for the upstream ofItf path:
+  primitive/tagged integers, legacy integral JSON numbers without float64,
+  lists/sets/tuples/maps, variants/unit values, unserializable values, and records.
+  Conversion uses insdict.Dict, JavaScript numeric-key enumeration, upstream's
+  metadata/private-field filtering, and exact zero-based cross-state expression
+  IDs (including map-pair and unit-label allocation order). ITFTrace retains
+  original bytes, variable/parameter names, trace/state metadata, and loop index.
+  Seven upstream-generated fixtures match complete expression arrays without
+  normalization. Tests cover numeric precision, exponent forms, ordered fields,
+  shared generators, malformed values/traces, and input isolation. The existing
+  real checker violation test now decodes its two-state ITF witness. Full default
+  tests pass (combined execution 0.982s); final malformed-value tests also pass.
+  P10.4/P9.6 remain open for encoding/normalization, metadata diagnostics,
+  individual-invariant evaluation, and CLI trace output.

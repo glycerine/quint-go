@@ -1,0 +1,564 @@
+[
+  {
+    "name": "primitives",
+    "input": {
+      "vars": [
+        "b",
+        "s",
+        "n"
+      ],
+      "states": [
+        {
+          "b": true,
+          "s": "hello",
+          "n": {
+            "#bigint": "9007199254740993123456789"
+          }
+        },
+        {
+          "b": false,
+          "s": "",
+          "n": -1
+        }
+      ]
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 1,
+            "kind": "str",
+            "value": "b"
+          },
+          {
+            "id": 2,
+            "kind": "bool",
+            "value": true
+          },
+          {
+            "id": 3,
+            "kind": "str",
+            "value": "s"
+          },
+          {
+            "id": 4,
+            "kind": "str",
+            "value": "hello"
+          },
+          {
+            "id": 5,
+            "kind": "str",
+            "value": "n"
+          },
+          {
+            "id": 6,
+            "kind": "int",
+            "value": 9007199254740993123456789
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 8,
+            "kind": "str",
+            "value": "b"
+          },
+          {
+            "id": 9,
+            "kind": "bool",
+            "value": false
+          },
+          {
+            "id": 10,
+            "kind": "str",
+            "value": "s"
+          },
+          {
+            "id": 11,
+            "kind": "str",
+            "value": ""
+          },
+          {
+            "id": 12,
+            "kind": "str",
+            "value": "n"
+          },
+          {
+            "id": 13,
+            "kind": "int",
+            "value": -1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "collections",
+    "input": {
+      "vars": [],
+      "states": [
+        {
+          "list": [
+            1,
+            "a"
+          ],
+          "set": {
+            "#set": [
+              3,
+              1
+            ]
+          },
+          "tuple": {
+            "#tup": [
+              true,
+              2
+            ]
+          },
+          "map": {
+            "#map": [
+              [
+                "a",
+                1
+              ],
+              [
+                2,
+                false
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 1,
+            "kind": "str",
+            "value": "list"
+          },
+          {
+            "id": 2,
+            "kind": "app",
+            "opcode": "List",
+            "args": [
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 4,
+                "kind": "str",
+                "value": "a"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "kind": "str",
+            "value": "set"
+          },
+          {
+            "id": 6,
+            "kind": "app",
+            "opcode": "Set",
+            "args": [
+              {
+                "id": 7,
+                "kind": "int",
+                "value": 3
+              },
+              {
+                "id": 8,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "kind": "str",
+            "value": "tuple"
+          },
+          {
+            "id": 10,
+            "kind": "app",
+            "opcode": "Tup",
+            "args": [
+              {
+                "id": 11,
+                "kind": "bool",
+                "value": true
+              },
+              {
+                "id": 12,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "id": 13,
+            "kind": "str",
+            "value": "map"
+          },
+          {
+            "id": 14,
+            "kind": "app",
+            "opcode": "Map",
+            "args": [
+              {
+                "id": 17,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 15,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 16,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 20,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 18,
+                    "kind": "int",
+                    "value": 2
+                  },
+                  {
+                    "id": 19,
+                    "kind": "bool",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "variants",
+    "input": {
+      "vars": [],
+      "states": [
+        {
+          "a": {
+            "tag": "Some",
+            "value": 1
+          },
+          "b": {
+            "tag": "UNIT"
+          },
+          "c": {
+            "tag": "Other"
+          },
+          "d": {
+            "tag": "Rec",
+            "value": 2,
+            "extra": 3
+          }
+        }
+      ]
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 1,
+            "kind": "str",
+            "value": "a"
+          },
+          {
+            "id": 2,
+            "kind": "app",
+            "opcode": "variant",
+            "args": [
+              {
+                "id": 3,
+                "kind": "str",
+                "value": "Some"
+              },
+              {
+                "id": 4,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "kind": "str",
+            "value": "b"
+          },
+          {
+            "id": 6,
+            "kind": "app",
+            "opcode": "Tup",
+            "args": []
+          },
+          {
+            "id": 8,
+            "kind": "str",
+            "value": "c"
+          },
+          {
+            "id": 9,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 11,
+                "kind": "str",
+                "value": "tag"
+              },
+              {
+                "id": 10,
+                "kind": "str",
+                "value": "Other"
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "kind": "str",
+            "value": "d"
+          },
+          {
+            "id": 13,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 14,
+                "kind": "str",
+                "value": "tag"
+              },
+              {
+                "id": 15,
+                "kind": "str",
+                "value": "Rec"
+              },
+              {
+                "id": 16,
+                "kind": "str",
+                "value": "value"
+              },
+              {
+                "id": 17,
+                "kind": "int",
+                "value": 2
+              },
+              {
+                "id": 18,
+                "kind": "str",
+                "value": "extra"
+              },
+              {
+                "id": 19,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "metadata",
+    "input": {
+      "vars": [
+        "x"
+      ],
+      "loop": 0,
+      "#meta": {
+        "description": "trace"
+      },
+      "states": [
+        {
+          "#meta": {
+            "index": 0
+          },
+          "__hidden": 1,
+          "x": {
+            "nested": {
+              "#meta": {},
+              "__private": 2,
+              "visible": 3
+            }
+          }
+        }
+      ]
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 1,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 2,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 3,
+                "kind": "str",
+                "value": "nested"
+              },
+              {
+                "id": 4,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 5,
+                    "kind": "str",
+                    "value": "visible"
+                  },
+                  {
+                    "id": 6,
+                    "kind": "int",
+                    "value": 3
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "unserializable",
+    "input": {
+      "vars": [
+        "x"
+      ],
+      "states": [
+        {
+          "x": {
+            "#unserializable": "Unserializable(INT)"
+          }
+        }
+      ]
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 1,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 2,
+            "kind": "name",
+            "name": "Unserializable(INT)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "empty",
+    "input": {
+      "vars": [],
+      "states": []
+    },
+    "output": []
+  },
+  {
+    "name": "precedence",
+    "input": {
+      "vars": [],
+      "states": [
+        {
+          "x": {
+            "#bigint": "2",
+            "#set": [
+              1
+            ]
+          },
+          "y": {
+            "#tup": [
+              1
+            ],
+            "#set": [
+              2
+            ]
+          }
+        }
+      ]
+    },
+    "output": [
+      {
+        "id": 0,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 1,
+            "kind": "str",
+            "value": "x"
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 2
+          },
+          {
+            "id": 3,
+            "kind": "str",
+            "value": "y"
+          },
+          {
+            "id": 4,
+            "kind": "app",
+            "opcode": "Tup",
+            "args": [
+              {
+                "id": 5,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

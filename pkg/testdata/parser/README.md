@@ -202,3 +202,8 @@ Default Go tests require neither Node nor the upstream CLI dependencies.
 cover merge precedence and default/explicit checker selections without a solver.
 The adapter test replaces only source.content with `<IR>` for comparison because
 source compilation and transport are validated separately.
+
+`itf_decode.json` is regenerated with `node pkg/grammar/itf_fixtures.cjs`.
+Seven upstream ofItf cases cover primitives, collections, variants/unit values,
+metadata/private fields, unserializable values, empty traces, and marker
+precedence. Go compares complete expression arrays including every ID.

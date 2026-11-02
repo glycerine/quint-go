@@ -71,8 +71,9 @@ func TestSourceToGoApalache(t *testing.T) {
 				if result.Outcome != CheckViolation || len(result.Counterexamples) == 0 {
 					t.Fatal(result)
 				}
-				if !json.Valid(result.Counterexamples[0]) {
-					t.Fatal("invalid ITF trace")
+				trace, err := quint.DecodeITFTrace(result.Counterexamples[0])
+				if err != nil || len(trace.States) != 2 || len(trace.Vars) != 1 || trace.States[1].Opcode != "Rec" {
+					t.Fatal("invalid ITF trace", trace, err)
 				}
 			}
 			if tc.name == "safe" {
