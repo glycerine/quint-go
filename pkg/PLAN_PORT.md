@@ -1817,3 +1817,11 @@ word "retained" in the commit message.
   order and optional type IDs, match upstream without changes. Default tests
   pass (combined execution 0.748s). Analysis/source extension is unit-tested;
   instance integration and broader metadata differential fixtures remain open.
+
+- 2026-11-02: Added InstantiateModule to construct uniquely named instance
+  modules, collect override dependencies, replace constants with pure values,
+  namespace prototype definitions, refresh IDs/metadata, and return a star import
+  replacing the instance. A parsed/resolved/analyzed test covers override values,
+  dependency order, state names, fresh IDs, and prototype isolation. Default
+  tests pass (combined execution 0.725s). Instance-reference rewriting, module
+  traversal/registration, and exact upstream instance fixtures remain open.
