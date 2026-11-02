@@ -9,14 +9,19 @@ import (
 	"testing"
 )
 
-func TestUpstreamPureEvaluation(t *testing.T) {
+func TestUpstreamPureEvaluation(t *testing.T) { testPureEvaluationFixtures(t, "evaluate_pure.json") }
+func TestUpstreamSequenceEvaluation(t *testing.T) {
+	testPureEvaluationFixtures(t, "runtime_sequence.json")
+}
+func testPureEvaluationFixtures(t *testing.T, filename string) {
+	t.Helper()
 	var fixtures []struct {
 		Source string
 		Input  Expr
 		Output *Expr
 		Error  *Diagnostic
 	}
-	data, err := os.ReadFile("testdata/parser/evaluate_pure.json")
+	data, err := os.ReadFile("testdata/parser/" + filename)
 	if err != nil {
 		t.Fatal(err)
 	}

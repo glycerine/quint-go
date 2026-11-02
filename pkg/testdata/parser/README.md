@@ -268,3 +268,12 @@ integer arithmetic, constructors, equality, assertions, errors, empty Boolean
 folds, and lazy branches containing division by zero. Go compares complete value
 semantics and error codes/messages; source-reference allocation is tested
 separately. Definition/closure/stateful evaluation remains separate work.
+
+`runtime_sequence.json` is regenerated with
+`node pkg/grammar/runtime_sequence_fixtures.cjs`. Thirty-five parsed expressions
+run the full TypeScript evaluator to cover list/tuple indexing, head/tail,
+length, append/concat, replacement/slicing, record access/field names/updates,
+nested operations, and empty/missing/out-of-bounds errors. Go tests additionally
+check immutable ownership, invalid types/arity, and oversized indices. The
+reference's Number coercion and error formatting for extreme indices remain an
+explicit compatibility audit; Go currently reports exact integer indices.

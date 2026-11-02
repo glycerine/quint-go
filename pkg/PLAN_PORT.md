@@ -349,6 +349,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [ ] String/conversion builtins and full evaluator dispatch integration.
 - [ ] P7.4 Port collection, map/function, record, tuple, variant, higher-order,
   fold, indexing, range, and lazy/infinite-set operations.
+  - [x] Strict head/tail/length/append/concat, nth/item/replaceAt/slice, and
+    field/fieldNames/with operations with pure-evaluator integration and fixtures.
+  - [ ] Remaining collections/higher-order/symbolic operations and JavaScript
+    Number coercion/error formatting audit for extreme sequence indices.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
   updates, action composition, enabled/disabled actions, rollback, and commit.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
@@ -2184,3 +2188,16 @@ word "retained" in the commit message.
   Full default tests pass (combined package execution 0.983s). P7.2/P7.3 remain
   open for definition resolution, closures, local bindings, caches, full stack
   traces, strings/conversions, and stateful evaluator integration.
+
+- 2026-11-02: Added EvalSequenceBuiltin and connected twelve list/tuple/record
+  operations to pure evaluation: head, tail, length, append, concat, nth, item,
+  replaceAt, slice, field, fieldNames, and with. Lists index from zero, tuples
+  from one, and slice ends are exclusive. Updates retain immutable ownership;
+  field names are deterministic sets and missing fields preserve upstream error
+  messages. Thirty-five full TypeScript evaluator fixtures match values and
+  error codes/messages, including nested operations, empty sequences, every
+  bounds boundary, replacement, and records. Unit tests add invalid arity/types,
+  ownership checks, and oversized index rejection. Full default tests pass
+  (combined package execution 0.942s). Extreme-index JavaScript Number coercion
+  and diagnostic formatting remain explicitly open, as do remaining collection,
+  higher-order, range, and symbolic-set operations under P7.4.

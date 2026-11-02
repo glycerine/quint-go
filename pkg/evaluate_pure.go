@@ -131,7 +131,13 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 				return args[0], nil
 			}
 		}
-		value, err := EvalIntegerBuiltin(e.Opcode, args)
+		var value RuntimeValue
+		var err error
+		if sequenceBuiltinArity(e.Opcode) != 0 {
+			value, err = EvalSequenceBuiltin(e.Opcode, args)
+		} else {
+			value, err = EvalIntegerBuiltin(e.Opcode, args)
+		}
 		if d, ok := err.(Diagnostic); ok {
 			if d.Reference == nil {
 				id := e.ID
