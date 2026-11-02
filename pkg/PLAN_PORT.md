@@ -456,6 +456,13 @@ including failed actions that must not leak partially updated state.
     individual invariant reporting.
 - [ ] P8.2 Implement `test` discovery/filtering, randomized repetitions,
   pass/fail/ignore results, assertion reports, and replayable failing seeds.
+  - [x] Collector-order discovery with default Test suffix/custom predicates,
+    imports/instances/namespaces/hidden definitions, and empty-selection text.
+  - [x] Sequential named test execution with deterministic early exit,
+    randomized repetitions, pass/fail/ignore results, QNT511 references,
+    replayable failing seeds, pending-state commits, and selected traces.
+  - [ ] JavaScript-compatible CLI regex handling, source-project suite/name
+    wiring, execution frames/hooks, and user-facing assertion reports.
 - [ ] P8.3 Preserve trace hooks, action names, nondeterministic picks, debug
   metadata, and output filename templates used in model-based testing.
 - [ ] P8.4 Implement REPL multiline input, commands, load/reload, incremental
@@ -2631,3 +2638,16 @@ word "retained" in the commit message.
   still unfinished. Twenty-seven upstream cases plus malformed-call and exact
   source-reference tests pass. Full default tests pass with all current batches
   integrated (combined package execution 0.946s).
+
+- 2026-11-02: Added collector-scope DiscoverTests and sequential
+  ModuleEvaluator.Test APIs. Discovery follows collector order and matches
+  unqualified names with the default Test suffix or a caller predicate,
+  retaining import/instance namespaces, qualifiers, and hidden definitions.
+  Thirty upstream selections compare 80 definitions and empty-selection text.
+  Test execution matches deterministic early exit, randomized repetitions,
+  pass/fail/ignore results, QNT511 definition references, final-state commits,
+  selected traces, and replay seeds across 23 upstream scenarios (48 samples
+  and 29 selected states). Unit tests cover limits/errors, cancellation,
+  ownership, and failing-seed replay. Full default tests pass (combined package
+  execution 0.946s). JavaScript CLI regexes, project suite/name wiring, execution
+  frames/hooks, and assertion rendering remain open.

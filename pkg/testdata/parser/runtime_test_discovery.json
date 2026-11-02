@@ -1,0 +1,868 @@
+[
+  {
+    "name": "locals",
+    "source": "module M { const constTest:int var varTest:int type TypeTest=int assume assumeTest=true pure val alphaTest=true val betaTest=false action gammaTest=true run deltaTest=true temporal epsilonTest=true def fnTest(n)=n val lowercaseTEST=true val Test=1 val skip=0 }",
+    "main": "M",
+    "match": null,
+    "selected": [
+      {
+        "id": 10,
+        "name": "alphaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "pureval"
+      },
+      {
+        "id": 12,
+        "name": "betaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      },
+      {
+        "id": 14,
+        "name": "gammaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "action"
+      },
+      {
+        "id": 16,
+        "name": "deltaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "run"
+      },
+      {
+        "id": 18,
+        "name": "epsilonTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "temporal"
+      },
+      {
+        "id": 22,
+        "name": "fnTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "def"
+      },
+      {
+        "id": 26,
+        "name": "Test",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "locals",
+    "source": "module M { const constTest:int var varTest:int type TypeTest=int assume assumeTest=true pure val alphaTest=true val betaTest=false action gammaTest=true run deltaTest=true temporal epsilonTest=true def fnTest(n)=n val lowercaseTEST=true val Test=1 val skip=0 }",
+    "main": "M",
+    "match": "",
+    "selected": [
+      {
+        "id": 10,
+        "name": "alphaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "pureval"
+      },
+      {
+        "id": 12,
+        "name": "betaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      },
+      {
+        "id": 14,
+        "name": "gammaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "action"
+      },
+      {
+        "id": 16,
+        "name": "deltaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "run"
+      },
+      {
+        "id": 18,
+        "name": "epsilonTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "temporal"
+      },
+      {
+        "id": 22,
+        "name": "fnTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "def"
+      },
+      {
+        "id": 26,
+        "name": "Test",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "locals",
+    "source": "module M { const constTest:int var varTest:int type TypeTest=int assume assumeTest=true pure val alphaTest=true val betaTest=false action gammaTest=true run deltaTest=true temporal epsilonTest=true def fnTest(n)=n val lowercaseTEST=true val Test=1 val skip=0 }",
+    "main": "M",
+    "match": ".*",
+    "selected": [
+      {
+        "id": 10,
+        "name": "alphaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "pureval"
+      },
+      {
+        "id": 12,
+        "name": "betaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      },
+      {
+        "id": 14,
+        "name": "gammaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "action"
+      },
+      {
+        "id": 16,
+        "name": "deltaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "run"
+      },
+      {
+        "id": 18,
+        "name": "epsilonTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "temporal"
+      },
+      {
+        "id": 22,
+        "name": "fnTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "def"
+      },
+      {
+        "id": 24,
+        "name": "lowercaseTEST",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      },
+      {
+        "id": 26,
+        "name": "Test",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      },
+      {
+        "id": 28,
+        "name": "skip",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '.*'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "locals",
+    "source": "module M { const constTest:int var varTest:int type TypeTest=int assume assumeTest=true pure val alphaTest=true val betaTest=false action gammaTest=true run deltaTest=true temporal epsilonTest=true def fnTest(n)=n val lowercaseTEST=true val Test=1 val skip=0 }",
+    "main": "M",
+    "match": "^fn",
+    "selected": [
+      {
+        "id": 22,
+        "name": "fnTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "def"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '^fn'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "locals",
+    "source": "module M { const constTest:int var varTest:int type TypeTest=int assume assumeTest=true pure val alphaTest=true val betaTest=false action gammaTest=true run deltaTest=true temporal epsilonTest=true def fnTest(n)=n val lowercaseTEST=true val Test=1 val skip=0 }",
+    "main": "M",
+    "match": "Test$",
+    "selected": [
+      {
+        "id": 10,
+        "name": "alphaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "pureval"
+      },
+      {
+        "id": 12,
+        "name": "betaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      },
+      {
+        "id": 14,
+        "name": "gammaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "action"
+      },
+      {
+        "id": 16,
+        "name": "deltaTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "run"
+      },
+      {
+        "id": 18,
+        "name": "epsilonTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "temporal"
+      },
+      {
+        "id": 22,
+        "name": "fnTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "def"
+      },
+      {
+        "id": 26,
+        "name": "Test",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match 'Test$'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "locals",
+    "source": "module M { const constTest:int var varTest:int type TypeTest=int assume assumeTest=true pure val alphaTest=true val betaTest=false action gammaTest=true run deltaTest=true temporal epsilonTest=true def fnTest(n)=n val lowercaseTEST=true val Test=1 val skip=0 }",
+    "main": "M",
+    "match": "^missing$",
+    "selected": [],
+    "noTestsMessage": "no tests matched --match '^missing$'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "nested",
+    "source": "module M { val containerTest={ val hiddenTest=true; hiddenTest } val laterTest=true }",
+    "main": "M",
+    "match": null,
+    "selected": [
+      {
+        "id": 5,
+        "name": "containerTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      },
+      {
+        "id": 7,
+        "name": "laterTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "nested",
+    "source": "module M { val containerTest={ val hiddenTest=true; hiddenTest } val laterTest=true }",
+    "main": "M",
+    "match": ".*",
+    "selected": [
+      {
+        "id": 5,
+        "name": "containerTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      },
+      {
+        "id": 7,
+        "name": "laterTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '.*'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "nested",
+    "source": "module M { val containerTest={ val hiddenTest=true; hiddenTest } val laterTest=true }",
+    "main": "M",
+    "match": "hidden",
+    "selected": [],
+    "noTestsMessage": "no tests matched --match 'hidden'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "wildcard",
+    "source": "module A { val oneTest=true action otherTest=true val other=0 } module M { val localBeforeTest=true import A.* val localAfterTest=true }",
+    "main": "M",
+    "match": null,
+    "selected": [
+      {
+        "id": 9,
+        "name": "localBeforeTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      },
+      {
+        "id": 2,
+        "name": "oneTest",
+        "namespaces": [],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 4,
+        "name": "otherTest",
+        "namespaces": [],
+        "hidden": true,
+        "qualifier": "action"
+      },
+      {
+        "id": 12,
+        "name": "localAfterTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "wildcard",
+    "source": "module A { val oneTest=true action otherTest=true val other=0 } module M { val localBeforeTest=true import A.* val localAfterTest=true }",
+    "main": "M",
+    "match": ".*",
+    "selected": [
+      {
+        "id": 9,
+        "name": "localBeforeTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      },
+      {
+        "id": 2,
+        "name": "oneTest",
+        "namespaces": [],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 4,
+        "name": "otherTest",
+        "namespaces": [],
+        "hidden": true,
+        "qualifier": "action"
+      },
+      {
+        "id": 6,
+        "name": "other",
+        "namespaces": [],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 12,
+        "name": "localAfterTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '.*'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "wildcard",
+    "source": "module A { val oneTest=true action otherTest=true val other=0 } module M { val localBeforeTest=true import A.* val localAfterTest=true }",
+    "main": "M",
+    "match": "^local",
+    "selected": [
+      {
+        "id": 9,
+        "name": "localBeforeTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      },
+      {
+        "id": 12,
+        "name": "localAfterTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '^local'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "selective",
+    "source": "module A { val oneTest=true action otherTest=true val other=0 } module M { import A.oneTest val localTest=true }",
+    "main": "M",
+    "match": null,
+    "selected": [
+      {
+        "id": 2,
+        "name": "oneTest",
+        "namespaces": [],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 10,
+        "name": "localTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "selective",
+    "source": "module A { val oneTest=true action otherTest=true val other=0 } module M { import A.oneTest val localTest=true }",
+    "main": "M",
+    "match": ".*",
+    "selected": [
+      {
+        "id": 2,
+        "name": "oneTest",
+        "namespaces": [],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 10,
+        "name": "localTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '.*'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "aliases",
+    "source": "module A { val oneTest=true action otherTest=true val other=0 } module M { import A as I import A as J val localTest=true }",
+    "main": "M",
+    "match": null,
+    "selected": [
+      {
+        "id": 2,
+        "name": "oneTest",
+        "namespaces": [
+          "I"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 4,
+        "name": "otherTest",
+        "namespaces": [
+          "I"
+        ],
+        "hidden": true,
+        "qualifier": "action"
+      },
+      {
+        "id": 2,
+        "name": "oneTest",
+        "namespaces": [
+          "J"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 4,
+        "name": "otherTest",
+        "namespaces": [
+          "J"
+        ],
+        "hidden": true,
+        "qualifier": "action"
+      },
+      {
+        "id": 11,
+        "name": "localTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "aliases",
+    "source": "module A { val oneTest=true action otherTest=true val other=0 } module M { import A as I import A as J val localTest=true }",
+    "main": "M",
+    "match": ".*",
+    "selected": [
+      {
+        "id": 2,
+        "name": "oneTest",
+        "namespaces": [
+          "I"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 4,
+        "name": "otherTest",
+        "namespaces": [
+          "I"
+        ],
+        "hidden": true,
+        "qualifier": "action"
+      },
+      {
+        "id": 6,
+        "name": "other",
+        "namespaces": [
+          "I"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 2,
+        "name": "oneTest",
+        "namespaces": [
+          "J"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 4,
+        "name": "otherTest",
+        "namespaces": [
+          "J"
+        ],
+        "hidden": true,
+        "qualifier": "action"
+      },
+      {
+        "id": 6,
+        "name": "other",
+        "namespaces": [
+          "J"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 11,
+        "name": "localTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '.*'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "aliases",
+    "source": "module A { val oneTest=true action otherTest=true val other=0 } module M { import A as I import A as J val localTest=true }",
+    "main": "M",
+    "match": "^I::",
+    "selected": [],
+    "noTestsMessage": "no tests matched --match '^I::'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "aliases",
+    "source": "module A { val oneTest=true action otherTest=true val other=0 } module M { import A as I import A as J val localTest=true }",
+    "main": "M",
+    "match": "^one",
+    "selected": [
+      {
+        "id": 2,
+        "name": "oneTest",
+        "namespaces": [
+          "I"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 2,
+        "name": "oneTest",
+        "namespaces": [
+          "J"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '^one'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "instances",
+    "source": "module A { const N:int val oneTest=N==1 } module M { import A(N=1) as I import A(N=2) as J val localTest=true }",
+    "main": "M",
+    "match": null,
+    "selected": [
+      {
+        "id": 6,
+        "name": "oneTest",
+        "namespaces": [
+          "I",
+          "M"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 6,
+        "name": "oneTest",
+        "namespaces": [
+          "J",
+          "M"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 15,
+        "name": "localTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "instances",
+    "source": "module A { const N:int val oneTest=N==1 } module M { import A(N=1) as I import A(N=2) as J val localTest=true }",
+    "main": "M",
+    "match": ".*",
+    "selected": [
+      {
+        "id": 6,
+        "name": "oneTest",
+        "namespaces": [
+          "I",
+          "M"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 6,
+        "name": "oneTest",
+        "namespaces": [
+          "J",
+          "M"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 15,
+        "name": "localTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '.*'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "instances",
+    "source": "module A { const N:int val oneTest=N==1 } module M { import A(N=1) as I import A(N=2) as J val localTest=true }",
+    "main": "M",
+    "match": "^one",
+    "selected": [
+      {
+        "id": 6,
+        "name": "oneTest",
+        "namespaces": [
+          "I",
+          "M"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 6,
+        "name": "oneTest",
+        "namespaces": [
+          "J",
+          "M"
+        ],
+        "hidden": true,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '^one'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "hidden",
+    "source": "module A { const C:int val oneTest=true } module B { import A.* } module M { import B.* val local=0 }",
+    "main": "M",
+    "match": null,
+    "selected": [],
+    "noTestsMessage": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "hidden",
+    "source": "module A { const C:int val oneTest=true } module B { import A.* } module M { import B.* val local=0 }",
+    "main": "M",
+    "match": ".*",
+    "selected": [
+      {
+        "id": 10,
+        "name": "local",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '.*'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "reexport",
+    "source": "module A { val oneTest=true val twoTest=false } module B { import A as I export I.* } module M { import B.* }",
+    "main": "M",
+    "match": null,
+    "selected": [
+      {
+        "id": 2,
+        "name": "oneTest",
+        "namespaces": [],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 4,
+        "name": "twoTest",
+        "namespaces": [],
+        "hidden": true,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "reexport",
+    "source": "module A { val oneTest=true val twoTest=false } module B { import A as I export I.* } module M { import B.* }",
+    "main": "M",
+    "match": ".*",
+    "selected": [
+      {
+        "id": 2,
+        "name": "oneTest",
+        "namespaces": [],
+        "hidden": true,
+        "qualifier": "val"
+      },
+      {
+        "id": 4,
+        "name": "twoTest",
+        "namespaces": [],
+        "hidden": true,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '.*'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "other_module",
+    "source": "module N { val excludedTest=true } module M { val includedTest=true }",
+    "main": "M",
+    "match": null,
+    "selected": [
+      {
+        "id": 5,
+        "name": "includedTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "other_module",
+    "source": "module N { val excludedTest=true } module M { val includedTest=true }",
+    "main": "M",
+    "match": ".*",
+    "selected": [
+      {
+        "id": 5,
+        "name": "includedTest",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '.*'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "empty",
+    "source": "module M { val skip=0 }",
+    "main": "M",
+    "match": null,
+    "selected": [],
+    "noTestsMessage": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "empty",
+    "source": "module M { val skip=0 }",
+    "main": "M",
+    "match": ".*",
+    "selected": [
+      {
+        "id": 2,
+        "name": "skip",
+        "namespaces": [],
+        "hidden": false,
+        "qualifier": "val"
+      }
+    ],
+    "noTestsMessage": "no tests matched --match '.*'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  },
+  {
+    "name": "empty",
+    "source": "module M { val skip=0 }",
+    "main": "M",
+    "match": "^Test$",
+    "selected": [],
+    "noTestsMessage": "no tests matched --match '^Test$'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')"
+  }
+]

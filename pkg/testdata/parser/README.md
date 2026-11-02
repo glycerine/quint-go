@@ -484,3 +484,22 @@ next/oneOf rejection, symbolic generation rejection, unknown opcodes, lazy
 branches, and argument-error precedence. Unit tests add malformed fail calls
 and exact diagnostic source references. Bound nondeterministic oneOf handling
 is a separate unfinished implementation.
+
+`runtime_testing.json` is regenerated with
+`node pkg/grammar/runtime_testing_fixtures.cjs`. Twenty-three upstream test
+scenarios (48 samples and 29 selected states) compare statuses, errors, definition
+references, sample counts, seeds, selected/active traces, final registers, and
+RNG counters. They cover deterministic early exit, random repetitions and later
+failures, final commits even on error/false/non-Boolean results, ignored closures,
+zero samples, metadata, and trace ranking/ties. Unit tests add cancellation,
+validation, result ownership, and failing-seed replay.
+
+`runtime_test_discovery.json` is regenerated with
+`node pkg/grammar/runtime_test_discovery_fixtures.cjs`. Thirty selections compare
+80 definitions from upstream collector scopes, retaining IDs, order, names,
+namespaces, qualifiers, and hidden imports. Cases include selective/wildcard
+imports, aliases, instances, re-exports, locals, suffix/default matching, custom
+predicates, and empty-selection messages. The Go helper accepts a predicate;
+JavaScript regex compilation and linking selected entries to prepared evaluator
+names remain CLI orchestration work. Returned declaration/provenance views are
+read-only; selection and namespace slices are owned.
