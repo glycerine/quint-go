@@ -140,6 +140,9 @@ boundary, with concrete gaps listed before frontend implementation starts.
 - [ ] P1.4 Implement lossless JSON encoding/decoding for IR and analysis tables;
   preserve numeric values without `float64` conversion and distinguish absent,
   empty, and null fields where the upstream contract does.
+  - [x] Strict per-variant expression/type/row/row-field JSON with unknown,
+    unrelated, and mis-cased field rejection and failed-receiver preservation.
+  - [ ] Complete analysis-table wire schemas and optional empty metadata arrays.
 - [ ] P1.5 Port visitors, transformers, finders, IR printers, ID refreshing,
   namespacing, and source-reference preservation.
 - [x] P1.6 Port structured errors, error trees, codes, source excerpts, and
@@ -2860,3 +2863,12 @@ word "retained" in the commit message.
   lambdas 39789ns/5343B/97 to 31720ns/4699B/81. Full default tests and focused
   race checks pass. Latest combined package execution is 1.031s (core0.639s),
   close to the one-second target with all new command/editor coverage included.
+
+- 2026-11-02: Tightened Type/Row/RowField JSON schemas to reject unknown,
+  unrelated and mis-cased fields recursively, including null/false/empty extras.
+  Preserved optional/null IDs, nil/empty args and fields, prior RowField partial
+  decode behavior, semantic errors, and failed receivers. Exhaustive malformed
+  variant/nesting tests pass; 9587 upstream type schemes, 6255 expression roots,
+  and 139 declarations still round-trip in the optional corpus. Actual adapter,
+  full default tests, and unrestricted vet pass. Latest combined execution is
+  1.029s across core/backend/CLI/parser/LSP packages, near the one-second target.

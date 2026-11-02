@@ -2,6 +2,8 @@ package quint
 
 import (
 	"encoding/json"
+	"encoding/json/jsontext"
+	jsonv2 "encoding/json/v2"
 	"fmt"
 )
 
@@ -149,13 +151,94 @@ func (r Row) MarshalJSON() ([]byte, error) {
 		Other  *Row       `json:"other"`
 	}{r.Kind, fields, r.Other})
 }
+
+// Raw fields let the tag select its schema before decoding children. In
+// particular, a known field belonging to another variant must be rejected even
+// when it contains null, false, or an empty array.
+type typeJSON struct {
+	ID     json.RawMessage `json:"id"`
+	Kind   string          `json:"kind"`
+	Name   json.RawMessage `json:"name"`
+	Elem   json.RawMessage `json:"elem"`
+	Arg    json.RawMessage `json:"arg"`
+	Res    json.RawMessage `json:"res"`
+	Args   json.RawMessage `json:"args"`
+	Fields json.RawMessage `json:"fields"`
+	Ctor   json.RawMessage `json:"ctor"`
+	Extra  jsontext.Value  `json:",embed"`
+}
+
+type rowJSON struct {
+	Kind   string          `json:"kind"`
+	Name   json.RawMessage `json:"name"`
+	Fields json.RawMessage `json:"fields"`
+	Other  json.RawMessage `json:"other"`
+	Extra  jsontext.Value  `json:",embed"`
+}
+
+type rowFieldJSON struct {
+	Name  json.RawMessage `json:"fieldName"`
+	Type  json.RawMessage `json:"fieldType"`
+	Extra jsontext.Value  `json:",embed"`
+}
+
+var typeJSONOptions = jsonv2.JoinOptions(json.DefaultOptionsV1(), jsonv2.MatchCaseInsensitiveNames(false))
+
+// Absence and null retain their existing typed-decoding behavior. Required
+// semantic children/names are checked by Validate after the selected fields
+// have been consumed; optional IDs and nil arrays remain accepted.
+func readTypeJSONField(raw *json.RawMessage, target any) error {
+	if len(*raw) > 0 {
+		if err := json.Unmarshal(*raw, target); err != nil {
+			return err
+		}
+		*raw = nil
+	}
+	return nil
+}
+
 func (t *Type) UnmarshalJSON(b []byte) error {
-	type plain Type
-	var p plain
-	if err := json.Unmarshal(b, &p); err != nil {
+	var wire typeJSON
+	if err := jsonv2.Unmarshal(b, &wire, typeJSONOptions); err != nil {
 		return err
 	}
-	v := Type(p)
+	v := Type{Kind: wire.Kind}
+	if err := readTypeJSONField(&wire.ID, &v.ID); err != nil {
+		return err
+	}
+	var err error
+	switch v.Kind {
+	case "bool", "int", "str":
+	case "const", "var":
+		err = readTypeJSONField(&wire.Name, &v.Name)
+	case "set", "list":
+		err = readTypeJSONField(&wire.Elem, &v.Elem)
+	case "fun":
+		err = readTypeJSONField(&wire.Arg, &v.Arg)
+		if err == nil {
+			err = readTypeJSONField(&wire.Res, &v.Res)
+		}
+	case "oper":
+		err = readTypeJSONField(&wire.Args, &v.Args)
+		if err == nil {
+			err = readTypeJSONField(&wire.Res, &v.Res)
+		}
+	case "app":
+		err = readTypeJSONField(&wire.Args, &v.Args)
+		if err == nil {
+			err = readTypeJSONField(&wire.Ctor, &v.Ctor)
+		}
+	case "tup", "rec", "sum":
+		err = readTypeJSONField(&wire.Fields, &v.Fields)
+	default:
+		return fmt.Errorf("unknown type kind %q", v.Kind)
+	}
+	if err != nil {
+		return err
+	}
+	if len(wire.Name)+len(wire.Elem)+len(wire.Arg)+len(wire.Res)+len(wire.Args)+len(wire.Fields)+len(wire.Ctor)+len(wire.Extra) != 0 {
+		return fmt.Errorf("unexpected fields in %s type", v.Kind)
+	}
 	if err := v.Validate(); err != nil {
 		return err
 	}
@@ -163,16 +246,56 @@ func (t *Type) UnmarshalJSON(b []byte) error {
 	return nil
 }
 func (r *Row) UnmarshalJSON(b []byte) error {
-	type plain Row
-	var p plain
-	if err := json.Unmarshal(b, &p); err != nil {
+	var wire rowJSON
+	if err := jsonv2.Unmarshal(b, &wire, typeJSONOptions); err != nil {
 		return err
 	}
-	v := Row(p)
+	v := Row{Kind: wire.Kind}
+	var err error
+	switch v.Kind {
+	case "empty":
+	case "var":
+		err = readTypeJSONField(&wire.Name, &v.Name)
+	case "row":
+		err = readTypeJSONField(&wire.Fields, &v.Fields)
+		if err == nil {
+			err = readTypeJSONField(&wire.Other, &v.Other)
+		}
+	default:
+		return fmt.Errorf("unknown row kind %q", v.Kind)
+	}
+	if err != nil {
+		return err
+	}
+	if len(wire.Name)+len(wire.Fields)+len(wire.Other)+len(wire.Extra) != 0 {
+		return fmt.Errorf("unexpected fields in %s row", v.Kind)
+	}
 	if err := v.Validate(); err != nil {
 		return err
 	}
 	*r = v
+	return nil
+}
+
+func (f *RowField) UnmarshalJSON(b []byte) error {
+	var wire rowFieldJSON
+	if err := jsonv2.Unmarshal(b, &wire, typeJSONOptions); err != nil {
+		return err
+	}
+	if len(wire.Extra) != 0 {
+		return fmt.Errorf("unexpected fields in row field")
+	}
+	// RowField previously used the standard struct decoder, so absent fields
+	// (and null string fields) retain their receiver values on a successful
+	// partial decode. Stage changes locally to preserve it on any failure.
+	v := *f
+	if err := readTypeJSONField(&wire.Name, &v.Name); err != nil {
+		return err
+	}
+	if err := readTypeJSONField(&wire.Type, &v.Type); err != nil {
+		return err
+	}
+	*f = v
 	return nil
 }
 func UnitType() Type {

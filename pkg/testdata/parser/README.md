@@ -672,3 +672,10 @@ unknown/mis-cased/wrong-variant fields, nested failure and receiver preservation
 legacy duplicate-last keys and escaped names, exact integers, and invalid UTF-8
 replacement. Explicit benchmarks compare the strict wire-struct implementation
 with the former map-based decoder; the compatibility suite remains unchanged.
+
+Strict Type/Row/RowField JSON tests cover every tagged variant and unknown,
+unrelated, mis-cased, and nested fields, malformed roots, receiver preservation,
+large/zero/null IDs, nil/empty arrays, escaped keys, and prior partial RowField
+behavior. The existing optional corpus additionally round-trips 9,587 upstream
+type schemes, 6,255 expression roots and 139 declarations; no valid fixture
+needed an extraneous field exception.
