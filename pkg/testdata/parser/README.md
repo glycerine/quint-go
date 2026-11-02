@@ -313,3 +313,11 @@ value error. Additional cases cover first-class operator arguments, returned
 closures, anonymous functions, captured locals, and conditional function values.
 Concrete collections containing closures and concurrent closure calls remain
 outside the implemented scope.
+
+`runtime_list_higher.json` is regenerated with
+`node pkg/grammar/runtime_list_higher_fixtures.cjs`. Twenty-one full TypeScript
+evaluator cases cover list selection, left/right folds, noncommutative order,
+captured/local operator callbacks, empty folds, callback errors, collection
+accumulators, and nested map order. Unit tests also check cancellation between
+callbacks, first-error stopping, immutable inputs, malformed calls, and identity
+preservation of an empty fold's initial closure value.

@@ -367,6 +367,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     indices, including rounding, exponent cutoffs, and signed Infinity.
   - [x] Preserve nested map source order through strict sequence/record access
     and updates, including duplicate-record-field replacement.
+  - [x] Higher-order list select/foldl/foldr with lexical callbacks, traversal
+    and argument ordering, empty folds, cancellation, and error propagation.
   - [ ] Remaining collections/higher-order/symbolic operations.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
   updates, action composition, enabled/disabled actions, rollback, and commit.
@@ -2301,3 +2303,16 @@ word "retained" in the commit message.
   and are documented for sequential use; concurrent execution, closures inside
   concrete collections, module definitions, and collection higher-order builtins
   remain unfinished.
+
+- 2026-11-02: Added EvalListHigherBuiltin and pure-evaluator dispatch for
+  select/foldl/foldr using first-class closures. Selection preserves list order
+  and duplicates; left folds pass accumulator/element in forward order, while
+  right folds pass element/accumulator from right to left. Empty folds retain
+  the initial runtime value without invoking callbacks. Twenty-one full
+  TypeScript evaluator fixtures match, covering noncommutative folds, lexical
+  callbacks, local operators, collection accumulators, callback failures, and
+  retained nested map ordering. Unit tests cover cancellation between callbacks,
+  first-error stopping, immutable input ownership, malformed calls, predicate
+  type errors, and empty-fold closure identity. Full default tests pass
+  (combined package execution 0.977s). Set/map higher-order operators, reference
+  traversal ordering, symbolic collections, and module integration remain open.
