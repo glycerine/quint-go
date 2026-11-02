@@ -398,8 +398,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     overridden instances, nested instances, and preserved caller modules/IDs.
   - [x] expect action/condition evaluation with upstream shifts, next-state
     recovery, metadata restoration, false diagnostics, and error behavior.
+  - [x] Runtime state trace snapshots, module commit/shift, then/reps extension,
+    expect drop semantics, and q::lastTrace values.
   - [ ] Audit primed-expression restrictions, simulation-level transaction
-    handling, and trace integration.
+    handling, trace rendering, and execution recorder callbacks.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
   empty choices, and bounded sampling of infinite domains.
 - [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
@@ -2526,3 +2528,15 @@ word "retained" in the commit message.
   add action metadata recovery, pending-state preservation, and context/arity
   validation. Full default tests pass (combined package execution 1.045s, near
   the one-second target). Trace extension/drop integration remains open.
+
+- 2026-11-02: Added RuntimeTrace with copied state slices, reset/extend/drop,
+  and context-style shifts that record metadata before clearing it. Module
+  evaluators retain a trace across named calls and expose Shift for commits.
+  then/reps append intermediate states; expect drops the final trace entry only
+  after a condition returns a value, matching upstream nested/error behavior.
+  q::lastTrace returns the current execution's concrete state list. Seventy-four
+  upstream transitions/readbacks compare outputs/errors, current registers, and
+  every trace entry. Tests add slice ownership, empty drops, reset, and module
+  metadata snapshots. Full default tests pass (combined package execution
+  1.039s, near the one-second target). Execution-recorder callbacks, trace diff
+  rendering, and simulation-level orchestration remain open.

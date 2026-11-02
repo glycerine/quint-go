@@ -36,13 +36,25 @@ func EvaluateStateExpressionWithRNG(ctx context.Context, expression Expr, storag
 	return evaluateExpression(ctx, expression, nil, storage, rng)
 }
 
-func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue], storage *VariableStorage, rng *RNG) (RuntimeValue, error) {
+func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue], storage *VariableStorage, rng *RNG, traces ...*RuntimeTrace) (RuntimeValue, error) {
 	if bindings != nil {
 		owned := insdict.NewDict[string, RuntimeValue]()
 		for name, value := range bindings.All() {
 			owned.Set(name, value)
 		}
 		bindings = owned
+	}
+	var trace *RuntimeTrace
+	if len(traces) > 0 {
+		trace = traces[0]
+	}
+	shift := func() error {
+		if trace != nil {
+			return trace.Shift(storage)
+		}
+		storage.Shift()
+		storage.ClearMetadata()
+		return nil
 	}
 	var eval func(Expr) (RuntimeValue, error)
 	type localValue func([]RuntimeValue) (RuntimeValue, error)
@@ -88,6 +100,15 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 						return value, err
 					}
 				}
+			}
+			if e.Name == "q::lastTrace" {
+				args := []Expr{}
+				if trace != nil {
+					for _, state := range trace.States() {
+						args = append(args, copyRuntimeExpression(state.source))
+					}
+				}
+				return NewRuntimeValue(Expr{Kind: "app", Opcode: "List", Args: args})
 			}
 			return fail(e, "Unbound runtime name: "+e.Name)
 		case "lambda":
@@ -222,8 +243,9 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 				}
 				return RuntimeValue{}, Diagnostic{Code: "QNT513", Message: "Cannot continue in `then` because the highlighted expression evaluated to false", Reference: &id}
 			}
-			storage.Shift()
-			storage.ClearMetadata()
+			if err := shift(); err != nil {
+				return RuntimeValue{}, err
+			}
 			return eval(e.Args[1])
 		case "reps":
 			if storage == nil {
@@ -267,8 +289,9 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 					return RuntimeValue{}, Diagnostic{Code: "QNT513", Message: fmt.Sprintf("Reps loop could not continue after iteration #%s evaluated to false", runtimeNumberString(i+1)), Reference: &id}
 				}
 				if i < limit-1 {
-					storage.Shift()
-					storage.ClearMetadata()
+					if err := shift(); err != nil {
+						return RuntimeValue{}, err
+					}
 				}
 			}
 			return result, nil
@@ -338,13 +361,17 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 				return RuntimeValue{}, Diagnostic{Code: "QNT508", Message: "Cannot continue to \"expect\"", Reference: &e.ID}
 			}
 			snapshot := storage.Snapshot()
-			storage.Shift()
-			storage.ClearMetadata()
+			if err := shift(); err != nil {
+				return RuntimeValue{}, err
+			}
 			condition, err := boolean(e.Args[1])
 			if err != nil {
 				return RuntimeValue{}, err
 			}
 			storage.Recover(snapshot)
+			if trace != nil {
+				trace.DropLast()
+			}
 			if !condition {
 				return RuntimeValue{}, Diagnostic{Code: "QNT508", Message: "Expect condition does not hold true", Reference: &e.ID}
 			}

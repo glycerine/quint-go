@@ -6,11 +6,12 @@ import (
 )
 
 // ModuleEvaluator retains registers and RNG for a standalone/flattened module.
-// Callers explicitly shift or recover Storage between action evaluations.
+// Callers use Shift to commit and record states, or recover Storage between actions.
 // Each instance is owned by one execution and must be used sequentially.
 type ModuleEvaluator struct {
 	Storage     *VariableStorage
 	RNG         *RNG
+	Trace       RuntimeTrace
 	module      Module
 	definitions *insdict.Dict[string, Declaration]
 }
@@ -73,7 +74,7 @@ func (e *ModuleEvaluator) Evaluate(ctx context.Context, name string, args []Runt
 		nested := body
 		body = Expr{ID: d.ID, Kind: "let", Opdef: &definition, Body: &nested}
 	}
-	value, err := evaluateExpression(ctx, body, nil, e.Storage, e.RNG)
+	value, err := evaluateExpression(ctx, body, nil, e.Storage, e.RNG, &e.Trace)
 	if err != nil {
 		return RuntimeValue{}, err
 	}
@@ -82,3 +83,6 @@ func (e *ModuleEvaluator) Evaluate(ctx context.Context, name string, args []Runt
 	}
 	return value, nil
 }
+
+// Shift commits a pending state and appends it to this execution's trace.
+func (e *ModuleEvaluator) Shift() error { return e.Trace.Shift(e.Storage) }

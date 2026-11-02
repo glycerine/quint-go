@@ -18,6 +18,7 @@ func testStateTransitions(t *testing.T, filename string) {
 	t.Helper()
 	t.Parallel()
 	var fixtures []struct {
+		Trace     *[]Expr
 		Operation string
 		RNG       *string
 		Input     *Expr
@@ -32,6 +33,7 @@ func testStateTransitions(t *testing.T, filename string) {
 	if err = json.Unmarshal(data, &fixtures); err != nil {
 		t.Fatal(err)
 	}
+	trace := &RuntimeTrace{}
 	rng := NewRNG(Integer{})
 	storage := NewVariableStorage()
 	storage.Register("x", "x")
@@ -40,7 +42,7 @@ func testStateTransitions(t *testing.T, filename string) {
 		if f.Operation == "shift" {
 			storage.Shift()
 		} else {
-			got, err := EvaluateStateExpressionWithRNG(context.Background(), *f.Input, storage, rng)
+			got, err := evaluateExpression(context.Background(), *f.Input, nil, storage, rng, trace)
 			if f.Error != nil {
 				var d Diagnostic
 				if !errors.As(err, &d) || d.Code != f.Error.Code || d.Message != f.Error.Message || d.Reference == nil {
@@ -53,6 +55,18 @@ func testStateTransitions(t *testing.T, filename string) {
 				want, err := NewRuntimeValue(*f.Output)
 				if err != nil || !got.Equal(want) {
 					t.Fatal(index, got.String(), want.String(), err)
+				}
+			}
+		}
+		if f.Trace != nil {
+			got := trace.States()
+			if len(got) != len(*f.Trace) {
+				t.Fatal(index, "trace length", len(got), len(*f.Trace))
+			}
+			for i, expression := range *f.Trace {
+				want, err := NewRuntimeValue(expression)
+				if err != nil || !got[i].Equal(want) {
+					t.Fatal(index, "trace state", i, got[i].String(), want.String(), err)
 				}
 			}
 		}
