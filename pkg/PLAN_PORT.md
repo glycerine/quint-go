@@ -927,3 +927,11 @@ word "retained" in the commit message.
   Unicode record fields. Default tests pass within the sub-second target. P2.5
   remains open for type IDs, other synthesized-span details, and inclusive
   upstream-location compatibility/differential verification.
+
+- 2026-11-02: Added ParseTypeWithSource with IDs/spans for nested type nodes and
+  application constructors, preserving the ID-free ParseType signature API.
+  Tests cover containers, functions/operators, records/rows, tuples/unit,
+  applications, parentheses, exact excerpts, complete node/span coverage, and
+  invalid input. Default tests pass within the sub-second target. P2.5 remains
+  open for integrating type IDs into module/operator annotations and synthesized
+  sum annotations, plus upstream inclusive-location compatibility.

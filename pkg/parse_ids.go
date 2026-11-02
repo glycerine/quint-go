@@ -79,3 +79,21 @@ func ParseModulesWithSource(name, text string) ([]Module, SourceMap, error) {
 	}
 	return modules, ids.sources, nil
 }
+
+// ParseTypeWithSource assigns IDs and half-open spans to every type node. Rows
+// are structural containers without IDs; their field types carry source spans.
+func ParseTypeWithSource(name, text string) (Type, SourceMap, error) {
+	file, err := NewSourceFile(name, text)
+	if err != nil {
+		return Type{}, nil, err
+	}
+	ids := &locatedParserIDs{generator: NewIDGenerator(), file: file, sources: SourceMap{}}
+	typ, err := parseTypeWithIDs(text, ids)
+	if err != nil {
+		return Type{}, nil, err
+	}
+	if ids.err != nil {
+		return Type{}, nil, ids.err
+	}
+	return typ, ids.sources, nil
+}

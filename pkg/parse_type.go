@@ -10,6 +10,9 @@ import (
 // ParseType parses one complete Quint type. IDs are deliberately absent: the
 // module parser will assign source identities when constructing annotated IR.
 func ParseType(text string) (Type, error) {
+	return parseTypeWithIDs(text, nil)
+}
+func parseTypeWithIDs(text string, ids parserIDAllocator) (Type, error) {
 	listener := newSyntaxErrors(text)
 	lexer := p.NewQuintLexer(antlr.NewInputStream(text))
 	lexer.RemoveErrorListeners()
@@ -25,17 +28,29 @@ func ParseType(text string) (Type, error) {
 	if len(listener.issues) > 0 {
 		return Type{}, listener.err("type")
 	}
-	return typeFromContext(tree)
+	return typeFromContextWithIDs(tree, ids)
 }
 func typeFromContext(ctx p.ITypeContext) (Type, error) {
+	return typeFromContextWithIDs(ctx, nil)
+}
+func typeFromContextWithIDs(ctx p.ITypeContext, ids parserIDAllocator) (result Type, err error) {
+	if ids != nil {
+		defer func() {
+			if err == nil && result.ID == nil {
+				id := parserIDAt(ids, ctx)
+				result.ID = &id
+			}
+		}()
+	}
+
 	one := func(kind string, child p.ITypeContext) (Type, error) {
-		v, err := typeFromContext(child)
+		v, err := typeFromContextWithIDs(child, ids)
 		return Type{Kind: kind, Elem: &v}, err
 	}
 	many := func(children []p.ITypeContext) ([]Type, error) {
 		out := make([]Type, len(children))
 		for i, c := range children {
-			v, err := typeFromContext(c)
+			v, err := typeFromContextWithIDs(c, ids)
 			if err != nil {
 				return nil, err
 			}
@@ -55,7 +70,7 @@ func typeFromContext(ctx p.ITypeContext) (Type, error) {
 	case *p.TypeConstContext:
 		return Type{Kind: "const", Name: c.GetText()}, nil
 	case *p.TypeParenContext:
-		return typeFromContext(c.Type_())
+		return typeFromContextWithIDs(c.Type_(), ids)
 	case *p.TypeSetContext:
 		return one("set", c.Type_())
 	case *p.TypeListContext:
@@ -111,7 +126,12 @@ func typeFromContext(ctx p.ITypeContext) (Type, error) {
 			replacement := key + " -> " + value
 			return Type{}, Diagnostic{Code: QNT015, Message: "Use '" + replacement + "' instead of '" + original + "' for map types", Data: &DiagnosticData{Fix: &DiagnosticFix{Kind: "replace", Original: original, Replacement: replacement}}}
 		}
-		return Type{Kind: "app", Ctor: &Type{Kind: "const", Name: app.QualId().GetText()}, Args: args}, nil
+		ctor := Type{Kind: "const", Name: app.QualId().GetText()}
+		if ids != nil {
+			id := parserIDAt(ids, ctx)
+			ctor.ID = &id
+		}
+		return Type{Kind: "app", Ctor: &ctor, Args: args}, nil
 	}
 	return Type{}, fmt.Errorf("unsupported type parse node %T", ctx)
 }
