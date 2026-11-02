@@ -30,7 +30,7 @@ func ResolveLinkedModules(modules []Module) (LinkedNameResolution, error) {
 				if source != nil && d.ProtoName != m.Name && d.QualifiedName != nil {
 					alias := NewNameScope(*d.QualifiedName)
 					for name, entries := range source.Definitions.All() {
-						alias.Definitions.Set(name, append([]LookupDefinition(nil), entries...))
+						alias.Definitions.Set(name, cloneLookupEntries(entries))
 					}
 					result.Modules.Set(*d.QualifiedName, alias)
 				}

@@ -206,6 +206,9 @@ errors without panics or losing subsequent declarations after recoverable errors
     upstream Immutable collection iteration.
 - [ ] P3.5 Preserve definition identity and lookup-table consistency across
   module boundaries and incremental declaration analysis.
+  - [x] Track collected binding identity and expose unused-definition queries.
+  - [x] Compare unused definitions against upstream module-resolution fixtures.
+  - [ ] Support incremental declaration analysis and module switching.
 - [ ] P3.6 Run name/static fixtures, including nested instances, collisions,
   export visibility, import cycles, and deterministic ordering.
 
@@ -1155,3 +1158,12 @@ word "retained" in the commit message.
   (combined execution 0.501s). This frontend still fails early during source or
   syntax errors; upstream recovery, unused definitions, inference, and subsequent
   compilation passes remain incomplete.
+
+- 2026-11-02: Added collected-binding identity independent of IR IDs and
+  UnusedDefinitions queries on linked resolution and frontend results. Imported
+  and alias/instance copies retain distinct identities; self-table entries do not
+  count as usage. Unshadowed reference replacement also creates a new identity,
+  matching upstream object replacement. Tests compare ordered unused definitions
+  in all 22 upstream resolution fixtures and verify prototype/import independence,
+  absent modules, and frontend queries. Default tests pass under one second.
+  Incremental resolution and module switching remain pending.

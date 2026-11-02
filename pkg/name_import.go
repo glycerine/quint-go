@@ -65,6 +65,7 @@ func (s *NameScope) copyModuleDefinitions(source *NameScope, decl Declaration, h
 		}
 		found = true
 		def := *candidate
+		def.identity = new(byte)
 		if hide {
 			def.Hidden = true
 		}

@@ -70,8 +70,7 @@ shadowing, import provenance, and ordered diagnostics with
 reference paths. Cases cover forward references, shadowing, types, missing names,
 duplicate parameters/definitions, local recursion, instance overrides, alias
 exports, hidden constants/values, instance errors, nested and repeated instances,
-collisions, alias replacement, and override lambdas. Unused-definition identity
-is outside these differential comparisons.
+collisions, alias replacement, and override lambdas. Unused-definition identity is covered separately in `unused.json`.
 
 
 `unshadow.json` contains 11 successful resolution cases transformed by the
@@ -90,3 +89,8 @@ upstream graph uses Immutable sets. Go stores discoveries in insertion order.
 call-graph fixtures. Tests compare exact declaration order and residual cycle
 sets. Cycle IDs are sorted in the fixtures: upstream Immutable iteration order
 for diagnostics is not covered by this comparison.
+
+
+`unused.json` records ordered unused-definition queries for all 22 resolution
+cases. It retains upstream IR IDs to distinguish object-identity usage from
+merely referencing another imported copy of the same definition.

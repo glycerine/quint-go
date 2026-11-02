@@ -37,3 +37,12 @@ func ParseProject(resolver SourceResolver, main SourceLookupPath) (FrontendResul
 	result.Diagnostics = append(result.Diagnostics, cycles...)
 	return result, nil
 }
+
+// UnusedDefinitions queries collected binding identities against the current
+// lookup table, including any updates made by later transformation passes.
+func (r FrontendResult) UnusedDefinitions(module string) []LookupDefinition {
+	if r.Scopes == nil || r.Table == nil {
+		return []LookupDefinition{}
+	}
+	return (LinkedNameResolution{Modules: r.Scopes, Table: r.Table}).UnusedDefinitions(module)
+}

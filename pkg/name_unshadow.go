@@ -36,6 +36,7 @@ func UnshadowNames(module Module, table *insdict.Dict[ID, LookupDefinition]) Mod
 			def := table.Get(e.ID)
 			if name := names.Get(def.ID.String()); name != "" {
 				def.Name = name
+				def.identity = new(byte)
 				// The lookup payload mirrors the renamed name without changing
 				// the original binding or other references to that payload.
 				if def.Parameter != nil {

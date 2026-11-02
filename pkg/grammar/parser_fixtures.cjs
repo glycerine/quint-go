@@ -174,3 +174,10 @@ const sortFixtures=graphFixtures.map(f=>({name:f.name,input:f.input,results:f.in
  return {sorted:result.sorted.map(d=>String(d.id)),cycles:[...result.cycles].map(String).sort()}
 })}))
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/declaration_sort.json'),JSONbig.stringify(sortFixtures,null,2)+'\n')
+
+const unusedFixtures=resolutionCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ const result=resolveNames(parsed.modules)
+ return {name,input:parsed.modules,unused:parsed.modules.map(m=>[...result.unusedDefinitions(m.name)].map(d=>({id:String(d.id),name:d.name})))}
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/unused.json'),JSONbig.stringify(unusedFixtures,null,2)+'\n')

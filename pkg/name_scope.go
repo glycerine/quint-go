@@ -6,6 +6,7 @@ import "github.com/glycerine/insdict"
 // Declaration and Parameter are mutually exclusive payloads; the scope does not
 // mutate either payload. Import provenance is added by module resolution.
 type LookupDefinition struct {
+	identity     *byte // Identity of the upstream lookup object, distinct from its IR ID.
 	Hidden       bool
 	Namespaces   []string
 	ImportedFrom *Declaration
@@ -29,6 +30,7 @@ func NewNameScope(module string) *NameScope {
 	return &NameScope{Module: module, Definitions: insdict.NewDict[string, []LookupDefinition](), Errors: []Diagnostic{}}
 }
 func (s *NameScope) Add(def LookupDefinition) LookupDefinition {
+	def.identity = new(byte)
 	if def.Name == "_" {
 		return def
 	}

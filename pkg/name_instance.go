@@ -9,7 +9,7 @@ func (s *NameScope) InstanceDefinitions(source *NameScope, decl Declaration) *Na
 	}
 	instance := NewNameScope(source.Module)
 	for name, entries := range source.Definitions.All() {
-		instance.Definitions.Set(name, append([]LookupDefinition(nil), entries...))
+		instance.Definitions.Set(name, cloneLookupEntries(entries))
 	}
 	for _, override := range decl.Overrides {
 		name := override.Parameter.Name
