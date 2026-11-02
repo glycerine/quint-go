@@ -575,3 +575,9 @@ word "retained" in the commit message.
   and optional/full diagnostic-data serialization. Default tests pass (core
   0.006s). P1.6 remains open for source excerpt formatting and stricter data
   validation.
+
+- 2026-11-02: Ported diagnostic printing for every type variant, rows, qualifiers,
+  and constraints. Focused expected-string tests cover open/nested rows, unit
+  variants, hidden sum tails, constructors, function/operator parentheses, and
+  conjunction separators. Default tests pass (core 0.011s). P1.5/P4.5 remain
+  open for expression/declaration printing and canonical scheme rendering.
