@@ -1,0 +1,101 @@
+[
+  {
+    "name": "sequence",
+    "template": "traces/{test}-{seq}-{seq}.itf.json",
+    "test": "Spec::test",
+    "index": 3,
+    "autoAppend": true,
+    "output": "traces/{test}-3-3.itf.json",
+    "named": "traces/Spec::test-3-3.itf.json"
+  },
+  {
+    "name": "name",
+    "template": "{test}/{test}.json",
+    "test": "Spec::test",
+    "index": 2,
+    "autoAppend": false,
+    "output": "{test}/{test}.json",
+    "named": "Spec::test/Spec::test.json"
+  },
+  {
+    "name": "append",
+    "template": "trace.itf.json",
+    "test": "test",
+    "index": 7,
+    "autoAppend": true,
+    "output": "trace7.itf.json",
+    "named": "trace7.itf.json"
+  },
+  {
+    "name": "dot-directory",
+    "template": "tmp.v1/trace.json",
+    "test": "test",
+    "index": 7,
+    "autoAppend": true,
+    "output": "tmp7.v1/trace.json",
+    "named": "tmp7.v1/trace.json"
+  },
+  {
+    "name": "hidden",
+    "template": ".trace",
+    "test": "test",
+    "index": 7,
+    "autoAppend": true,
+    "output": "7.trace",
+    "named": "7.trace"
+  },
+  {
+    "name": "no-extension",
+    "template": "trace",
+    "test": "test",
+    "index": 7,
+    "autoAppend": true,
+    "output": "trace7",
+    "named": "trace7"
+  },
+  {
+    "name": "empty",
+    "template": "",
+    "test": "test",
+    "index": 0,
+    "autoAppend": true,
+    "output": "0",
+    "named": "0"
+  },
+  {
+    "name": "unchanged",
+    "template": "trace.json",
+    "test": "test",
+    "index": 7,
+    "autoAppend": false,
+    "output": "trace.json",
+    "named": "trace.json"
+  },
+  {
+    "name": "insert-sequence",
+    "template": "{test}.json",
+    "test": "test-{seq}",
+    "index": 4,
+    "autoAppend": true,
+    "output": "{test}4.json",
+    "named": "test-4.json"
+  },
+  {
+    "name": "dollar",
+    "template": "{test}-{test}.json",
+    "test": "$$-$&-$`-$'-$1",
+    "index": 2,
+    "autoAppend": false,
+    "output": "{test}-{test}.json",
+    "named": "$-{test}---{test}.json-$1-$-{test}-{test}--.json-$1.json"
+  },
+  {
+    "name": "unicode",
+    "template": "{test}-{seq}.json",
+    "test": "λ",
+    "index": -1,
+    "autoAppend": false,
+    "output": "{test}--1.json",
+    "named": "λ--1.json"
+  }
+]

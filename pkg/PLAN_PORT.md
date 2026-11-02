@@ -460,8 +460,9 @@ Build these items alongside the phases that supply their command behavior.
     metadata with eleven upstream encoding/error fixtures.
   - [x] State and pending-step diagnostic extraction with zero expression IDs,
     sparse diagnostic rows, and five exact upstream fixtures.
-  - [ ] Implement headers/loop output, runtime normalization, and trace
-    filename/output integration.
+  - [x] Header construction and filename substitution with upstream metadata
+    precedence; preserve existing loops, parameters, and custom trace fields.
+  - [ ] Implement runtime normalization and CLI trace file/output integration.
 - [ ] P10.5 Port pretty printing, source-error rendering, value diffs, execution
   frames, trace display, statistics, and witness/invariant reports.
 - [ ] P10.6 Port documentation extraction and `docs`; embed builtin definitions
@@ -2053,3 +2054,17 @@ word "retained" in the commit message.
   signature/ITF race tests pass (1.910s with instrumentation), and full default
   tests pass (combined execution 0.983s). Header/loop output, normalization,
   filename substitution, and CLI trace display remain open under P10.4/P9.6.
+
+- 2026-11-02: Added ExpandOutputTemplate/ExpandNamedOutputTemplate for trace
+  filename placeholders, including repeated placeholders, first-dot automatic
+  indexing, test names containing sequence placeholders, and JavaScript's
+  replacement-string dollar substitutions. Added AddITFHeader/ITFHeader with
+  caller-supplied display date and millisecond timestamp, matching upstream
+  addItfHeader without introducing a nondeterministic library clock. Existing
+  trace metadata replaces the generated header; loops, parameters, custom
+  fields, raw integers, and property order remain intact. Eleven filename and
+  four deterministic header fixtures match upstream. Tests also cover malformed
+  envelopes, header idempotence/precedence, large integer preservation, decoded
+  loop/parameter retention, and input isolation. Full default tests pass
+  (combined execution 0.922s). Runtime normalization, default CLI clock/date
+  presentation, trace file writing, and complete CLI integration remain open.

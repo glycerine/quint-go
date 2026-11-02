@@ -1,0 +1,119 @@
+[
+  {
+    "name": "new",
+    "input": {
+      "vars": [
+        "x"
+      ],
+      "states": [
+        {
+          "x": {
+            "#bigint": "9007199254740993123456789"
+          }
+        }
+      ]
+    },
+    "header": {
+      "source": "model.qnt",
+      "status": "violation",
+      "createdAt": "Mon Nov 02 2026 00:00:00 GMT+0000 (Coordinated Universal Time)",
+      "timestamp": 1793577600000
+    },
+    "output": {
+      "#meta": {
+        "format": "ITF",
+        "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+        "source": "model.qnt",
+        "status": "violation",
+        "description": "Created by Quint on Mon Nov 02 2026 00:00:00 GMT+0000 (Coordinated Universal Time)",
+        "timestamp": 1793577600000
+      },
+      "vars": [
+        "x"
+      ],
+      "states": [
+        {
+          "x": {
+            "#bigint": "9007199254740993123456789"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "override",
+    "input": {
+      "#meta": {
+        "custom": "keep"
+      },
+      "vars": [],
+      "states": [],
+      "loop": 0,
+      "params": [
+        "N"
+      ],
+      "extra": {
+        "value": 42
+      }
+    },
+    "header": {
+      "source": "model.qnt",
+      "status": "violation",
+      "createdAt": "Mon Nov 02 2026 00:00:00 GMT+0000 (Coordinated Universal Time)",
+      "timestamp": 1793577600000
+    },
+    "output": {
+      "#meta": {
+        "custom": "keep"
+      },
+      "vars": [],
+      "states": [],
+      "loop": 0,
+      "params": [
+        "N"
+      ],
+      "extra": {
+        "value": 42
+      }
+    }
+  },
+  {
+    "name": "null-meta",
+    "input": {
+      "#meta": null,
+      "vars": [],
+      "states": []
+    },
+    "header": {
+      "source": "model.qnt",
+      "status": "violation",
+      "createdAt": "Mon Nov 02 2026 00:00:00 GMT+0000 (Coordinated Universal Time)",
+      "timestamp": 1793577600000
+    },
+    "output": {
+      "#meta": null,
+      "vars": [],
+      "states": []
+    }
+  },
+  {
+    "name": "empty",
+    "input": {},
+    "header": {
+      "source": "model.qnt",
+      "status": "violation",
+      "createdAt": "Mon Nov 02 2026 00:00:00 GMT+0000 (Coordinated Universal Time)",
+      "timestamp": 1793577600000
+    },
+    "output": {
+      "#meta": {
+        "format": "ITF",
+        "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+        "source": "model.qnt",
+        "status": "violation",
+        "description": "Created by Quint on Mon Nov 02 2026 00:00:00 GMT+0000 (Coordinated Universal Time)",
+        "timestamp": 1793577600000
+      }
+    }
+  }
+]

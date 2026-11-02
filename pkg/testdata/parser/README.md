@@ -218,3 +218,9 @@ checks separately in unit tests.
 Five upstream diagnostic-extraction fixtures cover sparse state rows and pending
 failed-step messages. Complete message expressions, including zero IDs on all
 nested nodes, are compared structurally.
+
+`trace_output.json` and `itf_header.json` are regenerated with
+`node pkg/grammar/trace_output_fixtures.cjs`. Eleven filename cases compare both
+upstream expansion functions. Four header cases run upstream addItfHeader with
+a fixed UTC clock and capture its display date/millisecond timestamp as inputs
+to the deterministic Go header builder.
