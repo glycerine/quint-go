@@ -162,3 +162,6 @@ compare resumed diagnostics, retained effects, and mode suggestions exactly.
 
 `convert_init.json` records six upstream init conversions, with exact transformed
 modules, inferred mode suggestions, and shared-action diagnostics.
+
+The init-conversion corpus now has eight cases, including nested q::init and
+local action dependencies.

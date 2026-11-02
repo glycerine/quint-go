@@ -1697,3 +1697,10 @@ word "retained" in the commit message.
   QNT409 diagnostics match upstream without changes. Default tests pass
   (combined execution 0.729s). Nested-definition discovery and compilation-path
   integration remain open under P6.5.
+
+- 2026-11-02: Fixed init dependency discovery for nested q::init definitions by
+  scanning local-definition entry contexts throughout module expressions,
+  assumptions, and overrides. Added upstream nested-init and local-dependency
+  fixtures; all eight exact conversion cases pass. Default tests pass under one
+  second. Compilation-path integration and broader recursive visitor parity
+  remain open under P6.5.

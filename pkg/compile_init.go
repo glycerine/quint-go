@@ -40,11 +40,39 @@ func ConvertInit(module Module, table *insdict.Dict[ID, LookupDefinition], modes
 			find(*e.Body)
 		}
 	}
-	for _, d := range module.Declarations {
-		if d.Kind == "def" && names[d.Name] {
-			find(*d.Expr)
+	var scan func(Expr, bool)
+	scan = func(e Expr, inside bool) {
+		if inside {
+			if e.Kind == "name" {
+				dependency(e.Name, e.ID)
+			}
+			if e.Kind == "app" {
+				dependency(e.Opcode, e.ID)
+			}
+		}
+		if e.Opdef != nil {
+			scan(*e.Opdef.Expr, inside || names[e.Opdef.Name])
+		}
+		for _, a := range e.Args {
+			scan(a, inside)
+		}
+		if e.Body != nil {
+			scan(*e.Body, inside)
 		}
 	}
+	for _, d := range module.Declarations {
+		inside := d.Kind == "def" && names[d.Name]
+		if d.Expr != nil {
+			scan(*d.Expr, inside)
+		}
+		if d.Assumption != nil {
+			scan(*d.Assumption, false)
+		}
+		for _, o := range d.Overrides {
+			scan(o.Expr, false)
+		}
+	}
+
 	errors := []Diagnostic{}
 	check := func(id ID, name string, inside bool) {
 		if inside || !names[name] {

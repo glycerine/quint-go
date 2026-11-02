@@ -453,6 +453,9 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/analyzer_incremental.json')
 
 const {convertInit}=require(path.join(root,'quint/src/ir/initToPredicate'))
 const initCases=[
+ ['nested-init',"module M { var x:int action start=x'=1 action outer=action q::init=start; true }"],
+ ['local-dependency',"module M { var x:int action q::init=action local=x'=1; local }"],
+
  ['direct',"module M { var x:int action q::init=x'=1 action step=x'=2 }"],
  ['dependency',"module M { var x:int action start=x'=1 action q::init=start }"],
  ['call',"module M { var x:int action start(n)=x'=n action q::init=start(1) }"],
