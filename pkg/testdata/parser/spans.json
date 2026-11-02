@@ -1,0 +1,196 @@
+[
+  {
+    "name": "simple",
+    "source": "module M { val x = 1 + 2 }",
+    "spans": {
+      "/0": {
+        "start": 0,
+        "end": 26
+      },
+      "/0/declarations/0": {
+        "start": 15,
+        "end": 16
+      },
+      "/0/declarations/0/expr": {
+        "start": 19,
+        "end": 24
+      },
+      "/0/declarations/0/expr/args/0": {
+        "start": 19,
+        "end": 20
+      },
+      "/0/declarations/0/expr/args/1": {
+        "start": 23,
+        "end": 24
+      }
+    }
+  },
+  {
+    "name": "parameters",
+    "source": "module M { def f(x: int): int = x + 1 }",
+    "spans": {
+      "/0": {
+        "start": 0,
+        "end": 39
+      },
+      "/0/declarations/0": {
+        "start": 15,
+        "end": 16
+      },
+      "/0/declarations/0/expr": {
+        "start": 11,
+        "end": 37
+      },
+      "/0/declarations/0/expr/params/0": {
+        "start": 17,
+        "end": 23
+      },
+      "/0/declarations/0/expr/params/0/typeAnnotation": {
+        "start": 20,
+        "end": 23
+      },
+      "/0/declarations/0/expr/expr": {
+        "start": 32,
+        "end": 37
+      },
+      "/0/declarations/0/expr/expr/args/0": {
+        "start": 32,
+        "end": 33
+      },
+      "/0/declarations/0/expr/expr/args/1": {
+        "start": 36,
+        "end": 37
+      },
+      "/0/declarations/0/typeAnnotation/args/0": {
+        "start": 20,
+        "end": 23
+      },
+      "/0/declarations/0/typeAnnotation/res": {
+        "start": 26,
+        "end": 29
+      }
+    }
+  },
+  {
+    "name": "records",
+    "source": "module M { val r = { a: 1, b: true } }",
+    "spans": {
+      "/0": {
+        "start": 0,
+        "end": 38
+      },
+      "/0/declarations/0": {
+        "start": 15,
+        "end": 16
+      },
+      "/0/declarations/0/expr": {
+        "start": 19,
+        "end": 36
+      },
+      "/0/declarations/0/expr/args/0": {
+        "start": 21,
+        "end": 25
+      },
+      "/0/declarations/0/expr/args/1": {
+        "start": 24,
+        "end": 25
+      },
+      "/0/declarations/0/expr/args/2": {
+        "start": 27,
+        "end": 34
+      },
+      "/0/declarations/0/expr/args/3": {
+        "start": 30,
+        "end": 34
+      }
+    }
+  },
+  {
+    "name": "match",
+    "source": "module M { val r = match x { A(v) => v | _ => 0 } }",
+    "spans": {
+      "/0": {
+        "start": 0,
+        "end": 51
+      },
+      "/0/declarations/0": {
+        "start": 15,
+        "end": 16
+      },
+      "/0/declarations/0/expr": {
+        "start": 19,
+        "end": 49
+      },
+      "/0/declarations/0/expr/args/0": {
+        "start": 25,
+        "end": 26
+      },
+      "/0/declarations/0/expr/args/1": {
+        "start": 29,
+        "end": 38
+      },
+      "/0/declarations/0/expr/args/2": {
+        "start": 29,
+        "end": 38
+      },
+      "/0/declarations/0/expr/args/2/expr": {
+        "start": 37,
+        "end": 38
+      },
+      "/0/declarations/0/expr/args/2/params/0": {
+        "start": 29,
+        "end": 38
+      },
+      "/0/declarations/0/expr/args/3": {
+        "start": 41,
+        "end": 47
+      },
+      "/0/declarations/0/expr/args/4": {
+        "start": 41,
+        "end": 47
+      },
+      "/0/declarations/0/expr/args/4/expr": {
+        "start": 46,
+        "end": 47
+      },
+      "/0/declarations/0/expr/args/4/params/0": {
+        "start": 41,
+        "end": 47
+      }
+    }
+  },
+  {
+    "name": "types",
+    "source": "module M { var x: List[int] type T[a] = Set[a] }",
+    "spans": {
+      "/0": {
+        "start": 0,
+        "end": 48
+      },
+      "/0/declarations/0": {
+        "start": 11,
+        "end": 27
+      },
+      "/0/declarations/0/typeAnnotation": {
+        "start": 18,
+        "end": 27
+      },
+      "/0/declarations/0/typeAnnotation/elem": {
+        "start": 23,
+        "end": 26
+      },
+      "/0/declarations/1": {
+        "start": 28,
+        "end": 46
+      },
+      "/0/declarations/1/type": {
+        "start": 40,
+        "end": 46
+      },
+      "/0/declarations/1/type/elem": {
+        "start": 44,
+        "end": 45
+      }
+    }
+  }
+]

@@ -27,13 +27,15 @@ func ParseOperatorDefinition(text string) (OperatorDef, error) {
 func operatorFromContext(ctx p.IOperDefContext, ids parserIDAllocator) (OperatorDef, error) {
 	defer parserScope(ids, ctx)()
 	var name string
+	var nameContext p.INormalCallNameContext
 	var qualifier Qualifier
 	var expr p.IExprContext
 	var annotation *Type
 	params := []Parameter{}
 	switch c := ctx.(type) {
 	case *p.DeprecatedOperDefContext:
-		name = c.NormalCallName().GetText()
+		nameContext = c.NormalCallName()
+		name = nameContext.GetText()
 		qualifier = Qualifier(c.Qualifier().GetText())
 		expr = c.Expr()
 		for _, param := range c.AllParameter() {
@@ -47,7 +49,8 @@ func operatorFromContext(ctx p.IOperDefContext, ids parserIDAllocator) (Operator
 			annotation = &t
 		}
 	case *p.AnnotatedOperDefContext:
-		name = c.NormalCallName().GetText()
+		nameContext = c.NormalCallName()
+		name = nameContext.GetText()
 		qualifier = Qualifier(c.Qualifier().GetText())
 		expr = c.Expr()
 		types := []Type{}
@@ -81,5 +84,5 @@ func operatorFromContext(ctx p.IOperDefContext, ids parserIDAllocator) (Operator
 		inner := body
 		body = Expr{ID: ids.Next(), Kind: "lambda", Params: params, Qualifier: qualifier, Body: &inner}
 	}
-	return OperatorDef{ID: ids.Next(), Kind: "def", Name: name, Qualifier: qualifier, Expr: &body, TypeAnnotation: annotation}, nil
+	return OperatorDef{ID: parserIDAt(ids, nameContext), Kind: "def", Name: name, Qualifier: qualifier, Expr: &body, TypeAnnotation: annotation}, nil
 }

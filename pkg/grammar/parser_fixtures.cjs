@@ -62,3 +62,24 @@ const importFixtures=importCases.map(([name,sources])=>{
  return {name,sources,reads,modules:result.modules.map(m=>m.name),errors:result.errors.map(({code,message})=>({code,message}))}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/imports.json'),JSONbig.stringify(importFixtures,null,2)+'\n')
+// Match nodes by their structural IR path, independent of ID allocation order.
+const spanCases = [
+ ['simple','module M { val x = 1 + 2 }'],
+ ['parameters','module M { def f(x: int): int = x + 1 }'],
+ ['records','module M { val r = { a: 1, b: true } }'],
+ ['match','module M { val r = match x { A(v) => v | _ => 0 } }'],
+ ['types','module M { var x: List[int] type T[a] = Set[a] }'],
+]
+const spanFixtures=spanCases.map(([name,source])=>{
+ const parsed=parsePhase1fromText(newIdGenerator(),source,name)
+ if(parsed.errors.length)throw Error(JSONbig.stringify(parsed.errors))
+ const spans={}
+ function visit(value,key){
+  if(!value||typeof value!=='object')return
+  if(value.id!==undefined){const loc=parsed.sourceMap.get(value.id);if(loc)spans[key]={start:loc.start.index,end:loc.end.index+1}}
+  for(const [field,child] of Object.entries(value))if(field!=='id')visit(child,key+'/'+field)
+ }
+ visit(parsed.modules,'')
+ return {name,source,spans}
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/spans.json'),JSONbig.stringify(spanFixtures,null,2)+'\n')

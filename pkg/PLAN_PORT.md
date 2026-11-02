@@ -970,3 +970,11 @@ word "retained" in the commit message.
   blank input, nil generators, and syntax/semantic failures. Default tests pass
   within the sub-second target. P2.6 still requires upstream location/diagnostic
   parity and expanded differential entry-point fixtures before completion.
+
+- 2026-11-02: Added five upstream source-span fixtures matched by structural IR
+  path, converting inclusive end indexes to half-open indexes. The comparison
+  exposed and corrected operator declaration spans: upstream uses the operator
+  name, not the entire definition. All compared spans now match for operators,
+  parameters, records, matches, and types. Updated the earlier exact-span test.
+  Default tests pass within the sub-second target. P2.5/P2.9 remain open for
+  multiline/Unicode coordinates, generated names, and full source-map parity.

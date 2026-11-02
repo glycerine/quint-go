@@ -87,7 +87,7 @@ func TestModuleExactSourceSpans(t *testing.T) {
 	for _, tc := range []struct {
 		id   ID
 		want string
-	}{{ms[0].ID, text}, {ds[0].ID, "val x = 1"}, {ds[0].Expr.ID, "1"}, {ds[1].ID, "type T = A | B"}, {ds[2].ID, "A"}, {ds[3].ID, "B"}, {ds[4].Overrides[0].Parameter.ID, "N"}} {
+	}{{ms[0].ID, text}, {ds[0].ID, "x"}, {ds[0].Expr.ID, "1"}, {ds[1].ID, "type T = A | B"}, {ds[2].ID, "A"}, {ds[3].ID, "B"}, {ds[4].Overrides[0].Parameter.ID, "N"}} {
 		if got := excerpt(tc.id); got != tc.want {
 			t.Fatalf("span %q want %q", got, tc.want)
 		}
