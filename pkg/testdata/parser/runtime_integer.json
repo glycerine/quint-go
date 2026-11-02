@@ -1,0 +1,1193 @@
+[
+  {
+    "op": "iadd",
+    "args": [
+      "-7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -10
+    }
+  },
+  {
+    "op": "iadd",
+    "args": [
+      "-7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -7
+    }
+  },
+  {
+    "op": "iadd",
+    "args": [
+      "-7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -4
+    }
+  },
+  {
+    "op": "iadd",
+    "args": [
+      "0",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -3
+    }
+  },
+  {
+    "op": "iadd",
+    "args": [
+      "0",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "iadd",
+    "args": [
+      "0",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 3
+    }
+  },
+  {
+    "op": "iadd",
+    "args": [
+      "7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 4
+    }
+  },
+  {
+    "op": "iadd",
+    "args": [
+      "7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 7
+    }
+  },
+  {
+    "op": "iadd",
+    "args": [
+      "7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 10
+    }
+  },
+  {
+    "op": "iadd",
+    "args": [
+      "340282366920938463463374607431768211457",
+      "18446744073709551615"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 340282366920938463481821351505477763072
+    }
+  },
+  {
+    "op": "isub",
+    "args": [
+      "-7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -4
+    }
+  },
+  {
+    "op": "isub",
+    "args": [
+      "-7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -7
+    }
+  },
+  {
+    "op": "isub",
+    "args": [
+      "-7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -10
+    }
+  },
+  {
+    "op": "isub",
+    "args": [
+      "0",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 3
+    }
+  },
+  {
+    "op": "isub",
+    "args": [
+      "0",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "isub",
+    "args": [
+      "0",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -3
+    }
+  },
+  {
+    "op": "isub",
+    "args": [
+      "7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 10
+    }
+  },
+  {
+    "op": "isub",
+    "args": [
+      "7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 7
+    }
+  },
+  {
+    "op": "isub",
+    "args": [
+      "7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 4
+    }
+  },
+  {
+    "op": "isub",
+    "args": [
+      "340282366920938463463374607431768211457",
+      "18446744073709551615"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 340282366920938463444927863358058659842
+    }
+  },
+  {
+    "op": "imul",
+    "args": [
+      "-7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 21
+    }
+  },
+  {
+    "op": "imul",
+    "args": [
+      "-7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "imul",
+    "args": [
+      "-7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -21
+    }
+  },
+  {
+    "op": "imul",
+    "args": [
+      "0",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "imul",
+    "args": [
+      "0",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "imul",
+    "args": [
+      "0",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "imul",
+    "args": [
+      "7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -21
+    }
+  },
+  {
+    "op": "imul",
+    "args": [
+      "7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "imul",
+    "args": [
+      "7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 21
+    }
+  },
+  {
+    "op": "imul",
+    "args": [
+      "340282366920938463463374607431768211457",
+      "18446744073709551615"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 6277101735386680763495507056286727952657427581105975853055
+    }
+  },
+  {
+    "op": "idiv",
+    "args": [
+      "-7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 2
+    }
+  },
+  {
+    "op": "idiv",
+    "args": [
+      "-7",
+      "0"
+    ],
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero"
+    }
+  },
+  {
+    "op": "idiv",
+    "args": [
+      "-7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -2
+    }
+  },
+  {
+    "op": "idiv",
+    "args": [
+      "0",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "idiv",
+    "args": [
+      "0",
+      "0"
+    ],
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero"
+    }
+  },
+  {
+    "op": "idiv",
+    "args": [
+      "0",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "idiv",
+    "args": [
+      "7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -2
+    }
+  },
+  {
+    "op": "idiv",
+    "args": [
+      "7",
+      "0"
+    ],
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero"
+    }
+  },
+  {
+    "op": "idiv",
+    "args": [
+      "7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 2
+    }
+  },
+  {
+    "op": "idiv",
+    "args": [
+      "340282366920938463463374607431768211457",
+      "18446744073709551615"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 18446744073709551617
+    }
+  },
+  {
+    "op": "imod",
+    "args": [
+      "-7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -1
+    }
+  },
+  {
+    "op": "imod",
+    "args": [
+      "-7",
+      "0"
+    ],
+    "thrown": "Division by zero"
+  },
+  {
+    "op": "imod",
+    "args": [
+      "-7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -1
+    }
+  },
+  {
+    "op": "imod",
+    "args": [
+      "0",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "imod",
+    "args": [
+      "0",
+      "0"
+    ],
+    "thrown": "Division by zero"
+  },
+  {
+    "op": "imod",
+    "args": [
+      "0",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "imod",
+    "args": [
+      "7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 1
+    }
+  },
+  {
+    "op": "imod",
+    "args": [
+      "7",
+      "0"
+    ],
+    "thrown": "Division by zero"
+  },
+  {
+    "op": "imod",
+    "args": [
+      "7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 1
+    }
+  },
+  {
+    "op": "imod",
+    "args": [
+      "340282366920938463463374607431768211457",
+      "18446744073709551615"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 2
+    }
+  },
+  {
+    "op": "ipow",
+    "args": [
+      "0",
+      "0"
+    ],
+    "error": {
+      "code": "QNT503",
+      "message": "0^0 is undefined"
+    }
+  },
+  {
+    "op": "ipow",
+    "args": [
+      "0",
+      "2"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "ipow",
+    "args": [
+      "2",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 1
+    }
+  },
+  {
+    "op": "ipow",
+    "args": [
+      "2",
+      "-1"
+    ],
+    "error": {
+      "code": "QNT503",
+      "message": "i^j is undefined for j < 0"
+    }
+  },
+  {
+    "op": "ipow",
+    "args": [
+      "-3",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -27
+    }
+  },
+  {
+    "op": "ipow",
+    "args": [
+      "-3",
+      "4"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 81
+    }
+  },
+  {
+    "op": "ipow",
+    "args": [
+      "2",
+      "256"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 115792089237316195423570985008687907853269984665640564039457584007913129639936
+    }
+  },
+  {
+    "op": "iuminus",
+    "args": [
+      "-1"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 1
+    }
+  },
+  {
+    "op": "iuminus",
+    "args": [
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 0
+    }
+  },
+  {
+    "op": "iuminus",
+    "args": [
+      "1"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -1
+    }
+  },
+  {
+    "op": "iuminus",
+    "args": [
+      "115792089237316195423570985008687907853269984665640564039457584007913129639936"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": -115792089237316195423570985008687907853269984665640564039457584007913129639936
+    }
+  },
+  {
+    "op": "ilt",
+    "args": [
+      "-7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "ilt",
+    "args": [
+      "-7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "ilt",
+    "args": [
+      "-7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "ilt",
+    "args": [
+      "0",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "ilt",
+    "args": [
+      "0",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "ilt",
+    "args": [
+      "0",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "ilt",
+    "args": [
+      "7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "ilt",
+    "args": [
+      "7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "ilt",
+    "args": [
+      "7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "ilt",
+    "args": [
+      "340282366920938463463374607431768211457",
+      "18446744073709551615"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "ilte",
+    "args": [
+      "-7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "ilte",
+    "args": [
+      "-7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "ilte",
+    "args": [
+      "-7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "ilte",
+    "args": [
+      "0",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "ilte",
+    "args": [
+      "0",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "ilte",
+    "args": [
+      "0",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "ilte",
+    "args": [
+      "7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "ilte",
+    "args": [
+      "7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "ilte",
+    "args": [
+      "7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "ilte",
+    "args": [
+      "340282366920938463463374607431768211457",
+      "18446744073709551615"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "igt",
+    "args": [
+      "-7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "igt",
+    "args": [
+      "-7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "igt",
+    "args": [
+      "-7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "igt",
+    "args": [
+      "0",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "igt",
+    "args": [
+      "0",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "igt",
+    "args": [
+      "0",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "igt",
+    "args": [
+      "7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "igt",
+    "args": [
+      "7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "igt",
+    "args": [
+      "7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "igt",
+    "args": [
+      "340282366920938463463374607431768211457",
+      "18446744073709551615"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "igte",
+    "args": [
+      "-7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "igte",
+    "args": [
+      "-7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "igte",
+    "args": [
+      "-7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "igte",
+    "args": [
+      "0",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "igte",
+    "args": [
+      "0",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "igte",
+    "args": [
+      "0",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    }
+  },
+  {
+    "op": "igte",
+    "args": [
+      "7",
+      "-3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "igte",
+    "args": [
+      "7",
+      "0"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "igte",
+    "args": [
+      "7",
+      "3"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  },
+  {
+    "op": "igte",
+    "args": [
+      "340282366920938463463374607431768211457",
+      "18446744073709551615"
+    ],
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    }
+  }
+]

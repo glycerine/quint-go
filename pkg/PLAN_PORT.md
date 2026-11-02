@@ -338,6 +338,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   local bindings, lazy branches, definition caches, and runtime error traces.
 - [ ] P7.3 Port arithmetic, Boolean, comparison, string, and conversion
   builtins; test negative division/modulo and integer boundary behavior.
+  - [x] Strict integer arithmetic/comparison builtins, arbitrary precision,
+    signed division/remainder, power errors, and upstream result/error fixtures.
+  - [ ] Boolean/string/conversion builtins and evaluator dispatch integration.
 - [ ] P7.4 Port collection, map/function, record, tuple, variant, higher-order,
   fold, indexing, range, and lazy/infinite-set operations.
 - [ ] P7.5 Port current/next-state storage, primed assignment, simultaneous
@@ -2146,3 +2149,17 @@ word "retained" in the commit message.
   compatibility audit. Equal-constructor comparisons match upstream. Full
   default tests pass (combined package execution 0.983s). Runtime traversal,
   symbolic values, closures, and evaluator/collection integration remain open.
+
+- 2026-11-02: Added EvalIntegerBuiltin for addition, subtraction,
+  multiplication, division, remainder, exponentiation, unary negation, and the
+  four ordered integer comparisons. Arithmetic uses arbitrary-precision copies;
+  division truncates toward zero and remainder retains the dividend's sign.
+  Power rejects zero-to-zero and negative exponents with upstream QNT503 text.
+  All 101 generated TypeScript result/error cases pass, covering signed zero
+  divisors, all sign combinations, huge integers, and powers through 2^256.
+  Argument ownership and arity/type/unknown-op validation are also tested.
+  TypeScript imod by zero throws an uncaught RangeError; Go intentionally returns
+  structured QNT503 Division by zero, keeping evaluation errors reportable.
+  Full default tests pass (combined package execution 0.963s). P7.3 remains open
+  for Boolean/string/conversion operators and evaluator integration; resource
+  controls for expensive operations remain part of P8.5.

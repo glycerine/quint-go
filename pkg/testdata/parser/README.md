@@ -253,3 +253,10 @@ set-like fallback can equate empty lists/tuples with arbitrary records/maps,
 because their fallback enumeration is empty. This untyped discrepancy remains
 open for the runtime compatibility audit. Hash bytes are Go-specific; tests
 require equal values to have equal hashes rather than matching Immutable.js.
+
+`runtime_integer.json` is regenerated with
+`node pkg/grammar/runtime_integer_fixtures.cjs`. It captures builtinLambda
+results/errors for eleven strict integer operators, sign combinations, zero,
+128/256-bit values, and power edge cases. Integer division truncates toward zero;
+remainder has the dividend's sign. The TypeScript modulo-by-zero exception is
+retained in the fixture; Go deliberately returns QNT503 Division by zero for it.
