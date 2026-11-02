@@ -1735,3 +1735,11 @@ word "retained" in the commit message.
   Entire transformed declarations match upstream without changes. Default tests
   pass (combined execution 0.728s). Module/instance flattening and annotation
   remapping remain open under P6.1/P6.2.
+
+- 2026-11-02: Added referenced-definition collection for flattening with
+  dependency order, import namespaces, duplicate-name suppression, local/parameter
+  exclusion, and instance-import deferral. Tests cover namespaced transitive
+  constants/operators, repeated calls, local definitions, instance references,
+  and source isolation. Default tests pass (combined execution 0.724s).
+  Cyclic input receives an explicit error rather than upstream recursion;
+  exact dependency fixtures and complete module/export expansion remain open.
