@@ -380,8 +380,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     - [x] Attach compact domains to RuntimeValue and source evaluation without
       eager display/identity trees; checked context APIs provide extensional
       equality, hashing, serialization and nested collection operations.
-    - [ ] Complete symbolic collection-key equality for variant payloads and
-      mixed representations; these paths currently return explicit QNT501.
+    - [x] Symbolic variant/mixed-representation collection keys with checked
+      HAMT operations, exact source hash history and owned per-value memo state.
   - [x] Explicit-state TypeScript-compatible serialization, including transient
     tuple sets, fresh-object hashing, Unicode ties, and repeated-call UID history.
   - [x] Share object-hash state through implemented evaluator collection operations,
@@ -424,7 +424,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] Boolean/equality/assert builtins and integer dispatch in pure evaluation.
   - [x] Scalar evaluator dispatch; no string/conversion opcode work is invented
     beyond this revision's actual inventory.
-- [ ] P7.4 Port collection, map/function, record, tuple, variant, higher-order,
+- [x] P7.4 Port collection, map/function, record, tuple, variant, higher-order,
   fold, indexing, range, and lazy/infinite-set operations.
   - [x] Strict head/tail/length/append/concat, nth/item/replaceAt/slice, and
     field/fieldNames/with operations with pure-evaluator integration and fixtures.
@@ -468,7 +468,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] Compact interval/Int/Nat/product/powerset/map-set source constructors,
     membership/cardinality, iteration, higher-order callbacks, access and display;
     150 exact source cases cover large compact queries and resource errors.
-  - [ ] Complete remaining mixed symbolic-key and cross-constructor audits.
+  - [x] Variant and mixed symbolic keys through constructors, callbacks and
+    collection operations; public checked equality/hash stay consistent while
+    private source equality preserves upstream cached-hash quirks.
+  Broader unlike-constructor equality remains an open audit under P7.1.
 - [x] P7.5 Port current/next-state storage, primed assignment, simultaneous
   updates, action composition, enabled/disabled actions, rollback, and commit.
   - [x] Stable named current/next registers, unset diagnostics, shift/reset,
@@ -3363,3 +3366,13 @@ word "retained" in the commit message.
   in both parser modes. SuperSpec improves24.3→3.07ms and7.96MB→0.789MB;
   nested calls8.8→0.398ms. Small inputs remain similar; malformed fallback costs
   an extra syntax pass (81→121us). Aggregate suite timing is measured separately.
+
+- 2026-11-02: Removed both symbolic-key QNT501 limits using checked HAMT
+  lookup/update/delete/batch operations and per-value atomic hash history. Exact
+  source equality preserves upstream raw-hash asymmetry/cache effects; public
+  checked equality remains symmetric and hash-consistent. Source fixtures add170
+  typed key and14 memo cases, with unchanged prior150 symbolic cases. No-op list/
+  map wrappers share memo correctly; fresh records/set rebuilds have their own
+  state. Independent review executes four typechecked programs and finds no
+  blocker; targeted race2.261s, vet and focused0.175s pass. Broad unlike-constructor
+  fallback remains an explicit P7.1 audit, separate from typed collection support.

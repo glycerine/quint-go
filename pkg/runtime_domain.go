@@ -173,7 +173,7 @@ func (d RuntimeDomain) Contains(ctx context.Context, value RuntimeValue) (bool, 
 		if err != nil {
 			return false, err
 		}
-		_, found, err := entries.Lookup(normal)
+		_, found, err := entries.LookupContext(ctx, normal)
 		return found, err
 	}
 	if value.expression.Kind != "int" {
@@ -262,9 +262,10 @@ func (d RuntimeDomain) Subset(ctx context.Context, other RuntimeDomain) (bool, e
 	return contained, err
 }
 
-// Equal compares domains extensionally across explicit sets and intervals,
-// avoiding interval materialization. Int/Nat only equal their own infinite kind.
-// Private reference hashes may differ before normalization, as upstream does.
+// Equal follows the upstream domain classes, avoiding interval materialization.
+// Int/Nat only equal their own infinite kind. Explicit sets preserve source key
+// hash history, which can make equality asymmetric for symbolic keys; use
+// RuntimeValue.EqualContext for the symmetric public Go comparison.
 func (d RuntimeDomain) Equal(ctx context.Context, other RuntimeDomain) (bool, error) {
 	if err := d.validate(ctx); err != nil {
 		return false, err
@@ -279,7 +280,7 @@ func (d RuntimeDomain) Equal(ctx context.Context, other RuntimeDomain) (bool, er
 		return d.first == other.first && d.last == other.last, nil
 	}
 	if d.kind == runtimeExplicitDomain && other.kind == runtimeExplicitDomain {
-		return d.explicit.EqualContext(ctx, other.explicit)
+		return runtimeSourceEqualContext(ctx, d.explicit, other.explicit)
 	}
 	if d.compound() || other.compound() {
 		if d.kind == other.kind {
@@ -293,7 +294,7 @@ func (d RuntimeDomain) Equal(ctx context.Context, other RuntimeDomain) (bool, er
 		if err != nil {
 			return false, err
 		}
-		return left.EqualContext(ctx, right)
+		return runtimeSourceEqualContext(ctx, left, right)
 	}
 	leftSize, err := d.Cardinality(ctx)
 	if err != nil {

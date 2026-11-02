@@ -318,7 +318,7 @@ func runtimeDomainMap(ctx context.Context, keys, values []RuntimeValue) (Runtime
 		}
 		entries[i] = runtimeReferenceEntry{Key: normal, Value: values[i]}
 	}
-	mapValue, err := runtimeReferenceMapFromEntries(entries)
+	mapValue, err := runtimeReferenceMapFromEntriesContext(ctx, entries)
 	if err != nil {
 		return RuntimeValue{}, err
 	}
@@ -607,7 +607,7 @@ func (d RuntimeDomain) pickMap(ctx context.Context, positions *runtimeDomainPosi
 			}); err != nil {
 				return false, err
 			}
-			set, err := runtimeReferenceMapFromEntries(entries)
+			set, err := runtimeReferenceMapFromEntriesContext(ctx, entries)
 			if err != nil {
 				return false, err
 			}

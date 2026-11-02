@@ -109,8 +109,13 @@ func TestCompactRuntimeCollectionsCheckedBoundary(t *testing.T) {
 	}
 	label, _ := NewRuntimeValue(Expr{Kind: "str", Str: "D"})
 	variant := symbolicComposite(t, "variant", label, interval)
-	if _, err := NewRuntimeCompositeContext(ctx, "Set", []RuntimeValue{variant}); err == nil || err.Error() != "[QNT501] Symbolic runtime values retained inside collection keys are not supported" {
-		t.Fatalf("retained-domain key limitation: %v", err)
+	variantSet, err := NewRuntimeCompositeContext(ctx, "Set", []RuntimeValue{variant})
+	if err != nil {
+		t.Fatalf("retained-domain variant key: %v", err)
+	}
+	variantEntries, err := runtimeEntries(variantSet)
+	if err != nil || len(variantEntries) != 1 || !sameRuntimeObject(variantEntries[0].Key, variant) {
+		t.Fatalf("variant key payload identity: %v", err)
 	}
 	normalized, err := runtimeNormalFormContext(ctx, variant)
 	if err != nil || !sameRuntimeObject(normalized, variant) {

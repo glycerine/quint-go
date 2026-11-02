@@ -41,8 +41,8 @@ operator/name, so successful decoding must not be counted as builtin support.
 | `append`, `concat`, `head`, `tail`, `length`, `nth`, `replaceAt`, `slice`, `indices` | implemented: finite sequences and index diagnostics | signature | rule | translated |
 | `range` | implemented: exclusive list range with Number rounding | signature | rule | translated |
 | `item`, `field`, `fieldNames`, `with` | implemented: tuple/record access and updates | special | rule | translated |
-| `contains`, `in`, `subseteq`, `union`, `intersect`, `exclude`, `size`, `isFinite`, `flatten` | partial: explicit and compact domains; mixed symbolic-key audit open | signature | rule | translated |
-| `exists`, `forall`, `map`, `filter`, `fold`, `mapBy` | partial: finite/compact domains, lexical callbacks; symbolic-key audit open | signature | rule | translated |
+| `contains`, `in`, `subseteq`, `union`, `intersect`, `exclude`, `size`, `isFinite`, `flatten` | implemented: explicit/compact domains and checked symbolic keys | signature | rule | translated |
+| `exists`, `forall`, `map`, `filter`, `fold`, `mapBy` | implemented: finite/compact domains, lexical callbacks and symbolic keys | signature | rule | translated |
 | `select`, `foldl` | implemented: list callbacks | signature | rule | translated |
 | `foldr` | implemented: list callbacks | signature | rule | fallback |
 | `get`, `keys`, `set`, `put`, `setBy` | implemented: concrete maps and retained children | signature | rule | translated |
@@ -83,8 +83,10 @@ hashes shared by evaluator collections, CLI and debug output. Source setToMap,
 allListsUpTo and 150 symbolic source cases pass. Selected variables preserve
 source/import/instance discovery order and persistent REPL cells. Exported aliases
 inside instances can still require first-compilation contexts beyond declaration
-provenance. Symbolic variant keys and mixed symbolic callback-key representations
-currently return QNT501. Exhaustive cross-type equality and locale-wide collation
+provenance. Symbolic variant and mixed callback keys now use checked HAMT operations. Source
+equality preserves upstream cached-hash asymmetry privately; public EqualContext
+uses symmetric entry-bag equality and agrees with HashContext independently of
+source memo history. Exhaustive cross-type equality and locale-wide collation
 remain open. Actual Rust comparison records differences in seeded picks, counter
 overflow, folded traversal, resource bounds and error codes; Go targets TypeScript.
 

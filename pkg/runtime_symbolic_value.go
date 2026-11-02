@@ -179,7 +179,7 @@ func NewRuntimeCompositeContext(ctx context.Context, op string, args []RuntimeVa
 	if err := ctx.Err(); err != nil {
 		return RuntimeValue{}, err
 	}
-	if !runtimeHasDomain(args) {
+	if !runtimeHasDomain(args) && !runtimeConstructorNeedsReferenceMemo(op, args) {
 		return newRuntimeComposite(op, args)
 	}
 	for _, v := range args {
@@ -224,7 +224,7 @@ func NewRuntimeCompositeContext(ctx context.Context, op string, args []RuntimeVa
 			if err != nil {
 				return RuntimeValue{}, err
 			}
-			m, err = m.Set(v, v)
+			m, err = m.SetContext(ctx, v, v)
 			if err != nil {
 				return RuntimeValue{}, err
 			}
@@ -249,7 +249,7 @@ func NewRuntimeCompositeContext(ctx context.Context, op string, args []RuntimeVa
 			}
 			entries = append(entries, runtimeReferenceEntry{Key: key, Value: children[1]})
 		}
-		m, err := runtimeReferenceMapFromEntries(entries)
+		m, err := runtimeReferenceMapFromEntriesContext(ctx, entries)
 		if err != nil {
 			return RuntimeValue{}, err
 		}
@@ -264,6 +264,7 @@ func runtimeAssembleCompact(ctx context.Context, op string, children []RuntimeVa
 	payload := &runtimePayload{children: children, entries: m}
 	if op == "Set" || op == "Map" {
 		for _, entry := range m.Entries() {
+			payload.referenceMemoKeys = payload.referenceMemoKeys || runtimeKeyNeedsReferenceMemo(entry.Key)
 			containsClosure = containsClosure || entry.Key.containsClosure || entry.Value.containsClosure
 			containsDomain = containsDomain || entry.Key.containsDomain || entry.Value.containsDomain
 			if op == "Set" {
@@ -312,14 +313,22 @@ func runtimeNormalFormContext(ctx context.Context, value RuntimeValue) (RuntimeV
 	if value.domain != nil {
 		return value.domain.Materialize(ctx)
 	}
-	if !value.containsDomain {
-		return runtimeNormalForm(value)
+	if !value.containsDomain && (value.payload == nil || value.expression.Opcode == "Set") {
+		normalized, err := runtimeNormalForm(value)
+		if err == nil && value.expression.Opcode == "Set" {
+			normalized = runtimeInheritReferenceMemo(normalized, value)
+		}
+		return normalized, err
 	}
 	switch value.expression.Opcode {
 	case "variant":
 		return value, nil
 	case "Set":
-		return runtimeWithEntriesContext(ctx, "Set", value.payload.entries)
+		normalized, err := runtimeWithEntriesContext(ctx, "Set", value.payload.entries)
+		if err == nil {
+			normalized = runtimeInheritReferenceMemo(normalized, value)
+		}
+		return normalized, err
 	case "Map":
 		entries := value.payload.entries.Entries()
 		for i, entry := range entries {
@@ -333,21 +342,27 @@ func runtimeNormalFormContext(ctx context.Context, value RuntimeValue) (RuntimeV
 				return RuntimeValue{}, err
 			}
 		}
-		m, err := runtimeReferenceMapFromEntries(entries)
+		m, err := runtimeReferenceMapFromEntriesContext(ctx, entries)
 		if err != nil {
 			return RuntimeValue{}, err
 		}
 		return runtimeWithEntriesContext(ctx, "Map", m)
 	case "List", "Tup", "Rec":
 		children := append([]RuntimeValue{}, value.payload.children...)
+		unchanged := true
 		for i, child := range children {
 			var err error
 			children[i], err = runtimeNormalFormContext(ctx, child)
 			if err != nil {
 				return RuntimeValue{}, err
 			}
+			unchanged = unchanged && sameRuntimeObject(child, children[i])
 		}
-		return NewRuntimeCompositeContext(ctx, value.expression.Opcode, children)
+		normalized, err := NewRuntimeCompositeContext(ctx, value.expression.Opcode, children)
+		if err == nil && unchanged && value.expression.Opcode == "Rec" {
+			normalized = runtimeInheritReferenceMemo(normalized, value)
+		}
+		return normalized, err
 	}
 	return value, nil
 }
@@ -355,9 +370,6 @@ func runtimeKeyNormalFormContext(ctx context.Context, value RuntimeValue) (Runti
 	value, err := runtimeNormalFormContext(ctx, value)
 	if err != nil {
 		return RuntimeValue{}, err
-	}
-	if value.containsDomain {
-		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Symbolic runtime values retained inside collection keys are not supported"}
 	}
 	return value, nil
 }

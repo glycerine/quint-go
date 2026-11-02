@@ -13,8 +13,12 @@ func EvalMapBuiltinContext(ctx context.Context, op string, args []RuntimeValue) 
 	if err := ctx.Err(); err != nil {
 		return RuntimeValue{}, err
 	}
-	if !runtimeHasDomain(args) {
-		return EvalMapBuiltin(op, args)
+	if !runtimeHasDomain(args) && !runtimeMapOperationNeedsReferenceMemo(op, args) {
+		value, err := EvalMapBuiltin(op, args)
+		if err == nil && (op == "set" || op == "put") && value.payload != nil && args[0].payload != nil && value.payload.entries.root == args[0].payload.entries.root {
+			value = runtimeInheritReferenceMemo(value, args[0])
+		}
+		return value, err
 	}
 	fail := func(code, message string) (RuntimeValue, error) {
 		return RuntimeValue{}, Diagnostic{Code: code, Message: message}
@@ -49,7 +53,7 @@ func EvalMapBuiltinContext(ctx context.Context, op string, args []RuntimeValue) 
 	if err != nil {
 		return RuntimeValue{}, err
 	}
-	value, found, err := entries.Lookup(key)
+	value, found, err := entries.LookupContext(ctx, key)
 	if err != nil {
 		return RuntimeValue{}, err
 	}
@@ -59,7 +63,7 @@ func EvalMapBuiltinContext(ctx context.Context, op string, args []RuntimeValue) 
 		}
 		// The raw Immutable.Map.toMap rebuild in the reference's diagnostic
 		// path affects collision traversal, unlike RuntimeValue.toMap.
-		diagnosticEntries, err := runtimeReferenceMapFromEntries(entries.Entries())
+		diagnosticEntries, err := runtimeReferenceMapFromEntriesContext(ctx, entries.Entries())
 		if err != nil {
 			return RuntimeValue{}, err
 		}
@@ -81,11 +85,15 @@ func EvalMapBuiltinContext(ctx context.Context, op string, args []RuntimeValue) 
 	if op == "set" && !found {
 		return fail("QNT507", "Called 'set' with a non-existing key")
 	}
-	updated, err := entries.Set(key, args[2])
+	updated, err := entries.SetContext(ctx, key, args[2])
 	if err != nil {
 		return RuntimeValue{}, err
 	}
-	return runtimeWithEntriesContext(ctx, "Map", updated)
+	result, err := runtimeWithEntriesContext(ctx, "Map", updated)
+	if err == nil && updated.root == entries.root {
+		result = runtimeInheritReferenceMemo(result, args[0])
+	}
+	return result, err
 }
 
 // EvalMapSetByContext applies a callback to an existing retained value. Missing
@@ -120,7 +128,11 @@ func EvalSequenceBuiltinContext(ctx context.Context, op string, args []RuntimeVa
 		return RuntimeValue{}, err
 	}
 	if op != "indices" && !runtimeHasDomain(args) {
-		return EvalSequenceBuiltin(op, args)
+		value, err := EvalSequenceBuiltin(op, args)
+		if err == nil {
+			value = runtimeSequenceInheritReferenceMemo(op, args, value)
+		}
+		return value, err
 	}
 	fail := func(code, message string) (RuntimeValue, error) {
 		return RuntimeValue{}, Diagnostic{Code: code, Message: message}
@@ -152,8 +164,12 @@ func EvalSequenceBuiltinContext(ctx context.Context, op string, args []RuntimeVa
 	if err != nil {
 		return RuntimeValue{}, err
 	}
-	makeValue := func(op string, values []RuntimeValue) (RuntimeValue, error) {
-		return NewRuntimeCompositeContext(ctx, op, values)
+	makeValue := func(constructor string, values []RuntimeValue) (RuntimeValue, error) {
+		value, err := NewRuntimeCompositeContext(ctx, constructor, values)
+		if err == nil {
+			value = runtimeSequenceInheritReferenceMemo(op, args, value)
+		}
+		return value, err
 	}
 	if record {
 		if op == "fieldNames" {

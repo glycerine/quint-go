@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"math"
-	"strconv"
-	"strings"
 )
 
 func runtimeContextSetLike(value RuntimeValue) bool {
@@ -18,7 +16,7 @@ func EvalSetBuiltinContext(ctx context.Context, op string, args []RuntimeValue) 
 	if err := ctx.Err(); err != nil {
 		return RuntimeValue{}, err
 	}
-	if !runtimeHasDomain(args) {
+	if !runtimeHasDomain(args) && !runtimeSetOperationNeedsReferenceMemo(op, args) {
 		return EvalSetBuiltin(op, args)
 	}
 	fail := func(message string) (RuntimeValue, error) {
@@ -146,7 +144,7 @@ func EvalSetBuiltinContext(ctx context.Context, op string, args []RuntimeValue) 
 		case left.Len() == 0:
 			output = right
 		default:
-			output, err = runtimeReferenceMapBatchSet(left, right.Entries())
+			output, err = runtimeReferenceMapBatchSetContext(ctx, left, right.Entries())
 			if err != nil {
 				return RuntimeValue{}, err
 			}
@@ -157,7 +155,7 @@ func EvalSetBuiltinContext(ctx context.Context, op string, args []RuntimeValue) 
 			if err := ctx.Err(); err != nil {
 				return RuntimeValue{}, err
 			}
-			_, present, err := right.Lookup(entry.Value)
+			_, present, err := right.LookupContext(ctx, entry.Value)
 			if err != nil {
 				return RuntimeValue{}, err
 			}
@@ -169,7 +167,7 @@ func EvalSetBuiltinContext(ctx context.Context, op string, args []RuntimeValue) 
 			if err := ctx.Err(); err != nil {
 				return RuntimeValue{}, err
 			}
-			output, err = output.Delete(key)
+			output, err = output.DeleteContext(ctx, key)
 			if err != nil {
 				return RuntimeValue{}, err
 			}
@@ -290,80 +288,10 @@ func EvalSetHigherBuiltinContext(ctx context.Context, op string, args []RuntimeV
 }
 
 // runtimeRawMapFromEntriesContext retains transient construction before the
-// final mkSet/mkMap normalization. Mixed compact representations require a
-// contextual HAMT equality path; reject those explicitly instead of comparing
-// their compact display identities as though they were extensional values.
+// final mkSet/mkMap normalization. Raw class hashes and contextual collision
+// equality reproduce the reference even when symbolic representations differ.
 func runtimeRawMapFromEntriesContext(ctx context.Context, entries []runtimeReferenceEntry) (runtimeReferenceMap, error) {
-	hasDomain := false
-	for _, entry := range entries {
-		hasDomain = hasDomain || entry.Key.containsDomain
-	}
-	if hasDomain && len(entries) > 1 {
-		shape := runtimeRawSymbolicShape(entries[0].Key)
-		for _, entry := range entries[1:] {
-			if err := ctx.Err(); err != nil {
-				return runtimeReferenceMap{}, err
-			}
-			if runtimeRawSymbolicShape(entry.Key) != shape {
-				return runtimeReferenceMap{}, Diagnostic{Code: "QNT501", Message: "Mixed symbolic runtime collection representations require contextual equality"}
-			}
-		}
-	}
-	if err := ctx.Err(); err != nil {
-		return runtimeReferenceMap{}, err
-	}
-	return runtimeReferenceMapFromEntries(entries)
-}
-
-func runtimeRawSymbolicShape(value RuntimeValue) string {
-	var result strings.Builder
-	var domainShape func(RuntimeDomain)
-	var valueShape func(RuntimeValue)
-	domainShape = func(domain RuntimeDomain) {
-		result.WriteString("d")
-		result.WriteString(strconv.Itoa(int(domain.kind)))
-		result.WriteByte('(')
-		switch domain.kind {
-		case runtimeExplicitDomain:
-			valueShape(domain.explicit)
-		case runtimeProductDomain:
-			for _, factor := range domain.factors {
-				domainShape(factor)
-			}
-		case runtimePowersetDomain:
-			domainShape(*domain.base)
-		case runtimeMapSetDomain:
-			domainShape(*domain.domain)
-			domainShape(*domain.rangeSet)
-		}
-		result.WriteByte(')')
-	}
-	valueShape = func(value RuntimeValue) {
-		if value.domain != nil {
-			domainShape(*value.domain)
-			return
-		}
-		result.WriteString(value.expression.Kind)
-		result.WriteByte(':')
-		result.WriteString(value.expression.Opcode)
-		if value.containsDomain && value.payload != nil {
-			result.WriteByte('(')
-			if value.expression.Opcode == "Set" || value.expression.Opcode == "Map" {
-				for _, entry := range value.payload.entries.Entries() {
-					valueShape(entry.Key)
-					valueShape(entry.Value)
-				}
-			} else {
-				for _, child := range value.payload.children {
-					valueShape(child)
-				}
-			}
-			result.WriteByte(')')
-		}
-		result.WriteByte(';')
-	}
-	valueShape(value)
-	return result.String()
+	return runtimeReferenceMapFromEntriesContext(ctx, entries)
 }
 
 // EvalSetToMapBuiltinContext preserves the intermediate fresh-array object
@@ -431,7 +359,7 @@ func EvalSetToMapBuiltinContext(ctx context.Context, args []RuntimeValue, hashes
 			return RuntimeValue{}, err
 		}
 	}
-	result, err := runtimeReferenceMapFromEntries(normalized)
+	result, err := runtimeReferenceMapFromEntriesContext(ctx, normalized)
 	if err != nil {
 		return RuntimeValue{}, err
 	}

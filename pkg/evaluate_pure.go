@@ -763,7 +763,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				return fail(e, fmt.Sprintf("%s requires %d arguments", e.Opcode, arity))
 			}
 			if e.Opcode == "eq" || e.Opcode == "neq" {
-				equal, err := args[0].EqualContext(ctx, args[1])
+				equal, err := runtimeSourceEqualContext(ctx, args[0], args[1])
 				if err != nil {
 					return RuntimeValue{}, runtimeExpressionError(e, err)
 				}

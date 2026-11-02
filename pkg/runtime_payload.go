@@ -17,6 +17,9 @@ type runtimePayload struct {
 	children        []RuntimeValue
 	entries         runtimeReferenceMap
 	containsClosure bool
+	// A concrete collection key can later compare with a compact counterpart;
+	// its actual source hash calls therefore still need history tracking.
+	referenceMemoKeys bool
 }
 
 func runtimeChildren(value RuntimeValue) ([]RuntimeValue, error) {
@@ -85,8 +88,10 @@ func runtimeAssemble(source Expr, payload *runtimePayload) (RuntimeValue, error)
 func runtimeWithEntries(op string, m runtimeReferenceMap) (RuntimeValue, error) {
 	source := Expr{Kind: "app", Opcode: op, Args: []Expr{}}
 	containsClosure := false
+	referenceMemoKeys := false
 	for _, entry := range m.Entries() {
 		containsClosure = containsClosure || entry.Key.containsClosure || entry.Value.containsClosure
+		referenceMemoKeys = referenceMemoKeys || runtimeKeyNeedsReferenceMemo(entry.Key)
 		switch op {
 		case "Set":
 			source.Args = append(source.Args, entry.Value.source)
@@ -99,7 +104,7 @@ func runtimeWithEntries(op string, m runtimeReferenceMap) (RuntimeValue, error) 
 	if op != "Set" && op != "Map" {
 		return RuntimeValue{}, fmt.Errorf("invalid retained collection %s", op)
 	}
-	return runtimeAssemble(source, &runtimePayload{entries: m, containsClosure: containsClosure})
+	return runtimeAssemble(source, &runtimePayload{entries: m, containsClosure: containsClosure, referenceMemoKeys: referenceMemoKeys})
 }
 
 // newRuntimeComposite implements runtime constructors on evaluated children.
@@ -234,7 +239,11 @@ func runtimeNormalForm(value RuntimeValue) (RuntimeValue, error) {
 		if err != nil {
 			return RuntimeValue{}, err
 		}
-		return runtimeWithEntries("Set", m)
+		normalized, err := runtimeWithEntries("Set", m)
+		if err == nil {
+			normalized = runtimeInheritReferenceMemo(normalized, value)
+		}
+		return normalized, err
 	case "Map":
 		entries, err := runtimeEntries(value)
 		if err != nil {
@@ -260,14 +269,20 @@ func runtimeNormalForm(value RuntimeValue) (RuntimeValue, error) {
 		if err != nil {
 			return RuntimeValue{}, err
 		}
+		unchanged := true
 		for i, child := range children {
 			// Record names are primitive strings and normalize to themselves.
 			children[i], err = runtimeNormalForm(child)
 			if err != nil {
 				return RuntimeValue{}, err
 			}
+			unchanged = unchanged && sameRuntimeObject(child, children[i])
 		}
-		return newRuntimeComposite(value.expression.Opcode, children)
+		normalized, err := newRuntimeComposite(value.expression.Opcode, children)
+		if err == nil && unchanged && value.expression.Opcode == "Rec" {
+			normalized = runtimeInheritReferenceMemo(normalized, value)
+		}
+		return normalized, err
 	}
 	return value, nil
 }

@@ -1053,3 +1053,15 @@ diagnostics and error rendering. No normalization is used. A private bail strate
 and isolated listener discard speculative failures before a fresh LL recovery;
 semantic conversion allocates IDs only after syntax succeeds. Concurrent recovery
 race tests pass. Large benchmark inputs remain outside the default unit cases.
+
+`runtime_symbolic_keys.json` adds 170 actual upstream typed key cases and
+`runtime_reference_memo_source.json` adds 14 concrete/symbolic memo-history cases.
+Matching grammar generators cover raw variant hashes, small-array/HAMT thresholds,
+callbacks, no-op list/map updates and fresh record/set results. Both prior symbolic
+key QNT501 limits are removed. `runtime_symbolic_hash_pending.json` preserves the
+actual typed proof motivating the now-tested API split: private source equality
+can be asymmetric/history-dependent, while public checked entry-bag equality is
+symmetric and agrees with canonical HashContext. Memo state is atomic and owned
+by value allocation; no global history is introduced. Four unlike-constructor
+counterexamples remain separate pending evidence. Independent typechecked source
+review and targeted races pass; context entry APIs have 100% coverage.

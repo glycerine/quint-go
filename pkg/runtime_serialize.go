@@ -135,7 +135,12 @@ func (s *runtimeSerialization) expression(value RuntimeValue) (Expr, error) {
 			}
 			pairs[i] = runtimeReferenceEntry{Key: pair, Value: pair}
 		}
-		set, err := runtimeReferenceMapFromEntries(pairs)
+		var set runtimeReferenceMap
+		if s.ctx != nil {
+			set, err = runtimeReferenceMapFromEntriesContext(s.ctx, pairs)
+		} else {
+			set, err = runtimeReferenceMapFromEntries(pairs)
+		}
 		if err != nil {
 			return Expr{}, err
 		}

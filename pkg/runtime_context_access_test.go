@@ -198,7 +198,7 @@ func TestContextMapKeysNormalizeAndValuesRetainIdentity(t *testing.T) {
 	}
 	variant := contextAccessComposite(t, "variant", contextAccessValue(t, `"symbolic"`), key)
 	_, err = EvalMapBuiltinContext(ctx, "get", []RuntimeValue{mapValue, variant})
-	contextAccessDiagnostic(t, err, "QNT501", "Symbolic runtime values retained inside collection keys are not supported")
+	contextAccessDiagnostic(t, err, "QNT507", `Called 'get' with a non-existing key. Key is variant("symbolic", Set(1, 2)). Map has keys: Set(1, 2)`)
 }
 
 func TestContextListCallbacksPreserveChildrenAndEvaluationOrder(t *testing.T) {

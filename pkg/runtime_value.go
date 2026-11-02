@@ -9,7 +9,14 @@ import (
 // Allocation identity is distinct from structural equality. It supports the
 // reference collection no-op rule for reusing the same stored value object.
 // The non-zero-sized token prevents Go from coalescing allocation addresses.
-type runtimeValueAllocation struct{ marker byte }
+type runtimeValueAllocation struct {
+	marker byte
+	// Hash history belongs to the retained source collection. Wrappers whose
+	// normalForm shares that collection inherit its memo without sharing their
+	// language object allocation identity.
+	referenceMemo          runtimeReferenceMemo
+	inheritedReferenceMemo *runtimeReferenceMemo
+}
 
 // RuntimeValue owns a language value, a lexical closure, or a collection retaining
 // such values, including compact symbolic domains. Its context-free expression

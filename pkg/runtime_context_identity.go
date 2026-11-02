@@ -7,11 +7,130 @@ import (
 	"math"
 )
 
-// EqualContext compares language values extensionally, including compact
-// domains retained inside collections. Domain comparisons can fail or be
-// canceled; Equal provides only the context-free structural view of these
-// values. Concrete values keep the existing equality and closure rules.
+// EqualContext compares retained values extensionally with a symmetric
+// structural boundary, including finite domains and explicit Set forms. This
+// public equality agrees with HashContext and ignores private source hash
+// history. The evaluator uses a separate exact source operation because the
+// upstream HAMT can compare differently hashed equal keys asymmetrically.
+// Comparing compound domains may enumerate them; errors and cancellation are
+// returned instead of being converted to a false result.
 func (v RuntimeValue) EqualContext(ctx context.Context, other RuntimeValue) (bool, error) {
+	if err := ctx.Err(); err != nil {
+		return false, err
+	}
+	if !v.Valid() || !other.Valid() {
+		return false, Diagnostic{Code: "QNT501", Message: "Invalid runtime value"}
+	}
+	if !v.containsDomain && !other.containsDomain {
+		return v.Equal(other), nil
+	}
+	if v.domain != nil || other.domain != nil {
+		isDomain := func(value RuntimeValue) bool {
+			return value.domain != nil || (value.expression.Kind == "app" && value.expression.Opcode == "Set")
+		}
+		if !isDomain(v) || !isDomain(other) {
+			return false, nil
+		}
+		left, err := RuntimeDomainFromValue(v)
+		if err != nil {
+			return false, err
+		}
+		right, err := RuntimeDomainFromValue(other)
+		if err != nil {
+			return false, err
+		}
+		if !left.compound() && !right.compound() {
+			return left.Equal(ctx, right)
+		}
+		a, err := left.Materialize(ctx)
+		if err != nil {
+			return false, err
+		}
+		b, err := right.Materialize(ctx)
+		if err != nil {
+			return false, err
+		}
+		return a.EqualContext(ctx, b)
+	}
+	if v.closure != nil || other.closure != nil || v.expression.Kind != other.expression.Kind || v.expression.Opcode != other.expression.Opcode {
+		return false, nil
+	}
+	if v.payload == nil || other.payload == nil {
+		return false, fmt.Errorf("checked equality requires retained collection payloads")
+	}
+	switch v.expression.Opcode {
+	case "variant", "List", "Tup", "Rec":
+		a, b := v.payload.children, other.payload.children
+		if len(a) != len(b) {
+			return false, nil
+		}
+		for i, child := range a {
+			var equal bool
+			var err error
+			if v.expression.Opcode == "variant" {
+				equal, err = child.EqualContext(ctx, b[i])
+			} else {
+				equal, err = runtimeCollectionEqualContext(ctx, child, b[i])
+			}
+			if err != nil || !equal {
+				return false, err
+			}
+		}
+		return true, nil
+	case "Set", "Map":
+		a, b := v.payload.entries.Entries(), other.payload.entries.Entries()
+		if len(a) != len(b) {
+			return false, nil
+		}
+		used := make([]bool, len(b))
+		for _, entry := range a {
+			matched := false
+			for j, candidate := range b {
+				if err := ctx.Err(); err != nil {
+					return false, err
+				}
+				if used[j] {
+					continue
+				}
+				equal, err := runtimeCollectionEqualContext(ctx, entry.Key, candidate.Key)
+				if err != nil {
+					return false, err
+				}
+				if !equal {
+					continue
+				}
+				equal, err = runtimeCollectionEqualContext(ctx, entry.Value, candidate.Value)
+				if err != nil {
+					return false, err
+				}
+				if equal {
+					used[j] = true
+					matched = true
+					break
+				}
+			}
+			if !matched {
+				return false, nil
+			}
+		}
+		return true, nil
+	}
+	return false, fmt.Errorf("checked equality does not support %s", v.expression.Opcode)
+}
+func runtimeCollectionEqualContext(ctx context.Context, left, right RuntimeValue) (bool, error) {
+	if err := ctx.Err(); err != nil {
+		return false, err
+	}
+	if sameRuntimeObject(left, right) {
+		return true, nil
+	}
+	return left.EqualContext(ctx, right)
+}
+
+// runtimeSourceEqualContext preserves the reference runtime's exact equality,
+// including raw hash routing and cached-hash history. Unlike public checked
+// equality, this operation can be asymmetric for symbolic collection keys.
+func runtimeSourceEqualContext(ctx context.Context, v, other RuntimeValue) (bool, error) {
 	if err := ctx.Err(); err != nil {
 		return false, err
 	}
@@ -44,6 +163,12 @@ func (v RuntimeValue) EqualContext(ctx context.Context, other RuntimeValue) (boo
 	if v.payload == nil || other.payload == nil {
 		return false, fmt.Errorf("checked equality requires retained collection payloads")
 	}
+	if v.expression.Opcode != "variant" {
+		different, err := runtimeReferenceCachedHashesDiffer(ctx, v, other)
+		if err != nil || different {
+			return false, err
+		}
+	}
 	switch v.expression.Opcode {
 	case "variant", "List", "Tup", "Rec":
 		left, right := v.payload.children, other.payload.children
@@ -56,9 +181,9 @@ func (v RuntimeValue) EqualContext(ctx context.Context, other RuntimeValue) (boo
 			if v.expression.Opcode == "variant" {
 				// Variant.equals invokes payload.equals directly. A closure
 				// payload does not acquire collection object identity here.
-				equal, err = child.EqualContext(ctx, right[i])
+				equal, err = runtimeSourceEqualContext(ctx, child, right[i])
 			} else {
-				equal, err = runtimeCollectionEqualContext(ctx, child, right[i])
+				equal, err = runtimeSourceCollectionEqualContext(ctx, child, right[i])
 			}
 			if err != nil || !equal {
 				return false, err
@@ -70,17 +195,18 @@ func (v RuntimeValue) EqualContext(ctx context.Context, other RuntimeValue) (boo
 		if left.Len() != right.Len() {
 			return false, nil
 		}
-		for _, entry := range left.Entries() {
+		for _, entry := range right.Entries() {
 			if err := ctx.Err(); err != nil {
 				return false, err
 			}
-			// Checked constructors normalize all keys before insertion, so
-			// reference lookup retains its concrete key and traversal rules.
-			value, found, err := right.Lookup(entry.Key)
+			// Immutable equality traverses the right collection and queries
+			// the left one. Raw symbolic hashes can make that direction
+			// observable even when payloads compare extensionally.
+			value, found, err := left.LookupContext(ctx, entry.Key)
 			if err != nil || !found {
 				return false, err
 			}
-			equal, err := runtimeCollectionEqualContext(ctx, entry.Value, value)
+			equal, err := runtimeSourceCollectionEqualContext(ctx, value, entry.Value)
 			if err != nil || !equal {
 				return false, err
 			}
@@ -91,14 +217,14 @@ func (v RuntimeValue) EqualContext(ctx context.Context, other RuntimeValue) (boo
 	}
 }
 
-func runtimeCollectionEqualContext(ctx context.Context, left, right RuntimeValue) (bool, error) {
+func runtimeSourceCollectionEqualContext(ctx context.Context, left, right RuntimeValue) (bool, error) {
 	if err := ctx.Err(); err != nil {
 		return false, err
 	}
 	if sameRuntimeObject(left, right) {
 		return true, nil
 	}
-	return left.EqualContext(ctx, right)
+	return runtimeSourceEqualContext(ctx, left, right)
 }
 
 // HashContext returns an extensional structural hash. EqualContext values have

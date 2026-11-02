@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"math/big"
-	"strings"
 	"testing"
 )
 
@@ -191,7 +190,7 @@ func TestContextSetHigherCallbacksReturnCompactValues(t *testing.T) {
 	}
 }
 
-func TestContextSetRawMixedRepresentationsAreExplicit(t *testing.T) {
+func TestContextSetRawMixedRepresentationsCompareContextually(t *testing.T) {
 	t.Parallel()
 	ctx := context.Background()
 	one, two := contextSetsInteger(t, "1"), contextSetsInteger(t, "2")
@@ -204,10 +203,13 @@ func TestContextSetRawMixedRepresentationsAreExplicit(t *testing.T) {
 		}
 		return explicit, nil
 	})
-	_, err := EvalSetHigherBuiltinContext(ctx, "map", []RuntimeValue{input, mapper})
-	var diagnostic Diagnostic
-	if !errors.As(err, &diagnostic) || diagnostic.Code != "QNT501" || !strings.Contains(diagnostic.Message, "contextual equality") {
-		t.Fatal("mixed raw representations silently used compact identity", err)
+	mapped, err := EvalSetHigherBuiltinContext(ctx, "map", []RuntimeValue{input, mapper})
+	if err != nil {
+		t.Fatal(err)
+	}
+	mappedEntries, err := runtimeEntries(mapped)
+	if err != nil || len(mappedEntries) != 1 || !mappedEntries[0].Value.Equal(explicit) {
+		t.Fatalf("mixed representations must normalize and deduplicate: %v", err)
 	}
 	// mapBy normalizes only keys; different compact value representations are
 	// retained freely and do not use the raw-result Set comparison boundary.
