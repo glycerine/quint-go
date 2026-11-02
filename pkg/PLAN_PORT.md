@@ -1674,3 +1674,10 @@ word "retained" in the commit message.
   suggestions all match upstream without changes. Full default tests pass
   (combined execution 0.745s). Incremental type-ID provenance, broader instance
   interactions, and completion audits for P4/P5 remain open.
+
+- 2026-11-02: Added RemoveRunDefinitions matching the TLA-output preparation
+  filter in cliCommands.ts: remove top-level run operators while retaining other
+  declarations and their order. Tests cover parsed mixed declarations, slice
+  isolation, idempotence, and empty modules. Default tests pass under one second.
+  Init-to-predicate conversion, flattening, and compilation-path integration
+  remain open under P6.5; this helper alone does not complete that item.
