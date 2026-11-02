@@ -200,8 +200,10 @@ errors without panics or losing subsequent declarations after recoverable errors
     imports, exports, and instance overrides.
   - [x] Compare graph vertices and edges against upstream fixtures.
   - [x] Sort declarations by dependency layers and emit residual QNT099 diagnostics.
-  - [ ] Integrate sorting into the full parser pipeline and verify cycle-diagnostic
-    order against upstream Immutable collection iteration.
+  - [x] Connect source loading, module ordering, resolution, and declaration
+    sorting through ParseProject, with both source maps and accumulated diagnostics.
+  - [ ] Complete parser recovery and verify cycle-diagnostic order against
+    upstream Immutable collection iteration.
 - [ ] P3.5 Preserve definition identity and lookup-table consistency across
   module boundaries and incremental declaration analysis.
 - [ ] P3.6 Run name/static fixtures, including nested instances, collisions,
@@ -1143,3 +1145,13 @@ word "retained" in the commit message.
   Default tests pass (combined execution 0.513s). Go emits residual diagnostics in
   graph discovery order; exact upstream Immutable diagnostic ordering and full
   parser pipeline integration remain pending.
+
+- 2026-11-02: Added ParseProject and FrontendResult to connect source loading,
+  module ordering, linked name resolution, and declaration sorting. Results retain
+  lookup/scopes, both source maps, and name/cycle diagnostics. End-to-end tests
+  cover cross-file parameterized instances, override prerequisite ordering,
+  reference identities, diagnostic locations, continued sorting after name errors,
+  and syntax/load/semantic failures with partial maps. Default tests pass
+  (combined execution 0.501s). This frontend still fails early during source or
+  syntax errors; upstream recovery, unused definitions, inference, and subsequent
+  compilation passes remain incomplete.
