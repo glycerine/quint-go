@@ -1750,3 +1750,12 @@ word "retained" in the commit message.
   hidden/namespaces/importedFrom fields are now retained. Entire declaration
   arrays match without normalization. Default tests pass (combined execution
   0.727s). Full module/export expansion remains open under P6.1.
+
+- 2026-11-02: Added the import-expansion stage FlattenModuleImports, collecting
+  referenced dependencies before declarations, removing import directives,
+  omitting unused imported definitions, and deduplicating repeated dependencies.
+  Tests cover namespaced transitive imports, local references, ordering, and
+  source isolation. Unexpanded exports receive an explicit error; instances are
+  retained for their separate pass. Default tests pass (combined execution
+  0.750s). Export expansion, instance flattening, and exact module differential
+  fixtures remain open under P6.1.
