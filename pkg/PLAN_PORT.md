@@ -348,7 +348,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   compare RNG vectors and collection traversal order, not just repeatability.
   - [x] TypeScript Squares RNG core, arbitrary-precision bounded draws, exact
     constructor/reset semantics, state restoration, and 120 upstream vectors.
-  - [ ] CLI seed parsing/default initialization, collection sampling/traversal,
+  - [x] CLI-compatible explicit seed parsing with JavaScript BigInt syntax,
+    ECMAScript whitespace, exact error messages, and reference fixtures.
+  - [ ] Default initialization and CLI wiring, collection sampling/traversal,
     and comparison with the Rust runtime's seeded behavior.
 - [ ] P7.9 Complete an opcode coverage matrix for evaluation, typing, effects,
   and symbolic conversion, distinguishing supported operations and deliberate
@@ -2115,3 +2117,14 @@ word "retained" in the commit message.
   ownership. Full default tests pass (combined package execution 0.964s).
   P7.8 remains open for seed parsing/default initialization, collection sampling,
   traversal order, and Rust-runtime comparisons; the evaluator is not yet wired.
+
+- 2026-11-02: Added ParseSeed with the CLI's JavaScript BigInt conversion
+  semantics and exact invalid-seed error message. Signed decimal, unsigned
+  radix-prefixed forms, leading zeros, arbitrary precision, empty input, and
+  ECMAScript whitespace are preserved. Explicit ASCII digit validation avoids
+  accepting Go-only separators or Unicode numeric lookalikes; signed radix
+  forms, exponents, suffixes, and fractional forms are rejected. All 68 generated
+  JavaScript fixtures pass, and accepted forms reproduce the corresponding
+  decimal-seeded RNG output and counter. Full default tests pass (combined
+  package execution 0.951s). Default seed initialization, CLI wiring, collection
+  sampling/traversal, and Rust seeded-runtime comparison remain under P7.8.

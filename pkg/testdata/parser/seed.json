@@ -1,0 +1,274 @@
+[
+  {
+    "input": "",
+    "value": "0"
+  },
+  {
+    "input": " ",
+    "value": "0"
+  },
+  {
+    "input": "0",
+    "value": "0"
+  },
+  {
+    "input": "-0",
+    "value": "0"
+  },
+  {
+    "input": "+0",
+    "value": "0"
+  },
+  {
+    "input": "123",
+    "value": "123"
+  },
+  {
+    "input": "-123",
+    "value": "-123"
+  },
+  {
+    "input": "+123",
+    "value": "123"
+  },
+  {
+    "input": "00012",
+    "value": "12"
+  },
+  {
+    "input": "-00012",
+    "value": "-12"
+  },
+  {
+    "input": "900719925474099312345678901234567890",
+    "value": "900719925474099312345678901234567890"
+  },
+  {
+    "input": "0xff",
+    "value": "255"
+  },
+  {
+    "input": "0XAB",
+    "value": "171"
+  },
+  {
+    "input": "0o17",
+    "value": "15"
+  },
+  {
+    "input": "0O17",
+    "value": "15"
+  },
+  {
+    "input": "0b101",
+    "value": "5"
+  },
+  {
+    "input": "0B101",
+    "value": "5"
+  },
+  {
+    "input": "+0xff",
+    "error": "--seed must be a big integer, found: +0xff"
+  },
+  {
+    "input": "-0xff",
+    "error": "--seed must be a big integer, found: -0xff"
+  },
+  {
+    "input": "+0o7",
+    "error": "--seed must be a big integer, found: +0o7"
+  },
+  {
+    "input": "-0b1",
+    "error": "--seed must be a big integer, found: -0b1"
+  },
+  {
+    "input": "0x",
+    "error": "--seed must be a big integer, found: 0x"
+  },
+  {
+    "input": "0o",
+    "error": "--seed must be a big integer, found: 0o"
+  },
+  {
+    "input": "0b",
+    "error": "--seed must be a big integer, found: 0b"
+  },
+  {
+    "input": "0xg",
+    "error": "--seed must be a big integer, found: 0xg"
+  },
+  {
+    "input": "0o8",
+    "error": "--seed must be a big integer, found: 0o8"
+  },
+  {
+    "input": "0b2",
+    "error": "--seed must be a big integer, found: 0b2"
+  },
+  {
+    "input": "1n",
+    "error": "--seed must be a big integer, found: 1n"
+  },
+  {
+    "input": "1.0",
+    "error": "--seed must be a big integer, found: 1.0"
+  },
+  {
+    "input": "1e3",
+    "error": "--seed must be a big integer, found: 1e3"
+  },
+  {
+    "input": "1_000",
+    "error": "--seed must be a big integer, found: 1_000"
+  },
+  {
+    "input": "0x1_0",
+    "error": "--seed must be a big integer, found: 0x1_0"
+  },
+  {
+    "input": "Infinity",
+    "error": "--seed must be a big integer, found: Infinity"
+  },
+  {
+    "input": "NaN",
+    "error": "--seed must be a big integer, found: NaN"
+  },
+  {
+    "input": "--1",
+    "error": "--seed must be a big integer, found: --1"
+  },
+  {
+    "input": "+",
+    "error": "--seed must be a big integer, found: +"
+  },
+  {
+    "input": "-",
+    "error": "--seed must be a big integer, found: -"
+  },
+  {
+    "input": "1 2",
+    "error": "--seed must be a big integer, found: 1 2"
+  },
+  {
+    "input": "１２",
+    "error": "--seed must be a big integer, found: １２"
+  },
+  {
+    "input": "١٢",
+    "error": "--seed must be a big integer, found: ١٢"
+  },
+  {
+    "input": "12",
+    "error": "--seed must be a big integer, found: 12"
+  },
+  {
+    "input": "᠎12",
+    "error": "--seed must be a big integer, found: ᠎12"
+  },
+  {
+    "input": "​12",
+    "error": "--seed must be a big integer, found: ​12"
+  },
+  {
+    "input": "﻿ -12 ﻿",
+    "value": "-12"
+  },
+  {
+    "input": "\t12\t",
+    "value": "12"
+  },
+  {
+    "input": "\n12\n",
+    "value": "12"
+  },
+  {
+    "input": "\u000b12\u000b",
+    "value": "12"
+  },
+  {
+    "input": "\f12\f",
+    "value": "12"
+  },
+  {
+    "input": "\r12\r",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": " 12 ",
+    "value": "12"
+  },
+  {
+    "input": "　12　",
+    "value": "12"
+  },
+  {
+    "input": "﻿12﻿",
+    "value": "12"
+  }
+]
