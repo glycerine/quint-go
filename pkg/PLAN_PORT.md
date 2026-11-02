@@ -226,7 +226,8 @@ analysis, with reproducible errors for invalid module structures.
   substitution, alias inlining, and recursive-alias rejection.
   - [x] Resolve outer aliases and recursively inline type-tree aliases by lookup ID.
   - [x] Preserve abstract types and reject cyclic alias expansion.
-  - [ ] Resolve parameterized type applications and transform module/type tables.
+  - [x] Resolve type-tree applications with fresh type/row parameters and arity errors.
+  - [ ] Transform module/type tables and validate full application-resolution parity.
 - [ ] P4.4 Port every builtin type signature and special constraint; maintain
   an opcode-to-signature coverage table to catch omissions.
 - [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
@@ -1189,3 +1190,13 @@ word "retained" in the commit message.
   type application arguments, shared aliases, and input immutability. Default
   tests pass (combined execution 0.521s). Full module/table alias transformations,
   parameterized applications, and inference integration remain pending.
+
+- 2026-11-02: Added TypeApplicationResolver for type-tree application expansion,
+  freshening both type and row parameters before argument substitution. Arity
+  errors retain applications and use upstream error-tree wording; invalid
+  constructor references and recursive applications return errors. Unit tests
+  cover nested constructors, swapped variables, record/variable row arguments,
+  too few/many arguments, malformed/abstract constructors, recursion, and input
+  immutability. Default tests pass under one second. Whole-module and lookup-table
+  transformation, upstream differential coverage, and inference integration remain
+  open; this is not yet the complete upstream type-application pass.
