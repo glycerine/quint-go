@@ -1541,3 +1541,11 @@ word "retained" in the commit message.
   non-topological input order, quantified exclusions, and output isolation.
   Default tests pass under one second. Lambda-stack and traversal integration
   remain open under P5.2.
+
+- 2026-11-02: Connected retained argument schemes, fresh builtin/user signatures,
+  effect unification, substitution composition, and argument/result updates in
+  EffectSignatureContext.InferApplication. Tests exercise arithmetic reads,
+  assignment updates, next-state temporal effects, invalid impure field labels,
+  and empty constructors. Full default tests pass (combined execution 0.692s).
+  This is the application-exit operation; recursive expression traversal,
+  lambda free-name updates, and declaration lifecycle remain pending under P5.2.
