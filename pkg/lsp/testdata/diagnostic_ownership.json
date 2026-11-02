@@ -1,0 +1,3042 @@
+{
+  "cases": [
+    {
+      "name": "main-clean",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { pure val answer = 42 }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      }
+    },
+    {
+      "name": "main-syntax-error",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { pure val broken = }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 32
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 33
+                  }
+                },
+                "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 32
+                },
+                "end": {
+                  "line": 0,
+                  "character": 33
+                }
+              },
+              "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+              "code": "QNT000",
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "analysisSkipped": true
+    },
+    {
+      "name": "main-name-error",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { pure val broken = unknown }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 32
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 39
+                  }
+                },
+                "message": "Name 'unknown' not found",
+                "code": "QNT404",
+                "data": {},
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 32
+                },
+                "end": {
+                  "line": 0,
+                  "character": 39
+                }
+              },
+              "message": "Name 'unknown' not found",
+              "code": "QNT404",
+              "data": {},
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "analysisSkipped": true
+    },
+    {
+      "name": "main-type-error",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { pure val broken = true + 1 }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 32
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 40
+                  }
+                },
+                "message": "Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (bool, int) => _t0\n",
+                "code": "QNT000",
+                "data": {
+                  "trace": {
+                    "location": "Trying to unify (int, int) => int and (bool, int) => _t0",
+                    "children": [
+                      {
+                        "location": "Trying to unify int and bool",
+                        "message": "Couldn't unify int and bool",
+                        "children": []
+                      }
+                    ]
+                  }
+                },
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 32
+                },
+                "end": {
+                  "line": 0,
+                  "character": 40
+                }
+              },
+              "message": "Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (bool, int) => _t0\n",
+              "code": "QNT000",
+              "data": {
+                "trace": {
+                  "location": "Trying to unify (int, int) => int and (bool, int) => _t0",
+                  "children": [
+                    {
+                      "location": "Trying to unify int and bool",
+                      "message": "Couldn't unify int and bool",
+                      "children": []
+                    }
+                  ]
+                }
+              },
+              "source": "quint"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "main-effect-qualifier-fix",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { var state: int pure val broken = state }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 38
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 44
+                  }
+                },
+                "message": "pure val operators may not interact with state variables, but operator `broken` reads variables 'state'. Use val instead.",
+                "code": "QNT200",
+                "data": {
+                  "fix": {
+                    "kind": "replace",
+                    "original": "pure val",
+                    "replacement": "val"
+                  }
+                },
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 38
+                },
+                "end": {
+                  "line": 0,
+                  "character": 44
+                }
+              },
+              "message": "pure val operators may not interact with state variables, but operator `broken` reads variables 'state'. Use val instead.",
+              "code": "QNT200",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              },
+              "source": "quint"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "main-multiple-update-effect-error",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { var state: int action broken = all { state' = 1, state' = 2 } }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 14
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 28
+                  }
+                },
+                "message": "Multiple updates of variable state",
+                "code": "QNT202",
+                "data": {},
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 14
+                },
+                "end": {
+                  "line": 0,
+                  "character": 28
+                }
+              },
+              "message": "Multiple updates of variable state",
+              "code": "QNT202",
+              "data": {},
+              "source": "quint"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "main-type-name-fix",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { type lower = int }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 14
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 30
+                  }
+                },
+                "message": "type names must start with an uppercase letter",
+                "code": "QNT007",
+                "data": {
+                  "fix": {
+                    "kind": "replace",
+                    "original": "type lower",
+                    "replacement": "type Lower"
+                  }
+                },
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 14
+                },
+                "end": {
+                  "line": 0,
+                  "character": 30
+                }
+              },
+              "message": "type names must start with an uppercase letter",
+              "code": "QNT007",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "type lower",
+                  "replacement": "type Lower"
+                }
+              },
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "analysisSkipped": true
+    },
+    {
+      "name": "main-map-type-fix",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { const values: Map[int, str] }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 28
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 41
+                  }
+                },
+                "message": "Use 'int -> str' instead of 'Map[int, str]' for map types",
+                "code": "QNT015",
+                "data": {
+                  "fix": {
+                    "kind": "replace",
+                    "original": "Map[int, str]",
+                    "replacement": "int -> str"
+                  }
+                },
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 28
+                },
+                "end": {
+                  "line": 0,
+                  "character": 41
+                }
+              },
+              "message": "Use 'int -> str' instead of 'Map[int, str]' for map types",
+              "code": "QNT015",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "Map[int, str]",
+                  "replacement": "int -> str"
+                }
+              },
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "analysisSkipped": true
+    },
+    {
+      "name": "imported-name-error",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { import Library.* from \"library\" pure val use = good }\n"
+        },
+        {
+          "path": "library.qnt",
+          "text": "module Library { pure val good = 1 pure val broken = unknown }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 53
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 60
+                  }
+                },
+                "message": "Name 'unknown' not found",
+                "code": "QNT404",
+                "data": {},
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysisSkipped": true
+    },
+    {
+      "name": "imported-type-error",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { import Library.* from \"library\" pure val use = good }\n"
+        },
+        {
+          "path": "library.qnt",
+          "text": "module Library { pure val good = 1 pure val broken = true + 1 }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 53
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 61
+                  }
+                },
+                "message": "Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (bool, int) => _t0\n",
+                "code": "QNT000",
+                "data": {
+                  "trace": {
+                    "location": "Trying to unify (int, int) => int and (bool, int) => _t0",
+                    "children": [
+                      {
+                        "location": "Trying to unify int and bool",
+                        "message": "Couldn't unify int and bool",
+                        "children": []
+                      }
+                    ]
+                  }
+                },
+                "source": "quint"
+              },
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 53
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 61
+                  }
+                },
+                "message": "Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (bool, int) => _t0\n",
+                "code": "QNT000",
+                "data": {
+                  "trace": {
+                    "location": "Trying to unify (int, int) => int and (bool, int) => _t0",
+                    "children": [
+                      {
+                        "location": "Trying to unify int and bool",
+                        "message": "Couldn't unify int and bool",
+                        "children": []
+                      }
+                    ]
+                  }
+                },
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      }
+    },
+    {
+      "name": "imported-effect-qualifier-fix",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { import Library.* from \"library\" pure val use = good }\n"
+        },
+        {
+          "path": "library.qnt",
+          "text": "module Library { var state: int pure val good = 1 pure val broken = state }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 59
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 65
+                  }
+                },
+                "message": "pure val operators may not interact with state variables, but operator `broken` reads variables 'state'. Use val instead.",
+                "code": "QNT200",
+                "data": {
+                  "fix": {
+                    "kind": "replace",
+                    "original": "pure val",
+                    "replacement": "val"
+                  }
+                },
+                "source": "quint"
+              },
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 59
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 65
+                  }
+                },
+                "message": "pure val operators may not interact with state variables, but operator `broken` reads variables 'state'. Use val instead.",
+                "code": "QNT200",
+                "data": {
+                  "fix": {
+                    "kind": "replace",
+                    "original": "pure val",
+                    "replacement": "val"
+                  }
+                },
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      }
+    },
+    {
+      "name": "imported-multiple-update-effect-error",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { import Library.* from \"library\" pure val use = good }\n"
+        },
+        {
+          "path": "library.qnt",
+          "text": "module Library { var state: int pure val good = 1 action broken = all { state' = 1, state' = 2 } }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 17
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 31
+                  }
+                },
+                "message": "Multiple updates of variable state",
+                "code": "QNT202",
+                "data": {},
+                "source": "quint"
+              },
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 17
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 31
+                  }
+                },
+                "message": "Multiple updates of variable state",
+                "code": "QNT202",
+                "data": {},
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      }
+    },
+    {
+      "name": "malformed-imported-source",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { import Library.* from \"library\" pure val use = good }\n"
+        },
+        {
+          "path": "library.qnt",
+          "text": "module Library { pure val good = 1 pure val broken = }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      }
+    },
+    {
+      "name": "malformed-imported-value-used-in-main-arithmetic",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module M { import A.* from \"a\" pure val x = value + 1 }\n"
+        },
+        {
+          "path": "a.qnt",
+          "text": "module A { pure val value = }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 44
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 53
+                  }
+                },
+                "message": "Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (bool, int) => _t0\n",
+                "code": "QNT000",
+                "data": {
+                  "trace": {
+                    "location": "Trying to unify (int, int) => int and (bool, int) => _t0",
+                    "children": [
+                      {
+                        "location": "Trying to unify int and bool",
+                        "message": "Couldn't unify int and bool",
+                        "children": []
+                      }
+                    ]
+                  }
+                },
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 44
+                },
+                "end": {
+                  "line": 0,
+                  "character": 53
+                }
+              },
+              "message": "Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (bool, int) => _t0\n",
+              "code": "QNT000",
+              "data": {
+                "trace": {
+                  "location": "Trying to unify (int, int) => int and (bool, int) => _t0",
+                  "children": [
+                    {
+                      "location": "Trying to unify int and bool",
+                      "message": "Couldn't unify int and bool",
+                      "children": []
+                    }
+                  ]
+                }
+              },
+              "source": "quint"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "recovering-main-keeps-neighboring-definition-references",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { pure val valid=1 pure val broken= pure val use=valid }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "navigation": {
+        "position": {
+          "line": 0,
+          "character": 61
+        },
+        "link": {
+          "nameId": 4,
+          "name": "valid",
+          "definitionId": 3
+        },
+        "target": {
+          "kind": "def",
+          "name": "valid"
+        },
+        "modules": [
+          {
+            "name": "Main",
+            "declarations": [
+              {
+                "kind": "def",
+                "name": "valid"
+              },
+              {
+                "kind": "def",
+                "name": "broken"
+              }
+            ]
+          }
+        ]
+      },
+      "parsing": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 67
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 68
+                  }
+                },
+                "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 67
+                },
+                "end": {
+                  "line": 0,
+                  "character": 68
+                }
+              },
+              "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+              "code": "QNT000",
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "analysisSkipped": true
+    },
+    {
+      "name": "multi-file-name-errors",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { import Library.* from \"library\" pure val use = unknownMain }\n"
+        },
+        {
+          "path": "library.qnt",
+          "text": "module Library { pure val good = 1 pure val broken = unknownLibrary }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 53
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 67
+                  }
+                },
+                "message": "Name 'unknownLibrary' not found",
+                "code": "QNT404",
+                "data": {},
+                "source": "quint"
+              }
+            ]
+          },
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 61
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 72
+                  }
+                },
+                "message": "Name 'unknownMain' not found",
+                "code": "QNT404",
+                "data": {},
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 61
+                },
+                "end": {
+                  "line": 0,
+                  "character": 72
+                }
+              },
+              "message": "Name 'unknownMain' not found",
+              "code": "QNT404",
+              "data": {},
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "analysisSkipped": true
+    },
+    {
+      "name": "multi-file-type-errors",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { import Library.* from \"library\" pure val use = false + 2 }\n"
+        },
+        {
+          "path": "library.qnt",
+          "text": "module Library { pure val good = 1 pure val broken = true + 1 }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 53
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 61
+                  }
+                },
+                "message": "Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (bool, int) => _t0\n",
+                "code": "QNT000",
+                "data": {
+                  "trace": {
+                    "location": "Trying to unify (int, int) => int and (bool, int) => _t0",
+                    "children": [
+                      {
+                        "location": "Trying to unify int and bool",
+                        "message": "Couldn't unify int and bool",
+                        "children": []
+                      }
+                    ]
+                  }
+                },
+                "source": "quint"
+              },
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 53
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 61
+                  }
+                },
+                "message": "Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (bool, int) => _t0\n",
+                "code": "QNT000",
+                "data": {
+                  "trace": {
+                    "location": "Trying to unify (int, int) => int and (bool, int) => _t0",
+                    "children": [
+                      {
+                        "location": "Trying to unify int and bool",
+                        "message": "Couldn't unify int and bool",
+                        "children": []
+                      }
+                    ]
+                  }
+                },
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      }
+    },
+    {
+      "name": "multi-file-effect-fixes",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { import Library.* from \"library\" var local: int pure val use = local }\n"
+        },
+        {
+          "path": "library.qnt",
+          "text": "module Library { var state: int pure val good = 1 pure val broken = state }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 59
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 65
+                  }
+                },
+                "message": "pure val operators may not interact with state variables, but operator `broken` reads variables 'state'. Use val instead.",
+                "code": "QNT200",
+                "data": {
+                  "fix": {
+                    "kind": "replace",
+                    "original": "pure val",
+                    "replacement": "val"
+                  }
+                },
+                "source": "quint"
+              },
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 59
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 65
+                  }
+                },
+                "message": "pure val operators may not interact with state variables, but operator `broken` reads variables 'state'. Use val instead.",
+                "code": "QNT200",
+                "data": {
+                  "fix": {
+                    "kind": "replace",
+                    "original": "pure val",
+                    "replacement": "val"
+                  }
+                },
+                "source": "quint"
+              }
+            ]
+          },
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 70
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 73
+                  }
+                },
+                "message": "pure val operators may not interact with state variables, but operator `use` reads variables 'local'. Use val instead.",
+                "code": "QNT200",
+                "data": {
+                  "fix": {
+                    "kind": "replace",
+                    "original": "pure val",
+                    "replacement": "val"
+                  }
+                },
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 70
+                },
+                "end": {
+                  "line": 0,
+                  "character": 73
+                }
+              },
+              "message": "pure val operators may not interact with state variables, but operator `use` reads variables 'local'. Use val instead.",
+              "code": "QNT200",
+              "data": {
+                "fix": {
+                  "kind": "replace",
+                  "original": "pure val",
+                  "replacement": "val"
+                }
+              },
+              "source": "quint"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "transitive-imported-name-error",
+      "files": [
+        {
+          "path": "main.qnt",
+          "text": "module Main { import Bridge.* from \"bridge\" pure val use = exposed }\n"
+        },
+        {
+          "path": "bridge.qnt",
+          "text": "module Bridge { import Library.* from \"nested/library\" pure val exposed = good }\n"
+        },
+        {
+          "path": "nested/library.qnt",
+          "text": "module Library { pure val good = 1 pure val broken = unknown }\n"
+        }
+      ],
+      "main": "main.qnt",
+      "parsing": {
+        "grouped": [
+          {
+            "source": "nested/library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 53
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 60
+                  }
+                },
+                "message": "Name 'unknown' not found",
+                "code": "QNT404",
+                "data": {},
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysisSkipped": true
+    }
+  ],
+  "helpers": [
+    {
+      "name": "no-reference-is-dropped",
+      "main": "main.qnt",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "No primary reference"
+        }
+      ],
+      "sourceMap": [
+        {
+          "id": 0,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        },
+        {
+          "id": 1,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          },
+          "end": {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          }
+        },
+        {
+          "id": 2,
+          "source": "library.qnt",
+          "start": {
+            "line": 1,
+            "col": 4,
+            "index": 24
+          },
+          "end": {
+            "line": 1,
+            "col": 9,
+            "index": 29
+          }
+        },
+        {
+          "id": 3,
+          "source": "main.qnt",
+          "start": {
+            "line": 2,
+            "col": 1,
+            "index": 41
+          }
+        }
+      ],
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "assembled": []
+    },
+    {
+      "name": "unknown-reference-is-dropped",
+      "main": "main.qnt",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "Unknown primary reference",
+          "reference": 99
+        }
+      ],
+      "sourceMap": [
+        {
+          "id": 0,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        },
+        {
+          "id": 1,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          },
+          "end": {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          }
+        },
+        {
+          "id": 2,
+          "source": "library.qnt",
+          "start": {
+            "line": 1,
+            "col": 4,
+            "index": 24
+          },
+          "end": {
+            "line": 1,
+            "col": 9,
+            "index": 29
+          }
+        },
+        {
+          "id": 3,
+          "source": "main.qnt",
+          "start": {
+            "line": 2,
+            "col": 1,
+            "index": 41
+          }
+        }
+      ],
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "assembled": []
+    },
+    {
+      "name": "missing-reference-with-valid-trace-is-dropped",
+      "main": "main.qnt",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "Trace cannot replace absent reference",
+          "trace": [
+            1,
+            2
+          ]
+        }
+      ],
+      "sourceMap": [
+        {
+          "id": 0,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        },
+        {
+          "id": 1,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          },
+          "end": {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          }
+        },
+        {
+          "id": 2,
+          "source": "library.qnt",
+          "start": {
+            "line": 1,
+            "col": 4,
+            "index": 24
+          },
+          "end": {
+            "line": 1,
+            "col": 9,
+            "index": 29
+          }
+        },
+        {
+          "id": 3,
+          "source": "main.qnt",
+          "start": {
+            "line": 2,
+            "col": 1,
+            "index": 41
+          }
+        }
+      ],
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "assembled": []
+    },
+    {
+      "name": "unknown-reference-with-valid-trace-is-dropped",
+      "main": "main.qnt",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "Trace cannot replace unknown reference",
+          "reference": 99,
+          "trace": [
+            1,
+            2
+          ]
+        }
+      ],
+      "sourceMap": [
+        {
+          "id": 0,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        },
+        {
+          "id": 1,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          },
+          "end": {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          }
+        },
+        {
+          "id": 2,
+          "source": "library.qnt",
+          "start": {
+            "line": 1,
+            "col": 4,
+            "index": 24
+          },
+          "end": {
+            "line": 1,
+            "col": 9,
+            "index": 29
+          }
+        },
+        {
+          "id": 3,
+          "source": "main.qnt",
+          "start": {
+            "line": 2,
+            "col": 1,
+            "index": 41
+          }
+        }
+      ],
+      "parsing": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "assembled": []
+    },
+    {
+      "name": "main-reference-with-imported-trace-stays-main",
+      "main": "main.qnt",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "Primary reference determines ownership",
+          "reference": 1,
+          "trace": [
+            2,
+            1
+          ]
+        }
+      ],
+      "sourceMap": [
+        {
+          "id": 0,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        },
+        {
+          "id": 1,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          },
+          "end": {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          }
+        },
+        {
+          "id": 2,
+          "source": "library.qnt",
+          "start": {
+            "line": 1,
+            "col": 4,
+            "index": 24
+          },
+          "end": {
+            "line": 1,
+            "col": 9,
+            "index": 29
+          }
+        },
+        {
+          "id": 3,
+          "source": "main.qnt",
+          "start": {
+            "line": 2,
+            "col": 1,
+            "index": 41
+          }
+        }
+      ],
+      "parsing": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 8
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 12
+                  }
+                },
+                "message": "Primary reference determines ownership",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 8
+                },
+                "end": {
+                  "line": 0,
+                  "character": 12
+                }
+              },
+              "message": "Primary reference determines ownership",
+              "code": "QNT000",
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 8
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 12
+                  }
+                },
+                "message": "Primary reference determines ownership",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 8
+                },
+                "end": {
+                  "line": 0,
+                  "character": 12
+                }
+              },
+              "message": "Primary reference determines ownership",
+              "code": "QNT000",
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "assembled": [
+        {
+          "source": "main.qnt",
+          "diagnostic": {
+            "severity": 1,
+            "range": {
+              "start": {
+                "line": 0,
+                "character": 8
+              },
+              "end": {
+                "line": 0,
+                "character": 12
+              }
+            },
+            "message": "Primary reference determines ownership",
+            "code": "QNT000",
+            "source": "quint"
+          }
+        }
+      ]
+    },
+    {
+      "name": "imported-reference-with-main-trace-stays-imported",
+      "main": "main.qnt",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "Imported primary reference determines ownership",
+          "reference": 2,
+          "trace": [
+            1,
+            2
+          ]
+        }
+      ],
+      "sourceMap": [
+        {
+          "id": 0,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        },
+        {
+          "id": 1,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          },
+          "end": {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          }
+        },
+        {
+          "id": 2,
+          "source": "library.qnt",
+          "start": {
+            "line": 1,
+            "col": 4,
+            "index": 24
+          },
+          "end": {
+            "line": 1,
+            "col": 9,
+            "index": 29
+          }
+        },
+        {
+          "id": 3,
+          "source": "main.qnt",
+          "start": {
+            "line": 2,
+            "col": 1,
+            "index": 41
+          }
+        }
+      ],
+      "parsing": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 1,
+                    "character": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "character": 10
+                  }
+                },
+                "message": "Imported primary reference determines ownership",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 1,
+                    "character": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "character": 10
+                  }
+                },
+                "message": "Imported primary reference determines ownership",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "assembled": [
+        {
+          "source": "library.qnt",
+          "diagnostic": {
+            "severity": 1,
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 4
+              },
+              "end": {
+                "line": 1,
+                "character": 10
+              }
+            },
+            "message": "Imported primary reference determines ownership",
+            "code": "QNT000",
+            "source": "quint"
+          }
+        }
+      ]
+    },
+    {
+      "name": "unknown-trace-frames-are-ignored",
+      "main": "main.qnt",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "Trace frames do not produce related information",
+          "reference": 1,
+          "trace": [
+            99,
+            2
+          ]
+        }
+      ],
+      "sourceMap": [
+        {
+          "id": 0,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        },
+        {
+          "id": 1,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          },
+          "end": {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          }
+        },
+        {
+          "id": 2,
+          "source": "library.qnt",
+          "start": {
+            "line": 1,
+            "col": 4,
+            "index": 24
+          },
+          "end": {
+            "line": 1,
+            "col": 9,
+            "index": 29
+          }
+        },
+        {
+          "id": 3,
+          "source": "main.qnt",
+          "start": {
+            "line": 2,
+            "col": 1,
+            "index": 41
+          }
+        }
+      ],
+      "parsing": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 8
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 12
+                  }
+                },
+                "message": "Trace frames do not produce related information",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 8
+                },
+                "end": {
+                  "line": 0,
+                  "character": 12
+                }
+              },
+              "message": "Trace frames do not produce related information",
+              "code": "QNT000",
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 8
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 12
+                  }
+                },
+                "message": "Trace frames do not produce related information",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 8
+                },
+                "end": {
+                  "line": 0,
+                  "character": 12
+                }
+              },
+              "message": "Trace frames do not produce related information",
+              "code": "QNT000",
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "assembled": [
+        {
+          "source": "main.qnt",
+          "diagnostic": {
+            "severity": 1,
+            "range": {
+              "start": {
+                "line": 0,
+                "character": 8
+              },
+              "end": {
+                "line": 0,
+                "character": 12
+              }
+            },
+            "message": "Trace frames do not produce related information",
+            "code": "QNT000",
+            "source": "quint"
+          }
+        }
+      ]
+    },
+    {
+      "name": "zero-reference-id-is-valid-when-present",
+      "main": "main.qnt",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "Zero is a valid source-map key",
+          "reference": 0
+        }
+      ],
+      "sourceMap": [
+        {
+          "id": 0,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        },
+        {
+          "id": 1,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          },
+          "end": {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          }
+        },
+        {
+          "id": 2,
+          "source": "library.qnt",
+          "start": {
+            "line": 1,
+            "col": 4,
+            "index": 24
+          },
+          "end": {
+            "line": 1,
+            "col": 9,
+            "index": 29
+          }
+        },
+        {
+          "id": 3,
+          "source": "main.qnt",
+          "start": {
+            "line": 2,
+            "col": 1,
+            "index": 41
+          }
+        }
+      ],
+      "parsing": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 0
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 6
+                  }
+                },
+                "message": "Zero is a valid source-map key",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 6
+                }
+              },
+              "message": "Zero is a valid source-map key",
+              "code": "QNT000",
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 0
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 6
+                  }
+                },
+                "message": "Zero is a valid source-map key",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 6
+                }
+              },
+              "message": "Zero is a valid source-map key",
+              "code": "QNT000",
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "assembled": [
+        {
+          "source": "main.qnt",
+          "diagnostic": {
+            "severity": 1,
+            "range": {
+              "start": {
+                "line": 0,
+                "character": 0
+              },
+              "end": {
+                "line": 0,
+                "character": 6
+              }
+            },
+            "message": "Zero is a valid source-map key",
+            "code": "QNT000",
+            "source": "quint"
+          }
+        }
+      ]
+    },
+    {
+      "name": "location-without-end-has-zero-width",
+      "main": "main.qnt",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "No end location",
+          "reference": 3
+        }
+      ],
+      "sourceMap": [
+        {
+          "id": 0,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        },
+        {
+          "id": 1,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          },
+          "end": {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          }
+        },
+        {
+          "id": 2,
+          "source": "library.qnt",
+          "start": {
+            "line": 1,
+            "col": 4,
+            "index": 24
+          },
+          "end": {
+            "line": 1,
+            "col": 9,
+            "index": 29
+          }
+        },
+        {
+          "id": 3,
+          "source": "main.qnt",
+          "start": {
+            "line": 2,
+            "col": 1,
+            "index": 41
+          }
+        }
+      ],
+      "parsing": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 2,
+                    "character": 1
+                  },
+                  "end": {
+                    "line": 2,
+                    "character": 1
+                  }
+                },
+                "message": "No end location",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 2,
+                  "character": 1
+                },
+                "end": {
+                  "line": 2,
+                  "character": 1
+                }
+              },
+              "message": "No end location",
+              "code": "QNT000",
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 2,
+                    "character": 1
+                  },
+                  "end": {
+                    "line": 2,
+                    "character": 1
+                  }
+                },
+                "message": "No end location",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 2,
+                  "character": 1
+                },
+                "end": {
+                  "line": 2,
+                  "character": 1
+                }
+              },
+              "message": "No end location",
+              "code": "QNT000",
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "assembled": [
+        {
+          "source": "main.qnt",
+          "diagnostic": {
+            "severity": 1,
+            "range": {
+              "start": {
+                "line": 2,
+                "character": 1
+              },
+              "end": {
+                "line": 2,
+                "character": 1
+              }
+            },
+            "message": "No end location",
+            "code": "QNT000",
+            "source": "quint"
+          }
+        }
+      ]
+    },
+    {
+      "name": "imported-fix-and-inference-data-stay-on-origin",
+      "main": "main.qnt",
+      "errors": [
+        {
+          "code": "QNT200",
+          "message": "Imported fix data is preserved",
+          "reference": 2,
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "pure val",
+              "replacement": "val"
+            },
+            "trace": {
+              "location": "synthetic inference context",
+              "message": "Inference detail",
+              "children": []
+            }
+          }
+        }
+      ],
+      "sourceMap": [
+        {
+          "id": 0,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        },
+        {
+          "id": 1,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          },
+          "end": {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          }
+        },
+        {
+          "id": 2,
+          "source": "library.qnt",
+          "start": {
+            "line": 1,
+            "col": 4,
+            "index": 24
+          },
+          "end": {
+            "line": 1,
+            "col": 9,
+            "index": 29
+          }
+        },
+        {
+          "id": 3,
+          "source": "main.qnt",
+          "start": {
+            "line": 2,
+            "col": 1,
+            "index": 41
+          }
+        }
+      ],
+      "parsing": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 1,
+                    "character": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "character": 10
+                  }
+                },
+                "message": "Imported fix data is preserved",
+                "code": "QNT200",
+                "data": {
+                  "fix": {
+                    "kind": "replace",
+                    "original": "pure val",
+                    "replacement": "val"
+                  },
+                  "trace": {
+                    "location": "synthetic inference context",
+                    "message": "Inference detail",
+                    "children": []
+                  }
+                },
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 1,
+                    "character": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "character": 10
+                  }
+                },
+                "message": "Imported fix data is preserved",
+                "code": "QNT200",
+                "data": {
+                  "fix": {
+                    "kind": "replace",
+                    "original": "pure val",
+                    "replacement": "val"
+                  },
+                  "trace": {
+                    "location": "synthetic inference context",
+                    "message": "Inference detail",
+                    "children": []
+                  }
+                },
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": []
+        }
+      },
+      "assembled": [
+        {
+          "source": "library.qnt",
+          "diagnostic": {
+            "severity": 1,
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 4
+              },
+              "end": {
+                "line": 1,
+                "character": 10
+              }
+            },
+            "message": "Imported fix data is preserved",
+            "code": "QNT200",
+            "data": {
+              "fix": {
+                "kind": "replace",
+                "original": "pure val",
+                "replacement": "val"
+              },
+              "trace": {
+                "location": "synthetic inference context",
+                "message": "Inference detail",
+                "children": []
+              }
+            },
+            "source": "quint"
+          }
+        }
+      ]
+    },
+    {
+      "name": "multiple-file-diagnostics-preserve-input-order",
+      "main": "main.qnt",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "First imported error",
+          "reference": 2
+        },
+        {
+          "code": "QNT404",
+          "message": "Main error",
+          "reference": 1
+        },
+        {
+          "code": "QNT000",
+          "message": "Second imported error",
+          "reference": 2
+        },
+        {
+          "code": "QNT000",
+          "message": "Unknown error omitted",
+          "reference": 99
+        }
+      ],
+      "sourceMap": [
+        {
+          "id": 0,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          },
+          "end": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        },
+        {
+          "id": 1,
+          "source": "main.qnt",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          },
+          "end": {
+            "line": 0,
+            "col": 11,
+            "index": 11
+          }
+        },
+        {
+          "id": 2,
+          "source": "library.qnt",
+          "start": {
+            "line": 1,
+            "col": 4,
+            "index": 24
+          },
+          "end": {
+            "line": 1,
+            "col": 9,
+            "index": 29
+          }
+        },
+        {
+          "id": 3,
+          "source": "main.qnt",
+          "start": {
+            "line": 2,
+            "col": 1,
+            "index": 41
+          }
+        }
+      ],
+      "parsing": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 1,
+                    "character": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "character": 10
+                  }
+                },
+                "message": "First imported error",
+                "code": "QNT000",
+                "source": "quint"
+              },
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 1,
+                    "character": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "character": 10
+                  }
+                },
+                "message": "Second imported error",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          },
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 8
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 12
+                  }
+                },
+                "message": "Main error",
+                "code": "QNT404",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 8
+                },
+                "end": {
+                  "line": 0,
+                  "character": 12
+                }
+              },
+              "message": "Main error",
+              "code": "QNT404",
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "analysis": {
+        "grouped": [
+          {
+            "source": "library.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 1,
+                    "character": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "character": 10
+                  }
+                },
+                "message": "First imported error",
+                "code": "QNT000",
+                "source": "quint"
+              },
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 1,
+                    "character": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "character": 10
+                  }
+                },
+                "message": "Second imported error",
+                "code": "QNT000",
+                "source": "quint"
+              }
+            ]
+          },
+          {
+            "source": "main.qnt",
+            "diagnostics": [
+              {
+                "severity": 1,
+                "range": {
+                  "start": {
+                    "line": 0,
+                    "character": 8
+                  },
+                  "end": {
+                    "line": 0,
+                    "character": 12
+                  }
+                },
+                "message": "Main error",
+                "code": "QNT404",
+                "source": "quint"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "uri": "main.qnt",
+          "diagnostics": [
+            {
+              "severity": 1,
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 8
+                },
+                "end": {
+                  "line": 0,
+                  "character": 12
+                }
+              },
+              "message": "Main error",
+              "code": "QNT404",
+              "source": "quint"
+            }
+          ]
+        }
+      },
+      "assembled": [
+        {
+          "source": "library.qnt",
+          "diagnostic": {
+            "severity": 1,
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 4
+              },
+              "end": {
+                "line": 1,
+                "character": 10
+              }
+            },
+            "message": "First imported error",
+            "code": "QNT000",
+            "source": "quint"
+          }
+        },
+        {
+          "source": "main.qnt",
+          "diagnostic": {
+            "severity": 1,
+            "range": {
+              "start": {
+                "line": 0,
+                "character": 8
+              },
+              "end": {
+                "line": 0,
+                "character": 12
+              }
+            },
+            "message": "Main error",
+            "code": "QNT404",
+            "source": "quint"
+          }
+        },
+        {
+          "source": "library.qnt",
+          "diagnostic": {
+            "severity": 1,
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 4
+              },
+              "end": {
+                "line": 1,
+                "character": 10
+              }
+            },
+            "message": "Second imported error",
+            "code": "QNT000",
+            "source": "quint"
+          }
+        }
+      ]
+    }
+  ]
+}

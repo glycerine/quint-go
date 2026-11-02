@@ -746,7 +746,9 @@ This follows the core CLI milestone but remains tracked for tooling parity.
     enclosing applications and UTF-16 spans; 39 actual upstream fixtures.
   - [x] Diagnostic quick fixes and protocol dispatch; 24 handler fixtures,
     current-buffer validation and safe qualifier edits with reanalysis.
-  - [ ] Complete imported diagnostic grouping, recovery and workspace audits.
+  - [x] Group diagnostics by the primary reference's source and publish only the
+    requested document's group; preserve origin-owned fixes and recovered navigation.
+  - [ ] Complete unsupported parser-conversion and broader workspace audits.
 - [x] P11.4 Update editor launch/build configuration and run protocol-level
   regressions for edits, imports, incomplete syntax, and cross-file navigation.
   - [x] Protocol tests for edits, imports, malformed input, lifecycle, stale
@@ -3276,3 +3278,11 @@ word "retained" in the commit message.
   with translator99.4% and compilation100% coverage. Unicode/escaped capture
   names, nested classes and capture-reset-dependent nested refs remain explicit
   limits; coarse engine timing is documented rather than claimed hard25ms.
+
+- 2026-11-02: Matched upstream LSP source grouping and main-document publication.
+  Primary-reference ownership replaces trace-first relocation; fixes remain with
+  the correct document and unknown references are omitted. Recovering parsing
+  preserves current navigation and skips analysis after syntax errors. Nineteen
+  actual source graphs,11 helper/publication fixtures and protocol overlay/fix
+  tests pass. Full LSP0.135s, helper100% coverage, race1.523s and vet/review pass.
+  Unstructured unsupported parser conversions and broader workspace audit remain.

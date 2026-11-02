@@ -2,7 +2,6 @@ package lsp
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"net/url"
@@ -101,7 +100,7 @@ func analyzeDocument(ctx context.Context, document Document, overlays *insdict.D
 	}
 	resolver := &overlayResolver{ctx: ctx, files: overlays, loaded: snapshot.Sources, disk: quint.NewFileSourceResolver(nil, nil)}
 	main := quint.SourceLookupPath{NormalizedPath: path, SourceName: path}
-	snapshot.Frontend, err = quint.ParseProject(resolver, main)
+	snapshot.Frontend, err = quint.ParseProjectRecovering(resolver, main)
 	if err == nil && ctx.Err() == nil && snapshot.Frontend.Table != nil && len(snapshot.Frontend.Diagnostics) == 0 {
 		snapshot.Analysis, err = quint.AnalyzeModules(snapshot.Frontend.Modules, snapshot.Frontend.Table)
 		if err == nil {
@@ -116,64 +115,30 @@ func analyzeDocument(ctx context.Context, document Document, overlays *insdict.D
 	if ctx.Err() != nil {
 		return snapshot, ctx.Err()
 	}
-	for _, diagnostic := range snapshot.Frontend.Diagnostics {
-		snapshot.Diagnostics = append(snapshot.Diagnostics, convertDiagnostic(path, snapshot.Frontend.Sources, diagnostic))
-	}
-	for _, diagnostic := range snapshot.Analysis.Diagnostics {
-		snapshot.Diagnostics = append(snapshot.Diagnostics, convertDiagnostic(path, snapshot.Frontend.Sources, diagnostic))
-	}
+	diagnostics := append([]quint.Diagnostic{}, snapshot.Frontend.Diagnostics...)
+	diagnostics = append(diagnostics, snapshot.Analysis.Diagnostics...)
+	snapshot.Diagnostics = diagnosticsForSource(diagnosticsBySource(snapshot.Frontend.Sources, diagnostics), path)
 	if err != nil {
 		var syntax *quint.SyntaxErrors
 		var diagnostic quint.Diagnostic
 		switch {
 		case errors.As(err, &syntax):
 			for _, issue := range syntax.Issues {
+				if syntax.Source != "" && syntax.Source != path {
+					continue
+				}
 				position := Position{Line: issue.Position.Line, Character: issue.Position.Col}
 				item := Diagnostic{Range: Range{Start: position, End: position}, Severity: 1, Code: issue.Code, Source: "quint", Message: issue.Message}
-				if syntax.Source != "" && syntax.Source != path {
-					item.Range = Range{}
-					item.RelatedInformation = []DiagnosticRelatedInformation{{Location: Location{URI: uriForSource(syntax.Source), Range: Range{Start: position, End: position}}, Message: issue.Message}}
-				}
 				snapshot.Diagnostics = append(snapshot.Diagnostics, item)
 			}
 		case errors.As(err, &diagnostic):
-			snapshot.Diagnostics = append(snapshot.Diagnostics, convertDiagnostic(path, snapshot.Frontend.Sources, diagnostic))
+			owned := diagnosticsForSource(diagnosticsBySource(snapshot.Frontend.Sources, []quint.Diagnostic{diagnostic}), path)
+			snapshot.Diagnostics = append(snapshot.Diagnostics, owned...)
 		default:
 			snapshot.Diagnostics = append(snapshot.Diagnostics, Diagnostic{Severity: 1, Source: "quint", Message: err.Error()})
 		}
 	}
 	return snapshot, nil
-}
-func convertDiagnostic(path string, sources quint.SourceMap, diagnostic quint.Diagnostic) Diagnostic {
-	out := Diagnostic{Severity: 1, Code: diagnostic.Code, Source: "quint", Message: diagnostic.Message}
-	resolved := quint.ResolveDiagnostic(sources, diagnostic)
-	if diagnostic.Data != nil {
-		data := diagnostic.Data
-		if data.Fix != nil && (len(resolved.Locations) == 0 || resolved.Locations[0].Source != path) {
-			// Imported errors are currently represented as related information
-			// on the requesting document. Their fixes belong to the origin
-			// source and must never produce an edit against this document.
-			if data.Trace == nil {
-				data = nil
-			} else {
-				copy := *data
-				copy.Fix = nil
-				data = &copy
-			}
-		}
-		if data != nil {
-			out.Data, _ = json.Marshal(data)
-		}
-	}
-	for _, location := range append(resolved.Locations, resolved.TraceLocations...) {
-		span := rangeForLocation(location)
-		if location.Source == path && out.Range == (Range{}) {
-			out.Range = span
-			continue
-		}
-		out.RelatedInformation = append(out.RelatedInformation, DiagnosticRelatedInformation{Location: Location{URI: uriForSource(location.Source), Range: span}, Message: diagnostic.Message})
-	}
-	return out
 }
 func rangeForLocation(location quint.Location) Range {
 	start := Position{Line: location.Start.Line, Character: location.Start.Col}

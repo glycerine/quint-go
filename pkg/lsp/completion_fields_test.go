@@ -119,8 +119,8 @@ func TestSemanticCompletionUsesCurrentScopesAliasesAndImportBuffers(t *testing.T
 		t.Fatal("completion mutated its original snapshot", snapshot)
 	}
 	snapshot, got = fieldCompletionTest(t, `module M { import Lib from "lib" pure val emoji = "😀" pure val use = Lib::r.| }`, files)
-	if snapshot.Frontend.Table != nil || snapshot.Sources.Get("/fields/lib.qnt") != files.Get("/fields/lib.qnt") {
-		t.Fatal("incomplete main did not retain current imported buffer")
+	if snapshot.Frontend.Table == nil || len(snapshot.Frontend.Diagnostics) == 0 || snapshot.Analysis.Types != nil || snapshot.Sources.Get("/fields/lib.qnt") != files.Get("/fields/lib.qnt") {
+		t.Fatal("incomplete main did not retain current parsing and imported buffer")
 	}
 	if len(got.Items) != 3 || got.Items[2].Label != "imported" || got.Items[2].Detail != "int" {
 		t.Fatal("incomplete main completion lost its import overlay", got)

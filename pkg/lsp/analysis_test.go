@@ -2,7 +2,6 @@ package lsp
 
 import (
 	"context"
-	"strings"
 	"testing"
 
 	"github.com/glycerine/insdict"
@@ -93,7 +92,9 @@ func TestGoDocumentAnalysis(t *testing.T) {
 	}
 	overlays.Set("/tmp/a.qnt", `module A { pure val value = }`)
 	snapshot, err = analyzeDocument(context.Background(), doc, overlays)
-	if err != nil || len(snapshot.Diagnostics) == 0 || len(snapshot.Diagnostics[0].RelatedInformation) != 1 || snapshot.Diagnostics[0].RelatedInformation[0].Location.URI != "file:///tmp/a.qnt" {
+	// Upstream drops the import's phase-one diagnostic, but its recovered
+	// Boolean placeholder still produces a type error at this main-file use.
+	if err != nil || len(snapshot.Diagnostics) != 1 || snapshot.Diagnostics[0].Code != "QNT000" || len(snapshot.Diagnostics[0].RelatedInformation) != 0 {
 		t.Fatal(err, snapshot.Diagnostics)
 	}
 	ctx, cancel := context.WithCancel(context.Background())
@@ -108,8 +109,9 @@ func TestDiagnosticRanges(t *testing.T) {
 	other, _ := quint.ParseID("2")
 	end := quint.Position{Line: 1, Col: 8}
 	sources := quint.SourceMap{id: {Source: "/tmp/main.qnt", Start: quint.Position{Line: 1, Col: 4}, End: &end}, other: {Source: "/tmp/other.qnt", Start: quint.Position{Col: 2}}}
-	got := convertDiagnostic("/tmp/main.qnt", sources, quint.Diagnostic{Code: "QNT123", Message: "details", Reference: &id, Trace: []quint.ID{id, other}})
-	if got.Range.Start.Line != 1 || got.Range.Start.Character != 4 || got.Range.End.Character != 8 || got.Code != "QNT123" || len(got.RelatedInformation) != 1 || !strings.HasSuffix(got.RelatedInformation[0].Location.URI, "other.qnt") {
+	groups := diagnosticsBySource(sources, []quint.Diagnostic{{Code: "QNT123", Message: "details", Reference: &id, Trace: []quint.ID{id, other}}})
+	got := diagnosticsForSource(groups, "/tmp/main.qnt")[0]
+	if got.Range.Start.Line != 1 || got.Range.Start.Character != 4 || got.Range.End.Character != 8 || got.Code != "QNT123" || len(got.RelatedInformation) != 0 {
 		t.Fatal(got)
 	}
 }

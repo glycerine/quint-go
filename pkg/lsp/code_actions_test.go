@@ -263,32 +263,28 @@ func TestCodeActionDiagnosticDataOwnershipAndSource(t *testing.T) {
 	sources := quint.SourceMap{id: {Source: path, Start: quint.Position{}, End: &end}}
 	data := &quint.DiagnosticData{Fix: &quint.DiagnosticFix{Kind: "replace", Original: "pure val", Replacement: "val"}}
 	diagnostic := quint.Diagnostic{Reference: &id, Data: data}
-	local := convertDiagnostic(path, sources, diagnostic)
+	local := diagnosticsForSource(diagnosticsBySource(sources, []quint.Diagnostic{diagnostic}), path)[0]
 	data.Fix.Replacement = "action"
 	if !bytes.Contains(local.Data, []byte(`"replacement":"val"`)) {
 		t.Fatal("published fix aliases inference data", string(local.Data))
 	}
-	foreign := convertDiagnostic("/quickfix/other.qnt", sources, diagnostic)
-	if len(foreign.Data) != 0 || len(foreign.RelatedInformation) != 1 {
+	foreign := diagnosticsForSource(diagnosticsBySource(sources, []quint.Diagnostic{diagnostic}), "/quickfix/other.qnt")
+	if len(foreign) != 0 {
 		t.Fatal("foreign fix leaked into requesting document", foreign)
 	}
 	trace := quint.ErrorLeaf("source", "details")
 	data.Trace = &trace
-	foreign = convertDiagnostic("/quickfix/other.qnt", sources, diagnostic)
-	if !bytes.Contains(foreign.Data, []byte(`"trace"`)) || bytes.Contains(foreign.Data, []byte(`"fix"`)) || data.Fix == nil {
-		t.Fatal("foreign fix filtering lost trace or changed original data", string(foreign.Data))
+	groups := diagnosticsBySource(sources, []quint.Diagnostic{diagnostic})
+	foreign = diagnosticsForSource(groups, "/quickfix/other.qnt")
+	if len(foreign) != 0 || !bytes.Contains(diagnosticsForSource(groups, path)[0].Data, []byte(`"trace"`)) || data.Fix == nil {
+		t.Fatal("source grouping lost trace or changed original data", foreign)
 	}
 	files := insdict.NewDict[string, string]()
 	files.Set(path, "module M { import Lib.* from \"lib\" pure val n=1 }")
 	files.Set("/quickfix/lib.qnt", "module Lib { var x:int pure val bad=x }")
 	snapshot, err := analyzeDocument(context.Background(), Document{URI: uriForSource(path), Text: files.Get(path)}, files)
-	if err != nil || len(snapshot.Diagnostics) == 0 {
+	if err != nil || len(snapshot.Diagnostics) != 0 {
 		t.Fatal(err, snapshot.Diagnostics)
-	}
-	for _, diagnostic := range snapshot.Diagnostics {
-		if len(diagnostic.Data) != 0 || len(diagnostic.RelatedInformation) == 0 || !strings.HasSuffix(diagnostic.RelatedInformation[0].Location.URI, "/lib.qnt") {
-			t.Fatal("imported fix exposed against the main source", diagnostic)
-		}
 	}
 }
 

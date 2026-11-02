@@ -980,3 +980,12 @@ Unicode capture names, nested class syntax and capture-reset-dependent nested
 backreferences remain explicit rejections. Definition names are ASCII. Matching
 has a 25ms engine budget with a coarse timer (about 200ms observed cancellation
 latency), checked context before/after, and no Node/runtime process dependency.
+
+LSP `testdata/diagnostic_ownership.json` has 19 actual source graphs and 11
+helper/publication cases from its matching generator. Primary references own
+errors regardless of trace frames; absent references are omitted, imported fixes
+stay on their origin, and each requesting document publishes only its own group.
+Recovered parsing preserves navigation while suppressing later analysis after
+syntax diagnostics. RPC tests cover imported open buffers, unsaved fixes and
+recovery followed by correction. Unstructured unsupported parser-conversion
+errors remain a generic fallback, separately tracked from language diagnostics.
