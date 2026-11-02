@@ -384,8 +384,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     next-state snapshots/recovery, current record export, and shift cache reset.
   - [x] Optional action/pick metadata, metadata snapshot/reset semantics, and
     from-record restoration with cache clearing and variable-name precedence.
-  - [ ] Evaluator variable/assignment integration and action composition with
-    rollback/commit.
+  - [x] Registered current-state reads and primed assignments through expression
+    evaluation, including lazy branches and simultaneous next-state updates.
+  - [ ] Stateful module/instance binding, primed-read support, action composition,
+    transactional rollback/commit, and simulation integration.
 - [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
   empty choices, and bounded sampling of infinite domains.
 - [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
@@ -2417,3 +2419,18 @@ word "retained" in the commit message.
   and variable-name collisions. Full default tests pass (combined package
   execution 1.045s, near the one-second target). Variable/assignment evaluation,
   action composition, and transactional rollback/commit remain open under P7.5.
+
+- 2026-11-02: Added EvaluateStateExpression by sharing the pure evaluator's
+  dispatch with registered current-state reads and primed assignment IR. Reads
+  preserve QNT502 unset diagnostics with source references; assignment evaluates
+  RHS in the calling lexical/current-state context, updates only next registers,
+  and returns true. Lazy conditionals/Boolean branches retain their existing
+  behavior, and multiple assignments overwrite in evaluation order as upstream.
+  Twenty-four full TypeScript runtime transitions match outputs/errors and
+  current records, including pre-shift reads, swaps, repeated writes, skipped
+  assignments, missing next-state values, failed RHS, and local RHS bindings.
+  Unit tests cover invalid targets/arity, local shadowing, unchanged registers
+  after RHS failure, cancellation, and pure-context rejection. Full default tests
+  pass (combined package execution 1.015s, near the one-second target). Stateful
+  module/instance binding, primed reads, action composition, transactional
+  rollback/commit, and simulation remain open.

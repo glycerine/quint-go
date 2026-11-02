@@ -13,6 +13,20 @@ import (
 // Module definition lookup and stateful operations belong
 // to the full evaluator and are not yet handled here.
 func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue]) (RuntimeValue, error) {
+	return evaluateExpression(ctx, expression, bindings, nil)
+}
+
+// EvaluateStateExpression adds registered variable reads and assignments to the
+// pure evaluator. Assignments update next registers; callers explicitly shift
+// or recover storage when composing actions.
+func EvaluateStateExpression(ctx context.Context, expression Expr, storage *VariableStorage) (RuntimeValue, error) {
+	if storage == nil {
+		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "State evaluation requires variable storage"}
+	}
+	return evaluateExpression(ctx, expression, nil, storage)
+}
+
+func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue], storage *VariableStorage) (RuntimeValue, error) {
 	if bindings != nil {
 		owned := insdict.NewDict[string, RuntimeValue]()
 		for name, value := range bindings.All() {
@@ -50,6 +64,19 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 			if bindings != nil {
 				if value, ok := bindings.Get2(e.Name); ok && value.Valid() {
 					return value, nil
+				}
+			}
+			if storage != nil {
+				for _, register := range storage.current.All() {
+					if register.Name == e.Name {
+						value, err := register.Read()
+						if d, ok := err.(Diagnostic); ok {
+							id := e.ID
+							d.Reference = &id
+							err = d
+						}
+						return value, err
+					}
 				}
 			}
 			return fail(e, "Unbound runtime name: "+e.Name)
@@ -148,6 +175,27 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 			return v.expression.Bool, nil
 		}
 		switch e.Opcode {
+		case "assign":
+			if storage == nil {
+				return fail(e, "Assignment requires variable storage")
+			}
+			if len(e.Args) != 2 || e.Args[0].Kind != "name" {
+				return fail(e, "Assignment requires a variable and value")
+			}
+			if _, local := lookup(e.Args[0].Name); local {
+				return fail(e, "Assignment target is a local binding")
+			}
+			for key, register := range storage.current.All() {
+				if register.Name == e.Args[0].Name {
+					value, err := eval(e.Args[1])
+					if err != nil {
+						return RuntimeValue{}, err
+					}
+					storage.next.Get(key).Value = value
+					return boolValue(true)
+				}
+			}
+			return fail(e, "Unknown assignment variable: "+e.Args[0].Name)
 		case "matchVariant":
 			if len(e.Args) < 1 || len(e.Args)%2 != 1 {
 				return fail(e, "matchVariant requires a value and label/branch pairs")

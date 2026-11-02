@@ -368,3 +368,11 @@ through snapshots, recovery, shift, clear/reset, and record restoration. The
 reference's retained Some variant on import (and resulting nested Some on
 subsequent export) is captured exactly. Unit tests add cache clearing, reusable
 snapshot ownership, malformed metadata, and variable-name precedence.
+
+`runtime_assignment.json` is regenerated with
+`node pkg/grammar/runtime_assignment_fixtures.cjs`. Twenty-four full TypeScript
+evaluator transitions compare outputs/errors and current records through
+variable reads, primed assignments, shifts, simultaneous swaps, repeated writes,
+lazy branches, local RHS bindings, and failed RHS evaluation. Unit tests check
+source references, stable registers on RHS failure, invalid targets, local-name
+shadowing, cancellation, and rejection by the pure evaluator.
