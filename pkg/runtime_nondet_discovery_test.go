@@ -40,11 +40,11 @@ func loadNondetDiscovery(t *testing.T) (expressions []nondetDiscoveryExpressionF
 	return fixture.Expressions, fixture.Module, fixture.Steps
 }
 func TestUpstreamNondetDiscovery(t *testing.T) {
-	t.Setenv("QUINT_RETRY_NONDET_SMALLER_THAN", "100")
+	t.Parallel()
+	ctx := WithRuntimeNondetOptions(context.Background(), RuntimeNondetOptions{RetrySmallerThan: Integer{decimal: "100"}})
 	fixtures, _, _ := loadNondetDiscovery(t)
 	for _, fixture := range fixtures {
 		t.Run(fixture.Name, func(t *testing.T) {
-			ctx := context.Background()
 			storage := NewVariableStorageWithMetadata(true)
 			rng := NewRNG(Integer{})
 			discovery := RuntimeNondetDiscovery{}
@@ -82,7 +82,8 @@ func TestUpstreamNondetDiscovery(t *testing.T) {
 }
 
 func TestUpstreamNondetModuleDiscovery(t *testing.T) {
-	t.Setenv("QUINT_RETRY_NONDET_SMALLER_THAN", "100")
+	t.Parallel()
+	ctx := WithRuntimeNondetOptions(context.Background(), RuntimeNondetOptions{RetrySmallerThan: Integer{decimal: "100"}})
 	_, module, steps := loadNondetDiscovery(t)
 	evaluator, err := NewModuleEvaluator(module, nil, true)
 	if err != nil {
@@ -91,11 +92,11 @@ func TestUpstreamNondetModuleDiscovery(t *testing.T) {
 	discovery := RuntimeNondetDiscovery{}
 	prepared := NewVariableStorageWithMetadata(true)
 	for index, step := range steps {
-		if err = discovery.Prepare(context.Background(), step.Input, prepared); err != nil {
+		if err = discovery.Prepare(ctx, step.Input, prepared); err != nil {
 			t.Fatal(err)
 		}
 		assertNondetPicks(t, prepared, step.Before)
-		_, err = evaluator.Evaluate(context.Background(), step.Name, nil)
+		_, err = evaluator.Evaluate(ctx, step.Name, nil)
 		if step.Error != nil {
 			var diagnostic Diagnostic
 			if !errors.As(err, &diagnostic) || diagnostic.Code != step.Error.Code || diagnostic.Message != step.Error.Message {

@@ -130,7 +130,7 @@ packaging remains separate validation work.
 
 | Environment variable | Status |
 | --- | --- |
-| `QUINT_RETRY_NONDET_SMALLER_THAN` | Implemented: default 100; read by `EvalNondet` per invocation, explicit-options API also available. TypeScript reads once at module initialization. |
+| `QUINT_RETRY_NONDET_SMALLER_THAN` | Implemented: default 100, captured at process initialization like TypeScript's module snapshot. Explicit/context-local options override it. Invalid values return a stored SyntaxError on evaluation rather than panicking during Go import. |
 | `QUINT_HOME` | Pending compatibility; no Go Scala/Rust download directory or persistent REPL history setup. Scala download/start behavior is intentionally replaced by the Go backend. |
 | `LOG_LEVEL` | TypeScript LSP logging variable; Go server does not implement that logging/config contract. |
 | `QUINT_VSCODE_SERVER_BACKEND` | Development-launch override for the configured VSCode Go/TypeScript server choice; installed extensions use settings. |

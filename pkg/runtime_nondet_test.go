@@ -206,16 +206,15 @@ func TestUpstreamNondetRetries(t *testing.T) {
 }
 
 func TestUpstreamNondetExpressions(t *testing.T) {
-	// The reference fixture uses its default limit; explicit retry tests above
-	// exercise overrides without modifying process-global environment in parallel.
-	t.Setenv("QUINT_RETRY_NONDET_SMALLER_THAN", "100")
+	t.Parallel()
+	ctx := WithRuntimeNondetOptions(context.Background(), RuntimeNondetOptions{RetrySmallerThan: Integer{decimal: "100"}})
 	_, fixtures := loadNondetFixtures(t)
 	for _, fixture := range fixtures {
 		t.Run(fixture.Source, func(t *testing.T) {
 			storage := NewVariableStorageWithMetadata(true)
 			_, next := storage.Register("x", "x")
 			rng := NewRNG(Integer{})
-			got, err := EvaluateStateExpressionWithRNG(context.Background(), fixture.Input, storage, rng)
+			got, err := EvaluateStateExpressionWithRNG(ctx, fixture.Input, storage, rng)
 			assertNondetOutcome(t, got, err, fixture.Output, fixture.Error)
 			assertNondetPicks(t, storage, fixture.Picks)
 			if len(fixture.Pending) == 0 {
@@ -307,15 +306,19 @@ func TestNondetValidationCancellationAndIdentity(t *testing.T) {
 	}
 }
 
-func TestNondetEnvironmentOverride(t *testing.T) {
-	t.Setenv("QUINT_RETRY_NONDET_SMALLER_THAN", "bad")
-	if _, err := EvalNondet(context.Background(), "p", NewVariableStorage(), NewRNG(Integer{}), nil, nil); err == nil {
+func TestNondetEnvironmentParsingAndContextOverride(t *testing.T) {
+	t.Parallel()
+	if _, err := runtimeNondetOptionsFromEnvironment("bad", true); err == nil {
 		t.Fatal("invalid environment accepted")
 	}
-	t.Setenv("QUINT_RETRY_NONDET_SMALLER_THAN", "1")
+	options, err := runtimeNondetOptionsFromEnvironment("1", true)
+	if err != nil {
+		t.Fatal(err)
+	}
 	set, _ := NewRuntimeValue(Expr{Kind: "app", Opcode: "Set", Args: []Expr{{Kind: "bool", Bool: true}, {Kind: "bool", Bool: false}}})
 	calls := 0
-	value, err := EvalNondet(context.Background(), "p", NewVariableStorage(), NewRNG(Integer{}), func(context.Context) (RuntimeValue, error) { return set, nil }, func(context.Context, RuntimeValue, error) (RuntimeValue, error) {
+	ctx := WithRuntimeNondetOptions(context.Background(), options)
+	value, err := EvalNondet(ctx, "p", NewVariableStorage(), NewRNG(Integer{}), func(context.Context) (RuntimeValue, error) { return set, nil }, func(context.Context, RuntimeValue, error) (RuntimeValue, error) {
 		calls++
 		return NewRuntimeValue(Expr{Kind: "bool", Bool: false})
 	})

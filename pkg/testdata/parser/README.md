@@ -1007,3 +1007,13 @@ write its actual marker, and remove consumed replay comments to avoid duplicatio
 Lexical scanning avoids strings/comments/hashbangs and preserves token separation;
 expressions containing */ are rejected before file writes rather than corrupting
 comment-based archives. CLI load/reload replays accepted expressions once.
+
+`runtime_nondet_precedence.json` saves 28 actual callback/environment scenarios
+and 18 JavaScript BigInt module-load vectors. `runtime_nondet_source_precedence.json`
+adds 17 statically checked source cases for cached pick references, empty/infinite
+bounds, error precedence and source wrapping. Matching grammar scripts generate
+both. Five small fresh-process checks protect initialization-time environment
+capture; context-local overrides remove global Setenv dependencies from existing
+unit tests. Non-Diagnostic exceptions/cancellation leave pick metadata untouched,
+while returned diagnostics preserve the reference's metadata behavior. Invalid
+startup values become a stored evaluation SyntaxError instead of a Go import panic.

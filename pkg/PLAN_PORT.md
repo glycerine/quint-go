@@ -495,7 +495,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     lazy argument behavior and source-referenced QNT000 diagnostics.
   - [x] Simulation/test recorder boundaries, run outcomes and state transitions;
     exact upstream event streams include rollback and disabled choices.
-- [ ] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
+- [x] P7.6 Port nondeterministic binding, choice/retry policy, cache reset,
   empty choices, and bounded sampling of infinite domains.
   - [x] Finite Set positional/RNG sampling with retained child objects and
     reference traversal, bounds, empty-set errors, and exact counter advancement.
@@ -505,7 +505,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     definition dependencies, with persistent registration and lexical ordering.
   - [x] Symbolic/infinite source bounds, shared nested positional cursors, ordered
     multidimensional draws and retry odometers, including empty/zero bounds.
-  - [ ] Import-time versus per-call retry environment semantics.
+  - [x] Capture the retry environment at process initialization, provide explicit
+    context-local options, and preserve exception/diagnostic metadata precedence.
 - [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
   model-based-testing metadata. Explicitly reject non-executable temporal
   constructs where the reference runtime does.
@@ -3310,3 +3311,12 @@ word "retained" in the commit message.
   unsafe comment terminators fail before writing. Callback, cancellation, I/O and
   token-boundary tests pass. Focused core0.143s/CLI0.058s, races1.431s/1.196s and
   vet pass. Verbose frame/value-diff display remains separate work.
+
+- 2026-11-02: Matched process-captured nondet retry settings and exception/error
+  precedence with explicit context-local overrides. Twenty-eight callback cases,
+  18 environment vectors,17 typed source cases and five fresh-process checks pass;
+  existing nondet tests now use local options and can run independently. Callback
+  throws/cancellation bypass metadata writes, returned diagnostics preserve them,
+  and cached errors retain source references. Invalid startup settings are safely
+  returned on evaluation. Focused tests0.082s, full core0.938s and vet pass; P7.6
+  is complete for the implemented source/compiler boundary.

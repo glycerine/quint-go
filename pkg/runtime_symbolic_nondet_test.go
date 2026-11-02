@@ -197,10 +197,10 @@ func TestUpstreamSymbolicNondetRetries(t *testing.T) {
 }
 
 func TestUpstreamSymbolicNondetExpressions(t *testing.T) {
-	t.Setenv("QUINT_RETRY_NONDET_SMALLER_THAN", "100")
+	t.Parallel()
+	ctx := WithRuntimeNondetOptions(context.Background(), RuntimeNondetOptions{RetrySmallerThan: Integer{decimal: "100"}})
 	for _, fixture := range loadSymbolicNondetFixtures(t).Expressions {
 		t.Run(fixture.Name, func(t *testing.T) {
-			ctx := context.Background()
 			storage := NewVariableStorageWithMetadata(true)
 			_, next := storage.Register("x", "x")
 			seed, err := ParseInteger(fixture.Seed)

@@ -1,0 +1,1222 @@
+[
+  {
+    "name": "set_error_before_body",
+    "source": "module M { var x:int val result={ nondet p=Set(1/0).oneOf(); assert(false) } }",
+    "input": {
+      "id": 11,
+      "kind": "let",
+      "opdef": {
+        "id": 8,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 7,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 6,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "idiv",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 10,
+        "kind": "app",
+        "opcode": "assert",
+        "args": [
+          {
+            "id": 9,
+            "kind": "bool",
+            "value": false
+          }
+        ]
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero",
+      "reference": 5
+    },
+    "picks": [
+      {
+        "name": "p"
+      }
+    ],
+    "pending": [],
+    "rng": "0"
+  },
+  {
+    "name": "set_error_before_union",
+    "source": "module M { var x:int val result={ nondet p=Set().union(Set(1/0)).oneOf(); assert(false) } }",
+    "input": {
+      "id": 13,
+      "kind": "let",
+      "opdef": {
+        "id": 10,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 9,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 8,
+              "kind": "app",
+              "opcode": "union",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": []
+                },
+                {
+                  "id": 7,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 6,
+                      "kind": "app",
+                      "opcode": "idiv",
+                      "args": [
+                        {
+                          "id": 4,
+                          "kind": "int",
+                          "value": 1
+                        },
+                        {
+                          "id": 5,
+                          "kind": "int",
+                          "value": 0
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 12,
+        "kind": "app",
+        "opcode": "assert",
+        "args": [
+          {
+            "id": 11,
+            "kind": "bool",
+            "value": false
+          }
+        ]
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero",
+      "reference": 6
+    },
+    "picks": [
+      {
+        "name": "p"
+      }
+    ],
+    "pending": [],
+    "rng": "0"
+  },
+  {
+    "name": "empty_set_skips_error",
+    "source": "module M { var x:int val result={ nondet p=Set().oneOf(); assert(false) } }",
+    "input": {
+      "id": 8,
+      "kind": "let",
+      "opdef": {
+        "id": 5,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 4,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 3,
+              "kind": "app",
+              "opcode": "Set",
+              "args": []
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 7,
+        "kind": "app",
+        "opcode": "assert",
+        "args": [
+          {
+            "id": 6,
+            "kind": "bool",
+            "value": false
+          }
+        ]
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    },
+    "picks": [
+      {
+        "name": "p"
+      }
+    ],
+    "pending": [],
+    "rng": "0"
+  },
+  {
+    "name": "empty_interval_skips_error",
+    "source": "module M { var x:int val result={ nondet p=3.to(1).oneOf(); assert(false) } }",
+    "input": {
+      "id": 10,
+      "kind": "let",
+      "opdef": {
+        "id": 7,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 6,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 5,
+              "kind": "app",
+              "opcode": "to",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 3
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 9,
+        "kind": "app",
+        "opcode": "assert",
+        "args": [
+          {
+            "id": 8,
+            "kind": "bool",
+            "value": false
+          }
+        ]
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    },
+    "picks": [
+      {
+        "name": "p"
+      }
+    ],
+    "pending": [],
+    "rng": "0"
+  },
+  {
+    "name": "cached_pick_ignored_true",
+    "source": "module M { var x:int val result={ nondet p=Int.powerset().oneOf(); true } }",
+    "input": {
+      "id": 8,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 5,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 4,
+              "kind": "app",
+              "opcode": "powerset",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "Int"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 7,
+        "kind": "bool",
+        "value": true
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    },
+    "picks": [
+      {
+        "name": "p"
+      }
+    ],
+    "pending": [],
+    "rng": "9"
+  },
+  {
+    "name": "cached_pick_ignored_false",
+    "source": "module M { var x:int val result={ nondet p=Int.powerset().oneOf(); false } }",
+    "input": {
+      "id": 8,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 5,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 4,
+              "kind": "app",
+              "opcode": "powerset",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "Int"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 7,
+        "kind": "bool",
+        "value": false
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    },
+    "picks": [
+      {
+        "name": "p"
+      }
+    ],
+    "pending": [],
+    "rng": "9"
+  },
+  {
+    "name": "cached_pick_read_error",
+    "source": "module M { var x:int val result={ nondet p=Int.powerset().oneOf(); p==p } }",
+    "input": {
+      "id": 10,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 5,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 4,
+              "kind": "app",
+              "opcode": "powerset",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "Int"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 9,
+        "kind": "app",
+        "opcode": "eq",
+        "args": [
+          {
+            "id": 7,
+            "kind": "name",
+            "name": "p"
+          },
+          {
+            "id": 8,
+            "kind": "name",
+            "name": "p"
+          }
+        ]
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "error": {
+      "code": "QNT514",
+      "message": "Cardinality of Int is infinite",
+      "reference": 7
+    },
+    "picks": [
+      {
+        "name": "p"
+      }
+    ],
+    "pending": [],
+    "rng": "9"
+  },
+  {
+    "name": "body_error_before_cached_pick",
+    "source": "module M { var x:int val result={ nondet p=Int.powerset().oneOf(); assert(false) } }",
+    "input": {
+      "id": 9,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 5,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 4,
+              "kind": "app",
+              "opcode": "powerset",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "Int"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 8,
+        "kind": "app",
+        "opcode": "assert",
+        "args": [
+          {
+            "id": 7,
+            "kind": "bool",
+            "value": false
+          }
+        ]
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "error": {
+      "code": "QNT508",
+      "message": "Assertion failed",
+      "reference": 8
+    },
+    "picks": [
+      {
+        "name": "p"
+      }
+    ],
+    "pending": [],
+    "rng": "9"
+  },
+  {
+    "name": "cached_pick_short_circuit_skips",
+    "source": "module M { var x:int val result={ nondet p=Int.powerset().oneOf(); true or p==Set() } }",
+    "input": {
+      "id": 12,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 5,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 4,
+              "kind": "app",
+              "opcode": "powerset",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "Int"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 11,
+        "kind": "app",
+        "opcode": "or",
+        "args": [
+          {
+            "id": 7,
+            "kind": "bool",
+            "value": true
+          },
+          {
+            "id": 10,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 8,
+                "kind": "name",
+                "name": "p"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "Set",
+                "args": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "output": {
+      "id": 0,
+      "kind": "bool",
+      "value": true
+    },
+    "picks": [
+      {
+        "name": "p"
+      }
+    ],
+    "pending": [],
+    "rng": "9"
+  },
+  {
+    "name": "cached_pick_short_circuit_reads",
+    "source": "module M { var x:int val result={ nondet p=Int.powerset().oneOf(); false or p==Set() } }",
+    "input": {
+      "id": 12,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 5,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 4,
+              "kind": "app",
+              "opcode": "powerset",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "Int"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 11,
+        "kind": "app",
+        "opcode": "or",
+        "args": [
+          {
+            "id": 7,
+            "kind": "bool",
+            "value": false
+          },
+          {
+            "id": 10,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 8,
+                "kind": "name",
+                "name": "p"
+              },
+              {
+                "id": 9,
+                "kind": "app",
+                "opcode": "Set",
+                "args": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "error": {
+      "code": "QNT514",
+      "message": "Cardinality of Int is infinite",
+      "reference": 8
+    },
+    "picks": [
+      {
+        "name": "p"
+      }
+    ],
+    "pending": [],
+    "rng": "9"
+  },
+  {
+    "name": "nested_set_error_before_retry",
+    "source": "module M { var x:int val result={ nondet p=Set(1,2).oneOf(); nondet q=Set(1/0).oneOf(); p==2 } }",
+    "input": {
+      "id": 18,
+      "kind": "let",
+      "opdef": {
+        "id": 7,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 6,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 5,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 17,
+        "kind": "let",
+        "opdef": {
+          "id": 13,
+          "kind": "def",
+          "name": "q",
+          "qualifier": "nondet",
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "oneOf",
+            "args": [
+              {
+                "id": 11,
+                "kind": "app",
+                "opcode": "Set",
+                "args": [
+                  {
+                    "id": 10,
+                    "kind": "app",
+                    "opcode": "idiv",
+                    "args": [
+                      {
+                        "id": 8,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 9,
+                        "kind": "int",
+                        "value": 0
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "expr": {
+          "id": 16,
+          "kind": "app",
+          "opcode": "eq",
+          "args": [
+            {
+              "id": 14,
+              "kind": "name",
+              "name": "p"
+            },
+            {
+              "id": 15,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "error": {
+      "code": "QNT503",
+      "message": "Division by zero",
+      "reference": 10
+    },
+    "picks": [
+      {
+        "name": "p",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "name": "q"
+      }
+    ],
+    "pending": [],
+    "rng": "1"
+  },
+  {
+    "name": "body_error_saves_pick",
+    "source": "module M { var x:int val result={ nondet p=Set(1,2).oneOf(); assert(false) } }",
+    "input": {
+      "id": 10,
+      "kind": "let",
+      "opdef": {
+        "id": 7,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 6,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 5,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 9,
+        "kind": "app",
+        "opcode": "assert",
+        "args": [
+          {
+            "id": 8,
+            "kind": "bool",
+            "value": false
+          }
+        ]
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "error": {
+      "code": "QNT508",
+      "message": "Assertion failed",
+      "reference": 9
+    },
+    "picks": [
+      {
+        "name": "p",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      }
+    ],
+    "pending": [],
+    "rng": "1"
+  },
+  {
+    "name": "body_error_after_retry",
+    "source": "module M { var x:int val result={ nondet p=Set(1,2,3).oneOf(); if(p==2) assert(false) else false } }",
+    "input": {
+      "id": 16,
+      "kind": "let",
+      "opdef": {
+        "id": 8,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 7,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 6,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 5,
+                  "kind": "int",
+                  "value": 3
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 15,
+        "kind": "app",
+        "opcode": "ite",
+        "args": [
+          {
+            "id": 11,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 9,
+                "kind": "name",
+                "name": "p"
+              },
+              {
+                "id": 10,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "id": 13,
+            "kind": "app",
+            "opcode": "assert",
+            "args": [
+              {
+                "id": 12,
+                "kind": "bool",
+                "value": false
+              }
+            ]
+          },
+          {
+            "id": 14,
+            "kind": "bool",
+            "value": false
+          }
+        ]
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "error": {
+      "code": "QNT508",
+      "message": "Assertion failed",
+      "reference": 13
+    },
+    "picks": [
+      {
+        "name": "p",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ],
+    "pending": [],
+    "rng": "1"
+  },
+  {
+    "name": "nested_cursor_assertion",
+    "source": "module M { var x:int val result={ nondet p=tuples(tuples(1.to(2),3.to(4)),5.to(6)).oneOf(); true } }",
+    "input": {
+      "id": 17,
+      "kind": "let",
+      "opdef": {
+        "id": 15,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 14,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 13,
+              "kind": "app",
+              "opcode": "tuples",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "tuples",
+                  "args": [
+                    {
+                      "id": 5,
+                      "kind": "app",
+                      "opcode": "to",
+                      "args": [
+                        {
+                          "id": 3,
+                          "kind": "int",
+                          "value": 1
+                        },
+                        {
+                          "id": 4,
+                          "kind": "int",
+                          "value": 2
+                        }
+                      ]
+                    },
+                    {
+                      "id": 8,
+                      "kind": "app",
+                      "opcode": "to",
+                      "args": [
+                        {
+                          "id": 6,
+                          "kind": "int",
+                          "value": 3
+                        },
+                        {
+                          "id": 7,
+                          "kind": "int",
+                          "value": 4
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "to",
+                  "args": [
+                    {
+                      "id": 10,
+                      "kind": "int",
+                      "value": 5
+                    },
+                    {
+                      "id": 11,
+                      "kind": "int",
+                      "value": 6
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 16,
+        "kind": "bool",
+        "value": true
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "error": {
+      "code": "QNT501",
+      "message": "Internal error: too few positions. Report a bug.",
+      "reference": 17
+    },
+    "picks": [
+      {
+        "name": "p"
+      }
+    ],
+    "pending": [],
+    "rng": "2"
+  },
+  {
+    "name": "zero_bound_after_infinite",
+    "source": "module M { var x:int val result={ nondet p=tuples(Int,Set()).oneOf(); true } }",
+    "input": {
+      "id": 9,
+      "kind": "let",
+      "opdef": {
+        "id": 7,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 6,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 5,
+              "kind": "app",
+              "opcode": "tuples",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "Int"
+                },
+                {
+                  "id": 4,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": []
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 8,
+        "kind": "bool",
+        "value": true
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "error": {
+      "code": "QNT501",
+      "message": "The expression evaluated to a falsy value:\n\n  (bound > 0n)\n",
+      "reference": 9
+    },
+    "picks": [
+      {
+        "name": "p"
+      }
+    ],
+    "pending": [],
+    "rng": "9"
+  },
+  {
+    "name": "pending_error_saves_pick",
+    "source": "module M { var x:int action result={ nondet p=Set(1,2).oneOf(); all {x'=p,assert(false)} } }",
+    "input": {
+      "id": 14,
+      "kind": "let",
+      "opdef": {
+        "id": 7,
+        "kind": "def",
+        "name": "p",
+        "qualifier": "nondet",
+        "expr": {
+          "id": 6,
+          "kind": "app",
+          "opcode": "oneOf",
+          "args": [
+            {
+              "id": 5,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expr": {
+        "id": 13,
+        "kind": "app",
+        "opcode": "actionAll",
+        "args": [
+          {
+            "id": 10,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 9,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 8,
+                "kind": "name",
+                "name": "p"
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "kind": "app",
+            "opcode": "assert",
+            "args": [
+              {
+                "id": 11,
+                "kind": "bool",
+                "value": false
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "analysisErrors": [],
+    "seed": "0",
+    "error": {
+      "code": "QNT508",
+      "message": "Assertion failed",
+      "reference": 12
+    },
+    "picks": [
+      {
+        "name": "p",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      }
+    ],
+    "pending": [
+      {
+        "name": "x",
+        "value": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      }
+    ],
+    "rng": "1"
+  },
+  {
+    "name": "nonboolean_source_rejected",
+    "source": "module M { var x:int val result={ nondet p=Set(1,2).oneOf(); p } }",
+    "analysisErrors": [
+      {
+        "code": "QNT205",
+        "message": "nondet bindings can only be used with boolean expressions, but expression has type: int",
+        "reference": 9,
+        "data": {}
+      }
+    ]
+  }
+]

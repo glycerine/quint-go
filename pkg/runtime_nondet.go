@@ -3,7 +3,6 @@ package quint
 import (
 	"context"
 	"math/big"
-	"os"
 )
 
 // RuntimeNondetOptions controls retrying a false nondeterministic body. Every
@@ -15,7 +14,8 @@ type RuntimeNondetOptions struct {
 }
 
 // EvalNondet evaluates a nondeterministic binding using the reference's default
-// retry limit of 100, overridden by QUINT_RETRY_NONDET_SMALLER_THAN when set.
+// retry limit of 100, overridden by QUINT_RETRY_NONDET_SMALLER_THAN at process
+// initialization, or by WithRuntimeNondetOptions for an evaluation context.
 // The set expression runs once. bodyEval receives the cached pick (including
 // any error), so callers can bind its name lazily and clear that binding after
 // each invocation. Finite retries advance positions cyclically without drawing
@@ -24,15 +24,11 @@ func EvalNondet(ctx context.Context, name string, storage *VariableStorage, rng 
 	setEval func(context.Context) (RuntimeValue, error),
 	bodyEval func(context.Context, RuntimeValue, error) (RuntimeValue, error),
 ) (RuntimeValue, error) {
-	limit, _ := ParseInteger("100")
-	if text, exists := os.LookupEnv("QUINT_RETRY_NONDET_SMALLER_THAN"); exists {
-		var err error
-		limit, err = ParseSeed(text)
-		if err != nil {
-			return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "QUINT_RETRY_NONDET_SMALLER_THAN must be a big integer, found: " + text}
-		}
+	options, err := runtimeNondetOptionsForContext(ctx)
+	if err != nil {
+		return RuntimeValue{}, err
 	}
-	return EvalNondetWithOptions(ctx, name, storage, rng, setEval, bodyEval, RuntimeNondetOptions{RetrySmallerThan: limit})
+	return EvalNondetWithOptions(ctx, name, storage, rng, setEval, bodyEval, options)
 }
 
 // EvalNondetWithOptions uses an explicit retry limit for an execution. The
@@ -124,8 +120,11 @@ func EvalNondetWithOptions(ctx context.Context, name string, storage *VariableSt
 			return RuntimeValue{}, pickErr
 		}
 		result, bodyErr := bodyEval(ctx, picked, pickErr)
+		if bodyErr != nil && !runtimeDomainIsDiagnostic(bodyErr) {
+			return RuntimeValue{}, bodyErr
+		}
 		if bodyErr == nil && result.expression.Kind != "bool" {
-			bodyErr = Diagnostic{Code: "QNT501", Message: "Expected a Boolean value"}
+			return RuntimeValue{}, RuntimeDomainException{Name: "Error", Message: "Expected a Boolean value"}
 		}
 		if bodyErr != nil || result.expression.Bool || !retry {
 			if pickErr == nil {
