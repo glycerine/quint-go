@@ -343,4 +343,12 @@ cases evaluate named module definitions using the resolver's lookup table. They
 cover forward references, module values/operators, lazy failures, higher-order
 arguments, returned closures, local parameter scope, typedefs, nested maps, and
 fold callbacks. Go resolves and dependency-orders standalone/flattened modules
-before evaluation; imported/instanced orchestration remains separate work.
+before evaluation; the project corpus below adds imported/instanced orchestration.
+
+`runtime_project.json` is regenerated with
+`node pkg/grammar/runtime_project_fixtures.cjs`. Nine parsed projects run upstream
+analysis, flattening, and evaluation. They cover wildcard/qualified imports,
+re-exports, constant overrides, independent/nested instances, unused failures,
+and imported callbacks. The last case preserves the static effect checker's
+operator-returning-operator rejection instead of bypassing it for runtime
+execution. Go tests also verify unmodified module IR and parser ID state.

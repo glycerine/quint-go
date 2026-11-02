@@ -1,0 +1,81 @@
+[
+  {
+    "source": "module A { val a=41 } module M { import A.* val result=a+1 }",
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 42
+    }
+  },
+  {
+    "source": "module A { val a=40 def f(x)=x+a } module M { import A as I val result=I::f(2) }",
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 42
+    }
+  },
+  {
+    "source": "module A { val a=1 } module B { import A as I export I } module M { import B.* val result=I::a+41 }",
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 42
+    }
+  },
+  {
+    "source": "module A { const c:int val a=c def f(x)=x+c } module M { import A(c=40) as I val result=I::f(2) }",
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 42
+    }
+  },
+  {
+    "source": "module A { const c:int val a=c } module M { import A(c=1) as I import A(c=2) as J val result=I::a+J::a }",
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 3
+    }
+  },
+  {
+    "source": "module A { const c:int val a=c } module B { const d:int import A(c=d) as I val b=I::a } module M { import B(d=42) as J val result=J::b }",
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 42
+    }
+  },
+  {
+    "source": "module A { val bad=1/0 val a=42 } module M { import A.* val result=a }",
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 42
+    }
+  },
+  {
+    "source": "module A { def inc(x)=x+1 } module M { import A as I val result=List(1,2).foldl(0,(a,x)=>I::inc(a+x)) }",
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 5
+    }
+  },
+  {
+    "source": "module A { const c:int def make(x)=(y)=>x+y+c } module M { import A(c=2) as I val f=I::make(10) val result=f(30) }",
+    "error": {
+      "code": "QNT000",
+      "message": "Result cannot be an operator\nTrying to infer effect for operator application in iadd(iadd(x, y), c)\n",
+      "reference": 10,
+      "data": {
+        "trace": {
+          "location": "Trying to infer effect for operator application in iadd(iadd(x, y), c)",
+          "message": "Result cannot be an operator",
+          "children": []
+        }
+      }
+    }
+  }
+]

@@ -347,8 +347,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     invocation, returned closures, and caller-context cancellation via Apply.
   - [x] Standalone/flattened module definition evaluation with name resolution,
     dependency ordering, forward references, cycles, and lazy module bindings.
-  - [ ] End-to-end imported/instanced module orchestration, closures inside
-    concrete collections, remaining caches, and complete runtime stack traces.
+  - [x] Parsed-project pure evaluation through module sorting, resolution,
+    static analysis, and full import/export/instance flattening with overrides.
+  - [ ] Filesystem/CLI evaluation wiring, closures inside concrete collections,
+    remaining caches, and complete runtime stack traces.
 - [ ] P7.3 Port arithmetic, Boolean, comparison, string, and conversion
   builtins; test negative division/modulo and integer boundary behavior.
   - [x] Strict integer arithmetic/comparison builtins, arbitrary precision,
@@ -2366,3 +2368,18 @@ word "retained" in the commit message.
   (combined package execution 1.017s, near the one-second target). Imported/
   instanced source orchestration, state variables, unbound constants, collection
   closures, and full runtime stacks remain open; imports must be flattened first.
+
+- 2026-11-02: Added EvaluatePureModules to connect parsed projects through
+  module/declaration ordering, linked resolution, type/effect/mode analysis,
+  full flattening, and named pure evaluation. Imports, re-exports, aliases,
+  independent/nested instances, and constant overrides now reach the Go runtime
+  through the existing compiler transformations. Static diagnostics stop
+  evaluation; a private parser-generator copy keeps caller IDs unchanged.
+  Nine upstream analyzed/flattened/evaluated project cases match, including
+  unused failures, imported fold callbacks, and the effect checker's existing
+  rejection of operator-returning-operator definitions. Unit tests cover static
+  errors, missing imports/main/IDs, cycles, cancellation, module ownership, and
+  generator preservation. Independent project cases run in parallel; focused
+  race tests pass (1.306s instrumented). Full default tests pass (combined package
+  execution 1.020s, near the one-second target). Filesystem/CLI wiring, runtime
+  state, unbound constants, collection closures, and remaining builtins stay open.
