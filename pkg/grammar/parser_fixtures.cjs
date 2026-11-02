@@ -318,3 +318,27 @@ const effectSubstitutionFixtures=substitutionCases.map(([name,text,substitutions
  return {name,input,substitutions,output:result.value}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/effect_substitution.json'),JSONbig.stringify(effectSubstitutionFixtures,null,2)+'\n')
+
+const {unifyEntities}=require(path.join(root,'quint/src/effects/base'))
+const eu=(...entities)=>({kind:'union',entities})
+const ec=(...names)=>({kind:'concrete',stateVariables:names.map((name,i)=>({name,reference:BigInt(i+1)}))})
+const entityUnifyCases=[
+ ['empty',ec(),ec()],['sets',ec('x','y','x'),ec('y','x')],['mismatch',ec('x'),ec('y')],
+ ['same-variable',ev('a'),ev('a')],['variables',ev('a'),ev('b')],
+ ['bind-concrete',ev('a'),ec('x')],['reverse-bind',ec('x'),ev('a')],
+ ['self-union',ev('a'),eu(ev('a'),ev('b'))],
+ ['nested-self',ev('a'),eu(ev('b'),eu(ev('a'),ev('c')))],
+ ['covered',eu(ev('a'),ec('x')),ec('x')],
+ ['remaining',eu(ev('a'),ev('b'),ec('x')),ec('y','x','z')],
+ ['reverse-covered',ec('x'),eu(ev('a'),ec('x'))],
+ ['uncovered',eu(ev('a'),ec('z')),ec('x')],
+ ['identical',eu(ev('a'),ev('b')),eu(ev('a'),ev('b'))],
+ ['intersection',eu(ev('a'),ev('b')),eu(ev('a'),ev('c'))],
+ ['repeated-intersection',eu(ev('a'),ev('a'),ev('b')),eu(ev('a'),ev('c'))],
+ ['disjoint',eu(ev('a'),ev('b')),eu(ev('c'),ev('d'))],
+ ['nested',eu(eu(ev('a'),ec('x')),ec('y')),ec('x','y','z')],
+]
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/entity_unify.json'),JSONbig.stringify(entityUnifyCases.map(([name,a,b])=>{
+ const result=unifyEntities(a,b)
+ return {name,a,b,...(result.isLeft()?{error:result.value}:{substitutions:result.value})}
+}),null,2)+'\n')

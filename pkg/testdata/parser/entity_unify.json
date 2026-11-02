@@ -1,0 +1,668 @@
+[
+  {
+    "name": "empty",
+    "a": {
+      "kind": "concrete",
+      "stateVariables": []
+    },
+    "b": {
+      "kind": "concrete",
+      "stateVariables": []
+    },
+    "substitutions": []
+  },
+  {
+    "name": "sets",
+    "a": {
+      "kind": "concrete",
+      "stateVariables": [
+        {
+          "name": "x",
+          "reference": 1
+        },
+        {
+          "name": "y",
+          "reference": 2
+        },
+        {
+          "name": "x",
+          "reference": 3
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "stateVariables": [
+        {
+          "name": "y",
+          "reference": 1
+        },
+        {
+          "name": "x",
+          "reference": 2
+        }
+      ]
+    },
+    "substitutions": []
+  },
+  {
+    "name": "mismatch",
+    "a": {
+      "kind": "concrete",
+      "stateVariables": [
+        {
+          "name": "x",
+          "reference": 1
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "stateVariables": [
+        {
+          "name": "y",
+          "reference": 1
+        }
+      ]
+    },
+    "error": {
+      "location": "Trying to unify entities ['x'] and ['y']",
+      "message": "Expected [x] and [y] to be the same",
+      "children": []
+    }
+  },
+  {
+    "name": "same-variable",
+    "a": {
+      "kind": "variable",
+      "name": "a"
+    },
+    "b": {
+      "kind": "variable",
+      "name": "a"
+    },
+    "substitutions": []
+  },
+  {
+    "name": "variables",
+    "a": {
+      "kind": "variable",
+      "name": "a"
+    },
+    "b": {
+      "kind": "variable",
+      "name": "b"
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "a",
+        "value": {
+          "kind": "variable",
+          "name": "b"
+        }
+      }
+    ]
+  },
+  {
+    "name": "bind-concrete",
+    "a": {
+      "kind": "variable",
+      "name": "a"
+    },
+    "b": {
+      "kind": "concrete",
+      "stateVariables": [
+        {
+          "name": "x",
+          "reference": 1
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "a",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": [
+            {
+              "name": "x",
+              "reference": 1
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "reverse-bind",
+    "a": {
+      "kind": "concrete",
+      "stateVariables": [
+        {
+          "name": "x",
+          "reference": 1
+        }
+      ]
+    },
+    "b": {
+      "kind": "variable",
+      "name": "a"
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "a",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": [
+            {
+              "name": "x",
+              "reference": 1
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "self-union",
+    "a": {
+      "kind": "variable",
+      "name": "a"
+    },
+    "b": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "variable",
+          "name": "b"
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "a",
+        "value": {
+          "kind": "variable",
+          "name": "a"
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "a",
+        "value": {
+          "kind": "variable",
+          "name": "b"
+        }
+      }
+    ]
+  },
+  {
+    "name": "nested-self",
+    "a": {
+      "kind": "variable",
+      "name": "a"
+    },
+    "b": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "b"
+        },
+        {
+          "kind": "union",
+          "entities": [
+            {
+              "kind": "variable",
+              "name": "a"
+            },
+            {
+              "kind": "variable",
+              "name": "c"
+            }
+          ]
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "a",
+        "value": {
+          "kind": "variable",
+          "name": "b"
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "a",
+        "value": {
+          "kind": "variable",
+          "name": "a"
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "a",
+        "value": {
+          "kind": "variable",
+          "name": "c"
+        }
+      }
+    ]
+  },
+  {
+    "name": "covered",
+    "a": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "concrete",
+          "stateVariables": [
+            {
+              "name": "x",
+              "reference": 1
+            }
+          ]
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "stateVariables": [
+        {
+          "name": "x",
+          "reference": 1
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "a",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "remaining",
+    "a": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "variable",
+          "name": "b"
+        },
+        {
+          "kind": "concrete",
+          "stateVariables": [
+            {
+              "name": "x",
+              "reference": 1
+            }
+          ]
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "stateVariables": [
+        {
+          "name": "y",
+          "reference": 1
+        },
+        {
+          "name": "x",
+          "reference": 2
+        },
+        {
+          "name": "z",
+          "reference": 3
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "a",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": [
+            {
+              "name": "y",
+              "reference": 1
+            },
+            {
+              "name": "z",
+              "reference": 3
+            }
+          ]
+        }
+      },
+      {
+        "kind": "entity",
+        "name": "b",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": [
+            {
+              "name": "y",
+              "reference": 1
+            },
+            {
+              "name": "z",
+              "reference": 3
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "reverse-covered",
+    "a": {
+      "kind": "concrete",
+      "stateVariables": [
+        {
+          "name": "x",
+          "reference": 1
+        }
+      ]
+    },
+    "b": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "concrete",
+          "stateVariables": [
+            {
+              "name": "x",
+              "reference": 1
+            }
+          ]
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "a",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "uncovered",
+    "a": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "concrete",
+          "stateVariables": [
+            {
+              "name": "z",
+              "reference": 1
+            }
+          ]
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "stateVariables": [
+        {
+          "name": "x",
+          "reference": 1
+        }
+      ]
+    },
+    "error": {
+      "location": "Trying to unify entities [a, 'z'] and ['x']",
+      "message": "Expected [z] to be in [x]",
+      "children": []
+    }
+  },
+  {
+    "name": "identical",
+    "a": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "variable",
+          "name": "b"
+        }
+      ]
+    },
+    "b": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "variable",
+          "name": "b"
+        }
+      ]
+    },
+    "substitutions": []
+  },
+  {
+    "name": "intersection",
+    "a": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "variable",
+          "name": "b"
+        }
+      ]
+    },
+    "b": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "variable",
+          "name": "c"
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "b",
+        "value": {
+          "kind": "variable",
+          "name": "c"
+        }
+      }
+    ]
+  },
+  {
+    "name": "repeated-intersection",
+    "a": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "variable",
+          "name": "b"
+        }
+      ]
+    },
+    "b": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "variable",
+          "name": "c"
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "b",
+        "value": {
+          "kind": "variable",
+          "name": "c"
+        }
+      }
+    ]
+  },
+  {
+    "name": "disjoint",
+    "a": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "a"
+        },
+        {
+          "kind": "variable",
+          "name": "b"
+        }
+      ]
+    },
+    "b": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "variable",
+          "name": "c"
+        },
+        {
+          "kind": "variable",
+          "name": "d"
+        }
+      ]
+    },
+    "error": {
+      "location": "Trying to unify entities [a, b] and [c, d]",
+      "message": "Unification for unions of entities is not implemented",
+      "children": []
+    }
+  },
+  {
+    "name": "nested",
+    "a": {
+      "kind": "union",
+      "entities": [
+        {
+          "kind": "union",
+          "entities": [
+            {
+              "kind": "variable",
+              "name": "a"
+            },
+            {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "concrete",
+          "stateVariables": [
+            {
+              "name": "y",
+              "reference": 1
+            }
+          ]
+        }
+      ]
+    },
+    "b": {
+      "kind": "concrete",
+      "stateVariables": [
+        {
+          "name": "x",
+          "reference": 1
+        },
+        {
+          "name": "y",
+          "reference": 2
+        },
+        {
+          "name": "z",
+          "reference": 3
+        }
+      ]
+    },
+    "substitutions": [
+      {
+        "kind": "entity",
+        "name": "a",
+        "value": {
+          "kind": "concrete",
+          "stateVariables": [
+            {
+              "name": "z",
+              "reference": 3
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

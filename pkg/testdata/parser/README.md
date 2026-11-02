@@ -128,3 +128,8 @@ diagnostics, isolating checker behavior from inference implementation difference
 
 `effect_substitution.json` contains six upstream substitution outcomes and
 compares exact effect/entity trees, including references and union multiplicity.
+
+`entity_unify.json` contains eighteen upstream entity-unification cases covering
+concrete sets, variable bindings, nested/self-containing unions, covered states,
+intersection removal, and rejected unions. Substitution order, references, and
+error trees are compared without normalization.
