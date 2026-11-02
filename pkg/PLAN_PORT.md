@@ -1023,3 +1023,12 @@ word "retained" in the commit message.
   duplicate identities, conflicting references, builtins, holes, and inventory
   parity. Default tests pass within the sub-second target. Module collection,
   traversal, reference resolution, imports, and unused definitions remain open.
+
+- 2026-11-02: Added top-level local declaration collection into ordered module
+  scopes, retaining import/export/instance directives for later resolution.
+  Preserved upstream operator-annotation omission, constant annotations, module
+  replacement/order, and QNT102 duplicate-module errors. Tests cover all local
+  declaration categories, holes, nested-definition exclusion, input immutability,
+  metadata, conflict ordering, and independent module scopes. Default tests pass
+  within the sub-second target. P3.1/P3.2 remain open for lexical traversal,
+  lookup-table construction, references, and imported definition visibility.
