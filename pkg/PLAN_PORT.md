@@ -1681,3 +1681,12 @@ word "retained" in the commit message.
   isolation, idempotence, and empty modules. Default tests pass under one second.
   Init-to-predicate conversion, flattening, and compilation-path integration
   remain open under P6.5; this helper alone does not complete that item.
+
+- 2026-11-02: Added ConvertInit dependency discovery and copied expression
+  transformation: assignments in q::init and referenced definitions become
+  equalities, while shared action dependencies outside init produce QNT409.
+  Mode suggestions override annotation-based action detection. Tests cover
+  dependency conversion, unchanged step assignments, shared-action rejection,
+  and input isolation. Default tests pass under one second. Exact upstream
+  transform fixtures, nested-definition discovery auditing, and compilation-path
+  integration remain open under P6.5.
