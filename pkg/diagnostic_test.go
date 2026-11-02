@@ -54,3 +54,20 @@ func TestErrorTrees(t *testing.T) {
 		t.Fatalf("round trip: %v %v", decoded, err)
 	}
 }
+
+func TestDiagnosticDataRoundTrip(t *testing.T) {
+	leaf := ErrorLeaf("in expression", "wrong type")
+	d := Diagnostic{Code: QNT006, Message: "use equality", Data: &DiagnosticData{Fix: &DiagnosticFix{Kind: "replace", Original: "=", Replacement: "=="}, Trace: &leaf}}
+	data, err := json.Marshal(d)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var got Diagnostic
+	if err = json.Unmarshal(data, &got); err != nil || !reflect.DeepEqual(d, got) {
+		t.Fatalf("round trip: %+v %v", got, err)
+	}
+	data, err = json.Marshal(DiagnosticData{})
+	if err != nil || string(data) != "{}" {
+		t.Fatalf("optional fields: %s %v", data, err)
+	}
+}

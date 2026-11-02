@@ -565,3 +565,13 @@ word "retained" in the commit message.
   and error propagation through every constraint variant. Default tests pass
   (core 0.008s). Constraint generation/solving and substitution composition remain
   open under P4.1/P4.2.
+
+- Dependency preference: whenever a dictionary requires deterministic insertion
+  order, use `insdict.Dict` from `github.com/glycerine/insdict` and obtain the
+  latest version as requested. Ordinary lookup-only maps do not require migration.
+- 2026-11-02: Added the upstream diagnostic-code inventory, validated against
+  `quintError.ts` by a fast unit test, and typed diagnostic fix/error-tree data.
+  Tests cover all declared codes, invalid code spellings, inventory isolation,
+  and optional/full diagnostic-data serialization. Default tests pass (core
+  0.006s). P1.6 remains open for source excerpt formatting and stricter data
+  validation.

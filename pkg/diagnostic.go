@@ -1,7 +1,6 @@
 package quint
 
 import (
-	"encoding/json"
 	"strings"
 )
 
@@ -10,7 +9,7 @@ type Diagnostic struct {
 	Message   string          `json:"message"`
 	Reference *ID             `json:"reference,omitempty"`
 	Trace     []ID            `json:"trace,omitempty"`
-	Data      json.RawMessage `json:"data,omitempty"`
+	Data      *DiagnosticData `json:"data,omitempty"`
 }
 
 func (d Diagnostic) Error() string { return "[" + d.Code + "] " + d.Message }
@@ -79,4 +78,15 @@ func (e ErrorTree) String() string {
 	out.WriteString(e.Location)
 	out.WriteByte('\n')
 	return out.String()
+}
+
+// DiagnosticData carries machine-readable fixes and nested inference errors.
+type DiagnosticData struct {
+	Fix   *DiagnosticFix `json:"fix,omitempty"`
+	Trace *ErrorTree     `json:"trace,omitempty"`
+}
+type DiagnosticFix struct {
+	Kind        string `json:"kind"`
+	Original    string `json:"original"`
+	Replacement string `json:"replacement"`
 }
