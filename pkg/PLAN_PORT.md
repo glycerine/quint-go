@@ -1652,3 +1652,11 @@ word "retained" in the commit message.
   type-ID normalization. Default tests pass (combined execution 0.724s).
   Cross-module/instance analyzer parity and incremental previous-output handling
   remain open under P5.5.
+
+- 2026-11-02: Added AnalysisOutput and AnalyzeIncremental for declaration batches
+  seeded from previous type/effect/mode results. Types and suggestions retain
+  upstream shared-table behavior; the effects dictionary is copied before adding
+  results. Tests resume a polymorphic identity across integer/boolean calls and
+  verify retained tables, diagnostics, and previous effect-table isolation.
+  Default tests pass under one second. Exact upstream incremental fixtures,
+  cross-module/instance parity, and deeper value-isolation auditing remain open.

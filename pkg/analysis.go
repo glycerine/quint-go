@@ -15,11 +15,43 @@ type AnalysisResult struct {
 // AnalyzeModules runs the frontend analysis passes on dependency-ordered,
 // name-resolved modules. Type application expansion updates the lookup table.
 func AnalyzeModules(modules []Module, table *insdict.Dict[ID, LookupDefinition]) (AnalysisResult, error) {
+	return analyzeModulesWithPrevious(modules, table, nil)
+}
+
+// AnalysisOutput is the retained state used to resume analysis.
+type AnalysisOutput struct {
+	Types   *insdict.Dict[string, TypeScheme]
+	Effects *insdict.Dict[string, EffectScheme]
+	Modes   *insdict.Dict[string, Qualifier]
+}
+
+// AnalyzeIncremental analyzes a new declaration batch using previous results.
+// As upstream does, types and mode suggestions are reused, while the effects
+// dictionary is copied before new entries are added.
+func AnalyzeIncremental(previous AnalysisOutput, table *insdict.Dict[ID, LookupDefinition], declarations []Declaration) (AnalysisResult, error) {
+	return analyzeModulesWithPrevious([]Module{{Declarations: declarations}}, table, &previous)
+}
+
+func analyzeModulesWithPrevious(modules []Module, table *insdict.Dict[ID, LookupDefinition], previous *AnalysisOutput) (AnalysisResult, error) {
 	applications := NewTypeApplicationResolver(table)
-	inferrer := NewTypeInferrer(table, nil)
+	var seedTypes *insdict.Dict[string, TypeScheme]
+	if previous != nil {
+		seedTypes = previous.Types
+	}
+	inferrer := NewTypeInferrer(table, seedTypes)
 	types := TypeAnalysisResult{Modules: append([]Module{}, modules...), Types: inferrer.Context.Types, TypeErrors: inferrer.Context.Errors, ApplicationErrors: applications.Errors}
 	effects := NewEffectInferrer(table)
 	modes := NewModeChecker()
+	if previous != nil {
+		if previous.Effects != nil {
+			for id, s := range previous.Effects.All() {
+				effects.Effects.Set(id, s)
+			}
+		}
+		if previous.Modes != nil {
+			modes.Suggestions = previous.Modes
+		}
+	}
 	updates := MultipleUpdatesChecker{}
 	nondet := NewNondetChecker(table)
 	result := AnalysisResult{TypeAnalysisResult: types, Effects: effects.Effects, EffectErrors: effects.Errors, Modes: modes.Suggestions, Diagnostics: []Diagnostic{}}

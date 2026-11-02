@@ -63,3 +63,38 @@ func TestAnalysisErrorTreesAndModuleOrder(t *testing.T) {
 		t.Fatal("retained upstream error repetition changed")
 	}
 }
+
+func TestIncrementalAnalysis(t *testing.T) {
+	ms, err := ParseModules("module M { def identity(x)=x val a=identity(1) val b=identity(true) }")
+	if err != nil {
+		t.Fatal(err)
+	}
+	linked, _ := ResolveLinkedModules(ms)
+	first, err := AnalyzeModules([]Module{{Declarations: ms[0].Declarations[:1]}}, linked.Table)
+	if err != nil {
+		t.Fatal(err)
+	}
+	oldEffects := first.Effects.Len()
+	previous := AnalysisOutput{Types: first.Types, Effects: first.Effects, Modes: first.Modes}
+	next, err := AnalyzeIncremental(previous, linked.Table, ms[0].Declarations[1:])
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(next.Diagnostics) != 0 {
+		t.Fatal(next.Diagnostics)
+	}
+	if next.Types != first.Types || next.Modes != first.Modes || next.Effects == first.Effects {
+		t.Fatal("retention semantics")
+	}
+	if first.Effects.Len() != oldEffects || next.Effects.Len() <= oldEffects {
+		t.Fatal("effects dictionary mutated")
+	}
+	for _, d := range ms[0].Declarations[1:] {
+		if _, ok := next.Types.Get2(d.ID.String()); !ok {
+			t.Fatal("missing type")
+		}
+		if _, ok := next.Effects.Get2(d.ID.String()); !ok {
+			t.Fatal("missing effect")
+		}
+	}
+}
