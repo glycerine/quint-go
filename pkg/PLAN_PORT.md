@@ -345,8 +345,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     capture, parameter scopes, and fresh per-call local caches.
   - [x] First-class lambdas, local operator values, higher-order parameter
     invocation, returned closures, and caller-context cancellation via Apply.
-  - [ ] Module definition/lookup integration, closures inside concrete
-    collections, remaining caches, and complete runtime stack traces.
+  - [x] Standalone/flattened module definition evaluation with name resolution,
+    dependency ordering, forward references, cycles, and lazy module bindings.
+  - [ ] End-to-end imported/instanced module orchestration, closures inside
+    concrete collections, remaining caches, and complete runtime stack traces.
 - [ ] P7.3 Port arithmetic, Boolean, comparison, string, and conversion
   builtins; test negative division/modulo and integer boundary behavior.
   - [x] Strict integer arithmetic/comparison builtins, arbitrary precision,
@@ -2349,3 +2351,18 @@ word "retained" in the commit message.
   fixtures. Full default tests pass (combined package execution 1.014s, near the
   one-second target). Higher-order set operations and traversal compatibility
   remain open.
+
+- 2026-11-02: Added EvaluatePureDefinition for standalone or already-flattened
+  modules. It resolves names, orders declarations with the existing call graph,
+  reports cycles/unbound references, installs lazy module definitions, and
+  returns a named value/operator or invokes it with explicit arguments. Forward
+  references and lexical captures share the established local evaluator rather
+  than duplicating operator semantics. Twelve full TypeScript evaluator module
+  cases match, including forward calls, lazy unused errors, higher-order
+  operators, returned closures, typedefs, parameter shadowing, nested map error
+  order, and fold callbacks. Unit tests cover callable exports, closure lifetime,
+  invalid value calls, missing entries, cycles, unresolved names, explicit import
+  rejection, cancellation, and unchanged module IR. Full default tests pass
+  (combined package execution 1.017s, near the one-second target). Imported/
+  instanced source orchestration, state variables, unbound constants, collection
+  closures, and full runtime stacks remain open; imports must be flattened first.

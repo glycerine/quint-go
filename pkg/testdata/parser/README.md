@@ -336,3 +336,11 @@ evaluator cases cover map setBy, structural keys, captured/local callbacks,
 missing-key precedence, callback failures, duplicate keys, nested maps, and
 chained updates. The reference's unusual missing-key text, including the space
 in "non- existing" and object interpolation, is retained exactly.
+
+`runtime_module.json` is regenerated with
+`node pkg/grammar/runtime_module_fixtures.cjs`. Twelve full TypeScript evaluator
+cases evaluate named module definitions using the resolver's lookup table. They
+cover forward references, module values/operators, lazy failures, higher-order
+arguments, returned closures, local parameter scope, typedefs, nested maps, and
+fold callbacks. Go resolves and dependency-orders standalone/flattened modules
+before evaluation; imported/instanced orchestration remains separate work.
