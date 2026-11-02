@@ -115,7 +115,7 @@ ordered substitutions and source-keyed error trees, including nested and
 post-failure behavior. These fixtures use an empty lookup table.
 
 
-`inference.json` contains eight upstream declaration-inference cases. Tests compare
+`inference.json` contains ten upstream declaration-inference cases. Tests compare
 ordered expression/definition type tables, quantified variable names, and errors.
 Only IDs inside type trees are stripped: builtin-signature type IDs are currently
 absent in Go. Expression/definition IDs and all type-variable names remain exact.

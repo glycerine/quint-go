@@ -1388,3 +1388,10 @@ word "retained" in the commit message.
   open; expression/definition IDs and variable names are compared exactly.
   Default tests pass (combined execution 0.603s). Public inference orchestration,
   builtin type-ID parity, and broader inference coverage remain pending.
+
+- 2026-11-02: Expanded inference parity fixtures to ten with local constraint
+  failures and overly general local annotations. Fixed publication of failed
+  local schemes and removed an extra expression trace from annotation errors,
+  using the annotation ID when available. Default tests pass (combined execution
+  0.618s). Type-node ID normalization remains documented; broader inference
+  coverage and orchestration remain open.

@@ -158,12 +158,21 @@ func (g *TypeConstraintGenerator) Generate(e *Expr) error {
 			if err != nil {
 				return err
 			}
+			if g.failed() {
+				goto localBody
+			}
 			before, err = ExpandFreeVariables(before, subs)
 			if err != nil {
 				return err
 			}
 			if d.TypeAnnotation != nil {
-				g.record(d.ID, CheckAnnotationGenerality(subs, *d.TypeAnnotation))
+				reference := d.ID
+				if d.TypeAnnotation.ID != nil {
+					reference = *d.TypeAnnotation.ID
+				}
+				if failure := CheckAnnotationGenerality(subs, *d.TypeAnnotation); failure != nil {
+					g.Context.Errors.Set(reference.String(), *failure)
+				}
 			}
 			schemes = nil
 			for _, s := range g.Scope.All() {
@@ -181,6 +190,7 @@ func (g *TypeConstraintGenerator) Generate(e *Expr) error {
 			g.Context.Types.Set(d.ID.String(), generalized)
 			g.Scope.Set(d.ID.String(), generalized)
 		}
+	localBody:
 		if err = g.Generate(e.Body); err != nil {
 			return err
 		}

@@ -254,6 +254,9 @@ fs.writeFileSync(path.join(root,'pkg/testdata/parser/constraint_solver.json'),JS
 
 const {TypeInferrer}=require(path.join(root,'quint/src/types/inferrer'))
 const inferenceCases=[
+ ['local-error','module M { val x=val y=1+true; y }'],
+ ['local-annotation','module M { val x=def f(a:b):b=a+1; f(1) }'],
+
  ['basic','module M { val x=1+2 val y=List(1,2) }'],
  ['polymorphic','module M { def identity(x)=x val a=identity(1) val b=identity(true) }'],
  ['local','module M { val pair=def identity(x)=x; (identity(1),identity(true)) }'],
