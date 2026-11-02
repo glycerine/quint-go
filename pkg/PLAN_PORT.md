@@ -859,3 +859,12 @@ word "retained" in the commit message.
   Default tests pass within the sub-second target. P2.7 remains open: this API
   deliberately returns discovery order, with dependency sorting, module-cycle
   diagnostics, partial-result behavior, and source maps still to implement.
+
+- 2026-11-02: Added module dependency sorting and load-and-sort entry point,
+  including QNT101 duplicate modules, QNT405 missing modules, and QNT098 cyclic
+  residual graphs. Tests cover dependency layers, diamond imports, self/mutual
+  cycles and blocked dependents, missing modules, duplicate names, export exclusion,
+  input immutability, and JavaScript's lexical BigInt ordering within layers.
+  Default tests pass within the sub-second target. P2.7 remains open for source
+  maps/partial results and differential sorting fixtures; cycle-name order uses
+  discovery order and still needs comparison with upstream Immutable.Set ordering.
