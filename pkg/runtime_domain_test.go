@@ -135,12 +135,13 @@ func TestUpstreamPrimitiveRuntimeDomains(t *testing.T) {
 		Input           primitiveDomainSpec
 		SkipEnumeration bool
 		Expected        struct {
-			HashCode, ImmutableHash domainFixtureOutcome[int64]
-			Cardinality             domainFixtureOutcome[Integer]
-			Bounds                  domainFixtureOutcome[[]*Integer]
-			Display                 domainFixtureOutcome[Expr]
-			Iteration               domainFixtureOutcome[[]Expr]
-			NormalForm              domainFixtureOutcome[struct {
+			HashCode      domainFixtureOutcome[float64]
+			ImmutableHash domainFixtureOutcome[int64]
+			Cardinality   domainFixtureOutcome[Integer]
+			Bounds        domainFixtureOutcome[[]*Integer]
+			Display       domainFixtureOutcome[Expr]
+			Iteration     domainFixtureOutcome[[]Expr]
+			NormalForm    domainFixtureOutcome[struct {
 				Class     string
 				Value     Expr
 				HashCode  int64

@@ -367,8 +367,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     - [x] Independent immutable RuntimeDomain APIs for explicit sets, inclusive
       intervals, Int/Nat, cardinality/membership, iteration, equality/subset,
       positional picks and exact finite/infinite RNG sampling.
-    - [ ] Attach compact domains to RuntimeValue and source evaluation; implement
-      product, powerset and map-set domains without eager display/identity trees.
+    - [x] Independent compact product, powerset and map-set domains, shared
+      positional cursors, zero/multiple bounds and normalization/serialization.
+    - [ ] Attach compact domains to RuntimeValue and source evaluation without
+      eager display/identity trees.
   - [x] Explicit-state TypeScript-compatible serialization, including transient
     tuple sets, fresh-object hashing, Unicode ties, and repeated-call UID history.
   - [x] Share object-hash state through implemented evaluator collection operations,
@@ -3078,3 +3080,12 @@ word "retained" in the commit message.
   top-level test combinators have 32 upstream output/simulation cases. Focused
   integrated tests pass0.145s and race1.794s. Eager variable registration, compiler
   instance contexts and actual execution-frame recording remain open.
+
+- 2026-11-02: Added immutable product, powerset and map-set RuntimeDomain APIs
+  with shared pick cursors, zero/multiple bounds, exact iteration/normalization,
+  finite sampling and reference resource exceptions. Sixteen domain snapshots,
+  26 previously pending edge cases and 126 RNG draws now pass, plus direct
+  ownership/cancellation/mixed-equality tests. Large-factor Number hash vectors
+  catch overflow beyond int64. Focused domain tests pass0.078s; compound statement
+  coverage89.3%. This completes the independent compound library batch; attaching
+  compact domains to source RuntimeValue/evaluator operations remains open.

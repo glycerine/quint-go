@@ -30,6 +30,9 @@ const (
 	runtimeIntervalDomain
 	runtimeIntegerDomain
 	runtimeNaturalDomain
+	runtimeProductDomain
+	runtimePowersetDomain
+	runtimeMapSetDomain
 )
 
 // RuntimeDomain is an immutable explicit finite set, inclusive integer
@@ -40,6 +43,10 @@ type RuntimeDomain struct {
 	kind        runtimeDomainKind
 	first, last Integer
 	explicit    RuntimeValue
+	factors     []RuntimeDomain
+	base        *RuntimeDomain
+	domain      *RuntimeDomain
+	rangeSet    *RuntimeDomain
 }
 
 // RuntimeDomainFromValue retains an explicit finite set and its traversal.
@@ -76,7 +83,7 @@ func NewRuntimeInfiniteSet(kind string) (RuntimeDomain, error) {
 }
 
 func (d RuntimeDomain) Valid() bool {
-	return d.kind >= runtimeExplicitDomain && d.kind <= runtimeNaturalDomain
+	return d.kind >= runtimeExplicitDomain && d.kind <= runtimeMapSetDomain
 }
 
 func (d RuntimeDomain) validate(ctx context.Context) error {
@@ -115,6 +122,8 @@ func (d RuntimeDomain) Cardinality(ctx context.Context) (Integer, error) {
 	case runtimeIntervalDomain:
 		size := new(big.Int).Sub(d.last.Big(), d.first.Big())
 		return IntegerFromBig(size.Add(size, big.NewInt(1))), nil
+	case runtimeProductDomain, runtimePowersetDomain, runtimeMapSetDomain:
+		return d.compoundCardinality(ctx)
 	default:
 		return Integer{}, Diagnostic{Code: "QNT514", Message: "Cardinality of " + d.infiniteName() + " is infinite"}
 	}
@@ -128,6 +137,9 @@ func (d RuntimeDomain) Bounds(ctx context.Context) ([]RuntimeBound, error) {
 	}
 	if d.infinite() {
 		return []RuntimeBound{{Finite: false}}, nil
+	}
+	if d.compound() {
+		return d.compoundBounds(ctx)
 	}
 	size, err := d.Cardinality(ctx)
 	if err != nil {
@@ -144,6 +156,9 @@ func (d RuntimeDomain) Contains(ctx context.Context, value RuntimeValue) (bool, 
 	}
 	if !value.Valid() {
 		return false, Diagnostic{Code: "QNT501", Message: "Invalid runtime value"}
+	}
+	if d.compound() {
+		return d.compoundContains(ctx, value)
 	}
 	if d.kind == runtimeExplicitDomain {
 		normal, err := runtimeNormalForm(value)
@@ -179,6 +194,9 @@ func (d RuntimeDomain) ForEach(ctx context.Context, yield func(RuntimeValue) (bo
 	}
 	if d.infinite() {
 		return RuntimeDomainException{Name: "Error", Message: "Infinite set " + d.infiniteName() + " is non-enumerable"}
+	}
+	if d.compound() {
+		return d.compoundForEach(ctx, yield)
 	}
 	if d.kind == runtimeExplicitDomain {
 		entries, err := runtimeEntries(d.explicit)
@@ -228,6 +246,9 @@ func (d RuntimeDomain) Subset(ctx context.Context, other RuntimeDomain) (bool, e
 	if d.kind == runtimeIntervalDomain && other.kind == runtimeIntervalDomain {
 		return d.first.Big().Cmp(other.first.Big()) >= 0 && d.last.Big().Cmp(other.last.Big()) <= 0, nil
 	}
+	if d.compound() && d.kind == other.kind {
+		return d.compoundSubset(ctx, other)
+	}
 	contained := true
 	err := d.ForEach(ctx, func(value RuntimeValue) (bool, error) {
 		var err error
@@ -256,6 +277,17 @@ func (d RuntimeDomain) Equal(ctx context.Context, other RuntimeDomain) (bool, er
 	if d.kind == runtimeExplicitDomain && other.kind == runtimeExplicitDomain {
 		return d.explicit.Equal(other.explicit), nil
 	}
+	if d.compound() || other.compound() {
+		if d.kind == other.kind {
+			return d.compoundEqual(ctx, other)
+		}
+		left, err := d.Materialize(ctx)
+		if err != nil {
+			return false, err
+		}
+		right, err := other.Materialize(ctx)
+		return left.Equal(right), err
+	}
 	leftSize, err := d.Cardinality(ctx)
 	if err != nil {
 		return false, err
@@ -273,25 +305,8 @@ func (d RuntimeDomain) Equal(ctx context.Context, other RuntimeDomain) (bool, er
 // Pick selects the first position and ignores additional positions. As in the
 // reference, a nonempty interval returns first+position even outside its bounds.
 func (d RuntimeDomain) Pick(ctx context.Context, positions []Integer) (RuntimeValue, error) {
-	if err := d.validate(ctx); err != nil {
-		return RuntimeValue{}, err
-	}
-	if len(positions) == 0 {
-		return RuntimeValue{}, RuntimeDomainException{Name: "AssertionError", Message: "Internal error: too few positions. Report a bug."}
-	}
-	if d.kind == runtimeExplicitDomain {
-		return PickRuntimePosition(ctx, d.explicit, positions)
-	}
-	position := positions[0].Big()
-	if d.kind == runtimeIntervalDomain {
-		if d.last.Big().Cmp(d.first.Big()) < 0 {
-			return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Index out of bounds"}
-		}
-		position.Add(position, d.first.Big())
-	} else if d.kind == runtimeNaturalDomain {
-		position.Abs(position)
-	}
-	return NewRuntimeValue(Expr{Kind: "int", Int: IntegerFromBig(position)})
+	value, _, err := d.PickWithPositions(ctx, positions)
+	return value, err
 }
 
 // Sample draws one position from the caller-owned RNG. Infinite positions use
@@ -302,27 +317,35 @@ func (d RuntimeDomain) Sample(ctx context.Context, rng *RNG) (RuntimeValue, erro
 	if err != nil {
 		return RuntimeValue{}, err
 	}
-	bound := bounds[0]
-	if bound.Finite && bound.Value.Big().Sign() == 0 {
-		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Index out of bounds"}
+	for _, bound := range bounds {
+		if bound.Finite && bound.Value.Big().Sign() == 0 {
+			return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Index out of bounds"}
+		}
 	}
-	if rng == nil {
+	if rng == nil && len(bounds) > 0 {
 		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Picking requires an RNG"}
 	}
-	limit := bound.Value
-	if !bound.Finite {
-		limit = IntegerFromBig(new(big.Int).Lsh(big.NewInt(1), 256))
+	positions := make([]Integer, len(bounds))
+	for i, bound := range bounds {
+		if err := ctx.Err(); err != nil {
+			return RuntimeValue{}, err
+		}
+		limit := bound.Value
+		if !bound.Finite {
+			limit = IntegerFromBig(new(big.Int).Lsh(big.NewInt(1), 256))
+		}
+		position, err := rng.Next(limit)
+		if err != nil {
+			return RuntimeValue{}, err
+		}
+		if !bound.Finite {
+			n := position.Big()
+			n.Sub(n, new(big.Int).Lsh(big.NewInt(1), 255))
+			position = IntegerFromBig(n)
+		}
+		positions[i] = position
 	}
-	position, err := rng.Next(limit)
-	if err != nil {
-		return RuntimeValue{}, err
-	}
-	if !bound.Finite {
-		n := position.Big()
-		n.Sub(n, new(big.Int).Lsh(big.NewInt(1), 255))
-		position = IntegerFromBig(n)
-	}
-	return d.Pick(ctx, []Integer{position})
+	return d.Pick(ctx, positions)
 }
 
 // Materialize converts a finite domain to the normalized explicit Set form.
@@ -350,19 +373,31 @@ func (d RuntimeDomain) Materialize(ctx context.Context) (RuntimeValue, error) {
 // numeric enumeration order; that display differs from a normalized Set's
 // string-collation order. Int/Nat remain built-in names.
 func (d RuntimeDomain) Expression(ctx context.Context) (Expr, error) {
+	return d.Serialize(ctx, nil)
+}
+
+// Serialize shares the reference object-hash sequence when state is non-nil.
+// Compound displays preserve enumeration order and serialize retained children.
+func (d RuntimeDomain) Serialize(ctx context.Context, state *RuntimeObjectHashState) (Expr, error) {
 	if err := d.validate(ctx); err != nil {
 		return Expr{}, err
 	}
 	if d.kind == runtimeExplicitDomain {
-		return d.explicit.Expression(), nil
+		return SerializeRuntimeValue(d.explicit, state)
 	}
 	if d.infinite() {
 		return Expr{Kind: "name", Name: d.infiniteName()}, nil
 	}
+	if state == nil {
+		state = &RuntimeObjectHashState{}
+	}
 	result := Expr{Kind: "app", Opcode: "Set", Args: []Expr{}}
 	err := d.ForEach(ctx, func(value RuntimeValue) (bool, error) {
-		result.Args = append(result.Args, value.Expression())
-		return true, nil
+		expression, err := SerializeRuntimeValue(value, state)
+		if err == nil {
+			result.Args = append(result.Args, expression)
+		}
+		return true, err
 	})
 	return result, err
 }
@@ -370,19 +405,22 @@ func (d RuntimeDomain) Expression(ctx context.Context) (Expr, error) {
 // referenceHashCode is the compact class's raw upstream hash, before
 // Immutable.hash's signed-small-integer conversion. It is not a Go structural
 // hash: finite domains must normalize before use as collection keys/elements.
-func (d RuntimeDomain) referenceHashCode() (int64, error) {
+func (d RuntimeDomain) referenceHashCode() (float64, error) {
 	if !d.Valid() {
 		return 0, fmt.Errorf("reference hashing requires a valid runtime domain")
 	}
 	switch d.kind {
 	case runtimeExplicitDomain:
-		return runtimeReferenceHashCode(d.explicit.expression)
+		code, err := runtimeReferenceHashCode(d.explicit.expression)
+		return float64(code), err
 	case runtimeIntervalDomain:
 		n := new(big.Int).Add(d.first.Big(), d.last.Big())
 		n.Mod(n, new(big.Int).Lsh(big.NewInt(1), 32))
-		return n.Int64(), nil
+		return float64(n.Int64()), nil
 	case runtimeNaturalDomain:
 		return 9007199254740990, nil
+	case runtimeProductDomain, runtimePowersetDomain, runtimeMapSetDomain:
+		return d.compoundReferenceHashCode()
 	default:
 		return 9007199254740991, nil
 	}
