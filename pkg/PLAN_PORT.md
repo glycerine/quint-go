@@ -225,7 +225,8 @@ analysis, with reproducible errors for invalid module structures.
 - [ ] P4.2 Port constraint generation/solving for primitive, collection,
   function/operator, tuple, record, row-polymorphic, and sum types.
   - [x] Implement structural type/row unification and ordered substitution composition.
-  - [ ] Compare exact unification substitutions/errors with upstream and connect constraint solving.
+  - [x] Compare initial type/row unification substitutions and errors exactly with upstream.
+  - [ ] Expand composition-failure coverage and connect constraint solving.
 - [ ] P4.3 Port type aliases, abstract types, type applications, parameter
   substitution, alias inlining, and recursive-alias rejection.
   - [x] Resolve outer aliases and recursively inline type-tree aliases by lookup ID.
@@ -1251,3 +1252,11 @@ word "retained" in the commit message.
   Default tests pass (combined execution 0.554s). Inputs require validated IR,
   acyclic aliases, and resolved applications. Exact upstream differential parity,
   composition failure formatting, and constraint solver integration remain open.
+
+- 2026-11-02: Added 24 upstream unification fixtures retaining type IDs and
+  comparing ordered substitutions and complete error trees. Cases cover equality,
+  occurs checks, collections, dependent function/operator arguments, arity errors,
+  tuple failures, shared/disjoint row fields, open tails, nested records, and
+  unresolved aliases. All match without implementation changes. Default tests
+  pass (combined execution 0.554s). Composition exception behavior, broader
+  alias/sum coverage, and constraint solving remain open.

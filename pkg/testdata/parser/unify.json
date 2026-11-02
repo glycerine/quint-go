@@ -1,0 +1,1139 @@
+[
+  {
+    "left": {
+      "id": 1,
+      "kind": "int"
+    },
+    "right": {
+      "id": 1,
+      "kind": "int"
+    },
+    "substitutions": [],
+    "error": null
+  },
+  {
+    "left": {
+      "id": 1,
+      "kind": "int"
+    },
+    "right": {
+      "id": 1,
+      "kind": "str"
+    },
+    "substitutions": null,
+    "error": {
+      "location": "Trying to unify int and str",
+      "message": "Couldn't unify int and str",
+      "children": []
+    }
+  },
+  {
+    "left": {
+      "id": 1,
+      "kind": "var",
+      "name": "a"
+    },
+    "right": {
+      "id": 2,
+      "kind": "list",
+      "elem": {
+        "id": 1,
+        "kind": "var",
+        "name": "a"
+      }
+    },
+    "substitutions": null,
+    "error": {
+      "location": "Trying to unify a and List[a]",
+      "message": "Can't bind a to List[a]: cyclical binding",
+      "children": []
+    }
+  },
+  {
+    "left": {
+      "id": 1,
+      "kind": "var",
+      "name": "a"
+    },
+    "right": {
+      "id": 2,
+      "kind": "list",
+      "elem": {
+        "id": 1,
+        "kind": "int"
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 2,
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "int"
+          }
+        }
+      }
+    ],
+    "error": null
+  },
+  {
+    "left": {
+      "id": 2,
+      "kind": "set",
+      "elem": {
+        "id": 1,
+        "kind": "var",
+        "name": "a"
+      }
+    },
+    "right": {
+      "id": 2,
+      "kind": "set",
+      "elem": {
+        "id": 1,
+        "kind": "str"
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "str"
+        }
+      }
+    ],
+    "error": null
+  },
+  {
+    "left": {
+      "id": 2,
+      "kind": "list",
+      "elem": {
+        "id": 1,
+        "kind": "int"
+      }
+    },
+    "right": {
+      "id": 2,
+      "kind": "set",
+      "elem": {
+        "id": 1,
+        "kind": "int"
+      }
+    },
+    "substitutions": null,
+    "error": {
+      "location": "Trying to unify List[int] and Set[int]",
+      "message": "Couldn't unify list and set",
+      "children": []
+    }
+  },
+  {
+    "left": {
+      "id": 3,
+      "kind": "fun",
+      "arg": {
+        "id": 1,
+        "kind": "var",
+        "name": "a"
+      },
+      "res": {
+        "id": 2,
+        "kind": "var",
+        "name": "a"
+      }
+    },
+    "right": {
+      "id": 3,
+      "kind": "fun",
+      "arg": {
+        "id": 1,
+        "kind": "int"
+      },
+      "res": {
+        "id": 2,
+        "kind": "int"
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      }
+    ],
+    "error": null
+  },
+  {
+    "left": {
+      "id": 3,
+      "kind": "fun",
+      "arg": {
+        "id": 1,
+        "kind": "var",
+        "name": "a"
+      },
+      "res": {
+        "id": 2,
+        "kind": "var",
+        "name": "a"
+      }
+    },
+    "right": {
+      "id": 3,
+      "kind": "fun",
+      "arg": {
+        "id": 1,
+        "kind": "int"
+      },
+      "res": {
+        "id": 2,
+        "kind": "str"
+      }
+    },
+    "substitutions": null,
+    "error": {
+      "location": "Trying to unify int and str",
+      "message": "Couldn't unify int and str",
+      "children": []
+    }
+  },
+  {
+    "left": {
+      "id": 4,
+      "kind": "oper",
+      "args": [
+        {
+          "id": 1,
+          "kind": "var",
+          "name": "a"
+        },
+        {
+          "id": 2,
+          "kind": "var",
+          "name": "b"
+        }
+      ],
+      "res": {
+        "id": 3,
+        "kind": "var",
+        "name": "a"
+      }
+    },
+    "right": {
+      "id": 4,
+      "kind": "oper",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int"
+        },
+        {
+          "id": 2,
+          "kind": "str"
+        }
+      ],
+      "res": {
+        "id": 3,
+        "kind": "int"
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "id": 2,
+          "kind": "str"
+        }
+      }
+    ],
+    "error": null
+  },
+  {
+    "left": {
+      "id": 3,
+      "kind": "oper",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int"
+        }
+      ],
+      "res": {
+        "id": 2,
+        "kind": "int"
+      }
+    },
+    "right": {
+      "id": 4,
+      "kind": "oper",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int"
+        },
+        {
+          "id": 2,
+          "kind": "str"
+        }
+      ],
+      "res": {
+        "id": 3,
+        "kind": "int"
+      }
+    },
+    "substitutions": null,
+    "error": {
+      "location": "Trying to unify (int) => int and (int, str) => int",
+      "message": "Expected 1 arguments, got 2",
+      "children": []
+    }
+  },
+  {
+    "left": {
+      "id": 4,
+      "kind": "oper",
+      "args": [
+        {
+          "id": 1,
+          "kind": "var",
+          "name": "a"
+        },
+        {
+          "id": 2,
+          "kind": "var",
+          "name": "a"
+        }
+      ],
+      "res": {
+        "id": 3,
+        "kind": "var",
+        "name": "a"
+      }
+    },
+    "right": {
+      "id": 4,
+      "kind": "oper",
+      "args": [
+        {
+          "id": 1,
+          "kind": "int"
+        },
+        {
+          "id": 2,
+          "kind": "str"
+        }
+      ],
+      "res": {
+        "id": 3,
+        "kind": "int"
+      }
+    },
+    "substitutions": null,
+    "error": {
+      "location": "Trying to unify (a, a) => a and (int, str) => int",
+      "children": [
+        {
+          "location": "Trying to unify int and str",
+          "message": "Couldn't unify int and str",
+          "children": []
+        }
+      ]
+    }
+  },
+  {
+    "left": {
+      "id": 3,
+      "kind": "tup",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "0",
+            "fieldType": {
+              "id": 1,
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "fieldName": "1",
+            "fieldType": {
+              "id": 2,
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "right": {
+      "id": 3,
+      "kind": "tup",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "0",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "1",
+            "fieldType": {
+              "id": 2,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "id": 2,
+          "kind": "str"
+        }
+      }
+    ],
+    "error": null
+  },
+  {
+    "left": {
+      "id": 3,
+      "kind": "tup",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "0",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "1",
+            "fieldType": {
+              "id": 2,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "right": {
+      "id": 3,
+      "kind": "tup",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "0",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "1",
+            "fieldType": {
+              "id": 2,
+              "kind": "bool"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "substitutions": null,
+    "error": {
+      "location": "Trying to unify (int, str) and (int, bool)",
+      "children": [
+        {
+          "location": "Trying to unify { 0: int, 1: str } and { 0: int, 1: bool }",
+          "children": [
+            {
+              "location": "Trying to unify str and bool",
+              "message": "Couldn't unify str and bool",
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "left": {
+      "id": 1,
+      "kind": "tup",
+      "fields": {
+        "kind": "empty"
+      }
+    },
+    "right": {
+      "id": 3,
+      "kind": "tup",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "0",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "1",
+            "fieldType": {
+              "id": 2,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "substitutions": null,
+    "error": {
+      "location": "Trying to unify () and (int, str)",
+      "children": [
+        {
+          "location": "Trying to unify {} and { 0: int, 1: str }",
+          "message": "Couldn't unify empty and row",
+          "children": []
+        }
+      ]
+    }
+  },
+  {
+    "left": {
+      "id": 2,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 1,
+              "kind": "var",
+              "name": "a"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "r"
+        }
+      }
+    },
+    "right": {
+      "id": 3,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "y",
+            "fieldType": {
+              "id": 2,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "id": 2,
+                "kind": "str"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "error": null
+  },
+  {
+    "left": {
+      "id": 2,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "r"
+        }
+      }
+    },
+    "right": {
+      "id": 2,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "y",
+            "fieldType": {
+              "id": 1,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "s"
+        }
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "s",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "id": 1,
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "$r$s"
+          }
+        }
+      },
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "id": 1,
+                "kind": "str"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "$r$s"
+          }
+        }
+      }
+    ],
+    "error": null
+  },
+  {
+    "left": {
+      "id": 2,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "r"
+        }
+      }
+    },
+    "right": {
+      "id": 2,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "y",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "r"
+        }
+      }
+    },
+    "substitutions": null,
+    "error": {
+      "location": "Trying to unify { x: int | r } and { y: int | r }",
+      "message": "Incompatible tails for rows with disjoint fields: { | r } and { | r }",
+      "children": []
+    }
+  },
+  {
+    "left": {
+      "id": 2,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "right": {
+      "id": 2,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "y",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "substitutions": null,
+    "error": {
+      "location": "Trying to unify { x: int } and { y: int }",
+      "message": "Incompatible tails for rows with disjoint fields: {} and {}",
+      "children": []
+    }
+  },
+  {
+    "left": {
+      "id": 2,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "right": {
+      "id": 2,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 1,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "substitutions": null,
+    "error": {
+      "location": "Trying to unify { x: int } and { x: str }",
+      "children": [
+        {
+          "location": "Trying to unify int and str",
+          "message": "Couldn't unify int and str",
+          "children": []
+        }
+      ]
+    }
+  },
+  {
+    "left": {
+      "id": 3,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 1,
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          {
+            "fieldName": "y",
+            "fieldType": {
+              "id": 2,
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "r"
+        }
+      }
+    },
+    "right": {
+      "id": 3,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "y",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 2,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "s"
+        }
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 2,
+          "kind": "str"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "var",
+          "name": "s"
+        }
+      }
+    ],
+    "error": null
+  },
+  {
+    "left": {
+      "id": 3,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 2,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "z",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "var",
+                      "name": "a"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "r"
+        }
+      }
+    },
+    "right": {
+      "id": 4,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 2,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "z",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "int"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          {
+            "fieldName": "y",
+            "fieldType": {
+              "id": 3,
+              "kind": "bool"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "id": 3,
+                "kind": "bool"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "error": null
+  },
+  {
+    "left": {
+      "id": 1,
+      "kind": "const",
+      "name": "Unknown"
+    },
+    "right": {
+      "id": 1,
+      "kind": "int"
+    },
+    "substitutions": null,
+    "error": {
+      "location": "Trying to unify Unknown and int",
+      "message": "Couldn't find type alias Unknown",
+      "children": []
+    }
+  },
+  {
+    "left": {
+      "id": 1,
+      "kind": "const",
+      "name": "Unknown"
+    },
+    "right": {
+      "id": 1,
+      "kind": "const",
+      "name": "Unknown"
+    },
+    "substitutions": [],
+    "error": null
+  },
+  {
+    "left": {
+      "id": 2,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "r"
+        }
+      }
+    },
+    "right": {
+      "id": 2,
+      "kind": "rec",
+      "fields": {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "x",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "s"
+        }
+      }
+    },
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "r",
+        "value": {
+          "kind": "var",
+          "name": "s"
+        }
+      }
+    ],
+    "error": null
+  }
+]

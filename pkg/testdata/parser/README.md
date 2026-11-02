@@ -101,3 +101,9 @@ IDs are retained; Go resolves lookup payloads first, then compares exact declara
 IR, ordered lookup annotations/alias types, and error trees. Fixtures cover pairs,
 nested aliases, record/open rows, operator annotations, sums, swapped parameters,
 alias arguments/bodies, and too few/many arguments.
+
+
+`unify.json` contains 24 upstream unification outcomes, preserving original
+type IDs. Tests compare substitution order and replacement trees exactly, plus
+complete structured diagnostics. These cases use an empty alias lookup context;
+resolved-alias behavior is currently covered by Go unit tests.

@@ -205,3 +205,26 @@ const applicationFixtures=applicationCases.map(([name,source])=>{
  return {name,input:parsed.modules,output,table:[...linked.table].map(([id,d])=>({id:String(id),annotation:d.typeAnnotation??null,type:d.kind==='typedef'?(d.type??null):null})),errors:[...errors].map(([id,error])=>({id:String(id),error}))}
 })
 fs.writeFileSync(path.join(root,'pkg/testdata/parser/type_application.json'),JSONbig.stringify(applicationFixtures,null,2)+'\n')
+
+const {unify}=require(path.join(root,'quint/src/types/constraintSolver'))
+const {parseType}=require(path.join(root,'quint/src/types/parser'))
+const unifyCases=[
+ ['int','int'],['int','str'],['a','List[a]'],['a','List[int]'],
+ ['Set[a]','Set[str]'],['List[int]','Set[int]'],
+ ['a -> a','int -> int'],['a -> a','int -> str'],
+ ['(a,b)=>a','(int,str)=>int'],['(int)=>int','(int,str)=>int'],
+ ['(a,a)=>a','(int,str)=>int'],['(a,b)','(int,str)'],
+ ['(int,str)','(int,bool)'],['()','(int,str)'],
+ ['{x:a|r}','{x:int,y:str}'],['{x:int|r}','{y:str|s}'],
+ ['{x:int|r}','{y:int|r}'],['{x:int}','{y:int}'],
+ ['{x:int}','{x:str}'],['{x:a,y:b|r}','{y:int,x:str|s}'],
+ ['{x:{z:a}|r}','{x:{z:int},y:bool}'],['Unknown','int'],
+ ['Unknown','Unknown'],['{x:int|r}','{x:int|s}'],
+]
+const unifyFixtures=unifyCases.map(([left,right])=>{
+ const a=parseType(left),b=parseType(right)
+ if(a.isLeft()||b.isLeft())throw Error(left+' / '+right)
+ const result=unify(new Map(),a.value,b.value)
+ return {left:a.value,right:b.value,substitutions:result.isRight()?result.value:null,error:result.isLeft()?result.value:null}
+})
+fs.writeFileSync(path.join(root,'pkg/testdata/parser/unify.json'),JSONbig.stringify(unifyFixtures,null,2)+'\n')
