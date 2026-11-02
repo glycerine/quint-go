@@ -133,7 +133,6 @@ func TestVerifyTLCExplicitUnsupportedOptions(t *testing.T) {
 		{[]string{"--apalache-config=x"}, "apalache-config"},
 		{[]string{"--random-transitions"}, "random-transitions"},
 		{[]string{"--inductive-invariant=safe"}, "inductive-invariant"},
-		{[]string{"--out-itf=trace.json"}, "out-itf"},
 	} {
 		var stdout, stderr bytes.Buffer
 		args := append([]string{"M.qnt", "--backend=tlc"}, tc.args...)
@@ -200,13 +199,14 @@ func TestVerifyTLCActualTemporalSource(t *testing.T) {
 	input := verifyTestSource(t, `module M { var x:bool action init=x'=false action step=x'=not(x) temporal live=eventually(x) }`)
 	dir := t.TempDir()
 	config, output := filepath.Join(dir, "tlc.json"), filepath.Join(dir, "result.json")
+	itfOutput := filepath.Join(dir, "trace.itf.json")
 	if err := os.WriteFile(config, []byte(`{"workers":2}`), 0600); err != nil {
 		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	var stdout, stderr bytes.Buffer
-	code := commandVerify(ctx, []string{input, "--backend=tlc", "--temporal=live", "--tlc-config", config, "--out", output}, &stdout, &stderr)
+	code := commandVerify(ctx, []string{input, "--backend=tlc", "--temporal=live", "--tlc-config", config, "--out", output, "--out-itf", itfOutput}, &stdout, &stderr)
 	data, err := os.ReadFile(output)
 	if err != nil {
 		t.Fatal(err)
@@ -226,6 +226,26 @@ func TestVerifyTLCActualTemporalSource(t *testing.T) {
 	for i, state := range stage.TLC.Trace {
 		if state.Index != i || len(state.Values) != 1 || state.Values[0].Name != "x" || state.Values[0].Value != "FALSE" {
 			t.Fatal(string(data))
+		}
+	}
+	itfData, err := os.ReadFile(itfOutput)
+	if err != nil {
+		t.Fatal(err)
+	}
+	itf, err := quint.DecodeITFTrace(itfData)
+	if err != nil || len(itf.Vars) != 1 || itf.Vars[0] != "x" || itf.Loop == nil || *itf.Loop != *stage.TLC.Loop || len(itf.States) != len(stage.TLC.Trace) {
+		t.Fatal(string(itfData), err)
+	}
+	var compact bytes.Buffer
+	if err := json.Compact(&compact, stage.Trace); err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(bytes.TrimSpace(itfData), compact.Bytes()) {
+		t.Fatal("JSON and ITF files have different counterexamples")
+	}
+	for _, state := range itf.States {
+		if state.Kind != "app" || state.Opcode != "Rec" || len(state.Args) != 2 || state.Args[0].Str != "x" || state.Args[1].Kind != "bool" || state.Args[1].Bool {
+			t.Fatal(state)
 		}
 	}
 }

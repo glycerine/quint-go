@@ -39,17 +39,19 @@ func (s *verifyStringFlags) Set(value string) error {
 // verifyStage keeps backend JSON lossless and reports a bounded result without
 // presenting bounded checking as an unbounded proof.
 type verifyStage struct {
-	Status      string                       `json:"status"`
-	Input       string                       `json:"input,omitempty"`
-	Main        string                       `json:"main,omitempty"`
-	Outcome     apalache.CheckOutcome        `json:"outcome,omitempty"`
-	Explanation string                       `json:"explanation,omitempty"`
-	Errors      []quint.ErrorMessage         `json:"errors"`
-	Trace       json.RawMessage              `json:"trace,omitempty"`
-	Phases      []apalache.VerificationPhase `json:"phases,omitempty"`
-	MaxSteps    *int                         `json:"maxSteps,omitempty"`
-	BackendData string                       `json:"backendData,omitempty"`
-	TLC         *gotlc.Result                `json:"tlc,omitempty"`
+	Status             string                       `json:"status"`
+	Input              string                       `json:"input,omitempty"`
+	Main               string                       `json:"main,omitempty"`
+	Outcome            apalache.CheckOutcome        `json:"outcome,omitempty"`
+	Explanation        string                       `json:"explanation,omitempty"`
+	Errors             []quint.ErrorMessage         `json:"errors"`
+	Trace              json.RawMessage              `json:"trace,omitempty"`
+	Phases             []apalache.VerificationPhase `json:"phases,omitempty"`
+	MaxSteps           *int                         `json:"maxSteps,omitempty"`
+	BackendData        string                       `json:"backendData,omitempty"`
+	TLC                *gotlc.Result                `json:"tlc,omitempty"`
+	ViolatedInvariants []string                     `json:"violatedInvariants,omitempty"`
+	Warnings           []string                     `json:"warnings,omitempty"`
 }
 
 func commandVerify(ctx context.Context, args []string, stdout, stderr io.Writer) int {
@@ -132,12 +134,14 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		return verifyOutput(options, stage, stdout, stderr)
 	}
 	_, invariants := quint.CompilationInvariants(options.invariant, options.invariants)
+	reportInvariants := len(invariants) > 1 || options.inductive != "" && len(invariants) > 0
 	compiled, err := quint.CompileModules(analysis.Modules, quint.AnalysisOutput{Types: analysis.Types, Effects: analysis.Effects, Modes: analysis.Modes}, frontend.IDs, frontend.Sources, quint.CompilationOptions{
 		Main: options.main, DefaultModule: coreDefaultModule(frontend, abs), Input: options.input,
 		CompilationEntries: quint.CompilationEntries{
 			Target: "json", Flatten: true, Init: &options.init, Step: &options.step,
 			Invariants: invariants, InductiveInvariant: options.inductive,
-			Temporal: options.temporal,
+			Temporal:         options.temporal,
+			InvariantReports: reportInvariants,
 		},
 	})
 	if err != nil {
@@ -154,6 +158,7 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		return fail(err)
 	}
 	if verifyUsesTLC(options) {
+		tlcOptions.ITF = options.outITF != "" || reportInvariants
 		if len(invariants) == 0 {
 			tlcOptions.Invariants = []string{}
 		}
@@ -168,6 +173,17 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		if !result.Complete {
 			return fail(fmt.Errorf("TLC did not complete checking"))
 		}
+		if options.outITF != "" && result.Outcome != gotlc.Safe {
+			if result.ITFError != "" {
+				return fail(fmt.Errorf("TLC ITF export: %s", result.ITFError))
+			}
+			if len(result.ITF) == 0 || !json.Valid(result.ITF) {
+				return fail(fmt.Errorf("TLC returned no valid typed ITF counterexample"))
+			}
+		}
+		if result.Outcome != gotlc.Safe && len(result.ITF) > 0 {
+			stage.Trace = append(json.RawMessage(nil), result.ITF...)
+		}
 		stage.Outcome = apalache.CheckOutcome(result.Outcome)
 		switch result.Outcome {
 		case gotlc.Safe:
@@ -178,6 +194,13 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 			stage.Explanation = fmt.Sprintf("TLC found a %s.\n%s", result.Outcome, result.Log)
 		default:
 			return fail(fmt.Errorf("invalid TLC outcome %q", result.Outcome))
+		}
+		if reportInvariants && stage.Outcome == apalache.CheckViolation {
+			if result.ITFError != "" {
+				stage.Warnings = append(stage.Warnings, "could not identify violated invariants: "+result.ITFError)
+			} else {
+				verifyReportInvariants(ctx, compiled, invariants, &stage)
+			}
 		}
 		return verifyOutput(options, stage, stdout, stderr)
 	}
@@ -206,6 +229,9 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		stage.Status = "ok"
 	} else if err == nil && (result.Outcome == apalache.CheckViolation || result.Outcome == apalache.CheckDeadlock) {
 		stage.Status = "violation"
+	}
+	if reportInvariants && err == nil && stage.Status == "violation" {
+		verifyReportInvariants(ctx, compiled, invariants, &stage)
 	}
 	return verifyOutput(options, stage, stdout, stderr)
 }
@@ -278,9 +304,6 @@ func verifyParseOptions(args []string, stdout, stderr io.Writer) (verifyOptions,
 		}
 		if options.inductive != "" {
 			return options, false, fmt.Errorf("--inductive-invariant is unsupported by Go TLC")
-		}
-		if options.outITF != "" {
-			return options, false, fmt.Errorf("--out-itf is not yet supported by Go TLC; --out retains concrete TLC counterexample states")
 		}
 	} else if options.tlcConfig != "" {
 		return options, false, fmt.Errorf("--tlc-config requires the Go TLC backend")
@@ -394,6 +417,12 @@ func verifyOutput(options verifyOptions, stage verifyStage, stdout, stderr io.Wr
 		for _, diagnostic := range stage.Errors {
 			fmt.Fprintln(stderr, diagnostic.Explanation)
 		}
+		for _, label := range stage.ViolatedInvariants {
+			fmt.Fprintln(stdout, "❌ "+label)
+		}
+	}
+	for _, warning := range stage.Warnings {
+		fmt.Fprintln(stderr, "[warning] "+warning)
 	}
 	return code
 }

@@ -617,7 +617,8 @@ TypeScript or Rust evaluator process.
   and ordinary/multiple-invariant handling with equivalent result categories.
   - [x] Bounded-check API, explicit no-invariant selection, lossless violation/
     deadlock responses, and source-generated safe/violating/instance checks.
-  - [ ] Complete ordinary/multiple-invariant user-facing orchestration tests.
+  - [x] Ordinary/multiple-invariant CLI attribution through actual Go Apalache
+    and TLC counterexamples; reporting failures preserve the checker verdict.
 - [x] P9.4 Port inductive-invariant orchestration: initialization at bound 0,
   one-step preservation from the inductive predicate, and optional implication
   of ordinary invariants at bound 0.
@@ -643,8 +644,9 @@ TypeScript or Rust evaluator process.
   - [x] Optional separately compiled invariant predicates and a Go final-state
     reporting API; exact source oracles and actual checker traces cover individual
     false indices, inline expressions, imports/overrides and reporting failures.
-  - [ ] Individual-invariant violation reporting and variable/source rendering;
-    Shai currently omits temporal loop indices from its ITF response.
+  - [x] Individual-invariant CLI labels and JSON attribution for multiple or
+    inductive ordinary predicates; reporting failures become visible warnings.
+  - [ ] Rich variable/source rendering; Shai omits temporal loop indices.
 - [ ] P9.7 Implement `compile --target=tlaplus` through Go Apalache and port
   `tlaplusPostprocessing.ts`; compare parsed TLA semantics and required textual
   output against reference fixtures.
@@ -659,7 +661,9 @@ TypeScript or Rust evaluator process.
     Variants module, configuration, exhaustive outcomes and concrete TLA traces.
   - [x] Temporal PROPERTY selection and CLI --temporal, always/eventually/
     leadsTo, weak/strong fairness, finite quantifiers and checked lasso traces.
-  - [ ] ITF export, full native semantic parity and hard preemption.
+  - [x] Typed native ITF export including empty/structured values, variants and
+    temporal loops; explicit export errors preserve definitive native verdicts.
+  - [ ] Full native semantic parity and hard preemption.
 - [ ] P9.9 Replace Scala version/download/launch behavior. Define Go backend
   selection/version reporting and the treatment of legacy endpoint/version
   flags; test Go gRPC compatibility if endpoint mode is retained.
@@ -3339,3 +3343,14 @@ word "retained" in the commit message.
   class translation preserves Annex B ranges while avoiding .NET-only semantics.
   Focused tests0.236s and races1.368s pass, with class helpers100% coverage.
   Repeated nested capture references remain the explicit semantic limit.
+
+- 2026-11-02: Added typed native TLC ITF export with loop indices, original
+  names, structured/empty values and variants. Snapshots stay inside native
+  ownership; generated TLA uses a token-aware named Variants instance shim with
+  collision errors. Optional export failures preserve definitive checker results;
+  explicit file output fails while report-only paths warn. Both verification
+  backends now identify individual false ordinary invariants in JSON/stdout,
+  retaining proof outcomes on reporting errors. Twelve additional actual checker
+  cases, default helpers/CLI writes, races and independent review pass. Backend
+  default0.161s and verify CLI0.198s; larger optional TLC/CLI corpora pass4.186s/
+  1.375s. Native numeric bounds, broader parity and hard preemption remain open.

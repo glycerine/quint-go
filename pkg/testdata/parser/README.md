@@ -1033,3 +1033,14 @@ JavaScript flat classes and Annex B ranges translate without .NET class semantic
 Independent bounded audits compare 613,200 class cases and all 1,114,112 Unicode
 codepoints against the actual Node runtime. Repeated nested capture references
 still reject where the engines reset capture history differently.
+
+Native TLC typed ITF tests cover lists/tuples, sets, arbitrary-key maps, records,
+variants, empty values, exact int32 decimal output, names and temporal loops.
+Default helper/error tests and the existing real temporal CLI check exercise both
+JSON and ITF writes; 12 additional actual checker cases cover source, namespaces,
+structured values and invariant attribution across both backends. Conversion is
+opt-in and snapshots native values while checker ownership is held. Generated
+TLA adds a named Variants instance only for real qualified references, with explicit
+name-collision rejection. Export/reporting errors preserve definitive verdicts;
+explicit --out-itf fails unavailable export while report-only paths warn. Native
+integer/resource bounds and hard-preemption limits remain unchanged.
