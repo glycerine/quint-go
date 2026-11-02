@@ -683,3 +683,10 @@ word "retained" in the commit message.
   spread-only records, and both diagnostics. Default tests pass (core 0.265s).
   P2.4 remains open for tuple-lambda desugaring, local bindings, matches, source
   mapping, and recovery/diagnostic parity.
+
+- 2026-11-02: Added operator-definition parsing/conversion and local let bindings,
+  including all qualifiers, annotated parameters/results, legacy annotations,
+  lambda wrapping, and upstream's true placeholder for documentation-only heads.
+  Tests cover nested lets, local functions, annotation shapes, qualifiers, and
+  malformed definitions. Default tests pass (core 0.268s). P2.3/P2.4 remain open
+  for module integration, destructuring definitions, matches, and source maps.

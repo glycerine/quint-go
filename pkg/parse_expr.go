@@ -98,6 +98,17 @@ func expressionFromContext(ctx p.IExprContext, ids *IDGenerator) (Expr, error) {
 		}
 		return record, nil
 	}
+	if c, ok := ctx.(*p.LetInContext); ok {
+		definition, err := operatorFromContext(c.OperDef(), ids)
+		if err != nil {
+			return Expr{}, err
+		}
+		body, err := expressionFromContext(c.Expr(), ids)
+		if err != nil {
+			return Expr{}, err
+		}
+		return Expr{ID: ids.Next(), Kind: "let", Opdef: &definition, Body: &body}, nil
+	}
 	args := []Expr{}
 	for _, child := range ctx.GetChildren() {
 		if ex, ok := child.(p.IExprContext); ok {
