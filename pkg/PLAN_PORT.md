@@ -1014,3 +1014,12 @@ word "retained" in the commit message.
   identity. All corpus cases pass (0.300s); invalid cases verify rejection rather
   than complete diagnostic recovery parity. Default tests remain under the target
   (core 0.410s). P2.9 still requires broader examples/error/source-map coverage.
+
+- 2026-11-02: Started P3.1 with insertion-ordered definition stacks using
+  insdict.Dict, lexical lookup/restoration, same-ID replacement, depth-aware
+  shadowing, underscore exclusion, and upstream QNT101 conflict diagnostics.
+  Added a separate name-resolution builtin inventory checked against base.ts
+  (internal IR opcodes are not the same inventory). Tests cover shadow/restore,
+  duplicate identities, conflicting references, builtins, holes, and inventory
+  parity. Default tests pass within the sub-second target. Module collection,
+  traversal, reference resolution, imports, and unused definitions remain open.
