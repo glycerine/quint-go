@@ -1788,3 +1788,10 @@ word "retained" in the commit message.
   export/import output now matches both upstream fixtures exactly structurally.
   Default tests pass (combined execution 0.731s). Broader nested aliases,
   duplicate export dependencies, and instance flattening remain open under P6.1.
+
+- 2026-11-02: Added copied expression ID refreshing with lambda/local-definition
+  IDs and extension of source/type/effect/mode tables under new keys. Tests cover
+  fresh expression/parameter/body IDs, retained old analysis entries, copied
+  output, absent metadata, and generator advancement. Default tests pass
+  (combined execution 0.725s). Definition/type-annotation refreshing, traversal
+  order differential fixtures, and instance integration remain open under P6.2.
