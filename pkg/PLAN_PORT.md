@@ -610,3 +610,11 @@ word "retained" in the commit message.
   nonduplicate variables, read exclusion, symbolic entities, diagnostic ordering,
   and accumulation. Default tests pass (core 0.009s). P5.4 remains open for
   nondeterministic-choice checks and integrated analyzer validation.
+
+- 2026-11-02: Added recursive effect simplification and entity-union flattening
+  with upstream grouping order. Read/temporal union members deduplicate by
+  structure; updates retain occurrences and references. Concrete state occurrences
+  remain distinct Go values (upstream's Set uses object identity). Tests cover
+  empty/singleton/nested unions, grouping, reference and slice isolation, arrow
+  recursion, and update preservation. Default tests pass (core 0.012s). P5.1
+  remains open for substitution/unification and shared-object identity auditing.
