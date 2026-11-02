@@ -1066,5 +1066,513 @@
       "message": "Expected a lambda value",
       "reference": 3
     }
+  },
+  {
+    "source": "{ def inc(x)=x+1; def twice(f,x)=f(f(x)); twice(inc,3) }",
+    "input": {
+      "id": 18,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "inc",
+        "qualifier": "def",
+        "expr": {
+          "id": 5,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 2,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 17,
+        "kind": "let",
+        "opdef": {
+          "id": 13,
+          "kind": "def",
+          "name": "twice",
+          "qualifier": "def",
+          "expr": {
+            "id": 12,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 7,
+                "name": "f"
+              },
+              {
+                "id": 8,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "f",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "app",
+                  "opcode": "f",
+                  "args": [
+                    {
+                      "id": 9,
+                      "kind": "name",
+                      "name": "x"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 16,
+          "kind": "app",
+          "opcode": "twice",
+          "args": [
+            {
+              "id": 14,
+              "kind": "name",
+              "name": "inc"
+            },
+            {
+              "id": 15,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        }
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 5
+    }
+  },
+  {
+    "source": "{ val inc = (x) => x+1; inc(7) }",
+    "input": {
+      "id": 9,
+      "kind": "let",
+      "opdef": {
+        "id": 6,
+        "kind": "def",
+        "name": "inc",
+        "qualifier": "val",
+        "expr": {
+          "id": 5,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 2,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 8,
+        "kind": "app",
+        "opcode": "inc",
+        "args": [
+          {
+            "id": 7,
+            "kind": "int",
+            "value": 7
+          }
+        ]
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 8
+    }
+  },
+  {
+    "source": "{ val x=2; val f=(y)=>x+y; f(3) }",
+    "input": {
+      "id": 12,
+      "kind": "let",
+      "opdef": {
+        "id": 2,
+        "kind": "def",
+        "name": "x",
+        "qualifier": "val",
+        "expr": {
+          "id": 1,
+          "kind": "int",
+          "value": 2
+        }
+      },
+      "expr": {
+        "id": 11,
+        "kind": "let",
+        "opdef": {
+          "id": 8,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "val",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "y"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "y"
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 10,
+          "kind": "app",
+          "opcode": "f",
+          "args": [
+            {
+              "id": 9,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        }
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 5
+    }
+  },
+  {
+    "source": "{ def make(x) = (y)=>x+y; val add2=make(2); add2(5) }",
+    "input": {
+      "id": 15,
+      "kind": "let",
+      "opdef": {
+        "id": 8,
+        "kind": "def",
+        "name": "make",
+        "qualifier": "def",
+        "expr": {
+          "id": 7,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "x"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 6,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 2,
+                "name": "y"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "y"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "expr": {
+        "id": 14,
+        "kind": "let",
+        "opdef": {
+          "id": 11,
+          "kind": "def",
+          "name": "add2",
+          "qualifier": "val",
+          "expr": {
+            "id": 10,
+            "kind": "app",
+            "opcode": "make",
+            "args": [
+              {
+                "id": 9,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "expr": {
+          "id": 13,
+          "kind": "app",
+          "opcode": "add2",
+          "args": [
+            {
+              "id": 12,
+              "kind": "int",
+              "value": 5
+            }
+          ]
+        }
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 7
+    }
+  },
+  {
+    "source": "{ def choose(b,f,g)=if(b) f else g; def inc(x)=x+1; def dec(x)=x-1; val f=choose(true,inc,dec); f(4) }",
+    "input": {
+      "id": 32,
+      "kind": "let",
+      "opdef": {
+        "id": 9,
+        "kind": "def",
+        "name": "choose",
+        "qualifier": "def",
+        "expr": {
+          "id": 8,
+          "kind": "lambda",
+          "params": [
+            {
+              "id": 1,
+              "name": "b"
+            },
+            {
+              "id": 2,
+              "name": "f"
+            },
+            {
+              "id": 3,
+              "name": "g"
+            }
+          ],
+          "qualifier": "def",
+          "expr": {
+            "id": 7,
+            "kind": "app",
+            "opcode": "ite",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "b"
+              },
+              {
+                "id": 5,
+                "kind": "name",
+                "name": "f"
+              },
+              {
+                "id": 6,
+                "kind": "name",
+                "name": "g"
+              }
+            ]
+          }
+        }
+      },
+      "expr": {
+        "id": 31,
+        "kind": "let",
+        "opdef": {
+          "id": 15,
+          "kind": "def",
+          "name": "inc",
+          "qualifier": "def",
+          "expr": {
+            "id": 14,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 10,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 13,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 11,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 12,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          }
+        },
+        "expr": {
+          "id": 30,
+          "kind": "let",
+          "opdef": {
+            "id": 21,
+            "kind": "def",
+            "name": "dec",
+            "qualifier": "def",
+            "expr": {
+              "id": 20,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 16,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 19,
+                "kind": "app",
+                "opcode": "isub",
+                "args": [
+                  {
+                    "id": 17,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 18,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          },
+          "expr": {
+            "id": 29,
+            "kind": "let",
+            "opdef": {
+              "id": 26,
+              "kind": "def",
+              "name": "f",
+              "qualifier": "val",
+              "expr": {
+                "id": 25,
+                "kind": "app",
+                "opcode": "choose",
+                "args": [
+                  {
+                    "id": 22,
+                    "kind": "bool",
+                    "value": true
+                  },
+                  {
+                    "id": 23,
+                    "kind": "name",
+                    "name": "inc"
+                  },
+                  {
+                    "id": 24,
+                    "kind": "name",
+                    "name": "dec"
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 28,
+              "kind": "app",
+              "opcode": "f",
+              "args": [
+                {
+                  "id": 27,
+                  "kind": "int",
+                  "value": 4
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "output": {
+      "id": 0,
+      "kind": "int",
+      "value": 5
+    }
   }
 ]

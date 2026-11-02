@@ -304,9 +304,12 @@ lexical capture under shadowing, initializer scope, and cleanup between calls.
 First-class closures and nondeterministic definitions remain unfinished.
 
 `runtime_operator.json` is regenerated with
-`node pkg/grammar/runtime_operator_fixtures.cjs`. Fifteen parsed/name-resolved
+`node pkg/grammar/runtime_operator_fixtures.cjs`. Twenty parsed/name-resolved
 expressions run the full TypeScript evaluator, covering direct local operator
 calls, strict arguments, captured locals, calls between local operators,
 per-call local values, errors, and parameterized constructors. Calling a
 non-lambda value with empty parentheses retains upstream's Expected a lambda
-value error. First-class operator values and higher-order use remain open.
+value error. Additional cases cover first-class operator arguments, returned
+closures, anonymous functions, captured locals, and conditional function values.
+Concrete collections containing closures and concurrent closure calls remain
+outside the implemented scope.

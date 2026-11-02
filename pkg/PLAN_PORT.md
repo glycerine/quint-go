@@ -343,8 +343,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     capture, shadowing, and cleanup between evaluations.
   - [x] Direct local operator calls with strict argument evaluation, lexical
     capture, parameter scopes, and fresh per-call local caches.
-  - [ ] Module definition/lookup integration, first-class closures/operator
-    values, remaining caches, and complete runtime stack traces.
+  - [x] First-class lambdas, local operator values, higher-order parameter
+    invocation, returned closures, and caller-context cancellation via Apply.
+  - [ ] Module definition/lookup integration, closures inside concrete
+    collections, remaining caches, and complete runtime stack traces.
 - [ ] P7.3 Port arithmetic, Boolean, comparison, string, and conversion
   builtins; test negative division/modulo and integer boundary behavior.
   - [x] Strict integer arithmetic/comparison builtins, arbitrary precision,
@@ -2282,3 +2284,20 @@ word "retained" in the commit message.
   Full default tests pass (combined package execution 1.043s, near the one-second
   target). First-class operators, higher-order use, module lookup, stateful
   evaluation, and full runtime stacks remain open.
+
+- 2026-11-02: Added first-class runtime closures and Apply, extending local
+  operators into values that can be passed as parameters, selected by branches,
+  returned from other calls, and invoked after the defining scope exits.
+  Closure bodies/parameter slices and supplied binding dictionaries are owned
+  copies; invocation uses its caller's context rather than the creation context.
+  Mock exported lambda IR follows upstream's placeholder convention. Closure
+  equality remains false as upstream does; concrete structural identity is
+  unchanged. Expanded operator fixtures from 15 to 20 full TypeScript evaluator
+  cases, with unit tests for lifetime, export isolation, repeated invocation,
+  arity/type rejection, canceled invocation, and canceled creation contexts.
+  Independent evaluator fixture suites now run in parallel; focused race checks
+  pass (1.226s instrumented). Full default tests pass (combined package execution
+  1.012s, near the one-second target). Closures share evaluator scope machinery
+  and are documented for sequential use; concurrent execution, closures inside
+  concrete collections, module definitions, and collection higher-order builtins
+  remain unfinished.

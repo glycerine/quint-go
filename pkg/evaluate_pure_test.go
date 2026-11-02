@@ -23,6 +23,7 @@ func TestUpstreamSequenceEvaluation(t *testing.T) {
 }
 func testPureEvaluationFixtures(t *testing.T, filename string) {
 	t.Helper()
+	t.Parallel()
 	var fixtures []struct {
 		Source string
 		Input  Expr

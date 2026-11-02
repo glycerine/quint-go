@@ -10,9 +10,16 @@ import (
 // EvaluatePureExpression evaluates concrete constructors, strict integer/Boolean
 // operations, and lazy Boolean/conditional expressions. Bindings contain already
 // evaluated values. Local value definitions are lazy and memoized per scope.
-// Module definition lookup, closures, and stateful operations belong
+// Module definition lookup and stateful operations belong
 // to the full evaluator and are not yet handled here.
 func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insdict.Dict[string, RuntimeValue]) (RuntimeValue, error) {
+	if bindings != nil {
+		owned := insdict.NewDict[string, RuntimeValue]()
+		for name, value := range bindings.All() {
+			owned.Set(name, value)
+		}
+		bindings = owned
+	}
 	var eval func(Expr) (RuntimeValue, error)
 	type localValue func([]RuntimeValue) (RuntimeValue, error)
 	scopes := []*insdict.Dict[string, localValue]{}
@@ -46,6 +53,34 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 				}
 			}
 			return fail(e, "Unbound runtime name: "+e.Name)
+		case "lambda":
+			e = copyRuntimeExpression(e)
+			if e.Body == nil {
+				return fail(e, "Malformed local operator")
+			}
+			captured := append([]*insdict.Dict[string, localValue](nil), scopes...)
+			return newRuntimeClosure(len(e.Params), func(callContext context.Context, arguments []RuntimeValue) (RuntimeValue, error) {
+				if len(arguments) != len(e.Params) {
+					return fail(e, fmt.Sprintf("lambda requires %d arguments", len(e.Params)))
+				}
+				parameters := insdict.NewDict[string, localValue]()
+				for i, param := range e.Params {
+					value := arguments[i]
+					parameters.Set(param.Name, func(extra []RuntimeValue) (RuntimeValue, error) {
+						if extra != nil {
+							return value.Apply(ctx, extra)
+						}
+						return value, nil
+					})
+				}
+				saved, savedContext := scopes, ctx
+				scopes = append(append([]*insdict.Dict[string, localValue](nil), captured...), parameters)
+				ctx = callContext
+				result, err := eval(*e.Body)
+				scopes, ctx = saved, savedContext
+				return result, err
+			}), nil
+
 		case "let":
 			if e.Opdef == nil || e.Opdef.Expr == nil || e.Body == nil {
 				return fail(e, "Malformed local definition")
@@ -58,33 +93,7 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 			var cachedErr error
 			evaluated := false
 			thunk := func(arguments []RuntimeValue) (RuntimeValue, error) {
-				if e.Opdef.Expr.Kind == "lambda" {
-					lambda := e.Opdef.Expr
-					if lambda.Body == nil {
-						return fail(e, "Malformed local operator")
-					}
-					if len(arguments) != len(lambda.Params) {
-						return fail(e, fmt.Sprintf("%s requires %d arguments", e.Opdef.Name, len(lambda.Params)))
-					}
-					parameters := insdict.NewDict[string, localValue]()
-					for i, param := range lambda.Params {
-						value := arguments[i]
-						parameters.Set(param.Name, func(extra []RuntimeValue) (RuntimeValue, error) {
-							if len(extra) != 0 {
-								return fail(e, "Parameter value does not accept arguments")
-							}
-							return value, nil
-						})
-					}
-					saved := scopes
-					scopes = append(append([]*insdict.Dict[string, localValue](nil), captured...), parameters)
-					result, err := eval(*lambda.Body)
-					scopes = saved
-					return result, err
-				}
-				if arguments != nil {
-					return fail(e, "Expected a lambda value")
-				}
+
 				if !evaluated {
 					saved := scopes
 					scopes = captured
@@ -92,7 +101,19 @@ func EvaluatePureExpression(ctx context.Context, expression Expr, bindings *insd
 					scopes = saved
 					evaluated = true
 				}
-				return cached, cachedErr
+				if cachedErr != nil {
+					return RuntimeValue{}, cachedErr
+				}
+				if arguments != nil {
+					result, err := cached.Apply(ctx, arguments)
+					if d, ok := err.(Diagnostic); ok && d.Reference == nil {
+						id := e.ID
+						d.Reference = &id
+						err = d
+					}
+					return result, err
+				}
+				return cached, nil
 			}
 			scope := insdict.NewDict[string, localValue]()
 			scope.Set(e.Opdef.Name, thunk)

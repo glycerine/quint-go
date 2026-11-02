@@ -7,6 +7,14 @@ const {parsePhase1fromText}=require(path.join(root,'quint/src/parsing/quintParse
 const {resolveNames}=require(path.join(root,'quint/src/names/resolver'))
 const {newIdGenerator}=require(path.join(root,'quint/src/idGenerator'))
 const sources=['{ def inc(x) = x+1; inc(2) }','{ def add(x,y) = x+y; add(2,3) }','{ val x=10; def add(y)=x+y; add(3) }','{ def square(x)=x*x; square(3)+square(4) }','{ def inc(x)=x+1; def twice(x)=inc(inc(x)); twice(4) }','{ def f(x) = { val y=x+1; y*y }; f(2)+f(3) }','{ def f(x)=if(x>0) x else 1/0; f(2) }','{ def f(x)=1/0; 42 }','{ def f(x)=42; f(1/0) }','{ def f(x)=x; f(Map((2,20),(1,10))).get(3) }','{ def f(x,y)=List(x,y); f(1,2).nth(1) }','{ def f(x)=x; f(Set(2,1)) == Set(1,2) }','{ def f(x)=assert(x); f(false) }','{ pure def f(x)=x*2; f(7) }','{ def f()=7; f() }']
+sources.push(
+ '{ def inc(x)=x+1; def twice(f,x)=f(f(x)); twice(inc,3) }',
+ '{ val inc = (x) => x+1; inc(7) }',
+ '{ val x=2; val f=(y)=>x+y; f(3) }',
+ '{ def make(x) = (y)=>x+y; val add2=make(2); add2(5) }',
+ '{ def choose(b,f,g)=if(b) f else g; def inc(x)=x+1; def dec(x)=x-1; val f=choose(true,inc,dec); f(4) }'
+)
+
 const cases=sources.map(source=>{
  const parsed=parsePhase1fromText(newIdGenerator(),`module M { val result = ${source} }`,'fixture.qnt')
  if(parsed.errors.length)throw Error(source+': '+JSON.stringify(parsed.errors,(_,v)=>typeof v==='bigint'?String(v):v))
