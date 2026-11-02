@@ -1583,3 +1583,13 @@ word "retained" in the commit message.
   tests pass under one second. Arrow-mode classification, declaration checking,
   action-as-temporal diagnostics, suggestions, and instance purity checks remain
   open under P5.3.
+
+- 2026-11-02: Added arrow effect mode classification, collecting parameter
+  entities through higher-order arguments and excluding propagated symbolic
+  interactions from newly introduced effects. Parameter updates propagated as
+  temporal effects do not promote the operator. Tests cover captured reads,
+  updates, higher-order propagation, variable results, val parameter constraints,
+  zero/multiple parameters, and rejected operator results. Upstream's concrete
+  Entity-versus-StateVariable comparison behavior is preserved explicitly.
+  Default tests pass under one second; mode-checker traversal and diagnostics
+  remain open under P5.3.
