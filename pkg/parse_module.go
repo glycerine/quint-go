@@ -129,7 +129,7 @@ func declarationFromContext(ctx p.IDeclarationContext, ids parserIDAllocator) (D
 			d.Overrides = append(d.Overrides, Override{Parameter: Parameter{ID: parserIDAt(ids, inst.Name(i)), Name: inst.Name(i).GetText()}, Expr: expr})
 		}
 	case *p.ConstContext:
-		typ, err := typeFromContext(c.Type_())
+		typ, err := typeFromContextWithIDs(c.Type_(), ids)
 		if err != nil {
 			return d, err
 		}
@@ -137,7 +137,7 @@ func declarationFromContext(ctx p.IDeclarationContext, ids parserIDAllocator) (D
 		d.Name = c.QualId().GetText()
 		d.TypeAnnotation = &typ
 	case *p.VarContext:
-		typ, err := typeFromContext(c.Type_())
+		typ, err := typeFromContextWithIDs(c.Type_(), ids)
 		if err != nil {
 			return d, err
 		}
@@ -162,7 +162,7 @@ func declarationFromContext(ctx p.IDeclarationContext, ids parserIDAllocator) (D
 			for _, param := range def.TypeDefHead().AllLOW_ID() {
 				d.Params = append(d.Params, param.GetText())
 			}
-			typ, err := typeFromContext(def.Type_())
+			typ, err := typeFromContextWithIDs(def.Type_(), ids)
 			if err != nil {
 				return d, err
 			}

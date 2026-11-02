@@ -14,7 +14,7 @@ func sumDeclarations(ctx *p.TypeSumDefContext, ids parserIDAllocator) ([]Declara
 		typ := Type{Kind: "tup", Fields: &Row{Kind: "row", Fields: []RowField{}, Other: &Row{Kind: "empty"}}}
 		if variant.Type_() != nil {
 			var err error
-			typ, err = typeFromContext(variant.Type_())
+			typ, err = typeFromContextWithIDs(variant.Type_(), ids)
 			if err != nil {
 				return nil, err
 			}

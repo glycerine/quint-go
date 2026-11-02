@@ -40,7 +40,7 @@ func operatorFromContext(ctx p.IOperDefContext, ids parserIDAllocator) (Operator
 			params = append(params, Parameter{ID: parserIDAt(ids, param), Name: param.GetText()})
 		}
 		if c.Type_() != nil {
-			t, err := typeFromContext(c.Type_())
+			t, err := typeFromContextWithIDs(c.Type_(), ids)
 			if err != nil {
 				return OperatorDef{}, err
 			}
@@ -52,14 +52,14 @@ func operatorFromContext(ctx p.IOperDefContext, ids parserIDAllocator) (Operator
 		expr = c.Expr()
 		types := []Type{}
 		for _, param := range c.AllAnnotatedParameter() {
-			t, err := typeFromContext(param.Type_())
+			t, err := typeFromContextWithIDs(param.Type_(), ids)
 			if err != nil {
 				return OperatorDef{}, err
 			}
 			params = append(params, Parameter{ID: parserIDAt(ids, param), Name: param.IdentOrHole().GetText(), TypeAnnotation: &t})
 			types = append(types, t)
 		}
-		result, err := typeFromContext(c.Type_())
+		result, err := typeFromContextWithIDs(c.Type_(), ids)
 		if err != nil {
 			return OperatorDef{}, err
 		}

@@ -32,7 +32,7 @@ func TestModuleSourceMapCoverage(t *testing.T) {
 	if err = json.Unmarshal(data, &value); err != nil {
 		t.Fatal(err)
 	}
-	count := 0
+	seen := map[ID]bool{}
 	var check func(any)
 	check = func(v any) {
 		switch x := v.(type) {
@@ -47,7 +47,7 @@ func TestModuleSourceMapCoverage(t *testing.T) {
 				if !ok || loc.Source != "m.qnt" || loc.End == nil {
 					t.Fatalf("unmapped ID %s", id)
 				}
-				count++
+				seen[id] = true
 			}
 			for _, child := range x {
 				check(child)
@@ -59,8 +59,8 @@ func TestModuleSourceMapCoverage(t *testing.T) {
 		}
 	}
 	check(value)
-	if len(sources) != count {
-		t.Fatalf("source entries %d vs IR IDs %d", len(sources), count)
+	if len(sources) != len(seen) {
+		t.Fatalf("source entries %d vs IR IDs %d", len(sources), len(seen))
 	}
 }
 func TestModuleExactSourceSpans(t *testing.T) {

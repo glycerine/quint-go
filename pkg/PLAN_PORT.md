@@ -935,3 +935,13 @@ word "retained" in the commit message.
   invalid input. Default tests pass within the sub-second target. P2.5 remains
   open for integrating type IDs into module/operator annotations and synthesized
   sum annotations, plus upstream inclusive-location compatibility.
+
+- 2026-11-02: Integrated parsed type IDs into constant/variable annotations,
+  aliases, sum payload types, annotated operator parameters/results, and legacy
+  signatures. Source-aware module/import APIs now map those IDs; ordinary module
+  parsing allocates the same identities while standalone ParseType stays ID-free.
+  Tests verify nested annotation spans, shared parameter/operator-argument type
+  identity, imported-file attribution, and unique-ID source-map coverage (shared
+  annotation subtrees may occur more than once in JSON). Default tests pass within
+  the sub-second target. Synthesized sum/annotation type IDs and upstream location
+  compatibility remain open in P2.5.
