@@ -1,0 +1,1047 @@
+{
+  "cases": [
+    {
+      "name": "crlf_unicode_type_error",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M {\r\n  val emoji=\"😀\"\r\n  val bad=emoji+1\r\n}\r\n"
+        }
+      ],
+      "sourceMap": {
+        "sourceIndex": {
+          "0": "<fixture>/M.qnt"
+        },
+        "map": {
+          "1": [
+            0,
+            {
+              "line": 1,
+              "col": 12,
+              "index": 24
+            },
+            {
+              "line": 1,
+              "col": 14,
+              "index": 26
+            }
+          ],
+          "2": [
+            0,
+            {
+              "line": 1,
+              "col": 6,
+              "index": 18
+            },
+            {
+              "line": 1,
+              "col": 10,
+              "index": 22
+            }
+          ],
+          "3": [
+            0,
+            {
+              "line": 2,
+              "col": 10,
+              "index": 39
+            },
+            {
+              "line": 2,
+              "col": 14,
+              "index": 43
+            }
+          ],
+          "4": [
+            0,
+            {
+              "line": 2,
+              "col": 16,
+              "index": 45
+            },
+            {
+              "line": 2,
+              "col": 16,
+              "index": 45
+            }
+          ],
+          "5": [
+            0,
+            {
+              "line": 2,
+              "col": 10,
+              "index": 39
+            },
+            {
+              "line": 2,
+              "col": 16,
+              "index": 45
+            }
+          ],
+          "6": [
+            0,
+            {
+              "line": 2,
+              "col": 6,
+              "index": 35
+            },
+            {
+              "line": 2,
+              "col": 8,
+              "index": 37
+            }
+          ],
+          "7": [
+            0,
+            {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            },
+            {
+              "line": 3,
+              "col": 48,
+              "index": 48
+            }
+          ]
+        }
+      },
+      "parsing": {
+        "stage": "parsing",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 7,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "def",
+                "name": "emoji",
+                "qualifier": "val",
+                "expr": {
+                  "id": 1,
+                  "kind": "str",
+                  "value": "😀"
+                }
+              },
+              {
+                "id": 6,
+                "kind": "def",
+                "name": "bad",
+                "qualifier": "val",
+                "expr": {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "name",
+                      "name": "emoji"
+                    },
+                    {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 2,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "str",
+              "value": "😀"
+            },
+            "depth": 0
+          },
+          "3": {
+            "id": 2,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "str",
+              "value": "😀"
+            },
+            "depth": 0
+          },
+          "6": {
+            "id": 6,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "emoji"
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "errors": []
+      },
+      "typechecking": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 7,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "def",
+                "name": "emoji",
+                "qualifier": "val",
+                "expr": {
+                  "id": 1,
+                  "kind": "str",
+                  "value": "😀"
+                }
+              },
+              {
+                "id": 6,
+                "kind": "def",
+                "name": "bad",
+                "qualifier": "val",
+                "expr": {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "name",
+                      "name": "emoji"
+                    },
+                    {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 2,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "str",
+              "value": "😀"
+            },
+            "depth": 0
+          },
+          "3": {
+            "id": 2,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "str",
+              "value": "😀"
+            },
+            "depth": 0
+          },
+          "6": {
+            "id": 6,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "emoji"
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "1": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "3": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "4": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          }
+        },
+        "effects": {
+          "1": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "2": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          },
+          "3": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "4": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "5": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "6": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT000] Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 2,
+                  "col": 10,
+                  "index": 39
+                },
+                "end": {
+                  "line": 2,
+                  "col": 16,
+                  "index": 45
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "imported_crlf_type_error",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M {\r\n import Lib.* from \"Lib\"\r\n val use=bad\r\n}\r\n"
+        },
+        {
+          "name": "Lib.qnt",
+          "source": "module Lib {\r\n val emoji=\"😀\"\r\n val bad=emoji+1\r\n}\r\n"
+        }
+      ],
+      "sourceMap": {
+        "sourceIndex": {
+          "0": "<fixture>/M.qnt",
+          "4": "<fixture>/Lib.qnt"
+        },
+        "map": {
+          "1": [
+            0,
+            {
+              "line": 1,
+              "col": 1,
+              "index": 13
+            },
+            {
+              "line": 1,
+              "col": 23,
+              "index": 35
+            }
+          ],
+          "2": [
+            0,
+            {
+              "line": 2,
+              "col": 9,
+              "index": 47
+            },
+            {
+              "line": 2,
+              "col": 11,
+              "index": 49
+            }
+          ],
+          "3": [
+            0,
+            {
+              "line": 2,
+              "col": 5,
+              "index": 43
+            },
+            {
+              "line": 2,
+              "col": 7,
+              "index": 45
+            }
+          ],
+          "4": [
+            0,
+            {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            },
+            {
+              "line": 3,
+              "col": 52,
+              "index": 52
+            }
+          ],
+          "5": [
+            4,
+            {
+              "line": 1,
+              "col": 11,
+              "index": 24
+            },
+            {
+              "line": 1,
+              "col": 13,
+              "index": 26
+            }
+          ],
+          "6": [
+            4,
+            {
+              "line": 1,
+              "col": 5,
+              "index": 18
+            },
+            {
+              "line": 1,
+              "col": 9,
+              "index": 22
+            }
+          ],
+          "7": [
+            4,
+            {
+              "line": 2,
+              "col": 9,
+              "index": 37
+            },
+            {
+              "line": 2,
+              "col": 13,
+              "index": 41
+            }
+          ],
+          "8": [
+            4,
+            {
+              "line": 2,
+              "col": 15,
+              "index": 43
+            },
+            {
+              "line": 2,
+              "col": 15,
+              "index": 43
+            }
+          ],
+          "9": [
+            4,
+            {
+              "line": 2,
+              "col": 9,
+              "index": 37
+            },
+            {
+              "line": 2,
+              "col": 15,
+              "index": 43
+            }
+          ],
+          "10": [
+            4,
+            {
+              "line": 2,
+              "col": 5,
+              "index": 33
+            },
+            {
+              "line": 2,
+              "col": 7,
+              "index": 35
+            }
+          ],
+          "11": [
+            4,
+            {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            },
+            {
+              "line": 3,
+              "col": 45,
+              "index": 45
+            }
+          ]
+        }
+      },
+      "parsing": {
+        "stage": "parsing",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 11,
+            "name": "Lib",
+            "declarations": [
+              {
+                "id": 6,
+                "kind": "def",
+                "name": "emoji",
+                "qualifier": "val",
+                "expr": {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "😀"
+                }
+              },
+              {
+                "id": 10,
+                "kind": "def",
+                "name": "bad",
+                "qualifier": "val",
+                "expr": {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "emoji"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 1,
+                "kind": "import",
+                "defName": "*",
+                "protoName": "Lib",
+                "fromSource": "Lib"
+              },
+              {
+                "id": 3,
+                "kind": "def",
+                "name": "use",
+                "qualifier": "val",
+                "expr": {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "bad"
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 10,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "emoji"
+                },
+                {
+                  "id": 8,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0,
+            "importedFrom": {
+              "id": 1,
+              "kind": "import",
+              "defName": "*",
+              "protoName": "Lib",
+              "fromSource": "Lib"
+            },
+            "hidden": true
+          },
+          "3": {
+            "id": 3,
+            "kind": "def",
+            "name": "use",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "bad"
+            },
+            "depth": 0
+          },
+          "6": {
+            "id": 6,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "str",
+              "value": "😀"
+            },
+            "depth": 0
+          },
+          "7": {
+            "id": 6,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "str",
+              "value": "😀"
+            },
+            "depth": 0
+          },
+          "10": {
+            "id": 10,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "emoji"
+                },
+                {
+                  "id": 8,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "errors": []
+      },
+      "typechecking": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 11,
+            "name": "Lib",
+            "declarations": [
+              {
+                "id": 6,
+                "kind": "def",
+                "name": "emoji",
+                "qualifier": "val",
+                "expr": {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "😀"
+                }
+              },
+              {
+                "id": 10,
+                "kind": "def",
+                "name": "bad",
+                "qualifier": "val",
+                "expr": {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "emoji"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 1,
+                "kind": "import",
+                "defName": "*",
+                "protoName": "Lib",
+                "fromSource": "Lib"
+              },
+              {
+                "id": 3,
+                "kind": "def",
+                "name": "use",
+                "qualifier": "val",
+                "expr": {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "bad"
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 10,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "emoji"
+                },
+                {
+                  "id": 8,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0,
+            "importedFrom": {
+              "id": 1,
+              "kind": "import",
+              "defName": "*",
+              "protoName": "Lib",
+              "fromSource": "Lib"
+            },
+            "hidden": true
+          },
+          "3": {
+            "id": 3,
+            "kind": "def",
+            "name": "use",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "bad"
+            },
+            "depth": 0
+          },
+          "6": {
+            "id": 6,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "str",
+              "value": "😀"
+            },
+            "depth": 0
+          },
+          "7": {
+            "id": 6,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "str",
+              "value": "😀"
+            },
+            "depth": 0
+          },
+          "10": {
+            "id": 10,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "emoji"
+                },
+                {
+                  "id": 8,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "6": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "7": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "8": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "9": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          }
+        },
+        "effects": {
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "3": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          },
+          "5": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "6": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          },
+          "7": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "8": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "9": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "10": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT000] Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n",
+            "locs": [
+              {
+                "source": "<fixture>/Lib.qnt",
+                "start": {
+                  "line": 2,
+                  "col": 9,
+                  "index": 37
+                },
+                "end": {
+                  "line": 2,
+                  "col": 15,
+                  "index": 43
+                }
+              }
+            ]
+          },
+          {
+            "explanation": "[QNT000] Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n",
+            "locs": [
+              {
+                "source": "<fixture>/Lib.qnt",
+                "start": {
+                  "line": 2,
+                  "col": 9,
+                  "index": 37
+                },
+                "end": {
+                  "line": 2,
+                  "col": 15,
+                  "index": 43
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

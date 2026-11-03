@@ -407,7 +407,7 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 		return fail(err.Error(), err)
 	}
 	sourceCode := map[string]string{}
-	resolver := quint.NewFileSourceResolver(sourceCode, nil)
+	resolver := cliMainSourceResolver{FileSourceResolver: quint.NewFileSourceResolver(sourceCode, nil), main: abs}
 	front, parseErr := quint.ParseProjectRecovering(resolver, resolver.LookupPath(filepath.Dir(abs), filepath.Base(abs)))
 	paths := make([]string, 0, len(sourceCode))
 	for path := range sourceCode {

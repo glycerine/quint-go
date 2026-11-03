@@ -113,11 +113,11 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 			return fail(fmt.Errorf("Apalache configuration must be a JSON object"))
 		}
 	}
-	resolver := quint.NewFileSourceResolver(nil, nil)
 	abs, err := filepath.Abs(options.input)
 	if err != nil {
 		return fail(err)
 	}
+	resolver := cliMainSourceResolver{FileSourceResolver: quint.NewFileSourceResolver(nil, nil), main: abs}
 	frontend, err := quint.ParseProjectRecovering(resolver, quint.SourceLookupPath{NormalizedPath: abs, SourceName: abs})
 	var loadError *quint.SourceLoadError
 	if errors.As(err, &loadError) && loadError.Path == abs {

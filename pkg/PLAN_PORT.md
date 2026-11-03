@@ -738,7 +738,7 @@ Build these items alongside the phases that supply their command behavior.
   - [ ] Complete remaining help/error-prose and terminal parity audit.
 - [ ] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
-- [ ] P10.3 Port machine-readable stage output and diagnostics; explicitly
+- [x] P10.3 Port machine-readable stage output and diagnostics; explicitly
   separate the full CLI JSON schema from the Go checker's input envelope.
 - [ ] P10.4 Port ITF read/write/normalization, big integers, sets/maps/tuples,
   records/variants, metadata, loops, hidden variables, and trace filename
@@ -3626,3 +3626,11 @@ word "retained" in the commit message.
   initial/.clear/.seed behavior. Both helpers100% covered; focused core0.028s/
   CLI0.058s, races1.146s/1.194s, vet and deterministic regeneration pass. System
   entropy algorithm is explicitly Go-specific rather than a reproducible JS RNG.
+
+- 2026-11-02: Completed P10.3 stage/diagnostic schema integration by applying
+  raw-main/LF-import source handling to parse/typecheck/compile and both verify
+  paths. Two actual CRLF sources produce ten exact command/backend checks for
+  complete stages and compact source maps. Together with22 run/test and21 verify
+  snapshots, raw metadata fixtures and existing core stage tests, the CLI schema
+  remains separate from the strict checker envelope. Combined0.125s, race1.121s,
+  vet and diff checks pass. OS directory-read error prose remains platform-specific.

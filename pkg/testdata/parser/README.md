@@ -1241,3 +1241,10 @@ negative and 1024-bit constructor counters separately from reset normalization.
 New random-default helper tests verify range, entropy errors, ownership and seed
 replay; Go entropy differs from Math.random while the reported seed contract
 matches. Existing deterministic zero constructors and 120 core vectors remain.
+
+`cli_main_sources.json` and `cli_main_source_fixtures.cjs` save two actual CRLF
+source projects for ten parse/typecheck/compile/verification-path checks. Full
+stages and compact source maps preserve main-file raw line endings while imports
+use upstream LF normalization. Together with 22 run/test and 21 verify stage
+snapshots these cover all source frontend adapters; platform directory-read error
+prose remains explicitly OS-specific.
