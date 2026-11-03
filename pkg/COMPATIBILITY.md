@@ -34,7 +34,7 @@ operator/name, so successful decoding must not be counted as builtin support.
 | --- | --- | --- | --- | --- |
 | `List`, `Map`, `Set` | implemented: finite constructors, including closures | signature | rule | translated |
 | `Rec`, `Tup`, `variant` | implemented: constructors, including closures | special | rule | translated |
-| `eq`, `neq` | partial: typed structural equality; cross-constructor audit open | signature | rule | translated |
+| `eq`, `neq` | implemented: exact private source cross-constructor fallback | signature | rule | translated |
 | `not`, `iff`, `assert`, `fail` | implemented: strict Boolean operations/assertion error | signature | rule | translated |
 | `and`, `or`, `implies`, `ite` | implemented: lazy branches | signature | rule | translated |
 | `iadd`, `isub`, `imul`, `idiv`, `imod`, `ipow`, `iuminus`, `ilt`, `ilte`, `igt`, `igte` | implemented: arbitrary integers and arithmetic errors | signature | rule | translated |
@@ -87,8 +87,8 @@ flattened-IR boundary. Remaining instance closure/cache/override contexts are au
 separately. Symbolic variant and mixed callback keys now use checked HAMT operations. Source
 equality preserves upstream cached-hash asymmetry privately; public EqualContext
 uses symmetric entry-bag equality and agrees with HashContext independently of
-source memo history. Exhaustive cross-type equality and locale-wide collation
-remain open. Actual Rust comparison records differences in seeded picks, counter
+source memo history. Source cross-type equality has 225 constructor-pair and 89 strategic/program
+comparisons; locale-wide collation remains open. Actual Rust comparison records differences in seeded picks, counter
 overflow, folded traversal, resource bounds and error codes; Go targets TypeScript.
 
 Rejection is observable behavior: next/standalone oneOf reject lazily, whereas

@@ -369,7 +369,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
 
 ## P7 — Go evaluator and builtin semantics
 
-- [ ] P7.1 Implement runtime values for arbitrary integers, booleans, strings,
+- [x] P7.1 Implement runtime values for arbitrary integers, booleans, strings,
   tuples, records, variants, sequences, sets, maps/functions, and closures.
   Define structural equality, hashing, canonical printing, and immutable-value
   ownership without relying on Go map iteration order.
@@ -379,7 +379,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     through constructors, normalization, accessors, state records, and traces.
   - [x] Callable closures inside all concrete collection constructors, including
     Set elements and Map keys, with reference object identity and hash behavior.
-  - [ ] Symbolic collections, remaining iteration behavior, and cross-type
+  - [x] Symbolic collections, remaining iteration behavior, and cross-type
     equality audit (TypeScript's set-like fallback equates unlike constructors).
     - [x] Independent immutable RuntimeDomain APIs for explicit sets, inclusive
       intervals, Int/Nat, cardinality/membership, iteration, equality/subset,
@@ -428,7 +428,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   negative division/modulo and integer boundary behavior. This revision has no
   source-language string/conversion builtin family; internal toStr/toInt helpers
   are runtime accessors. Inclusive set interval `to` remains under P7.4, and
-  cross-constructor equality remains under P7.1.
+  cross-constructor equality is covered by the private source fallback in P7.1.
   - [x] Strict integer arithmetic/comparison builtins, arbitrary precision,
     signed division/remainder, power errors, and upstream result/error fixtures.
   - [x] Boolean/equality/assert builtins and integer dispatch in pure evaluation.
@@ -481,7 +481,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] Variant and mixed symbolic keys through constructors, callbacks and
     collection operations; public checked equality/hash stay consistent while
     private source equality preserves upstream cached-hash quirks.
-  Broader unlike-constructor equality remains an open audit under P7.1.
+  Unlike-constructor source equality follows the exact private fallback; public
+  checked equality retains symmetric, hash-consistent structural semantics.
 - [x] P7.5 Port current/next-state storage, primed assignment, simultaneous
   updates, action composition, enabled/disabled actions, rollback, and commit.
   - [x] Stable named current/next registers, unset diagnostics, shift/reset,
@@ -3435,3 +3436,12 @@ word "retained" in the commit message.
   Matched small Set/Map construction improves CPU10–17% and bytes21–33%; larger
   collections improve CPU3–13%. Focused0.130s, race2.902s and vet pass. The
   full isolated suite remains above the aggregate one-second target.
+
+- 2026-11-02: Completed P7.1 with225 fresh constructor pairs,60 strategic
+  comparisons and29 classified source programs plus two historical-root
+  regressions. Private source equality preserves left-then-right set conversion,
+  list/tuple precedence, empty map/record iteration, infinite-set early returns,
+  nested fallback and lookup-only source asymmetry. It does not shortcut concrete
+  containers whose historical routing hashes differ. Public checked equality and
+  hashing stay symmetric and consistent. Explicit resource/cancellation errors
+  remain checked boundaries. Focused race1.219s and vet pass; public APIs unchanged.

@@ -137,16 +137,34 @@ func runtimeSourceEqualContext(ctx context.Context, v, other RuntimeValue) (bool
 	if !v.Valid() || !other.Valid() {
 		return false, Diagnostic{Code: "QNT501", Message: "Invalid runtime value"}
 	}
-	if !v.containsDomain && !other.containsDomain {
-		return v.Equal(other), nil
+	leftClass, rightClass := runtimeSourceConstructorOf(v), runtimeSourceConstructorOf(other)
+	if leftClass == runtimeSourceInfinite || rightClass == runtimeSourceInfinite {
+		return leftClass == runtimeSourceInfinite && rightClass == runtimeSourceInfinite && v.domain.kind == other.domain.kind, nil
 	}
-	if v.domain != nil || other.domain != nil {
-		isDomain := func(value RuntimeValue) bool {
-			return value.domain != nil || (value.expression.Kind == "app" && value.expression.Opcode == "Set")
-		}
-		if !isDomain(v) || !isDomain(other) {
+	if leftClass != rightClass {
+		if !runtimeSourceSetLike(leftClass) || !runtimeSourceSetLike(rightClass) {
 			return false, nil
 		}
+		left, err := runtimeSourceToSetContext(ctx, v)
+		if err != nil {
+			return false, err
+		}
+		right, err := runtimeSourceToSetContext(ctx, other)
+		if err != nil {
+			return false, err
+		}
+		return runtimeSourceEqualContext(ctx, left, right)
+	}
+	// Concrete containers can retain a ValueNode's earlier key hash after an
+	// unlike-class replacement. Their canonical IR alone cannot define source
+	// equality, even when both values contain no compact domains.
+	switch leftClass {
+	case runtimeSourceBool, runtimeSourceInt, runtimeSourceStr:
+		return v.Equal(other), nil
+	case runtimeSourceLambda:
+		return false, nil
+	}
+	if v.domain != nil || other.domain != nil {
 		left, err := RuntimeDomainFromValue(v)
 		if err != nil {
 			return false, err
@@ -155,8 +173,12 @@ func runtimeSourceEqualContext(ctx context.Context, v, other RuntimeValue) (bool
 		if err != nil {
 			return false, err
 		}
-		return left.Equal(ctx, right)
+		return runtimeSourceDomainEqualContext(ctx, left, right)
 	}
+	if v.expression.Kind != "app" || other.expression.Kind != "app" {
+		return false, nil
+	}
+
 	if v.closure != nil || other.closure != nil || v.expression.Kind != other.expression.Kind || v.expression.Opcode != other.expression.Opcode {
 		return false, nil
 	}
@@ -164,13 +186,32 @@ func runtimeSourceEqualContext(ctx context.Context, v, other RuntimeValue) (bool
 		return false, fmt.Errorf("checked equality requires retained collection payloads")
 	}
 	if v.expression.Opcode != "variant" {
+		if memo := runtimeReferenceMemoOf(v); memo != nil && memo == runtimeReferenceMemoOf(other) {
+			return true, nil
+		}
 		different, err := runtimeReferenceCachedHashesDiffer(ctx, v, other)
 		if err != nil || different {
 			return false, err
 		}
 	}
 	switch v.expression.Opcode {
-	case "variant", "List", "Tup", "Rec":
+	case "Rec":
+		left, right := v.payload.children, other.payload.children
+		if len(left) != len(right) {
+			return false, nil
+		}
+		for i := 0; i < len(left); i += 2 {
+			equal, err := runtimeSourceCollectionEqualContext(ctx, left[i+1], right[i+1])
+			if err != nil || !equal {
+				return false, err
+			}
+			equal, err = runtimeSourceCollectionEqualContext(ctx, left[i], right[i])
+			if err != nil || !equal {
+				return false, err
+			}
+		}
+		return true, nil
+	case "variant", "List", "Tup":
 		left, right := v.payload.children, other.payload.children
 		if len(left) != len(right) {
 			return false, nil
@@ -205,6 +246,9 @@ func runtimeSourceEqualContext(ctx context.Context, v, other RuntimeValue) (bool
 			value, found, err := left.LookupContext(ctx, entry.Key)
 			if err != nil || !found {
 				return false, err
+			}
+			if v.expression.Opcode == "Set" {
+				continue
 			}
 			equal, err := runtimeSourceCollectionEqualContext(ctx, value, entry.Value)
 			if err != nil || !equal {

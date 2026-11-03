@@ -1062,8 +1062,9 @@ key QNT501 limits are removed. `runtime_symbolic_hash_pending.json` preserves th
 actual typed proof motivating the now-tested API split: private source equality
 can be asymmetric/history-dependent, while public checked entry-bag equality is
 symmetric and agrees with canonical HashContext. Memo state is atomic and owned
-by value allocation; no global history is introduced. Four unlike-constructor
-counterexamples remain separate pending evidence. Independent typechecked source
+by value allocation; no global history is introduced. The four original unlike-constructor
+counterexamples remain historical evidence and are now covered by the separate
+source cross-constructor suite. Independent typechecked source
 review and targeted races pass; context entry APIs have 100% coverage.
 
 `cli_execution_frames.json` saves 66 upstream transcripts: 24 run reports,
@@ -1115,3 +1116,10 @@ batch construction, key collisions, early termination and concurrent readers.
 Construction/equality/serialization callers preserve exact source hash history
 and metadata. Public entry slices remain owned. Benchmarks measure construction
 CPU and allocation changes independently from correctness fixtures.
+
+`runtime_source_equality.json` and `runtime_source_set_asymmetry.json` save actual
+upstream results for 225 fresh constructor pairs, 60 strategic comparisons and
+29 classified programs, with two additional historical-root regressions. Matching
+grammar generators preserve conversion order, errors, nested fallback, infinite
+sets and source HAMT lookup asymmetry. Private source equality follows these
+quirks; public EqualContext/HashContext retain their symmetric, consistent contract.
