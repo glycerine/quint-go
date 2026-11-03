@@ -1,0 +1,5181 @@
+[
+  {
+    "entry": "expression",
+    "name": "integer",
+    "source": "123456789012345678901234567890",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 1,
+        "kind": "int",
+        "value": 123456789012345678901234567890
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "integer.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "entry": "expression",
+    "name": "precedence",
+    "source": "1+2*3^4^5",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 9,
+        "kind": "app",
+        "opcode": "iadd",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          {
+            "id": 8,
+            "kind": "app",
+            "opcode": "imul",
+            "args": [
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 2
+              },
+              {
+                "id": 7,
+                "kind": "app",
+                "opcode": "ipow",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 3
+                  },
+                  {
+                    "id": 6,
+                    "kind": "app",
+                    "opcode": "ipow",
+                    "args": [
+                      {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 4
+                      },
+                      {
+                        "id": 5,
+                        "kind": "int",
+                        "value": 5
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "precedence.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        }
+      },
+      "2": {
+        "source": "precedence.qnt",
+        "start": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        },
+        "end": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        }
+      },
+      "3": {
+        "source": "precedence.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        }
+      },
+      "4": {
+        "source": "precedence.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      },
+      "5": {
+        "source": "precedence.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      },
+      "6": {
+        "source": "precedence.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      },
+      "7": {
+        "source": "precedence.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      },
+      "8": {
+        "source": "precedence.qnt",
+        "start": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      },
+      "9": {
+        "source": "precedence.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      }
+    },
+    "nextID": 10
+  },
+  {
+    "entry": "expression",
+    "name": "unicode-string",
+    "source": "\"😀é\"",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 1,
+        "kind": "str",
+        "value": "😀é"
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "unicode-string.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "entry": "expression",
+    "name": "tuple",
+    "source": "(1,true,\"x\")",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 4,
+        "kind": "app",
+        "opcode": "Tup",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          {
+            "id": 2,
+            "kind": "bool",
+            "value": true
+          },
+          {
+            "id": 3,
+            "kind": "str",
+            "value": "x"
+          }
+        ]
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      },
+      "2": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        },
+        "end": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      },
+      "3": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "4": {
+        "source": "tuple.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      }
+    },
+    "nextID": 5
+  },
+  {
+    "entry": "expression",
+    "name": "unit",
+    "source": "()",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 1,
+        "kind": "app",
+        "opcode": "Tup",
+        "args": []
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "unit.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "entry": "expression",
+    "name": "list",
+    "source": "[1,2,3]",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 4,
+        "kind": "app",
+        "opcode": "List",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 2
+          },
+          {
+            "id": 3,
+            "kind": "int",
+            "value": 3
+          }
+        ]
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "list.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      },
+      "2": {
+        "source": "list.qnt",
+        "start": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      },
+      "3": {
+        "source": "list.qnt",
+        "start": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        },
+        "end": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      },
+      "4": {
+        "source": "list.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      }
+    },
+    "nextID": 5
+  },
+  {
+    "entry": "expression",
+    "name": "lambda",
+    "source": "(x,_) => x+1",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 6,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 1,
+            "name": "x"
+          },
+          {
+            "id": 2,
+            "name": "_"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 5,
+          "kind": "app",
+          "opcode": "iadd",
+          "args": [
+            {
+              "id": 3,
+              "kind": "name",
+              "name": "x"
+            },
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      },
+      "2": {
+        "source": "lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      },
+      "3": {
+        "source": "lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      },
+      "4": {
+        "source": "lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "5": {
+        "source": "lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "6": {
+        "source": "lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "entry": "expression",
+    "name": "tuple-lambda",
+    "source": "((x,y)) => x+y",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 15,
+        "kind": "lambda",
+        "params": [
+          {
+            "id": 6,
+            "name": "quintTupledLambdaParam6"
+          }
+        ],
+        "qualifier": "def",
+        "expr": {
+          "id": 11,
+          "kind": "let",
+          "opdef": {
+            "id": 2,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "item",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "name",
+                  "name": "quintTupledLambdaParam6"
+                },
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 7,
+            "kind": "let",
+            "opdef": {
+              "id": 1,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "pureval",
+              "expr": {
+                "id": 8,
+                "kind": "app",
+                "opcode": "item",
+                "args": [
+                  {
+                    "id": 9,
+                    "kind": "name",
+                    "name": "quintTupledLambdaParam6"
+                  },
+                  {
+                    "id": 10,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "y"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        },
+        "end": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        }
+      },
+      "2": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        }
+      },
+      "3": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "4": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "5": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "6": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "7": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "8": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "9": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "10": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "11": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "12": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "13": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "14": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "15": {
+        "source": "tuple-lambda.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      }
+    },
+    "nextID": 16
+  },
+  {
+    "entry": "expression",
+    "name": "record",
+    "source": "{a:1,b:true}",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 5,
+        "kind": "app",
+        "opcode": "Rec",
+        "args": [
+          {
+            "id": 2,
+            "kind": "str",
+            "value": "a"
+          },
+          {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          {
+            "id": 4,
+            "kind": "str",
+            "value": "b"
+          },
+          {
+            "id": 3,
+            "kind": "bool",
+            "value": true
+          }
+        ]
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "record.qnt",
+        "start": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      },
+      "2": {
+        "source": "record.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      },
+      "3": {
+        "source": "record.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "4": {
+        "source": "record.qnt",
+        "start": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "5": {
+        "source": "record.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      }
+    },
+    "nextID": 6
+  },
+  {
+    "entry": "expression",
+    "name": "spread",
+    "source": "{a:1,...r,b:2}",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 7,
+        "kind": "app",
+        "opcode": "with",
+        "args": [
+          {
+            "id": 6,
+            "kind": "app",
+            "opcode": "with",
+            "args": [
+              {
+                "id": 3,
+                "kind": "name",
+                "name": "r"
+              },
+              {
+                "id": 2,
+                "kind": "str",
+                "value": "a"
+              },
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "kind": "str",
+            "value": "b"
+          },
+          {
+            "id": 4,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "spread.qnt",
+        "start": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      },
+      "2": {
+        "source": "spread.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      },
+      "3": {
+        "source": "spread.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      },
+      "4": {
+        "source": "spread.qnt",
+        "start": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "5": {
+        "source": "spread.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "6": {
+        "source": "spread.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "7": {
+        "source": "spread.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      }
+    },
+    "nextID": 8
+  },
+  {
+    "entry": "expression",
+    "name": "local-destructuring",
+    "source": "{val (x,y)=(1,2) x+y}",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 18,
+        "kind": "let",
+        "opdef": {
+          "id": 4,
+          "kind": "def",
+          "name": "quintDestructTemp4",
+          "qualifier": "val",
+          "expr": {
+            "id": 3,
+            "kind": "app",
+            "opcode": "Tup",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "expr": {
+          "id": 17,
+          "kind": "let",
+          "opdef": {
+            "id": 13,
+            "kind": "def",
+            "name": "y",
+            "qualifier": "val",
+            "expr": {
+              "id": 14,
+              "kind": "app",
+              "opcode": "item",
+              "args": [
+                {
+                  "id": 15,
+                  "kind": "name",
+                  "name": "quintDestructTemp4"
+                },
+                {
+                  "id": 16,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 12,
+            "kind": "let",
+            "opdef": {
+              "id": 8,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 9,
+                "kind": "app",
+                "opcode": "item",
+                "args": [
+                  {
+                    "id": 10,
+                    "kind": "name",
+                    "name": "quintDestructTemp4"
+                  },
+                  {
+                    "id": 11,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 6,
+                  "kind": "name",
+                  "name": "y"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "local-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "2": {
+        "source": "local-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        },
+        "end": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        }
+      },
+      "3": {
+        "source": "local-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "4": {
+        "source": "local-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "5": {
+        "source": "local-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "6": {
+        "source": "local-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "7": {
+        "source": "local-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "12": {
+        "source": "local-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "17": {
+        "source": "local-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "18": {
+        "source": "local-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      }
+    },
+    "nextID": 19
+  },
+  {
+    "entry": "expression",
+    "name": "local-annotation",
+    "source": "{val x:Box[int]=1 x}",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 7,
+        "kind": "let",
+        "opdef": {
+          "id": 5,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "val",
+          "expr": {
+            "id": 4,
+            "kind": "int",
+            "value": 1
+          },
+          "typeAnnotation": {
+            "id": 2,
+            "kind": "app",
+            "ctor": {
+              "id": 3,
+              "kind": "const",
+              "name": "Box"
+            },
+            "args": [
+              {
+                "id": 1,
+                "kind": "int"
+              }
+            ]
+          }
+        },
+        "expr": {
+          "id": 6,
+          "kind": "name",
+          "name": "x"
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "2": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        }
+      },
+      "3": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        }
+      },
+      "4": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "5": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        },
+        "end": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      },
+      "6": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "7": {
+        "source": "local-annotation.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      }
+    },
+    "nextID": 8
+  },
+  {
+    "entry": "expression",
+    "name": "match",
+    "source": "match x { A(a) => a | B => 0 | _ => 1 }",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 5,
+        "kind": "app",
+        "opcode": "matchVariant",
+        "args": [
+          {
+            "id": 1,
+            "kind": "name",
+            "name": "x"
+          },
+          {
+            "id": 6,
+            "kind": "str",
+            "value": "A"
+          },
+          {
+            "id": 7,
+            "kind": "lambda",
+            "qualifier": "def",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "a"
+            },
+            "params": [
+              {
+                "name": "a",
+                "id": 8
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "kind": "str",
+            "value": "B"
+          },
+          {
+            "id": 10,
+            "kind": "lambda",
+            "qualifier": "def",
+            "expr": {
+              "id": 3,
+              "kind": "int",
+              "value": 0
+            },
+            "params": [
+              {
+                "name": "_",
+                "id": 11
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "kind": "str",
+            "value": "_"
+          },
+          {
+            "id": 13,
+            "kind": "lambda",
+            "qualifier": "def",
+            "expr": {
+              "id": 4,
+              "kind": "int",
+              "value": 1
+            },
+            "params": [
+              {
+                "name": "_",
+                "id": 14
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      },
+      "2": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "4": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "5": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 38,
+          "index": 38
+        }
+      },
+      "6": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "7": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "8": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "9": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "10": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "11": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "12": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "13": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      },
+      "14": {
+        "source": "match.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        }
+      }
+    },
+    "nextID": 15
+  },
+  {
+    "entry": "expression",
+    "name": "assignment",
+    "source": "x'=x+1",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 5,
+        "kind": "app",
+        "opcode": "assign",
+        "args": [
+          {
+            "id": 4,
+            "kind": "name",
+            "name": "x"
+          },
+          {
+            "id": 3,
+            "kind": "app",
+            "opcode": "iadd",
+            "args": [
+              {
+                "id": 1,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "assignment.qnt",
+        "start": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      },
+      "2": {
+        "source": "assignment.qnt",
+        "start": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        },
+        "end": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      },
+      "3": {
+        "source": "assignment.qnt",
+        "start": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        },
+        "end": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      },
+      "4": {
+        "source": "assignment.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      },
+      "5": {
+        "source": "assignment.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    },
+    "nextID": 6
+  },
+  {
+    "entry": "expression",
+    "name": "method",
+    "source": "xs.map(x=>x+1)",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 7,
+        "kind": "app",
+        "opcode": "map",
+        "args": [
+          {
+            "id": 1,
+            "kind": "name",
+            "name": "xs"
+          },
+          {
+            "id": 6,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 2,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "method.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      },
+      "2": {
+        "source": "method.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      },
+      "3": {
+        "source": "method.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "4": {
+        "source": "method.qnt",
+        "start": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "5": {
+        "source": "method.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "6": {
+        "source": "method.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "7": {
+        "source": "method.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      }
+    },
+    "nextID": 8
+  },
+  {
+    "entry": "expression",
+    "name": "conditional",
+    "source": "if (true) 1 else 2",
+    "result": {
+      "kind": "expr",
+      "expr": {
+        "id": 4,
+        "kind": "app",
+        "opcode": "ite",
+        "args": [
+          {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          {
+            "id": 2,
+            "kind": "int",
+            "value": 1
+          },
+          {
+            "id": 3,
+            "kind": "int",
+            "value": 2
+          }
+        ]
+      }
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "conditional.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      },
+      "2": {
+        "source": "conditional.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "3": {
+        "source": "conditional.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "4": {
+        "source": "conditional.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      }
+    },
+    "nextID": 5
+  },
+  {
+    "entry": "declaration",
+    "name": "constant",
+    "source": "const x:Box[List[int]]",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "kind": "const",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 3,
+            "kind": "app",
+            "ctor": {
+              "id": 4,
+              "kind": "const",
+              "name": "Box"
+            },
+            "args": [
+              {
+                "id": 2,
+                "kind": "list",
+                "elem": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              }
+            ]
+          },
+          "id": 5
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "constant.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "2": {
+        "source": "constant.qnt",
+        "start": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "3": {
+        "source": "constant.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "4": {
+        "source": "constant.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "5": {
+        "source": "constant.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      }
+    },
+    "nextID": 6
+  },
+  {
+    "entry": "declaration",
+    "name": "variable",
+    "source": "var state:{value:int | r}",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "kind": "var",
+          "name": "state",
+          "typeAnnotation": {
+            "id": 2,
+            "kind": "rec",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "value",
+                  "fieldType": {
+                    "id": 1,
+                    "kind": "int"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "var",
+                "name": "r"
+              }
+            }
+          },
+          "id": 3
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "variable.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "2": {
+        "source": "variable.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "3": {
+        "source": "variable.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      }
+    },
+    "nextID": 4
+  },
+  {
+    "entry": "declaration",
+    "name": "value",
+    "source": "val x:int=1",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "id": 3,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "val",
+          "expr": {
+            "id": 2,
+            "kind": "int",
+            "value": 1
+          },
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          }
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "value.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      },
+      "2": {
+        "source": "value.qnt",
+        "start": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "3": {
+        "source": "value.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        }
+      }
+    },
+    "nextID": 4
+  },
+  {
+    "entry": "declaration",
+    "name": "operator",
+    "source": "pure def f(x:int,y:bool):str=\"yes\"",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "puredef",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 2,
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              },
+              {
+                "id": 4,
+                "name": "y",
+                "typeAnnotation": {
+                  "id": 3,
+                  "kind": "bool"
+                }
+              }
+            ],
+            "qualifier": "puredef",
+            "expr": {
+              "id": 6,
+              "kind": "str",
+              "value": "yes"
+            }
+          },
+          "typeAnnotation": {
+            "kind": "oper",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int"
+              },
+              {
+                "id": 3,
+                "kind": "bool"
+              }
+            ],
+            "res": {
+              "id": 5,
+              "kind": "str"
+            }
+          }
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "2": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "3": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "4": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "5": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "6": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 29,
+          "index": 29
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "7": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      },
+      "8": {
+        "source": "operator.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      }
+    },
+    "nextID": 9
+  },
+  {
+    "entry": "declaration",
+    "name": "header",
+    "source": "def f(x:int):bool",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 5,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 2,
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 4,
+              "kind": "bool",
+              "value": true
+            }
+          },
+          "typeAnnotation": {
+            "kind": "oper",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int"
+              }
+            ],
+            "res": {
+              "id": 3,
+              "kind": "bool"
+            }
+          }
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "header.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "2": {
+        "source": "header.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      },
+      "3": {
+        "source": "header.qnt",
+        "start": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "4": {
+        "source": "header.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "5": {
+        "source": "header.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "6": {
+        "source": "header.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "entry": "declaration",
+    "name": "tuple-destructuring",
+    "source": "val (x,_,y)=(1,2,3)",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "id": 5,
+          "kind": "def",
+          "name": "quintDestructTemp5",
+          "qualifier": "val",
+          "expr": {
+            "id": 4,
+            "kind": "app",
+            "opcode": "Tup",
+            "args": [
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 2,
+                "kind": "int",
+                "value": 2
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          }
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "val",
+          "expr": {
+            "id": 7,
+            "kind": "app",
+            "opcode": "item",
+            "args": [
+              {
+                "id": 8,
+                "kind": "name",
+                "name": "quintDestructTemp5"
+              },
+              {
+                "id": 9,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 10,
+          "kind": "def",
+          "name": "y",
+          "qualifier": "val",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "item",
+            "args": [
+              {
+                "id": 12,
+                "kind": "name",
+                "name": "quintDestructTemp5"
+              },
+              {
+                "id": 13,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "tuple-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "2": {
+        "source": "tuple-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "3": {
+        "source": "tuple-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "4": {
+        "source": "tuple-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "5": {
+        "source": "tuple-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      }
+    },
+    "nextID": 14
+  },
+  {
+    "entry": "declaration",
+    "name": "record-destructuring",
+    "source": "pure val {x,y}={x:1,y:2}",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "quintDestructTemp6",
+          "qualifier": "pureval",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 2,
+                "kind": "str",
+                "value": "x"
+              },
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 4,
+                "kind": "str",
+                "value": "y"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        {
+          "id": 7,
+          "kind": "def",
+          "name": "x",
+          "qualifier": "pureval",
+          "expr": {
+            "id": 8,
+            "kind": "app",
+            "opcode": "field",
+            "args": [
+              {
+                "id": 9,
+                "kind": "name",
+                "name": "quintDestructTemp6"
+              },
+              {
+                "id": 10,
+                "kind": "str",
+                "value": "x"
+              }
+            ]
+          }
+        },
+        {
+          "id": 11,
+          "kind": "def",
+          "name": "y",
+          "qualifier": "pureval",
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "field",
+            "args": [
+              {
+                "id": 13,
+                "kind": "name",
+                "name": "quintDestructTemp6"
+              },
+              {
+                "id": 14,
+                "kind": "str",
+                "value": "y"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "record-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "2": {
+        "source": "record-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "record-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "4": {
+        "source": "record-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "5": {
+        "source": "record-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "6": {
+        "source": "record-destructuring.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      }
+    },
+    "nextID": 15
+  },
+  {
+    "entry": "declaration",
+    "name": "abstract-type",
+    "source": "type Box",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "id": 1,
+          "kind": "typedef",
+          "name": "Box"
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "abstract-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "entry": "declaration",
+    "name": "type-alias",
+    "source": "type Box[a]=List[a]",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "id": 3,
+          "kind": "typedef",
+          "name": "Box",
+          "type": {
+            "id": 2,
+            "kind": "list",
+            "elem": {
+              "id": 1,
+              "kind": "var",
+              "name": "a"
+            }
+          },
+          "params": [
+            "a"
+          ]
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "type-alias.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "2": {
+        "source": "type-alias.qnt",
+        "start": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "type-alias.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      }
+    },
+    "nextID": 4
+  },
+  {
+    "entry": "declaration",
+    "name": "sum-type",
+    "source": "type Result[a]=Ok(a)|Err(str)|Empty",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "id": 4,
+          "kind": "typedef",
+          "name": "Result",
+          "type": {
+            "id": 4,
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "Ok",
+                  "fieldType": {
+                    "id": 1,
+                    "kind": "var",
+                    "name": "a"
+                  }
+                },
+                {
+                  "fieldName": "Err",
+                  "fieldType": {
+                    "id": 2,
+                    "kind": "str"
+                  }
+                },
+                {
+                  "fieldName": "Empty",
+                  "fieldType": {
+                    "id": 3,
+                    "kind": "tup",
+                    "fields": {
+                      "kind": "row",
+                      "fields": [],
+                      "other": {
+                        "kind": "empty"
+                      }
+                    }
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          },
+          "params": [
+            "a"
+          ]
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "Ok",
+          "qualifier": "def",
+          "typeAnnotation": {
+            "kind": "oper",
+            "args": [
+              {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "id": 4,
+              "kind": "app",
+              "ctor": {
+                "id": 5,
+                "kind": "const",
+                "name": "Result"
+              },
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "var",
+                  "name": "a"
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 11,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 8,
+                "name": "__OkParam"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "str",
+                  "value": "Ok"
+                },
+                {
+                  "kind": "name",
+                  "name": "__OkParam",
+                  "id": 9
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 18,
+          "kind": "def",
+          "name": "Err",
+          "qualifier": "def",
+          "typeAnnotation": {
+            "kind": "oper",
+            "args": [
+              {
+                "id": 2,
+                "kind": "str"
+              }
+            ],
+            "res": {
+              "id": 4,
+              "kind": "app",
+              "ctor": {
+                "id": 5,
+                "kind": "const",
+                "name": "Result"
+              },
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "var",
+                  "name": "a"
+                }
+              ]
+            }
+          },
+          "expr": {
+            "id": 17,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 14,
+                "name": "__ErrParam"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 16,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "str",
+                  "value": "Err"
+                },
+                {
+                  "kind": "name",
+                  "name": "__ErrParam",
+                  "id": 15
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 22,
+          "kind": "def",
+          "name": "Empty",
+          "qualifier": "val",
+          "typeAnnotation": {
+            "id": 4,
+            "kind": "app",
+            "ctor": {
+              "id": 5,
+              "kind": "const",
+              "name": "Result"
+            },
+            "args": [
+              {
+                "id": 6,
+                "kind": "var",
+                "name": "a"
+              }
+            ]
+          },
+          "expr": {
+            "id": 21,
+            "kind": "app",
+            "opcode": "variant",
+            "args": [
+              {
+                "id": 19,
+                "kind": "str",
+                "value": "Empty"
+              },
+              {
+                "id": 20,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "2": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "3": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "4": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "5": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "6": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "7": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "8": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "9": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      },
+      "10": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "11": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "12": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "13": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "14": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      },
+      "15": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "16": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "17": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "18": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "19": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "20": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "21": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      },
+      "22": {
+        "source": "sum-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 34,
+          "index": 34
+        }
+      }
+    },
+    "nextID": 23
+  },
+  {
+    "entry": "declaration",
+    "name": "import",
+    "source": "import A.x from \"./other\"",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "id": 1,
+          "kind": "import",
+          "defName": "x",
+          "protoName": "A",
+          "fromSource": "./other"
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "import.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "entry": "declaration",
+    "name": "export",
+    "source": "export A as B",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "id": 1,
+          "kind": "export",
+          "protoName": "A",
+          "qualifiedName": "B"
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "export.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "entry": "declaration",
+    "name": "instance",
+    "source": "import A(c=1+2,d=3) as X",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "id": 7,
+          "kind": "instance",
+          "qualifiedName": "X",
+          "protoName": "A",
+          "overrides": [
+            [
+              {
+                "id": 5,
+                "name": "c"
+              },
+              {
+                "id": 3,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "id": 6,
+                "name": "d"
+              },
+              {
+                "id": 4,
+                "kind": "int",
+                "value": 3
+              }
+            ]
+          ],
+          "identityOverride": false
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "instance.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      },
+      "2": {
+        "source": "instance.qnt",
+        "start": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "3": {
+        "source": "instance.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "4": {
+        "source": "instance.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      },
+      "5": {
+        "source": "instance.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      },
+      "6": {
+        "source": "instance.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "7": {
+        "source": "instance.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      }
+    },
+    "nextID": 8
+  },
+  {
+    "entry": "declaration",
+    "name": "assumption",
+    "source": "assume _=true",
+    "result": {
+      "kind": "declaration",
+      "decls": [
+        {
+          "id": 2,
+          "kind": "assume",
+          "name": "_",
+          "assumption": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          }
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "assumption.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      },
+      "2": {
+        "source": "assumption.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        }
+      }
+    },
+    "nextID": 3
+  },
+  {
+    "entry": "repl",
+    "name": "empty",
+    "source": "",
+    "result": {
+      "kind": "none"
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {},
+    "nextID": 1
+  },
+  {
+    "entry": "repl",
+    "name": "comment",
+    "source": "// comment\n",
+    "result": {
+      "kind": "none"
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {},
+    "nextID": 1
+  },
+  {
+    "entry": "repl",
+    "name": "doc-comment",
+    "source": "/// doc\n",
+    "result": {
+      "kind": "none"
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {},
+    "nextID": 1
+  },
+  {
+    "entry": "syntax",
+    "name": "missing-operand",
+    "source": "1+",
+    "result": {
+      "kind": "error",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '<EOF>' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 1
+        }
+      ]
+    },
+    "recognition": {
+      "issues": [
+        {
+          "message": "mismatched input '<EOF>' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "start": {
+            "line": 0,
+            "col": 2,
+            "index": 2
+          }
+        }
+      ]
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "missing-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      },
+      "2": {
+        "source": "missing-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        }
+      },
+      "3": {
+        "source": "missing-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      },
+      "4": {
+        "source": "missing-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      },
+      "5": {
+        "source": "missing-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      },
+      "6": {
+        "source": "missing-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      },
+      "7": {
+        "source": "missing-operand.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      }
+    },
+    "nextID": 8
+  },
+  {
+    "entry": "syntax",
+    "name": "missing-list-close",
+    "source": "[1,2",
+    "result": {
+      "kind": "error",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "extraneous input '<EOF>' expecting {',', ']'}",
+          "reference": 1
+        }
+      ]
+    },
+    "recognition": {
+      "issues": [
+        {
+          "message": "extraneous input '<EOF>' expecting {',', ']'}",
+          "start": {
+            "line": 0,
+            "col": 4,
+            "index": 4
+          }
+        }
+      ]
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "missing-list-close.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      },
+      "2": {
+        "source": "missing-list-close.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      },
+      "3": {
+        "source": "missing-list-close.qnt",
+        "start": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      },
+      "4": {
+        "source": "missing-list-close.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      }
+    },
+    "nextID": 5
+  },
+  {
+    "entry": "syntax",
+    "name": "missing-constant-type",
+    "source": "const x:",
+    "thrown": "Value is None",
+    "recognition": {
+      "issues": [
+        {
+          "message": "mismatched input '<EOF>' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          }
+        }
+      ]
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "missing-constant-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "entry": "syntax",
+    "name": "missing-binding-value",
+    "source": "val x=",
+    "result": {
+      "kind": "error",
+      "errors": [
+        {
+          "code": "QNT000",
+          "message": "no viable alternative at input 'valx='",
+          "reference": 1
+        }
+      ]
+    },
+    "recognition": {
+      "issues": [
+        {
+          "message": "no viable alternative at input 'valx='",
+          "start": {
+            "line": 0,
+            "col": 6,
+            "index": 6
+          }
+        }
+      ]
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "missing-binding-value.qnt",
+        "start": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        },
+        "end": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "entry": "semantic",
+    "name": "duplicate-field",
+    "source": "{a:1,a:2}",
+    "result": {
+      "kind": "error",
+      "errors": [
+        {
+          "code": "QNT016",
+          "message": "Field a cannot be defined more than once",
+          "reference": 5,
+          "data": {}
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "duplicate-field.qnt",
+        "start": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      },
+      "2": {
+        "source": "duplicate-field.qnt",
+        "start": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        },
+        "end": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      },
+      "3": {
+        "source": "duplicate-field.qnt",
+        "start": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        },
+        "end": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      },
+      "4": {
+        "source": "duplicate-field.qnt",
+        "start": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        },
+        "end": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      },
+      "5": {
+        "source": "duplicate-field.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      },
+      "6": {
+        "source": "duplicate-field.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "entry": "semantic",
+    "name": "duplicate-spread",
+    "source": "{...a,...b}",
+    "result": {
+      "kind": "error",
+      "errors": [
+        {
+          "code": "QNT012",
+          "message": "... may be used once in { ...record, <fields> }",
+          "reference": 3,
+          "data": {}
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "duplicate-spread.qnt",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        },
+        "end": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        }
+      },
+      "2": {
+        "source": "duplicate-spread.qnt",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        },
+        "end": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      },
+      "3": {
+        "source": "duplicate-spread.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      }
+    },
+    "nextID": 4
+  },
+  {
+    "entry": "semantic",
+    "name": "lower-type",
+    "source": "type lower=int",
+    "result": {
+      "kind": "error",
+      "errors": [
+        {
+          "code": "QNT007",
+          "message": "type names must start with an uppercase letter",
+          "reference": 2,
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "type lower",
+              "replacement": "type Lower"
+            }
+          }
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "lower-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      },
+      "2": {
+        "source": "lower-type.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 13,
+          "index": 13
+        }
+      }
+    },
+    "nextID": 3
+  },
+  {
+    "entry": "semantic",
+    "name": "deprecated-map",
+    "source": "const x:Map[int,str]",
+    "result": {
+      "kind": "error",
+      "errors": [
+        {
+          "code": "QNT015",
+          "message": "Use 'int -> str' instead of 'Map[int, str]' for map types",
+          "reference": 3,
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "Map[int, str]",
+              "replacement": "int -> str"
+            }
+          }
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    },
+    "upstreamSources": {
+      "1": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 12,
+          "index": 12
+        },
+        "end": {
+          "line": 0,
+          "col": 14,
+          "index": 14
+        }
+      },
+      "2": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "3": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "4": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "5": {
+        "source": "deprecated-map.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      }
+    },
+    "nextID": 6
+  },
+  {
+    "entry": "type",
+    "name": "primitive",
+    "source": "int",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 1,
+        "kind": "int"
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "constant",
+    "source": "NS::Box",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 1,
+        "kind": "const",
+        "name": "NS::Box"
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "variable",
+    "source": "a",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 1,
+        "kind": "var",
+        "name": "a"
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "unit",
+    "source": "()",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 1,
+        "kind": "tup",
+        "fields": {
+          "kind": "empty"
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "empty-record",
+    "source": "{}",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 1,
+        "kind": "rec",
+        "fields": {
+          "kind": "empty"
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "collections",
+    "source": "Set[List[int]]",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 3,
+        "kind": "set",
+        "elem": {
+          "id": 2,
+          "kind": "list",
+          "elem": {
+            "id": 1,
+            "kind": "int"
+          }
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "type-application",
+    "source": "Result[List[int],{value:bool}]",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 5,
+        "kind": "app",
+        "ctor": {
+          "id": 6,
+          "kind": "const",
+          "name": "Result"
+        },
+        "args": [
+          {
+            "id": 2,
+            "kind": "list",
+            "elem": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "id": 4,
+            "kind": "rec",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "value",
+                  "fieldType": {
+                    "id": 3,
+                    "kind": "bool"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "function",
+    "source": "int->bool->str",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 5,
+        "kind": "fun",
+        "arg": {
+          "id": 1,
+          "kind": "int"
+        },
+        "res": {
+          "id": 4,
+          "kind": "fun",
+          "arg": {
+            "id": 2,
+            "kind": "bool"
+          },
+          "res": {
+            "id": 3,
+            "kind": "str"
+          }
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "operator",
+    "source": "(int,bool)=>str",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 4,
+        "kind": "oper",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int"
+          },
+          {
+            "id": 2,
+            "kind": "bool"
+          }
+        ],
+        "res": {
+          "id": 3,
+          "kind": "str"
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "nullary-operator",
+    "source": "()=>int",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 2,
+        "kind": "oper",
+        "args": [],
+        "res": {
+          "id": 1,
+          "kind": "int"
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "tuple",
+    "source": "(int,Box[str],{})",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 6,
+        "kind": "tup",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "0",
+              "fieldType": {
+                "id": 1,
+                "kind": "int"
+              }
+            },
+            {
+              "fieldName": "1",
+              "fieldType": {
+                "id": 3,
+                "kind": "app",
+                "ctor": {
+                  "id": 4,
+                  "kind": "const",
+                  "name": "Box"
+                },
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "str"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldName": "2",
+              "fieldType": {
+                "id": 5,
+                "kind": "rec",
+                "fields": {
+                  "kind": "empty"
+                }
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "record",
+    "source": "{x:int,y:List[a]|r}",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 4,
+        "kind": "rec",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "x",
+              "fieldType": {
+                "id": 1,
+                "kind": "int"
+              }
+            },
+            {
+              "fieldName": "y",
+              "fieldType": {
+                "id": 3,
+                "kind": "list",
+                "elem": {
+                  "id": 2,
+                  "kind": "var",
+                  "name": "a"
+                }
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "r"
+          }
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "open-record",
+    "source": "{|r}",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 1,
+        "kind": "rec",
+        "fields": {
+          "kind": "row",
+          "fields": [],
+          "other": {
+            "kind": "var",
+            "name": "r"
+          }
+        }
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "parentheses",
+    "source": "((Box[int]))",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 2,
+        "kind": "app",
+        "ctor": {
+          "id": 3,
+          "kind": "const",
+          "name": "Box"
+        },
+        "args": [
+          {
+            "id": 1,
+            "kind": "int"
+          }
+        ]
+      }
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "missing",
+    "source": "",
+    "result": {
+      "kind": "left",
+      "value": [
+        {
+          "explanation": "mismatched input '<EOF>' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 0,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": -1,
+                "index": -1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "recognition": {
+      "issues": [
+        {
+          "message": "mismatched input '<EOF>' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "start": {
+            "line": 0,
+            "col": 0,
+            "index": 0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entry": "type",
+    "name": "missing-bracket",
+    "source": "Set[",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 1,
+        "kind": "const",
+        "name": "Set"
+      }
+    },
+    "recognition": {
+      "issues": [],
+      "trailing": {
+        "text": "[",
+        "start": {
+          "line": 0,
+          "col": 3,
+          "index": 3
+        }
+      }
+    }
+  },
+  {
+    "entry": "type",
+    "name": "missing-arrow-result",
+    "source": "int->",
+    "result": {
+      "kind": "left",
+      "value": [
+        {
+          "explanation": "mismatched input '<EOF>' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              },
+              "end": {
+                "line": 0,
+                "col": 4,
+                "index": 4
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "recognition": {
+      "issues": [
+        {
+          "message": "mismatched input '<EOF>' expecting {'{', 'int', 'str', 'bool', 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "start": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entry": "type",
+    "name": "wrong-application",
+    "source": "Box(int)",
+    "result": {
+      "kind": "left",
+      "value": [
+        {
+          "explanation": "[QNT009] Use square brackets instead of parenthesis for type application: Box[int]",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 8,
+                "index": 8
+              },
+              "end": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "recognition": {
+      "issues": [
+        {
+          "message": "[QNT009] Use square brackets instead of parenthesis for type application: Box[int]",
+          "start": {
+            "line": 0,
+            "col": 8,
+            "index": 8
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entry": "type",
+    "name": "qualified-row-label",
+    "source": "{a::b:int}",
+    "result": {
+      "kind": "left",
+      "value": [
+        {
+          "explanation": "[QNT008] Identifiers in a record cannot be qualified with '::'. Found a::b.",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              },
+              "end": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "recognition": {
+      "issues": [
+        {
+          "message": "[QNT008] Identifiers in a record cannot be qualified with '::'. Found a::b.",
+          "start": {
+            "line": 0,
+            "col": 5,
+            "index": 5
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entry": "type",
+    "name": "deprecated-map",
+    "source": "Map[int,str]",
+    "result": {
+      "kind": "left",
+      "value": [
+        {
+          "code": "QNT015",
+          "message": "Use 'int -> str' instead of 'Map[int, str]' for map types",
+          "reference": 3,
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "Map[int, str]",
+              "replacement": "int -> str"
+            }
+          }
+        }
+      ]
+    },
+    "recognition": {
+      "issues": []
+    }
+  },
+  {
+    "entry": "type",
+    "name": "trailing-name",
+    "source": "int extra",
+    "result": {
+      "kind": "right",
+      "value": {
+        "id": 1,
+        "kind": "int"
+      }
+    },
+    "recognition": {
+      "issues": [],
+      "trailing": {
+        "text": "extra",
+        "start": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        }
+      }
+    }
+  },
+  {
+    "entry": "type",
+    "name": "trailing-call",
+    "source": "Box(int) trailing",
+    "result": {
+      "kind": "left",
+      "value": [
+        {
+          "explanation": "[QNT009] Use square brackets instead of parenthesis for type application: Box[int]",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 9,
+                "index": 9
+              },
+              "end": {
+                "line": 0,
+                "col": 16,
+                "index": 16
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "recognition": {
+      "issues": [
+        {
+          "message": "[QNT009] Use square brackets instead of parenthesis for type application: Box[int]",
+          "start": {
+            "line": 0,
+            "col": 9,
+            "index": 9
+          }
+        }
+      ],
+      "trailing": {
+        "text": "trailing",
+        "start": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      }
+    }
+  }
+]

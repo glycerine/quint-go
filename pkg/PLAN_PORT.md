@@ -3736,3 +3736,12 @@ word "retained" in the commit message.
   empty initial executions versus deadlocks and temporary-source cleanup. Full
   isolated tests/vet pass (Apalache0.576s). Ineffective native resource/search
   controls remain under active explicit compatibility validation.
+
+- 2026-11-02: Added63 actual standalone parser entry fixtures:16 expressions,
+  14 declarations,3 REPL cases,14 types,five semantic/eight syntax diagnostic
+  cases and three explicit strict-EOF boundaries. Raw successful IR/IDs/maps/next
+  IDs match; plain type parsing deliberately omits IDs. Fail-fast malformed REPL
+  allocation differs from the reference recovering listener and is classified
+  explicitly rather than counted as raw recovery parity. Default0.101s, race1.555s,
+  byte-identical generation, full isolated tests and vet pass. Effect entrypoint
+  recovery remains the final separate P2.6 subitem.
