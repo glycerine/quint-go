@@ -1,0 +1,1861 @@
+{
+  "node": "22.22.2",
+  "icu": "78.2",
+  "locale": "en-US",
+  "cases": [
+    {
+      "name": "escaped-surrogate-pairs",
+      "input": "{\"states\":[{\"x\":[\"\\ud83d\\ude00\",\"\\ud800\\udc00\",\"\\udbff\\udfff\"]}]}",
+      "unsupportedUnicode": false,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "str",
+                  "value": "😀"
+                },
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "𐀀"
+                },
+                {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "􏿿"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "😀"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "𐀀"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "􏿿"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          55357,
+          56832
+        ],
+        [
+          55296,
+          56320
+        ],
+        [
+          56319,
+          57343
+        ]
+      ]
+    },
+    {
+      "name": "replacement-literal-and-backslash",
+      "input": "{\"states\":[{\"x\":[\"\\ufffd\",\"\ufffd\",\"\\\\ud800\",\"\\\\uFFFD\",\"\\\\\\\\ud800\"]}]}",
+      "unsupportedUnicode": false,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "str",
+                  "value": "\ufffd"
+                },
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "\ufffd"
+                },
+                {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "\\ud800"
+                },
+                {
+                  "id": 6,
+                  "kind": "str",
+                  "value": "\\uFFFD"
+                },
+                {
+                  "id": 7,
+                  "kind": "str",
+                  "value": "\\\\ud800"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\ufffd"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\ufffd"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\\ud800"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\\uFFFD"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\\\\ud800"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          65533
+        ],
+        [
+          65533
+        ],
+        [
+          92,
+          117,
+          100,
+          56,
+          48,
+          48
+        ],
+        [
+          92,
+          117,
+          70,
+          70,
+          70,
+          68
+        ],
+        [
+          92,
+          92,
+          117,
+          100,
+          56,
+          48,
+          48
+        ]
+      ]
+    },
+    {
+      "name": "escaped-pair-and-literal-identity",
+      "input": "{\"states\":[{\"x\":{\"#set\":[\"\\ud83d\\ude00\",\"😀\",\"\\ufffd\",\"\ufffd\",\"\\\\ud800\"]}}]}",
+      "unsupportedUnicode": false,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "str",
+                  "value": "😀"
+                },
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "😀"
+                },
+                {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "\ufffd"
+                },
+                {
+                  "id": 6,
+                  "kind": "str",
+                  "value": "\ufffd"
+                },
+                {
+                  "id": 7,
+                  "kind": "str",
+                  "value": "\\ud800"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\\ud800"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "😀"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\ufffd"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          55357,
+          56832
+        ],
+        [
+          55357,
+          56832
+        ],
+        [
+          65533
+        ],
+        [
+          65533
+        ],
+        [
+          92,
+          117,
+          100,
+          56,
+          48,
+          48
+        ]
+      ]
+    },
+    {
+      "name": "unicode-record-field-order",
+      "input": "{\"states\":[{\"b\":0,\"\\ue000\":1,\"\\ud83d\\ude00\":2,\"\\ud800\\udc00\":3,\"10\":4,\"2\":5,\"0\":6,\"a\":7,\"é\":8,\"é\":9}]}",
+      "unsupportedUnicode": false,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "0"
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 6
+            },
+            {
+              "id": 3,
+              "kind": "str",
+              "value": "2"
+            },
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 5
+            },
+            {
+              "id": 5,
+              "kind": "str",
+              "value": "10"
+            },
+            {
+              "id": 6,
+              "kind": "int",
+              "value": 4
+            },
+            {
+              "id": 7,
+              "kind": "str",
+              "value": "b"
+            },
+            {
+              "id": 8,
+              "kind": "int",
+              "value": 0
+            },
+            {
+              "id": 9,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 10,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 11,
+              "kind": "str",
+              "value": "😀"
+            },
+            {
+              "id": 12,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 13,
+              "kind": "str",
+              "value": "𐀀"
+            },
+            {
+              "id": 14,
+              "kind": "int",
+              "value": 3
+            },
+            {
+              "id": 15,
+              "kind": "str",
+              "value": "a"
+            },
+            {
+              "id": 16,
+              "kind": "int",
+              "value": 7
+            },
+            {
+              "id": 17,
+              "kind": "str",
+              "value": "é"
+            },
+            {
+              "id": 18,
+              "kind": "int",
+              "value": 8
+            },
+            {
+              "id": 19,
+              "kind": "str",
+              "value": "é"
+            },
+            {
+              "id": 20,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "0"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 6
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "10"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 4
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "2"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 5
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "a"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 7
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "b"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 0
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "é"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "é"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 8
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "𐀀"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 3
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "😀"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": ""
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          48
+        ],
+        [
+          50
+        ],
+        [
+          49,
+          48
+        ],
+        [
+          98
+        ],
+        [
+          57344
+        ],
+        [
+          55357,
+          56832
+        ],
+        [
+          55296,
+          56320
+        ],
+        [
+          97
+        ],
+        [
+          233
+        ],
+        [
+          101,
+          769
+        ]
+      ]
+    },
+    {
+      "name": "escaped-field-overwrite",
+      "input": "{\"states\":[{\"😀\":\"old\",\"z\":0,\"\\ud83d\\ude00\":\"new\",\"\\\\ud800\":1,\"\\ufffd\":2}]}",
+      "unsupportedUnicode": false,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "😀"
+            },
+            {
+              "id": 2,
+              "kind": "str",
+              "value": "new"
+            },
+            {
+              "id": 3,
+              "kind": "str",
+              "value": "z"
+            },
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 0
+            },
+            {
+              "id": 5,
+              "kind": "str",
+              "value": "\\ud800"
+            },
+            {
+              "id": 6,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 7,
+              "kind": "str",
+              "value": "\ufffd"
+            },
+            {
+              "id": 8,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "\\ud800"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "z"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 0
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "😀"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "new"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "\ufffd"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          55357,
+          56832
+        ],
+        [
+          110,
+          101,
+          119
+        ],
+        [
+          122
+        ],
+        [
+          92,
+          117,
+          100,
+          56,
+          48,
+          48
+        ],
+        [
+          65533
+        ]
+      ]
+    },
+    {
+      "name": "unicode-map-keys",
+      "input": "{\"states\":[{\"x\":{\"#map\":[[\"\\ud83d\\ude00\",1],[\"😀\",2],[\"\\\\ud800\",3],[\"\\ufffd\",4]]}}]}",
+      "unsupportedUnicode": false,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "str",
+                      "value": "😀"
+                    },
+                    {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 8,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 6,
+                      "kind": "str",
+                      "value": "😀"
+                    },
+                    {
+                      "id": 7,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 9,
+                      "kind": "str",
+                      "value": "\\ud800"
+                    },
+                    {
+                      "id": 10,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 14,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 12,
+                      "kind": "str",
+                      "value": "\ufffd"
+                    },
+                    {
+                      "id": 13,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "\\ud800"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "😀"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "\ufffd"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 4
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          55357,
+          56832
+        ],
+        [
+          55357,
+          56832
+        ],
+        [
+          92,
+          117,
+          100,
+          56,
+          48,
+          48
+        ],
+        [
+          65533
+        ]
+      ]
+    },
+    {
+      "name": "control-strings",
+      "input": "{\"states\":[{\"x\":[\"\\u0000\",\"\\b\\f\\n\\r\\t\",\"\\\"\\\\/\",\"\\u2028\\u2029\"]}]}",
+      "unsupportedUnicode": false,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "str",
+                  "value": "\u0000"
+                },
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "\b\f\n\r\t"
+                },
+                {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "\"\\/"
+                },
+                {
+                  "id": 6,
+                  "kind": "str",
+                  "value": "\u2028\u2029"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\u0000"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\b\f\n\r\t"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\"\\/"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\u2028\u2029"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          0
+        ],
+        [
+          8,
+          12,
+          10,
+          13,
+          9
+        ],
+        [
+          34,
+          92,
+          47
+        ],
+        [
+          8232,
+          8233
+        ]
+      ]
+    },
+    {
+      "name": "unicode-headers",
+      "input": "{\"vars\":[\"\\ud83d\\ude00\",\"\\ufffd\",\"\\\\ud800\"],\"params\":[\"\\ud800\\udc00\"],\"states\":[{\"x\":true}]}",
+      "unsupportedUnicode": false,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "bool",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "bool",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ]
+      ]
+    },
+    {
+      "name": "metadata-is-retained-without-interpreting-text",
+      "input": "{\"vars\":[\"x\"],\"params\":[\"N\"],\"loop\":0,\"#meta\":{\"text\":\"\\ud800\",\"description\":\"😀\"},\"states\":[{\"#meta\":{\"index\":0,\"note\":\"\\udc00\"},\"__hidden\":\"\\ud800\",\"x\":{\"#tup\":[\"\\ud83d\\ude00\",\"\\ufffd\",\"\\\\ud800\"]}}]}",
+      "unsupportedUnicode": false,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "str",
+                  "value": "😀"
+                },
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "\ufffd"
+                },
+                {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "\\ud800"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "😀"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\ufffd"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\\ud800"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          55357,
+          56832
+        ],
+        [
+          65533
+        ],
+        [
+          92,
+          117,
+          100,
+          56,
+          48,
+          48
+        ]
+      ]
+    },
+    {
+      "name": "symbolic-unicode",
+      "input": "{\"states\":[{\"x\":{\"#unserializable\":\"Symbol\\ud83d\\ude00\"}}]}",
+      "unsupportedUnicode": false,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "name",
+              "name": "Symbol😀"
+            }
+          ]
+        }
+      ],
+      "normalizationError": "Cannot convert Rec(\"x\", Symbol😀) to a runtime value",
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          83,
+          121,
+          109,
+          98,
+          111,
+          108,
+          55357,
+          56832
+        ]
+      ]
+    },
+    {
+      "name": "lone-high-value",
+      "input": "{\"states\":[{\"x\":\"\\ud800\"}]}",
+      "unsupportedUnicode": true,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "str",
+              "value": "�"
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "�"
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          55296
+        ]
+      ]
+    },
+    {
+      "name": "lone-low-value",
+      "input": "{\"states\":[{\"x\":\"\\udc00\"}]}",
+      "unsupportedUnicode": true,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "str",
+              "value": "�"
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "�"
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          56320
+        ]
+      ]
+    },
+    {
+      "name": "high-high-value",
+      "input": "{\"states\":[{\"x\":\"\\ud800\\ud801\"}]}",
+      "unsupportedUnicode": true,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "str",
+              "value": "��"
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "��"
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          55296,
+          55297
+        ]
+      ]
+    },
+    {
+      "name": "low-high-value",
+      "input": "{\"states\":[{\"x\":\"\\udc00\\ud800\"}]}",
+      "unsupportedUnicode": true,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "str",
+              "value": "��"
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "��"
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          56320,
+          55296
+        ]
+      ]
+    },
+    {
+      "name": "unpaired-surrogate-with-text",
+      "input": "{\"states\":[{\"x\":\"a\\ud800z\"}]}",
+      "unsupportedUnicode": true,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "str",
+              "value": "a�z"
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "a�z"
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          97,
+          55296,
+          122
+        ]
+      ]
+    },
+    {
+      "name": "distinct-lone-surrogate-values",
+      "input": "{\"states\":[{\"x\":{\"#set\":[\"\\ud800\",\"\\udc00\",\"\\ufffd\"]}}]}",
+      "unsupportedUnicode": true,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "str",
+                  "value": "�"
+                },
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "�"
+                },
+                {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "\ufffd"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "�"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "�"
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "\ufffd"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          65533
+        ]
+      ]
+    },
+    {
+      "name": "distinct-lone-surrogate-fields",
+      "input": "{\"states\":[{\"\\ud800\":1,\"\\udc00\":2,\"\\ufffd\":3}]}",
+      "unsupportedUnicode": true,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "�"
+            },
+            {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 3,
+              "kind": "str",
+              "value": "�"
+            },
+            {
+              "id": 4,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 5,
+              "kind": "str",
+              "value": "\ufffd"
+            },
+            {
+              "id": 6,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "�"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "�"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "\ufffd"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 3
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          65533
+        ]
+      ]
+    },
+    {
+      "name": "distinct-lone-surrogate-map-keys",
+      "input": "{\"states\":[{\"x\":{\"#map\":[[\"\\ud800\",1],[\"\\udc00\",2],[\"\\ufffd\",3]]}}]}",
+      "unsupportedUnicode": true,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "str",
+                      "value": "�"
+                    },
+                    {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 8,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 6,
+                      "kind": "str",
+                      "value": "�"
+                    },
+                    {
+                      "id": 7,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 9,
+                      "kind": "str",
+                      "value": "\ufffd"
+                    },
+                    {
+                      "id": 10,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "�"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "�"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "\ufffd"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          55296
+        ],
+        [
+          56320
+        ],
+        [
+          65533
+        ]
+      ]
+    },
+    {
+      "name": "symbolic-lone-surrogate",
+      "input": "{\"states\":[{\"x\":{\"#unserializable\":\"\\ud800\"}}]}",
+      "unsupportedUnicode": true,
+      "decoded": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 1,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 2,
+              "kind": "name",
+              "name": "�"
+            }
+          ]
+        }
+      ],
+      "normalizationError": "Cannot convert Rec(\"x\", �) to a runtime value",
+      "stringUnits": [
+        [
+          120
+        ],
+        [
+          55296
+        ]
+      ]
+    }
+  ]
+}

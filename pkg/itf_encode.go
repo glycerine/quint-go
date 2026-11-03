@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
+	"unicode/utf8"
 
 	"github.com/glycerine/insdict"
 )
@@ -33,6 +34,9 @@ func EncodeITFValue(expression Expr) (json.RawMessage, error) {
 	case "int":
 		return object("#bigint", e.Int.String())
 	case "str":
+		if !utf8.ValidString(e.Str) {
+			return nil, fmt.Errorf("ITF string is not valid UTF-8")
+		}
 		return marshal(e.Str)
 	case "bool":
 		return marshal(e.Bool)
@@ -101,6 +105,11 @@ func EncodeITFValue(expression Expr) (json.RawMessage, error) {
 // append model-based-testing variable names. It does not add a trace header or
 // reorder/normalize values. Existing state #meta fields override index metadata.
 func EncodeITFTrace(vars []string, states []Expr, mbtMetadata bool) (json.RawMessage, error) {
+	for i, name := range vars {
+		if !utf8.ValidString(name) {
+			return nil, fmt.Errorf("ITF variable name %d is not valid UTF-8", i)
+		}
+	}
 	names := append([]string{}, vars...)
 	if mbtMetadata {
 		names = append(names, ITFActionTaken, ITFNondetPicks)

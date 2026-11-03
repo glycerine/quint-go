@@ -15,11 +15,13 @@ import (
 	"golang.org/x/text/language"
 )
 
-// NormalizeValue implements the concrete-value round trip used by upstream ITF
-// normalization. It resets IDs to zero, sorts records, deduplicates sets, keeps
+// NormalizeValue constructs the deterministic structural form of a concrete
+// value. It resets IDs to zero, sorts records, deduplicates sets, keeps
 // the last map value for equal keys, and sorts sets/map pairs by their printed
 // expressions using en-US collation. Lists and tuples retain element order.
 // This does not evaluate operators or expand symbolic runtime collections.
+// Runtime display can reorder collation ties through object-hash history;
+// DecodeNormalizedITFTrace and SerializeRuntimeValueContext preserve that path.
 func NormalizeValue(input Expr) (Expr, error) {
 	var comparison *collate.Collator
 	var normalize func(Expr) (Expr, error)
@@ -123,22 +125,6 @@ func NormalizeValue(input Expr) (Expr, error) {
 		return out, nil
 	}
 	return normalize(input)
-}
-
-// DecodeNormalizedITFTrace provides upstream ofItfNormalized's concrete-state
-// normalization while retaining the original trace bytes and metadata.
-func DecodeNormalizedITFTrace(data []byte) (ITFTrace, error) {
-	trace, err := DecodeITFTrace(data)
-	if err != nil {
-		return ITFTrace{}, err
-	}
-	for i, state := range trace.States {
-		trace.States[i], err = NormalizeValue(state)
-		if err != nil {
-			return ITFTrace{}, fmt.Errorf("normalizing ITF state %d: %w", i, err)
-		}
-	}
-	return trace, nil
 }
 
 func utf16Less(a, b string) bool {

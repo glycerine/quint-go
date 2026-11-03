@@ -1,0 +1,4841 @@
+[
+  {
+    "name": "integer",
+    "input": {
+      "kind": "int",
+      "value": "9007199254740993123456789"
+    },
+    "direct": {
+      "id": 0,
+      "kind": "int",
+      "value": 9007199254740993123456789
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "int",
+      "value": 9007199254740993123456789
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9007199254740993123456789
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#bigint": "9007199254740993123456789"
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "string",
+    "input": {
+      "kind": "str",
+      "value": "é 😀"
+    },
+    "direct": {
+      "id": 0,
+      "kind": "str",
+      "value": "é 😀"
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "str",
+      "value": "é 😀"
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "é 😀"
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": "é 😀"
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "boolean",
+    "input": {
+      "kind": "bool",
+      "value": false
+    },
+    "direct": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "bool",
+      "value": false
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "bool",
+          "value": false
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": false
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "concrete_list",
+    "input": {
+      "kind": "list",
+      "args": [
+        {
+          "kind": "int",
+          "value": "12"
+        },
+        {
+          "kind": "int",
+          "value": "9"
+        },
+        {
+          "kind": "bool",
+          "value": true
+        }
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "List",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 12
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        },
+        {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "List",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 12
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        },
+        {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            },
+            {
+              "id": 0,
+              "kind": "bool",
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": [
+              {
+                "#bigint": "12"
+              },
+              {
+                "#bigint": "9"
+              },
+              true
+            ]
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "concrete_tuple",
+    "input": {
+      "kind": "tuple",
+      "args": [
+        {
+          "kind": "str",
+          "value": "z"
+        },
+        {
+          "kind": "int",
+          "value": "2"
+        }
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Tup",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "z"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Tup",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "z"
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "z"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#tup": [
+                "z",
+                {
+                  "#bigint": "2"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "interval_display_sort",
+    "input": {
+      "kind": "interval",
+      "first": "9",
+      "last": "12"
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 10
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 11
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 12
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 10
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 11
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 12
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": [
+                {
+                  "#bigint": "10"
+                },
+                {
+                  "#bigint": "11"
+                },
+                {
+                  "#bigint": "12"
+                },
+                {
+                  "#bigint": "9"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "interval_identity_hash_threshold",
+    "input": {
+      "kind": "interval",
+      "first": "8",
+      "last": "17"
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 8
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 10
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 11
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 12
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 13
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 14
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 15
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 16
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 17
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 10
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 11
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 12
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 13
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 14
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 15
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 16
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 17
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 8
+        },
+        {
+          "id": 0,
+          "kind": "int",
+          "value": 9
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 13
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 14
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 15
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 16
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 17
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 8
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": [
+                {
+                  "#bigint": "10"
+                },
+                {
+                  "#bigint": "11"
+                },
+                {
+                  "#bigint": "12"
+                },
+                {
+                  "#bigint": "13"
+                },
+                {
+                  "#bigint": "14"
+                },
+                {
+                  "#bigint": "15"
+                },
+                {
+                  "#bigint": "16"
+                },
+                {
+                  "#bigint": "17"
+                },
+                {
+                  "#bigint": "8"
+                },
+                {
+                  "#bigint": "9"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 20,
+      "afterITF": 20
+    }
+  },
+  {
+    "name": "empty_interval",
+    "input": {
+      "kind": "interval",
+      "first": "5",
+      "last": "3"
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": []
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "powerset",
+    "input": {
+      "kind": "powerset",
+      "base": {
+        "kind": "interval",
+        "first": "9",
+        "last": "10"
+      }
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": [
+                {
+                  "#set": []
+                },
+                {
+                  "#set": [
+                    {
+                      "#bigint": "10"
+                    },
+                    {
+                      "#bigint": "9"
+                    }
+                  ]
+                },
+                {
+                  "#set": [
+                    {
+                      "#bigint": "10"
+                    }
+                  ]
+                },
+                {
+                  "#set": [
+                    {
+                      "#bigint": "9"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "empty_powerset",
+    "input": {
+      "kind": "powerset",
+      "base": {
+        "kind": "set",
+        "args": []
+      }
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": []
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": [
+                {
+                  "#set": []
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "product",
+    "input": {
+      "kind": "product",
+      "args": [
+        {
+          "kind": "interval",
+          "first": "9",
+          "last": "10"
+        },
+        {
+          "kind": "set",
+          "args": [
+            {
+              "kind": "str",
+              "value": "b"
+            },
+            {
+              "kind": "str",
+              "value": "a"
+            }
+          ]
+        }
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "b"
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "b"
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "a"
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "a"
+            }
+          ]
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "a"
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "b"
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "a"
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "b"
+            }
+          ]
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "a"
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "b"
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "a"
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "b"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": [
+                {
+                  "#tup": [
+                    {
+                      "#bigint": "10"
+                    },
+                    "a"
+                  ]
+                },
+                {
+                  "#tup": [
+                    {
+                      "#bigint": "10"
+                    },
+                    "b"
+                  ]
+                },
+                {
+                  "#tup": [
+                    {
+                      "#bigint": "9"
+                    },
+                    "a"
+                  ]
+                },
+                {
+                  "#tup": [
+                    {
+                      "#bigint": "9"
+                    },
+                    "b"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "zero_product",
+    "input": {
+      "kind": "product",
+      "args": []
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": []
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "empty_product",
+    "input": {
+      "kind": "product",
+      "args": [
+        {
+          "kind": "set",
+          "args": []
+        },
+        {
+          "kind": "interval",
+          "first": "1",
+          "last": "2"
+        }
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": []
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "mapset",
+    "input": {
+      "kind": "mapset",
+      "domain": {
+        "kind": "set",
+        "args": [
+          {
+            "kind": "str",
+            "value": "b"
+          },
+          {
+            "kind": "str",
+            "value": "a"
+          }
+        ]
+      },
+      "range": {
+        "kind": "interval",
+        "first": "9",
+        "last": "10"
+      }
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "a"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 10
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "b"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 10
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "a"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 10
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "b"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "a"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "b"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 10
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "a"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "str",
+                      "value": "b"
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": [
+                {
+                  "#map": [
+                    [
+                      "a",
+                      {
+                        "#bigint": "10"
+                      }
+                    ],
+                    [
+                      "b",
+                      {
+                        "#bigint": "10"
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "#map": [
+                    [
+                      "a",
+                      {
+                        "#bigint": "10"
+                      }
+                    ],
+                    [
+                      "b",
+                      {
+                        "#bigint": "9"
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "#map": [
+                    [
+                      "a",
+                      {
+                        "#bigint": "9"
+                      }
+                    ],
+                    [
+                      "b",
+                      {
+                        "#bigint": "10"
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "#map": [
+                    [
+                      "a",
+                      {
+                        "#bigint": "9"
+                      }
+                    ],
+                    [
+                      "b",
+                      {
+                        "#bigint": "9"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "empty_domain_mapset",
+    "input": {
+      "kind": "mapset",
+      "domain": {
+        "kind": "set",
+        "args": []
+      },
+      "range": {
+        "kind": "set",
+        "args": [
+          {
+            "kind": "int",
+            "value": "1"
+          }
+        ]
+      }
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": []
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": []
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": []
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": [
+                {
+                  "#map": []
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "empty_range_mapset",
+    "input": {
+      "kind": "mapset",
+      "domain": {
+        "kind": "set",
+        "args": [
+          {
+            "kind": "int",
+            "value": "1"
+          }
+        ]
+      },
+      "range": {
+        "kind": "set",
+        "args": []
+      }
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": []
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": []
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": []
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "empty_domain_and_range_mapset",
+    "input": {
+      "kind": "mapset",
+      "domain": {
+        "kind": "set",
+        "args": []
+      },
+      "range": {
+        "kind": "set",
+        "args": []
+      }
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": []
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": []
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": []
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": [
+                {
+                  "#map": []
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "nested_list",
+    "input": {
+      "kind": "list",
+      "args": [
+        {
+          "kind": "interval",
+          "first": "9",
+          "last": "12"
+        },
+        {
+          "kind": "powerset",
+          "base": {
+            "kind": "set",
+            "args": [
+              {
+                "kind": "int",
+                "value": "1"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "List",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "List",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": []
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 11
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 12
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": []
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": [
+              {
+                "#set": [
+                  {
+                    "#bigint": "10"
+                  },
+                  {
+                    "#bigint": "11"
+                  },
+                  {
+                    "#bigint": "12"
+                  },
+                  {
+                    "#bigint": "9"
+                  }
+                ]
+              },
+              {
+                "#set": [
+                  {
+                    "#set": []
+                  },
+                  {
+                    "#set": [
+                      {
+                        "#bigint": "1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "nested_tuple",
+    "input": {
+      "kind": "tuple",
+      "args": [
+        {
+          "kind": "interval",
+          "first": "9",
+          "last": "12"
+        },
+        {
+          "kind": "product",
+          "args": [
+            {
+              "kind": "set",
+              "args": [
+                {
+                  "kind": "int",
+                  "value": "2"
+                }
+              ]
+            },
+            {
+              "kind": "set",
+              "args": [
+                {
+                  "kind": "bool",
+                  "value": true
+                },
+                {
+                  "kind": "bool",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Tup",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 0,
+                  "kind": "bool",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 0,
+                  "kind": "bool",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Tup",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 0,
+                  "kind": "bool",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 2
+                },
+                {
+                  "id": 0,
+                  "kind": "bool",
+                  "value": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 11
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 12
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    },
+                    {
+                      "id": 0,
+                      "kind": "bool",
+                      "value": false
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 2
+                    },
+                    {
+                      "id": 0,
+                      "kind": "bool",
+                      "value": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#tup": [
+                {
+                  "#set": [
+                    {
+                      "#bigint": "10"
+                    },
+                    {
+                      "#bigint": "11"
+                    },
+                    {
+                      "#bigint": "12"
+                    },
+                    {
+                      "#bigint": "9"
+                    }
+                  ]
+                },
+                {
+                  "#set": [
+                    {
+                      "#tup": [
+                        {
+                          "#bigint": "2"
+                        },
+                        false
+                      ]
+                    },
+                    {
+                      "#tup": [
+                        {
+                          "#bigint": "2"
+                        },
+                        true
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "nested_record",
+    "input": {
+      "kind": "record",
+      "entries": [
+        [
+          "z",
+          {
+            "kind": "interval",
+            "first": "9",
+            "last": "12"
+          }
+        ],
+        [
+          "a",
+          {
+            "kind": "list",
+            "args": [
+              {
+                "kind": "interval",
+                "first": "9",
+                "last": "10"
+              }
+            ]
+          }
+        ]
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "a"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "z"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            }
+          ]
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "a"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "z"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "a"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "List",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 10
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "z"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 11
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 12
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "a": [
+                {
+                  "#set": [
+                    {
+                      "#bigint": "10"
+                    },
+                    {
+                      "#bigint": "9"
+                    }
+                  ]
+                }
+              ],
+              "z": {
+                "#set": [
+                  {
+                    "#bigint": "10"
+                  },
+                  {
+                    "#bigint": "11"
+                  },
+                  {
+                    "#bigint": "12"
+                  },
+                  {
+                    "#bigint": "9"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "nested_map_values",
+    "input": {
+      "kind": "map",
+      "entries": [
+        [
+          {
+            "kind": "str",
+            "value": "z"
+          },
+          {
+            "kind": "interval",
+            "first": "9",
+            "last": "12"
+          }
+        ],
+        [
+          {
+            "kind": "str",
+            "value": "a"
+          },
+          {
+            "kind": "map",
+            "entries": [
+              [
+                {
+                  "kind": "int",
+                  "value": "1"
+                },
+                {
+                  "kind": "interval",
+                  "first": "9",
+                  "last": "10"
+                }
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Map",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "a"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 0,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": [
+                        {
+                          "id": 0,
+                          "kind": "int",
+                          "value": 9
+                        },
+                        {
+                          "id": 0,
+                          "kind": "int",
+                          "value": 10
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "z"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 11
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 12
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Map",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "a"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Map",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 1
+                    },
+                    {
+                      "id": 0,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": [
+                        {
+                          "id": 0,
+                          "kind": "int",
+                          "value": 10
+                        },
+                        {
+                          "id": 0,
+                          "kind": "int",
+                          "value": 9
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "z"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 11
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 12
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Map",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "app",
+                      "opcode": "Tup",
+                      "args": [
+                        {
+                          "id": 0,
+                          "kind": "int",
+                          "value": 1
+                        },
+                        {
+                          "id": 0,
+                          "kind": "app",
+                          "opcode": "Set",
+                          "args": [
+                            {
+                              "id": 0,
+                              "kind": "int",
+                              "value": 10
+                            },
+                            {
+                              "id": 0,
+                              "kind": "int",
+                              "value": 9
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "z"
+                },
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 10
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 11
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#map": [
+                      [
+                        {
+                          "#bigint": "1"
+                        },
+                        {
+                          "#set": [
+                            {
+                              "#bigint": "10"
+                            },
+                            {
+                              "#bigint": "9"
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                [
+                  "z",
+                  {
+                    "#set": [
+                      {
+                        "#bigint": "10"
+                      },
+                      {
+                        "#bigint": "11"
+                      },
+                      {
+                        "#bigint": "12"
+                      },
+                      {
+                        "#bigint": "9"
+                      }
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "map_interval_key",
+    "input": {
+      "kind": "map",
+      "entries": [
+        [
+          {
+            "kind": "interval",
+            "first": "9",
+            "last": "12"
+          },
+          {
+            "kind": "str",
+            "value": "domain"
+          }
+        ]
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Map",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 11
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 12
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "domain"
+            }
+          ]
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Map",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 11
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 12
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            },
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "domain"
+            }
+          ]
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Map",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 10
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 11
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 12
+                    },
+                    {
+                      "id": 0,
+                      "kind": "int",
+                      "value": 9
+                    }
+                  ]
+                },
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "domain"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#map": [
+                [
+                  {
+                    "#set": [
+                      {
+                        "#bigint": "10"
+                      },
+                      {
+                        "#bigint": "11"
+                      },
+                      {
+                        "#bigint": "12"
+                      },
+                      {
+                        "#bigint": "9"
+                      }
+                    ]
+                  },
+                  "domain"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "set_interval_duplicate",
+    "input": {
+      "kind": "set",
+      "args": [
+        {
+          "kind": "interval",
+          "first": "9",
+          "last": "10"
+        },
+        {
+          "kind": "set",
+          "args": [
+            {
+              "kind": "int",
+              "value": "10"
+            },
+            {
+              "kind": "int",
+              "value": "9"
+            }
+          ]
+        }
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Set",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            }
+          ]
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "#set": [
+                {
+                  "#set": [
+                    {
+                      "#bigint": "10"
+                    },
+                    {
+                      "#bigint": "9"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "variant_interval_passthrough",
+    "input": {
+      "kind": "variant",
+      "label": "D",
+      "value": {
+        "kind": "interval",
+        "first": "9",
+        "last": "12"
+      }
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "variant",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "D"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            }
+          ]
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "variant",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "D"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Set",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 9
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 10
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 11
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 12
+            }
+          ]
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "D"
+            },
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "Set",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 9
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 10
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 11
+                },
+                {
+                  "id": 0,
+                  "kind": "int",
+                  "value": 12
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "value": {
+        "vars": [
+          "x"
+        ],
+        "states": [
+          {
+            "#meta": {
+              "index": 0
+            },
+            "x": {
+              "tag": "D",
+              "value": {
+                "#set": [
+                  {
+                    "#bigint": "9"
+                  },
+                  {
+                    "#bigint": "10"
+                  },
+                  {
+                    "#bigint": "11"
+                  },
+                  {
+                    "#bigint": "12"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "variant_infinite_passthrough",
+    "input": {
+      "kind": "variant",
+      "label": "D",
+      "value": {
+        "kind": "infinite",
+        "name": "Int"
+      }
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "variant",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "D"
+        },
+        {
+          "id": 0,
+          "kind": "name",
+          "name": "Int"
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "variant",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "D"
+        },
+        {
+          "id": 0,
+          "kind": "name",
+          "name": "Int"
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "D"
+            },
+            {
+              "id": 0,
+              "kind": "name",
+              "name": "Int"
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "error": "Unexpected expression kind: name"
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "nested_variant_infinite_passthrough",
+    "input": {
+      "kind": "list",
+      "args": [
+        {
+          "kind": "variant",
+          "label": "D",
+          "value": {
+            "kind": "infinite",
+            "name": "Nat"
+          }
+        }
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "List",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "D"
+            },
+            {
+              "id": 0,
+              "kind": "name",
+              "name": "Nat"
+            }
+          ]
+        }
+      ]
+    },
+    "normalized": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "List",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "variant",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "D"
+            },
+            {
+              "id": 0,
+              "kind": "name",
+              "name": "Nat"
+            }
+          ]
+        }
+      ]
+    },
+    "wrapped": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "x"
+        },
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 0,
+                  "kind": "str",
+                  "value": "D"
+                },
+                {
+                  "id": 0,
+                  "kind": "name",
+                  "name": "Nat"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "itf": {
+      "error": "Unexpected expression kind: name"
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "integer_infinite_error",
+    "input": {
+      "kind": "infinite",
+      "name": "Int"
+    },
+    "direct": {
+      "id": 0,
+      "kind": "name",
+      "name": "Int"
+    },
+    "normalizationError": {
+      "name": "Error",
+      "message": "Infinite set Int is non-enumerable"
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "natural_infinite_error",
+    "input": {
+      "kind": "infinite",
+      "name": "Nat"
+    },
+    "direct": {
+      "id": 0,
+      "kind": "name",
+      "name": "Nat"
+    },
+    "normalizationError": {
+      "name": "Error",
+      "message": "Infinite set Nat is non-enumerable"
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "list_infinite_error",
+    "input": {
+      "kind": "list",
+      "args": [
+        {
+          "kind": "infinite",
+          "name": "Int"
+        }
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "List",
+      "args": [
+        {
+          "id": 0,
+          "kind": "name",
+          "name": "Int"
+        }
+      ]
+    },
+    "normalizationError": {
+      "name": "Error",
+      "message": "Infinite set Int is non-enumerable"
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "record_infinite_error",
+    "input": {
+      "kind": "record",
+      "entries": [
+        [
+          "domain",
+          {
+            "kind": "infinite",
+            "name": "Nat"
+          }
+        ]
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Rec",
+      "args": [
+        {
+          "id": 0,
+          "kind": "str",
+          "value": "domain"
+        },
+        {
+          "id": 0,
+          "kind": "name",
+          "name": "Nat"
+        }
+      ]
+    },
+    "normalizationError": {
+      "name": "Error",
+      "message": "Infinite set Nat is non-enumerable"
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "map_value_infinite_error",
+    "input": {
+      "kind": "map",
+      "entries": [
+        [
+          {
+            "kind": "str",
+            "value": "domain"
+          },
+          {
+            "kind": "infinite",
+            "name": "Int"
+          }
+        ]
+      ]
+    },
+    "direct": {
+      "id": 0,
+      "kind": "app",
+      "opcode": "Map",
+      "args": [
+        {
+          "id": 0,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "domain"
+            },
+            {
+              "id": 0,
+              "kind": "name",
+              "name": "Int"
+            }
+          ]
+        }
+      ]
+    },
+    "normalizationError": {
+      "name": "Error",
+      "message": "Infinite set Int is non-enumerable"
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "powerset_infinite_error",
+    "input": {
+      "kind": "powerset",
+      "base": {
+        "kind": "infinite",
+        "name": "Nat"
+      }
+    },
+    "directError": {
+      "name": "Error",
+      "message": "Either state is Left"
+    },
+    "normalizationError": {
+      "name": "Error",
+      "message": "Either state is Left"
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "product_infinite_error",
+    "input": {
+      "kind": "product",
+      "args": [
+        {
+          "kind": "set",
+          "args": [
+            {
+              "kind": "int",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "kind": "infinite",
+          "name": "Int"
+        }
+      ]
+    },
+    "directError": {
+      "name": "Error",
+      "message": "Infinite set Int is non-enumerable"
+    },
+    "normalizationError": {
+      "name": "Error",
+      "message": "Infinite set Int is non-enumerable"
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  },
+  {
+    "name": "mapset_infinite_error",
+    "input": {
+      "kind": "mapset",
+      "domain": {
+        "kind": "set",
+        "args": [
+          {
+            "kind": "int",
+            "value": "1"
+          }
+        ]
+      },
+      "range": {
+        "kind": "infinite",
+        "name": "Int"
+      }
+    },
+    "directError": {
+      "name": "Error",
+      "message": "Infinite set Int is non-enumerable"
+    },
+    "normalizationError": {
+      "name": "Error",
+      "message": "Infinite set Int is non-enumerable"
+    },
+    "counter": {
+      "initial": 0,
+      "before": 0,
+      "afterNormalization": 0,
+      "afterSerialization": 0,
+      "afterITF": 0
+    }
+  }
+]

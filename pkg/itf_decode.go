@@ -3,11 +3,13 @@ package quint
 import (
 	"bytes"
 	"encoding/json"
+	"encoding/json/jsontext"
 	"fmt"
 	"math/big"
 	"sort"
 	"strconv"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/glycerine/insdict"
 )
@@ -26,9 +28,11 @@ type ITFTrace struct {
 
 // DecodeITFTrace decodes all states with one zero-based expression ID sequence.
 // It retains original bytes and trace/state metadata independently of the IR.
+// Exposed strings and names must be Unicode scalar values; unsupported lone
+// UTF-16 surrogates are errors instead of being replaced. Raw metadata is opaque.
 func DecodeITFTrace(data []byte) (ITFTrace, error) {
 	var input struct {
-		Vars, Params []string
+		Vars, Params []json.RawMessage
 		Loop         *int
 		Metadata     json.RawMessage `json:"#meta"`
 		States       []json.RawMessage
@@ -39,7 +43,15 @@ func DecodeITFTrace(data []byte) (ITFTrace, error) {
 	if input.States == nil {
 		return ITFTrace{}, fmt.Errorf("ITF trace requires states")
 	}
-	result := ITFTrace{Vars: input.Vars, Params: input.Params, Loop: input.Loop, Metadata: input.Metadata, States: []Expr{}, StateMetadata: []json.RawMessage{}, Raw: append(json.RawMessage(nil), data...)}
+	vars, err := itfUnicodeNames("vars", input.Vars)
+	if err != nil {
+		return ITFTrace{}, err
+	}
+	params, err := itfUnicodeNames("params", input.Params)
+	if err != nil {
+		return ITFTrace{}, err
+	}
+	result := ITFTrace{Vars: vars, Params: params, Loop: input.Loop, Metadata: input.Metadata, States: []Expr{}, StateMetadata: []json.RawMessage{}, Raw: append(json.RawMessage(nil), data...)}
 	ids := &IDGenerator{} // Upstream ofItf starts at zero and shares IDs across states.
 	for i, state := range input.States {
 		expression, err := DecodeITFValue(state, ids)
@@ -61,6 +73,8 @@ func DecodeITFTrace(data []byte) (ITFTrace, error) {
 // DecodeITFValue converts an ITF value to Quint IR without floating-point number
 // conversion. Nil ids starts a new zero-based sequence; malformed values return
 // errors rather than upstream's unchecked JavaScript exceptions.
+// Lone UTF-16 surrogates cannot be represented by the Go string boundary and
+// are rejected; valid surrogate pairs are decoded to their UTF-8 scalar value.
 func DecodeITFValue(data []byte, ids *IDGenerator) (Expr, error) {
 	if ids == nil {
 		ids = &IDGenerator{}
@@ -100,7 +114,8 @@ func decodeITFValue(data []byte, nextID func() ID) (Expr, error) {
 		return e, err
 	case '"':
 		e.Kind = "str"
-		err := json.Unmarshal(data, &e.Str)
+		text, err := itfUnicodeString(data)
+		e.Str = text
 		return e, err
 	case '[':
 		e.Kind, e.Opcode = "app", "List"
@@ -143,7 +158,11 @@ func decodeITFValue(data []byte, nextID func() ID) (Expr, error) {
 		if err = json.Unmarshal(value, &name); err != nil || name == nil {
 			return Expr{}, fmt.Errorf("ITF #unserializable requires a string")
 		}
-		e.Kind, e.Name = "name", *name
+		text, err := itfUnicodeString(value)
+		if err != nil {
+			return Expr{}, err
+		}
+		e.Kind, e.Name = "name", text
 		return e, nil
 	}
 	if value, ok := fields.Get2("#map"); ok {
@@ -218,9 +237,18 @@ func itfObject(data []byte) (*insdict.Dict[string, json.RawMessage], error) {
 		return nil, err
 	}
 	for decoder.More() {
+		start := decoder.InputOffset()
 		key, err := decoder.Token()
 		if err != nil {
 			return nil, err
+		}
+		// encoding/json replaces lone UTF-16 surrogates with U+FFFD. Refuse
+		// those keys before distinct source properties can silently collapse.
+		rawKey := bytes.TrimLeft(data[start:decoder.InputOffset()], ", \t\r\n")
+		if bytes.Contains(rawKey, []byte(`\u`)) || !utf8.Valid(rawKey) {
+			if _, err := itfUnicodeString(rawKey); err != nil {
+				return nil, fmt.Errorf("ITF object field: %w", err)
+			}
 		}
 		var value json.RawMessage
 		if err = decoder.Decode(&value); err != nil {
@@ -229,6 +257,32 @@ func itfObject(data []byte) (*insdict.Dict[string, json.RawMessage], error) {
 		fields.Set(key.(string), value)
 	}
 	return fields, nil
+}
+
+// ITF's JavaScript producer can hold lone UTF-16 code units. Go strings expose
+// Unicode scalar values here; reject unsupported strings instead of replacing
+// distinct values with U+FFFD. Valid surrogate pairs remain ordinary UTF-8.
+func itfUnicodeString(data []byte) (string, error) {
+	text, err := jsontext.AppendUnquote(nil, bytes.TrimSpace(data))
+	if err != nil {
+		return "", fmt.Errorf("ITF string is not valid Unicode: %w", err)
+	}
+	return string(text), nil
+}
+
+func itfUnicodeNames(field string, raw []json.RawMessage) ([]string, error) {
+	if raw == nil {
+		return nil, nil
+	}
+	names := make([]string, len(raw))
+	for i, value := range raw {
+		name, err := itfUnicodeString(value)
+		if err != nil {
+			return nil, fmt.Errorf("ITF %s name %d: %w", field, i, err)
+		}
+		names[i] = name
+	}
+	return names, nil
 }
 
 // JavaScript enumerates canonical uint32 index keys before other object keys.
