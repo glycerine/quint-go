@@ -284,7 +284,7 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 	}
 	o.main = frontend.Modules[index].Name
 	// Analyze original source before adding CLI expressions, preserving its stage
-	// output. NewProjectEvaluator separately checks and flattens the added wrappers.
+	// output. Evaluation reuses this result while preparing the added wrappers.
 	analysis, err := quint.AnalyzeModules(frontend.Modules, frontend.Table)
 	fields = coreStageFields("typechecking", frontend, &analysis)
 	if err != nil {
@@ -336,7 +336,7 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 	}
 	modules := append([]quint.Module{}, analysis.Modules...)
 	modules[index].Declarations = append(append([]quint.Declaration{}, modules[index].Declarations...), declarations...)
-	evaluator, err := quint.NewProjectEvaluator(ctx, modules, frontend.IDs, o.main, quint.NewRNG(seed), o.metadata)
+	evaluator, err := quint.NewProjectEvaluatorFromAnalysis(ctx, analysis, declarations, frontend.IDs, o.main, quint.NewRNG(seed), o.metadata)
 	if err != nil {
 		return fail(err)
 	}
