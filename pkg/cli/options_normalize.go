@@ -40,9 +40,13 @@ func cliNormalizeOptions(command string, args []string) ([]string, error) {
 	specs := cliFlagSpecs(command)
 	flags := insdict.NewDict[string, *cliFlagValue]()
 	positionals := []string{}
+	positionalLimit := -1
+	unknown := insdict.NewDict[string, bool]()
+	var coercionError, repeatedError error
 	for i := 0; i < len(args); i++ {
 		argument := args[i]
 		if argument == "--" {
+			positionalLimit = len(positionals)
 			positionals = append(positionals, args[i+1:]...)
 			break
 		}
@@ -56,7 +60,15 @@ func cliNormalizeOptions(command string, args []string) ([]string, error) {
 			if command == "repl" && (raw == "q" || raw == "r") {
 				// Short aliases are declared only by the REPL builder.
 			} else {
-				return nil, coreUnknownShortArguments(argument)
+				message := coreUnknownShortArguments(argument).Error()
+				message = strings.TrimPrefix(strings.TrimPrefix(message, "Unknown arguments: "), "Unknown argument: ")
+				for _, name := range strings.Split(message, ", ") {
+					unknown.Set(name, true)
+				}
+				if !inline && i+1 < len(args) && args[i+1] != "--" && coreOptionValueArgument(args[i+1]) {
+					i++
+				}
+				continue
 			}
 		}
 		name, negated := raw, false
@@ -73,15 +85,20 @@ func cliNormalizeOptions(command string, args []string) ([]string, error) {
 		}
 		spec, known := specs[name]
 		if !known || negated && spec.kind != 'b' {
-			unknown := raw
+			unknown.Set(raw, true)
 			if strings.Contains(raw, "-") {
-				return nil, fmt.Errorf("Unknown arguments: %s, %s", unknown, cliCamelFlag(unknown))
+				unknown.Set(cliCamelFlag(raw), true)
 			}
-			return nil, fmt.Errorf("Unknown argument: %s", unknown)
+			if !inline && i+1 < len(args) && args[i+1] != "--" && coreOptionValueArgument(args[i+1]) {
+				i++
+			}
+			continue
 		}
 		previous := flags.Get(name)
 		if previous != nil && spec.kind != 'b' && spec.kind != 'a' {
-			return nil, fmt.Errorf("--%s can not be specified more than once", previous.first)
+			if repeatedError == nil {
+				repeatedError = fmt.Errorf("--%s can not be specified more than once", previous.first)
+			}
 		}
 		flag := &cliFlagValue{name: name, first: raw, kind: spec.kind}
 		if previous != nil {
@@ -122,9 +139,12 @@ func cliNormalizeOptions(command string, args []string) ([]string, error) {
 			if name == "seed" {
 				seed, err := quint.ParseSeed(value)
 				if err != nil {
-					return nil, err
+					if coercionError == nil {
+						coercionError = err
+					}
+				} else {
+					value = seed.String()
 				}
-				value = seed.String()
 			}
 			if spec.kind == 'n' && !flag.omit {
 				number := coreNumberOption(value)
@@ -135,6 +155,30 @@ func cliNormalizeOptions(command string, args []string) ([]string, error) {
 			flag.value = value
 		}
 		flags.Set(name, flag)
+	}
+	if command != "repl" && len(positionals) == 0 {
+		return nil, fmt.Errorf("Not enough non-option arguments: got 0, need at least 1")
+	}
+	if coercionError != nil {
+		return nil, coercionError
+	}
+	if unknown.Len() > 0 {
+		names := make([]string, 0, unknown.Len())
+		for name := range unknown.All() {
+			names = append(names, name)
+		}
+		return nil, cliUnknownArguments(names)
+	}
+	if command != "repl" {
+		if positionalLimit < 0 {
+			positionalLimit = len(positionals)
+		}
+		if positionalLimit > 1 {
+			return nil, cliUnknownArguments(positionals[1:positionalLimit])
+		}
+	}
+	if repeatedError != nil {
+		return nil, repeatedError
 	}
 	// The hidden test --output option is an override in the upstream handler,
 	// rather than a parser alias. Its value wins in either argument order.

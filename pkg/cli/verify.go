@@ -42,6 +42,7 @@ func (s *verifyStringFlags) Set(value string) error {
 // Fields projects the shared CLI stage schema independently of backend reports.
 type verifyStage struct {
 	Fields             *insdict.Dict[string, any]   `json:"-"`
+	Frontend           *verifyFrontendFailure       `json:"-"`
 	BackendResult      bool                         `json:"-"`
 	NormalizedTrace    bool                         `json:"-"`
 	Status             string                       `json:"status"`
@@ -79,7 +80,7 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		fmt.Fprintln(stderr, err)
 		return 1
 	}
-	stage := verifyStage{Status: "failure", Input: options.input, Errors: []quint.ErrorMessage{}}
+	stage := verifyStage{Status: "failure", Input: options.input, Errors: []quint.ErrorMessage{}, Frontend: verifyFrontendSources(nil)}
 	stage.Fields = insdict.NewDict[string, any]()
 	stage.Fields.Set("stage", "loading")
 	stage.Fields.Set("errors", stage.Errors)
@@ -118,11 +119,13 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 	if err != nil {
 		return fail(err)
 	}
-	resolver := cliMainSourceResolver{FileSourceResolver: quint.NewFileSourceResolver(nil, nil), main: abs}
+	sourceCode := map[string]string{}
+	resolver := cliMainSourceResolver{FileSourceResolver: quint.NewFileSourceResolver(sourceCode, nil), main: abs}
 	frontend, err := quint.ParseProjectRecovering(resolver, quint.SourceLookupPath{NormalizedPath: abs, SourceName: abs})
+	stage.Frontend = verifyFrontendSources(sourceCode)
 	var loadError *quint.SourceLoadError
 	if errors.As(err, &loadError) && loadError.Path == abs {
-		return fail(err)
+		return fail(verifyFrontendLoadingError(options.input, loadError))
 	}
 	stage.Fields = coreStageFields("parsing", frontend, nil)
 	if err != nil {
@@ -299,15 +302,7 @@ func verifyParseOptions(args []string, stdout, stderr io.Writer) (verifyOptions,
 	flags.IntVar(&options.maxSteps, "max-steps", 10, "maximum number of transitions")
 	flags.IntVar(&options.verbosity, "verbosity", 2, "console verbosity (0 to 5)")
 	flags.BoolVar(&options.randomTransitions, "random-transitions", false, "choose symbolic transitions at random")
-	printHelp := func() error {
-		var help bytes.Buffer
-		fmt.Fprintln(&help, "Usage: quint verify <input> [options]")
-		flags.SetOutput(&help)
-		flags.PrintDefaults()
-		flags.SetOutput(io.Discard)
-		_, err := io.WriteString(stdout, help.String())
-		return err
-	}
+	printHelp := func() error { return cliWriteHelp(stdout, "verify") }
 	flags.Usage = func() {}
 	normalized, err := verifyInterspersedArgs(args)
 	if err != nil {
@@ -331,7 +326,7 @@ func verifyParseOptions(args []string, stdout, stderr io.Writer) (verifyOptions,
 		return options, false, fmt.Errorf("verbosity must be between 0 and 5")
 	}
 	if options.backend != "apalache" && options.backend != "apalache-go" && !verifyUsesTLC(options) {
-		return options, false, fmt.Errorf("unsupported verification backend %q; choose a Go Apalache or Go TLC backend", options.backend)
+		return options, false, cliInvalidChoice("backend", options.backend, "apalache", "tlc")
 	}
 	if verifyUsesTLC(options) {
 		explicitBound, explicitVerbosity := false, false
@@ -467,8 +462,15 @@ func verifyOutputContext(ctx context.Context, options verifyOptions, stage verif
 			return 1
 		}
 	}
+	if handled, code := verifyFrontendOutputContext(ctx, options, stage, stderr); handled {
+		return code
+	}
 	if options.out != "" || options.outITF != "" || options.verbosity == 0 {
 		return code
+	}
+	if err := verifyPrintCounterExample(ctx, stdout, options, stage); err != nil {
+		fmt.Fprintln(stderr, "display counterexample:", err)
+		return 1
 	}
 	if code == 0 {
 		var err error

@@ -119,7 +119,7 @@ func TestREPLCommandFlags(t *testing.T) {
 	t.Parallel()
 	for _, args := range [][]string{{"--unknown"}, {"--verbosity=6"}, {"--verbosity=-1"}, {"--backend=rust"}, {"--seed=oops"}} {
 		var stdout, stderr bytes.Buffer
-		if status := commandREPL(context.Background(), args, &stdout, &stderr); status != 2 || stderr.Len() == 0 {
+		if status := commandREPL(context.Background(), args, &stdout, &stderr); status != 1 || stderr.Len() == 0 {
 			t.Fatal(args, status, stderr.String())
 		}
 	}

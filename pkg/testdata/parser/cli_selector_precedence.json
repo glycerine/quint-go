@@ -1,0 +1,467 @@
+{
+  "cases": [
+    {
+      "name": "empty_module_default",
+      "command": "test",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M {}"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [],
+      "outcome": {
+        "kind": "result",
+        "status": 1,
+        "summary": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')",
+        "stage": {
+          "stage": "testing",
+          "errors": [
+            {
+              "explanation": "no tests matched. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')",
+              "locs": []
+            }
+          ],
+          "passed": [],
+          "failed": [],
+          "ignored": []
+        }
+      }
+    },
+    {
+      "name": "empty_module_invalid_match",
+      "command": "test",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M {}"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [
+        "--match=["
+      ],
+      "outcome": {
+        "kind": "result",
+        "status": 1,
+        "summary": "no tests matched --match '['. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')",
+        "stage": {
+          "stage": "testing",
+          "errors": [
+            {
+              "explanation": "no tests matched --match '['. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')",
+              "locs": []
+            }
+          ],
+          "passed": [],
+          "failed": [],
+          "ignored": []
+        }
+      }
+    },
+    {
+      "name": "only_const_invalid_match",
+      "command": "test",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { const N:int }"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [
+        "--match=["
+      ],
+      "outcome": {
+        "kind": "result",
+        "status": 1,
+        "summary": "no tests matched --match '['. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')",
+        "stage": {
+          "stage": "testing",
+          "errors": [
+            {
+              "explanation": "no tests matched --match '['. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')",
+              "locs": []
+            }
+          ],
+          "passed": [],
+          "failed": [],
+          "ignored": []
+        }
+      }
+    },
+    {
+      "name": "missing_main_before_invalid_match",
+      "command": "test",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { pure val xTest=true }"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [
+        "--main=Missing",
+        "--match=["
+      ],
+      "outcome": {
+        "kind": "result",
+        "status": 1,
+        "summary": "Argument error",
+        "stage": {
+          "stage": "typechecking",
+          "errors": [
+            {
+              "explanation": "[QNT405] Main module Missing not found",
+              "locs": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "type_error_before_invalid_match",
+      "command": "test",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { pure val xTest=1+true }"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [
+        "--match=["
+      ],
+      "outcome": {
+        "kind": "result",
+        "status": 1,
+        "summary": "typechecking failed",
+        "stage": {
+          "stage": "typechecking",
+          "errors": [
+            {
+              "explanation": "[QNT000] Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (int, bool) => _t0\n",
+              "locs": [
+                {
+                  "source": "/workspace/M.qnt",
+                  "start": {
+                    "line": 0,
+                    "col": 26,
+                    "index": 26
+                  },
+                  "end": {
+                    "line": 0,
+                    "col": 31,
+                    "index": 31
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "run_type_error_before_missing_main",
+      "command": "run",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { pure val bad=1+true }"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [
+        "--main=Missing"
+      ],
+      "outcome": {
+        "kind": "result",
+        "status": 1,
+        "summary": "typechecking failed",
+        "stage": {
+          "stage": "typechecking",
+          "errors": [
+            {
+              "explanation": "[QNT000] Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (int, bool) => _t0\n",
+              "locs": [
+                {
+                  "source": "/workspace/M.qnt",
+                  "start": {
+                    "line": 0,
+                    "col": 24,
+                    "index": 24
+                  },
+                  "end": {
+                    "line": 0,
+                    "col": 29,
+                    "index": 29
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "invalid_match_with_definition_throws",
+      "command": "test",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { pure val xTest=true }"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [
+        "--match=["
+      ],
+      "outcome": {
+        "kind": "throw",
+        "exception": {
+          "name": "SyntaxError",
+          "message": "Invalid regular expression: /[/: Unterminated character class"
+        },
+        "before": {
+          "stage": "typechecking",
+          "errors": []
+        }
+      }
+    },
+    {
+      "name": "valid_match_selects_unqualified_import",
+      "command": "test",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module A { pure val xTest=true } module M { import A as I }"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [
+        "--main=M",
+        "--match=^xTest$"
+      ],
+      "outcome": {
+        "kind": "result",
+        "status": 0,
+        "summary": "",
+        "stage": {
+          "stage": "testing",
+          "errors": [],
+          "passed": [
+            "I::xTest"
+          ],
+          "failed": [],
+          "ignored": []
+        }
+      }
+    },
+    {
+      "name": "namespace_is_not_match_subject",
+      "command": "test",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module A { pure val xTest=true } module M { import A as I }"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [
+        "--main=M",
+        "--match=^I::xTest$"
+      ],
+      "outcome": {
+        "kind": "result",
+        "status": 1,
+        "summary": "no tests matched --match '^I::xTest$'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')",
+        "stage": {
+          "stage": "testing",
+          "errors": [
+            {
+              "explanation": "no tests matched --match '^I::xTest$'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')",
+              "locs": []
+            }
+          ],
+          "passed": [],
+          "failed": [],
+          "ignored": []
+        }
+      }
+    },
+    {
+      "name": "run_invalid_default_init_qualifier",
+      "command": "run",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { pure val init=true action step=true }"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [],
+      "outcome": {
+        "kind": "result",
+        "status": 1,
+        "summary": "Argument error",
+        "stage": {
+          "stage": "running",
+          "errors": [
+            {
+              "explanation": "[QNT501] default --init action name 'init' is used by a pureval declaration",
+              "locs": []
+            }
+          ]
+        }
+      },
+      "terminal": {
+        "stdout": "",
+        "stderr": "error: [QNT501] default --init action name 'init' is used by a pureval declaration\nerror: Argument error\n",
+        "status": 1
+      }
+    },
+    {
+      "name": "run_invalid_both_default_qualifiers",
+      "command": "run",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { pure val init=true pure val step=true }"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [],
+      "outcome": {
+        "kind": "result",
+        "status": 1,
+        "summary": "Argument error",
+        "stage": {
+          "stage": "running",
+          "errors": [
+            {
+              "explanation": "[QNT501] default --init action name 'init' is used by a pureval declaration",
+              "locs": []
+            },
+            {
+              "explanation": "[QNT501] default --step action name 'step' is used by a pureval declaration",
+              "locs": []
+            }
+          ]
+        }
+      },
+      "terminal": {
+        "stdout": "",
+        "stderr": "error: [QNT501] default --init action name 'init' is used by a pureval declaration\nerror: [QNT501] default --step action name 'step' is used by a pureval declaration\nerror: Argument error\n",
+        "status": 1
+      }
+    },
+    {
+      "name": "run_invalid_init_selector_syntax",
+      "command": "run",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { action init=true action step=true }"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [
+        "--init=val x=1"
+      ],
+      "outcome": {
+        "kind": "result",
+        "status": 1,
+        "summary": "Argument error",
+        "stage": {
+          "stage": "running",
+          "errors": [
+            {
+              "explanation": "[QNT501] Expected val x=1 to be a valid expression",
+              "locs": []
+            }
+          ]
+        }
+      },
+      "terminal": {
+        "stdout": "",
+        "stderr": "error: [QNT501] Expected val x=1 to be a valid expression\nerror: Argument error\n",
+        "status": 1
+      }
+    },
+    {
+      "name": "run_missing_init_and_step_shared_errors",
+      "command": "run",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { action other=true }"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [],
+      "outcome": {
+        "kind": "result",
+        "status": 1,
+        "summary": "Argument error",
+        "stage": {
+          "stage": "running",
+          "errors": [
+            {
+              "explanation": "[QNT404] Name 'init' not found",
+              "locs": []
+            },
+            {
+              "explanation": "[QNT404] Name 'init' not found",
+              "locs": []
+            },
+            {
+              "explanation": "[QNT404] Name 'init' not found",
+              "locs": []
+            }
+          ]
+        }
+      },
+      "terminal": {
+        "stdout": "",
+        "stderr": "error: [QNT404] Name 'init' not found\nerror: Argument error\n",
+        "status": 1
+      }
+    },
+    {
+      "name": "run_missing_step_shared_errors",
+      "command": "run",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { action init=true }"
+        }
+      ],
+      "input": "M.qnt",
+      "args": [],
+      "outcome": {
+        "kind": "result",
+        "status": 1,
+        "summary": "Argument error",
+        "stage": {
+          "stage": "running",
+          "errors": [
+            {
+              "explanation": "[QNT404] Name 'step' not found",
+              "locs": []
+            },
+            {
+              "explanation": "[QNT404] Name 'step' not found",
+              "locs": []
+            }
+          ]
+        }
+      },
+      "terminal": {
+        "stdout": "",
+        "stderr": "error: [QNT404] Name 'step' not found\nerror: Argument error\n",
+        "status": 1
+      }
+    }
+  ]
+}

@@ -220,7 +220,7 @@ func TestCLIFlagErrorsHelpAndExecutionBoundaries(t *testing.T) {
 				t.Fatal("help/version writer error lost", command, informational, status, stderr.String())
 			}
 		}
-		_, err := cliNormalizeOptions(command, []string{"--out=a", "--out=b"})
+		_, err := cliNormalizeOptions(command, []string{"M.qnt", "--out=a", "--out=b"})
 		if command != "repl" && (err == nil || err.Error() != "--out can not be specified more than once") {
 			t.Fatal(command, err)
 		}

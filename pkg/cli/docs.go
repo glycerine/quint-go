@@ -15,7 +15,7 @@ import (
 	quint "github.com/glycerine/quint-go/pkg"
 )
 
-const docsHelp = "Usage: quint docs <input> [--out <file>]\n\nProduces Markdown documentation from docstrings in a Quint specification.\n\nOptions:\n  --out <file>  write the documentation stage as JSON\n  --help        show this help\n"
+var docsHelp = cliHelpTexts["docs"]
 
 type docsOptions struct{ input, out string }
 
@@ -83,15 +83,10 @@ type docsStage struct {
 func commandDocs(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	options, help, err := docsParseOptions(args)
 	if help {
-		if _, err = io.WriteString(stdout, docsHelp); err != nil {
-			fmt.Fprintln(stderr, "error:", err)
-			return 1
-		}
-		return 0
+		return cliPrintHelp(stdout, stderr, "docs")
 	}
 	if err != nil {
-		fmt.Fprintln(stderr, "error:", err)
-		return 1
+		return cliPrintArgumentError(stderr, err)
 	}
 	stage := docsStage{Stage: "loading"}
 	fail := func(message string, diagnostics []quint.ErrorMessage) int {

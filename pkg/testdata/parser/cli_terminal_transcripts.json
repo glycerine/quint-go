@@ -1,0 +1,338 @@
+{
+  "cases": [
+    {
+      "name": "run_name_error",
+      "command": "run",
+      "source": "module M { val a=missing }",
+      "level": 0,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1"
+      ],
+      "status": 1,
+      "stdout": "",
+      "stderr": "\n Error [QNT404]: Name 'missing' not found\n\n  at fixture.qnt:1:18\n  1: module M { val a=missing }\n                      ^^^^^^^\n\nerror: parsing failed\n"
+    },
+    {
+      "name": "run_name_error",
+      "command": "run",
+      "source": "module M { val a=missing }",
+      "level": 1,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1"
+      ],
+      "status": 1,
+      "stdout": "",
+      "stderr": "\n Error [QNT404]: Name 'missing' not found\n\n  at fixture.qnt:1:18\n  1: module M { val a=missing }\n                      ^^^^^^^\n\nerror: parsing failed\n"
+    },
+    {
+      "name": "run_type_error",
+      "command": "run",
+      "source": "module M { val a=1+true }",
+      "level": 0,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1"
+      ],
+      "status": 1,
+      "stdout": "",
+      "stderr": "\n Error [QNT000]: Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (int, bool) => _t0\n\n\n  at fixture.qnt:1:18\n  1: module M { val a=1+true }\n                      ^^^^^^\n\nerror: typechecking failed\n"
+    },
+    {
+      "name": "run_type_error",
+      "command": "run",
+      "source": "module M { val a=1+true }",
+      "level": 1,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1"
+      ],
+      "status": 1,
+      "stdout": "",
+      "stderr": "\n Error [QNT000]: Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (int, bool) => _t0\n\n\n  at fixture.qnt:1:18\n  1: module M { val a=1+true }\n                      ^^^^^^\n\nerror: typechecking failed\n"
+    },
+    {
+      "name": "run_runtime_error",
+      "command": "run",
+      "source": "module M { var x:int action init=x'=0 action step=x'=1/0 }",
+      "level": 0,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1"
+      ],
+      "status": 1,
+      "stdout": "[error] Runtime error (<elapsed>ms at <rate> traces/second).\n",
+      "stderr": "\n Error [QNT503]: Division by zero\n\n  at fixture.qnt:1:54\n  1: module M { var x:int action init=x'=0 action step=x'=1/0 }\n                                                          ^^^\n\nerror: Runtime error\n"
+    },
+    {
+      "name": "run_runtime_error",
+      "command": "run",
+      "source": "module M { var x:int action init=x'=0 action step=x'=1/0 }",
+      "level": 1,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1"
+      ],
+      "status": 1,
+      "stdout": "\u001b[31m[error]\u001b[39m Runtime error \u001b[90m(<elapsed>ms at <rate> traces/second).\u001b[39m\n",
+      "stderr": "\n Error [QNT503]: Division by zero\n\n  at fixture.qnt:1:54\n  1: module M { var x:int action init=x'=0 action step=x'=1/0 }\n                                                          ^^^\n\nerror: Runtime error\n"
+    },
+    {
+      "name": "run_nested_runtime_error",
+      "command": "run",
+      "source": "module M { var x:int pure def quotient(n)=n/0 action init=x'=0 action step=x'=quotient(x) }",
+      "level": 0,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1"
+      ],
+      "status": 1,
+      "stdout": "[error] Runtime error (<elapsed>ms at <rate> traces/second).\n",
+      "stderr": "\n Error [QNT503]: Division by zero\n\n  at fixture.qnt:1:43\n  1: module M { var x:int pure def quotient(n)=n/0 action init=x'=0 action step=x'=quotient(x) }\n                                               ^^^\n\nerror: Runtime error\n"
+    },
+    {
+      "name": "run_nested_runtime_error",
+      "command": "run",
+      "source": "module M { var x:int pure def quotient(n)=n/0 action init=x'=0 action step=x'=quotient(x) }",
+      "level": 1,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1"
+      ],
+      "status": 1,
+      "stdout": "\u001b[31m[error]\u001b[39m Runtime error \u001b[90m(<elapsed>ms at <rate> traces/second).\u001b[39m\n",
+      "stderr": "\n Error [QNT503]: Division by zero\n\n  at fixture.qnt:1:43\n  1: module M { var x:int pure def quotient(n)=n/0 action init=x'=0 action step=x'=quotient(x) }\n                                               ^^^\n\nerror: Runtime error\n"
+    },
+    {
+      "name": "run_violation",
+      "command": "run",
+      "source": "module M { var x:int action init=x'=0 action step=x'=x+1 val safe=x<1 }",
+      "level": 0,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1",
+        "--invariant=safe"
+      ],
+      "status": 1,
+      "stdout": "[violation] Found an issue (<elapsed>ms at <rate> traces/second).\nUse --seed=0x11 --backend=go to reproduce.\n",
+      "stderr": "error: Invariant violated\n"
+    },
+    {
+      "name": "run_violation",
+      "command": "run",
+      "source": "module M { var x:int action init=x'=0 action step=x'=x+1 val safe=x<1 }",
+      "level": 1,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1",
+        "--invariant=safe"
+      ],
+      "status": 1,
+      "stdout": "\u001b[31m[violation]\u001b[39m Found an issue \u001b[90m(<elapsed>ms at <rate> traces/second).\u001b[39m\n\u001b[90mUse --seed=0x11 --backend=go to reproduce.\u001b[39m\n",
+      "stderr": "error: Invariant violated\n"
+    },
+    {
+      "name": "run_explicit_actions",
+      "command": "run",
+      "source": "module M { var x:int action start=x'=0 action advance=x'=x+1 }",
+      "level": 0,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1",
+        "--init=start",
+        "--step=advance"
+      ],
+      "status": 0,
+      "stdout": "[ok] No violation found (<elapsed>ms at <rate> traces/second).\nUse --seed=0x11 --backend=go to reproduce.\n",
+      "stderr": ""
+    },
+    {
+      "name": "run_explicit_actions",
+      "command": "run",
+      "source": "module M { var x:int action start=x'=0 action advance=x'=x+1 }",
+      "level": 1,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1",
+        "--init=start",
+        "--step=advance"
+      ],
+      "status": 0,
+      "stdout": "\u001b[32m[ok]\u001b[39m No violation found \u001b[90m(<elapsed>ms at <rate> traces/second).\u001b[39m\n\u001b[90mUse --seed=0x11 --backend=go to reproduce.\u001b[39m\n",
+      "stderr": ""
+    },
+    {
+      "name": "run_missing_main",
+      "command": "run",
+      "source": "module M { var x:int action init=x'=0 action step=x'=x+1 }",
+      "level": 0,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1",
+        "--main=Missing"
+      ],
+      "status": 1,
+      "stdout": "",
+      "stderr": "error: [QNT405] Main module Missing not found\nerror: Argument error\n"
+    },
+    {
+      "name": "run_missing_main",
+      "command": "run",
+      "source": "module M { var x:int action init=x'=0 action step=x'=x+1 }",
+      "level": 1,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--max-steps=1",
+        "--verbosity=1",
+        "--main=Missing"
+      ],
+      "status": 1,
+      "stdout": "",
+      "stderr": "error: [QNT405] Main module Missing not found\nerror: Argument error\n"
+    },
+    {
+      "name": "test_name_error",
+      "command": "test",
+      "source": "module M { val a=missing }",
+      "level": 0,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--verbosity=1"
+      ],
+      "status": 1,
+      "stdout": "",
+      "stderr": "\n Error [QNT404]: Name 'missing' not found\n\n  at fixture.qnt:1:18\n  1: module M { val a=missing }\n                      ^^^^^^^\n\nerror: parsing failed\n"
+    },
+    {
+      "name": "test_name_error",
+      "command": "test",
+      "source": "module M { val a=missing }",
+      "level": 1,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--verbosity=1"
+      ],
+      "status": 1,
+      "stdout": "",
+      "stderr": "\n Error [QNT404]: Name 'missing' not found\n\n  at fixture.qnt:1:18\n  1: module M { val a=missing }\n                      ^^^^^^^\n\nerror: parsing failed\n"
+    },
+    {
+      "name": "test_no_match",
+      "command": "test",
+      "source": "module M { pure val sampleTest=true }",
+      "level": 0,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--verbosity=1",
+        "--match=absent"
+      ],
+      "status": 1,
+      "stdout": "",
+      "stderr": "error: no tests matched --match 'absent'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')\n"
+    },
+    {
+      "name": "test_no_match",
+      "command": "test",
+      "source": "module M { pure val sampleTest=true }",
+      "level": 1,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--verbosity=1",
+        "--match=absent"
+      ],
+      "status": 1,
+      "stdout": "",
+      "stderr": "error: no tests matched --match 'absent'. By default, quint test runs definitions whose names end with \"Test\". Use --match to select other names (for example, --match '.*')\n"
+    },
+    {
+      "name": "test_false_detail",
+      "command": "test",
+      "source": "module M { pure val sampleTest=false }",
+      "level": 0,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--verbosity=2"
+      ],
+      "status": 1,
+      "stdout": "\n  M\n    1) sampleTest failed after 1 test(s)\n\n  1 failed\n\n  1) sampleTest:\n       Error [QNT511]: Test sampleTest returned false\n        at fixture.qnt:1:21\n        1: module M { pure val sampleTest=false }\n                               ^^^^^^^^^^\n    Use --seed=0x11 --match=sampleTest to repeat.\n\n\n  Use --verbosity=3 to show executions.\n  Further debug with: quint test --verbosity=3 fixture.qnt\n",
+      "stderr": "error: Tests failed\n"
+    },
+    {
+      "name": "test_false_detail",
+      "command": "test",
+      "source": "module M { pure val sampleTest=false }",
+      "level": 1,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--verbosity=2"
+      ],
+      "status": 1,
+      "stdout": "\n  M\n    \u001b[31m1\u001b[39m) sampleTest failed after 1 test(s)\n\n\u001b[31m  1 failed\u001b[39m\n\n  1) sampleTest:\n\u001b[31m       Error [QNT511]: Test sampleTest returned false\u001b[39m\n\u001b[31m        at fixture.qnt:1:21\u001b[39m\n\u001b[31m        1: module M { pure val sampleTest=false }\u001b[39m\n\u001b[31m                               ^^^^^^^^^^\u001b[39m\n\u001b[90m    Use --seed=0x11 --match=sampleTest to repeat.\u001b[39m\n\n\u001b[90m\u001b[39m\n\u001b[90m  Use --verbosity=3 to show executions.\u001b[39m\n\u001b[90m  Further debug with: quint test --verbosity=3 fixture.qnt\u001b[39m\n",
+      "stderr": "error: Tests failed\n"
+    },
+    {
+      "name": "test_missing_main",
+      "command": "test",
+      "source": "module M { pure val sampleTest=true }",
+      "level": 0,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--verbosity=1",
+        "--main=Missing"
+      ],
+      "status": 1,
+      "stdout": "",
+      "stderr": "error: [QNT405] Main module Missing not found\nerror: Argument error\n"
+    },
+    {
+      "name": "test_missing_main",
+      "command": "test",
+      "source": "module M { pure val sampleTest=true }",
+      "level": 1,
+      "flags": [
+        "--seed=17",
+        "--max-samples=1",
+        "--verbosity=1",
+        "--main=Missing"
+      ],
+      "status": 1,
+      "stdout": "",
+      "stderr": "error: [QNT405] Main module Missing not found\nerror: Argument error\n"
+    }
+  ]
+}

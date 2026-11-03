@@ -39,20 +39,6 @@ func (w *testOutputWriter) Write(data []byte) (int, error) {
 	return n, err
 }
 
-const testUsage = `Usage: quint test <input> [options]
-  --main NAME          main module (defaults to the source module or filename)
-  --match REGEX        select test names; defaults to names ending in Test
-                       JavaScript lookaround, backreferences and named captures
-                       nested-class/capture-reset limits and a short execution budget apply
-  --max-samples N      successful samples per randomized test (default 10000, or 1 with --seed)
-  --seed INTEGER       replay an arbitrary-precision decimal/hexadecimal seed
-  --verbosity N        output level from 0 to 5 (default 2)
-  --out FILE           write stage JSON and suppress test reports
-  --out-itf TEMPLATE   write passing/false-result traces; supports {test} and {seq}
-  --output TEMPLATE    alias for --out-itf
-  --backend go         use the Go evaluator
-`
-
 func testParseOptions(args []string) (testCommandOptions, error) {
 	o := testCommandOptions{maxSamples: 10000, verbosity: 2}
 	normalized, err := cliNormalizeOptions("test", args)
@@ -127,7 +113,7 @@ func testParseOptions(args []string) (testCommandOptions, error) {
 			o.verbosity = n
 		case "--backend":
 			if value != "go" {
-				return o, fmt.Errorf("unsupported test backend %q: the Go port uses --backend=go", value)
+				return o, cliInvalidChoice("backend", value, "go")
 			}
 		}
 	}
@@ -260,19 +246,10 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	ctx = quint.WithRuntimeHooks(ctx, quint.RuntimeHooks{DebugWriter: stdout})
 	options, err := testParseOptions(args)
 	if err != nil {
-		if strings.HasPrefix(err.Error(), "--seed must be a big integer") {
-			fmt.Fprintln(stderr, err)
-		} else {
-			fmt.Fprintln(stderr, "error:", err)
-		}
-		return 1
+		return cliPrintArgumentError(stderr, err)
 	}
 	if options.help {
-		if _, err := fmt.Fprint(stdout, testUsage); err != nil {
-			fmt.Fprintln(stderr, "error: writing test output:", err)
-			return 1
-		}
-		return 0
+		return cliPrintHelp(stdout, stderr, "test")
 	}
 	fields := insdict.NewDict[string, any]()
 	fields.Set("stage", "loading")
@@ -302,7 +279,7 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 			duplicate := false
 			for _, message := range cliUniqueErrorMessages(messages) {
 				rendered := quint.RenderErrorMessage(message, code, terminalDiagnosticOptions(ctx, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
-				fmt.Fprintln(stderr, terminalStyle(ctx, rendered, "red"))
+				fmt.Fprintln(stderr, rendered)
 				duplicate = duplicate || rendered == "error: "+summary
 			}
 			if summary != "" && !duplicate {
@@ -325,13 +302,18 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	var match func(string) bool
 	var matchErr error
 	if options.match != "" {
-		matcher, err := testCompileJavaScriptRegex(options.match)
-		if err != nil {
-			return fail(err)
-		}
+		var matcher *testJavaScriptRegex
 		match = func(name string) bool {
 			if matchErr != nil {
 				return false
+			}
+			// Upstream constructs RegExp only when a definition reaches the
+			// discovery filter. Source errors and an empty module win first.
+			if matcher == nil {
+				matcher, matchErr = testCompileJavaScriptRegex(options.match)
+				if matchErr != nil {
+					return false
+				}
 			}
 			var matched bool
 			matched, matchErr = matcher.MatchString(ctx, name)

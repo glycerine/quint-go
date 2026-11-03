@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"bytes"
 	"errors"
 	"flag"
 	"fmt"
@@ -28,16 +27,12 @@ func replParseOptions(args []string) (REPLLoopOptions, string, error) {
 	flags.Usage = func() {}
 	if err := flags.Parse(args); err != nil {
 		if errors.Is(err, flag.ErrHelp) {
-			var output bytes.Buffer
-			fmt.Fprintln(&output, "Usage: quint repl [options] [commands...]")
-			flags.SetOutput(&output)
-			flags.PrintDefaults()
-			return options, output.String(), nil
+			return options, cliHelpTexts["repl"], nil
 		}
 		return options, "", err
 	}
 	if *backend != "go" {
-		return options, "", fmt.Errorf("repl: unsupported backend %q; use go", *backend)
+		return options, "", cliInvalidChoice("backend", *backend, "go")
 	}
 	if options.Verbosity < 0 || options.Verbosity > 5 {
 		return options, "", fmt.Errorf("repl: --verbosity must be between 0 and 5")

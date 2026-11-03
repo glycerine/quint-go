@@ -167,8 +167,8 @@ func TestTestCommandZeroSamplesAndValidation(t *testing.T) {
 		args []string
 		want string
 	}{
-		{nil, "input"},
-		{[]string{input, "extra.qnt"}, "input"},
+		{nil, "Not enough non-option arguments"},
+		{[]string{input, "extra.qnt"}, "Unknown argument: extra.qnt"},
 		{[]string{input, "--unknown"}, "unknown"},
 		{[]string{input, "--main=Missing"}, "Missing"},
 		{[]string{input, "--max-samples=-1"}, "max-samples"},

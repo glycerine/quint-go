@@ -168,11 +168,11 @@ func TestCoreOptionValidation(t *testing.T) {
 		args    []string
 		want    string
 	}{
-		{"parse", nil, "exactly one"},
-		{"parse", []string{"a", "b"}, "exactly one"},
-		{"parse", []string{"--wat", "a"}, "Unknown argument: wat"},
-		{"parse", []string{"-x", "a"}, "Unknown argument: x"},
-		{"parse", []string{"--out"}, "exactly one"},
+		{"parse", nil, "Not enough non-option arguments"},
+		{"parse", []string{"a", "b"}, "Unknown argument: b"},
+		{"parse", []string{"a", "--wat"}, "Unknown argument: wat"},
+		{"parse", []string{"a", "-x"}, "Unknown argument: x"},
+		{"parse", []string{"--out"}, "Not enough non-option arguments"},
 		{"parse", []string{"--out=a", "--out=b", "file"}, "more than once"},
 		{"typecheck", []string{"--source-map=a", "file"}, "Unknown argument"},
 		{"compile", []string{"--target=wat", "file"}, "Invalid value"},

@@ -26,15 +26,10 @@ type REPLLoopOptions struct {
 func commandREPL(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	options, help, err := replParseOptions(args)
 	if err != nil {
-		fmt.Fprintln(stderr, err)
-		return 2
+		return cliPrintArgumentError(stderr, err)
 	}
 	if help != "" {
-		if _, err := io.WriteString(stdout, help); err != nil {
-			fmt.Fprintln(stderr, err)
-			return 1
-		}
-		return 0
+		return cliPrintHelp(stdout, stderr, "repl")
 	}
 	return runREPLCommandInput(ctx, stdout, stderr, options)
 }

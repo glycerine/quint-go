@@ -60,7 +60,7 @@ func TestTerminalFrontendDiagnosticsAndJSONOwnership(t *testing.T) {
 	level := 1
 	ctx := WithTerminalOptions(context.Background(), TerminalOptions{ColorLevel: &level})
 	var stdout, stderr bytes.Buffer
-	if status := Execute(ctx, []string{"typecheck", input}, &stdout, &stderr); status != 1 || stdout.Len() != 0 || !strings.Contains(stderr.String(), "\x1b[31m") || !strings.Contains(stderr.String(), "QNT404") {
+	if status := Execute(ctx, []string{"typecheck", input}, &stdout, &stderr); status != 1 || stdout.Len() != 0 || strings.Contains(stderr.String(), "\x1b[31m") || !strings.Contains(stderr.String(), "QNT404") {
 		t.Fatalf("diagnostic status=%d out=%q err=%q", status, stdout.String(), stderr.String())
 	}
 	stdout.Reset()

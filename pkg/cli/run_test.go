@@ -169,7 +169,7 @@ func TestRunPreparationRuntimeAndOutputErrors(t *testing.T) {
 	}
 	stdout.Reset()
 	stderr.Reset()
-	if status := commandRun(context.Background(), []string{"--help"}, &stdout, &stderr); status != 0 || !strings.Contains(stdout.String(), "Usage: quint run") {
+	if status := commandRun(context.Background(), []string{"--help"}, &stdout, &stderr); status != 0 || !strings.HasPrefix(stdout.String(), "quint run <input>\n") {
 		t.Fatal(status, stdout.String(), stderr.String())
 	}
 }

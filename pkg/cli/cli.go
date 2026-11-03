@@ -146,21 +146,7 @@ func coreInformationalOptions(args []string) (help, version bool, remaining []st
 }
 
 func coreHelp(stdout, stderr io.Writer, command string) int {
-	text := "quint [command]\n\nCommands:\n  parse <input>       parse and resolve a specification\n  typecheck <input>   check types and effects\n  compile <input>     compile to JSON or TLA+ using Go Apalache\n  run <input>         simulate a specification\n  test <input>        run named tests\n  verify <input>      verify with Go Apalache\n  repl [commands..]   evaluate interactively (default)\n  docs <input>        produce documentation\n\nOptions:\n  --help              show help\n  --version           show version\n"
-	if command != "" {
-		text = "quint " + command + " <input> [options]\n\nOptions:\n  --out <file>        write stage JSON to a file\n  --help              show help\n"
-		if command == "parse" {
-			text += "  --source-map <file> write compact source locations\n"
-		}
-		if command == "compile" {
-			text += "  --main <module>    select the main module\n  --target <target>  json (default) or tlaplus\n  --flatten <bool>   flatten imports and instances (default true)\n  --init <expr>      initializer action\n  --step <expr>      next-state action\n  --invariant <expr> invariant expression\n  --temporal <expr>  temporal properties\n  --verbosity <0-5>  output verbosity\n"
-		}
-	}
-	if _, err := io.WriteString(stdout, text); err != nil {
-		fmt.Fprintln(stderr, "error:", err)
-		return 1
-	}
-	return 0
+	return cliPrintHelp(stdout, stderr, command)
 }
 
 type coreOptions struct {
@@ -265,7 +251,7 @@ func coreParseOptions(command string, args []string) (coreOptions, error) {
 			o.main = value
 		case "target":
 			if value != "json" && value != "tlaplus" {
-				return o, fmt.Errorf("Invalid value for --target: %s; expected json or tlaplus", value)
+				return o, cliInvalidChoice("target", value, "tlaplus", "json")
 			}
 			o.target = value
 		case "init":
@@ -366,8 +352,7 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 	ctx = terminalBind(ctx, stdout)
 	o, err := coreParseOptions(command, args)
 	if err != nil {
-		fmt.Fprintln(stderr, "error:", err)
-		return 1
+		return cliPrintArgumentError(stderr, err)
 	}
 	if o.help {
 		return coreHelp(stdout, stderr, command)
@@ -389,7 +374,7 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 		if diagnostics, ok := fields.Get("errors").([]quint.ErrorMessage); ok {
 			for _, diagnostic := range diagnostics {
 				text := quint.RenderErrorMessage(diagnostic, code, terminalDiagnosticOptions(ctx, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
-				fmt.Fprintln(stderr, terminalStyle(ctx, text, "red"))
+				fmt.Fprintln(stderr, text)
 			}
 		}
 		if failure == nil || summary != failure.Error() {

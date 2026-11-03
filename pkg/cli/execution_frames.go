@@ -82,37 +82,7 @@ func executionPrintFrame(ctx context.Context, out io.Writer, index int, frame qu
 }
 
 func executionPrintTrace(ctx context.Context, out io.Writer, states []quint.Expr, frames []quint.ExecutionFrame, hide []string, objects *quint.RuntimeObjectHashState) error {
-	hidden := insdict.NewDict[string, bool]()
-	for _, name := range hide {
-		hidden.Set(name, true)
-	}
-	for index, state := range states {
-		if err := ctx.Err(); err != nil {
-			return err
-		}
-		if index < len(frames) {
-			if err := executionPrintFrame(ctx, out, index, frames[index], objects); err != nil {
-				return err
-			}
-		}
-		if len(hide) > 0 {
-			filtered := []quint.Expr{}
-			for i := 0; i+1 < len(state.Args); i += 2 {
-				if state.Args[i].Kind == "str" && !hidden.Get(state.Args[i].Str) {
-					filtered = append(filtered, state.Args[i], state.Args[i+1])
-				}
-			}
-			state.Args = filtered
-		}
-		text, err := quint.FormatTraceStateExpressionContext(ctx, index, state, terminalWidth(ctx))
-		if err != nil {
-			return err
-		}
-		if err := executionWrite(ctx, out, text+"\n\n"); err != nil {
-			return err
-		}
-	}
-	return nil
+	return executionPrintAnnotatedTrace(ctx, out, states, quint.TraceFormatOptions{Frames: frames, HideVariables: hide, ObjectHashState: objects})
 }
 
 func executionPrintCounterExample(ctx context.Context, out io.Writer, verbosity int, states []quint.Expr, frames []quint.ExecutionFrame, hide []string, objects *quint.RuntimeObjectHashState) error {

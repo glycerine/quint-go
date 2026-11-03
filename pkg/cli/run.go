@@ -85,7 +85,7 @@ func runParseOptions(args []string) (runOptions, error) {
 				o.outITF = v
 			case "--backend":
 				if v != "go" {
-					return o, fmt.Errorf("--backend=%s is unsupported; this port uses --backend=go", v)
+					return o, cliInvalidChoice("backend", v, "go")
 				}
 			}
 		case "--max-samples", "--max-steps", "--n-traces", "--verbosity", "--n-threads":
@@ -174,15 +174,10 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 	ctx = terminalBind(ctx, stdout)
 	o, err := runParseOptions(args)
 	if errors.Is(err, errRunHelp) {
-		if _, err := fmt.Fprintln(stdout, "Usage: quint run <input> [--main M] [--init init] [--step step] [--invariant true] [--invariants names...] [--max-steps 20] [--max-samples N] [--n-traces 1] [--seed N] [--out file] [--out-itf template] [--verbosity 0..5] [--mbt] [--backend go]"); err != nil {
-			fmt.Fprintln(stderr, "error:", err)
-			return 1
-		}
-		return 0
+		return cliPrintHelp(stdout, stderr, "run")
 	}
 	if err != nil {
-		fmt.Fprintln(stderr, "error:", err)
-		return 1
+		return cliPrintArgumentError(stderr, err)
 	}
 	ctx = quint.WithRuntimeHooks(ctx, quint.RuntimeHooks{DebugWriter: stdout})
 	fields := insdict.NewDict[string, any]()
@@ -200,7 +195,7 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 			duplicate := false
 			for _, message := range cliUniqueErrorMessages(messages) {
 				rendered := quint.RenderErrorMessage(message, sourceCode, terminalDiagnosticOptions(ctx, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
-				fmt.Fprintln(stderr, terminalStyle(ctx, rendered, "red"))
+				fmt.Fprintln(stderr, rendered)
 				duplicate = duplicate || rendered == "error: "+summary
 			}
 			if summary != "" && !duplicate {
@@ -278,11 +273,6 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 			sourceDefault = module.Name
 		}
 	}
-	index, err := quint.SelectMainModule(frontend.Modules, o.main, sourceDefault, o.input)
-	if err != nil {
-		return fail(quint.Diagnostic{Code: "QNT405", Message: "Main module " + quint.GuessMainModule(o.main, sourceDefault, o.input) + " not found"})
-	}
-	o.main = frontend.Modules[index].Name
 	// Analyze original source before adding CLI expressions, preserving its stage
 	// output. Evaluation reuses this result while preparing the added wrappers.
 	analysis, err := quint.AnalyzeModules(frontend.Modules, frontend.Table)
@@ -293,14 +283,21 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 	if len(analysis.Diagnostics) > 0 {
 		return failMessages("typechecking failed", coreResolveDiagnostics(sources, analysis.Diagnostics))
 	}
+	index, err := quint.SelectMainModule(frontend.Modules, o.main, sourceDefault, o.input)
+	if err != nil {
+		name := quint.GuessMainModule(o.main, sourceDefault, o.input)
+		return failMessages("Argument error", []quint.ErrorMessage{{Explanation: "[QNT405] Main module " + name + " not found", Locations: []quint.Location{}}})
+	}
+	o.main = frontend.Modules[index].Name
 	fields.Set("stage", "running")
-	if err = runValidateAction(frontend, o.main, "init", o.init); err != nil {
-		return fail(err)
-	}
-	if err = runValidateAction(frontend, o.main, "step", o.step); err != nil {
-		return fail(err)
-	}
 	combined, individualInvariants := quint.CompilationInvariants(o.invariant, o.invariants)
+	selectorErrors, err := runValidateSelectors(frontend, o.main, o.init, o.step, combined, o.witnesses)
+	if err != nil {
+		return fail(err)
+	}
+	if len(selectorErrors) > 0 {
+		return failMessages("Argument error", selectorErrors)
+	}
 	declarations, err := quint.SynthesizeCompilationEntries(quint.CompilationEntries{Target: "json", Init: &o.init, Step: &o.step, Invariants: []string{combined}}, frontend.IDs)
 	if err != nil {
 		return fail(err)
@@ -439,7 +436,7 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 		}
 		for _, message := range runUniqueMessages(messages) {
 			text := quint.RenderErrorMessage(message, sourceCode, terminalDiagnosticOptions(ctx, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
-			fmt.Fprintln(stderr, terminalStyle(ctx, text, "red"))
+			fmt.Fprintln(stderr, text)
 		}
 		if o.verbosity >= 1 && o.outITF == "" && len(outcome.BestTraces) > 0 && outcome.BestTraces[0].Seed.Big().Sign() != 0 {
 			fmt.Fprintln(stdout, terminalStyle(ctx, "Use --seed=0x"+outcome.BestTraces[0].Seed.Big().Text(16)+" --backend=go to reproduce.", "gray"))
@@ -455,32 +452,6 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 		return 1
 	}
 	return 0
-}
-
-func runValidateAction(frontend quint.FrontendResult, main, flag, text string) error {
-	parsed, err := quint.ParseExpressionOrDeclaration(text, quint.NewIDGenerator())
-	if err != nil || parsed.Kind != "expr" {
-		return fmt.Errorf("Expected %s to be a valid expression", text)
-	}
-	if parsed.Expr.Kind != "name" {
-		return nil
-	}
-	scope, ok := frontend.Scopes.Get2(main)
-	if !ok {
-		return nil
-	}
-	def, ok := scope.Lookup(parsed.Expr.Name)
-	if !ok {
-		return nil
-	}
-	if def.Declaration != nil && (def.Declaration.Kind != "def" || def.Declaration.Qualifier != quint.Action) {
-		kind := def.Declaration.Kind
-		if kind == "def" {
-			kind = string(def.Declaration.Qualifier)
-		}
-		return quint.Diagnostic{Code: "QNT501", Message: fmt.Sprintf("default --%s action name '%s' is used by a %s declaration", flag, text, kind)}
-	}
-	return nil
 }
 
 func runExpressions(ctx context.Context, values []quint.RuntimeValue, hashes *quint.RuntimeObjectHashState) ([]quint.Expr, error) {

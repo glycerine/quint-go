@@ -168,7 +168,7 @@ func TestVerifyCLIInvalidInvocation(t *testing.T) {
 	}
 	for _, help := range []string{"--help", "-h"} {
 		var stdout, stderr bytes.Buffer
-		if code := commandVerify(context.Background(), []string{help}, &stdout, &stderr); code != 0 || strings.Count(stdout.String(), "Usage:") != 1 || stderr.Len() != 0 {
+		if code := commandVerify(context.Background(), []string{help}, &stdout, &stderr); code != 0 || !strings.HasPrefix(stdout.String(), "quint verify <input>\n") || stderr.Len() != 0 {
 			t.Fatal(code, stdout.String(), stderr.String())
 		}
 	}
@@ -225,7 +225,7 @@ func TestVerifyCLIFrontendAndConfigurationFailures(t *testing.T) {
 		}
 	}
 	var stdout, stderr bytes.Buffer
-	if code := commandVerify(context.Background(), []string{filepath.Join(dir, "missing.qnt")}, &stdout, &stderr); code != 1 || !strings.Contains(stderr.String(), "ENOENT") {
+	if code := commandVerify(context.Background(), []string{filepath.Join(dir, "missing.qnt")}, &stdout, &stderr); code != 1 || !strings.Contains(stderr.String(), "does not exist") {
 		t.Fatal(code, stderr.String())
 	}
 }
