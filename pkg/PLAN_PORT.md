@@ -3706,3 +3706,13 @@ word "retained" in the commit message.
   raw IR, diagnostics, upstream spans and continued IDs. Focused0.033s, broad
   parser/source0.364s, optional197-source hash corpus4.924s, race1.257s, full
   isolated tests and vet pass. Standalone entrypoint audit remains separate.
+
+- 2026-11-02: Added explicit malformed storage-import boundary tests for all
+  eight saved direct-API cases. Go returns owned QNT501 diagnostics, rejects a
+  non-record before mutation, and documents partial restoration for malformed
+  metadata; this intentionally differs from reference thrown exceptions. Native
+  TLC resource tests prove materialized collection exhaustion stays incomplete
+  and SetBound is not a state budget, with successful safety/temporal controls.
+  Adapter metadata cleanup is checked; native resolver tlc-* directories lack a
+  public close API and remain an explicit lifecycle gap. Full isolated tests/vet
+  pass; native focused resource test0.058s.

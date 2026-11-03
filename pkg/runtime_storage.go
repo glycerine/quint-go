@@ -187,6 +187,9 @@ func (s *VariableStorage) Record() (RuntimeValue, error) {
 // FromRecord resets registers, restores known variable names and optional
 // metadata, and clears tracked caches. Unknown fields are ignored. As upstream,
 // Some pick values are retained as variants, rather than unwrapped.
+// An invalid outer value returns a QNT501 Diagnostic before changing storage.
+// Malformed metadata in a record also returns QNT501, but the reset and any
+// earlier field imports remain applied. Caches are cleared only on success.
 func (s *VariableStorage) FromRecord(record RuntimeValue) error {
 	fail := func(message string) error { return Diagnostic{Code: "QNT501", Message: message} }
 	if !record.Valid() || record.expression.Kind != "app" || record.expression.Opcode != "Rec" {

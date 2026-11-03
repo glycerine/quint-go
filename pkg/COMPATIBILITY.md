@@ -240,3 +240,9 @@ that all upstream integration transcripts, the entire solver opcode surface,
 Rust runtime agreement, clean-machine packaging, or all races were run.
 `TestCompatibilityInventory` prevents an IR opcode/builtin value from silently
 losing its matrix row; it does not certify the semantic status of that row.
+
+Direct storage imports return owned QNT501 diagnostics for malformed metadata;
+outer invalid shapes preserve storage, while record metadata may be partially
+restored before failure. Native TLC SetBound limits collection growth, not
+explored states. Adapter temporary metadata is cleaned; native resolver directory
+cleanup remains a dependency lifecycle gap.
