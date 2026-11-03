@@ -104,7 +104,7 @@ func (v RuntimeValue) Equal(other RuntimeValue) bool {
 		if left.Len() != right.Len() {
 			return false
 		}
-		for _, entry := range left.Entries() {
+		for entry := range left.all() {
 			value, found, err := right.Lookup(entry.Key)
 			if err != nil || !found || !runtimeCollectionEqual(entry.Value, value) {
 				return false

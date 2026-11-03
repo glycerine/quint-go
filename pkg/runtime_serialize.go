@@ -145,7 +145,7 @@ func (s *runtimeSerialization) expression(value RuntimeValue) (Expr, error) {
 			return Expr{}, err
 		}
 		values := make([]RuntimeValue, 0, set.Len())
-		for _, entry := range set.Entries() {
+		for entry := range set.all() {
 			values = append(values, entry.Value)
 		}
 		args, err := s.setElements(values)

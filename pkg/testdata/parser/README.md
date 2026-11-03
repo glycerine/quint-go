@@ -1108,3 +1108,10 @@ fixtures, the inventory covers all 95 tests in eight upstream type-suite familie
 The Go generator exposes the upstream optional solver injection; its default
 remains structural unification. The saved tuple-prefix resource witness remains
 an explicit allocation-policy difference.
+
+Allocation-free private reference-map iteration is checked against the previous
+owned-slice traversal for every HAMT node shape and 157 historical roots, including
+batch construction, key collisions, early termination and concurrent readers.
+Construction/equality/serialization callers preserve exact source hash history
+and metadata. Public entry slices remain owned. Benchmarks measure construction
+CPU and allocation changes independently from correctness fixtures.

@@ -3427,3 +3427,11 @@ word "retained" in the commit message.
   and parser tests complete the inventory. Focused56 cases pass0.018s; broader
   exact replay0.095s. The explicit tuple-prefix allocation limit remains a Go
   resource policy; Rust supplies runtime comparisons rather than a type checker.
+
+- 2026-11-02: Replaced four temporary entry-slice traversals with an immutable
+  reference-map iterator while preserving owned public Entries slices. Exact node
+  order,157 historical roots, batch construction, collisions, early stop and
+  concurrent readers pass. Old slice-formula oracles check all value metadata.
+  Matched small Set/Map construction improves CPU10–17% and bytes21–33%; larger
+  collections improve CPU3–13%. Focused0.130s, race2.902s and vet pass. The
+  full isolated suite remains above the aggregate one-second target.

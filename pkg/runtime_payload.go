@@ -59,7 +59,7 @@ func runtimeAssemble(source Expr, payload *runtimePayload) (RuntimeValue, error)
 				display.Args = append(display.Args, child.expression)
 			}
 		case "Set", "Map":
-			for _, entry := range payload.entries.Entries() {
+			for entry := range payload.entries.all() {
 				if source.Opcode == "Set" {
 					display.Args = append(display.Args, entry.Value.expression)
 				} else {
@@ -89,7 +89,7 @@ func runtimeWithEntries(op string, m runtimeReferenceMap) (RuntimeValue, error) 
 	source := Expr{Kind: "app", Opcode: op, Args: []Expr{}}
 	containsClosure := false
 	referenceMemoKeys := false
-	for _, entry := range m.Entries() {
+	for entry := range m.all() {
 		containsClosure = containsClosure || entry.Key.containsClosure || entry.Value.containsClosure
 		referenceMemoKeys = referenceMemoKeys || runtimeKeyNeedsReferenceMemo(entry.Key)
 		switch op {
