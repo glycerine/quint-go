@@ -9,10 +9,18 @@ import (
 	quint "github.com/glycerine/quint-go/pkg"
 )
 
-// PreparationError retains source-referenced diagnostics from TLA preparation.
-type PreparationError struct{ Diagnostics []quint.Diagnostic }
+// PreparationError retains source-referenced diagnostics before checking or TLA
+// generation. Explanation may describe a backend preparation restriction;
+// omitting it retains the init-to-predicate explanation.
+type PreparationError struct {
+	Diagnostics []quint.Diagnostic
+	Explanation string
+}
 
 func (e *PreparationError) Error() string {
+	if e.Explanation != "" {
+		return fmt.Sprintf("%s: %v", e.Explanation, e.Diagnostics)
+	}
 	return fmt.Sprintf("failed to convert init to predicate: %v", e.Diagnostics)
 }
 

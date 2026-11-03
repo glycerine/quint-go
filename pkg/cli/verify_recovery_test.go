@@ -65,7 +65,7 @@ func TestVerifyUpstreamRecoveringDiagnostics(t *testing.T) {
 					t.Fatal(err)
 				}
 				var stage verifyStage
-				if err := json.Unmarshal(encoded, &stage); err != nil || code != 1 || called || stdout.Len() != 0 || stderr.Len() != 0 || stage.Status != "failure" || stage.Explanation != "parsing failed" || stage.Outcome != "" || stage.TLC != nil {
+				if err := json.Unmarshal(encoded, &stage); err != nil || code != 1 || called || stdout.Len() != 0 || stderr.Len() != 0 || stage.Status != "" || stage.Explanation != "" || stage.Outcome != "" || stage.TLC != nil {
 					t.Fatal(code, called, string(encoded), stdout.String(), stderr.String(), err)
 				}
 				got, err := json.Marshal(stage.Errors)

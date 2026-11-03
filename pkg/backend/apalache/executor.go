@@ -12,6 +12,8 @@ import (
 
 // Executor uses the production command service in-process, without a server or JVM.
 // Config is the same JSON configuration accepted by the Go Shai service.
+// Cancellation observed before Run returns takes precedence over a backend
+// response, including a response that completed concurrently with cancellation.
 type Executor struct{ service *shai.CmdExecutorService }
 
 func New() *Executor { return &Executor{service: shai.NewCmdExecutorService()} }
@@ -23,5 +25,12 @@ func (e *Executor) Run(ctx context.Context, command cmd.Cmd, config json.RawMess
 	if err := ctx.Err(); err != nil {
 		return nil, err
 	}
-	return e.service.Run(ctx, &cmd.CmdRequest{Cmd: command, Config: string(config)})
+	response, err := e.service.Run(ctx, &cmd.CmdRequest{Cmd: command, Config: string(config)})
+	// The service can encode solver cancellation as an ordinary failure payload.
+	// Preserve caller cancellation as a Go context error instead of losing its
+	// identity inside that JSON, or accepting a concurrent success response.
+	if contextError := ctx.Err(); contextError != nil {
+		return nil, contextError
+	}
+	return response, err
 }

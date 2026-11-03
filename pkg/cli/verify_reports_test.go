@@ -172,8 +172,12 @@ func TestVerifyReportsCLIFromEitherChecker(t *testing.T) {
 				t.Fatal(err)
 			}
 			var stage verifyStage
-			if err := json.Unmarshal(data, &stage); err != nil || !called || code != 1 || stage.Status != "violation" || stage.Outcome != apalache.CheckViolation || !reflect.DeepEqual(stage.ViolatedInvariants, []string{"upper", "x != 3"}) || len(stage.Warnings) > 0 || stdout.Len() > 0 || stderr.Len() > 0 {
+			if err := json.Unmarshal(data, &stage); err != nil || !called || code != 1 || stage.Status != "violation" || stage.Outcome != "" || len(stage.ViolatedInvariants) > 0 || len(stage.Warnings) > 0 || stdout.Len() > 0 || stderr.Len() > 0 {
 				t.Fatal(code, string(data), stdout.String(), stderr.String(), err)
+			}
+			visible := []string{input, "--backend=" + name, "--verbosity=1", "--invariants=nonnegative", "--invariants=upper", "--invariants=x != 3"}
+			if code := verifyWithCheckers(context.Background(), visible, &stdout, &stderr, backend, tlcBackend); code != 1 || !strings.Contains(stdout.String(), "❌ upper") || !strings.Contains(stdout.String(), "❌ x != 3") || strings.Contains(stdout.String(), "❌ nonnegative") {
+				t.Fatal(code, stdout.String(), stderr.String())
 			}
 		})
 	}
@@ -198,8 +202,11 @@ func TestVerifyReportsTLCCannotConvertTrace(t *testing.T) {
 		t.Fatal(err)
 	}
 	var stage verifyStage
-	if err := json.Unmarshal(data, &stage); err != nil || !called || code != 1 || stage.Status != "violation" || stage.Outcome != apalache.CheckViolation || len(stage.Trace) > 0 || len(stage.ViolatedInvariants) > 0 || len(stage.Warnings) != 1 || !strings.Contains(stage.Warnings[0], "could not identify violated invariants: conversion unavailable") || stdout.Len() > 0 || stderr.Len() > 0 {
+	if err := json.Unmarshal(data, &stage); err != nil || !called || code != 1 || stage.Status != "violation" || stage.Outcome != "" || len(stage.Trace) > 0 || len(stage.ViolatedInvariants) > 0 || len(stage.Warnings) > 0 || stdout.Len() > 0 || stderr.Len() > 0 {
 		t.Fatal(code, string(data), stdout.String(), stderr.String(), err)
+	}
+	if code := verifyWithCheckers(context.Background(), []string{input, "--backend=tlc-go", "--verbosity=1", "--invariants=nonnegative", "--invariants=upper"}, &stdout, &stderr, nil, checker); code != 1 || !strings.Contains(stderr.String(), "could not identify violated invariants: conversion unavailable") {
+		t.Fatal(code, stdout.String(), stderr.String())
 	}
 }
 
@@ -229,8 +236,11 @@ func TestVerifyReportsInductiveSingleOrdinaryInvariant(t *testing.T) {
 		t.Fatal(err)
 	}
 	var stage verifyStage
-	if err := json.Unmarshal(data, &stage); err != nil || !called || code != 1 || stage.Status != "violation" || stage.Outcome != apalache.CheckViolation || !reflect.DeepEqual(stage.ViolatedInvariants, []string{"upper"}) || len(stage.Warnings) > 0 || stdout.Len() > 0 || stderr.Len() > 0 {
+	if err := json.Unmarshal(data, &stage); err != nil || !called || code != 1 || stage.Status != "violation" || stage.Outcome != "" || len(stage.ViolatedInvariants) > 0 || len(stage.Warnings) > 0 || stdout.Len() > 0 || stderr.Len() > 0 {
 		t.Fatal(code, string(data), stdout.String(), stderr.String(), err)
+	}
+	if code := verifyWithBackend(context.Background(), []string{input, "--inductive-invariant=nonnegative", "--invariant=upper", "--verbosity=1"}, &stdout, &stderr, backend); code != 1 || !strings.Contains(stdout.String(), "❌ upper") || strings.Contains(stdout.String(), "❌ nonnegative") {
+		t.Fatal(code, stdout.String(), stderr.String())
 	}
 }
 
@@ -266,8 +276,9 @@ val bad=not(x)
 		t.Run(backend, func(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
-			output := filepath.Join(t.TempDir(), "result.json")
-			args := []string{input, "--backend=" + backend, "--invariants=good", "--invariants=bad", "--out=" + output}
+			directory := t.TempDir()
+			output, itf := filepath.Join(directory, "result.json"), filepath.Join(directory, "trace.itf.json")
+			args := []string{input, "--backend=" + backend, "--invariants=good", "--invariants=bad", "--out=" + output, "--out-itf=" + itf}
 			if backend == "apalache-go" {
 				args = append(args, "--max-steps=1")
 			}
@@ -278,10 +289,14 @@ val bad=not(x)
 				t.Fatal(err)
 			}
 			var stage verifyStage
-			if err := json.Unmarshal(data, &stage); err != nil || code != 1 || stage.Status != "violation" || stage.Outcome != apalache.CheckViolation || !reflect.DeepEqual(stage.ViolatedInvariants, []string{"bad"}) || len(stage.Warnings) > 0 || len(stage.Errors) > 0 || stdout.Len() > 0 || stderr.Len() > 0 {
+			if err := json.Unmarshal(data, &stage); err != nil || code != 1 || stage.Status != "violation" || stage.Outcome != "" || len(stage.ViolatedInvariants) > 0 || len(stage.Warnings) > 0 || len(stage.Errors) > 0 || stdout.Len() > 0 || stderr.Len() > 0 {
 				t.Fatal(code, string(data), stdout.String(), stderr.String(), err)
 			}
-			trace, err := quint.DecodeITFTrace(stage.Trace)
+			raw, err := os.ReadFile(itf)
+			if err != nil {
+				t.Fatal(err)
+			}
+			trace, err := quint.DecodeITFTrace(raw)
 			if err != nil || !reflect.DeepEqual(trace.Vars, []string{"x"}) || len(trace.States) < 2 {
 				t.Fatal(string(stage.Trace), err)
 			}

@@ -57,8 +57,8 @@ func TestVerifyTLCITFOutputAndFailures(t *testing.T) {
 			} else if !os.IsNotExist(err) {
 				t.Fatal("unexpected ITF output", string(itfData), err)
 			}
-			if tc.status == "failure" && !strings.Contains(stage.Explanation, "typed ITF counterexample") {
-				t.Fatal(stage.Explanation)
+			if stage.Explanation != "" || len(stage.Trace) != 0 {
+				t.Fatal("TLC stage leaked backend fields", string(data))
 			}
 		})
 	}
@@ -84,7 +84,7 @@ func TestVerifyTLCITFOutputAndFailures(t *testing.T) {
 		t.Fatal(err)
 	}
 	var stage verifyStage
-	if err := json.Unmarshal(data, &stage); err != nil || stage.Status != "failure" || !strings.Contains(stage.Explanation, "TLC ITF export: conversion unavailable") {
+	if err := json.Unmarshal(data, &stage); err != nil || stage.Status != "failure" || stage.Explanation != "" {
 		t.Fatal(string(data), err)
 	}
 }

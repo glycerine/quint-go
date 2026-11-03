@@ -43,6 +43,9 @@ func CheckConfig(compiled quint.CompilationResult, loaded json.RawMessage, optio
 	if options.MaxSteps < 0 {
 		return nil, fmt.Errorf("maximum steps cannot be negative")
 	}
+	if err := validateTemporalNames(compiled, options); err != nil {
+		return nil, err
+	}
 	input, err := MarshalInput(compiled)
 	if err != nil {
 		return nil, err
@@ -149,27 +152,31 @@ func decodeCheckResponse(response *cmd.CmdResponse) (CheckResult, error) {
 			return CheckResult{}, failure
 		}
 		var payload struct {
-			Pass  string `json:"pass_name"`
-			Error struct {
-				Result          string            `json:"checking_result"`
-				Counterexamples []json.RawMessage `json:"counterexamples"`
-			} `json:"error_data"`
+			Pass  string          `json:"pass_name"`
+			Error json.RawMessage `json:"error_data"`
 		}
 		if err := json.Unmarshal([]byte(failure.Data), &payload); err != nil {
-			return CheckResult{}, fmt.Errorf("invalid Go Apalache failure response: %w", err)
+			return CheckResult{}, fmt.Errorf("invalid Go Apalache failure response (%v): %w", err, failure)
 		}
 		if payload.Pass != "BoundedChecker" {
 			return CheckResult{}, failure
 		}
+		var status struct {
+			Result          string            `json:"checking_result"`
+			Counterexamples []json.RawMessage `json:"counterexamples"`
+		}
+		if err := json.Unmarshal(payload.Error, &status); err != nil {
+			return CheckResult{}, fmt.Errorf("invalid Go Apalache bounded-check failure (%v): %w", err, failure)
+		}
 		outcome := CheckViolation
-		switch payload.Error.Result {
+		switch status.Result {
 		case "Error":
 		case "Deadlock":
 			outcome = CheckDeadlock
 		default:
 			return CheckResult{}, failure
 		}
-		return CheckResult{Outcome: outcome, Counterexamples: payload.Error.Counterexamples, Data: json.RawMessage(failure.Data)}, nil
+		return CheckResult{Outcome: outcome, Counterexamples: status.Counterexamples, Data: json.RawMessage(failure.Data)}, nil
 	default:
 		return CheckResult{}, fmt.Errorf("Go Apalache check response has no result")
 	}

@@ -63,6 +63,9 @@ func ReportCheck(result CheckResult, err error, sources quint.SourceMap) Verific
 	var preparation *PreparationError
 	if errors.As(err, &preparation) {
 		report.Explanation = "Failed to convert init to predicate"
+		if preparation.Explanation != "" {
+			report.Explanation = preparation.Explanation
+		}
 		for _, d := range preparation.Diagnostics {
 			report.Errors = append(report.Errors, quint.ResolveDiagnostic(sources, d))
 		}

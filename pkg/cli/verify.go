@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
@@ -11,6 +12,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/glycerine/insdict"
 	quint "github.com/glycerine/quint-go/pkg"
 	"github.com/glycerine/quint-go/pkg/backend/apalache"
 	gotlc "github.com/glycerine/quint-go/pkg/backend/tlc"
@@ -36,9 +38,12 @@ func (s *verifyStringFlags) Set(value string) error {
 	return nil
 }
 
-// verifyStage keeps backend JSON lossless and reports a bounded result without
-// presenting bounded checking as an unbounded proof.
+// verifyStage retains checker details for terminal reports and raw ITF export.
+// Fields projects the shared CLI stage schema independently of backend reports.
 type verifyStage struct {
+	Fields             *insdict.Dict[string, any]   `json:"-"`
+	BackendResult      bool                         `json:"-"`
+	NormalizedTrace    bool                         `json:"-"`
 	Status             string                       `json:"status"`
 	Input              string                       `json:"input,omitempty"`
 	Main               string                       `json:"main,omitempty"`
@@ -74,6 +79,9 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		return 1
 	}
 	stage := verifyStage{Status: "failure", Input: options.input, Errors: []quint.ErrorMessage{}}
+	stage.Fields = insdict.NewDict[string, any]()
+	stage.Fields.Set("stage", "loading")
+	stage.Fields.Set("errors", stage.Errors)
 	if !verifyUsesTLC(options) {
 		stage.MaxSteps = &options.maxSteps
 	}
@@ -111,6 +119,11 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		return fail(err)
 	}
 	frontend, err := quint.ParseProjectRecovering(resolver, quint.SourceLookupPath{NormalizedPath: abs, SourceName: abs})
+	var loadError *quint.SourceLoadError
+	if errors.As(err, &loadError) && loadError.Path == abs {
+		return fail(err)
+	}
+	stage.Fields = coreStageFields("parsing", frontend, nil)
 	if err != nil {
 		return fail(err)
 	}
@@ -126,6 +139,7 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		return verifyOutput(options, stage, stdout, stderr)
 	}
 	analysis, err := quint.AnalyzeModules(frontend.Modules, frontend.Table)
+	stage.Fields = coreStageFields("typechecking", frontend, &analysis)
 	if err != nil {
 		return fail(err)
 	}
@@ -150,11 +164,25 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 	}
 	stage.Main = compiled.Main
 	if len(compiled.Diagnostics) > 0 || len(compiled.AnalysisDiagnostics) > 0 {
-		addDiagnostics(compiled.Diagnostics)
+		if compiled.Table != nil {
+			stage.Fields.Set("table", coreLookupTable(compiled.Table))
+		}
+		if compiled.UnflattenedModules == nil {
+			stage.Errors = coreResolveDiagnostics(nil, compiled.Diagnostics)
+		} else {
+			stage.Fields.Set("modules", coreModules(compiled.UnflattenedModules))
+			addDiagnostics(compiled.Diagnostics)
+		}
 		addDiagnostics(compiled.AnalysisDiagnostics)
 		stage.Explanation = "compilation failed"
 		return verifyOutput(options, stage, stdout, stderr)
 	}
+	stage.Fields.Set("stage", "verifying")
+	stage.Fields.Set("modules", coreModules(compiled.UnflattenedModules))
+	stage.Fields.Set("table", coreLookupTable(compiled.Table))
+	stage.Fields.Set("types", coreStringTable(compiled.Analysis.Types))
+	stage.Fields.Set("effects", coreStringTable(coreCompilationEffects(compiled, analysis.Effects)))
+	stage.Fields.Set("main", compiled.Main)
 	if err = ctx.Err(); err != nil {
 		return fail(err)
 	}
@@ -169,8 +197,16 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		result, checkErr := tlcBackend(ctx, compiled, tlcOptions)
 		stage.TLC = &result
 		if checkErr != nil {
+			var preparation *apalache.PreparationError
+			if errors.As(checkErr, &preparation) {
+				report := apalache.ReportVerification(apalache.VerificationResult{}, checkErr, coreCompatibilitySources(frontend))
+				stage.Errors, stage.Explanation = report.Errors, report.Explanation
+				return verifyOutput(options, stage, stdout, stderr)
+			}
+			stage.BackendResult = true
 			return fail(checkErr)
 		}
+		stage.BackendResult = true
 		if !result.Complete {
 			return fail(fmt.Errorf("TLC did not complete checking"))
 		}
@@ -213,7 +249,8 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		checkOptions.Temporal = []string{"q::temporalProps"}
 	}
 	result, err := backend.Verify(ctx, compiled, loaded, apalache.VerificationOptions{CheckOptions: checkOptions, Inductive: options.inductive != ""})
-	report := apalache.ReportVerification(result, err, frontend.Sources)
+	report := apalache.ReportVerification(result, err, coreCompatibilitySources(frontend))
+	stage.BackendResult = true
 	stage.Outcome = result.Outcome
 	stage.Explanation = report.Explanation
 	stage.Errors = report.Errors
@@ -225,10 +262,11 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 	}
 	if len(report.Traces) > 0 {
 		stage.Trace = report.Traces[0]
+		stage.NormalizedTrace = true
 	}
 	if err == nil && result.Outcome == apalache.CheckSafe {
 		stage.Status = "ok"
-	} else if err == nil && (result.Outcome == apalache.CheckViolation || result.Outcome == apalache.CheckDeadlock) {
+	} else if len(report.Traces) > 0 {
 		stage.Status = "violation"
 	}
 	if reportInvariants && err == nil && stage.Status == "violation" {
@@ -391,10 +429,24 @@ func verifyOutput(options verifyOptions, stage verifyStage, stdout, stderr io.Wr
 		code = 0
 	}
 	if options.out != "" {
-		data, err := json.MarshalIndent(stage, "", "  ")
-		if err == nil {
-			err = os.WriteFile(options.out, append(data, '\n'), 0o644)
+		fields := stage.Fields
+		if fields == nil {
+			fields = insdict.NewDict[string, any]()
+			fields.Set("stage", "verifying")
 		}
+		fields.Set("errors", stage.Errors)
+		if stage.BackendResult {
+			fields.Set("status", stage.Status)
+		}
+		if stage.NormalizedTrace {
+			trace, err := quint.DecodeNormalizedITFTrace(stage.Trace)
+			if err != nil {
+				fmt.Fprintln(stderr, "write verification result:", err)
+				return 1
+			}
+			fields.Set("trace", trace.States)
+		}
+		err := coreWriteStage(options.out, fields)
 		if err != nil {
 			fmt.Fprintln(stderr, "write verification result:", err)
 			return 1

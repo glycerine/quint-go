@@ -258,7 +258,7 @@ func TestVerifyCLIResultFilesAndBackendFailures(t *testing.T) {
 			t.Fatal(err)
 		}
 		var stage verifyStage
-		if err = json.Unmarshal(data, &stage); err != nil || stage.Status != test.status || len(stage.Phases) != 1 || code != test.code || stdout.Len() != 0 || stderr.Len() != 0 {
+		if err = json.Unmarshal(data, &stage); err != nil || stage.Status != test.status || len(stage.Phases) != 0 || code != test.code || stdout.Len() != 0 || stderr.Len() != 0 {
 			t.Fatal(test, stage, code, stdout.String(), stderr.String(), err)
 		}
 		if test.outcome == apalache.CheckViolation || test.outcome == apalache.CheckDeadlock {
@@ -300,6 +300,15 @@ func TestVerifyCLICancellationQuietAndWriteErrors(t *testing.T) {
 	stage.Trace = json.RawMessage(`{`)
 	if code := verifyOutput(verifyOptions{outITF: filepath.Join(t.TempDir(), "trace.json")}, stage, io.Discard, &stderr); code != 1 || !strings.Contains(stderr.String(), "invalid ITF") {
 		t.Fatal(code, stderr.String())
+	}
+	stderr.Reset()
+	stage.NormalizedTrace = true
+	output := filepath.Join(t.TempDir(), "stage.json")
+	if code := verifyOutput(verifyOptions{out: output}, stage, io.Discard, &stderr); code != 1 || !strings.Contains(stderr.String(), "write verification result") {
+		t.Fatal(code, stderr.String())
+	}
+	if _, err := os.Stat(output); !errors.Is(err, os.ErrNotExist) {
+		t.Fatal("wrote an invalid normalized counterexample", err)
 	}
 	stderr.Reset()
 	if code := verifyOutput(verifyOptions{verbosity: 2}, verifyStage{Status: "ok"}, verifyBrokenWriter{}, &stderr); code != 1 || !strings.Contains(stderr.String(), "write verification result") {

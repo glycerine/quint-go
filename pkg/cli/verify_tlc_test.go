@@ -60,7 +60,7 @@ func TestVerifyTLCOptionsAndOutput(t *testing.T) {
 			t.Fatal(err)
 		}
 		var stage verifyStage
-		if err = json.Unmarshal(data, &stage); err != nil || code != 0 || stdout.Len() != 0 || stderr.Len() != 0 || stage.Status != "ok" || stage.TLC == nil || !stage.TLC.Complete || stage.MaxSteps != nil || len(stage.Phases) != 0 {
+		if err = json.Unmarshal(data, &stage); err != nil || code != 0 || stdout.Len() != 0 || stderr.Len() != 0 || stage.Status != "ok" || stage.TLC != nil || stage.MaxSteps != nil || len(stage.Phases) != 0 {
 			t.Fatal(string(data), code, err)
 		}
 	}
@@ -104,7 +104,7 @@ func TestVerifyTLCResultsAndFailures(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if err = json.Unmarshal(data, &stage); err != nil || code != 1 || stage.Status != tc.status || stage.TLC == nil || stdout.Len() != 0 || stderr.Len() != 0 {
+			if err = json.Unmarshal(data, &stage); err != nil || code != 1 || stage.Status != tc.status || stage.TLC != nil || stdout.Len() != 0 || stderr.Len() != 0 {
 				t.Fatal(code, string(data), err)
 			}
 		})
@@ -178,16 +178,22 @@ func TestVerifyTLCActualGoChecker(t *testing.T) {
 			t.Fatal(code, stdout.String(), stderr.String())
 		}
 		out := filepath.Join(t.TempDir(), "result.json")
-		code = commandVerify(context.Background(), []string{input, "--backend=tlc", "--invariant=safe", "--out", out}, io.Discard, io.Discard)
+		var native gotlc.Result
+		checker := func(ctx context.Context, compiled quint.CompilationResult, options gotlc.Options) (gotlc.Result, error) {
+			var err error
+			native, err = gotlc.Check(ctx, compiled, options)
+			return native, err
+		}
+		code = verifyWithCheckers(context.Background(), []string{input, "--backend=tlc", "--invariant=safe", "--out", out}, io.Discard, io.Discard, nil, checker)
 		data, err := os.ReadFile(out)
 		var stage verifyStage
 		if err != nil {
 			t.Fatal(err)
 		}
-		if err = json.Unmarshal(data, &stage); err != nil || code != tc.wantCode || stage.TLC == nil || !stage.TLC.Complete {
+		if err = json.Unmarshal(data, &stage); err != nil || code != tc.wantCode || stage.TLC != nil || !native.Complete {
 			t.Fatal(code, string(data), err)
 		}
-		if tc.wantCode == 1 && (len(stage.TLC.Trace) != 2 || stage.TLC.Trace[0].Values[0].Value != "0" || stage.TLC.Trace[1].Values[0].Value != "1") {
+		if tc.wantCode == 1 && (len(native.Trace) != 2 || native.Trace[0].Values[0].Value != "0" || native.Trace[1].Values[0].Value != "1") {
 			t.Fatal(string(data))
 		}
 	}
@@ -206,7 +212,13 @@ func TestVerifyTLCActualTemporalSource(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	var stdout, stderr bytes.Buffer
-	code := commandVerify(ctx, []string{input, "--backend=tlc", "--temporal=live", "--tlc-config", config, "--out", output, "--out-itf", itfOutput}, &stdout, &stderr)
+	var native gotlc.Result
+	checker := func(ctx context.Context, compiled quint.CompilationResult, options gotlc.Options) (gotlc.Result, error) {
+		var err error
+		native, err = gotlc.Check(ctx, compiled, options)
+		return native, err
+	}
+	code := verifyWithCheckers(ctx, []string{input, "--backend=tlc", "--temporal=live", "--tlc-config", config, "--out", output, "--out-itf", itfOutput}, &stdout, &stderr, nil, checker)
 	data, err := os.ReadFile(output)
 	if err != nil {
 		t.Fatal(err)
@@ -215,15 +227,15 @@ func TestVerifyTLCActualTemporalSource(t *testing.T) {
 	if err := json.Unmarshal(data, &stage); err != nil {
 		t.Fatal(err)
 	}
-	if code != 1 || stdout.Len() != 0 || stderr.Len() != 0 || stage.Status != "violation" || stage.MaxSteps != nil || stage.TLC == nil || !stage.TLC.Complete || stage.TLC.Outcome != gotlc.Violation {
+	if code != 1 || stdout.Len() != 0 || stderr.Len() != 0 || stage.Status != "violation" || stage.MaxSteps != nil || stage.TLC != nil || !native.Complete || native.Outcome != gotlc.Violation {
 		t.Fatalf("code=%d stdout=%s stderr=%s result=%s", code, stdout.String(), stderr.String(), data)
 	}
 	// Eventual x is false only if the entire concrete prefix and repeated cycle
 	// omit TRUE. The native INIT/NEXT semantics allow the final FALSE stutter.
-	if stage.TLC.Loop == nil || *stage.TLC.Loop < 0 || *stage.TLC.Loop >= len(stage.TLC.Trace) {
+	if native.Loop == nil || *native.Loop < 0 || *native.Loop >= len(native.Trace) {
 		t.Fatal(string(data))
 	}
-	for i, state := range stage.TLC.Trace {
+	for i, state := range native.Trace {
 		if state.Index != i || len(state.Values) != 1 || state.Values[0].Name != "x" || state.Values[0].Value != "FALSE" {
 			t.Fatal(string(data))
 		}
@@ -233,15 +245,15 @@ func TestVerifyTLCActualTemporalSource(t *testing.T) {
 		t.Fatal(err)
 	}
 	itf, err := quint.DecodeITFTrace(itfData)
-	if err != nil || len(itf.Vars) != 1 || itf.Vars[0] != "x" || itf.Loop == nil || *itf.Loop != *stage.TLC.Loop || len(itf.States) != len(stage.TLC.Trace) {
+	if err != nil || len(itf.Vars) != 1 || itf.Vars[0] != "x" || itf.Loop == nil || *itf.Loop != *native.Loop || len(itf.States) != len(native.Trace) {
 		t.Fatal(string(itfData), err)
 	}
 	var compact bytes.Buffer
-	if err := json.Compact(&compact, stage.Trace); err != nil {
+	if err := json.Compact(&compact, native.ITF); err != nil {
 		t.Fatal(err)
 	}
 	if !bytes.Equal(bytes.TrimSpace(itfData), compact.Bytes()) {
-		t.Fatal("JSON and ITF files have different counterexamples")
+		t.Fatal("backend and ITF files have different counterexamples")
 	}
 	for _, state := range itf.States {
 		if state.Kind != "app" || state.Opcode != "Rec" || len(state.Args) != 2 || state.Args[0].Str != "x" || state.Args[1].Kind != "bool" || state.Args[1].Bool {

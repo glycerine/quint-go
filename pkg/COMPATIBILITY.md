@@ -106,6 +106,11 @@ Type-system coverage includes all 95 upstream tests across eight suite families,
 with exact raw-ID generator, solver and helper replays. The tuple-prefix
 allocation cap is an explicit Go resource policy.
 
+Temporal Go Apalache checking explicitly rejects names that collide with native
+loop/tableau encoding; this prevents false safe results until backend hygiene is
+implemented. Ordinary safety accepts those user names. Caller cancellation keeps
+its Go context identity even when encoded in a native service response.
+
 ## Commands and flags
 
 All eight commands and a default REPL are dispatched by `cmd/quint`. Help/version
@@ -151,6 +156,9 @@ packaging remains separate validation work.
 | `HOME`, `USERPROFILE` | Used by upstream editor logger to choose its log path; no corresponding Go logger/path behavior. |
 
 ## Data, statuses, and diagnostics
+
+Verify `--out` uses the full CLI stage schema with normalized Quint trace states;
+public backend reports and raw `--out-itf` remain separate interfaces.
 
 Raw wire tests distinguish absent, empty and nonempty diagnostic/namespace arrays
 through serialization and import/flatten metadata copies. IDs remain lossless.

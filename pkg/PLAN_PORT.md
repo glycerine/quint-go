@@ -3586,3 +3586,15 @@ word "retained" in the commit message.
   modules after abort. Focused0.012s, broad parser/source0.209s, CLI recovery0.064s,
   race1.057s, vet and byte-identical generation pass. Recovering CLI adapters can
   now preserve these partial results rather than replace them with generic errors.
+
+- 2026-11-02: Preserved native backend cancellation identity and raw pass-failure
+  payloads, with actual service cancellation/query-deadline/temporary-cleanup
+  tests. Temporal verification rejects precise internal-name collisions before
+  calling the checker, preventing the demonstrated false-safe __InLoop case;
+  ordinary safety and unrelated/namespaced names remain supported. Source-located
+  preparation explanations flow through both backends. Verify --out now uses the
+  full CLI stage schema (modules/table/types/effects/main/errors/status/normalized
+  Quint trace), separate from public checker reports and raw --out-itf. Twenty-one
+  actual upstream stage snapshots pass; default verify0.252s, optional actual
+  backend corpus1.415s, resource race1.256s and native suites pass. Shai loop/source
+  omissions, hard preemption and dependency-version reporting remain open.
