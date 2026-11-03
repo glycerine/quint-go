@@ -25,7 +25,7 @@ func FlattenModules(modules []Module, table *insdict.Dict[ID, LookupDefinition],
 	needsSourceGraph := false
 	for _, module := range modules {
 		for _, declaration := range module.Declarations {
-			if declaration.Kind == "var" || declaration.Expr != nil && (declaration.Qualifier == Action && declaration.Expr.Kind != "lambda" || runtimeHasSourceAction(*declaration.Expr)) {
+			if declaration.Kind == "var" || declaration.Kind == "instance" || declaration.Expr != nil && (declaration.Qualifier == Action && declaration.Expr.Kind != "lambda" || runtimeHasSourceAction(*declaration.Expr)) {
 				needsSourceGraph = true
 			}
 		}

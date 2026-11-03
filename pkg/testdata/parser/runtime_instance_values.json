@@ -1,0 +1,1515 @@
+[
+  {
+    "name": "direct_instances",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=100) as B val result=List(A::f(0),B::f(0))}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 100
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "higher_order_instances",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=100) as B def both(f,g)=List(f(0),g(0)) val result=both(A::f,B::f)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 100
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 100
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "higher_order_instances_reverse",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=100) as B def both(f,g)=List(f(0),g(0)) val result=both(B::f,A::f)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "unused_callback_updates_override",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=100) as B def first(f,g)=f(0) val result=first(A::f,B::f)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 100
+        }
+      }
+    ]
+  },
+  {
+    "name": "later_argument_updates_override",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=100) as B def apply(f,x)=f(x) val result=apply(A::f,B::f(0))}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 200
+        }
+      }
+    ]
+  },
+  {
+    "name": "repeated_instance_callback",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=100) as B def both(f,g)=List(f(0),g(0)) val result=both(A::f,A::f)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "three_instances",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=100) as B import P(n=7) as C def use(f,g,h)=List(f(0),g(0),h(0)) val result=use(A::f,B::f,C::f)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 7
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 7
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 7
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "nested_local_callback",
+    "source": "module P {const n:int def f(x)={def g(y)=n+x+y g(1)}} module M {import P(n=1) as A import P(n=100) as B def both(f,g)=List(f(0),g(0)) val result=both(A::f,B::f)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 101
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 101
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "pureval_first_read_after_override",
+    "source": "module P {const n:int pure val p=n def f(x)=p+x} module M {import P(n=1) as A import P(n=100) as B def both(f,g)=List(f(0),g(0)) val result=both(A::f,B::f)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 100
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 100
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "pureval_cached_before_override",
+    "source": "module P {const n:int pure val p=n def f(x)=p+x} module M {import P(n=1) as A import P(n=100) as B def both(f,g)=List(f(0),g(0)) val result=List(A::p,both(A::f,B::f).head())}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "val_first_read_after_override",
+    "source": "module P {const n:int val p=n def f(x)=p+x} module M {import P(n=1) as A import P(n=100) as B def both(f,g)=List(f(0),g(0)) val result=both(A::f,B::f)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 100
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 100
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "operator_override_callbacks",
+    "source": "module P {const op:(int)=>int def f(x)=op(x)} module M {import P(op=(x)=>x+1) as A import P(op=(x)=>x+100) as B def both(f,g)=List(f(0),g(0)) val result=both(A::f,B::f)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 100
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 100
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "operator_override_direct",
+    "source": "module P {const op:(int)=>int def f(x)=op(x)} module M {import P(op=(x)=>x+1) as A import P(op=(x)=>x+100) as B val result=List(A::f(0),B::f(0))}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 100
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "shared_parameter_after_callback",
+    "source": "module P {const n:int def f(x,g)=g(20)+x} module M {import P(n=1) as A import P(n=100) as B val result=A::f(10,(z)=>B::f(z,(v)=>v))}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 60
+        }
+      }
+    ]
+  },
+  {
+    "name": "shared_parameter_unused_callback",
+    "source": "module P {const n:int def f(x,g)={val ignored=g(20) x}} module M {import P(n=1) as A import P(n=100) as B val result=A::f(10,(z)=>B::f(z,(v)=>v))}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 10
+        }
+      }
+    ]
+  },
+  {
+    "name": "shared_scoped_value_first_read_after_callback",
+    "source": "module P {const n:int def f(x,g)={val z=x g(20)+z}} module M {import P(n=1) as A import P(n=100) as B val result=A::f(10,(z)=>B::f(z,(v)=>v))}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 60
+        }
+      }
+    ]
+  },
+  {
+    "name": "shared_scoped_value_cached_before_callback",
+    "source": "module P {const n:int def f(x,g)={val z=x z+g(20)+z}} module M {import P(n=1) as A import P(n=100) as B val result=A::f(10,(z)=>B::f(z,(v)=>v))}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 80
+        }
+      }
+    ]
+  },
+  {
+    "name": "shared_scoped_const_cached_before_callback",
+    "source": "module P {const n:int def f(x,g)={val z=n z+g(20)+z}} module M {import P(n=1) as A import P(n=100) as B val result=A::f(10,(z)=>B::f(z,(v)=>v))}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 222
+        }
+      }
+    ]
+  },
+  {
+    "name": "scoped_operator_alias",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=100) as B def use(f,g)={def a=f def b=g List(a(0),b(0))} val result=use(A::f,B::f)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 100
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 100
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "unused_error_override",
+    "source": "module P {const n:int def f(x)=x} module M {def bad(x)=1/0 import P(n=bad(0)) as A val result=A::f(2)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "name": "later_error_override",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=1/0) as B def both(f,g)=List(f(0),g(0)) val result=both(A::f,B::f)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "error": {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 15
+        }
+      }
+    ]
+  },
+  {
+    "name": "scoped_cache_restored_after_error",
+    "source": "module P {const n:int def f(x,g)={val z=x z+g(20)+z}} module M {import P(n=1) as A import P(n=100) as B val result=A::f(10,(z)=>B::f(z,(v)=>1/0))}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "error": {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 29
+        }
+      }
+    ]
+  },
+  {
+    "name": "saved_instance_closures",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=100) as B def a=A::f def b=B::f}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "a",
+        "closure": true
+      },
+      {
+        "kind": "capture",
+        "name": "b",
+        "save": "b",
+        "closure": true
+      },
+      {
+        "kind": "same",
+        "left": "a",
+        "right": "b",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": false
+        }
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          0
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 100
+        }
+      },
+      {
+        "kind": "call",
+        "name": "b",
+        "arguments": [
+          0
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 100
+        }
+      },
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "again",
+        "closure": true
+      },
+      {
+        "kind": "same",
+        "left": "a",
+        "right": "again",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "kind": "call",
+        "name": "b",
+        "arguments": [
+          0
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "saved_instance_closures_reverse",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=100) as B def a=A::f def b=B::f}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "capture",
+        "name": "b",
+        "save": "b",
+        "closure": true
+      },
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "a",
+        "closure": true
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          0
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "kind": "call",
+        "name": "b",
+        "arguments": [
+          0
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "ordinary_import_alias_closures",
+    "source": "module P {def f(x)=x+1} module M {import P as A import P as B def a=A::f def b=B::f}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "a",
+        "closure": true
+      },
+      {
+        "kind": "capture",
+        "name": "b",
+        "save": "b",
+        "closure": true
+      },
+      {
+        "kind": "same",
+        "left": "a",
+        "right": "b",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          2
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        }
+      },
+      {
+        "kind": "call",
+        "name": "b",
+        "arguments": [
+          3
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 4
+        }
+      }
+    ]
+  },
+  {
+    "name": "saved_const_reads_and_pureval_caches",
+    "source": "module P {const n:int pure val p=n def f(x)=p+x} module M {import P(n=1) as A import P(n=100) as B def a=A::f def b=B::f val pa=A::p val pb=B::p}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "a",
+        "closure": true
+      },
+      {
+        "kind": "capture",
+        "name": "b",
+        "save": "b",
+        "closure": true
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          0
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 100
+        }
+      },
+      {
+        "kind": "evaluate",
+        "name": "pa",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 100
+        }
+      },
+      {
+        "kind": "call",
+        "name": "b",
+        "arguments": [
+          0
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "kind": "evaluate",
+        "name": "pb",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          1
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 101
+        }
+      }
+    ]
+  },
+  {
+    "name": "shared_inner_instance_closure",
+    "source": "module P {const n:int def f(x)=n+x} module Q {const d:int import P(n=d) as Inner def pickFn=Inner::f def direct(x)=Inner::f(x)} module M {import Q(d=1) as A import Q(d=100) as B def a=A::pickFn def b=B::pickFn}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "a",
+        "closure": true
+      },
+      {
+        "kind": "capture",
+        "name": "b",
+        "save": "b",
+        "closure": true
+      },
+      {
+        "kind": "same",
+        "left": "a",
+        "right": "b",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          0
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "kind": "call",
+        "name": "b",
+        "arguments": [
+          1
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "name": "shared_inner_instance_direct",
+    "source": "module P {const n:int def f(x)=n+x} module Q {const d:int import P(n=d) as Inner def pickFn=Inner::f def direct(x)=Inner::f(x)} module M {import Q(d=1) as A import Q(d=100) as B val result=List(A::direct(0),B::direct(0))}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "shared_inner_instance_callbacks",
+    "source": "module P {const n:int def f(x)=n+x} module Q {const d:int import P(n=d) as Inner def pickFn=Inner::f def direct(x)=Inner::f(x)} module M {import Q(d=1) as A import Q(d=100) as B def both(f,g)=List(f(0),g(0)) val result=both(A::pickFn,B::pickFn)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 1
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "independent_evaluators_are_isolated",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=100) as B def a=A::f def b=B::f}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "a",
+        "closure": true
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          0
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "saved_error_override",
+    "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1/0) as A def a=A::f}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "a",
+        "closure": true
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          0
+        ],
+        "error": {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 12
+        }
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          1
+        ],
+        "error": {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 12
+        }
+      }
+    ]
+  },
+  {
+    "name": "stateful_value_cache_cleared_by_shift",
+    "source": "module P {const n:int var x:int action init=x'=0 action step=x'=x+1 val p=n+x pure val c=n def f(y)=p+y} module M {import P(n=1) as A import P(n=100) as B def a=A::f def b=B::f val ca=A::c action init=all{A::init,B::init} action step=A::step}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "a",
+        "closure": true
+      },
+      {
+        "kind": "capture",
+        "name": "b",
+        "save": "b",
+        "closure": true
+      },
+      {
+        "kind": "evaluate",
+        "name": "init",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "kind": "shift",
+        "shifted": true
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          0
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 100
+        }
+      },
+      {
+        "kind": "call",
+        "name": "b",
+        "arguments": [
+          0
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 100
+        }
+      },
+      {
+        "kind": "evaluate",
+        "name": "ca",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      },
+      {
+        "kind": "evaluate",
+        "name": "step",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "kind": "shift",
+        "shifted": true
+      },
+      {
+        "kind": "call",
+        "name": "b",
+        "arguments": [
+          0
+        ],
+        "error": {
+          "code": "QNT502",
+          "message": "Variable M::B::x not set",
+          "reference": 16
+        }
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          0
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        }
+      },
+      {
+        "kind": "evaluate",
+        "name": "ca",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "instance_variable_target_ignores_caller_alias",
+    "source": "module P {const n:int var x:int action assignValue=x'=n} module M {val x=41 import P(n=1) as A action init=A::assignValue val result=A::x}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "init",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "kind": "shift",
+        "shifted": true
+      },
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "imported_variable_target_ignores_caller_alias",
+    "source": "module P {var x:int action assignValue=x'=1} module M {val x=41 import P as A action init=A::assignValue val result=A::x}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "init",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "kind": "shift",
+        "shifted": true
+      },
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "factory_shared_parameters",
+    "source": "module P {const n:int def factory(x)=List((y)=>x+y)} module M {import P(n=1) as A import P(n=100) as B def a=A::factory(10).head() def b=B::factory(20).head()}",
+    "module": "M",
+    "runtimeBoundary": true,
+    "analysisDiagnostics": [
+      {
+        "code": "QNT000",
+        "message": "Can't unify different types of effects\nTrying to unify Read[_v6] & Temporal[_v7] & Update[_v8] and (Read[_v3] & Temporal[_v4] & Update[_v5]) => Read[_v0, _v3] & Temporal[_v1, _v4, _v2, _v5]\nTrying to unify (Read[_v6] & Temporal[_v7] & Update[_v8]) => Read[_v6] & Temporal[_v7, _v8] and ((Read[_v3] & Temporal[_v4] & Update[_v5]) => Read[_v0, _v3] & Temporal[_v1, _v4, _v2, _v5]) => _e1\nTrying to infer effect for operator application in List(((y) => iadd(x, y)))\n",
+        "reference": 9,
+        "data": {
+          "trace": {
+            "location": "Trying to infer effect for operator application in List(((y) => iadd(x, y)))",
+            "children": [
+              {
+                "location": "Trying to unify (Read[_v6] & Temporal[_v7] & Update[_v8]) => Read[_v6] & Temporal[_v7, _v8] and ((Read[_v3] & Temporal[_v4] & Update[_v5]) => Read[_v0, _v3] & Temporal[_v1, _v4, _v2, _v5]) => _e1",
+                "children": [
+                  {
+                    "location": "Trying to unify Read[_v6] & Temporal[_v7] & Update[_v8] and (Read[_v3] & Temporal[_v4] & Update[_v5]) => Read[_v0, _v3] & Temporal[_v1, _v4, _v2, _v5]",
+                    "message": "Can't unify different types of effects",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "code": "QNT000",
+        "message": "Can't unify different types of effects\nTrying to unify Read[_v6] & Temporal[_v7] & Update[_v8] and (Read[_v3] & Temporal[_v4] & Update[_v5]) => Read[_v0, _v3] & Temporal[_v1, _v4, _v2, _v5]\nTrying to unify (Read[_v6] & Temporal[_v7] & Update[_v8]) => Read[_v6] & Temporal[_v7, _v8] and ((Read[_v3] & Temporal[_v4] & Update[_v5]) => Read[_v0, _v3] & Temporal[_v1, _v4, _v2, _v5]) => _e1\nTrying to infer effect for operator application in List(((y) => iadd(x, y)))\n",
+        "reference": 9,
+        "data": {
+          "trace": {
+            "location": "Trying to infer effect for operator application in List(((y) => iadd(x, y)))",
+            "children": [
+              {
+                "location": "Trying to unify (Read[_v6] & Temporal[_v7] & Update[_v8]) => Read[_v6] & Temporal[_v7, _v8] and ((Read[_v3] & Temporal[_v4] & Update[_v5]) => Read[_v0, _v3] & Temporal[_v1, _v4, _v2, _v5]) => _e1",
+                "children": [
+                  {
+                    "location": "Trying to unify Read[_v6] & Temporal[_v7] & Update[_v8] and (Read[_v3] & Temporal[_v4] & Update[_v5]) => Read[_v0, _v3] & Temporal[_v1, _v4, _v2, _v5]",
+                    "message": "Can't unify different types of effects",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "steps": [
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "a",
+        "closure": true
+      },
+      {
+        "kind": "capture",
+        "name": "b",
+        "save": "b",
+        "closure": true
+      },
+      {
+        "kind": "same",
+        "left": "a",
+        "right": "b",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": false
+        }
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          1
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 21
+        }
+      },
+      {
+        "kind": "call",
+        "name": "b",
+        "arguments": [
+          2
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 22
+        }
+      }
+    ]
+  },
+  {
+    "name": "factory_shared_parameters_and_const",
+    "source": "module P {const n:int def factory(x)=List((y)=>n+x+y)} module M {import P(n=1) as A import P(n=100) as B def a=A::factory(10).head() def b=B::factory(20).head()}",
+    "module": "M",
+    "runtimeBoundary": true,
+    "analysisDiagnostics": [
+      {
+        "code": "QNT000",
+        "message": "Can't unify different types of effects\nTrying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]\nTrying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2\nTrying to infer effect for operator application in List(((y) => iadd(iadd(n, x), y)))\n",
+        "reference": 11,
+        "data": {
+          "trace": {
+            "location": "Trying to infer effect for operator application in List(((y) => iadd(iadd(n, x), y)))",
+            "children": [
+              {
+                "location": "Trying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2",
+                "children": [
+                  {
+                    "location": "Trying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]",
+                    "message": "Can't unify different types of effects",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "code": "QNT000",
+        "message": "Can't unify different types of effects\nTrying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]\nTrying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2\nTrying to infer effect for operator application in List(((y) => iadd(iadd(n, x), y)))\n",
+        "reference": 11,
+        "data": {
+          "trace": {
+            "location": "Trying to infer effect for operator application in List(((y) => iadd(iadd(n, x), y)))",
+            "children": [
+              {
+                "location": "Trying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2",
+                "children": [
+                  {
+                    "location": "Trying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]",
+                    "message": "Can't unify different types of effects",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "steps": [
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "a",
+        "closure": true
+      },
+      {
+        "kind": "capture",
+        "name": "b",
+        "save": "b",
+        "closure": true
+      },
+      {
+        "kind": "same",
+        "left": "a",
+        "right": "b",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": false
+        }
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          1
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 121
+        }
+      },
+      {
+        "kind": "call",
+        "name": "b",
+        "arguments": [
+          2
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 122
+        }
+      }
+    ]
+  },
+  {
+    "name": "factory_shared_scoped_cache",
+    "source": "module P {const n:int def factory(x)={val z=n+x List((y)=>z+y)}} module M {import P(n=1) as A import P(n=100) as B def a=A::factory(10).head() def b=B::factory(20).head()}",
+    "module": "M",
+    "runtimeBoundary": true,
+    "analysisDiagnostics": [
+      {
+        "code": "QNT000",
+        "message": "Can't unify different types of effects\nTrying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]\nTrying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2\nTrying to infer effect for operator application in List(((y) => iadd(z, y)))\n",
+        "reference": 13,
+        "data": {
+          "trace": {
+            "location": "Trying to infer effect for operator application in List(((y) => iadd(z, y)))",
+            "children": [
+              {
+                "location": "Trying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2",
+                "children": [
+                  {
+                    "location": "Trying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]",
+                    "message": "Can't unify different types of effects",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "code": "QNT000",
+        "message": "Can't unify different types of effects\nTrying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]\nTrying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2\nTrying to infer effect for operator application in List(((y) => iadd(z, y)))\n",
+        "reference": 13,
+        "data": {
+          "trace": {
+            "location": "Trying to infer effect for operator application in List(((y) => iadd(z, y)))",
+            "children": [
+              {
+                "location": "Trying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2",
+                "children": [
+                  {
+                    "location": "Trying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]",
+                    "message": "Can't unify different types of effects",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "steps": [
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "a",
+        "closure": true
+      },
+      {
+        "kind": "capture",
+        "name": "b",
+        "save": "b",
+        "closure": true
+      },
+      {
+        "kind": "same",
+        "left": "a",
+        "right": "b",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": false
+        }
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          1
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 121
+        }
+      },
+      {
+        "kind": "call",
+        "name": "b",
+        "arguments": [
+          2
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 122
+        }
+      }
+    ]
+  },
+  {
+    "name": "factory_shared_inner_instance",
+    "source": "module P {const n:int def factory(x)=List((y)=>n+x+y)} module Q {const d:int import P(n=d) as Inner def factory(x)=Inner::factory(x)} module M {import Q(d=1) as A import Q(d=100) as B def a=A::factory(10).head() def b=B::factory(20).head()}",
+    "module": "M",
+    "runtimeBoundary": true,
+    "analysisDiagnostics": [
+      {
+        "code": "QNT000",
+        "message": "Can't unify different types of effects\nTrying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]\nTrying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2\nTrying to infer effect for operator application in List(((y) => iadd(iadd(n, x), y)))\n",
+        "reference": 11,
+        "data": {
+          "trace": {
+            "location": "Trying to infer effect for operator application in List(((y) => iadd(iadd(n, x), y)))",
+            "children": [
+              {
+                "location": "Trying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2",
+                "children": [
+                  {
+                    "location": "Trying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]",
+                    "message": "Can't unify different types of effects",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "code": "QNT000",
+        "message": "Can't unify different types of effects\nTrying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]\nTrying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2\nTrying to infer effect for operator application in List(((y) => iadd(iadd(n, x), y)))\n",
+        "reference": 11,
+        "data": {
+          "trace": {
+            "location": "Trying to infer effect for operator application in List(((y) => iadd(iadd(n, x), y)))",
+            "children": [
+              {
+                "location": "Trying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2",
+                "children": [
+                  {
+                    "location": "Trying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]",
+                    "message": "Can't unify different types of effects",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "code": "QNT000",
+        "message": "Can't unify different types of effects\nTrying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]\nTrying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2\nTrying to infer effect for operator application in List(((y) => iadd(iadd(n, x), y)))\n",
+        "reference": 11,
+        "data": {
+          "trace": {
+            "location": "Trying to infer effect for operator application in List(((y) => iadd(iadd(n, x), y)))",
+            "children": [
+              {
+                "location": "Trying to unify (Read[_v12] & Temporal[_v13] & Update[_v14]) => Read[_v12] & Temporal[_v13, _v14] and ((Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]) => _e2",
+                "children": [
+                  {
+                    "location": "Trying to unify Read[_v12] & Temporal[_v13] & Update[_v14] and (Read[_v9] & Temporal[_v10] & Update[_v11]) => Read[_v3, _v9] & Temporal[_v4, _v5, _v10, _v11]",
+                    "message": "Can't unify different types of effects",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "steps": [
+      {
+        "kind": "capture",
+        "name": "a",
+        "save": "a",
+        "closure": true
+      },
+      {
+        "kind": "capture",
+        "name": "b",
+        "save": "b",
+        "closure": true
+      },
+      {
+        "kind": "same",
+        "left": "a",
+        "right": "b",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "kind": "call",
+        "name": "a",
+        "arguments": [
+          1
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 22
+        }
+      },
+      {
+        "kind": "call",
+        "name": "b",
+        "arguments": [
+          2
+        ],
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 23
+        }
+      }
+    ]
+  }
+]

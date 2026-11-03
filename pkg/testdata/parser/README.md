@@ -1262,3 +1262,10 @@ Terminal policy/status/value fixtures capture 248 actual upstream snapshots.
 `repl_interrupt.json` saves 12 line/interrupt histories; deterministic ownership,
 cancellation and file-descriptor tests accompany a real Unix PTY smoke. Generic
 readers remain caller-owned; non-Unix terminal keepalive is an explicit limit.
+
+`runtime_instance_values.json` saves 34 typed source and four explicit
+pre-analysis Builder histories with96 operations. Matching generation validates
+classification and compares shared constant/parameter registers, captured factory
+identity, scoped caches, override order and exact diagnostic references. Source
+helpers add ownership/cancellation and JSON-fallback tests; action-label histories
+include unrelated-root adoption and nested-only source graph activation.

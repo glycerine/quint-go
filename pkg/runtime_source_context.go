@@ -18,6 +18,7 @@ type runtimeSourceGraph struct {
 	table   *insdict.Dict[ID, LookupDefinition]
 	scopes  *insdict.Dict[string, *NameScope]
 	actions *insdict.Dict[string, runtimeSourceAction]
+	owners  *insdict.Dict[string, ID]
 }
 
 type runtimeSourceAction struct {
@@ -60,13 +61,24 @@ func newRuntimeSourceGraph(modules []Module) (*runtimeSourceGraph, error) {
 		return nil, linked.Errors[0]
 	}
 	actions := insdict.NewDict[string, runtimeSourceAction]()
+	owners := insdict.NewDict[string, ID]()
 	for id, definition := range linked.Table.All() {
 		declaration := definition.Declaration
-		if declaration != nil && declaration.ID == id && declaration.Kind == "def" && declaration.Qualifier == Action && declaration.Expr != nil {
-			actions.Set(declaration.Expr.ID.String(), runtimeSourceAction{ID: declaration.ID, Name: declaration.Name})
+		if declaration != nil && declaration.ID == id && declaration.Kind == "def" && declaration.Expr != nil {
+			owners.Set(declaration.Expr.ID.String(), declaration.ID)
+			if declaration.Qualifier == Action {
+				actions.Set(declaration.Expr.ID.String(), runtimeSourceAction{ID: declaration.ID, Name: declaration.Name})
+			}
 		}
 	}
-	return &runtimeSourceGraph{table: linked.Table, scopes: linked.Modules, actions: actions}, nil
+	for _, module := range owned {
+		for _, declaration := range module.Declarations {
+			for _, override := range declaration.Overrides {
+				owners.Set(override.Expr.ID.String(), override.Parameter.ID)
+			}
+		}
+	}
+	return &runtimeSourceGraph{table: linked.Table, scopes: linked.Modules, actions: actions, owners: owners}, nil
 }
 
 // Nonlambda actions create synthetic recorder calls even without variables.
@@ -103,10 +115,15 @@ type runtimeSourceCompileContext struct {
 // flattened name remains a fallback for transported IR without source metadata.
 // Like a builder, this object belongs to one sequential evaluator and storage.
 type runtimeSourcePreparation struct {
-	source   *runtimeSourceModule
-	memos    *insdict.Dict[ID, *insdict.Dict[ID, *runtimeSourceNode]]
-	bindings *insdict.Dict[runtimeSourceIdentity, RuntimeVariableBinding]
-	active   map[runtimeSourceIdentity]bool
+	source      *runtimeSourceModule
+	memos       *insdict.Dict[ID, *insdict.Dict[ID, *runtimeSourceNode]]
+	bindings    *insdict.Dict[runtimeSourceIdentity, RuntimeVariableBinding]
+	active      map[runtimeSourceIdentity]bool
+	values      *insdict.Dict[runtimeSourceIdentity, runtimeSourceValueTarget]
+	definitions *insdict.Dict[runtimeSourceIdentity, OperatorDef]
+	owners      *insdict.Dict[string, ID]
+	parameters  *insdict.Dict[string, []ID]
+	roots       *insdict.Dict[string, runtimeSourceIdentity]
 }
 
 func runtimeSourceIDHash(id ID) uint64 {
@@ -124,16 +141,29 @@ func runtimeSourceIdentityHash(identity runtimeSourceIdentity) uint64 {
 }
 
 func newRuntimeSourcePreparation(source *runtimeSourceModule) *runtimeSourcePreparation {
-	return &runtimeSourcePreparation{
+	preparation := &runtimeSourcePreparation{
 		source: source, memos: insdict.NewDictFunc[ID, *insdict.Dict[ID, *runtimeSourceNode]](runtimeSourceIDHash),
 		bindings: insdict.NewDictFunc[runtimeSourceIdentity, RuntimeVariableBinding](runtimeSourceIdentityHash), active: map[runtimeSourceIdentity]bool{},
+		values:      insdict.NewDictFunc[runtimeSourceIdentity, runtimeSourceValueTarget](runtimeSourceIdentityHash),
+		definitions: insdict.NewDictFunc[runtimeSourceIdentity, OperatorDef](runtimeSourceIdentityHash),
+		owners:      insdict.NewDict[string, ID](), parameters: insdict.NewDict[string, []ID](), roots: insdict.NewDict[string, runtimeSourceIdentity](),
 	}
+	preparation.UpdateSource(source)
+	return preparation
 }
 
 // UpdateSource changes the lookup graph used for future compilations. Memoized
 // references and their captured bindings remain frozen across REPL requests.
 func (p *runtimeSourcePreparation) UpdateSource(source *runtimeSourceModule) {
 	p.source = source
+	// Root names describe the current module request graph. Captured source
+	// references stay in values, independently of these replaceable name hints.
+	p.roots = insdict.NewDict[string, runtimeSourceIdentity]()
+	if source != nil && source.graph != nil && source.graph.owners != nil {
+		for body, owner := range source.graph.owners.All() {
+			p.owners.Set(body, owner)
+		}
+	}
 }
 
 func (p *runtimeSourcePreparation) Binding(identity runtimeSourceIdentity) (RuntimeVariableBinding, bool) {
@@ -175,6 +205,14 @@ func (p *runtimeSourcePreparation) PrepareDefinition(ctx context.Context, name s
 		return false, nil
 	}
 	_, err := p.buildDefinition(ctx, definition, runtimeSourceCompileContext{}, storage)
+	if err == nil {
+		target, targetError := p.sourceValueTarget(definition, runtimeSourceCompileContext{})
+		if targetError != nil {
+			return true, targetError
+		}
+		p.roots.Set(name, target.Identity)
+		p.values.Set(target.Identity, target)
+	}
 	return true, err
 }
 
@@ -249,6 +287,7 @@ func (p *runtimeSourcePreparation) buildDefinition(ctx context.Context, definiti
 				}
 			}
 		}
+		p.captureSourceDefinition(definition, compilation)
 		memo.Set(definition.ID, node)
 		return node, nil
 	})
@@ -287,8 +326,16 @@ func (p *runtimeSourcePreparation) buildExpression(ctx context.Context, expressi
 			if definition.Declaration != nil && definition.Declaration.Kind == "var" && node.variable != nil {
 				p.bindings.Set(identity, *node.variable)
 			}
+			if err := p.captureValueReference(identity, definition, compilation); err != nil {
+				return nil, err
+			}
 		}
 	case "lambda":
+		parameters := make([]ID, len(expression.Params))
+		for index, parameter := range expression.Params {
+			parameters[index] = parameter.ID
+		}
+		p.parameters.Set(expression.ID.String(), parameters)
 		if err := build(expression.Body); err != nil {
 			return nil, err
 		}
@@ -321,6 +368,9 @@ func (p *runtimeSourcePreparation) buildExpression(ctx context.Context, expressi
 				if err != nil {
 					return nil, err
 				}
+				if err := p.captureValueReference(runtimeSourceIdentity{ID: expression.Args[0].ID, InstanceID: compilation.instance}, definition, compilation); err != nil {
+					return nil, err
+				}
 			}
 		} else {
 			for i := range expression.Args {
@@ -330,6 +380,9 @@ func (p *runtimeSourcePreparation) buildExpression(ctx context.Context, expressi
 			}
 			if definition, exists := p.source.graph.table.Get2(expression.ID); exists {
 				if _, err := p.buildDefinition(ctx, definition, compilation, storage); err != nil {
+					return nil, err
+				}
+				if err := p.captureValueReference(identity, definition, compilation); err != nil {
 					return nil, err
 				}
 			}

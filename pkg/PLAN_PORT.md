@@ -427,7 +427,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     source/import/instance provenance and ITF header order across REPL updates.
   - [x] Source/instance variable compilation contexts, including exported aliases
     whose first compiled read fixes cell identity; assignment targets bypass memo.
-  - [ ] Complete remaining instance closure/cache/override and runtime-stack audits.
+  - [x] Match source instance constant/parameter registers, captured closures,
+    scoped caches and override order with34 typed/four runtime histories.
+  - [ ] Complete transported alias first-selection and broader runtime-stack audits.
   - [x] Eight execution-listener hooks, owned frames, verbosity filtering, run
     ranking, choice pruning, next-state placeholders and captured source calls.
 - [x] P7.3 Port scalar arithmetic, Boolean, and comparison builtins; test
@@ -3686,3 +3688,12 @@ word "retained" in the commit message.
   analysis/navigation. Fresh CGO-disabled builds pass; smoke0.782s and18 Python
   driver tests0.361s pass. Public checker pinning, release archive automation and
   other-platform execution remain explicitly open.
+
+- 2026-11-02: Added source-only canonical definition/literal/lambda identities
+  and original constant/parameter/scoped-value registers across instances. Shared
+  override and callback effects now match actual source histories; metadata-free
+  JSON keeps its explicit flattened boundary. Thirty-four typed and four
+  pre-analysis runtime histories compare96 operations, including cancellation,
+  input ownership and saved factories. Source helpers100% covered; expanded race
+ 1.769s, full isolated tests/vet pass (core1.253s, CLI0.466s). Transported alias
+  first-selection and broader runtime-stack parity remain open.

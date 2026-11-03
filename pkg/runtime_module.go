@@ -175,6 +175,11 @@ func (e *ModuleEvaluator) PrepareDefinition(ctx context.Context, name string) er
 		}
 		e.prepared[name] = true
 	}
+	if e.module.runtimeSource != nil {
+		if identity, exists := e.execution.source.RootIdentity(name); exists {
+			e.request.runtimeSource = &identity
+		}
+	}
 	return nil
 }
 

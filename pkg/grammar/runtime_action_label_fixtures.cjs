@@ -21,6 +21,7 @@ const cases=[
  ['local_shadowed_action','module A {action result={action local=true; {action local=false;local} or local}} module M {import A as C action keep=C::result}',['C::result']],
  ['qualified_original_name','module A {action N::start=true} module M {import A as C action keep=C::N::start}',['C::N::start']],
  ['lambda_action_application','module A {action apply(x)=x>0} module M {import A as C action result=C::apply(1)}',['result']],
+ ['later_selected_instance_named_call','module A {const N:int def inc(x)=x+N action start=inc(1)>0} module M {import A(N=1) as I val unrelated=42 action keep=I::start}',['unrelated','keep']],
 ]
 function evaluate(module,linked,ids,roots){
  const rng=newRng(0n),recorder=newTraceRecorder(3,rng),evaluator=new Evaluator(linked.table,recorder,rng,true)

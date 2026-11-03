@@ -93,17 +93,25 @@ type runtimeLocalCache struct {
 	generation uint64
 }
 type runtimeLocalDefinition struct {
-	cache runtimeLocalCache
+	cache *runtimeLocalCache
 	scope *insdict.Dict[string, runtimeLocalValue]
 	value runtimeLocalValue
 }
 type runtimeLambdaKey struct {
-	id   ID
-	body *Expr
+	id       ID
+	instance ID
+	source   bool
+	body     *Expr
 }
 type runtimeDefinitionKey struct {
 	id         ID
+	instance   ID
+	source     bool
 	definition *OperatorDef
+}
+type runtimeParameterKey struct {
+	id     ID
+	source bool
 }
 
 // The reference catches domain exceptions at the expression that invokes an
@@ -155,9 +163,11 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 	var eval func(Expr) (RuntimeValue, error)
 	scopes := []*insdict.Dict[string, runtimeLocalValue]{}
 	lambdas := map[runtimeLambdaKey]RuntimeValue{}
-	literals := map[ID]RuntimeValue{}
-	parameters := map[ID]*runtimeParameter{}
+	literals := map[runtimeLambdaKey]RuntimeValue{}
+	parameters := map[runtimeParameterKey]*runtimeParameter{}
 	definitions := map[runtimeDefinitionKey]*runtimeLocalDefinition{}
+	scopedValues := map[ID]*runtimeLocalCache{}
+	constantValues := map[ID]runtimeLocalCache{}
 	lookup := func(name string) (runtimeLocalValue, bool) {
 		for i := len(scopes) - 1; i >= 0; i-- {
 			if value, ok := scopes[i].Get2(name); ok {
@@ -171,6 +181,84 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 		return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: message, Reference: &id}
 	}
 	boolValue := func(b bool) (RuntimeValue, error) { return NewRuntimeValue(Expr{Kind: "bool", Bool: b}) }
+	var sourceValue func(runtimeSourceValueTarget) (RuntimeValue, error)
+	applySourceOverrides := func(target runtimeSourceValueTarget) {
+		for _, override := range target.Overrides {
+			value, err := sourceValue(override.Value)
+			constantValues[override.ConstantID] = runtimeLocalCache{value: value, err: err, evaluated: true}
+		}
+	}
+	sourceValue = func(target runtimeSourceValueTarget) (RuntimeValue, error) {
+		if err := ctx.Err(); err != nil {
+			return RuntimeValue{}, err
+		}
+		applySourceOverrides(target)
+		switch target.Kind {
+		case "const":
+			if cell, exists := constantValues[target.Identity.ID]; exists {
+				return cell.value, cell.err
+			}
+			return RuntimeValue{}, Diagnostic{Code: "QNT500", Message: "Uninitialized const " + target.Name + ". Use: import <moduleName>(" + target.Name + "=<value>).*"}
+		case "param":
+			if register := parameters[runtimeParameterKey{id: target.Identity.ID, source: true}]; register != nil && register.value.Valid() {
+				return register.value, nil
+			}
+			return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Parameter " + target.Name + " not set"}
+		case "def":
+			key := runtimeDefinitionKey{id: target.Identity.ID, instance: target.Identity.InstanceID, source: true}
+			definition, exists := definitions[key]
+			if !exists {
+				original, found := session.source.SourceDefinition(target.Identity)
+				if !found {
+					return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Runtime source definition not compiled: " + target.Name}
+				}
+				// Flattening can omit an unused override and its dependencies.
+				// Install the owned source body through the ordinary evaluator.
+				body := Expr{Kind: "bool", Bool: true}
+				if _, err := eval(Expr{Kind: "let", Opdef: &original, Body: &body}); err != nil {
+					return RuntimeValue{}, err
+				}
+				definition = definitions[key]
+				if definition == nil {
+					return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Runtime source definition not installed: " + target.Name}
+				}
+			}
+			return definition.value(nil)
+		default:
+			return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Unsupported runtime source reference: " + target.Name}
+		}
+	}
+	lookupExpression := func(expression Expr) (runtimeLocalValue, bool) {
+		if target, exists := session.source.ValueReference(expression); exists {
+			return func(arguments []RuntimeValue) (RuntimeValue, error) {
+				var value RuntimeValue
+				var err error
+				if target.Kind == "var" {
+					applySourceOverrides(target)
+					binding, bound := session.variableBinding(expression)
+					if storage != nil && bound {
+						if register, registered := storage.current.Get2(binding.Key); registered {
+							value, err = register.Read()
+						} else {
+							err = Diagnostic{Code: "QNT501", Message: "Runtime source variable not registered: " + target.Name}
+						}
+					} else {
+						err = Diagnostic{Code: "QNT501", Message: "Runtime source variable unavailable: " + target.Name}
+					}
+				} else {
+					value, err = sourceValue(target)
+				}
+				if err == nil && arguments != nil {
+					return value.Apply(ctx, arguments)
+				}
+				return value, err
+			}, true
+		}
+		if expression.Kind == "app" {
+			return lookup(expression.Opcode)
+		}
+		return lookup(expression.Name)
+	}
 	eval = func(e Expr) (RuntimeValue, error) {
 		if err := ctx.Err(); err != nil {
 			return RuntimeValue{}, err
@@ -178,18 +266,22 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 		switch e.Kind {
 		case "int", "bool", "str":
 			if e.ID != (ID{}) {
-				if value, exists := literals[e.ID]; exists {
+				key := runtimeLambdaKey{id: e.ID}
+				if identity, source := session.source.ExpressionIdentity(e); source {
+					key.id, key.instance, key.source = identity.ID, identity.InstanceID, true
+				}
+				if value, exists := literals[key]; exists {
 					return value, nil
 				}
 				value, err := NewRuntimeValue(e)
 				if err == nil {
-					literals[e.ID] = value
+					literals[key] = value
 				}
 				return value, err
 			}
 			return NewRuntimeValue(e)
 		case "name":
-			if value, ok := lookup(e.Name); ok {
+			if value, ok := lookupExpression(e); ok {
 				result, err := value(nil)
 				return result, runtimeExpressionError(e, err)
 			}
@@ -249,6 +341,9 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				return fail(e, "Malformed local operator")
 			}
 			key := runtimeLambdaKey{id: e.ID}
+			if identity, source := session.source.ExpressionIdentity(e); source {
+				key.id, key.instance, key.source = identity.ID, identity.InstanceID, true
+			}
 			if e.ID == (ID{}) {
 				key.body = e.Body
 			}
@@ -258,14 +353,19 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 			captured := append([]*insdict.Dict[string, runtimeLocalValue](nil), scopes...)
 			parameterScope := insdict.NewDict[string, runtimeLocalValue]()
 			registers := make([]*runtimeParameter, len(e.Params))
+			sourceParameters, hasSourceParameters := session.source.ParameterIDs(e)
 			for i, param := range e.Params {
-				register := parameters[param.ID]
+				parameterKey := runtimeParameterKey{id: param.ID}
+				if hasSourceParameters && i < len(sourceParameters) {
+					parameterKey.id, parameterKey.source = sourceParameters[i], true
+				}
+				register := parameters[parameterKey]
 				// Syntax APIs also accept hand-built IR with omitted IDs. Keep
 				// those independent rather than alias every unnamed parameter.
 				if register == nil || param.ID == (ID{}) {
 					register = &runtimeParameter{}
 					if param.ID != (ID{}) {
-						parameters[param.ID] = register
+						parameters[parameterKey] = register
 					}
 				}
 				registers[i] = register
@@ -306,6 +406,17 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				return fail(e, "Malformed local definition")
 			}
 			key := runtimeDefinitionKey{id: e.Opdef.ID}
+			alias := e.Opdef.Name
+			if identity, source := session.source.DefinitionIdentity(*e.Opdef); source {
+				if original, found := session.source.SourceDefinition(identity); found {
+					key.id, key.instance, key.source = identity.ID, identity.InstanceID, true
+					e.Opdef = &original
+				} else if e.Opdef.Qualifier == Nondet {
+					// A nondeterministic let installs its sampled-value getter
+					// directly instead of compiling an ordinary definition body.
+					key.id, key.instance, key.source = identity.ID, identity.InstanceID, true
+				}
+			}
 			if e.Opdef.ID == (ID{}) {
 				key.definition = e.Opdef
 			}
@@ -315,7 +426,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				}
 				binding, exists := definitions[key]
 				if !exists {
-					binding = &runtimeLocalDefinition{scope: insdict.NewDict[string, runtimeLocalValue]()}
+					binding = &runtimeLocalDefinition{scope: insdict.NewDict[string, runtimeLocalValue](), cache: &runtimeLocalCache{}}
 					definitions[key] = binding
 					binding.value = func(arguments []RuntimeValue) (RuntimeValue, error) {
 						if binding.cache.err != nil {
@@ -346,13 +457,20 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 						ctx = saved
 						return value, err
 					})
-				binding.cache = runtimeLocalCache{}
+				*binding.cache = runtimeLocalCache{}
 				return value, runtimeExpressionError(e, err)
 			}
 			definition, exists := definitions[key]
 			topLevel := e.Opdef.Depth != nil && *e.Opdef.Depth == 0
 			if !exists {
-				definition = &runtimeLocalDefinition{scope: insdict.NewDict[string, runtimeLocalValue]()}
+				definition = &runtimeLocalDefinition{scope: insdict.NewDict[string, runtimeLocalValue](), cache: &runtimeLocalCache{}}
+				if key.source && !topLevel && e.Opdef.Expr.Kind != "lambda" && e.Opdef.Qualifier != Action {
+					if cell := scopedValues[key.id]; cell != nil {
+						definition.cache = cell
+					} else {
+						scopedValues[key.id] = definition.cache
+					}
+				}
 				definitions[key] = definition
 				captured := append([]*insdict.Dict[string, runtimeLocalValue](nil), scopes...)
 				var actionApp Expr
@@ -366,9 +484,9 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 						actionListener.OnUserOperatorCall(actionApp)
 					}
 					if storage != nil && e.Opdef.Qualifier == Action && storage.ActionTaken == "" {
-						storage.ActionTaken = e.Opdef.Name
+						storage.ActionTaken = alias
 					}
-					cache := &definition.cache
+					cache := definition.cache
 					if storage != nil && topLevel && e.Opdef.Qualifier == Val && cache.generation != storage.generation {
 						cache.evaluated = false
 					}
@@ -397,23 +515,23 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 			}
 			// Ordinary import aliases share the compiled definition ID and
 			// cache, but each flattened name must resolve to that same getter.
-			definition.scope.Set(e.Opdef.Name, definition.value)
+			definition.scope.Set(alias, definition.value)
 			// Scoped value cells belong to the compiled definition. Each let
 			// invocation temporarily clears its cache, then restores the saved
 			// value even when a returned lambda still refers to that cell.
-			savedCache := definition.cache
+			savedCache := *definition.cache
 			if !topLevel && e.Opdef.Expr.Kind != "lambda" {
-				definition.cache = runtimeLocalCache{}
+				*definition.cache = runtimeLocalCache{}
 			}
 			scopes = append(scopes, definition.scope)
 			result, err := eval(*e.Body)
 			scopes = scopes[:len(scopes)-1]
 			if !topLevel && e.Opdef.Expr.Kind != "lambda" {
-				definition.cache = savedCache
+				*definition.cache = savedCache
 			}
 			return result, err
 		case "app":
-			if value, ok := lookup(e.Opcode); ok {
+			if value, ok := lookupExpression(e); ok {
 				if listener != nil {
 					listener.OnUserOperatorCall(e)
 				}
@@ -651,8 +769,11 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 			if len(e.Args) != 2 || e.Args[0].Kind != "name" {
 				return fail(e, "Assignment requires a variable and value")
 			}
-			if _, local := lookup(e.Args[0].Name); local {
-				return fail(e, "Assignment target is a local binding")
+			sourceTarget, hasSourceTarget := session.source.ValueReference(e.Args[0])
+			if !hasSourceTarget || sourceTarget.Kind != "var" {
+				if _, local := lookup(e.Args[0].Name); local {
+					return fail(e, "Assignment target is a local binding")
+				}
 			}
 			var target *RuntimeRegister
 			binding, bound := session.variableBinding(e.Args[0])
@@ -670,6 +791,9 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				value, err := eval(e.Args[1])
 				if err != nil {
 					return RuntimeValue{}, err
+				}
+				if hasSourceTarget {
+					applySourceOverrides(sourceTarget)
 				}
 				target.Value = value
 				return boolValue(true)
