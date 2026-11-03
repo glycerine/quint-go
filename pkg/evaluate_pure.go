@@ -355,12 +355,14 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				definition = &runtimeLocalDefinition{scope: insdict.NewDict[string, runtimeLocalValue]()}
 				definitions[key] = definition
 				captured := append([]*insdict.Dict[string, runtimeLocalValue](nil), scopes...)
+				var actionApp Expr
+				if e.Opdef.Qualifier == Action && e.Opdef.Expr.Kind != "lambda" {
+					actionApp = session.source.ActionApp(*e.Opdef)
+				}
 				definition.value = func(arguments []RuntimeValue) (RuntimeValue, error) {
 					var actionListener ExecutionListener
-					var actionApp Expr
 					if listener != nil && e.Opdef.Qualifier == Action && e.Opdef.Expr.Kind != "lambda" {
 						actionListener = listener
-						actionApp = Expr{ID: e.Opdef.ID, Kind: "app", Opcode: e.Opdef.Name, Args: []Expr{}}
 						actionListener.OnUserOperatorCall(actionApp)
 					}
 					if storage != nil && e.Opdef.Qualifier == Action && storage.ActionTaken == "" {

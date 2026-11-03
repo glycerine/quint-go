@@ -1172,3 +1172,11 @@ remaining nullable reset forms; matcher panics become errors before discovery
 executes tests. An independent exact-production audit matches Node on 1,004,998
 accepted outcomes, with 71,280 unsupported outcomes and 48 panic probes recorded
 separately. The reset helper has 100% coverage.
+
+`repl_state_diff.json` saves 45 actual REPL streams with state changes, nested
+then/shift, aliases, replay and verbosity behavior. Checked runtime diffs preserve
+compact values and reject infinite display explicitly; owned snapshots avoid
+post-commit mutation. `runtime_action_labels.json` adds ten scenarios under source
+and transported-IR boundaries, preserving exact original action names/IDs through
+imports, nested instances, local unshadowing and genuine qualified names. The
+metadata ActionTaken API keeps its qualified names; JSON fallback stays explicit.

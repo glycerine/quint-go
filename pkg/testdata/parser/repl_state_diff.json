@@ -1,0 +1,408 @@
+{
+  "cases": [
+    {
+      "name": "named_actions_0",
+      "verbosity": 0,
+      "input": "var x:int\naction init=x'=0\naction step=x'=x+1\ninit\nstep\nx\n.exit\n",
+      "stdout": "\n\n\ntrue\ntrue\n1\n",
+      "stderr": "",
+      "output": "\n\n\ntrue\ntrue\n1\n"
+    },
+    {
+      "name": "named_actions_1",
+      "verbosity": 1,
+      "input": "var x:int\naction init=x'=0\naction step=x'=x+1\ninit\nstep\nx\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> \n>>> \n>>> true\n>>> true\n>>> 1\n>>> >>> ",
+      "stderr": "",
+      "output": "\n\n\ntrue\ntrue\n1\n"
+    },
+    {
+      "name": "named_actions_2",
+      "verbosity": 2,
+      "input": "var x:int\naction init=x'=0\naction step=x'=x+1\ninit\nstep\nx\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> \n>>> \n>>> true\n{ x: 0 }\n>>> true\n{ x: 0 => 1 }\n>>> 1\n>>> >>> ",
+      "stderr": "",
+      "output": "\n\n\ntrue\n{ x: 0 }\ntrue\n{ x: 0 => 1 }\n1\n"
+    },
+    {
+      "name": "named_actions_3",
+      "verbosity": 3,
+      "input": "var x:int\naction init=x'=0\naction step=x'=x+1\ninit\nstep\nx\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> \n>>> \n>>> true\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\n>>> true\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n>>> 1\n>>> >>> ",
+      "stderr": "",
+      "output": "\n\n\ntrue\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n1\n"
+    },
+    {
+      "name": "named_actions_4",
+      "verbosity": 4,
+      "input": "var x:int\naction init=x'=0\naction step=x'=x+1\ninit\nstep\nx\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> \n>>> \n>>> true\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\n>>> true\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n>>> 1\n>>> >>> ",
+      "stderr": "",
+      "output": "\n\n\ntrue\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n1\n"
+    },
+    {
+      "name": "named_actions_5",
+      "verbosity": 5,
+      "input": "var x:int\naction init=x'=0\naction step=x'=x+1\ninit\nstep\nx\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> \n>>> \n>>> true\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\n>>> true\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n>>> 1\n>>> >>> ",
+      "stderr": "",
+      "output": "\n\n\ntrue\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n1\n"
+    },
+    {
+      "name": "same_value_and_no_update_2",
+      "verbosity": 2,
+      "input": "var x:int\nx'=4\nx'=4\ntrue\nfalse\nx\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ x: 4 }\n>>> true\n{ x: 4 }\n>>> true\n>>> false\n>>> 4\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ x: 4 }\ntrue\n{ x: 4 }\ntrue\nfalse\n4\n"
+    },
+    {
+      "name": "same_value_and_no_update_3",
+      "verbosity": 3,
+      "input": "var x:int\nx'=4\nx'=4\ntrue\nfalse\nx\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ x: 4 }\n>>> true\n{ x: 4 }\n>>> true\n>>> false\n>>> 4\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ x: 4 }\ntrue\n{ x: 4 }\ntrue\nfalse\n4\n"
+    },
+    {
+      "name": "pending_false_then_true_2",
+      "verbosity": 2,
+      "input": "var x:int\nx'=0\nall {x'=1,false}\ntrue\nx\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ x: 0 }\n>>> false\n>>> true\n>>> 0\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ x: 0 }\nfalse\ntrue\n0\n"
+    },
+    {
+      "name": "pending_false_then_true_3",
+      "verbosity": 3,
+      "input": "var x:int\nx'=0\nall {x'=1,false}\ntrue\nx\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ x: 0 }\n>>> false\n>>> true\n>>> 0\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ x: 0 }\nfalse\ntrue\n0\n"
+    },
+    {
+      "name": "partial_update_missing_2",
+      "verbosity": 2,
+      "input": "var z:int\nvar a:int\nall{z'=0,a'=2}\nz'=1\nz\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> \n>>> true\n{ a: 2, z: 0 }\n>>> true\n{ a: 2, z: 0 => 1 }\n[warning] some variables are undefined: a\n>>> 1\n>>> >>> ",
+      "stderr": "",
+      "output": "\n\ntrue\n{ a: 2, z: 0 }\ntrue\n{ a: 2, z: 0 => 1 }\n[warning] some variables are undefined: a\n1\n"
+    },
+    {
+      "name": "partial_update_missing_3",
+      "verbosity": 3,
+      "input": "var z:int\nvar a:int\nall{z'=0,a'=2}\nz'=1\nz\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> \n>>> true\n{ a: 2, z: 0 }\n>>> true\n{ a: 2, z: 0 => 1 }\n[warning] some variables are undefined: a\n>>> 1\n>>> >>> ",
+      "stderr": "",
+      "output": "\n\ntrue\n{ a: 2, z: 0 }\ntrue\n{ a: 2, z: 0 => 1 }\n[warning] some variables are undefined: a\n1\n"
+    },
+    {
+      "name": "list_elements_and_length_2",
+      "verbosity": 2,
+      "input": "var x:List[int]\nx'=List(1,2,3)\nx'=List(1,4,3)\nx'=List(1,4,3,5)\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ x: [1, 2, 3] }\n>>> true\n{ x: [1, 2 => 4, 3] }\n>>> true\n{ x: [1, 4, 3] => [1, 4, 3, 5] }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ x: [1, 2, 3] }\ntrue\n{ x: [1, 2 => 4, 3] }\ntrue\n{ x: [1, 4, 3] => [1, 4, 3, 5] }\n"
+    },
+    {
+      "name": "list_elements_and_length_3",
+      "verbosity": 3,
+      "input": "var x:List[int]\nx'=List(1,2,3)\nx'=List(1,4,3)\nx'=List(1,4,3,5)\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ x: [1, 2, 3] }\n>>> true\n{ x: [1, 2 => 4, 3] }\n>>> true\n{ x: [1, 4, 3] => [1, 4, 3, 5] }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ x: [1, 2, 3] }\ntrue\n{ x: [1, 2 => 4, 3] }\ntrue\n{ x: [1, 4, 3] => [1, 4, 3, 5] }\n"
+    },
+    {
+      "name": "tuple_elements_2",
+      "verbosity": 2,
+      "input": "var pair:(int,List[int])\npair'=(1,List(2,3))\npair'=(4,List(2,5))\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ pair: [1, [2, 3]] }\n>>> true\n{ pair: [1 => 4, [2, 3 => 5]] }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ pair: [1, [2, 3]] }\ntrue\n{ pair: [1 => 4, [2, 3 => 5]] }\n"
+    },
+    {
+      "name": "tuple_elements_3",
+      "verbosity": 3,
+      "input": "var pair:(int,List[int])\npair'=(1,List(2,3))\npair'=(4,List(2,5))\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ pair: [1, [2, 3]] }\n>>> true\n{ pair: [1 => 4, [2, 3 => 5]] }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ pair: [1, [2, 3]] }\ntrue\n{ pair: [1 => 4, [2, 3 => 5]] }\n"
+    },
+    {
+      "name": "maps_retained_order_2",
+      "verbosity": 2,
+      "input": "var m:int->int\nm'=Map((3,30),(1,10),(2,20))\nm'=Map((1,11),(2,20),(4,40))\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ m: Map(3 -> 30, 1 -> 10, 2 -> 20) }\n>>> true\n{ m: Map(3 -> 30, 1 -> 10 => 11, 2 -> 20, 4 -> 40) }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ m: Map(3 -> 30, 1 -> 10, 2 -> 20) }\ntrue\n{ m: Map(3 -> 30, 1 -> 10 => 11, 2 -> 20, 4 -> 40) }\n"
+    },
+    {
+      "name": "maps_retained_order_3",
+      "verbosity": 3,
+      "input": "var m:int->int\nm'=Map((3,30),(1,10),(2,20))\nm'=Map((1,11),(2,20),(4,40))\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ m: Map(3 -> 30, 1 -> 10, 2 -> 20) }\n>>> true\n{ m: Map(3 -> 30, 1 -> 10 => 11, 2 -> 20, 4 -> 40) }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ m: Map(3 -> 30, 1 -> 10, 2 -> 20) }\ntrue\n{ m: Map(3 -> 30, 1 -> 10 => 11, 2 -> 20, 4 -> 40) }\n"
+    },
+    {
+      "name": "sets_retained_order_2",
+      "verbosity": 2,
+      "input": "var s:Set[int]\ns'=Set(3,2,1)\ns'=Set(2,4,3)\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ s: Set(3, 2, 1) }\n>>> true\n{ s: Set(3, 2, 1, 4) }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ s: Set(3, 2, 1) }\ntrue\n{ s: Set(3, 2, 1, 4) }\n"
+    },
+    {
+      "name": "sets_retained_order_3",
+      "verbosity": 3,
+      "input": "var s:Set[int]\ns'=Set(3,2,1)\ns'=Set(2,4,3)\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ s: Set(3, 2, 1) }\n>>> true\n{ s: Set(3, 2, 1, 4) }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ s: Set(3, 2, 1) }\ntrue\n{ s: Set(3, 2, 1, 4) }\n"
+    },
+    {
+      "name": "nested_collapse_2",
+      "verbosity": 2,
+      "input": "var x:{unchanged:List[int],changed:int}\nx'={unchanged:List(1,2,3),changed:0}\nx'={unchanged:List(1,2,3),changed:1}\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ x: { changed: 0, unchanged: [1, 2, 3] } }\n>>> true\n{ x: { changed: 0 => 1, unchanged: ... } }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ x: { changed: 0, unchanged: [1, 2, 3] } }\ntrue\n{ x: { changed: 0 => 1, unchanged: ... } }\n"
+    },
+    {
+      "name": "nested_collapse_3",
+      "verbosity": 3,
+      "input": "var x:{unchanged:List[int],changed:int}\nx'={unchanged:List(1,2,3),changed:0}\nx'={unchanged:List(1,2,3),changed:1}\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ x: { changed: 0, unchanged: [1, 2, 3] } }\n>>> true\n{ x: { changed: 0 => 1, unchanged: ... } }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ x: { changed: 0, unchanged: [1, 2, 3] } }\ntrue\n{ x: { changed: 0 => 1, unchanged: ... } }\n"
+    },
+    {
+      "name": "nested_set_map_collapse_2",
+      "verbosity": 2,
+      "input": "var x:(Set[int],int->int,int)\nx'=(Set(1,2,3),Map((1,1),(2,2),(3,3)),0)\nx'=(Set(3,2,1),Map((3,3),(2,2),(1,1)),1)\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ x: [Set(1, 2, 3), Map(1 -> 1, 2 -> 2, 3 -> 3), 0] }\n>>> true\n{ x: [..., ..., 0 => 1] }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ x: [Set(1, 2, 3), Map(1 -> 1, 2 -> 2, 3 -> 3), 0] }\ntrue\n{ x: [..., ..., 0 => 1] }\n"
+    },
+    {
+      "name": "nested_set_map_collapse_3",
+      "verbosity": 3,
+      "input": "var x:(Set[int],int->int,int)\nx'=(Set(1,2,3),Map((1,1),(2,2),(3,3)),0)\nx'=(Set(3,2,1),Map((3,3),(2,2),(1,1)),1)\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ x: [Set(1, 2, 3), Map(1 -> 1, 2 -> 2, 3 -> 3), 0] }\n>>> true\n{ x: [..., ..., 0 => 1] }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ x: [Set(1, 2, 3), Map(1 -> 1, 2 -> 2, 3 -> 3), 0] }\ntrue\n{ x: [..., ..., 0 => 1] }\n"
+    },
+    {
+      "name": "strings_unicode_width_2",
+      "verbosity": 2,
+      "input": "var x:{alpha:str,beta:str,gamma:str}\nx'={alpha:\"😀\",beta:\"a long unchanged phrase\",gamma:\"before a long changed phrase\"}\nx'={alpha:\"😀\",beta:\"a long unchanged phrase\",gamma:\"after a long changed phrase\"}\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{\n  x:\n    {\n      alpha: \"😀\",\n      beta: \"a long unchanged phrase\",\n      gamma: \"before a long changed phrase\"\n    }\n}\n>>> true\n{\n  x:\n    {\n      alpha: \"😀\",\n      beta: \"a long unchanged phrase\",\n      gamma: \"before a long changed phrase\" => \"after a long changed phrase\"\n    }\n}\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{\n  x:\n    {\n      alpha: \"😀\",\n      beta: \"a long unchanged phrase\",\n      gamma: \"before a long changed phrase\"\n    }\n}\ntrue\n{\n  x:\n    {\n      alpha: \"😀\",\n      beta: \"a long unchanged phrase\",\n      gamma: \"before a long changed phrase\" => \"after a long changed phrase\"\n    }\n}\n"
+    },
+    {
+      "name": "strings_unicode_width_3",
+      "verbosity": 3,
+      "input": "var x:{alpha:str,beta:str,gamma:str}\nx'={alpha:\"😀\",beta:\"a long unchanged phrase\",gamma:\"before a long changed phrase\"}\nx'={alpha:\"😀\",beta:\"a long unchanged phrase\",gamma:\"after a long changed phrase\"}\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{\n  x:\n    {\n      alpha: \"😀\",\n      beta: \"a long unchanged phrase\",\n      gamma: \"before a long changed phrase\"\n    }\n}\n>>> true\n{\n  x:\n    {\n      alpha: \"😀\",\n      beta: \"a long unchanged phrase\",\n      gamma: \"before a long changed phrase\" => \"after a long changed phrase\"\n    }\n}\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{\n  x:\n    {\n      alpha: \"😀\",\n      beta: \"a long unchanged phrase\",\n      gamma: \"before a long changed phrase\"\n    }\n}\ntrue\n{\n  x:\n    {\n      alpha: \"😀\",\n      beta: \"a long unchanged phrase\",\n      gamma: \"before a long changed phrase\" => \"after a long changed phrase\"\n    }\n}\n"
+    },
+    {
+      "name": "compact_interval_2",
+      "verbosity": 2,
+      "input": "var s:Set[int]\ns'=1.to(3)\ns'=2.to(4)\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ s: Set(1, 2, 3) }\n>>> true\n{ s: Set(1, 2, 3, 4) }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ s: Set(1, 2, 3) }\ntrue\n{ s: Set(1, 2, 3, 4) }\n"
+    },
+    {
+      "name": "compact_product_2",
+      "verbosity": 2,
+      "input": "var s:Set[(int,int)]\ns'=tuples(Set(1,2),Set(3))\ns'=tuples(Set(2,4),Set(3))\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ s: Set([1, 3], [2, 3]) }\n>>> true\n{ s: Set([1, 3], [2, 3], [4, 3]) }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ s: Set([1, 3], [2, 3]) }\ntrue\n{ s: Set([1, 3], [2, 3], [4, 3]) }\n"
+    },
+    {
+      "name": "compact_powerset_2",
+      "verbosity": 2,
+      "input": "var s:Set[Set[int]]\ns'=Set(1,2).powerset()\ns'=Set(2,3).powerset()\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ s: Set(Set(), Set(1), Set(2), Set(1, 2)) }\n>>> true\n{ s: Set(Set(), Set(1), Set(2), Set(1, 2), Set(3), Set(2, 3)) }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ s: Set(Set(), Set(1), Set(2), Set(1, 2)) }\ntrue\n{ s: Set(Set(), Set(1), Set(2), Set(1, 2), Set(3), Set(2, 3)) }\n"
+    },
+    {
+      "name": "compact_set_of_maps_2",
+      "verbosity": 2,
+      "input": "var s:Set[int->int]\ns'=Set(1).setOfMaps(Set(2,3))\ns'=Set(1).setOfMaps(Set(3,4))\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ s: Set(Map(1 -> 2), Map(1 -> 3)) }\n>>> true\n{ s: Set(Map(1 -> 2), Map(1 -> 3), Map(1 -> 4)) }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ s: Set(Map(1 -> 2), Map(1 -> 3)) }\ntrue\n{ s: Set(Map(1 -> 2), Map(1 -> 3), Map(1 -> 4)) }\n"
+    },
+    {
+      "name": "compact_nested_collapse_2",
+      "verbosity": 2,
+      "input": "var x:(Set[int],int)\nx'=(1.to(3),0)\nx'=(1.to(3),1)\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ x: [Set(1, 2, 3), 0] }\n>>> true\n{ x: [..., 0 => 1] }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ x: [Set(1, 2, 3), 0] }\ntrue\n{ x: [..., 0 => 1] }\n"
+    },
+    {
+      "name": "then_shift_old_state_2",
+      "verbosity": 2,
+      "input": "var n:int\naction init=n'=0\naction step=n'=n+1\ninit.then(step).then(step)\nn\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> \n>>> \n>>> true\n{ n: 1 => 2 }\n>>> 2\n>>> >>> ",
+      "stderr": "",
+      "output": "\n\n\ntrue\n{ n: 1 => 2 }\n2\n"
+    },
+    {
+      "name": "then_shift_old_state_3",
+      "verbosity": 3,
+      "input": "var n:int\naction init=n'=0\naction step=n'=n+1\ninit.then(step).then(step)\nn\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> \n>>> \n>>> true\n{ n: 1 => 2 }\n\n[Frame 0]\ninit => true\n\n[Frame 1]\nstep => true\n\n[Frame 2]\nstep => true\n\n>>> 2\n>>> >>> ",
+      "stderr": "",
+      "output": "\n\n\ntrue\n{ n: 1 => 2 }\n\n[Frame 0]\ninit => true\n\n[Frame 1]\nstep => true\n\n[Frame 2]\nstep => true\n\n2\n"
+    },
+    {
+      "name": "verbosity_transitions_0",
+      "verbosity": 0,
+      "input": "var x:int\nx'=0\n.verbosity=1\nx'=1\n.verbosity=2\nx'=2\n.verbosity=3\nx'=3\n.verbosity=0\nx'=4\n.verbosity=2\nx'=5\n.exit\n",
+      "stdout": "\ntrue\n.verbosity=1\ntrue\n.verbosity=2\ntrue\n{ x: 1 => 2 }\n.verbosity=3\ntrue\n{ x: 2 => 3 }\ntrue\n.verbosity=2\ntrue\n{ x: 4 => 5 }\n",
+      "stderr": "",
+      "output": "\ntrue\n.verbosity=1\ntrue\n.verbosity=2\ntrue\n{ x: 1 => 2 }\n.verbosity=3\ntrue\n{ x: 2 => 3 }\ntrue\n.verbosity=2\ntrue\n{ x: 4 => 5 }\n"
+    },
+    {
+      "name": "verbosity_transitions_2",
+      "verbosity": 2,
+      "input": "var x:int\nx'=0\n.verbosity=1\nx'=1\n.verbosity=2\nx'=2\n.verbosity=3\nx'=3\n.verbosity=0\nx'=4\n.verbosity=2\nx'=5\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> true\n{ x: 0 }\n>>> .verbosity=1\n>>> true\n>>> .verbosity=2\n>>> true\n{ x: 1 => 2 }\n>>> .verbosity=3\n>>> true\n{ x: 2 => 3 }\n>>> >>> true\n>>> .verbosity=2\n>>> true\n{ x: 4 => 5 }\n>>> >>> ",
+      "stderr": "",
+      "output": "\ntrue\n{ x: 0 }\n.verbosity=1\ntrue\n.verbosity=2\ntrue\n{ x: 1 => 2 }\n.verbosity=3\ntrue\n{ x: 2 => 3 }\ntrue\n.verbosity=2\ntrue\n{ x: 4 => 5 }\n"
+    },
+    {
+      "name": "import_alias_2",
+      "verbosity": 2,
+      "input": ".load $DIR/alias.qnt Main\nC::init\nC::step\nC::x\n.exit\n",
+      "files": [
+        {
+          "name": "alias.qnt",
+          "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 }\nmodule Main { import Counter as C }"
+        }
+      ],
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> >>> true\n{ x: 0 }\n>>> true\n{ x: 0 => 1 }\n>>> 1\n>>> >>> ",
+      "stderr": "",
+      "output": "true\n{ x: 0 }\ntrue\n{ x: 0 => 1 }\n1\n"
+    },
+    {
+      "name": "import_alias_3",
+      "verbosity": 3,
+      "input": ".load $DIR/alias.qnt Main\nC::init\nC::step\nC::x\n.exit\n",
+      "files": [
+        {
+          "name": "alias.qnt",
+          "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 }\nmodule Main { import Counter as C }"
+        }
+      ],
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> >>> true\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\n>>> true\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n>>> 1\n>>> >>> ",
+      "stderr": "",
+      "output": "true\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n1\n"
+    },
+    {
+      "name": "load_history_reload_0",
+      "verbosity": 0,
+      "input": ".load $DIR/history.qnt\nstep\n.reload\nx\n.exit\n",
+      "files": [
+        {
+          "name": "history.qnt",
+          "source": "// @mainModule M\nmodule M { var x:int action init=x'=0 action step=x'=x+1 }\n/*! init !*/\n/*! step !*/\n"
+        }
+      ],
+      "stdout": "true\ntrue\ntrue\ntrue\ntrue\n1\n",
+      "stderr": "",
+      "output": "true\ntrue\ntrue\ntrue\ntrue\n1\n"
+    },
+    {
+      "name": "load_history_reload_2",
+      "verbosity": 2,
+      "input": ".load $DIR/history.qnt\nstep\n.reload\nx\n.exit\n",
+      "files": [
+        {
+          "name": "history.qnt",
+          "source": "// @mainModule M\nmodule M { var x:int action init=x'=0 action step=x'=x+1 }\n/*! init !*/\n/*! step !*/\n"
+        }
+      ],
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> Evaluating expression history in $DIR/history.qnt\n>>> init\ntrue\n{ x: 0 }\n>>> step\ntrue\n{ x: 0 => 1 }\n>>> true\n{ x: 1 => 2 }\n>>> Evaluating expression history in $DIR/history.qnt\n>>> init\ntrue\n{ x: 0 }\n>>> step\ntrue\n{ x: 0 => 1 }\n>>> 1\n>>> >>> ",
+      "stderr": "",
+      "output": "Evaluating expression history in $DIR/history.qnt\ninit\ntrue\n{ x: 0 }\nstep\ntrue\n{ x: 0 => 1 }\ntrue\n{ x: 1 => 2 }\nEvaluating expression history in $DIR/history.qnt\ninit\ntrue\n{ x: 0 }\nstep\ntrue\n{ x: 0 => 1 }\n1\n"
+    },
+    {
+      "name": "load_history_reload_3",
+      "verbosity": 3,
+      "input": ".load $DIR/history.qnt\nstep\n.reload\nx\n.exit\n",
+      "files": [
+        {
+          "name": "history.qnt",
+          "source": "// @mainModule M\nmodule M { var x:int action init=x'=0 action step=x'=x+1 }\n/*! init !*/\n/*! step !*/\n"
+        }
+      ],
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> Evaluating expression history in $DIR/history.qnt\n>>> init\ntrue\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\n>>> step\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n>>> true\n{ x: 1 => 2 }\n\n[Frame 0]\nstep => true\n\n>>> Evaluating expression history in $DIR/history.qnt\n>>> init\ntrue\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\n>>> step\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n>>> 1\n>>> >>> ",
+      "stderr": "",
+      "output": "Evaluating expression history in $DIR/history.qnt\ninit\ntrue\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\nstep\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\ntrue\n{ x: 1 => 2 }\n\n[Frame 0]\nstep => true\n\nEvaluating expression history in $DIR/history.qnt\ninit\ntrue\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\nstep\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n1\n"
+    },
+    {
+      "name": "require_history_2",
+      "verbosity": 2,
+      "input": "step\nx\n.exit\n",
+      "require": "$DIR/history.qnt",
+      "files": [
+        {
+          "name": "history.qnt",
+          "source": "// @mainModule M\nmodule M { var x:int action init=x'=0 action step=x'=x+1 }\n/*! init !*/\n/*! step !*/\n"
+        }
+      ],
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\nEvaluating expression history in $DIR/history.qnt\n>>> init\ntrue\n{ x: 0 }\n>>> step\ntrue\n{ x: 0 => 1 }\n>>> true\n{ x: 1 => 2 }\n>>> 2\n>>> >>> >>> ",
+      "stderr": "",
+      "output": "Evaluating expression history in $DIR/history.qnt\ninit\ntrue\n{ x: 0 }\nstep\ntrue\n{ x: 0 => 1 }\ntrue\n{ x: 1 => 2 }\n2\n"
+    },
+    {
+      "name": "require_history_3",
+      "verbosity": 3,
+      "input": "step\nx\n.exit\n",
+      "require": "$DIR/history.qnt",
+      "files": [
+        {
+          "name": "history.qnt",
+          "source": "// @mainModule M\nmodule M { var x:int action init=x'=0 action step=x'=x+1 }\n/*! init !*/\n/*! step !*/\n"
+        }
+      ],
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\nEvaluating expression history in $DIR/history.qnt\n>>> init\ntrue\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\n>>> step\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n>>> true\n{ x: 1 => 2 }\n\n[Frame 0]\nstep => true\n\n>>> 2\n>>> >>> >>> ",
+      "stderr": "",
+      "output": "Evaluating expression history in $DIR/history.qnt\ninit\ntrue\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\nstep\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\ntrue\n{ x: 1 => 2 }\n\n[Frame 0]\nstep => true\n\n2\n"
+    },
+    {
+      "name": "save_load_replay_0",
+      "verbosity": 0,
+      "input": "var x:int\naction init=x'=0\naction step=x'=x+1\ninit\nstep\n.save $DIR/session.qnt\n.clear\n.load $DIR/session.qnt\nstep\nx\n.exit\n",
+      "stdout": "\n\n\ntrue\ntrue\nSession saved to: $DIR/session.qnt\n\ntrue\ntrue\ntrue\n2\n",
+      "stderr": "",
+      "output": "\n\n\ntrue\ntrue\nSession saved to: $DIR/session.qnt\n\ntrue\ntrue\ntrue\n2\n"
+    },
+    {
+      "name": "save_load_replay_2",
+      "verbosity": 2,
+      "input": "var x:int\naction init=x'=0\naction step=x'=x+1\ninit\nstep\n.save $DIR/session.qnt\n.clear\n.load $DIR/session.qnt\nstep\nx\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> \n>>> \n>>> true\n{ x: 0 }\n>>> true\n{ x: 0 => 1 }\n>>> Session saved to: $DIR/session.qnt\n>>> \n>>> Evaluating expression history in $DIR/session.qnt\n>>> init\ntrue\n{ x: 0 }\n>>> step\ntrue\n{ x: 0 => 1 }\n>>> true\n{ x: 1 => 2 }\n>>> 2\n>>> >>> ",
+      "stderr": "",
+      "output": "\n\n\ntrue\n{ x: 0 }\ntrue\n{ x: 0 => 1 }\nSession saved to: $DIR/session.qnt\n\nEvaluating expression history in $DIR/session.qnt\ninit\ntrue\n{ x: 0 }\nstep\ntrue\n{ x: 0 => 1 }\ntrue\n{ x: 1 => 2 }\n2\n"
+    },
+    {
+      "name": "save_load_replay_3",
+      "verbosity": 3,
+      "input": "var x:int\naction init=x'=0\naction step=x'=x+1\ninit\nstep\n.save $DIR/session.qnt\n.clear\n.load $DIR/session.qnt\nstep\nx\n.exit\n",
+      "stdout": "Quint REPL 0.33.1\nType \".exit\" to exit, or \".help\" for more information\n>>> \n>>> \n>>> \n>>> true\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\n>>> true\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n>>> Session saved to: $DIR/session.qnt\n>>> \n>>> Evaluating expression history in $DIR/session.qnt\n>>> init\ntrue\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\n>>> step\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\n>>> true\n{ x: 1 => 2 }\n\n[Frame 0]\nstep => true\n\n>>> 2\n>>> >>> ",
+      "stderr": "",
+      "output": "\n\n\ntrue\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\nSession saved to: $DIR/session.qnt\n\nEvaluating expression history in $DIR/session.qnt\ninit\ntrue\n{ x: 0 }\n\n[Frame 0]\ninit => true\n\nstep\ntrue\n{ x: 0 => 1 }\n\n[Frame 0]\nstep => true\n\ntrue\n{ x: 1 => 2 }\n\n[Frame 0]\nstep => true\n\n2\n"
+    }
+  ]
+}

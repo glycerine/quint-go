@@ -15,8 +15,14 @@ type runtimeSourceIdentity struct {
 }
 
 type runtimeSourceGraph struct {
-	table  *insdict.Dict[ID, LookupDefinition]
-	scopes *insdict.Dict[string, *NameScope]
+	table   *insdict.Dict[ID, LookupDefinition]
+	scopes  *insdict.Dict[string, *NameScope]
+	actions *insdict.Dict[string, runtimeSourceAction]
+}
+
+type runtimeSourceAction struct {
+	ID   ID
+	Name string
 }
 
 type runtimeSourceModule struct {
@@ -53,7 +59,33 @@ func newRuntimeSourceGraph(modules []Module) (*runtimeSourceGraph, error) {
 	if len(linked.Errors) != 0 {
 		return nil, linked.Errors[0]
 	}
-	return &runtimeSourceGraph{table: linked.Table, scopes: linked.Modules}, nil
+	actions := insdict.NewDict[string, runtimeSourceAction]()
+	for id, definition := range linked.Table.All() {
+		declaration := definition.Declaration
+		if declaration != nil && declaration.ID == id && declaration.Kind == "def" && declaration.Qualifier == Action && declaration.Expr != nil {
+			actions.Set(declaration.Expr.ID.String(), runtimeSourceAction{ID: declaration.ID, Name: declaration.Name})
+		}
+	}
+	return &runtimeSourceGraph{table: linked.Table, scopes: linked.Modules, actions: actions}, nil
+}
+
+// Nonlambda actions create synthetic recorder calls even without variables.
+// Their original declaration names must survive namespacing and unshadowing.
+func runtimeHasSourceAction(expression Expr) bool {
+	if expression.Opdef != nil && expression.Opdef.Expr != nil {
+		if expression.Opdef.Qualifier == Action && expression.Opdef.Expr.Kind != "lambda" {
+			return true
+		}
+		if runtimeHasSourceAction(*expression.Opdef.Expr) {
+			return true
+		}
+	}
+	for _, argument := range expression.Args {
+		if runtimeHasSourceAction(argument) {
+			return true
+		}
+	}
+	return expression.Body != nil && runtimeHasSourceAction(*expression.Body)
 }
 
 type runtimeSourceNode struct {
@@ -109,6 +141,19 @@ func (p *runtimeSourcePreparation) Binding(identity runtimeSourceIdentity) (Runt
 		return RuntimeVariableBinding{}, false
 	}
 	return p.bindings.Get2(identity)
+}
+
+// ActionApp freezes the original source declaration in a compiled getter.
+// Transported IR has no private source identity and retains its flattened name.
+func (p *runtimeSourcePreparation) ActionApp(definition OperatorDef) Expr {
+	app := Expr{ID: definition.ID, Kind: "app", Opcode: definition.Name, Args: []Expr{}}
+	if p == nil || p.source == nil || p.source.graph == nil || p.source.graph.actions == nil || definition.Expr == nil || definition.Expr.runtimeSource == nil {
+		return app
+	}
+	if source, exists := p.source.graph.actions.Get2(definition.Expr.runtimeSource.ID.String()); exists {
+		app.ID, app.Opcode = source.ID, source.Name
+	}
+	return app
 }
 
 func (p *runtimeSourcePreparation) PrepareDefinition(ctx context.Context, name string, storage *VariableStorage) (bool, error) {

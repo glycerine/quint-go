@@ -96,6 +96,9 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 				return err
 			}
 			out(formatted + "\n")
+			if err := replPrintStateDiff(ctx, stdout, result, level); err != nil {
+				return err
+			}
 			if len(result.Missing) > 0 {
 				out("[warning] some variables are undefined: " + strings.Join(result.Missing, ", ") + "\n")
 			}

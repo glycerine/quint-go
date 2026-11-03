@@ -1,7 +1,9 @@
 package quint
 
 import (
+	"context"
 	"fmt"
+	"math/big"
 	"sort"
 
 	"github.com/glycerine/insdict"
@@ -32,6 +34,21 @@ type ValueDiffOptions struct {
 // and unchanged values use the public Go structural-equality boundary. The
 // caller chooses output width and styling; the function performs no terminal IO.
 func FormatRuntimeValueDiff(old, new RuntimeValue, width int, options ...ValueDiffOptions) (string, error) {
+	return formatRuntimeValueDiff(nil, old, new, width, options...)
+}
+
+// FormatRuntimeValueDiffContext compares retained runtime values, including
+// compact finite domains, with checked extensional equality. Domain elements
+// retain their runtime traversal order. Cancellation and enumeration failures
+// are returned without a partial rendering; no terminal output is performed.
+func FormatRuntimeValueDiffContext(ctx context.Context, old, new RuntimeValue, width int, options ...ValueDiffOptions) (string, error) {
+	if err := ctx.Err(); err != nil {
+		return "", err
+	}
+	return formatRuntimeValueDiff(ctx, old, new, width, options...)
+}
+
+func formatRuntimeValueDiff(ctx context.Context, old, new RuntimeValue, width int, options ...ValueDiffOptions) (string, error) {
 	var option ValueDiffOptions
 	if len(options) > 0 {
 		option = options[0]
@@ -42,15 +59,48 @@ func FormatRuntimeValueDiff(old, new RuntimeValue, width int, options ...ValueDi
 	if !old.Valid() || !new.Valid() {
 		return "", fmt.Errorf("value diff requires valid runtime values")
 	}
-	differ := valueDiffer{option}
+	differ := valueDiffer{options: option, ctx: ctx}
 	doc, err := differ.diff(old, new, false)
 	if err != nil {
 		return "", err
 	}
-	return formatValueDoc(doc, width, option.FirstColumn), nil
+	formatted := formatValueDoc(doc, width, option.FirstColumn)
+	if err := differ.check(); err != nil {
+		return "", err
+	}
+	return formatted, nil
 }
 
-type valueDiffer struct{ options ValueDiffOptions }
+type valueDiffer struct {
+	options ValueDiffOptions
+	ctx     context.Context
+}
+
+func (d valueDiffer) check() error {
+	if d.ctx != nil {
+		return d.ctx.Err()
+	}
+	return nil
+}
+
+func (d valueDiffer) equal(a, b RuntimeValue) (bool, error) {
+	if d.ctx != nil {
+		if err := d.ctx.Err(); err != nil {
+			return false, err
+		}
+		// Runtime values are immutable. Reusing an object needs no domain
+		// enumeration, including compound domains with infinite factors.
+		if sameRuntimeObject(a, b) {
+			return true, nil
+		}
+		return a.EqualContext(d.ctx, b)
+	}
+	return a.Equal(b), nil
+}
+
+func (d valueDiffer) setLike(v RuntimeValue) bool {
+	return (d.ctx != nil && v.domain != nil) || valueDiffSetLike(v)
+}
 
 func (d valueDiffer) token(role ValueDiffRole, text string) valueDoc {
 	doc := vdText(text)
@@ -76,25 +126,47 @@ func valueDiffOp(v RuntimeValue, ops ...string) bool {
 func valueDiffPrimitive(v RuntimeValue) bool {
 	return v.closure == nil && (v.expression.Kind == "bool" || v.expression.Kind == "int" || v.expression.Kind == "str")
 }
-func (d valueDiffer) collapse(v RuntimeValue) bool {
+func (d valueDiffer) collapse(v RuntimeValue) (bool, error) {
 	limit := d.options.CollapseThreshold
 	if limit <= 0 {
-		return false
+		return false, nil
+	}
+	if d.ctx != nil && v.domain != nil {
+		size, err := v.domain.Cardinality(d.ctx)
+		if err != nil {
+			// Infinite values do not have a finite collapse size. Their
+			// eventual enumeration still reports the checked domain error.
+			if checkErr := d.check(); checkErr != nil {
+				return false, checkErr
+			}
+			return false, nil
+		}
+		return size.Big().Cmp(big.NewInt(int64(limit))) > 0, nil
 	}
 	switch {
 	case valueDiffOp(v, "Map", "Set"):
-		return v.payload != nil && v.payload.entries.Len() > limit
+		return v.payload != nil && v.payload.entries.Len() > limit, nil
 	case valueDiffOp(v, "Rec"):
-		return v.payload != nil && len(v.payload.children)/2 > limit
+		return v.payload != nil && len(v.payload.children)/2 > limit, nil
 	case valueDiffOp(v, "List", "Tup"):
-		return v.payload != nil && len(v.payload.children) > limit
+		return v.payload != nil && len(v.payload.children) > limit, nil
 	}
-	return false
+	return false, nil
 }
 func (d valueDiffer) diff(a, b RuntimeValue, nested bool) (valueDoc, error) {
-	if a.Equal(b) {
-		if nested && d.collapse(a) {
-			return d.token(ValueDiffUnchanged, "..."), nil
+	equal, err := d.equal(a, b)
+	if err != nil {
+		return valueDoc{}, err
+	}
+	if equal {
+		if nested {
+			collapse, err := d.collapse(a)
+			if err != nil {
+				return valueDoc{}, err
+			}
+			if collapse {
+				return d.token(ValueDiffUnchanged, "..."), nil
+			}
 		}
 		return d.pretty(a, ValueDiffUnchanged)
 	}
@@ -160,7 +232,7 @@ func (d valueDiffer) diff(a, b RuntimeValue, nested bool) (valueDoc, error) {
 		payload, err := d.diff(left[1], right[1], true)
 		return vdGroup(label, vdText("("), payload, vdText(")")), err
 	}
-	if valueDiffSetLike(a) || valueDiffSetLike(b) {
+	if d.setLike(a) || d.setLike(b) {
 		return d.sets(a, b)
 	}
 	return d.arrow(a, b)
@@ -210,6 +282,9 @@ func (d valueDiffer) records(a, b RuntimeValue) (valueDoc, error) {
 	sort.Slice(names, func(i, j int) bool { return utf16Less(names[i], names[j]) })
 	fields := make([]valueDoc, 0, len(names))
 	for _, name := range names {
+		if err := d.check(); err != nil {
+			return valueDoc{}, err
+		}
 		old, hasOld := left.Get2(name)
 		new, hasNew := right.Get2(name)
 		role := ValueDiffUnchanged
@@ -244,7 +319,11 @@ func (d valueDiffer) maps(a, b RuntimeValue) (valueDoc, error) {
 	for _, old := range left {
 		matched := -1
 		for i, new := range right {
-			if old.Key.Equal(new.Key) {
+			equal, err := d.equal(old.Key, new.Key)
+			if err != nil {
+				return valueDoc{}, err
+			}
+			if equal {
 				matched = i
 				break
 			}
@@ -290,13 +369,25 @@ func valueDiffEmptyPayload(v RuntimeValue) bool {
 	return valueDiffOp(v, "List", "Tup") && v.payload != nil && len(v.payload.children) == 0
 }
 func valueDiffSetLike(v RuntimeValue) bool { return valueDiffOp(v, "Set", "List", "Tup", "Map", "Rec") }
-func valueDiffElements(v RuntimeValue) ([]RuntimeValue, error) {
+func (d valueDiffer) elements(v RuntimeValue) ([]RuntimeValue, error) {
+	if d.ctx != nil {
+		if err := d.ctx.Err(); err != nil {
+			return nil, err
+		}
+		if v.domain != nil {
+			return runtimeDomainValues(d.ctx, *v.domain)
+		}
+	}
 	if valueDiffOp(v, "List", "Tup") {
 		children, err := runtimeChildren(v)
 		if err != nil {
 			return nil, err
 		}
-		v, err = newRuntimeComposite("Set", children)
+		if d.ctx != nil {
+			v, err = NewRuntimeCompositeContext(d.ctx, "Set", children)
+		} else {
+			v, err = newRuntimeComposite("Set", children)
+		}
 		if err != nil {
 			return nil, err
 		}
@@ -314,11 +405,11 @@ func valueDiffElements(v RuntimeValue) ([]RuntimeValue, error) {
 	return values, nil
 }
 func (d valueDiffer) sets(a, b RuntimeValue) (valueDoc, error) {
-	left, err := valueDiffElements(a)
+	left, err := d.elements(a)
 	if err != nil {
 		return valueDoc{}, err
 	}
-	right, err := valueDiffElements(b)
+	right, err := d.elements(b)
 	if err != nil {
 		return valueDoc{}, err
 	}
@@ -327,7 +418,14 @@ func (d valueDiffer) sets(a, b RuntimeValue) (valueDoc, error) {
 	for _, old := range left {
 		role := ValueDiffRemoved
 		for i, new := range right {
-			if !matched[i] && old.Equal(new) {
+			if matched[i] {
+				continue
+			}
+			equal, err := d.equal(old, new)
+			if err != nil {
+				return valueDoc{}, err
+			}
+			if equal {
 				matched[i] = true
 				role = ValueDiffUnchanged
 				break
@@ -351,6 +449,9 @@ func (d valueDiffer) sets(a, b RuntimeValue) (valueDoc, error) {
 	return vdGroup(d.token(ValueDiffUnchanged, "Set"), d.nary(ValueDiffUnchanged, "(", items, ")", vdBreak())), nil
 }
 func (d valueDiffer) pretty(v RuntimeValue, role ValueDiffRole) (valueDoc, error) {
+	if err := d.check(); err != nil {
+		return valueDoc{}, err
+	}
 	if v.closure != nil {
 		return valueDoc{}, fmt.Errorf("value diff does not support lexical closures")
 	}
@@ -379,8 +480,8 @@ func (d valueDiffer) pretty(v RuntimeValue, role ValueDiffRole) (valueDoc, error
 			pairs = append(pairs, vdGroup(key, d.token(role, " -> "), value))
 		}
 		return vdGroup(d.token(role, "Map"), d.nary(role, "(", pairs, ")", vdBreak())), nil
-	case valueDiffOp(v, "Set"):
-		elements, err := valueDiffElements(v)
+	case valueDiffOp(v, "Set") || (d.ctx != nil && v.domain != nil):
+		elements, err := d.elements(v)
 		if err != nil {
 			return valueDoc{}, err
 		}

@@ -15,12 +15,16 @@ import (
 // REPLResult describes an accepted input. Kind is none, declaration, or value.
 // A true value commits pending variable updates, just as the interactive
 // TypeScript evaluator does. Missing lists variables left unset by that commit.
+// OldState and NewState retain immutable snapshots immediately before and after
+// a commit; they are valid only when Shifted is true.
 type REPLResult struct {
-	Kind    string
-	Value   RuntimeValue
-	Type    *TypeScheme
-	Shifted bool
-	Missing []string
+	Kind     string
+	Value    RuntimeValue
+	Type     *TypeScheme
+	Shifted  bool
+	Missing  []string
+	OldState RuntimeValue
+	NewState RuntimeValue
 }
 
 // REPLSession retains declarations, static analysis, runtime state, and unique
@@ -144,10 +148,19 @@ func (s *REPLSession) Evaluate(ctx context.Context, text string) (REPLResult, er
 			}
 		}
 		if updated {
+			oldState, err := s.runtime.Storage.Record()
+			if err != nil {
+				return result, err
+			}
 			if err = s.runtime.Shift(); err != nil {
 				return result, err
 			}
+			newState, err := s.runtime.Storage.Record()
+			if err != nil {
+				return result, err
+			}
 			result.Shifted = true
+			result.OldState, result.NewState = oldState, newState
 		} else {
 			result.Missing = []string{}
 		}

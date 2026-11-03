@@ -125,7 +125,8 @@ options; commented-out `--timeout` is not an upstream implemented option.
 
 REPL `.clear`, `.exit`/`.quit`, `.help`, `.load`, `.reload`, `.state`, `.history`,
 `.verbosity`, `.seed`, `.save`, saved-expression replay and multiline input are
-implemented. Interactive blocked-read cancellation belongs to the
+implemented, including checked state value diffs and source action frames.
+Interactive blocked-read cancellation belongs to the
 input owner. Parser/evaluator errors leave the session available.
 
 `--seed` reduces default run/test samples to one unless `--max-samples` is

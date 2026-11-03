@@ -604,7 +604,9 @@ including failed actions that must not leak partially updated state.
   - [x] Save source snapshots and accepted expression history, load/reload with
     replay, raw line endings, selected-module markers and safe round trips.
   - [x] Verbose captured execution frames, including loaded/replayed expressions.
-  - [ ] State value diffs and interruption of caller-owned blocked input readers.
+  - [x] State value diffs with owned old/new snapshots and checked compact values;
+    45 exact upstream streams preserve internal then/shift and replay ordering.
+  - [ ] Interrupt event handling and explicit caller-owned blocked-input contract.
 - [ ] P8.5 Add cancellation and bounded resource controls. Where concurrent
   simulation is exposed, isolate RNG/state/cache ownership and define result
   ordering and reproducibility across worker counts.
@@ -751,8 +753,8 @@ Build these items alongside the phases that supply their command behavior.
     with Unicode UTF-16, CRLF/tabs, offsets, REPL formatting, and source fallback.
   - [x] Width-aware plain value formatting, recursive concrete value diffs with
     collapse/styling options, state prefixes and captured execution-frame trees.
-  - [ ] Runtime frame capture/listener integration, terminal width/colors and
-    remaining command report formatting.
+  - [x] Capture runtime frames/listeners and render REPL state diffs.
+  - [ ] Terminal width/colors and remaining command report formatting.
 - [x] P10.6 Port documentation extraction and `docs`; embed builtin definitions
   and necessary runtime assets so the binary works outside the checkout.
   - [x] Reusable documentation extraction/Markdown rendering and embedded
@@ -3518,3 +3520,15 @@ word "retained" in the commit message.
   outcomes;71,280 unsupported outcomes and48 panic probes are classified
   separately. Focused0.233s, full CLI0.609s, race1.488s and vet pass; reset helper
  100% covered. Remaining nullable semantics stay an explicit bounded limit.
+
+- 2026-11-02: Added REPL state diffs with45 actual upstream streams and checked
+  compact-value formatting. Old/new snapshots preserve internal transitions,
+  replay and owned child values; quiet paths avoid enumeration. Synthetic action
+  frames now freeze original source names/IDs through imports, instances and
+  unshadowing; explicit transported IR keeps its flattened names and existing
+  qualified action metadata. Ten additional source/transport histories compare
+  exact hooks. Pure actions seed source graphs only when needed (tiny model
+  overhead19.9us/9KB); other pure projects keep the previous path. Existing43
+  recorder cases,66 CLI frame transcripts and source-context suites pass. Focused
+  core0.202s/CLI0.170s; diff helpers100% covered. Interrupt/terminal policy remains
+  separate work.
