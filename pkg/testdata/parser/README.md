@@ -1248,3 +1248,12 @@ stages and compact source maps preserve main-file raw line endings while imports
 use upstream LF normalization. Together with 22 run/test and 21 verify stage
 snapshots these cover all source frontend adapters; platform directory-read error
 prose remains explicitly OS-specific.
+
+Public API fixtures `api_ir_access.json`, `api_printing.json`,
+`api_source_compact.json` and `api_effect_printing.json` have matching generators
+and actual source-backed expectations: 228 lifecycle events, 372 finder results,
+96 declarations/two modules/1,280 layouts, nine ordered source maps/nine ID views,
+five resumed ID sequences and 13 substitution strings. APIs document borrowed
+visitors versus owned outputs, precise source coordinates and safe errors for
+reference pretty-printer recursion bugs. An external-package example validates
+the parse-to-evaluate public path. General replacement transforms are separate.

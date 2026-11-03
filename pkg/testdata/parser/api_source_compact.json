@@ -1,0 +1,627 @@
+{
+  "sourceMaps": [
+    {
+      "name": "empty",
+      "entries": [],
+      "output": "{\"sourceIndex\":{},\"map\":{}}",
+      "byIDOutput": "{\"sourceIndex\":{},\"map\":{}}"
+    },
+    {
+      "name": "missing-end-zero-id",
+      "entries": [
+        {
+          "id": "0",
+          "location": {
+            "source": "empty.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        }
+      ],
+      "output": "{\"sourceIndex\":{\"0\":\"empty.qnt\"},\"map\":{\"0\":[0,{\"line\":0,\"col\":0,\"index\":0},{}]}}",
+      "byIDOutput": "{\"sourceIndex\":{\"0\":\"empty.qnt\"},\"map\":{\"0\":[0,{\"line\":0,\"col\":0,\"index\":0},{}]}}"
+    },
+    {
+      "name": "gapped-source-index",
+      "entries": [
+        {
+          "id": "9",
+          "location": {
+            "source": "a.qnt",
+            "start": {
+              "line": 1,
+              "col": 2,
+              "index": 3
+            },
+            "end": {
+              "line": 4,
+              "col": 5,
+              "index": 6
+            }
+          }
+        },
+        {
+          "id": "1",
+          "location": {
+            "source": "a.qnt",
+            "start": {
+              "line": 7,
+              "col": 8,
+              "index": 9
+            }
+          }
+        },
+        {
+          "id": "7",
+          "location": {
+            "source": "b.qnt",
+            "start": {
+              "line": 10,
+              "col": 11,
+              "index": 12
+            },
+            "end": {
+              "line": 13,
+              "col": 14,
+              "index": 15
+            }
+          }
+        }
+      ],
+      "output": "{\"sourceIndex\":{\"0\":\"a.qnt\",\"2\":\"b.qnt\"},\"map\":{\"1\":[0,{\"line\":7,\"col\":8,\"index\":9},{}],\"7\":[2,{\"line\":10,\"col\":11,\"index\":12},{\"line\":13,\"col\":14,\"index\":15}],\"9\":[0,{\"line\":1,\"col\":2,\"index\":3},{\"line\":4,\"col\":5,\"index\":6}]}}",
+      "byIDOutput": "{\"sourceIndex\":{\"0\":\"a.qnt\",\"1\":\"b.qnt\"},\"map\":{\"1\":[0,{\"line\":7,\"col\":8,\"index\":9},{}],\"7\":[1,{\"line\":10,\"col\":11,\"index\":12},{\"line\":13,\"col\":14,\"index\":15}],\"9\":[0,{\"line\":1,\"col\":2,\"index\":3},{\"line\":4,\"col\":5,\"index\":6}]}}"
+    },
+    {
+      "name": "several-source-gaps",
+      "entries": [
+        {
+          "id": "20",
+          "location": {
+            "source": "a.qnt",
+            "start": {
+              "line": 0,
+              "col": 1,
+              "index": 2
+            }
+          }
+        },
+        {
+          "id": "19",
+          "location": {
+            "source": "a.qnt",
+            "start": {
+              "line": 1,
+              "col": 2,
+              "index": 3
+            }
+          }
+        },
+        {
+          "id": "18",
+          "location": {
+            "source": "a.qnt",
+            "start": {
+              "line": 2,
+              "col": 3,
+              "index": 4
+            }
+          }
+        },
+        {
+          "id": "17",
+          "location": {
+            "source": "b.qnt",
+            "start": {
+              "line": 3,
+              "col": 4,
+              "index": 5
+            }
+          }
+        },
+        {
+          "id": "16",
+          "location": {
+            "source": "b.qnt",
+            "start": {
+              "line": 4,
+              "col": 5,
+              "index": 6
+            }
+          }
+        },
+        {
+          "id": "15",
+          "location": {
+            "source": "c.qnt",
+            "start": {
+              "line": 5,
+              "col": 6,
+              "index": 7
+            }
+          }
+        }
+      ],
+      "output": "{\"sourceIndex\":{\"0\":\"a.qnt\",\"3\":\"b.qnt\",\"5\":\"c.qnt\"},\"map\":{\"15\":[5,{\"line\":5,\"col\":6,\"index\":7},{}],\"16\":[3,{\"line\":4,\"col\":5,\"index\":6},{}],\"17\":[3,{\"line\":3,\"col\":4,\"index\":5},{}],\"18\":[0,{\"line\":2,\"col\":3,\"index\":4},{}],\"19\":[0,{\"line\":1,\"col\":2,\"index\":3},{}],\"20\":[0,{\"line\":0,\"col\":1,\"index\":2},{}]}}",
+      "byIDOutput": "{\"sourceIndex\":{\"0\":\"c.qnt\",\"1\":\"b.qnt\",\"3\":\"a.qnt\"},\"map\":{\"15\":[0,{\"line\":5,\"col\":6,\"index\":7},{}],\"16\":[1,{\"line\":4,\"col\":5,\"index\":6},{}],\"17\":[1,{\"line\":3,\"col\":4,\"index\":5},{}],\"18\":[3,{\"line\":2,\"col\":3,\"index\":4},{}],\"19\":[3,{\"line\":1,\"col\":2,\"index\":3},{}],\"20\":[3,{\"line\":0,\"col\":1,\"index\":2},{}]}}"
+    },
+    {
+      "name": "javascript-key-boundary",
+      "entries": [
+        {
+          "id": "4294967295",
+          "location": {
+            "source": "big-first.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        },
+        {
+          "id": "18446744073709551616",
+          "location": {
+            "source": "big-second.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        },
+        {
+          "id": "3",
+          "location": {
+            "source": "small.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        },
+        {
+          "id": "4294967294",
+          "location": {
+            "source": "last-index.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        },
+        {
+          "id": "0",
+          "location": {
+            "source": "zero.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        },
+        {
+          "id": "8",
+          "location": {
+            "source": "eight.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        },
+        {
+          "id": "4294967296",
+          "location": {
+            "source": "big-third.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "location": {
+            "source": "two.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        }
+      ],
+      "output": "{\"sourceIndex\":{\"0\":\"big-first.qnt\",\"1\":\"big-second.qnt\",\"2\":\"small.qnt\",\"3\":\"last-index.qnt\",\"4\":\"zero.qnt\",\"5\":\"eight.qnt\",\"6\":\"big-third.qnt\",\"7\":\"two.qnt\"},\"map\":{\"0\":[4,{\"line\":0,\"col\":0,\"index\":0},{}],\"2\":[7,{\"line\":0,\"col\":0,\"index\":0},{}],\"3\":[2,{\"line\":0,\"col\":0,\"index\":0},{}],\"8\":[5,{\"line\":0,\"col\":0,\"index\":0},{}],\"4294967294\":[3,{\"line\":0,\"col\":0,\"index\":0},{}],\"4294967295\":[0,{\"line\":0,\"col\":0,\"index\":0},{}],\"18446744073709551616\":[1,{\"line\":0,\"col\":0,\"index\":0},{}],\"4294967296\":[6,{\"line\":0,\"col\":0,\"index\":0},{}]}}",
+      "byIDOutput": "{\"sourceIndex\":{\"0\":\"zero.qnt\",\"1\":\"two.qnt\",\"2\":\"small.qnt\",\"3\":\"eight.qnt\",\"4\":\"last-index.qnt\",\"5\":\"big-first.qnt\",\"6\":\"big-third.qnt\",\"7\":\"big-second.qnt\"},\"map\":{\"0\":[0,{\"line\":0,\"col\":0,\"index\":0},{}],\"2\":[1,{\"line\":0,\"col\":0,\"index\":0},{}],\"3\":[2,{\"line\":0,\"col\":0,\"index\":0},{}],\"8\":[3,{\"line\":0,\"col\":0,\"index\":0},{}],\"4294967294\":[4,{\"line\":0,\"col\":0,\"index\":0},{}],\"4294967295\":[5,{\"line\":0,\"col\":0,\"index\":0},{}],\"4294967296\":[6,{\"line\":0,\"col\":0,\"index\":0},{}],\"18446744073709551616\":[7,{\"line\":0,\"col\":0,\"index\":0},{}]}}"
+    },
+    {
+      "name": "overwrite-retains-slot",
+      "entries": [
+        {
+          "id": "1000000000000000000000000000000000001",
+          "location": {
+            "source": "removed.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "location": {
+            "source": "é/😀.qnt",
+            "start": {
+              "line": 1,
+              "col": 2,
+              "index": 3
+            },
+            "end": {
+              "line": 2,
+              "col": 7,
+              "index": 11
+            }
+          }
+        },
+        {
+          "id": "1000000000000000000000000000000000001",
+          "location": {
+            "source": "replacement.qnt",
+            "start": {
+              "line": 10,
+              "col": 20,
+              "index": 30
+            },
+            "end": {
+              "line": 11,
+              "col": 12,
+              "index": 34
+            }
+          }
+        },
+        {
+          "id": "1",
+          "location": {
+            "source": "é/😀.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        }
+      ],
+      "output": "{\"sourceIndex\":{\"0\":\"replacement.qnt\",\"1\":\"é/😀.qnt\"},\"map\":{\"1\":[1,{\"line\":0,\"col\":0,\"index\":0},{}],\"2\":[1,{\"line\":1,\"col\":2,\"index\":3},{\"line\":2,\"col\":7,\"index\":11}],\"1000000000000000000000000000000000001\":[0,{\"line\":10,\"col\":20,\"index\":30},{\"line\":11,\"col\":12,\"index\":34}]}}",
+      "byIDOutput": "{\"sourceIndex\":{\"0\":\"é/😀.qnt\",\"2\":\"replacement.qnt\"},\"map\":{\"1\":[0,{\"line\":0,\"col\":0,\"index\":0},{}],\"2\":[0,{\"line\":1,\"col\":2,\"index\":3},{\"line\":2,\"col\":7,\"index\":11}],\"1000000000000000000000000000000000001\":[2,{\"line\":10,\"col\":20,\"index\":30},{\"line\":11,\"col\":12,\"index\":34}]}}"
+    },
+    {
+      "name": "empty-and-unusual-source",
+      "entries": [
+        {
+          "id": "7",
+          "location": {
+            "source": "",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "location": {
+            "source": "__proto__",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        },
+        {
+          "id": "9",
+          "location": {
+            "source": "<quoted>\"&source",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            }
+          }
+        }
+      ],
+      "output": "{\"sourceIndex\":{\"0\":\"\",\"1\":\"__proto__\",\"2\":\"<quoted>\\\"&source\"},\"map\":{\"2\":[1,{\"line\":0,\"col\":0,\"index\":0},{}],\"7\":[0,{\"line\":0,\"col\":0,\"index\":0},{}],\"9\":[2,{\"line\":0,\"col\":0,\"index\":0},{}]}}",
+      "byIDOutput": "{\"sourceIndex\":{\"0\":\"__proto__\",\"1\":\"\",\"2\":\"<quoted>\\\"&source\"},\"map\":{\"2\":[0,{\"line\":0,\"col\":0,\"index\":0},{}],\"7\":[1,{\"line\":0,\"col\":0,\"index\":0},{}],\"9\":[2,{\"line\":0,\"col\":0,\"index\":0},{}]}}"
+    },
+    {
+      "name": "parsed-ascii",
+      "entries": [
+        {
+          "id": "4294967291",
+          "location": {
+            "source": "M.qnt",
+            "start": {
+              "line": 0,
+              "col": 18,
+              "index": 18
+            },
+            "end": {
+              "line": 0,
+              "col": 20,
+              "index": 20
+            }
+          }
+        },
+        {
+          "id": "4294967292",
+          "location": {
+            "source": "M.qnt",
+            "start": {
+              "line": 0,
+              "col": 11,
+              "index": 11
+            },
+            "end": {
+              "line": 0,
+              "col": 20,
+              "index": 20
+            }
+          }
+        },
+        {
+          "id": "4294967293",
+          "location": {
+            "source": "M.qnt",
+            "start": {
+              "line": 0,
+              "col": 41,
+              "index": 41
+            },
+            "end": {
+              "line": 0,
+              "col": 41,
+              "index": 41
+            }
+          }
+        },
+        {
+          "id": "4294967294",
+          "location": {
+            "source": "M.qnt",
+            "start": {
+              "line": 0,
+              "col": 36,
+              "index": 36
+            },
+            "end": {
+              "line": 0,
+              "col": 41,
+              "index": 41
+            }
+          }
+        },
+        {
+          "id": "4294967295",
+          "location": {
+            "source": "M.qnt",
+            "start": {
+              "line": 0,
+              "col": 36,
+              "index": 36
+            },
+            "end": {
+              "line": 0,
+              "col": 41,
+              "index": 41
+            }
+          }
+        },
+        {
+          "id": "4294967296",
+          "location": {
+            "source": "M.qnt",
+            "start": {
+              "line": 0,
+              "col": 29,
+              "index": 29
+            },
+            "end": {
+              "line": 0,
+              "col": 32,
+              "index": 32
+            }
+          }
+        },
+        {
+          "id": "4294967297",
+          "location": {
+            "source": "M.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            },
+            "end": {
+              "line": 0,
+              "col": 43,
+              "index": 43
+            }
+          }
+        }
+      ],
+      "output": "{\"sourceIndex\":{\"0\":\"M.qnt\"},\"map\":{\"4294967291\":[0,{\"line\":0,\"col\":18,\"index\":18},{\"line\":0,\"col\":20,\"index\":20}],\"4294967292\":[0,{\"line\":0,\"col\":11,\"index\":11},{\"line\":0,\"col\":20,\"index\":20}],\"4294967293\":[0,{\"line\":0,\"col\":41,\"index\":41},{\"line\":0,\"col\":41,\"index\":41}],\"4294967294\":[0,{\"line\":0,\"col\":36,\"index\":36},{\"line\":0,\"col\":41,\"index\":41}],\"4294967295\":[0,{\"line\":0,\"col\":36,\"index\":36},{\"line\":0,\"col\":41,\"index\":41}],\"4294967296\":[0,{\"line\":0,\"col\":29,\"index\":29},{\"line\":0,\"col\":32,\"index\":32}],\"4294967297\":[0,{\"line\":0,\"col\":0,\"index\":0},{\"line\":0,\"col\":43,\"index\":43}]}}",
+      "byIDOutput": "{\"sourceIndex\":{\"0\":\"M.qnt\"},\"map\":{\"4294967291\":[0,{\"line\":0,\"col\":18,\"index\":18},{\"line\":0,\"col\":20,\"index\":20}],\"4294967292\":[0,{\"line\":0,\"col\":11,\"index\":11},{\"line\":0,\"col\":20,\"index\":20}],\"4294967293\":[0,{\"line\":0,\"col\":41,\"index\":41},{\"line\":0,\"col\":41,\"index\":41}],\"4294967294\":[0,{\"line\":0,\"col\":36,\"index\":36},{\"line\":0,\"col\":41,\"index\":41}],\"4294967295\":[0,{\"line\":0,\"col\":36,\"index\":36},{\"line\":0,\"col\":41,\"index\":41}],\"4294967296\":[0,{\"line\":0,\"col\":29,\"index\":29},{\"line\":0,\"col\":32,\"index\":32}],\"4294967297\":[0,{\"line\":0,\"col\":0,\"index\":0},{\"line\":0,\"col\":43,\"index\":43}]}}"
+    },
+    {
+      "name": "parsed-unicode",
+      "entries": [
+        {
+          "id": "4294967291",
+          "location": {
+            "source": "é/😀.qnt",
+            "start": {
+              "line": 0,
+              "col": 22,
+              "index": 22
+            },
+            "end": {
+              "line": 0,
+              "col": 25,
+              "index": 25
+            }
+          }
+        },
+        {
+          "id": "4294967292",
+          "location": {
+            "source": "é/😀.qnt",
+            "start": {
+              "line": 0,
+              "col": 15,
+              "index": 15
+            },
+            "end": {
+              "line": 0,
+              "col": 18,
+              "index": 18
+            }
+          }
+        },
+        {
+          "id": "4294967293",
+          "location": {
+            "source": "é/😀.qnt",
+            "start": {
+              "line": 1,
+              "col": 13,
+              "index": 40
+            },
+            "end": {
+              "line": 1,
+              "col": 13,
+              "index": 40
+            }
+          }
+        },
+        {
+          "id": "4294967294",
+          "location": {
+            "source": "é/😀.qnt",
+            "start": {
+              "line": 1,
+              "col": 16,
+              "index": 43
+            },
+            "end": {
+              "line": 1,
+              "col": 18,
+              "index": 45
+            }
+          }
+        },
+        {
+          "id": "4294967295",
+          "location": {
+            "source": "é/😀.qnt",
+            "start": {
+              "line": 1,
+              "col": 12,
+              "index": 39
+            },
+            "end": {
+              "line": 1,
+              "col": 19,
+              "index": 46
+            }
+          }
+        },
+        {
+          "id": "4294967296",
+          "location": {
+            "source": "é/😀.qnt",
+            "start": {
+              "line": 1,
+              "col": 5,
+              "index": 32
+            },
+            "end": {
+              "line": 1,
+              "col": 8,
+              "index": 35
+            }
+          }
+        },
+        {
+          "id": "4294967297",
+          "location": {
+            "source": "é/😀.qnt",
+            "start": {
+              "line": 0,
+              "col": 0,
+              "index": 0
+            },
+            "end": {
+              "line": 1,
+              "col": 48,
+              "index": 48
+            }
+          }
+        }
+      ],
+      "output": "{\"sourceIndex\":{\"0\":\"é/😀.qnt\"},\"map\":{\"4294967291\":[0,{\"line\":0,\"col\":22,\"index\":22},{\"line\":0,\"col\":25,\"index\":25}],\"4294967292\":[0,{\"line\":0,\"col\":15,\"index\":15},{\"line\":0,\"col\":18,\"index\":18}],\"4294967293\":[0,{\"line\":1,\"col\":13,\"index\":40},{\"line\":1,\"col\":13,\"index\":40}],\"4294967294\":[0,{\"line\":1,\"col\":16,\"index\":43},{\"line\":1,\"col\":18,\"index\":45}],\"4294967295\":[0,{\"line\":1,\"col\":12,\"index\":39},{\"line\":1,\"col\":19,\"index\":46}],\"4294967296\":[0,{\"line\":1,\"col\":5,\"index\":32},{\"line\":1,\"col\":8,\"index\":35}],\"4294967297\":[0,{\"line\":0,\"col\":0,\"index\":0},{\"line\":1,\"col\":48,\"index\":48}]}}",
+      "byIDOutput": "{\"sourceIndex\":{\"0\":\"é/😀.qnt\"},\"map\":{\"4294967291\":[0,{\"line\":0,\"col\":22,\"index\":22},{\"line\":0,\"col\":25,\"index\":25}],\"4294967292\":[0,{\"line\":0,\"col\":15,\"index\":15},{\"line\":0,\"col\":18,\"index\":18}],\"4294967293\":[0,{\"line\":1,\"col\":13,\"index\":40},{\"line\":1,\"col\":13,\"index\":40}],\"4294967294\":[0,{\"line\":1,\"col\":16,\"index\":43},{\"line\":1,\"col\":18,\"index\":45}],\"4294967295\":[0,{\"line\":1,\"col\":12,\"index\":39},{\"line\":1,\"col\":19,\"index\":46}],\"4294967296\":[0,{\"line\":1,\"col\":5,\"index\":32},{\"line\":1,\"col\":8,\"index\":35}],\"4294967297\":[0,{\"line\":0,\"col\":0,\"index\":0},{\"line\":1,\"col\":48,\"index\":48}]}}"
+    }
+  ],
+  "ids": [
+    {
+      "initial": "0",
+      "next": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "initial": "1",
+      "next": [
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    {
+      "initial": "4294967295",
+      "next": [
+        "4294967296",
+        "4294967297",
+        "4294967298"
+      ]
+    },
+    {
+      "initial": "18446744073709551616",
+      "next": [
+        "18446744073709551617",
+        "18446744073709551618",
+        "18446744073709551619"
+      ]
+    },
+    {
+      "initial": "999999999999999999999999999999999999",
+      "next": [
+        "1000000000000000000000000000000000000",
+        "1000000000000000000000000000000000001",
+        "1000000000000000000000000000000000002"
+      ]
+    }
+  ]
+}

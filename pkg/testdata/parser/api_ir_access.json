@@ -1,0 +1,5177 @@
+[
+  {
+    "name": "all_kinds_and_source_order",
+    "modules": [
+      {
+        "id": 52,
+        "name": "AllKinds",
+        "declarations": [
+          {
+            "id": 53,
+            "kind": "import",
+            "protoName": "Other",
+            "defName": "*",
+            "qualifiedName": "Renamed",
+            "fromSource": "./other"
+          },
+          {
+            "id": 54,
+            "kind": "export",
+            "protoName": "Other",
+            "defName": "*"
+          },
+          {
+            "id": 55,
+            "kind": "instance",
+            "protoName": "Other",
+            "qualifiedName": "Instance",
+            "identityOverride": false,
+            "overrides": [
+              [
+                {
+                  "id": 2,
+                  "name": "overrideArgument",
+                  "typeAnnotation": {
+                    "id": 1,
+                    "kind": "int"
+                  }
+                },
+                {
+                  "id": 6,
+                  "kind": "lambda",
+                  "qualifier": "puredef",
+                  "params": [
+                    {
+                      "id": 4,
+                      "name": "overridden",
+                      "typeAnnotation": {
+                        "id": 3,
+                        "kind": "str"
+                      }
+                    }
+                  ],
+                  "expr": {
+                    "id": 5,
+                    "kind": "name",
+                    "name": "overridden"
+                  }
+                }
+              ]
+            ]
+          },
+          {
+            "id": 56,
+            "kind": "const",
+            "name": "C",
+            "typeAnnotation": {
+              "id": 57,
+              "kind": "int"
+            }
+          },
+          {
+            "id": 58,
+            "kind": "var",
+            "name": "state",
+            "typeAnnotation": {
+              "id": 60,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "count",
+                    "fieldType": {
+                      "id": 59,
+                      "kind": "int"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          {
+            "id": 61,
+            "kind": "typedef",
+            "name": "All",
+            "params": [],
+            "type": {
+              "id": 32,
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "bool"
+                },
+                {
+                  "id": 8,
+                  "kind": "int"
+                },
+                {
+                  "id": 9,
+                  "kind": "str"
+                },
+                {
+                  "id": 10,
+                  "kind": "const",
+                  "name": "T"
+                },
+                {
+                  "id": 11,
+                  "kind": "var",
+                  "name": "a"
+                },
+                {
+                  "id": 13,
+                  "kind": "set",
+                  "elem": {
+                    "id": 12,
+                    "kind": "bool"
+                  }
+                },
+                {
+                  "id": 15,
+                  "kind": "list",
+                  "elem": {
+                    "id": 14,
+                    "kind": "str"
+                  }
+                },
+                {
+                  "id": 18,
+                  "kind": "fun",
+                  "arg": {
+                    "id": 16,
+                    "kind": "int"
+                  },
+                  "res": {
+                    "id": 17,
+                    "kind": "bool"
+                  }
+                },
+                {
+                  "id": 21,
+                  "kind": "tup",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "0",
+                        "fieldType": {
+                          "id": 19,
+                          "kind": "int"
+                        }
+                      },
+                      {
+                        "fieldName": "1",
+                        "fieldType": {
+                          "id": 20,
+                          "kind": "str"
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                },
+                {
+                  "id": 24,
+                  "kind": "rec",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "first",
+                        "fieldType": {
+                          "id": 22,
+                          "kind": "int"
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "row",
+                      "fields": [
+                        {
+                          "fieldName": "second",
+                          "fieldType": {
+                            "id": 23,
+                            "kind": "bool"
+                          }
+                        }
+                      ],
+                      "other": {
+                        "kind": "var",
+                        "name": "r"
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": 27,
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "Some",
+                        "fieldType": {
+                          "id": 25,
+                          "kind": "str"
+                        }
+                      },
+                      {
+                        "fieldName": "None",
+                        "fieldType": {
+                          "id": 26,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                },
+                {
+                  "kind": "bool"
+                }
+              ],
+              "res": {
+                "id": 31,
+                "kind": "app",
+                "ctor": {
+                  "id": 28,
+                  "kind": "const",
+                  "name": "Alias"
+                },
+                "args": [
+                  {
+                    "id": 29,
+                    "kind": "int"
+                  },
+                  {
+                    "id": 30,
+                    "kind": "var",
+                    "name": "b"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": 62,
+            "kind": "typedef",
+            "name": "Abstract"
+          },
+          {
+            "id": 63,
+            "kind": "assume",
+            "name": "_",
+            "assumption": {
+              "id": 64,
+              "kind": "bool",
+              "value": true
+            }
+          },
+          {
+            "id": 68,
+            "kind": "def",
+            "name": "main",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 51,
+              "kind": "lambda",
+              "qualifier": "puredef",
+              "params": [
+                {
+                  "id": 39,
+                  "name": "f",
+                  "typeAnnotation": {
+                    "id": 38,
+                    "kind": "oper",
+                    "args": [
+                      {
+                        "id": 36,
+                        "kind": "int"
+                      }
+                    ],
+                    "res": {
+                      "id": 37,
+                      "kind": "str"
+                    }
+                  }
+                },
+                {
+                  "id": 40,
+                  "name": "untyped"
+                }
+              ],
+              "expr": {
+                "id": 50,
+                "kind": "let",
+                "opdef": {
+                  "id": 35,
+                  "kind": "def",
+                  "name": "local",
+                  "qualifier": "pureval",
+                  "expr": {
+                    "id": 33,
+                    "kind": "int",
+                    "value": 42
+                  },
+                  "typeAnnotation": {
+                    "id": 34,
+                    "kind": "int"
+                  }
+                },
+                "expr": {
+                  "id": 49,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 41,
+                      "kind": "name",
+                      "name": "local"
+                    },
+                    {
+                      "id": 42,
+                      "kind": "bool",
+                      "value": true
+                    },
+                    {
+                      "id": 43,
+                      "kind": "int",
+                      "value": -3
+                    },
+                    {
+                      "id": 44,
+                      "kind": "str",
+                      "value": "hello"
+                    },
+                    {
+                      "id": 48,
+                      "kind": "lambda",
+                      "qualifier": "puredef",
+                      "params": [
+                        {
+                          "id": 46,
+                          "name": "inner",
+                          "typeAnnotation": {
+                            "id": 45,
+                            "kind": "bool"
+                          }
+                        }
+                      ],
+                      "expr": {
+                        "id": 47,
+                        "kind": "name",
+                        "name": "inner"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "typeAnnotation": {
+              "id": 67,
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 65,
+                  "kind": "var",
+                  "name": "a"
+                }
+              ],
+              "res": {
+                "id": 66,
+                "kind": "bool"
+              }
+            }
+          },
+          {
+            "id": 69,
+            "kind": "const",
+            "name": "Last",
+            "typeAnnotation": {
+              "id": 70,
+              "kind": "bool"
+            }
+          }
+        ]
+      },
+      {
+        "id": 71,
+        "name": "Empty",
+        "declarations": []
+      }
+    ],
+    "events": [
+      {
+        "event": "enterModule",
+        "kind": "module",
+        "id": 52,
+        "depth": -1
+      },
+      {
+        "event": "enterDecl",
+        "kind": "import",
+        "id": 53,
+        "depth": -1
+      },
+      {
+        "event": "exitDecl",
+        "kind": "import",
+        "id": 53,
+        "depth": 0
+      },
+      {
+        "event": "enterDecl",
+        "kind": "export",
+        "id": 54,
+        "depth": 0
+      },
+      {
+        "event": "exitDecl",
+        "kind": "export",
+        "id": 54,
+        "depth": 0
+      },
+      {
+        "event": "enterDecl",
+        "kind": "instance",
+        "id": 55,
+        "depth": 0
+      },
+      {
+        "event": "enterExpr",
+        "kind": "lambda",
+        "id": 6,
+        "depth": 0
+      },
+      {
+        "event": "enterType",
+        "kind": "str",
+        "id": 3,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "str",
+        "id": 3,
+        "depth": 1
+      },
+      {
+        "event": "enterExpr",
+        "kind": "name",
+        "id": 5,
+        "depth": 1
+      },
+      {
+        "event": "exitExpr",
+        "kind": "name",
+        "id": 5,
+        "depth": 1
+      },
+      {
+        "event": "exitExpr",
+        "kind": "lambda",
+        "id": 6,
+        "depth": 0
+      },
+      {
+        "event": "exitDecl",
+        "kind": "instance",
+        "id": 55,
+        "depth": 0
+      },
+      {
+        "event": "enterDecl",
+        "kind": "const",
+        "id": 56,
+        "depth": 0
+      },
+      {
+        "event": "enterDef",
+        "kind": "const",
+        "id": 56,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "int",
+        "id": 57,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "int",
+        "id": 57,
+        "depth": 1
+      },
+      {
+        "event": "exitDef",
+        "kind": "const",
+        "id": 56,
+        "depth": 1
+      },
+      {
+        "event": "exitDecl",
+        "kind": "const",
+        "id": 56,
+        "depth": 0
+      },
+      {
+        "event": "enterDecl",
+        "kind": "var",
+        "id": 58,
+        "depth": 0
+      },
+      {
+        "event": "enterDef",
+        "kind": "var",
+        "id": 58,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "rec",
+        "id": 60,
+        "depth": 1
+      },
+      {
+        "event": "enterRow",
+        "kind": "row",
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "int",
+        "id": 59,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "int",
+        "id": 59,
+        "depth": 1
+      },
+      {
+        "event": "enterRow",
+        "kind": "empty",
+        "depth": 1
+      },
+      {
+        "event": "exitRow",
+        "kind": "empty",
+        "depth": 1
+      },
+      {
+        "event": "exitRow",
+        "kind": "row",
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "rec",
+        "id": 60,
+        "depth": 1
+      },
+      {
+        "event": "exitDef",
+        "kind": "var",
+        "id": 58,
+        "depth": 1
+      },
+      {
+        "event": "exitDecl",
+        "kind": "var",
+        "id": 58,
+        "depth": 0
+      },
+      {
+        "event": "enterDecl",
+        "kind": "typedef",
+        "id": 61,
+        "depth": 0
+      },
+      {
+        "event": "enterDef",
+        "kind": "typedef",
+        "id": 61,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "oper",
+        "id": 32,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "bool",
+        "id": 7,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "bool",
+        "id": 7,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "int",
+        "id": 8,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "int",
+        "id": 8,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "str",
+        "id": 9,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "str",
+        "id": 9,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "const",
+        "id": 10,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "const",
+        "id": 10,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "var",
+        "id": 11,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "var",
+        "id": 11,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "set",
+        "id": 13,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "bool",
+        "id": 12,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "bool",
+        "id": 12,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "set",
+        "id": 13,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "list",
+        "id": 15,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "str",
+        "id": 14,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "str",
+        "id": 14,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "list",
+        "id": 15,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "fun",
+        "id": 18,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "int",
+        "id": 16,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "int",
+        "id": 16,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "bool",
+        "id": 17,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "bool",
+        "id": 17,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "fun",
+        "id": 18,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "tup",
+        "id": 21,
+        "depth": 1
+      },
+      {
+        "event": "enterRow",
+        "kind": "row",
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "int",
+        "id": 19,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "int",
+        "id": 19,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "str",
+        "id": 20,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "str",
+        "id": 20,
+        "depth": 1
+      },
+      {
+        "event": "enterRow",
+        "kind": "empty",
+        "depth": 1
+      },
+      {
+        "event": "exitRow",
+        "kind": "empty",
+        "depth": 1
+      },
+      {
+        "event": "exitRow",
+        "kind": "row",
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "tup",
+        "id": 21,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "rec",
+        "id": 24,
+        "depth": 1
+      },
+      {
+        "event": "enterRow",
+        "kind": "row",
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "int",
+        "id": 22,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "int",
+        "id": 22,
+        "depth": 1
+      },
+      {
+        "event": "enterRow",
+        "kind": "row",
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "bool",
+        "id": 23,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "bool",
+        "id": 23,
+        "depth": 1
+      },
+      {
+        "event": "enterRow",
+        "kind": "var",
+        "depth": 1
+      },
+      {
+        "event": "exitRow",
+        "kind": "var",
+        "depth": 1
+      },
+      {
+        "event": "exitRow",
+        "kind": "row",
+        "depth": 1
+      },
+      {
+        "event": "exitRow",
+        "kind": "row",
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "rec",
+        "id": 24,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "sum",
+        "id": 27,
+        "depth": 1
+      },
+      {
+        "event": "enterRow",
+        "kind": "row",
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "str",
+        "id": 25,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "str",
+        "id": 25,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "tup",
+        "id": 26,
+        "depth": 1
+      },
+      {
+        "event": "enterRow",
+        "kind": "row",
+        "depth": 1
+      },
+      {
+        "event": "enterRow",
+        "kind": "empty",
+        "depth": 1
+      },
+      {
+        "event": "exitRow",
+        "kind": "empty",
+        "depth": 1
+      },
+      {
+        "event": "exitRow",
+        "kind": "row",
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "tup",
+        "id": 26,
+        "depth": 1
+      },
+      {
+        "event": "enterRow",
+        "kind": "empty",
+        "depth": 1
+      },
+      {
+        "event": "exitRow",
+        "kind": "empty",
+        "depth": 1
+      },
+      {
+        "event": "exitRow",
+        "kind": "row",
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "sum",
+        "id": 27,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "bool",
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "bool",
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "app",
+        "id": 31,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "const",
+        "id": 28,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "const",
+        "id": 28,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "int",
+        "id": 29,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "int",
+        "id": 29,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "var",
+        "id": 30,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "var",
+        "id": 30,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "app",
+        "id": 31,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "oper",
+        "id": 32,
+        "depth": 1
+      },
+      {
+        "event": "exitDef",
+        "kind": "typedef",
+        "id": 61,
+        "depth": 1
+      },
+      {
+        "event": "exitDecl",
+        "kind": "typedef",
+        "id": 61,
+        "depth": 0
+      },
+      {
+        "event": "enterDecl",
+        "kind": "typedef",
+        "id": 62,
+        "depth": 0
+      },
+      {
+        "event": "enterDef",
+        "kind": "typedef",
+        "id": 62,
+        "depth": 1
+      },
+      {
+        "event": "exitDef",
+        "kind": "typedef",
+        "id": 62,
+        "depth": 1
+      },
+      {
+        "event": "exitDecl",
+        "kind": "typedef",
+        "id": 62,
+        "depth": 0
+      },
+      {
+        "event": "enterDecl",
+        "kind": "assume",
+        "id": 63,
+        "depth": 0
+      },
+      {
+        "event": "enterDef",
+        "kind": "assume",
+        "id": 63,
+        "depth": 1
+      },
+      {
+        "event": "enterExpr",
+        "kind": "bool",
+        "id": 64,
+        "depth": 1
+      },
+      {
+        "event": "exitExpr",
+        "kind": "bool",
+        "id": 64,
+        "depth": 1
+      },
+      {
+        "event": "exitDef",
+        "kind": "assume",
+        "id": 63,
+        "depth": 1
+      },
+      {
+        "event": "exitDecl",
+        "kind": "assume",
+        "id": 63,
+        "depth": 0
+      },
+      {
+        "event": "enterDecl",
+        "kind": "def",
+        "id": 68,
+        "depth": 0
+      },
+      {
+        "event": "enterDef",
+        "kind": "def",
+        "id": 68,
+        "depth": 0
+      },
+      {
+        "event": "enterType",
+        "kind": "oper",
+        "id": 67,
+        "depth": 0
+      },
+      {
+        "event": "enterType",
+        "kind": "var",
+        "id": 65,
+        "depth": 0
+      },
+      {
+        "event": "exitType",
+        "kind": "var",
+        "id": 65,
+        "depth": 0
+      },
+      {
+        "event": "enterType",
+        "kind": "bool",
+        "id": 66,
+        "depth": 0
+      },
+      {
+        "event": "exitType",
+        "kind": "bool",
+        "id": 66,
+        "depth": 0
+      },
+      {
+        "event": "exitType",
+        "kind": "oper",
+        "id": 67,
+        "depth": 0
+      },
+      {
+        "event": "enterExpr",
+        "kind": "lambda",
+        "id": 51,
+        "depth": 0
+      },
+      {
+        "event": "enterType",
+        "kind": "oper",
+        "id": 38,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "int",
+        "id": 36,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "int",
+        "id": 36,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "str",
+        "id": 37,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "str",
+        "id": 37,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "oper",
+        "id": 38,
+        "depth": 1
+      },
+      {
+        "event": "enterExpr",
+        "kind": "let",
+        "id": 50,
+        "depth": 1
+      },
+      {
+        "event": "enterDef",
+        "kind": "def",
+        "id": 35,
+        "depth": 3
+      },
+      {
+        "event": "enterType",
+        "kind": "int",
+        "id": 34,
+        "depth": 3
+      },
+      {
+        "event": "exitType",
+        "kind": "int",
+        "id": 34,
+        "depth": 3
+      },
+      {
+        "event": "enterExpr",
+        "kind": "int",
+        "id": 33,
+        "depth": 3
+      },
+      {
+        "event": "exitExpr",
+        "kind": "int",
+        "id": 33,
+        "depth": 3
+      },
+      {
+        "event": "exitDef",
+        "kind": "def",
+        "id": 35,
+        "depth": 3
+      },
+      {
+        "event": "enterExpr",
+        "kind": "app",
+        "id": 49,
+        "depth": 2
+      },
+      {
+        "event": "enterExpr",
+        "kind": "name",
+        "id": 41,
+        "depth": 2
+      },
+      {
+        "event": "exitExpr",
+        "kind": "name",
+        "id": 41,
+        "depth": 2
+      },
+      {
+        "event": "enterExpr",
+        "kind": "bool",
+        "id": 42,
+        "depth": 2
+      },
+      {
+        "event": "exitExpr",
+        "kind": "bool",
+        "id": 42,
+        "depth": 2
+      },
+      {
+        "event": "enterExpr",
+        "kind": "int",
+        "id": 43,
+        "depth": 2
+      },
+      {
+        "event": "exitExpr",
+        "kind": "int",
+        "id": 43,
+        "depth": 2
+      },
+      {
+        "event": "enterExpr",
+        "kind": "str",
+        "id": 44,
+        "depth": 2
+      },
+      {
+        "event": "exitExpr",
+        "kind": "str",
+        "id": 44,
+        "depth": 2
+      },
+      {
+        "event": "enterExpr",
+        "kind": "lambda",
+        "id": 48,
+        "depth": 2
+      },
+      {
+        "event": "enterType",
+        "kind": "bool",
+        "id": 45,
+        "depth": 3
+      },
+      {
+        "event": "exitType",
+        "kind": "bool",
+        "id": 45,
+        "depth": 3
+      },
+      {
+        "event": "enterExpr",
+        "kind": "name",
+        "id": 47,
+        "depth": 3
+      },
+      {
+        "event": "exitExpr",
+        "kind": "name",
+        "id": 47,
+        "depth": 3
+      },
+      {
+        "event": "exitExpr",
+        "kind": "lambda",
+        "id": 48,
+        "depth": 2
+      },
+      {
+        "event": "exitExpr",
+        "kind": "app",
+        "id": 49,
+        "depth": 2
+      },
+      {
+        "event": "exitExpr",
+        "kind": "let",
+        "id": 50,
+        "depth": 1
+      },
+      {
+        "event": "exitExpr",
+        "kind": "lambda",
+        "id": 51,
+        "depth": 0
+      },
+      {
+        "event": "exitDef",
+        "kind": "def",
+        "id": 68,
+        "depth": 0
+      },
+      {
+        "event": "exitDecl",
+        "kind": "def",
+        "id": 68,
+        "depth": -1
+      },
+      {
+        "event": "enterDecl",
+        "kind": "const",
+        "id": 69,
+        "depth": -1
+      },
+      {
+        "event": "enterDef",
+        "kind": "const",
+        "id": 69,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "bool",
+        "id": 70,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "bool",
+        "id": 70,
+        "depth": 1
+      },
+      {
+        "event": "exitDef",
+        "kind": "const",
+        "id": 69,
+        "depth": 1
+      },
+      {
+        "event": "exitDecl",
+        "kind": "const",
+        "id": 69,
+        "depth": 0
+      },
+      {
+        "event": "exitModule",
+        "kind": "module",
+        "id": 52,
+        "depth": 0
+      },
+      {
+        "event": "enterModule",
+        "kind": "module",
+        "id": 71,
+        "depth": 0
+      },
+      {
+        "event": "exitModule",
+        "kind": "module",
+        "id": 71,
+        "depth": 0
+      }
+    ],
+    "finds": [
+      {
+        "kind": "expression",
+        "id": 2,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 1,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 52,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 53,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 54,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 55,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 6,
+        "node": {
+          "id": 6,
+          "kind": "lambda",
+          "qualifier": "puredef",
+          "params": [
+            {
+              "id": 4,
+              "name": "overridden",
+              "typeAnnotation": {
+                "id": 3,
+                "kind": "str"
+              }
+            }
+          ],
+          "expr": {
+            "id": 5,
+            "kind": "name",
+            "name": "overridden"
+          }
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 3,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 5,
+        "node": {
+          "id": 5,
+          "kind": "name",
+          "name": "overridden"
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 4,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 56,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 57,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 58,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 60,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 59,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 61,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 32,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 7,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 8,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 9,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 10,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 11,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 13,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 12,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 15,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 14,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 18,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 16,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 17,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 21,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 19,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 20,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 24,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 22,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 23,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 27,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 25,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 26,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 31,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 28,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 29,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 30,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 62,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 63,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 64,
+        "node": {
+          "id": 64,
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 68,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 67,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 65,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 66,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 51,
+        "node": {
+          "id": 51,
+          "kind": "lambda",
+          "qualifier": "puredef",
+          "params": [
+            {
+              "id": 39,
+              "name": "f",
+              "typeAnnotation": {
+                "id": 38,
+                "kind": "oper",
+                "args": [
+                  {
+                    "id": 36,
+                    "kind": "int"
+                  }
+                ],
+                "res": {
+                  "id": 37,
+                  "kind": "str"
+                }
+              }
+            },
+            {
+              "id": 40,
+              "name": "untyped"
+            }
+          ],
+          "expr": {
+            "id": 50,
+            "kind": "let",
+            "opdef": {
+              "id": 35,
+              "kind": "def",
+              "name": "local",
+              "qualifier": "pureval",
+              "expr": {
+                "id": 33,
+                "kind": "int",
+                "value": 42
+              },
+              "typeAnnotation": {
+                "id": 34,
+                "kind": "int"
+              }
+            },
+            "expr": {
+              "id": 49,
+              "kind": "app",
+              "opcode": "Tup",
+              "args": [
+                {
+                  "id": 41,
+                  "kind": "name",
+                  "name": "local"
+                },
+                {
+                  "id": 42,
+                  "kind": "bool",
+                  "value": true
+                },
+                {
+                  "id": 43,
+                  "kind": "int",
+                  "value": -3
+                },
+                {
+                  "id": 44,
+                  "kind": "str",
+                  "value": "hello"
+                },
+                {
+                  "id": 48,
+                  "kind": "lambda",
+                  "qualifier": "puredef",
+                  "params": [
+                    {
+                      "id": 46,
+                      "name": "inner",
+                      "typeAnnotation": {
+                        "id": 45,
+                        "kind": "bool"
+                      }
+                    }
+                  ],
+                  "expr": {
+                    "id": 47,
+                    "kind": "name",
+                    "name": "inner"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 38,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 36,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 37,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 50,
+        "node": {
+          "id": 50,
+          "kind": "let",
+          "opdef": {
+            "id": 35,
+            "kind": "def",
+            "name": "local",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 33,
+              "kind": "int",
+              "value": 42
+            },
+            "typeAnnotation": {
+              "id": 34,
+              "kind": "int"
+            }
+          },
+          "expr": {
+            "id": 49,
+            "kind": "app",
+            "opcode": "Tup",
+            "args": [
+              {
+                "id": 41,
+                "kind": "name",
+                "name": "local"
+              },
+              {
+                "id": 42,
+                "kind": "bool",
+                "value": true
+              },
+              {
+                "id": 43,
+                "kind": "int",
+                "value": -3
+              },
+              {
+                "id": 44,
+                "kind": "str",
+                "value": "hello"
+              },
+              {
+                "id": 48,
+                "kind": "lambda",
+                "qualifier": "puredef",
+                "params": [
+                  {
+                    "id": 46,
+                    "name": "inner",
+                    "typeAnnotation": {
+                      "id": 45,
+                      "kind": "bool"
+                    }
+                  }
+                ],
+                "expr": {
+                  "id": 47,
+                  "kind": "name",
+                  "name": "inner"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 35,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 34,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 33,
+        "node": {
+          "id": 33,
+          "kind": "int",
+          "value": 42
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 49,
+        "node": {
+          "id": 49,
+          "kind": "app",
+          "opcode": "Tup",
+          "args": [
+            {
+              "id": 41,
+              "kind": "name",
+              "name": "local"
+            },
+            {
+              "id": 42,
+              "kind": "bool",
+              "value": true
+            },
+            {
+              "id": 43,
+              "kind": "int",
+              "value": -3
+            },
+            {
+              "id": 44,
+              "kind": "str",
+              "value": "hello"
+            },
+            {
+              "id": 48,
+              "kind": "lambda",
+              "qualifier": "puredef",
+              "params": [
+                {
+                  "id": 46,
+                  "name": "inner",
+                  "typeAnnotation": {
+                    "id": 45,
+                    "kind": "bool"
+                  }
+                }
+              ],
+              "expr": {
+                "id": 47,
+                "kind": "name",
+                "name": "inner"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 41,
+        "node": {
+          "id": 41,
+          "kind": "name",
+          "name": "local"
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 42,
+        "node": {
+          "id": 42,
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 43,
+        "node": {
+          "id": 43,
+          "kind": "int",
+          "value": -3
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 44,
+        "node": {
+          "id": 44,
+          "kind": "str",
+          "value": "hello"
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 48,
+        "node": {
+          "id": 48,
+          "kind": "lambda",
+          "qualifier": "puredef",
+          "params": [
+            {
+              "id": 46,
+              "name": "inner",
+              "typeAnnotation": {
+                "id": 45,
+                "kind": "bool"
+              }
+            }
+          ],
+          "expr": {
+            "id": 47,
+            "kind": "name",
+            "name": "inner"
+          }
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 45,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 47,
+        "node": {
+          "id": 47,
+          "kind": "name",
+          "name": "inner"
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 46,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 39,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 40,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 69,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 70,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 71,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 0,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 999999,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 2,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 1,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 52,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 53,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 54,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 55,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 6,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 3,
+        "node": {
+          "id": 3,
+          "kind": "str"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 5,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 4,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 56,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 57,
+        "node": {
+          "id": 57,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 58,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 60,
+        "node": {
+          "id": 60,
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "count",
+                "fieldType": {
+                  "id": 59,
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "id": 59,
+        "node": {
+          "id": 59,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 61,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 32,
+        "node": {
+          "id": 32,
+          "kind": "oper",
+          "args": [
+            {
+              "id": 7,
+              "kind": "bool"
+            },
+            {
+              "id": 8,
+              "kind": "int"
+            },
+            {
+              "id": 9,
+              "kind": "str"
+            },
+            {
+              "id": 10,
+              "kind": "const",
+              "name": "T"
+            },
+            {
+              "id": 11,
+              "kind": "var",
+              "name": "a"
+            },
+            {
+              "id": 13,
+              "kind": "set",
+              "elem": {
+                "id": 12,
+                "kind": "bool"
+              }
+            },
+            {
+              "id": 15,
+              "kind": "list",
+              "elem": {
+                "id": 14,
+                "kind": "str"
+              }
+            },
+            {
+              "id": 18,
+              "kind": "fun",
+              "arg": {
+                "id": 16,
+                "kind": "int"
+              },
+              "res": {
+                "id": 17,
+                "kind": "bool"
+              }
+            },
+            {
+              "id": 21,
+              "kind": "tup",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "0",
+                    "fieldType": {
+                      "id": 19,
+                      "kind": "int"
+                    }
+                  },
+                  {
+                    "fieldName": "1",
+                    "fieldType": {
+                      "id": 20,
+                      "kind": "str"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            },
+            {
+              "id": 24,
+              "kind": "rec",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "first",
+                    "fieldType": {
+                      "id": 22,
+                      "kind": "int"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "second",
+                      "fieldType": {
+                        "id": 23,
+                        "kind": "bool"
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "var",
+                    "name": "r"
+                  }
+                }
+              }
+            },
+            {
+              "id": 27,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "Some",
+                    "fieldType": {
+                      "id": 25,
+                      "kind": "str"
+                    }
+                  },
+                  {
+                    "fieldName": "None",
+                    "fieldType": {
+                      "id": 26,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            },
+            {
+              "kind": "bool"
+            }
+          ],
+          "res": {
+            "id": 31,
+            "kind": "app",
+            "ctor": {
+              "id": 28,
+              "kind": "const",
+              "name": "Alias"
+            },
+            "args": [
+              {
+                "id": 29,
+                "kind": "int"
+              },
+              {
+                "id": 30,
+                "kind": "var",
+                "name": "b"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "id": 7,
+        "node": {
+          "id": 7,
+          "kind": "bool"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 8,
+        "node": {
+          "id": 8,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 9,
+        "node": {
+          "id": 9,
+          "kind": "str"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 10,
+        "node": {
+          "id": 10,
+          "kind": "const",
+          "name": "T"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 11,
+        "node": {
+          "id": 11,
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 13,
+        "node": {
+          "id": 13,
+          "kind": "set",
+          "elem": {
+            "id": 12,
+            "kind": "bool"
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "id": 12,
+        "node": {
+          "id": 12,
+          "kind": "bool"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 15,
+        "node": {
+          "id": 15,
+          "kind": "list",
+          "elem": {
+            "id": 14,
+            "kind": "str"
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "id": 14,
+        "node": {
+          "id": 14,
+          "kind": "str"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 18,
+        "node": {
+          "id": 18,
+          "kind": "fun",
+          "arg": {
+            "id": 16,
+            "kind": "int"
+          },
+          "res": {
+            "id": 17,
+            "kind": "bool"
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "id": 16,
+        "node": {
+          "id": 16,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 17,
+        "node": {
+          "id": 17,
+          "kind": "bool"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 21,
+        "node": {
+          "id": 21,
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "0",
+                "fieldType": {
+                  "id": 19,
+                  "kind": "int"
+                }
+              },
+              {
+                "fieldName": "1",
+                "fieldType": {
+                  "id": 20,
+                  "kind": "str"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "id": 19,
+        "node": {
+          "id": 19,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 20,
+        "node": {
+          "id": 20,
+          "kind": "str"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 24,
+        "node": {
+          "id": 24,
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "first",
+                "fieldType": {
+                  "id": 22,
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "second",
+                  "fieldType": {
+                    "id": 23,
+                    "kind": "bool"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "var",
+                "name": "r"
+              }
+            }
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "id": 22,
+        "node": {
+          "id": 22,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 23,
+        "node": {
+          "id": 23,
+          "kind": "bool"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 27,
+        "node": {
+          "id": 27,
+          "kind": "sum",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "Some",
+                "fieldType": {
+                  "id": 25,
+                  "kind": "str"
+                }
+              },
+              {
+                "fieldName": "None",
+                "fieldType": {
+                  "id": 26,
+                  "kind": "tup",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "id": 25,
+        "node": {
+          "id": 25,
+          "kind": "str"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 26,
+        "node": {
+          "id": 26,
+          "kind": "tup",
+          "fields": {
+            "kind": "row",
+            "fields": [],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "id": 31,
+        "node": {
+          "id": 31,
+          "kind": "app",
+          "ctor": {
+            "id": 28,
+            "kind": "const",
+            "name": "Alias"
+          },
+          "args": [
+            {
+              "id": 29,
+              "kind": "int"
+            },
+            {
+              "id": 30,
+              "kind": "var",
+              "name": "b"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "type",
+        "id": 28,
+        "node": {
+          "id": 28,
+          "kind": "const",
+          "name": "Alias"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 29,
+        "node": {
+          "id": 29,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 30,
+        "node": {
+          "id": 30,
+          "kind": "var",
+          "name": "b"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 62,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 63,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 64,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 68,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 67,
+        "node": {
+          "id": 67,
+          "kind": "oper",
+          "args": [
+            {
+              "id": 65,
+              "kind": "var",
+              "name": "a"
+            }
+          ],
+          "res": {
+            "id": 66,
+            "kind": "bool"
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "id": 65,
+        "node": {
+          "id": 65,
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 66,
+        "node": {
+          "id": 66,
+          "kind": "bool"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 51,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 38,
+        "node": {
+          "id": 38,
+          "kind": "oper",
+          "args": [
+            {
+              "id": 36,
+              "kind": "int"
+            }
+          ],
+          "res": {
+            "id": 37,
+            "kind": "str"
+          }
+        }
+      },
+      {
+        "kind": "type",
+        "id": 36,
+        "node": {
+          "id": 36,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 37,
+        "node": {
+          "id": 37,
+          "kind": "str"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 50,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 35,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 34,
+        "node": {
+          "id": 34,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 33,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 49,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 41,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 42,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 43,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 44,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 48,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 45,
+        "node": {
+          "id": 45,
+          "kind": "bool"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 47,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 46,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 39,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 40,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 69,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 70,
+        "node": {
+          "id": 70,
+          "kind": "bool"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 71,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 0,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 999999,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 2,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 1,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 52,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 53,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 54,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 55,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 6,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 3,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 5,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 4,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 56,
+        "node": {
+          "id": 56,
+          "kind": "const",
+          "name": "C",
+          "typeAnnotation": {
+            "id": 57,
+            "kind": "int"
+          }
+        }
+      },
+      {
+        "kind": "definition",
+        "id": 57,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 58,
+        "node": {
+          "id": 58,
+          "kind": "var",
+          "name": "state",
+          "typeAnnotation": {
+            "id": 60,
+            "kind": "rec",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "count",
+                  "fieldType": {
+                    "id": 59,
+                    "kind": "int"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      },
+      {
+        "kind": "definition",
+        "id": 60,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 59,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 61,
+        "node": {
+          "id": 61,
+          "kind": "typedef",
+          "name": "All",
+          "params": [],
+          "type": {
+            "id": 32,
+            "kind": "oper",
+            "args": [
+              {
+                "id": 7,
+                "kind": "bool"
+              },
+              {
+                "id": 8,
+                "kind": "int"
+              },
+              {
+                "id": 9,
+                "kind": "str"
+              },
+              {
+                "id": 10,
+                "kind": "const",
+                "name": "T"
+              },
+              {
+                "id": 11,
+                "kind": "var",
+                "name": "a"
+              },
+              {
+                "id": 13,
+                "kind": "set",
+                "elem": {
+                  "id": 12,
+                  "kind": "bool"
+                }
+              },
+              {
+                "id": 15,
+                "kind": "list",
+                "elem": {
+                  "id": 14,
+                  "kind": "str"
+                }
+              },
+              {
+                "id": 18,
+                "kind": "fun",
+                "arg": {
+                  "id": 16,
+                  "kind": "int"
+                },
+                "res": {
+                  "id": 17,
+                  "kind": "bool"
+                }
+              },
+              {
+                "id": 21,
+                "kind": "tup",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "0",
+                      "fieldType": {
+                        "id": 19,
+                        "kind": "int"
+                      }
+                    },
+                    {
+                      "fieldName": "1",
+                      "fieldType": {
+                        "id": 20,
+                        "kind": "str"
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              {
+                "id": 24,
+                "kind": "rec",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "first",
+                      "fieldType": {
+                        "id": 22,
+                        "kind": "int"
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "second",
+                        "fieldType": {
+                          "id": 23,
+                          "kind": "bool"
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "var",
+                      "name": "r"
+                    }
+                  }
+                }
+              },
+              {
+                "id": 27,
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "Some",
+                      "fieldType": {
+                        "id": 25,
+                        "kind": "str"
+                      }
+                    },
+                    {
+                      "fieldName": "None",
+                      "fieldType": {
+                        "id": 26,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "row",
+                          "fields": [],
+                          "other": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              {
+                "kind": "bool"
+              }
+            ],
+            "res": {
+              "id": 31,
+              "kind": "app",
+              "ctor": {
+                "id": 28,
+                "kind": "const",
+                "name": "Alias"
+              },
+              "args": [
+                {
+                  "id": 29,
+                  "kind": "int"
+                },
+                {
+                  "id": 30,
+                  "kind": "var",
+                  "name": "b"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "kind": "definition",
+        "id": 32,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 7,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 8,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 9,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 10,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 11,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 13,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 12,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 15,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 14,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 18,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 16,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 17,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 21,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 19,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 20,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 24,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 22,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 23,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 27,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 25,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 26,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 31,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 28,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 29,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 30,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 62,
+        "node": {
+          "id": 62,
+          "kind": "typedef",
+          "name": "Abstract"
+        }
+      },
+      {
+        "kind": "definition",
+        "id": 63,
+        "node": {
+          "id": 63,
+          "kind": "assume",
+          "name": "_",
+          "assumption": {
+            "id": 64,
+            "kind": "bool",
+            "value": true
+          }
+        }
+      },
+      {
+        "kind": "definition",
+        "id": 64,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 68,
+        "node": {
+          "id": 68,
+          "kind": "def",
+          "name": "main",
+          "qualifier": "pureval",
+          "expr": {
+            "id": 51,
+            "kind": "lambda",
+            "qualifier": "puredef",
+            "params": [
+              {
+                "id": 39,
+                "name": "f",
+                "typeAnnotation": {
+                  "id": 38,
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "id": 36,
+                      "kind": "int"
+                    }
+                  ],
+                  "res": {
+                    "id": 37,
+                    "kind": "str"
+                  }
+                }
+              },
+              {
+                "id": 40,
+                "name": "untyped"
+              }
+            ],
+            "expr": {
+              "id": 50,
+              "kind": "let",
+              "opdef": {
+                "id": 35,
+                "kind": "def",
+                "name": "local",
+                "qualifier": "pureval",
+                "expr": {
+                  "id": 33,
+                  "kind": "int",
+                  "value": 42
+                },
+                "typeAnnotation": {
+                  "id": 34,
+                  "kind": "int"
+                }
+              },
+              "expr": {
+                "id": 49,
+                "kind": "app",
+                "opcode": "Tup",
+                "args": [
+                  {
+                    "id": 41,
+                    "kind": "name",
+                    "name": "local"
+                  },
+                  {
+                    "id": 42,
+                    "kind": "bool",
+                    "value": true
+                  },
+                  {
+                    "id": 43,
+                    "kind": "int",
+                    "value": -3
+                  },
+                  {
+                    "id": 44,
+                    "kind": "str",
+                    "value": "hello"
+                  },
+                  {
+                    "id": 48,
+                    "kind": "lambda",
+                    "qualifier": "puredef",
+                    "params": [
+                      {
+                        "id": 46,
+                        "name": "inner",
+                        "typeAnnotation": {
+                          "id": 45,
+                          "kind": "bool"
+                        }
+                      }
+                    ],
+                    "expr": {
+                      "id": 47,
+                      "kind": "name",
+                      "name": "inner"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "typeAnnotation": {
+            "id": 67,
+            "kind": "oper",
+            "args": [
+              {
+                "id": 65,
+                "kind": "var",
+                "name": "a"
+              }
+            ],
+            "res": {
+              "id": 66,
+              "kind": "bool"
+            }
+          }
+        }
+      },
+      {
+        "kind": "definition",
+        "id": 67,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 65,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 66,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 51,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 38,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 36,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 37,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 50,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 35,
+        "node": {
+          "id": 35,
+          "kind": "def",
+          "name": "local",
+          "qualifier": "pureval",
+          "expr": {
+            "id": 33,
+            "kind": "int",
+            "value": 42
+          },
+          "typeAnnotation": {
+            "id": 34,
+            "kind": "int"
+          }
+        }
+      },
+      {
+        "kind": "definition",
+        "id": 34,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 33,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 49,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 41,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 42,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 43,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 44,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 48,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 45,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 47,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 46,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 39,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 40,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 69,
+        "node": {
+          "id": 69,
+          "kind": "const",
+          "name": "Last",
+          "typeAnnotation": {
+            "id": 70,
+            "kind": "bool"
+          }
+        }
+      },
+      {
+        "kind": "definition",
+        "id": 70,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 71,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 0,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 999999,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 2,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 1,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 52,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 53,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 54,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 55,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 6,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 3,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 5,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 4,
+        "node": {
+          "id": 4,
+          "name": "overridden",
+          "typeAnnotation": {
+            "id": 3,
+            "kind": "str"
+          }
+        }
+      },
+      {
+        "kind": "parameter",
+        "id": 56,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 57,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 58,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 60,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 59,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 61,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 32,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 7,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 8,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 9,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 10,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 11,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 13,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 12,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 15,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 14,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 18,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 16,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 17,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 21,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 19,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 20,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 24,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 22,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 23,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 27,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 25,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 26,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 31,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 28,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 29,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 30,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 62,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 63,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 64,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 68,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 67,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 65,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 66,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 51,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 38,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 36,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 37,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 50,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 35,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 34,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 33,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 49,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 41,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 42,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 43,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 44,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 48,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 45,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 47,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 46,
+        "node": {
+          "id": 46,
+          "name": "inner",
+          "typeAnnotation": {
+            "id": 45,
+            "kind": "bool"
+          }
+        }
+      },
+      {
+        "kind": "parameter",
+        "id": 39,
+        "node": {
+          "id": 39,
+          "name": "f",
+          "typeAnnotation": {
+            "id": 38,
+            "kind": "oper",
+            "args": [
+              {
+                "id": 36,
+                "kind": "int"
+              }
+            ],
+            "res": {
+              "id": 37,
+              "kind": "str"
+            }
+          }
+        }
+      },
+      {
+        "kind": "parameter",
+        "id": 40,
+        "node": {
+          "id": 40,
+          "name": "untyped"
+        }
+      },
+      {
+        "kind": "parameter",
+        "id": 69,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 70,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 71,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 0,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 999999,
+        "node": null
+      }
+    ]
+  },
+  {
+    "name": "duplicate_ids_postorder",
+    "modules": [
+      {
+        "id": 75,
+        "name": "Duplicate",
+        "declarations": [
+          {
+            "id": 902,
+            "kind": "def",
+            "name": "outerWinner",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 901,
+              "kind": "lambda",
+              "qualifier": "puredef",
+              "params": [
+                {
+                  "id": 900,
+                  "name": "outerFirst",
+                  "typeAnnotation": {
+                    "id": 903,
+                    "kind": "int"
+                  }
+                },
+                {
+                  "id": 900,
+                  "name": "outerLast",
+                  "typeAnnotation": {
+                    "id": 903,
+                    "kind": "bool"
+                  }
+                }
+              ],
+              "expr": {
+                "id": 73,
+                "kind": "let",
+                "opdef": {
+                  "id": 902,
+                  "kind": "def",
+                  "qualifier": "pureval",
+                  "name": "innerLoser",
+                  "expr": {
+                    "id": 72,
+                    "kind": "bool",
+                    "value": false
+                  }
+                },
+                "expr": {
+                  "id": 901,
+                  "kind": "lambda",
+                  "qualifier": "puredef",
+                  "params": [
+                    {
+                      "id": 900,
+                      "name": "innerLoser"
+                    }
+                  ],
+                  "expr": {
+                    "id": 901,
+                    "kind": "name",
+                    "name": "innerLoser"
+                  }
+                }
+              }
+            },
+            "typeAnnotation": {
+              "id": 903,
+              "kind": "str"
+            }
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "event": "enterModule",
+        "kind": "module",
+        "id": 75,
+        "depth": -1
+      },
+      {
+        "event": "enterDecl",
+        "kind": "def",
+        "id": 902,
+        "depth": -1
+      },
+      {
+        "event": "enterDef",
+        "kind": "def",
+        "id": 902,
+        "depth": 0
+      },
+      {
+        "event": "enterType",
+        "kind": "str",
+        "id": 903,
+        "depth": 0
+      },
+      {
+        "event": "exitType",
+        "kind": "str",
+        "id": 903,
+        "depth": 0
+      },
+      {
+        "event": "enterExpr",
+        "kind": "lambda",
+        "id": 901,
+        "depth": 0
+      },
+      {
+        "event": "enterType",
+        "kind": "int",
+        "id": 903,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "int",
+        "id": 903,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "bool",
+        "id": 903,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "bool",
+        "id": 903,
+        "depth": 1
+      },
+      {
+        "event": "enterExpr",
+        "kind": "let",
+        "id": 73,
+        "depth": 1
+      },
+      {
+        "event": "enterDef",
+        "kind": "def",
+        "id": 902,
+        "depth": 3
+      },
+      {
+        "event": "enterExpr",
+        "kind": "bool",
+        "id": 72,
+        "depth": 3
+      },
+      {
+        "event": "exitExpr",
+        "kind": "bool",
+        "id": 72,
+        "depth": 3
+      },
+      {
+        "event": "exitDef",
+        "kind": "def",
+        "id": 902,
+        "depth": 3
+      },
+      {
+        "event": "enterExpr",
+        "kind": "lambda",
+        "id": 901,
+        "depth": 2
+      },
+      {
+        "event": "enterExpr",
+        "kind": "name",
+        "id": 901,
+        "depth": 3
+      },
+      {
+        "event": "exitExpr",
+        "kind": "name",
+        "id": 901,
+        "depth": 3
+      },
+      {
+        "event": "exitExpr",
+        "kind": "lambda",
+        "id": 901,
+        "depth": 2
+      },
+      {
+        "event": "exitExpr",
+        "kind": "let",
+        "id": 73,
+        "depth": 1
+      },
+      {
+        "event": "exitExpr",
+        "kind": "lambda",
+        "id": 901,
+        "depth": 0
+      },
+      {
+        "event": "exitDef",
+        "kind": "def",
+        "id": 902,
+        "depth": 0
+      },
+      {
+        "event": "exitDecl",
+        "kind": "def",
+        "id": 902,
+        "depth": -1
+      },
+      {
+        "event": "exitModule",
+        "kind": "module",
+        "id": 75,
+        "depth": -1
+      }
+    ],
+    "finds": [
+      {
+        "kind": "expression",
+        "id": 75,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 902,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 903,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 901,
+        "node": {
+          "id": 901,
+          "kind": "lambda",
+          "qualifier": "puredef",
+          "params": [
+            {
+              "id": 900,
+              "name": "outerFirst",
+              "typeAnnotation": {
+                "id": 903,
+                "kind": "int"
+              }
+            },
+            {
+              "id": 900,
+              "name": "outerLast",
+              "typeAnnotation": {
+                "id": 903,
+                "kind": "bool"
+              }
+            }
+          ],
+          "expr": {
+            "id": 73,
+            "kind": "let",
+            "opdef": {
+              "id": 902,
+              "kind": "def",
+              "qualifier": "pureval",
+              "name": "innerLoser",
+              "expr": {
+                "id": 72,
+                "kind": "bool",
+                "value": false
+              }
+            },
+            "expr": {
+              "id": 901,
+              "kind": "lambda",
+              "qualifier": "puredef",
+              "params": [
+                {
+                  "id": 900,
+                  "name": "innerLoser"
+                }
+              ],
+              "expr": {
+                "id": 901,
+                "kind": "name",
+                "name": "innerLoser"
+              }
+            }
+          }
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 73,
+        "node": {
+          "id": 73,
+          "kind": "let",
+          "opdef": {
+            "id": 902,
+            "kind": "def",
+            "qualifier": "pureval",
+            "name": "innerLoser",
+            "expr": {
+              "id": 72,
+              "kind": "bool",
+              "value": false
+            }
+          },
+          "expr": {
+            "id": 901,
+            "kind": "lambda",
+            "qualifier": "puredef",
+            "params": [
+              {
+                "id": 900,
+                "name": "innerLoser"
+              }
+            ],
+            "expr": {
+              "id": 901,
+              "kind": "name",
+              "name": "innerLoser"
+            }
+          }
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 72,
+        "node": {
+          "id": 72,
+          "kind": "bool",
+          "value": false
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 900,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 0,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 999999,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 75,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 902,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 903,
+        "node": {
+          "id": 903,
+          "kind": "bool"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 901,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 73,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 72,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 900,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 0,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 999999,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 75,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 902,
+        "node": {
+          "id": 902,
+          "kind": "def",
+          "name": "outerWinner",
+          "qualifier": "pureval",
+          "expr": {
+            "id": 901,
+            "kind": "lambda",
+            "qualifier": "puredef",
+            "params": [
+              {
+                "id": 900,
+                "name": "outerFirst",
+                "typeAnnotation": {
+                  "id": 903,
+                  "kind": "int"
+                }
+              },
+              {
+                "id": 900,
+                "name": "outerLast",
+                "typeAnnotation": {
+                  "id": 903,
+                  "kind": "bool"
+                }
+              }
+            ],
+            "expr": {
+              "id": 73,
+              "kind": "let",
+              "opdef": {
+                "id": 902,
+                "kind": "def",
+                "qualifier": "pureval",
+                "name": "innerLoser",
+                "expr": {
+                  "id": 72,
+                  "kind": "bool",
+                  "value": false
+                }
+              },
+              "expr": {
+                "id": 901,
+                "kind": "lambda",
+                "qualifier": "puredef",
+                "params": [
+                  {
+                    "id": 900,
+                    "name": "innerLoser"
+                  }
+                ],
+                "expr": {
+                  "id": 901,
+                  "kind": "name",
+                  "name": "innerLoser"
+                }
+              }
+            }
+          },
+          "typeAnnotation": {
+            "id": 903,
+            "kind": "str"
+          }
+        }
+      },
+      {
+        "kind": "definition",
+        "id": 903,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 901,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 73,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 72,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 900,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 0,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 999999,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 75,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 902,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 903,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 901,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 73,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 72,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 900,
+        "node": {
+          "id": 900,
+          "name": "outerLast",
+          "typeAnnotation": {
+            "id": 903,
+            "kind": "bool"
+          }
+        }
+      },
+      {
+        "kind": "parameter",
+        "id": 0,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 999999,
+        "node": null
+      }
+    ]
+  },
+  {
+    "name": "duplicate_ids_last_module",
+    "modules": [
+      {
+        "id": 75,
+        "name": "Duplicate",
+        "declarations": [
+          {
+            "id": 902,
+            "kind": "def",
+            "name": "outerWinner",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 901,
+              "kind": "lambda",
+              "qualifier": "puredef",
+              "params": [
+                {
+                  "id": 900,
+                  "name": "outerFirst",
+                  "typeAnnotation": {
+                    "id": 903,
+                    "kind": "int"
+                  }
+                },
+                {
+                  "id": 900,
+                  "name": "outerLast",
+                  "typeAnnotation": {
+                    "id": 903,
+                    "kind": "bool"
+                  }
+                }
+              ],
+              "expr": {
+                "id": 73,
+                "kind": "let",
+                "opdef": {
+                  "id": 902,
+                  "kind": "def",
+                  "qualifier": "pureval",
+                  "name": "innerLoser",
+                  "expr": {
+                    "id": 72,
+                    "kind": "bool",
+                    "value": false
+                  }
+                },
+                "expr": {
+                  "id": 901,
+                  "kind": "lambda",
+                  "qualifier": "puredef",
+                  "params": [
+                    {
+                      "id": 900,
+                      "name": "innerLoser"
+                    }
+                  ],
+                  "expr": {
+                    "id": 901,
+                    "kind": "name",
+                    "name": "innerLoser"
+                  }
+                }
+              }
+            },
+            "typeAnnotation": {
+              "id": 903,
+              "kind": "str"
+            }
+          }
+        ]
+      },
+      {
+        "id": 76,
+        "name": "Later",
+        "declarations": [
+          {
+            "id": 902,
+            "kind": "def",
+            "name": "laterWinner",
+            "qualifier": "pureval",
+            "expr": {
+              "id": 901,
+              "kind": "lambda",
+              "qualifier": "puredef",
+              "params": [
+                {
+                  "id": 900,
+                  "name": "laterWinner",
+                  "typeAnnotation": {
+                    "id": 903,
+                    "kind": "bool"
+                  }
+                }
+              ],
+              "expr": {
+                "id": 77,
+                "kind": "bool",
+                "value": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "event": "enterModule",
+        "kind": "module",
+        "id": 75,
+        "depth": -1
+      },
+      {
+        "event": "enterDecl",
+        "kind": "def",
+        "id": 902,
+        "depth": -1
+      },
+      {
+        "event": "enterDef",
+        "kind": "def",
+        "id": 902,
+        "depth": 0
+      },
+      {
+        "event": "enterType",
+        "kind": "str",
+        "id": 903,
+        "depth": 0
+      },
+      {
+        "event": "exitType",
+        "kind": "str",
+        "id": 903,
+        "depth": 0
+      },
+      {
+        "event": "enterExpr",
+        "kind": "lambda",
+        "id": 901,
+        "depth": 0
+      },
+      {
+        "event": "enterType",
+        "kind": "int",
+        "id": 903,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "int",
+        "id": 903,
+        "depth": 1
+      },
+      {
+        "event": "enterType",
+        "kind": "bool",
+        "id": 903,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "bool",
+        "id": 903,
+        "depth": 1
+      },
+      {
+        "event": "enterExpr",
+        "kind": "let",
+        "id": 73,
+        "depth": 1
+      },
+      {
+        "event": "enterDef",
+        "kind": "def",
+        "id": 902,
+        "depth": 3
+      },
+      {
+        "event": "enterExpr",
+        "kind": "bool",
+        "id": 72,
+        "depth": 3
+      },
+      {
+        "event": "exitExpr",
+        "kind": "bool",
+        "id": 72,
+        "depth": 3
+      },
+      {
+        "event": "exitDef",
+        "kind": "def",
+        "id": 902,
+        "depth": 3
+      },
+      {
+        "event": "enterExpr",
+        "kind": "lambda",
+        "id": 901,
+        "depth": 2
+      },
+      {
+        "event": "enterExpr",
+        "kind": "name",
+        "id": 901,
+        "depth": 3
+      },
+      {
+        "event": "exitExpr",
+        "kind": "name",
+        "id": 901,
+        "depth": 3
+      },
+      {
+        "event": "exitExpr",
+        "kind": "lambda",
+        "id": 901,
+        "depth": 2
+      },
+      {
+        "event": "exitExpr",
+        "kind": "let",
+        "id": 73,
+        "depth": 1
+      },
+      {
+        "event": "exitExpr",
+        "kind": "lambda",
+        "id": 901,
+        "depth": 0
+      },
+      {
+        "event": "exitDef",
+        "kind": "def",
+        "id": 902,
+        "depth": 0
+      },
+      {
+        "event": "exitDecl",
+        "kind": "def",
+        "id": 902,
+        "depth": -1
+      },
+      {
+        "event": "exitModule",
+        "kind": "module",
+        "id": 75,
+        "depth": -1
+      },
+      {
+        "event": "enterModule",
+        "kind": "module",
+        "id": 76,
+        "depth": -1
+      },
+      {
+        "event": "enterDecl",
+        "kind": "def",
+        "id": 902,
+        "depth": -1
+      },
+      {
+        "event": "enterDef",
+        "kind": "def",
+        "id": 902,
+        "depth": 0
+      },
+      {
+        "event": "enterExpr",
+        "kind": "lambda",
+        "id": 901,
+        "depth": 0
+      },
+      {
+        "event": "enterType",
+        "kind": "bool",
+        "id": 903,
+        "depth": 1
+      },
+      {
+        "event": "exitType",
+        "kind": "bool",
+        "id": 903,
+        "depth": 1
+      },
+      {
+        "event": "enterExpr",
+        "kind": "bool",
+        "id": 77,
+        "depth": 1
+      },
+      {
+        "event": "exitExpr",
+        "kind": "bool",
+        "id": 77,
+        "depth": 1
+      },
+      {
+        "event": "exitExpr",
+        "kind": "lambda",
+        "id": 901,
+        "depth": 0
+      },
+      {
+        "event": "exitDef",
+        "kind": "def",
+        "id": 902,
+        "depth": 0
+      },
+      {
+        "event": "exitDecl",
+        "kind": "def",
+        "id": 902,
+        "depth": -1
+      },
+      {
+        "event": "exitModule",
+        "kind": "module",
+        "id": 76,
+        "depth": -1
+      }
+    ],
+    "finds": [
+      {
+        "kind": "expression",
+        "id": 75,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 902,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 903,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 901,
+        "node": {
+          "id": 901,
+          "kind": "lambda",
+          "qualifier": "puredef",
+          "params": [
+            {
+              "id": 900,
+              "name": "laterWinner",
+              "typeAnnotation": {
+                "id": 903,
+                "kind": "bool"
+              }
+            }
+          ],
+          "expr": {
+            "id": 77,
+            "kind": "bool",
+            "value": true
+          }
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 73,
+        "node": {
+          "id": 73,
+          "kind": "let",
+          "opdef": {
+            "id": 902,
+            "kind": "def",
+            "qualifier": "pureval",
+            "name": "innerLoser",
+            "expr": {
+              "id": 72,
+              "kind": "bool",
+              "value": false
+            }
+          },
+          "expr": {
+            "id": 901,
+            "kind": "lambda",
+            "qualifier": "puredef",
+            "params": [
+              {
+                "id": 900,
+                "name": "innerLoser"
+              }
+            ],
+            "expr": {
+              "id": 901,
+              "kind": "name",
+              "name": "innerLoser"
+            }
+          }
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 72,
+        "node": {
+          "id": 72,
+          "kind": "bool",
+          "value": false
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 900,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 76,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 77,
+        "node": {
+          "id": 77,
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "kind": "expression",
+        "id": 0,
+        "node": null
+      },
+      {
+        "kind": "expression",
+        "id": 999999,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 75,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 902,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 903,
+        "node": {
+          "id": 903,
+          "kind": "bool"
+        }
+      },
+      {
+        "kind": "type",
+        "id": 901,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 73,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 72,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 900,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 76,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 77,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 0,
+        "node": null
+      },
+      {
+        "kind": "type",
+        "id": 999999,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 75,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 902,
+        "node": {
+          "id": 902,
+          "kind": "def",
+          "name": "laterWinner",
+          "qualifier": "pureval",
+          "expr": {
+            "id": 901,
+            "kind": "lambda",
+            "qualifier": "puredef",
+            "params": [
+              {
+                "id": 900,
+                "name": "laterWinner",
+                "typeAnnotation": {
+                  "id": 903,
+                  "kind": "bool"
+                }
+              }
+            ],
+            "expr": {
+              "id": 77,
+              "kind": "bool",
+              "value": true
+            }
+          }
+        }
+      },
+      {
+        "kind": "definition",
+        "id": 903,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 901,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 73,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 72,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 900,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 76,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 77,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 0,
+        "node": null
+      },
+      {
+        "kind": "definition",
+        "id": 999999,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 75,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 902,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 903,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 901,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 73,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 72,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 900,
+        "node": {
+          "id": 900,
+          "name": "laterWinner",
+          "typeAnnotation": {
+            "id": 903,
+            "kind": "bool"
+          }
+        }
+      },
+      {
+        "kind": "parameter",
+        "id": 76,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 77,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 0,
+        "node": null
+      },
+      {
+        "kind": "parameter",
+        "id": 999999,
+        "node": null
+      }
+    ]
+  }
+]

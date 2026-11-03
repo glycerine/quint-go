@@ -140,7 +140,7 @@ boundary, with concrete gaps listed before frontend implementation starts.
 - [x] P1.3 Preserve arbitrary-precision language integers with `math/big.Int`;
   prevent mutable-value aliasing. Choose a lossless ID representation and
   diagnose overflow rather than silently truncating imported IDs.
-- [ ] P1.4 Implement lossless JSON encoding/decoding for IR and analysis tables;
+- [x] P1.4 Implement lossless JSON encoding/decoding for IR and analysis tables;
   preserve numeric values without `float64` conversion and distinguish absent,
   empty, and null fields where the upstream contract does.
   - [x] Strict per-variant expression/type/row/row-field JSON with unknown,
@@ -151,7 +151,7 @@ boundary, with concrete gaps listed before frontend implementation starts.
   namespacing, and source-reference preservation.
 - [x] P1.6 Port structured errors, error trees, codes, source excerpts, and
   related locations; keep diagnostics independent of terminal formatting.
-- [ ] P1.7 Validate tagged-union round trips, large integers/IDs, malformed
+- [x] P1.7 Validate tagged-union round trips, large integers/IDs, malformed
   JSON, transformation identity, and source mapping against upstream fixtures.
 
 Exit gate: representative frontend and checker JSON fixtures round-trip
@@ -228,7 +228,7 @@ errors without panics or losing subsequent declarations after recoverable errors
   - [x] Verify numeric dependency-cycle order, message-name order and error
     references against upstream Immutable collection iteration.
   - [ ] Complete parser recovery (the remaining boundary is tracked in P2).
-- [ ] P3.5 Preserve definition identity and lookup-table consistency across
+- [x] P3.5 Preserve definition identity and lookup-table consistency across
   module boundaries and incremental declaration analysis.
   - [x] Track collected binding identity and expose unused-definition queries.
   - [x] Compare unused definitions against upstream module-resolution fixtures.
@@ -772,6 +772,10 @@ Build these items alongside the phases that supply their command behavior.
 - [ ] P10.7 Define idiomatic exported APIs corresponding to `quint/src/index.ts`,
   including parsing, analysis, IR access, formatting, and source resolution.
   Document ownership, incremental state, concurrency, and cancellation.
+  - [x] API.md maps upstream exports to Go; add whole-IR visitors/finders,
+    checked declaration/module and width-aware printers, compact source transport,
+    resumed IDs, effect substitution printing and an external-package example.
+  - [ ] Complete the general enter/exit replacement transformer under P1.5.
 - [ ] P10.8 Run CLI language/I/O/verification integration tests and JSON/ITF
   compatibility checks, including redirected output and nonzero exit paths.
   - [x] In-process tests across all commands, source imports/instances, actual
@@ -3634,3 +3638,13 @@ word "retained" in the commit message.
   snapshots, raw metadata fixtures and existing core stage tests, the CLI schema
   remains separate from the strict checker envelope. Combined0.125s, race1.121s,
   vet and diff checks pass. OS directory-read error prose remains platform-specific.
+
+- 2026-11-02: Added idiomatic public IR access/printing/source transport APIs
+  and API.md ownership/incremental/concurrency/cancellation contracts. Actual
+  source fixtures compare228 visitor events,372 finder results,96 declaration
+  strings/two modules/1,280 layouts,nine ordered maps/nine ID views,five resumed
+  ID sequences and13 effect substitution prints. Combined helpers/example0.086s,
+  focused races and96–100% printing coverage pass. An independent audit supports
+  closing P1.4/P1.7/P3.5 using raw schemas, large IDs, refresh ownership and
+  incremental identity suites. The general IR replacement transformer remains
+  explicit P1.5/P10.7 work; safe pretty-printer differences are documented.
