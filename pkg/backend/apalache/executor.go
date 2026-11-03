@@ -25,6 +25,11 @@ func (e *Executor) Run(ctx context.Context, command cmd.Cmd, config json.RawMess
 	if err := ctx.Err(); err != nil {
 		return nil, err
 	}
+	if command == cmd.Cmd_CHECK {
+		if err := validateCheckTuning(config); err != nil {
+			return nil, err
+		}
+	}
 	response, err := e.service.Run(ctx, &cmd.CmdRequest{Cmd: command, Config: string(config)})
 	// The service can encode solver cancellation as an ordinary failure payload.
 	// Preserve caller cancellation as a Go context error instead of losing its
