@@ -221,8 +221,9 @@ errors without panics or losing subsequent declarations after recoverable errors
   - [x] Sort declarations by dependency layers and emit residual QNT099 diagnostics.
   - [x] Connect source loading, module ordering, resolution, and declaration
     sorting through ParseProject, with both source maps and accumulated diagnostics.
-  - [ ] Complete parser recovery and verify cycle-diagnostic order against
-    upstream Immutable collection iteration.
+  - [x] Verify numeric dependency-cycle order, message-name order and error
+    references against upstream Immutable collection iteration.
+  - [ ] Complete parser recovery (the remaining boundary is tracked in P2).
 - [ ] P3.5 Preserve definition identity and lookup-table consistency across
   module boundaries and incremental declaration analysis.
   - [x] Track collected binding identity and expose unused-definition queries.
@@ -3445,3 +3446,14 @@ word "retained" in the commit message.
   containers whose historical routing hashes differ. Public checked equality and
   hashing stay symmetric and consistent. Explicit resource/cancellation errors
   remain checked boundaries. Focused race1.219s and vet pass; public APIs unchanged.
+
+- 2026-11-02: Matched dependency cycle ordering through a private reference-HAMT
+  ordering view while logical graphs use insdict. Thirty-five exact upstream
+  cases cover14 direct graphs,6 full-source phases and15 module orders, including
+  arbitrary-precision/colliding IDs, ninth-entry promotion, sink partitions, import
+  union and independent cycle-name order. An independent3,000 graph-pair audit
+  verifies construction-history invariance for dependency sets. All new helper
+  and sorting functions have100% statement coverage; focused0.066s, race1.429s,
+  vet and deterministic regeneration pass. Upstream ordering for more than eight
+  duplicate module objects depends on process-global identity history; Go keeps
+  deterministic discovery order there. Parser recovery remains separately open.

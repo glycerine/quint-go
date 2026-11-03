@@ -1123,3 +1123,12 @@ upstream results for 225 fresh constructor pairs, 60 strategic comparisons and
 grammar generators preserve conversion order, errors, nested fallback, infinite
 sets and source HAMT lookup asymmetry. Private source equality follows these
 quirks; public EqualContext/HashContext retain their symmetric, consistent contract.
+
+`dependency_cycle_order.json` and `module_cycle_order.json` add 35 exact upstream
+cases: 14 direct graphs, six raw source projects and 15 module-sort cases. Matching
+generators preserve decimal BigInt hashing, HAMT promotion/collisions, residual
+partitions, external vertices, import union and separate cycle-name iteration.
+Tests compare error references and raw source metadata as well as declaration
+order. Independent 3,000 graph-pair checks establish dependency-set construction
+history does not affect sorting. More than eight duplicate module objects are a
+separate upstream process-global identity-order limit, not a numeric graph case.

@@ -188,7 +188,7 @@ Do not infer complete exit-status parity from the command dispatcher comment.
 | Diagnostic inventory | Current distinction |
 | --- | --- |
 | `QNT000` | Known placeholder/unsupported opcode paths. |
-| `QNT001`, `QNT002`, `QNT003`, `QNT004`, `QNT005`, `QNT006`, `QNT007`, `QNT008`, `QNT009`, `QNT012`, `QNT013`, `QNT014`, `QNT015`, `QNT016`, `QNT098`, `QNT099` | Parser/source/cycle inventory modeled; complete malformed-input recovery/message parity remains partial. |
+| `QNT001`, `QNT002`, `QNT003`, `QNT004`, `QNT005`, `QNT006`, `QNT007`, `QNT008`, `QNT009`, `QNT012`, `QNT013`, `QNT014`, `QNT015`, `QNT016`, `QNT098`, `QNT099` | Numeric cycle ordering/messages/references match exact HAMT fixtures; malformed-input recovery remains partial. Duplicate-module object order above eight entries uses deterministic discovery rather than upstream process-global object hashes. |
 | `QNT101`, `QNT102`, `QNT404`, `QNT405`, `QNT406`, `QNT407`, `QNT408`, `QNT409` | Name/module/instance/init-conversion inventory modeled; frontend and transformation differential tests cover representative emission. |
 | `QNT200`, `QNT201`, `QNT202`, `QNT203`, `QNT204`, `QNT205`, `QNT206` | Effect/mode/nondet restrictions modeled; contexts are statically checked independently of runtime opcode support. |
 | `QNT500`, `QNT501`, `QNT502`, `QNT503`, `QNT504`, `QNT505`, `QNT506`, `QNT507`, `QNT508`, `QNT510`, `QNT511`, `QNT512`, `QNT513` | Runtime/test/sequence/arithmetic/assignment inventory modeled; exact occurrence/call-stack coverage remains partial. |

@@ -2,75 +2,25 @@ package quint
 
 import (
 	"github.com/glycerine/insdict"
-	"sort"
 )
 
 // SortDeclarations orders declarations by dependency layers and then decimal ID
 // strings, as upstream does. Dependencies outside declarations participate in
 // ordering but are not returned. Cycles contains all residual vertices, including
-// blocked dependents and nested definitions, in graph discovery order.
+// blocked dependents and nested definitions, in upstream Immutable.Set order.
 func SortDeclarations(graph *CallGraph, declarations []Declaration) (sorted []Declaration, cycles []ID) {
-	edges := insdict.NewDict[string, []ID]()
-	for id, uses := range graph.All() {
-		edges.Set(id, append([]ID(nil), uses...))
-	}
 	byID := insdict.NewDict[string, Declaration]()
-	for _, d := range declarations {
+	ids := make([]ID, len(declarations))
+	for i, d := range declarations {
 		byID.Set(d.ID.String(), d)
+		ids[i] = d.ID
 	}
-	// Complete the vertex set before removing any dependency layers.
-	for _, uses := range graph.All() {
-		for _, id := range uses {
-			if _, ok := edges.Get2(id.String()); !ok {
-				edges.Set(id.String(), nil)
-			}
-		}
-	}
-	for _, d := range declarations {
-		if _, ok := edges.Get2(d.ID.String()); !ok {
-			edges.Set(d.ID.String(), nil)
-		}
-	}
-	done := map[string]bool{}
+	ordered, cycles := sortDependencyIDs(graph, ids)
 	sorted = []Declaration{}
-	cycles = []ID{}
-	for {
-		sinks := []string{}
-		for id, uses := range edges.All() {
-			if !done[id] && len(uses) == 0 {
-				sinks = append(sinks, id)
-			}
-		}
-		if len(sinks) == 0 {
-			break
-		}
-		sort.Strings(sinks)
-		for _, id := range sinks {
-			done[id] = true
-			if d, ok := byID.Get2(id); ok {
-				sorted = append(sorted, d)
-			}
-		}
-		for id, uses := range edges.All() {
-			if done[id] {
-				continue
-			}
-			remaining := []ID{}
-			for _, use := range uses {
-				if !done[use.String()] {
-					remaining = append(remaining, use)
-				}
-			}
-			edges.Set(id, remaining)
-		}
+	for _, id := range ordered {
+		sorted = append(sorted, byID.Get(id.String()))
 	}
-	for key := range edges.All() {
-		if !done[key] {
-			id, _ := ParseID(key)
-			cycles = append(cycles, id)
-		}
-	}
-	return
+	return sorted, cycles
 }
 
 // SortModuleDeclarations applies the parser's declaration-ordering phase to

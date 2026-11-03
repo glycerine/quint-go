@@ -1,0 +1,3392 @@
+{
+  "direct": [
+    {
+      "name": "ring-0",
+      "input": [],
+      "declarations": [],
+      "sorted": [],
+      "cycles": []
+    },
+    {
+      "name": "ring-1",
+      "input": [
+        {
+          "id": 101,
+          "uses": [
+            101
+          ]
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "const",
+          "id": 101,
+          "name": "n101",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "sorted": [],
+      "cycles": [
+        101
+      ]
+    },
+    {
+      "name": "ring-2",
+      "input": [
+        {
+          "id": 101,
+          "uses": [
+            2
+          ]
+        },
+        {
+          "id": 2,
+          "uses": [
+            101
+          ]
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "const",
+          "id": 101,
+          "name": "n101",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 2,
+          "name": "n2",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "sorted": [],
+      "cycles": [
+        101,
+        2
+      ]
+    },
+    {
+      "name": "ring-8",
+      "input": [
+        {
+          "id": 101,
+          "uses": [
+            2
+          ]
+        },
+        {
+          "id": 2,
+          "uses": [
+            300
+          ]
+        },
+        {
+          "id": 300,
+          "uses": [
+            4
+          ]
+        },
+        {
+          "id": 4,
+          "uses": [
+            50
+          ]
+        },
+        {
+          "id": 50,
+          "uses": [
+            6
+          ]
+        },
+        {
+          "id": 6,
+          "uses": [
+            70
+          ]
+        },
+        {
+          "id": 70,
+          "uses": [
+            8
+          ]
+        },
+        {
+          "id": 8,
+          "uses": [
+            101
+          ]
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "const",
+          "id": 101,
+          "name": "n101",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 2,
+          "name": "n2",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 300,
+          "name": "n300",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 4,
+          "name": "n4",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 50,
+          "name": "n50",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 6,
+          "name": "n6",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 8,
+          "name": "n8",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "sorted": [],
+      "cycles": [
+        101,
+        2,
+        300,
+        4,
+        50,
+        6,
+        70,
+        8
+      ]
+    },
+    {
+      "name": "ring-9",
+      "input": [
+        {
+          "id": 101,
+          "uses": [
+            2
+          ]
+        },
+        {
+          "id": 2,
+          "uses": [
+            300
+          ]
+        },
+        {
+          "id": 300,
+          "uses": [
+            4
+          ]
+        },
+        {
+          "id": 4,
+          "uses": [
+            50
+          ]
+        },
+        {
+          "id": 50,
+          "uses": [
+            6
+          ]
+        },
+        {
+          "id": 6,
+          "uses": [
+            70
+          ]
+        },
+        {
+          "id": 70,
+          "uses": [
+            8
+          ]
+        },
+        {
+          "id": 8,
+          "uses": [
+            900
+          ]
+        },
+        {
+          "id": 900,
+          "uses": [
+            101
+          ]
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "const",
+          "id": 101,
+          "name": "n101",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 2,
+          "name": "n2",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 300,
+          "name": "n300",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 4,
+          "name": "n4",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 50,
+          "name": "n50",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 6,
+          "name": "n6",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 8,
+          "name": "n8",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 900,
+          "name": "n900",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "sorted": [],
+      "cycles": [
+        2,
+        101,
+        300,
+        4,
+        6,
+        8,
+        70,
+        900,
+        50
+      ]
+    },
+    {
+      "name": "ring-12",
+      "input": [
+        {
+          "id": 101,
+          "uses": [
+            2
+          ]
+        },
+        {
+          "id": 2,
+          "uses": [
+            300
+          ]
+        },
+        {
+          "id": 300,
+          "uses": [
+            4
+          ]
+        },
+        {
+          "id": 4,
+          "uses": [
+            50
+          ]
+        },
+        {
+          "id": 50,
+          "uses": [
+            6
+          ]
+        },
+        {
+          "id": 6,
+          "uses": [
+            70
+          ]
+        },
+        {
+          "id": 70,
+          "uses": [
+            8
+          ]
+        },
+        {
+          "id": 8,
+          "uses": [
+            900
+          ]
+        },
+        {
+          "id": 900,
+          "uses": [
+            11
+          ]
+        },
+        {
+          "id": 11,
+          "uses": [
+            120
+          ]
+        },
+        {
+          "id": 120,
+          "uses": [
+            13
+          ]
+        },
+        {
+          "id": 13,
+          "uses": [
+            101
+          ]
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "const",
+          "id": 101,
+          "name": "n101",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 2,
+          "name": "n2",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 300,
+          "name": "n300",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 4,
+          "name": "n4",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 50,
+          "name": "n50",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 6,
+          "name": "n6",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 8,
+          "name": "n8",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 900,
+          "name": "n900",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 11,
+          "name": "n11",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 120,
+          "name": "n120",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 13,
+          "name": "n13",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "sorted": [],
+      "cycles": [
+        11,
+        13,
+        120,
+        2,
+        101,
+        300,
+        4,
+        6,
+        8,
+        70,
+        900,
+        50
+      ]
+    },
+    {
+      "name": "blocked-multiple-components",
+      "input": [
+        {
+          "id": 101,
+          "uses": [
+            2
+          ]
+        },
+        {
+          "id": 2,
+          "uses": [
+            101
+          ]
+        },
+        {
+          "id": 300,
+          "uses": [
+            4
+          ]
+        },
+        {
+          "id": 4,
+          "uses": [
+            300
+          ]
+        },
+        {
+          "id": 50,
+          "uses": [
+            101
+          ]
+        },
+        {
+          "id": 6,
+          "uses": [
+            50
+          ]
+        },
+        {
+          "id": 70,
+          "uses": []
+        },
+        {
+          "id": 8,
+          "uses": [
+            70
+          ]
+        },
+        {
+          "id": 900,
+          "uses": [
+            8
+          ]
+        },
+        {
+          "id": 11,
+          "uses": [
+            6
+          ]
+        },
+        {
+          "id": 120,
+          "uses": []
+        },
+        {
+          "id": 13,
+          "uses": [
+            120
+          ]
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "const",
+          "id": 101,
+          "name": "n101",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 2,
+          "name": "n2",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 300,
+          "name": "n300",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 4,
+          "name": "n4",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 50,
+          "name": "n50",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 6,
+          "name": "n6",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 8,
+          "name": "n8",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 900,
+          "name": "n900",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 11,
+          "name": "n11",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 120,
+          "name": "n120",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 13,
+          "name": "n13",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "sorted": [
+        {
+          "kind": "const",
+          "id": 120,
+          "name": "n120",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 13,
+          "name": "n13",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 8,
+          "name": "n8",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 900,
+          "name": "n900",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "cycles": [
+        11,
+        2,
+        101,
+        300,
+        4,
+        6,
+        50
+      ]
+    },
+    {
+      "name": "small-residue-after-trie",
+      "input": [
+        {
+          "id": 101,
+          "uses": [
+            2
+          ]
+        },
+        {
+          "id": 2,
+          "uses": [
+            300
+          ]
+        },
+        {
+          "id": 300,
+          "uses": [
+            101
+          ]
+        },
+        {
+          "id": 4,
+          "uses": []
+        },
+        {
+          "id": 50,
+          "uses": []
+        },
+        {
+          "id": 6,
+          "uses": []
+        },
+        {
+          "id": 70,
+          "uses": []
+        },
+        {
+          "id": 8,
+          "uses": []
+        },
+        {
+          "id": 900,
+          "uses": []
+        },
+        {
+          "id": 11,
+          "uses": []
+        },
+        {
+          "id": 120,
+          "uses": []
+        },
+        {
+          "id": 13,
+          "uses": []
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "const",
+          "id": 101,
+          "name": "n101",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 2,
+          "name": "n2",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 300,
+          "name": "n300",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 4,
+          "name": "n4",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 50,
+          "name": "n50",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 6,
+          "name": "n6",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 8,
+          "name": "n8",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 900,
+          "name": "n900",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 11,
+          "name": "n11",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 120,
+          "name": "n120",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 13,
+          "name": "n13",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "sorted": [
+        {
+          "kind": "const",
+          "id": 11,
+          "name": "n11",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 120,
+          "name": "n120",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 13,
+          "name": "n13",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 4,
+          "name": "n4",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 50,
+          "name": "n50",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 6,
+          "name": "n6",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 8,
+          "name": "n8",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 900,
+          "name": "n900",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "cycles": [
+        2,
+        101,
+        300
+      ]
+    },
+    {
+      "name": "external-and-unsorted-completion",
+      "input": [
+        {
+          "id": 101,
+          "uses": [
+            2,
+            9007199254740993123456789
+          ]
+        },
+        {
+          "id": 2,
+          "uses": [
+            101
+          ]
+        },
+        {
+          "id": 300,
+          "uses": [
+            1000,
+            1001,
+            1002,
+            1003,
+            1004,
+            1005,
+            1006,
+            1007,
+            1008
+          ]
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "const",
+          "id": 101,
+          "name": "n101",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 2,
+          "name": "n2",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 300,
+          "name": "n300",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 4,
+          "name": "n4",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 50,
+          "name": "n50",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 6,
+          "name": "n6",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 8,
+          "name": "n8",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 900,
+          "name": "n900",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "sorted": [
+        {
+          "kind": "const",
+          "id": 4,
+          "name": "n4",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 50,
+          "name": "n50",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 6,
+          "name": "n6",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 8,
+          "name": "n8",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 900,
+          "name": "n900",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 300,
+          "name": "n300",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "cycles": [
+        2,
+        101
+      ]
+    },
+    {
+      "name": "decimal-layer-order",
+      "input": [
+        {
+          "id": 100,
+          "uses": [
+            2,
+            10
+          ]
+        },
+        {
+          "id": 2,
+          "uses": [
+            9
+          ]
+        },
+        {
+          "id": 10,
+          "uses": [
+            9
+          ]
+        },
+        {
+          "id": 1000000000000000000000000000000000000000,
+          "uses": [
+            100
+          ]
+        },
+        {
+          "id": 0,
+          "uses": []
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "const",
+          "id": 100,
+          "name": "n100",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 2,
+          "name": "n2",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 10,
+          "name": "n10",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 9,
+          "name": "n9",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 0,
+          "name": "n0",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 1000000000000000000000000000000000000000,
+          "name": "n1000000000000000000000000000000000000000",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "sorted": [
+        {
+          "kind": "const",
+          "id": 0,
+          "name": "n0",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 9,
+          "name": "n9",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 10,
+          "name": "n10",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 2,
+          "name": "n2",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 100,
+          "name": "n100",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 1000000000000000000000000000000000000000,
+          "name": "n1000000000000000000000000000000000000000",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "cycles": []
+    },
+    {
+      "name": "external-residual-cycle",
+      "input": [
+        {
+          "id": 101,
+          "uses": [
+            2
+          ]
+        },
+        {
+          "id": 2,
+          "uses": [
+            101
+          ]
+        },
+        {
+          "id": 300,
+          "uses": [
+            4
+          ]
+        },
+        {
+          "id": 4,
+          "uses": [
+            300
+          ]
+        },
+        {
+          "id": 50,
+          "uses": [
+            101
+          ]
+        },
+        {
+          "id": 6,
+          "uses": [
+            50
+          ]
+        },
+        {
+          "id": 70,
+          "uses": []
+        },
+        {
+          "id": 8,
+          "uses": [
+            70
+          ]
+        },
+        {
+          "id": 900,
+          "uses": [
+            8
+          ]
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "const",
+          "id": 900,
+          "name": "n900",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 8,
+          "name": "n8",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 6,
+          "name": "n6",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "sorted": [
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 8,
+          "name": "n8",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 900,
+          "name": "n900",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "cycles": [
+        2,
+        101,
+        300,
+        4,
+        6,
+        50
+      ]
+    },
+    {
+      "name": "only-external-cycle",
+      "input": [
+        {
+          "id": 101,
+          "uses": [
+            2
+          ]
+        },
+        {
+          "id": 2,
+          "uses": [
+            101
+          ]
+        }
+      ],
+      "declarations": [],
+      "sorted": [],
+      "cycles": [
+        101,
+        2
+      ]
+    },
+    {
+      "name": "collision-ninth-key",
+      "input": [
+        {
+          "id": 100000000000000000000000000000020734517,
+          "uses": [
+            100000000000000000000000000000020734517
+          ]
+        },
+        {
+          "id": 101,
+          "uses": [
+            101
+          ]
+        },
+        {
+          "id": 2,
+          "uses": [
+            2
+          ]
+        },
+        {
+          "id": 300,
+          "uses": [
+            300
+          ]
+        },
+        {
+          "id": 4,
+          "uses": [
+            4
+          ]
+        },
+        {
+          "id": 50,
+          "uses": [
+            50
+          ]
+        },
+        {
+          "id": 6,
+          "uses": [
+            6
+          ]
+        },
+        {
+          "id": 70,
+          "uses": [
+            70
+          ]
+        },
+        {
+          "id": 100000000000000000000000000000684953501,
+          "uses": [
+            100000000000000000000000000000684953501
+          ]
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "const",
+          "id": 100000000000000000000000000000020734517,
+          "name": "n100000000000000000000000000000020734517",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 101,
+          "name": "n101",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 2,
+          "name": "n2",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 300,
+          "name": "n300",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 4,
+          "name": "n4",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 50,
+          "name": "n50",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 6,
+          "name": "n6",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 100000000000000000000000000000684953501,
+          "name": "n100000000000000000000000000000684953501",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "sorted": [],
+      "cycles": [
+        2,
+        101,
+        100000000000000000000000000000684953501,
+        100000000000000000000000000000020734517,
+        300,
+        4,
+        6,
+        70,
+        50
+      ]
+    },
+    {
+      "name": "collision-residue-after-sink-partition",
+      "input": [
+        {
+          "id": 100000000000000000000000000000020734517,
+          "uses": [
+            100000000000000000000000000000020734517
+          ]
+        },
+        {
+          "id": 101,
+          "uses": []
+        },
+        {
+          "id": 2,
+          "uses": []
+        },
+        {
+          "id": 300,
+          "uses": []
+        },
+        {
+          "id": 4,
+          "uses": []
+        },
+        {
+          "id": 50,
+          "uses": []
+        },
+        {
+          "id": 6,
+          "uses": []
+        },
+        {
+          "id": 70,
+          "uses": []
+        },
+        {
+          "id": 100000000000000000000000000000684953501,
+          "uses": [
+            100000000000000000000000000000684953501
+          ]
+        }
+      ],
+      "declarations": [
+        {
+          "kind": "const",
+          "id": 100000000000000000000000000000020734517,
+          "name": "n100000000000000000000000000000020734517",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 101,
+          "name": "n101",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 2,
+          "name": "n2",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 300,
+          "name": "n300",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 4,
+          "name": "n4",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 50,
+          "name": "n50",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 6,
+          "name": "n6",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 100000000000000000000000000000684953501,
+          "name": "n100000000000000000000000000000684953501",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "sorted": [
+        {
+          "kind": "const",
+          "id": 101,
+          "name": "n101",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 2,
+          "name": "n2",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 300,
+          "name": "n300",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 4,
+          "name": "n4",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 50,
+          "name": "n50",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 6,
+          "name": "n6",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "const",
+          "id": 70,
+          "name": "n70",
+          "typeAnnotation": {
+            "kind": "int"
+          }
+        }
+      ],
+      "cycles": [
+        100000000000000000000000000000684953501,
+        100000000000000000000000000000020734517
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "source-ring-12",
+      "source": "module M { val d0=d1 val d1=d2 val d2=d3 val d3=d4 val d4=d5 val d5=d6 val d6=d7 val d7=d8 val d8=d9 val d9=d10 val d10=d11 val d11=d0 }",
+      "input": [
+        {
+          "id": 25,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "def",
+              "name": "d0",
+              "qualifier": "val",
+              "expr": {
+                "id": 1,
+                "kind": "name",
+                "name": "d1"
+              }
+            },
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "d1",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "name",
+                "name": "d2"
+              }
+            },
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "d2",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "name",
+                "name": "d3"
+              }
+            },
+            {
+              "id": 8,
+              "kind": "def",
+              "name": "d3",
+              "qualifier": "val",
+              "expr": {
+                "id": 7,
+                "kind": "name",
+                "name": "d4"
+              }
+            },
+            {
+              "id": 10,
+              "kind": "def",
+              "name": "d4",
+              "qualifier": "val",
+              "expr": {
+                "id": 9,
+                "kind": "name",
+                "name": "d5"
+              }
+            },
+            {
+              "id": 12,
+              "kind": "def",
+              "name": "d5",
+              "qualifier": "val",
+              "expr": {
+                "id": 11,
+                "kind": "name",
+                "name": "d6"
+              }
+            },
+            {
+              "id": 14,
+              "kind": "def",
+              "name": "d6",
+              "qualifier": "val",
+              "expr": {
+                "id": 13,
+                "kind": "name",
+                "name": "d7"
+              }
+            },
+            {
+              "id": 16,
+              "kind": "def",
+              "name": "d7",
+              "qualifier": "val",
+              "expr": {
+                "id": 15,
+                "kind": "name",
+                "name": "d8"
+              }
+            },
+            {
+              "id": 18,
+              "kind": "def",
+              "name": "d8",
+              "qualifier": "val",
+              "expr": {
+                "id": 17,
+                "kind": "name",
+                "name": "d9"
+              }
+            },
+            {
+              "id": 20,
+              "kind": "def",
+              "name": "d9",
+              "qualifier": "val",
+              "expr": {
+                "id": 19,
+                "kind": "name",
+                "name": "d10"
+              }
+            },
+            {
+              "id": 22,
+              "kind": "def",
+              "name": "d10",
+              "qualifier": "val",
+              "expr": {
+                "id": 21,
+                "kind": "name",
+                "name": "d11"
+              }
+            },
+            {
+              "id": 24,
+              "kind": "def",
+              "name": "d11",
+              "qualifier": "val",
+              "expr": {
+                "id": 23,
+                "kind": "name",
+                "name": "d0"
+              }
+            }
+          ]
+        }
+      ],
+      "output": [
+        {
+          "id": 25,
+          "name": "M",
+          "declarations": []
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 22
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 12
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 24
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 14
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 16
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 18
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 2
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 4
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 6
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 8
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 20
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 10
+        }
+      ]
+    },
+    {
+      "name": "source-independent-cycles",
+      "source": "module M { val good=1 val d0=d1 val d1=d0 val d2=d3 val d3=d2 val d4=d5 val d5=d4 val d6=d7 val d7=d6 val d8=d9 val d9=d8 val d10=d11 val d11=d10 val blocked=d0 val retained=good }",
+      "input": [
+        {
+          "id": 31,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "def",
+              "name": "good",
+              "qualifier": "val",
+              "expr": {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "d0",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "name",
+                "name": "d1"
+              }
+            },
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "d1",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "name",
+                "name": "d0"
+              }
+            },
+            {
+              "id": 8,
+              "kind": "def",
+              "name": "d2",
+              "qualifier": "val",
+              "expr": {
+                "id": 7,
+                "kind": "name",
+                "name": "d3"
+              }
+            },
+            {
+              "id": 10,
+              "kind": "def",
+              "name": "d3",
+              "qualifier": "val",
+              "expr": {
+                "id": 9,
+                "kind": "name",
+                "name": "d2"
+              }
+            },
+            {
+              "id": 12,
+              "kind": "def",
+              "name": "d4",
+              "qualifier": "val",
+              "expr": {
+                "id": 11,
+                "kind": "name",
+                "name": "d5"
+              }
+            },
+            {
+              "id": 14,
+              "kind": "def",
+              "name": "d5",
+              "qualifier": "val",
+              "expr": {
+                "id": 13,
+                "kind": "name",
+                "name": "d4"
+              }
+            },
+            {
+              "id": 16,
+              "kind": "def",
+              "name": "d6",
+              "qualifier": "val",
+              "expr": {
+                "id": 15,
+                "kind": "name",
+                "name": "d7"
+              }
+            },
+            {
+              "id": 18,
+              "kind": "def",
+              "name": "d7",
+              "qualifier": "val",
+              "expr": {
+                "id": 17,
+                "kind": "name",
+                "name": "d6"
+              }
+            },
+            {
+              "id": 20,
+              "kind": "def",
+              "name": "d8",
+              "qualifier": "val",
+              "expr": {
+                "id": 19,
+                "kind": "name",
+                "name": "d9"
+              }
+            },
+            {
+              "id": 22,
+              "kind": "def",
+              "name": "d9",
+              "qualifier": "val",
+              "expr": {
+                "id": 21,
+                "kind": "name",
+                "name": "d8"
+              }
+            },
+            {
+              "id": 24,
+              "kind": "def",
+              "name": "d10",
+              "qualifier": "val",
+              "expr": {
+                "id": 23,
+                "kind": "name",
+                "name": "d11"
+              }
+            },
+            {
+              "id": 26,
+              "kind": "def",
+              "name": "d11",
+              "qualifier": "val",
+              "expr": {
+                "id": 25,
+                "kind": "name",
+                "name": "d10"
+              }
+            },
+            {
+              "id": 28,
+              "kind": "def",
+              "name": "blocked",
+              "qualifier": "val",
+              "expr": {
+                "id": 27,
+                "kind": "name",
+                "name": "d0"
+              }
+            },
+            {
+              "id": 30,
+              "kind": "def",
+              "name": "retained",
+              "qualifier": "val",
+              "expr": {
+                "id": 29,
+                "kind": "name",
+                "name": "good"
+              }
+            }
+          ]
+        }
+      ],
+      "output": [
+        {
+          "id": 31,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "def",
+              "name": "good",
+              "qualifier": "val",
+              "expr": {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "id": 30,
+              "kind": "def",
+              "name": "retained",
+              "qualifier": "val",
+              "expr": {
+                "id": 29,
+                "kind": "name",
+                "name": "good"
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 22
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 12
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 24
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 14
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 26
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 16
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 28
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 18
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 4
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 6
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 8
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 20
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 10
+        }
+      ]
+    },
+    {
+      "name": "source-alias-ring-9",
+      "source": "module M { type T0=T1 type T1=T2 type T2=T3 type T3=T4 type T4=T5 type T5=T6 type T6=T7 type T7=T8 type T8=T0 }",
+      "input": [
+        {
+          "id": 37,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "typedef",
+              "name": "T0",
+              "type": {
+                "id": 4,
+                "kind": "const",
+                "name": "T1"
+              }
+            },
+            {
+              "id": 6,
+              "kind": "typedef",
+              "name": "T1",
+              "type": {
+                "id": 8,
+                "kind": "const",
+                "name": "T2"
+              }
+            },
+            {
+              "id": 10,
+              "kind": "typedef",
+              "name": "T2",
+              "type": {
+                "id": 12,
+                "kind": "const",
+                "name": "T3"
+              }
+            },
+            {
+              "id": 14,
+              "kind": "typedef",
+              "name": "T3",
+              "type": {
+                "id": 16,
+                "kind": "const",
+                "name": "T4"
+              }
+            },
+            {
+              "id": 18,
+              "kind": "typedef",
+              "name": "T4",
+              "type": {
+                "id": 20,
+                "kind": "const",
+                "name": "T5"
+              }
+            },
+            {
+              "id": 22,
+              "kind": "typedef",
+              "name": "T5",
+              "type": {
+                "id": 24,
+                "kind": "const",
+                "name": "T6"
+              }
+            },
+            {
+              "id": 26,
+              "kind": "typedef",
+              "name": "T6",
+              "type": {
+                "id": 28,
+                "kind": "const",
+                "name": "T7"
+              }
+            },
+            {
+              "id": 30,
+              "kind": "typedef",
+              "name": "T7",
+              "type": {
+                "id": 32,
+                "kind": "const",
+                "name": "T8"
+              }
+            },
+            {
+              "id": 34,
+              "kind": "typedef",
+              "name": "T8",
+              "type": {
+                "id": 36,
+                "kind": "const",
+                "name": "T0"
+              }
+            }
+          ]
+        }
+      ],
+      "output": [
+        {
+          "id": 37,
+          "name": "M",
+          "declarations": []
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 22
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 34
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 14
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 26
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 18
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 2
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 6
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 30
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 10
+        }
+      ]
+    },
+    {
+      "name": "source-nested-recursion",
+      "source": "module M { val good=1 val d0=def f0(x)=f0(x); f0(1) val d1=def f1(x)=f1(x); f1(1) val d2=def f2(x)=f2(x); f2(1) val d3=def f3(x)=f3(x); f3(1) val d4=def f4(x)=f4(x); f4(1) val d5=def f5(x)=f5(x); f5(1) val d6=def f6(x)=f6(x); f6(1) val d7=def f7(x)=f7(x); f7(1) val d8=def f8(x)=f8(x); f8(1) val blocked=d0 }",
+      "input": [
+        {
+          "id": 86,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "def",
+              "name": "good",
+              "qualifier": "val",
+              "expr": {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "id": 11,
+              "kind": "def",
+              "name": "d0",
+              "qualifier": "val",
+              "expr": {
+                "id": 10,
+                "kind": "let",
+                "opdef": {
+                  "id": 7,
+                  "kind": "def",
+                  "name": "f0",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 6,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 3,
+                        "name": "x"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 5,
+                      "kind": "app",
+                      "opcode": "f0",
+                      "args": [
+                        {
+                          "id": 4,
+                          "kind": "name",
+                          "name": "x"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "f0",
+                  "args": [
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 20,
+              "kind": "def",
+              "name": "d1",
+              "qualifier": "val",
+              "expr": {
+                "id": 19,
+                "kind": "let",
+                "opdef": {
+                  "id": 16,
+                  "kind": "def",
+                  "name": "f1",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 15,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 12,
+                        "name": "x"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 14,
+                      "kind": "app",
+                      "opcode": "f1",
+                      "args": [
+                        {
+                          "id": 13,
+                          "kind": "name",
+                          "name": "x"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 18,
+                  "kind": "app",
+                  "opcode": "f1",
+                  "args": [
+                    {
+                      "id": 17,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 29,
+              "kind": "def",
+              "name": "d2",
+              "qualifier": "val",
+              "expr": {
+                "id": 28,
+                "kind": "let",
+                "opdef": {
+                  "id": 25,
+                  "kind": "def",
+                  "name": "f2",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 24,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 21,
+                        "name": "x"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 23,
+                      "kind": "app",
+                      "opcode": "f2",
+                      "args": [
+                        {
+                          "id": 22,
+                          "kind": "name",
+                          "name": "x"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 27,
+                  "kind": "app",
+                  "opcode": "f2",
+                  "args": [
+                    {
+                      "id": 26,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 38,
+              "kind": "def",
+              "name": "d3",
+              "qualifier": "val",
+              "expr": {
+                "id": 37,
+                "kind": "let",
+                "opdef": {
+                  "id": 34,
+                  "kind": "def",
+                  "name": "f3",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 33,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 30,
+                        "name": "x"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 32,
+                      "kind": "app",
+                      "opcode": "f3",
+                      "args": [
+                        {
+                          "id": 31,
+                          "kind": "name",
+                          "name": "x"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 36,
+                  "kind": "app",
+                  "opcode": "f3",
+                  "args": [
+                    {
+                      "id": 35,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 47,
+              "kind": "def",
+              "name": "d4",
+              "qualifier": "val",
+              "expr": {
+                "id": 46,
+                "kind": "let",
+                "opdef": {
+                  "id": 43,
+                  "kind": "def",
+                  "name": "f4",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 42,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 39,
+                        "name": "x"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 41,
+                      "kind": "app",
+                      "opcode": "f4",
+                      "args": [
+                        {
+                          "id": 40,
+                          "kind": "name",
+                          "name": "x"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 45,
+                  "kind": "app",
+                  "opcode": "f4",
+                  "args": [
+                    {
+                      "id": 44,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 56,
+              "kind": "def",
+              "name": "d5",
+              "qualifier": "val",
+              "expr": {
+                "id": 55,
+                "kind": "let",
+                "opdef": {
+                  "id": 52,
+                  "kind": "def",
+                  "name": "f5",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 51,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 48,
+                        "name": "x"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 50,
+                      "kind": "app",
+                      "opcode": "f5",
+                      "args": [
+                        {
+                          "id": 49,
+                          "kind": "name",
+                          "name": "x"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 54,
+                  "kind": "app",
+                  "opcode": "f5",
+                  "args": [
+                    {
+                      "id": 53,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 65,
+              "kind": "def",
+              "name": "d6",
+              "qualifier": "val",
+              "expr": {
+                "id": 64,
+                "kind": "let",
+                "opdef": {
+                  "id": 61,
+                  "kind": "def",
+                  "name": "f6",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 60,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 57,
+                        "name": "x"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 59,
+                      "kind": "app",
+                      "opcode": "f6",
+                      "args": [
+                        {
+                          "id": 58,
+                          "kind": "name",
+                          "name": "x"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 63,
+                  "kind": "app",
+                  "opcode": "f6",
+                  "args": [
+                    {
+                      "id": 62,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 74,
+              "kind": "def",
+              "name": "d7",
+              "qualifier": "val",
+              "expr": {
+                "id": 73,
+                "kind": "let",
+                "opdef": {
+                  "id": 70,
+                  "kind": "def",
+                  "name": "f7",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 69,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 66,
+                        "name": "x"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 68,
+                      "kind": "app",
+                      "opcode": "f7",
+                      "args": [
+                        {
+                          "id": 67,
+                          "kind": "name",
+                          "name": "x"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 72,
+                  "kind": "app",
+                  "opcode": "f7",
+                  "args": [
+                    {
+                      "id": 71,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 83,
+              "kind": "def",
+              "name": "d8",
+              "qualifier": "val",
+              "expr": {
+                "id": 82,
+                "kind": "let",
+                "opdef": {
+                  "id": 79,
+                  "kind": "def",
+                  "name": "f8",
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 78,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 75,
+                        "name": "x"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 77,
+                      "kind": "app",
+                      "opcode": "f8",
+                      "args": [
+                        {
+                          "id": 76,
+                          "kind": "name",
+                          "name": "x"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 81,
+                  "kind": "app",
+                  "opcode": "f8",
+                  "args": [
+                    {
+                      "id": 80,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 85,
+              "kind": "def",
+              "name": "blocked",
+              "qualifier": "val",
+              "expr": {
+                "id": 84,
+                "kind": "name",
+                "name": "d0"
+              }
+            }
+          ]
+        }
+      ],
+      "output": [
+        {
+          "id": 86,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "def",
+              "name": "good",
+              "qualifier": "val",
+              "expr": {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 11
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 34
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 56
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 79
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 25
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 47
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 16
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 38
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 29
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 7
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 70
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 61
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 83
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 52
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 74
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 85
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 20
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 43
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 65
+        }
+      ]
+    },
+    {
+      "name": "source-import-exports",
+      "source": "module A { val good=1 val x=y val y=x } module B { import A.* export A val keep=good val blocked=x }",
+      "input": [
+        {
+          "id": 7,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "def",
+              "name": "good",
+              "qualifier": "val",
+              "expr": {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              }
+            },
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "name",
+                "name": "y"
+              }
+            },
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "y",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "name",
+                "name": "x"
+              }
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "name": "B",
+          "declarations": [
+            {
+              "id": 8,
+              "kind": "import",
+              "defName": "*",
+              "protoName": "A"
+            },
+            {
+              "id": 9,
+              "kind": "export",
+              "protoName": "A"
+            },
+            {
+              "id": 11,
+              "kind": "def",
+              "name": "keep",
+              "qualifier": "val",
+              "expr": {
+                "id": 10,
+                "kind": "name",
+                "name": "good"
+              }
+            },
+            {
+              "id": 13,
+              "kind": "def",
+              "name": "blocked",
+              "qualifier": "val",
+              "expr": {
+                "id": 12,
+                "kind": "name",
+                "name": "x"
+              }
+            }
+          ]
+        }
+      ],
+      "output": [
+        {
+          "id": 7,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "def",
+              "name": "good",
+              "qualifier": "val",
+              "expr": {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "name": "B",
+          "declarations": [
+            {
+              "id": 8,
+              "kind": "import",
+              "defName": "*",
+              "protoName": "A"
+            },
+            {
+              "id": 11,
+              "kind": "def",
+              "name": "keep",
+              "qualifier": "val",
+              "expr": {
+                "id": 10,
+                "kind": "name",
+                "name": "good"
+              }
+            },
+            {
+              "id": 13,
+              "kind": "def",
+              "name": "blocked",
+              "qualifier": "val",
+              "expr": {
+                "id": 12,
+                "kind": "name",
+                "name": "x"
+              }
+            },
+            {
+              "id": 9,
+              "kind": "export",
+              "protoName": "A"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 4
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 6
+        }
+      ]
+    },
+    {
+      "name": "source-large-import-union",
+      "source": "module A { val a=1 } module M { import A as A0 import A as A1 import A as A2 import A as A3 import A as A4 import A as A5 import A as A6 import A as A7 import A as A8 val first=second+A0::a val second=first }",
+      "input": [
+        {
+          "id": 3,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "def",
+              "name": "a",
+              "qualifier": "val",
+              "expr": {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 4,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A0"
+            },
+            {
+              "id": 5,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A1"
+            },
+            {
+              "id": 6,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A2"
+            },
+            {
+              "id": 7,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A3"
+            },
+            {
+              "id": 8,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A4"
+            },
+            {
+              "id": 9,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A5"
+            },
+            {
+              "id": 10,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A6"
+            },
+            {
+              "id": 11,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A7"
+            },
+            {
+              "id": 12,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A8"
+            },
+            {
+              "id": 16,
+              "kind": "def",
+              "name": "first",
+              "qualifier": "val",
+              "expr": {
+                "id": 15,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 13,
+                    "kind": "name",
+                    "name": "second"
+                  },
+                  {
+                    "id": 14,
+                    "kind": "name",
+                    "name": "A0::a"
+                  }
+                ]
+              }
+            },
+            {
+              "id": 18,
+              "kind": "def",
+              "name": "second",
+              "qualifier": "val",
+              "expr": {
+                "id": 17,
+                "kind": "name",
+                "name": "first"
+              }
+            }
+          ]
+        }
+      ],
+      "output": [
+        {
+          "id": 3,
+          "name": "A",
+          "declarations": [
+            {
+              "id": 2,
+              "kind": "def",
+              "name": "a",
+              "qualifier": "val",
+              "expr": {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 10,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A6"
+            },
+            {
+              "id": 11,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A7"
+            },
+            {
+              "id": 12,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A8"
+            },
+            {
+              "id": 4,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A0"
+            },
+            {
+              "id": 5,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A1"
+            },
+            {
+              "id": 6,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A2"
+            },
+            {
+              "id": 7,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A3"
+            },
+            {
+              "id": 8,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A4"
+            },
+            {
+              "id": 9,
+              "kind": "import",
+              "protoName": "A",
+              "qualifiedName": "A5"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 16
+        },
+        {
+          "code": "QNT099",
+          "message": "Found cyclic declarations. Use fold and foldl instead of recursion",
+          "reference": 18
+        }
+      ]
+    }
+  ]
+}

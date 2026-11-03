@@ -1,0 +1,3138 @@
+[
+  {
+    "name": "empty-graph",
+    "inputModules": [],
+    "modules": [],
+    "diagnostics": []
+  },
+  {
+    "name": "empty-declarations-lexical-layer",
+    "inputModules": [
+      {
+        "id": 101,
+        "name": "Empty0",
+        "declarations": []
+      },
+      {
+        "id": 2,
+        "name": "Empty1",
+        "declarations": []
+      },
+      {
+        "id": 300,
+        "name": "Empty2",
+        "declarations": []
+      },
+      {
+        "id": 4,
+        "name": "Empty3",
+        "declarations": []
+      },
+      {
+        "id": 50,
+        "name": "Empty4",
+        "declarations": []
+      },
+      {
+        "id": 6,
+        "name": "Empty5",
+        "declarations": []
+      },
+      {
+        "id": 70,
+        "name": "Empty6",
+        "declarations": []
+      },
+      {
+        "id": 8,
+        "name": "Empty7",
+        "declarations": []
+      },
+      {
+        "id": 900,
+        "name": "Empty8",
+        "declarations": []
+      },
+      {
+        "id": 10,
+        "name": "Empty9",
+        "declarations": []
+      },
+      {
+        "id": 11,
+        "name": "Empty10",
+        "declarations": []
+      },
+      {
+        "id": 12,
+        "name": "Empty11",
+        "declarations": []
+      }
+    ],
+    "modules": [
+      {
+        "id": 10,
+        "name": "Empty9",
+        "declarations": []
+      },
+      {
+        "id": 101,
+        "name": "Empty0",
+        "declarations": []
+      },
+      {
+        "id": 11,
+        "name": "Empty10",
+        "declarations": []
+      },
+      {
+        "id": 12,
+        "name": "Empty11",
+        "declarations": []
+      },
+      {
+        "id": 2,
+        "name": "Empty1",
+        "declarations": []
+      },
+      {
+        "id": 300,
+        "name": "Empty2",
+        "declarations": []
+      },
+      {
+        "id": 4,
+        "name": "Empty3",
+        "declarations": []
+      },
+      {
+        "id": 50,
+        "name": "Empty4",
+        "declarations": []
+      },
+      {
+        "id": 6,
+        "name": "Empty5",
+        "declarations": []
+      },
+      {
+        "id": 70,
+        "name": "Empty6",
+        "declarations": []
+      },
+      {
+        "id": 8,
+        "name": "Empty7",
+        "declarations": []
+      },
+      {
+        "id": 900,
+        "name": "Empty8",
+        "declarations": []
+      }
+    ],
+    "diagnostics": []
+  },
+  {
+    "name": "populated-lexical-layer",
+    "inputModules": [
+      {
+        "id": 101,
+        "name": "Present0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000000,
+            "kind": "typedef",
+            "name": "TypePresent0"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Present1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000001,
+            "kind": "typedef",
+            "name": "TypePresent1"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Present2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000002,
+            "kind": "typedef",
+            "name": "TypePresent2"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Present3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000003,
+            "kind": "typedef",
+            "name": "TypePresent3"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Present4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000004,
+            "kind": "typedef",
+            "name": "TypePresent4"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Present5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000005,
+            "kind": "typedef",
+            "name": "TypePresent5"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Present6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000006,
+            "kind": "typedef",
+            "name": "TypePresent6"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Present7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000007,
+            "kind": "typedef",
+            "name": "TypePresent7"
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Present8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000008,
+            "kind": "typedef",
+            "name": "TypePresent8"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Present9",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000009,
+            "kind": "typedef",
+            "name": "TypePresent9"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Present10",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000010,
+            "kind": "typedef",
+            "name": "TypePresent10"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "name": "Present11",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000011,
+            "kind": "typedef",
+            "name": "TypePresent11"
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": 10,
+        "name": "Present9",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000009,
+            "kind": "typedef",
+            "name": "TypePresent9"
+          }
+        ]
+      },
+      {
+        "id": 101,
+        "name": "Present0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000000,
+            "kind": "typedef",
+            "name": "TypePresent0"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Present10",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000010,
+            "kind": "typedef",
+            "name": "TypePresent10"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "name": "Present11",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000011,
+            "kind": "typedef",
+            "name": "TypePresent11"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Present1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000001,
+            "kind": "typedef",
+            "name": "TypePresent1"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Present2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000002,
+            "kind": "typedef",
+            "name": "TypePresent2"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Present3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000003,
+            "kind": "typedef",
+            "name": "TypePresent3"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Present4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000004,
+            "kind": "typedef",
+            "name": "TypePresent4"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Present5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000005,
+            "kind": "typedef",
+            "name": "TypePresent5"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Present6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000006,
+            "kind": "typedef",
+            "name": "TypePresent6"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Present7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000007,
+            "kind": "typedef",
+            "name": "TypePresent7"
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Present8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000008,
+            "kind": "typedef",
+            "name": "TypePresent8"
+          }
+        ]
+      }
+    ],
+    "diagnostics": []
+  },
+  {
+    "name": "cycle-eight-array-map-boundary",
+    "inputModules": [
+      {
+        "id": 101,
+        "name": "Ring0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000012,
+            "kind": "import",
+            "protoName": "Ring1"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Ring1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000013,
+            "kind": "import",
+            "protoName": "Ring2"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Ring2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000014,
+            "kind": "import",
+            "protoName": "Ring3"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Ring3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000015,
+            "kind": "import",
+            "protoName": "Ring4"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Ring4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000016,
+            "kind": "import",
+            "protoName": "Ring5"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Ring5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000017,
+            "kind": "import",
+            "protoName": "Ring6"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Ring6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000018,
+            "kind": "import",
+            "protoName": "Ring7"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Ring7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000019,
+            "kind": "import",
+            "protoName": "Ring0"
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": 101,
+        "name": "Ring0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000012,
+            "kind": "import",
+            "protoName": "Ring1"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Ring1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000013,
+            "kind": "import",
+            "protoName": "Ring2"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Ring2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000014,
+            "kind": "import",
+            "protoName": "Ring3"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Ring3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000015,
+            "kind": "import",
+            "protoName": "Ring4"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Ring4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000016,
+            "kind": "import",
+            "protoName": "Ring5"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Ring5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000017,
+            "kind": "import",
+            "protoName": "Ring6"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Ring6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000018,
+            "kind": "import",
+            "protoName": "Ring7"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Ring7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000019,
+            "kind": "import",
+            "protoName": "Ring0"
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT098",
+        "message": "Cyclic imports among: Ring0, Ring1, Ring2, Ring3, Ring4, Ring5, Ring6, Ring7",
+        "reference": 101
+      }
+    ]
+  },
+  {
+    "name": "cycle-nine-hamt-boundary",
+    "inputModules": [
+      {
+        "id": 101,
+        "name": "Ring0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000020,
+            "kind": "import",
+            "protoName": "Ring1"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Ring1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000021,
+            "kind": "import",
+            "protoName": "Ring2"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Ring2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000022,
+            "kind": "import",
+            "protoName": "Ring3"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Ring3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000023,
+            "kind": "import",
+            "protoName": "Ring4"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Ring4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000024,
+            "kind": "import",
+            "protoName": "Ring5"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Ring5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000025,
+            "kind": "import",
+            "protoName": "Ring6"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Ring6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000026,
+            "kind": "import",
+            "protoName": "Ring7"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Ring7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000027,
+            "kind": "import",
+            "protoName": "Ring8"
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Ring8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000028,
+            "kind": "import",
+            "protoName": "Ring0"
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": 101,
+        "name": "Ring0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000020,
+            "kind": "import",
+            "protoName": "Ring1"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Ring1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000021,
+            "kind": "import",
+            "protoName": "Ring2"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Ring2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000022,
+            "kind": "import",
+            "protoName": "Ring3"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Ring3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000023,
+            "kind": "import",
+            "protoName": "Ring4"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Ring4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000024,
+            "kind": "import",
+            "protoName": "Ring5"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Ring5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000025,
+            "kind": "import",
+            "protoName": "Ring6"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Ring6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000026,
+            "kind": "import",
+            "protoName": "Ring7"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Ring7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000027,
+            "kind": "import",
+            "protoName": "Ring8"
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Ring8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000028,
+            "kind": "import",
+            "protoName": "Ring0"
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT098",
+        "message": "Cyclic imports among: Ring0, Ring1, Ring2, Ring3, Ring4, Ring5, Ring6, Ring7, Ring8",
+        "reference": 2
+      }
+    ]
+  },
+  {
+    "name": "cycle-twelve-hamt-order",
+    "inputModules": [
+      {
+        "id": 101,
+        "name": "Z",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000029,
+            "kind": "import",
+            "protoName": "Alpha"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Alpha",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000030,
+            "kind": "import",
+            "protoName": "Omega"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Omega",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000031,
+            "kind": "import",
+            "protoName": "Beta"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Beta",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000032,
+            "kind": "import",
+            "protoName": "Leaf"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Leaf",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000033,
+            "kind": "import",
+            "protoName": "Node"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Node",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000034,
+            "kind": "import",
+            "protoName": "Long"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Long",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000035,
+            "kind": "import",
+            "protoName": "Camel"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Camel",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000036,
+            "kind": "import",
+            "protoName": "Sigma"
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Sigma",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000037,
+            "kind": "import",
+            "protoName": "Delta"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Delta",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000038,
+            "kind": "import",
+            "protoName": "Epsilon"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Epsilon",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000039,
+            "kind": "import",
+            "protoName": "Phi"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "name": "Phi",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000040,
+            "kind": "import",
+            "protoName": "Z"
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": 101,
+        "name": "Z",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000029,
+            "kind": "import",
+            "protoName": "Alpha"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Alpha",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000030,
+            "kind": "import",
+            "protoName": "Omega"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Omega",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000031,
+            "kind": "import",
+            "protoName": "Beta"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Beta",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000032,
+            "kind": "import",
+            "protoName": "Leaf"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Leaf",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000033,
+            "kind": "import",
+            "protoName": "Node"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Node",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000034,
+            "kind": "import",
+            "protoName": "Long"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Long",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000035,
+            "kind": "import",
+            "protoName": "Camel"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Camel",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000036,
+            "kind": "import",
+            "protoName": "Sigma"
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Sigma",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000037,
+            "kind": "import",
+            "protoName": "Delta"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Delta",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000038,
+            "kind": "import",
+            "protoName": "Epsilon"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Epsilon",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000039,
+            "kind": "import",
+            "protoName": "Phi"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "name": "Phi",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000040,
+            "kind": "import",
+            "protoName": "Z"
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT098",
+        "message": "Cyclic imports among: Omega, Node, Sigma, Epsilon, Beta, Phi, Camel, Delta, Z, Long, Alpha, Leaf",
+        "reference": 11
+      }
+    ]
+  },
+  {
+    "name": "cycle-zero-and-large-positive-ids",
+    "inputModules": [
+      {
+        "id": 0,
+        "name": "Ring0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000041,
+            "kind": "import",
+            "protoName": "Ring1"
+          }
+        ]
+      },
+      {
+        "id": 18446744073709551616,
+        "name": "Ring1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000042,
+            "kind": "import",
+            "protoName": "Ring2"
+          }
+        ]
+      },
+      {
+        "id": 100000000000000000000000000000000000001,
+        "name": "Ring2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000043,
+            "kind": "import",
+            "protoName": "Ring3"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Ring3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000044,
+            "kind": "import",
+            "protoName": "Ring4"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Ring4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000045,
+            "kind": "import",
+            "protoName": "Ring5"
+          }
+        ]
+      },
+      {
+        "id": 100000000000000000000000000000000000000,
+        "name": "Ring5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000046,
+            "kind": "import",
+            "protoName": "Ring6"
+          }
+        ]
+      },
+      {
+        "id": 9223372036854775808,
+        "name": "Ring6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000047,
+            "kind": "import",
+            "protoName": "Ring7"
+          }
+        ]
+      },
+      {
+        "id": 31,
+        "name": "Ring7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000048,
+            "kind": "import",
+            "protoName": "Ring8"
+          }
+        ]
+      },
+      {
+        "id": 4294967296,
+        "name": "Ring8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000049,
+            "kind": "import",
+            "protoName": "Ring9"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Ring9",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000050,
+            "kind": "import",
+            "protoName": "Ring10"
+          }
+        ]
+      },
+      {
+        "id": 32,
+        "name": "Ring10",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000051,
+            "kind": "import",
+            "protoName": "Ring11"
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "name": "Ring11",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000052,
+            "kind": "import",
+            "protoName": "Ring0"
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": 0,
+        "name": "Ring0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000041,
+            "kind": "import",
+            "protoName": "Ring1"
+          }
+        ]
+      },
+      {
+        "id": 18446744073709551616,
+        "name": "Ring1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000042,
+            "kind": "import",
+            "protoName": "Ring2"
+          }
+        ]
+      },
+      {
+        "id": 100000000000000000000000000000000000001,
+        "name": "Ring2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000043,
+            "kind": "import",
+            "protoName": "Ring3"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Ring3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000044,
+            "kind": "import",
+            "protoName": "Ring4"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Ring4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000045,
+            "kind": "import",
+            "protoName": "Ring5"
+          }
+        ]
+      },
+      {
+        "id": 100000000000000000000000000000000000000,
+        "name": "Ring5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000046,
+            "kind": "import",
+            "protoName": "Ring6"
+          }
+        ]
+      },
+      {
+        "id": 9223372036854775808,
+        "name": "Ring6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000047,
+            "kind": "import",
+            "protoName": "Ring7"
+          }
+        ]
+      },
+      {
+        "id": 31,
+        "name": "Ring7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000048,
+            "kind": "import",
+            "protoName": "Ring8"
+          }
+        ]
+      },
+      {
+        "id": 4294967296,
+        "name": "Ring8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000049,
+            "kind": "import",
+            "protoName": "Ring9"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Ring9",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000050,
+            "kind": "import",
+            "protoName": "Ring10"
+          }
+        ]
+      },
+      {
+        "id": 32,
+        "name": "Ring10",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000051,
+            "kind": "import",
+            "protoName": "Ring11"
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "name": "Ring11",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000052,
+            "kind": "import",
+            "protoName": "Ring0"
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT098",
+        "message": "Cyclic imports among: Ring0, Ring1, Ring2, Ring3, Ring4, Ring5, Ring6, Ring7, Ring8, Ring9, Ring10, Ring11",
+        "reference": 11
+      }
+    ]
+  },
+  {
+    "name": "blocked-dependents-after-removable-sinks",
+    "inputModules": [
+      {
+        "id": 7,
+        "name": "SafeEmpty",
+        "declarations": []
+      },
+      {
+        "id": 88,
+        "name": "SafePresent",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000053,
+            "kind": "typedef",
+            "name": "TypeSafePresent"
+          }
+        ]
+      },
+      {
+        "id": 101,
+        "name": "Blocked0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000054,
+            "kind": "import",
+            "protoName": "Blocked1"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Blocked1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000055,
+            "kind": "instance",
+            "protoName": "Blocked0",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Blocked2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000056,
+            "kind": "import",
+            "protoName": "Blocked1"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Blocked3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000057,
+            "kind": "instance",
+            "protoName": "Blocked2",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Blocked4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000058,
+            "kind": "import",
+            "protoName": "Blocked3"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Blocked5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000059,
+            "kind": "instance",
+            "protoName": "Blocked4",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Blocked6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000060,
+            "kind": "import",
+            "protoName": "Blocked5"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Blocked7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000061,
+            "kind": "instance",
+            "protoName": "Blocked6",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Blocked8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000062,
+            "kind": "import",
+            "protoName": "Blocked7"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Blocked9",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000063,
+            "kind": "instance",
+            "protoName": "Blocked8",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": 7,
+        "name": "SafeEmpty",
+        "declarations": []
+      },
+      {
+        "id": 88,
+        "name": "SafePresent",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000053,
+            "kind": "typedef",
+            "name": "TypeSafePresent"
+          }
+        ]
+      },
+      {
+        "id": 101,
+        "name": "Blocked0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000054,
+            "kind": "import",
+            "protoName": "Blocked1"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Blocked1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000055,
+            "kind": "instance",
+            "protoName": "Blocked0",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Blocked2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000056,
+            "kind": "import",
+            "protoName": "Blocked1"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Blocked3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000057,
+            "kind": "instance",
+            "protoName": "Blocked2",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Blocked4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000058,
+            "kind": "import",
+            "protoName": "Blocked3"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Blocked5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000059,
+            "kind": "instance",
+            "protoName": "Blocked4",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Blocked6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000060,
+            "kind": "import",
+            "protoName": "Blocked5"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Blocked7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000061,
+            "kind": "instance",
+            "protoName": "Blocked6",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Blocked8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000062,
+            "kind": "import",
+            "protoName": "Blocked7"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Blocked9",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000063,
+            "kind": "instance",
+            "protoName": "Blocked8",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT098",
+        "message": "Cyclic imports among: Blocked0, Blocked1, Blocked2, Blocked3, Blocked4, Blocked5, Blocked6, Blocked7, Blocked8, Blocked9",
+        "reference": 2
+      }
+    ]
+  },
+  {
+    "name": "multiple-residual-components",
+    "inputModules": [
+      {
+        "id": 101,
+        "name": "Component0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000064,
+            "kind": "import",
+            "protoName": "Component1"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Component1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000065,
+            "kind": "import",
+            "protoName": "Component2"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Component2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000066,
+            "kind": "import",
+            "protoName": "Component0"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Component3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000067,
+            "kind": "import",
+            "protoName": "Component4"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Component4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000068,
+            "kind": "import",
+            "protoName": "Component5"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Component5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000069,
+            "kind": "import",
+            "protoName": "Component3"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Component6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000070,
+            "kind": "import",
+            "protoName": "Component6"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Component7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000071,
+            "kind": "import",
+            "protoName": "Component6"
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Component8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000072,
+            "kind": "import",
+            "protoName": "Component7"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Component9",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000073,
+            "kind": "import",
+            "protoName": "Component8"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Component10",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000074,
+            "kind": "import",
+            "protoName": "Component9"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "name": "Component11",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000075,
+            "kind": "import",
+            "protoName": "Component10"
+          }
+        ]
+      },
+      {
+        "id": 1000,
+        "name": "Independent",
+        "declarations": []
+      }
+    ],
+    "modules": [
+      {
+        "id": 101,
+        "name": "Component0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000064,
+            "kind": "import",
+            "protoName": "Component1"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Component1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000065,
+            "kind": "import",
+            "protoName": "Component2"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Component2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000066,
+            "kind": "import",
+            "protoName": "Component0"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Component3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000067,
+            "kind": "import",
+            "protoName": "Component4"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Component4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000068,
+            "kind": "import",
+            "protoName": "Component5"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Component5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000069,
+            "kind": "import",
+            "protoName": "Component3"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Component6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000070,
+            "kind": "import",
+            "protoName": "Component6"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Component7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000071,
+            "kind": "import",
+            "protoName": "Component6"
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Component8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000072,
+            "kind": "import",
+            "protoName": "Component7"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Component9",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000073,
+            "kind": "import",
+            "protoName": "Component8"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Component10",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000074,
+            "kind": "import",
+            "protoName": "Component9"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "name": "Component11",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000075,
+            "kind": "import",
+            "protoName": "Component10"
+          }
+        ]
+      },
+      {
+        "id": 1000,
+        "name": "Independent",
+        "declarations": []
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT098",
+        "message": "Cyclic imports among: Component0, Component1, Component2, Component3, Component4, Component5, Component6, Component7, Component8, Component9, Component10, Component11",
+        "reference": 11
+      }
+    ]
+  },
+  {
+    "name": "layered-imports-and-instances",
+    "inputModules": [
+      {
+        "id": 2,
+        "name": "Top",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000076,
+            "kind": "import",
+            "protoName": "Left"
+          },
+          {
+            "id": 100000000000000000000000000000000000077,
+            "kind": "instance",
+            "protoName": "Right",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Left",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000078,
+            "kind": "import",
+            "protoName": "BottomA"
+          },
+          {
+            "id": 100000000000000000000000000000000000079,
+            "kind": "import",
+            "protoName": "BottomB"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Right",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000080,
+            "kind": "instance",
+            "protoName": "BottomA",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 32,
+        "name": "BottomA",
+        "declarations": []
+      },
+      {
+        "id": 1,
+        "name": "BottomB",
+        "declarations": []
+      },
+      {
+        "id": 0,
+        "name": "Independent2",
+        "declarations": []
+      },
+      {
+        "id": 9007199254740993,
+        "name": "Independent3",
+        "declarations": []
+      },
+      {
+        "id": 18446744073709551616,
+        "name": "Independent4",
+        "declarations": []
+      },
+      {
+        "id": 11,
+        "name": "Independent5",
+        "declarations": []
+      },
+      {
+        "id": 20,
+        "name": "Leaf",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000081,
+            "kind": "import",
+            "protoName": "Right"
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": 0,
+        "name": "Independent2",
+        "declarations": []
+      },
+      {
+        "id": 1,
+        "name": "BottomB",
+        "declarations": []
+      },
+      {
+        "id": 11,
+        "name": "Independent5",
+        "declarations": []
+      },
+      {
+        "id": 18446744073709551616,
+        "name": "Independent4",
+        "declarations": []
+      },
+      {
+        "id": 32,
+        "name": "BottomA",
+        "declarations": []
+      },
+      {
+        "id": 9007199254740993,
+        "name": "Independent3",
+        "declarations": []
+      },
+      {
+        "id": 10,
+        "name": "Left",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000078,
+            "kind": "import",
+            "protoName": "BottomA"
+          },
+          {
+            "id": 100000000000000000000000000000000000079,
+            "kind": "import",
+            "protoName": "BottomB"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Right",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000080,
+            "kind": "instance",
+            "protoName": "BottomA",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Top",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000076,
+            "kind": "import",
+            "protoName": "Left"
+          },
+          {
+            "id": 100000000000000000000000000000000000077,
+            "kind": "instance",
+            "protoName": "Right",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 20,
+        "name": "Leaf",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000081,
+            "kind": "import",
+            "protoName": "Right"
+          }
+        ]
+      }
+    ],
+    "diagnostics": []
+  },
+  {
+    "name": "exports-do-not-create-cycles",
+    "inputModules": [
+      {
+        "id": 101,
+        "name": "Export0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000082,
+            "kind": "export",
+            "protoName": "Export1"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Export1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000083,
+            "kind": "export",
+            "protoName": "Export2"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Export2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000084,
+            "kind": "export",
+            "protoName": "Export3"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Export3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000085,
+            "kind": "export",
+            "protoName": "Export4"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Export4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000086,
+            "kind": "export",
+            "protoName": "Export5"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Export5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000087,
+            "kind": "export",
+            "protoName": "Export6"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Export6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000088,
+            "kind": "export",
+            "protoName": "Export7"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Export7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000089,
+            "kind": "export",
+            "protoName": "Export8"
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Export8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000090,
+            "kind": "export",
+            "protoName": "Export9"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Export9",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000091,
+            "kind": "export",
+            "protoName": "Export10"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Export10",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000092,
+            "kind": "export",
+            "protoName": "Export11"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "name": "Export11",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000093,
+            "kind": "export",
+            "protoName": "Export0"
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": 10,
+        "name": "Export9",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000091,
+            "kind": "export",
+            "protoName": "Export10"
+          }
+        ]
+      },
+      {
+        "id": 101,
+        "name": "Export0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000082,
+            "kind": "export",
+            "protoName": "Export1"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Export10",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000092,
+            "kind": "export",
+            "protoName": "Export11"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "name": "Export11",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000093,
+            "kind": "export",
+            "protoName": "Export0"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Export1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000083,
+            "kind": "export",
+            "protoName": "Export2"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Export2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000084,
+            "kind": "export",
+            "protoName": "Export3"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Export3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000085,
+            "kind": "export",
+            "protoName": "Export4"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Export4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000086,
+            "kind": "export",
+            "protoName": "Export5"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Export5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000087,
+            "kind": "export",
+            "protoName": "Export6"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Export6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000088,
+            "kind": "export",
+            "protoName": "Export7"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Export7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000089,
+            "kind": "export",
+            "protoName": "Export8"
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Export8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000090,
+            "kind": "export",
+            "protoName": "Export9"
+          }
+        ]
+      }
+    ],
+    "diagnostics": []
+  },
+  {
+    "name": "unknown-export-ignored",
+    "inputModules": [
+      {
+        "id": 20,
+        "name": "Exports",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000094,
+            "kind": "export",
+            "protoName": "Missing"
+          }
+        ]
+      },
+      {
+        "id": 101,
+        "name": "Unrelated0",
+        "declarations": []
+      },
+      {
+        "id": 2,
+        "name": "Unrelated1",
+        "declarations": []
+      },
+      {
+        "id": 300,
+        "name": "Unrelated2",
+        "declarations": []
+      },
+      {
+        "id": 4,
+        "name": "Unrelated3",
+        "declarations": []
+      },
+      {
+        "id": 50,
+        "name": "Unrelated4",
+        "declarations": []
+      },
+      {
+        "id": 6,
+        "name": "Unrelated5",
+        "declarations": []
+      },
+      {
+        "id": 70,
+        "name": "Unrelated6",
+        "declarations": []
+      },
+      {
+        "id": 8,
+        "name": "Unrelated7",
+        "declarations": []
+      },
+      {
+        "id": 900,
+        "name": "Unrelated8",
+        "declarations": []
+      },
+      {
+        "id": 10,
+        "name": "Unrelated9",
+        "declarations": []
+      },
+      {
+        "id": 11,
+        "name": "Unrelated10",
+        "declarations": []
+      },
+      {
+        "id": 12,
+        "name": "Unrelated11",
+        "declarations": []
+      }
+    ],
+    "modules": [
+      {
+        "id": 10,
+        "name": "Unrelated9",
+        "declarations": []
+      },
+      {
+        "id": 101,
+        "name": "Unrelated0",
+        "declarations": []
+      },
+      {
+        "id": 11,
+        "name": "Unrelated10",
+        "declarations": []
+      },
+      {
+        "id": 12,
+        "name": "Unrelated11",
+        "declarations": []
+      },
+      {
+        "id": 2,
+        "name": "Unrelated1",
+        "declarations": []
+      },
+      {
+        "id": 20,
+        "name": "Exports",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000094,
+            "kind": "export",
+            "protoName": "Missing"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Unrelated2",
+        "declarations": []
+      },
+      {
+        "id": 4,
+        "name": "Unrelated3",
+        "declarations": []
+      },
+      {
+        "id": 50,
+        "name": "Unrelated4",
+        "declarations": []
+      },
+      {
+        "id": 6,
+        "name": "Unrelated5",
+        "declarations": []
+      },
+      {
+        "id": 70,
+        "name": "Unrelated6",
+        "declarations": []
+      },
+      {
+        "id": 8,
+        "name": "Unrelated7",
+        "declarations": []
+      },
+      {
+        "id": 900,
+        "name": "Unrelated8",
+        "declarations": []
+      }
+    ],
+    "diagnostics": []
+  },
+  {
+    "name": "first-unknown-import-before-later-unknown-instance",
+    "inputModules": [
+      {
+        "id": 20,
+        "name": "First",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000095,
+            "kind": "export",
+            "protoName": "Ignored"
+          },
+          {
+            "id": 100000000000000000000000000000000000096,
+            "kind": "import",
+            "protoName": "MissingFirst"
+          },
+          {
+            "id": 100000000000000000000000000000000000097,
+            "kind": "import",
+            "protoName": "MissingSecond"
+          }
+        ]
+      },
+      {
+        "id": 101,
+        "name": "Unrelated0",
+        "declarations": []
+      },
+      {
+        "id": 2,
+        "name": "Unrelated1",
+        "declarations": []
+      },
+      {
+        "id": 300,
+        "name": "Unrelated2",
+        "declarations": []
+      },
+      {
+        "id": 4,
+        "name": "Unrelated3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000098,
+            "kind": "instance",
+            "protoName": "MissingLater",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Unrelated4",
+        "declarations": []
+      },
+      {
+        "id": 6,
+        "name": "Unrelated5",
+        "declarations": []
+      },
+      {
+        "id": 70,
+        "name": "Unrelated6",
+        "declarations": []
+      },
+      {
+        "id": 8,
+        "name": "Unrelated7",
+        "declarations": []
+      },
+      {
+        "id": 900,
+        "name": "Unrelated8",
+        "declarations": []
+      },
+      {
+        "id": 10,
+        "name": "Unrelated9",
+        "declarations": []
+      },
+      {
+        "id": 11,
+        "name": "Unrelated10",
+        "declarations": []
+      },
+      {
+        "id": 12,
+        "name": "Unrelated11",
+        "declarations": []
+      }
+    ],
+    "modules": [
+      {
+        "id": 20,
+        "name": "First",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000095,
+            "kind": "export",
+            "protoName": "Ignored"
+          },
+          {
+            "id": 100000000000000000000000000000000000096,
+            "kind": "import",
+            "protoName": "MissingFirst"
+          },
+          {
+            "id": 100000000000000000000000000000000000097,
+            "kind": "import",
+            "protoName": "MissingSecond"
+          }
+        ]
+      },
+      {
+        "id": 101,
+        "name": "Unrelated0",
+        "declarations": []
+      },
+      {
+        "id": 2,
+        "name": "Unrelated1",
+        "declarations": []
+      },
+      {
+        "id": 300,
+        "name": "Unrelated2",
+        "declarations": []
+      },
+      {
+        "id": 4,
+        "name": "Unrelated3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000098,
+            "kind": "instance",
+            "protoName": "MissingLater",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Unrelated4",
+        "declarations": []
+      },
+      {
+        "id": 6,
+        "name": "Unrelated5",
+        "declarations": []
+      },
+      {
+        "id": 70,
+        "name": "Unrelated6",
+        "declarations": []
+      },
+      {
+        "id": 8,
+        "name": "Unrelated7",
+        "declarations": []
+      },
+      {
+        "id": 900,
+        "name": "Unrelated8",
+        "declarations": []
+      },
+      {
+        "id": 10,
+        "name": "Unrelated9",
+        "declarations": []
+      },
+      {
+        "id": 11,
+        "name": "Unrelated10",
+        "declarations": []
+      },
+      {
+        "id": 12,
+        "name": "Unrelated11",
+        "declarations": []
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT405",
+        "message": "Module First imports an unknown module MissingFirst",
+        "reference": 100000000000000000000000000000000000096
+      }
+    ]
+  },
+  {
+    "name": "unknown-instance-reference",
+    "inputModules": [
+      {
+        "id": 20,
+        "name": "First",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000099,
+            "kind": "instance",
+            "protoName": "MissingInstance",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 101,
+        "name": "Unrelated0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000100,
+            "kind": "typedef",
+            "name": "TypeUnrelated0"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Unrelated1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000101,
+            "kind": "typedef",
+            "name": "TypeUnrelated1"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Unrelated2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000102,
+            "kind": "typedef",
+            "name": "TypeUnrelated2"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Unrelated3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000103,
+            "kind": "typedef",
+            "name": "TypeUnrelated3"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Unrelated4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000104,
+            "kind": "typedef",
+            "name": "TypeUnrelated4"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Unrelated5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000105,
+            "kind": "typedef",
+            "name": "TypeUnrelated5"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Unrelated6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000106,
+            "kind": "typedef",
+            "name": "TypeUnrelated6"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Unrelated7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000107,
+            "kind": "typedef",
+            "name": "TypeUnrelated7"
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Unrelated8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000108,
+            "kind": "typedef",
+            "name": "TypeUnrelated8"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Unrelated9",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000109,
+            "kind": "typedef",
+            "name": "TypeUnrelated9"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Unrelated10",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000110,
+            "kind": "typedef",
+            "name": "TypeUnrelated10"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "name": "Unrelated11",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000111,
+            "kind": "typedef",
+            "name": "TypeUnrelated11"
+          }
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "id": 20,
+        "name": "First",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000099,
+            "kind": "instance",
+            "protoName": "MissingInstance",
+            "overrides": [],
+            "identityOverride": false
+          }
+        ]
+      },
+      {
+        "id": 101,
+        "name": "Unrelated0",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000100,
+            "kind": "typedef",
+            "name": "TypeUnrelated0"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Unrelated1",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000101,
+            "kind": "typedef",
+            "name": "TypeUnrelated1"
+          }
+        ]
+      },
+      {
+        "id": 300,
+        "name": "Unrelated2",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000102,
+            "kind": "typedef",
+            "name": "TypeUnrelated2"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Unrelated3",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000103,
+            "kind": "typedef",
+            "name": "TypeUnrelated3"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "name": "Unrelated4",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000104,
+            "kind": "typedef",
+            "name": "TypeUnrelated4"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Unrelated5",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000105,
+            "kind": "typedef",
+            "name": "TypeUnrelated5"
+          }
+        ]
+      },
+      {
+        "id": 70,
+        "name": "Unrelated6",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000106,
+            "kind": "typedef",
+            "name": "TypeUnrelated6"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Unrelated7",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000107,
+            "kind": "typedef",
+            "name": "TypeUnrelated7"
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "name": "Unrelated8",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000108,
+            "kind": "typedef",
+            "name": "TypeUnrelated8"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Unrelated9",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000109,
+            "kind": "typedef",
+            "name": "TypeUnrelated9"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Unrelated10",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000110,
+            "kind": "typedef",
+            "name": "TypeUnrelated10"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "name": "Unrelated11",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000111,
+            "kind": "typedef",
+            "name": "TypeUnrelated11"
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT405",
+        "message": "Module First imports an unknown module MissingInstance",
+        "reference": 100000000000000000000000000000000000099
+      }
+    ]
+  },
+  {
+    "name": "duplicate-name-order-and-priority",
+    "inputModules": [
+      {
+        "id": 20,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000112,
+            "kind": "import",
+            "protoName": "Missing"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "B",
+        "declarations": []
+      },
+      {
+        "id": 90,
+        "name": "A",
+        "declarations": []
+      },
+      {
+        "id": 8,
+        "name": "B",
+        "declarations": []
+      },
+      {
+        "id": 21,
+        "name": "A",
+        "declarations": []
+      },
+      {
+        "id": 3,
+        "name": "C",
+        "declarations": []
+      }
+    ],
+    "modules": [
+      {
+        "id": 20,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 100000000000000000000000000000000000112,
+            "kind": "import",
+            "protoName": "Missing"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "B",
+        "declarations": []
+      },
+      {
+        "id": 90,
+        "name": "A",
+        "declarations": []
+      },
+      {
+        "id": 8,
+        "name": "B",
+        "declarations": []
+      },
+      {
+        "id": 21,
+        "name": "A",
+        "declarations": []
+      },
+      {
+        "id": 3,
+        "name": "C",
+        "declarations": []
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT101",
+        "message": "Multiple modules conflict on the same name: A",
+        "reference": 90
+      },
+      {
+        "code": "QNT101",
+        "message": "Multiple modules conflict on the same name: B",
+        "reference": 8
+      },
+      {
+        "code": "QNT101",
+        "message": "Multiple modules conflict on the same name: A",
+        "reference": 21
+      }
+    ]
+  }
+]
