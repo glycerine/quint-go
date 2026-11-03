@@ -123,12 +123,13 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 			// Upstream reduces left to right: the last binding encloses the others.
 			for i, param := range params {
 				index, _ := ParseInteger(fmt.Sprint(i + 1))
+				letID := ids.Next()
 				access := Expr{ID: ids.Next(), Kind: "app", Opcode: "item", Args: []Expr{
 					{ID: ids.Next(), Kind: "name", Name: fresh.Name},
 					{ID: ids.Next(), Kind: "int", Int: index},
 				}}
 				inner := body
-				body = Expr{ID: ids.Next(), Kind: "let", Opdef: &OperatorDef{ID: param.ID, Kind: "def", Name: param.Name, Qualifier: PureVal, Expr: &access}, Body: &inner}
+				body = Expr{ID: letID, Kind: "let", Opdef: &OperatorDef{ID: param.ID, Kind: "def", Name: param.Name, Qualifier: PureVal, Expr: &access}, Body: &inner}
 			}
 			return Expr{ID: ids.Next(), Kind: "lambda", Params: []Parameter{fresh}, Qualifier: Def, Body: &body}, nil
 		}
@@ -211,10 +212,10 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 				return Expr{}, err
 			}
 			body = recoveryExpressionBody(ids, c, body)
-			for _, op := range defs[1:] {
+			destructuredFields(c.OperDef(), defs[0], ids, func(op OperatorDef) {
 				inner := body
 				body = Expr{ID: ids.Next(), Kind: "let", Opdef: &op, Body: &inner}
-			}
+			})
 			return Expr{ID: ids.Next(), Kind: "let", Opdef: &defs[0], Body: &body}, nil
 		}
 

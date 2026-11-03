@@ -1,0 +1,987 @@
+[
+  {
+    "name": "quint/src/builtin.qnt",
+    "sourceSHA256": "e0e901c784f74ddf9fb8a75b600b916edc6043287c5421b867452ffea997dce8",
+    "snapshotSHA256": "7655b71ec54e57abd372bdb2b1e1e9905730d7faa3fad95c28df940d0e40ad62"
+  },
+  {
+    "name": "quint/testFixture/_0001emptyModule.qnt",
+    "sourceSHA256": "7d6aa0830f3f2ec9f5c861db3793d310922a1761ba8f6b2d0a035c70790a356c",
+    "snapshotSHA256": "b2c4ed5d04452ba48f709f2961c52ef194076631d21da631890ea9c6bb7ff0ae"
+  },
+  {
+    "name": "quint/testFixture/_0099unorderedDefs.qnt",
+    "sourceSHA256": "e193a33120411d552428f4645ebc979288938ac3c1e092224e4bb72077ffd18f",
+    "snapshotSHA256": "c2b10919fb4120f5b41bbba4fb57a38d996775451a1d246b3d86f2272d03741a"
+  },
+  {
+    "name": "quint/testFixture/_0100cyclicDefs.qnt",
+    "sourceSHA256": "84e84dd745d565a83ab107a15e29fbb297eed1e861a9a0d2a01788ef818f4d0e",
+    "snapshotSHA256": "4015019634d30d9437d1ead45d64f5ee6f0ac48acf58b02089f47c21ddcb6aaa"
+  },
+  {
+    "name": "quint/testFixture/_0101noRecursion.qnt",
+    "sourceSHA256": "9d57ac1debd8590c0dbc1792ceaf35597073efeef8c705edba8088a0d2498c40",
+    "snapshotSHA256": "c819bae17609db9606a6549cd24e2e21ac532522b54c92e32fef268a23b465a7"
+  },
+  {
+    "name": "quint/testFixture/_1010undefinedName.qnt",
+    "sourceSHA256": "3a90a3caafbcac49f8d0083c265198dc7042ee19e49593bfffaab69fbb978324",
+    "snapshotSHA256": "cb50c5c69aed9b5e93f9142186593ff3c0fef53402de73efc2e94a0db0785a49"
+  },
+  {
+    "name": "quint/testFixture/_1011nameOutOfScope.qnt",
+    "sourceSHA256": "c6a54429d6d1556623640fe9a6a1210fe72626724e5127ffbdb30b62eca850cc",
+    "snapshotSHA256": "15c32d31e4e50b099e4bd8f96dcc79817ea0125e8b1b1f7cabab3aae47fe2e45"
+  },
+  {
+    "name": "quint/testFixture/_1012unknownType.qnt",
+    "sourceSHA256": "05628fb3ffb8b5f5094bda84499bc5f915939616cf08fcb140d4643e424108f4",
+    "snapshotSHA256": "209d18744820a6da37f0757ca96ba849d3d0d829442bbfb47a68009e52d7310e"
+  },
+  {
+    "name": "quint/testFixture/_1013unknownTypeLetIn.qnt",
+    "sourceSHA256": "b5dc1d2cb1a0cd0ee07026d36ed2f9090f696f5f9965dc93b17e2dc8dd2d23e3",
+    "snapshotSHA256": "c5667665173ae2691b4dd4afea97eccc812060ebc8ab8b24a95a2e99e1cc943b"
+  },
+  {
+    "name": "quint/testFixture/_1014conflictingNames.qnt",
+    "sourceSHA256": "5a3feea46ca03491e67952b8d5e1056f5ceddc4b5ccca90c8007385b5935f66b",
+    "snapshotSHA256": "ba834b9377a1b95205d32184bb8cbfff49475e9274ce8b4822d478331656b0b5"
+  },
+  {
+    "name": "quint/testFixture/_1015noToplevelNondet.qnt",
+    "sourceSHA256": "31a3d52b2fb183d868145d9fae821fe146773de95ca5f904e23b7a7ba00280a8",
+    "snapshotSHA256": "b2e60cccf1e14f9eaadad3f567634db03a560688c4dc795db9415ccee7a4eb89"
+  },
+  {
+    "name": "quint/testFixture/_1016nonConstOverride.qnt",
+    "sourceSHA256": "b47e19b2cfc17ed24e92c57a0a82a6d20e43c39a71c3cb9ef8047037d9b707e4",
+    "snapshotSHA256": "f1179e6ad83834ef2c004ea22fbf3c6b809bcc4f5f4352856ec1ed4afd19766e"
+  },
+  {
+    "name": "quint/testFixture/_1017keywordsAsIdentifiers.qnt",
+    "sourceSHA256": "d3bd6d77b117a2290c67ef622fe0b00f1146227f89fc25f3070f10521bbf1b14",
+    "snapshotSHA256": "bd6778d4ee4858244aa96809ab46704b0c195d61a3bdbcce65cd510436521cfa"
+  },
+  {
+    "name": "quint/testFixture/_1020importFrom.qnt",
+    "sourceSHA256": "a0409f3da4a5a27c0f771fbb54fff0426fa2637f6786354e41652cd040820d1a",
+    "snapshotSHA256": "240f8f05d7532a1df5e01bc7d8621d20fc0a9e822163a818cb8235c6988694b9"
+  },
+  {
+    "name": "quint/testFixture/_1021importee1.qnt",
+    "sourceSHA256": "54bd7f0b28eeb0cea4fdf957718ff30def03123c40d8839f9fd6927a72998269",
+    "snapshotSHA256": "6128951c4ab84a09698f1ce54b7824b1be78765e00f1b22fd5606e2fa88e8240"
+  },
+  {
+    "name": "quint/testFixture/_1022importee2.qnt",
+    "sourceSHA256": "887069538a52efadd9889e60340a04a5276b3adb9413e838a241f675a7e1aacf",
+    "snapshotSHA256": "a54e90828b5be2e142489260433ce85410943e14b760f50deee83384beada568"
+  },
+  {
+    "name": "quint/testFixture/_1023importFromUnresolved.qnt",
+    "sourceSHA256": "75e326d03e15e577810d1db3bf708c69b4cb23645a5c41e440f72a4db18ebf6d",
+    "snapshotSHA256": "75aa7d51716f328f48a4f0085a18984deed56ce1b84720b0cacf06b782b511a2"
+  },
+  {
+    "name": "quint/testFixture/_1025importeeWithError.qnt",
+    "sourceSHA256": "25d70272d9501b40e7f05849815e55b2739d449ade3ba2315a1c2bc68ad1b5dd",
+    "snapshotSHA256": "b9cc954bf54bb64e544c2c31fa32dbf56f64a6a2cd37cb03311669e28b5d8b8f"
+  },
+  {
+    "name": "quint/testFixture/_1026importCycleA.qnt",
+    "sourceSHA256": "2a823a2241f2632b8cc91fc91427668bb7a1080ba5d4185a7167750b5724530b",
+    "snapshotSHA256": "b6ab88f1b6054595a0ed3b2d963c5b5df6bb61c7d0f25a467300b66c03a17fd5"
+  },
+  {
+    "name": "quint/testFixture/_1027importCycleB.qnt",
+    "sourceSHA256": "1d2674bd33ab3e6f2cd97642cf6f5c1d4efb5334c2c8ddebe47d706e3854e9a1",
+    "snapshotSHA256": "722dbc548db7d754b9d2543881541cfca6f0b37fa29e10321bb3d7001d290713"
+  },
+  {
+    "name": "quint/testFixture/_1028importCycleC.qnt",
+    "sourceSHA256": "c4b9736c36d8f58f9bb08a72db1e7e4cbcb7edca4ba40048d244ca6e677bc3bf",
+    "snapshotSHA256": "7c72859d1d5ab29d118576f133809d54170f24ee875169a47e83cfa18737714a"
+  },
+  {
+    "name": "quint/testFixture/_1030const.qnt",
+    "sourceSHA256": "e070f8388f6e346737689d2498549343ab8144f99bd0e7c6f41adfe56fe570c8",
+    "snapshotSHA256": "4dd82ea6f71d7196d8d972e9bac8b3ba420ad348760bd8893d9ee4ed9e167554"
+  },
+  {
+    "name": "quint/testFixture/_1031instance.qnt",
+    "sourceSHA256": "769701f25e05db011a5d76deddea510711a1f9cdd93bbb51ac932aaf6046b7fd",
+    "snapshotSHA256": "9c6889cf2f4053b944d4a260e20254c2aa151cff7337ea00e8a99446e8ba9f47"
+  },
+  {
+    "name": "quint/testFixture/_1032docstrings.qnt",
+    "sourceSHA256": "e673e7a6f858c60d13634bb336238caa2bd818dac7a1246fcf6b78278aa17d25",
+    "snapshotSHA256": "5244f16694722b1ffd59c4eec3b6f587464e7df261abfa158e9960e79b7c92a9"
+  },
+  {
+    "name": "quint/testFixture/_1040compileError.qnt",
+    "sourceSHA256": "c0b67b0b265a55dff38ddd5fd951ad17cf9355244843dbb260d769cf2ee55839",
+    "snapshotSHA256": "7d3ab026cc27b7d189df7b4d943de28de8b474299f75d3c033111a811a468cca"
+  },
+  {
+    "name": "quint/testFixture/_1041compileConst.qnt",
+    "sourceSHA256": "230facd9b83550aaea5c6550955c04b36e3acbbc5f8cda26c6849af2b3e8d23b",
+    "snapshotSHA256": "06f7f07fb1203b663e002bcbaed4d945e72915e0dbb348e9536827bb24309d9a"
+  },
+  {
+    "name": "quint/testFixture/_1042qualifiersInRecordsFieldsError.qnt",
+    "sourceSHA256": "5c5b9b3fd9a7b39ba4e341d572f1391cc6833e129f52f9f19f460c738fa70b82",
+    "snapshotSHA256": "3f0359db8f40fc577287aca29f20839b0d2377b100c8fb97df84fe849dee1ee3"
+  },
+  {
+    "name": "quint/testFixture/_1043sumTypeDecl.qnt",
+    "sourceSHA256": "8318bf23be9b9cc6f318d837c9402f69384f7d00ddd75d282f4dfdfaf789b2c5",
+    "snapshotSHA256": "ee6528ff37a44e3506b130c8056fb2bc21a6edab26d648b0de4ed8d38f013379"
+  },
+  {
+    "name": "quint/testFixture/_1044matchExpression.qnt",
+    "sourceSHA256": "ad03c0b85bf9a655b11230a655b07bf6aeb2d8b36bb66d27f510109e7d8902b8",
+    "snapshotSHA256": "594d91338bb6a70ca07d6bfb9d92a44a9abb5ecd9ffcd3744f1225a85d26886e"
+  },
+  {
+    "name": "quint/testFixture/_1045polymorphicTypeDecl.qnt",
+    "sourceSHA256": "66f84925f26a8d3348213caf652e3ea1541ce65daf9e28d12a9dc481e8ac15a8",
+    "snapshotSHA256": "4a360b644de349e9d46ba3198622867f71a8c380764e6e42b61864d62686d46e"
+  },
+  {
+    "name": "quint/testFixture/_1050diffName.qnt",
+    "sourceSHA256": "4cbd3298be296c1feca0d23aa6ddc4cb6018df5f2971b6eef6bae72d02cd7844",
+    "snapshotSHA256": "3d66f2f19dc552dc6ab5525495f9b31393da336f26d9574d82eb87547cf1d0cc"
+  },
+  {
+    "name": "quint/testFixture/_1051manyTests.qnt",
+    "sourceSHA256": "2600401f29615076a13c618ec40a3c17fa1c7a27a2d5c95db125d14a3b9489a1",
+    "snapshotSHA256": "ed4198ea3b207ee3f9a4354cd770c0cc12059cab9dae1d95103d15bd5c18c768"
+  },
+  {
+    "name": "quint/testFixture/_1052one.qnt",
+    "sourceSHA256": "fcdb597d91f7eb4c1759bf3d9c53a88d61698290dd24759b883cf38da4ba25aa",
+    "snapshotSHA256": "38a28fd81efa27c345e56bdce7c27469778d1424cf93492aaf5b959286a77d60"
+  },
+  {
+    "name": "quint/testFixture/_1053two.qnt",
+    "sourceSHA256": "f972c6be451a8b361d8d6725d67cab023d7ef6f47750cd44f6f87424307f93f4",
+    "snapshotSHA256": "26b075e74b6a8c71191373c1e19c2a456ca4cab4e4509124fca9f6dfbe211eea"
+  },
+  {
+    "name": "quint/testFixture/_1054sumTypesInItf.qnt",
+    "sourceSHA256": "061a7616be05c98ba0fdf23fa37413a1b243873b4674e57737329b8229df4f6c",
+    "snapshotSHA256": "c535caeed2ced6e026c1373eed51e8fb88441e42dbcb1d3b4ac937b97eb360cf"
+  },
+  {
+    "name": "quint/testFixture/_1060case.qnt",
+    "sourceSHA256": "e9eab409abff130b411a95257e0b361a206b0fbb470b51d4c1b323b28db15dce",
+    "snapshotSHA256": "8f0f12d3fba7582c287239d6b079943b124ba9da9679d148fee12de7222d9b65"
+  },
+  {
+    "name": "quint/testFixture/_1070mapSyntax.qnt",
+    "sourceSHA256": "1de6cbe414d356624f54588521959ff54f8f6860dbb7b888d9acea1ec07af19e",
+    "snapshotSHA256": "b5aa0fa6418c8fdd6069d9eda062252c80b7c11ed670009301df954a632c52c1"
+  },
+  {
+    "name": "quint/testFixture/_1080tupleDestructuring.qnt",
+    "sourceSHA256": "481620810c6dade32b0a820d38562c52d0bf73b455d081f414ead63b237c6a25",
+    "snapshotSHA256": "5d0ebc14aa7385dceb7d2c6d52229695cab82d1803455c48f52cc30c843f4813"
+  },
+  {
+    "name": "quint/testFixture/_1090recordDestructuring.qnt",
+    "sourceSHA256": "3ed26fd1b3c80aa5d5df398b263eb745d6e1428cc11dd5bcace747102f6d7527",
+    "snapshotSHA256": "3cca3e85233214c85f3e796e07c15cc6607c1822e838aac81a62743a35e5250a"
+  },
+  {
+    "name": "quint/testFixture/apalache/actionProperties.qnt",
+    "sourceSHA256": "08bea27f40fa80504dfea173f5cad19f9d7397077ce4a3131e1d8dc10fd1140d",
+    "snapshotSHA256": "c2f0bcfeb24e39a5bc4fa163829524c35f941cfe6a35e573599cd7968651dc1f"
+  },
+  {
+    "name": "quint/testFixture/apalache/deadlock.qnt",
+    "sourceSHA256": "b61c6f21eca68b774e6a062212bf6f83e4674408e7b2c7baf31a02ef2f2b9f10",
+    "snapshotSHA256": "6c38e0dcc6ebbf6a0e1875e0d19cd96eb7f1a6f1ab93afb6455f36dd018eb7d8"
+  },
+  {
+    "name": "quint/testFixture/apalache/genericRowParam.qnt",
+    "sourceSHA256": "fbbc9032352160c3c3bc4a9d8a5fb0be7b9a8233fd6fb44f3b3e669b6f0b36a2",
+    "snapshotSHA256": "83ea92be3be63bd3b18981d35c5bc2adeaac83e1574d873e8c832337b72f1ff3"
+  },
+  {
+    "name": "quint/testFixture/apalache/inferredStateVar.qnt",
+    "sourceSHA256": "c3f47845ebfec5afeb9d3f4b17c1682b1c62b6064bce492c9e8b81aa2150a820",
+    "snapshotSHA256": "78a86791616e932dfcc9ebf6cc70580b535a49f6a8bdd74c04a8a75d0e3b62d6"
+  },
+  {
+    "name": "quint/testFixture/apalache/mapStateVar.qnt",
+    "sourceSHA256": "eae45d342cdd8797bc08ebbc21a48bc671cf8098a6184d8abc59bc2b4b687bd0",
+    "snapshotSHA256": "e74c38eb00033dc94338e368ca6234052f9f1397542b5ff4389cf7b2a526c8a5"
+  },
+  {
+    "name": "quint/testFixture/apalache/polyStateVar.qnt",
+    "sourceSHA256": "1f825478a9565c4253f49da5e07b6ac784b4fe1d432b1c58eaaa5fa092395218",
+    "snapshotSHA256": "66afb2859e8826e2180c5b44178bd69ba3d1a791ce788fb91bc07dd466fd3e63"
+  },
+  {
+    "name": "quint/testFixture/apalache/temporalTest.qnt",
+    "sourceSHA256": "3319e79caae81860bf1fa1af6db2fc7bd22508f38b06aa5929875160c6bcb2b0",
+    "snapshotSHA256": "8aec6273156cf8148d2869be4a92c5eeb1d33c29e4eb2d214609e6ee63ad6df3"
+  },
+  {
+    "name": "quint/testFixture/apalache/tlcConfigError.qnt",
+    "sourceSHA256": "2c0c613598720014475536ee177dda1ff47490fdc7bab8aa8d90861634eceea4",
+    "snapshotSHA256": "63eef267f6a225babd1516d262fa0588085646e12f6b1963da07ab8142b68091"
+  },
+  {
+    "name": "quint/testFixture/apalache/tlcCounter.qnt",
+    "sourceSHA256": "a2fbc1a23d720ddb8b951d559765fcc116f8b360e13a751438a024967c7e4059",
+    "snapshotSHA256": "390a876c9df620f550fa2bc531e6bf8fac51073a0064cc4935e5d22c036af92a"
+  },
+  {
+    "name": "quint/testFixture/apalache/tlcLeadsTo.qnt",
+    "sourceSHA256": "3360e3762d86cb7deba9c25a58e3996d18ded8e7d20a3e97e9ba7cb726fb0a4c",
+    "snapshotSHA256": "aba46f6cbeeab97dfa288a286d4767e1e4f661dd623db56ccc4b9c162e9838f9"
+  },
+  {
+    "name": "quint/testFixture/apalache/violateOnFive.qnt",
+    "sourceSHA256": "dd0109dc35a192e58147a399bb76ca2fb3c452ee3e4fdf645b1ffbfff3fac8f9",
+    "snapshotSHA256": "9cdf8cfbed4a7134763ef17db25da06ff66314ebba887cb53957864bd5c9c112"
+  },
+  {
+    "name": "quint/testFixture/ApalacheCompilation.qnt",
+    "sourceSHA256": "281e1f3f2cec0894ee84a28ee2f407f34e783e438951777c4cf178b85f8f67d7",
+    "snapshotSHA256": "71f335510913e7d67fbda62ecaa8966abaa30ed4ec53ad6be0398bbdf34e4d67"
+  },
+  {
+    "name": "quint/testFixture/ApalacheCompilationError.qnt",
+    "sourceSHA256": "07e60742b66495afca9d6bd7eabf3c3d53f606b13cecd6d30c59e0793e8536d9",
+    "snapshotSHA256": "d0efdc98df50b24335c30f9519a3e5fd41d6509a85e27340eb7a9dd1dee9151b"
+  },
+  {
+    "name": "quint/testFixture/bug1736setOfMaps.qnt",
+    "sourceSHA256": "efc28413bc64a44b0bd814976c67a781d1c97c2e626b6d629e29a4fe492c2d99",
+    "snapshotSHA256": "ab3558f39d4a15cd21ee282b613288828aaef7e5ade8d7f8563297f7f9244a83"
+  },
+  {
+    "name": "quint/testFixture/bug1981fieldNameCollision.qnt",
+    "sourceSHA256": "1a11d9373bd328fd4b20886c6b4ce4b9725f558796577f30eeb1a1e72556391a",
+    "snapshotSHA256": "05f8299df3305b0af001bc76088404b74c33c37befe04a1da095da65f4bf4bb9"
+  },
+  {
+    "name": "quint/testFixture/bug2027instanceAssignRhs.qnt",
+    "sourceSHA256": "ef70d7815c3a8659766559b8d0520572662e223a3f9c1b63297ab934c1d0b9df",
+    "snapshotSHA256": "993b950ef90de0ac6f49e7491cbb60caaa1a9ca31b9ff51aee74bdf99d15f490"
+  },
+  {
+    "name": "quint/testFixture/bug843pureValCache.qnt",
+    "sourceSHA256": "d51284b9a4405b1d90ab7944f15a72be4328840dae0134e1160b476115fb3444",
+    "snapshotSHA256": "def50e34a7c5232afeab960fbc02113ecd5cc7b05aa7e7bcd66089e8483dd15d"
+  },
+  {
+    "name": "quint/testFixture/expectNoStateDuplication.qnt",
+    "sourceSHA256": "7375d7ad394ef2b06f2394b3a5a7926de7aeb7e995290f2e7e41e836309f05cf",
+    "snapshotSHA256": "7748bb48a399392fc58b3b57f1035549db260c1bee057461b56b8aa9af930563"
+  },
+  {
+    "name": "quint/testFixture/modulesAndJunk.qnt",
+    "sourceSHA256": "ca9688597cc99840d4b1e06d49bdb717314214930938b8ea5ea514f6cdbc897b",
+    "snapshotSHA256": "1b9c723f92cfa635cd4c88cb951371db0e2214b2ff270079ec43f4a5d8be4140"
+  },
+  {
+    "name": "quint/testFixture/nestedParameterizedCallsWithLet.qnt",
+    "sourceSHA256": "a54decdbc4c6be282bd21548b130c6e7ca528c71706da9b6faf2623fbfd3efc2",
+    "snapshotSHA256": "cc3286043ad53a7480f6184c1188af987c1e36bb221b6ca993d50b7865281fb3"
+  },
+  {
+    "name": "quint/testFixture/noMatchingTests.qnt",
+    "sourceSHA256": "2feed7e8d5a6122815f26b634322e40e4e993edc8b07e7c4f46659794c182182",
+    "snapshotSHA256": "90cbb8c92dc405397add8f71dca947ef40b104702530815e5a749ad847f84651"
+  },
+  {
+    "name": "quint/testFixture/replRelativeImport.qnt",
+    "sourceSHA256": "93328bc2db0816a85de5212b8900fa1c4b2737ddb8815685639475af2325f1c8",
+    "snapshotSHA256": "637668d38550bc1a9068ee635df7ef493b83d730a8478275e0d3752cc81d59fa"
+  },
+  {
+    "name": "quint/testFixture/runtimeErrorStackTrace.qnt",
+    "sourceSHA256": "25774ada47c9cdb6885a0fc3c938647844cfc68d209c7064c7e4d0f2c37f2876",
+    "snapshotSHA256": "cf5d5fbba71b566902cb147f36f7c3ae27b73e98a91c3ef6968b37a223c4d77c"
+  },
+  {
+    "name": "quint/testFixture/simulator/debugCounter.qnt",
+    "sourceSHA256": "938bc2d6e790e15716c6f6cef6e6615269e5afe7a02257a42ed64c680178e5c7",
+    "snapshotSHA256": "0c69e5fab5a156ca63735a344304e1e3b6b62dc327c0c535d7a70f69ada69b7a"
+  },
+  {
+    "name": "quint/testFixture/simulator/failingTestCounters.qnt",
+    "sourceSHA256": "8d20a64a6d8899a46a45384adeb3448e230705261830d5ad3d5c10f4d7b34a37",
+    "snapshotSHA256": "41c83ede171908d076441835ddc037cff5e7db7f877b0b1aaa3dbda851c5f1e7"
+  },
+  {
+    "name": "quint/testFixture/simulator/flushingDiagnostics.qnt",
+    "sourceSHA256": "98932a7d1f877b0aa13f85409cf5c7a12d5d12af45ce6e896a955ea8beeb20bd",
+    "snapshotSHA256": "c33e50a314cd89addb48493c45d7eb3d97209a2ea0017681599b85bd5cfb6ce0"
+  },
+  {
+    "name": "quint/testFixture/simulator/gettingStarted.qnt",
+    "sourceSHA256": "2f185314aeb637b8c4039f20ddc1397d284223e8e7d1c86a7524935a4b9ccb15",
+    "snapshotSHA256": "295d5c836a1e6d5600e1d3b697801e9f6d13683544befb9cee72c16222e4c629"
+  },
+  {
+    "name": "quint/testFixture/simulator/lastActionInRun.qnt",
+    "sourceSHA256": "c351a276eb44bbf641dd7918f4c21aa4ac6daa551a0bbb941a10a5929386fd65",
+    "snapshotSHA256": "68a2c499d32acf3000d3287b5a4f4348e995f15b5122f2857bc2633240b999a9"
+  },
+  {
+    "name": "quint/testFixture/simulator/runtimeError.qnt",
+    "sourceSHA256": "4b4de26075005e1ce9d06c624d365870988d86c3c7d531146e9f78f5cff387c9",
+    "snapshotSHA256": "8ff591f8cbe1cc80040dc2361902b8697fe9eadf9c4989b4bb73ee2c12fa758e"
+  },
+  {
+    "name": "quint/testFixture/simulator/stopCounter.qnt",
+    "sourceSHA256": "009f4a42faec30955108bea38c38ba24ca201e790ec1a85e21ea682d6bbfd1bf",
+    "snapshotSHA256": "d596b1cc3746aa60dd2ce4aeb601253160d507b1cc4c03c8cbc13d94b8fd0837"
+  },
+  {
+    "name": "quint/testFixture/SuperSpec.qnt",
+    "sourceSHA256": "77f2411f4a7e430e79557ec4cefe67c1b0825444b5d030a96a575cd8fec6c8e2",
+    "snapshotSHA256": "fc8bc35cc90b655d5060c8bb70b5a3cfbedbe3309fafec9509c8aa4f5d07dab4"
+  },
+  {
+    "name": "quint/testFixture/thenErrorMessages.qnt",
+    "sourceSHA256": "cf8ea8af860a9b6544686505d135f17f86c001ed2fdb12857e64518d2fdf5048",
+    "snapshotSHA256": "4ebd7098a81a90ee3decdf2c8af7f30a140d4a0d2a5d87c2a4112277a9c290f0"
+  },
+  {
+    "name": "quint/testFixture/TrivialTypeError.qnt",
+    "sourceSHA256": "3a60392a001a2e0d6ce3cdcd828dbc8e1084537ab7aa737cd65280caa1994636",
+    "snapshotSHA256": "afd8760283b4a0d4141d7c56f9c8a99083d7faf38d46241b882c129bd412e915"
+  },
+  {
+    "name": "quint/testFixture/typechecking/FileWithError.qnt",
+    "sourceSHA256": "5bea8b8275ee0a77aafa72fe95a791e447a9868aec411c9d493737a7f7a2598f",
+    "snapshotSHA256": "0fa1163e92f4c83a43581c258d842f6175b951577aa6dd3abe5e3f81da4d2ebe"
+  },
+  {
+    "name": "quint/testFixture/typechecking/ImportFileWithError.qnt",
+    "sourceSHA256": "fc058b7d5fd56e27f9ff472454844cc4cbdbf687c5441866ad7c00c229259544",
+    "snapshotSHA256": "47c0ed53674efe51c7bbf15ecfe18cdbf5e54c8616104c654d05a3a7c0fbe619"
+  },
+  {
+    "name": "quint/testFixture/typechecking/OverrideErrors.qnt",
+    "sourceSHA256": "ddf23ec5299ff55563c5dd12305a2e46a93db4f90c27eb25d4b4c15589c49b08",
+    "snapshotSHA256": "a9a0f69101f59cf924cf833c9f7e97d4d8de7aad6f71b2126f0811aa2367cd61"
+  },
+  {
+    "name": "examples/classic/distributed/Bakery/bakery.qnt",
+    "sourceSHA256": "89781846291ff54718c4bebdd3423d043085b1261f84b7e7ac0dd23e68f348b4",
+    "snapshotSHA256": "e2377069148ef4e5fa78e24cca237f175e1840964bb2d6bac3ef8c75ab7ace1e"
+  },
+  {
+    "name": "examples/classic/distributed/ClockSync/clockSync6.qnt",
+    "sourceSHA256": "dd274b79b0ee80c49881f1fffb2451218e90366ba1038368a75b4bda617d00fb",
+    "snapshotSHA256": "ed1670289ab937bcbe7114e5b399c67606d20312c6aa293fba2707df2d1c0070"
+  },
+  {
+    "name": "examples/classic/distributed/ConsensusAlgorithm/ConsensusAlg.qnt",
+    "sourceSHA256": "9cf8ea3ca79388e8b67819ba2edea3169d4975a3e8d70c9ab4aaf11ffaf45fcd",
+    "snapshotSHA256": "8a428b4d2930f856a49365aaf15445c3693b179e61da7d4664aaea6ef442ac92"
+  },
+  {
+    "name": "examples/classic/distributed/ConsensusAlgorithm/KSetAgreementConsensus.qnt",
+    "sourceSHA256": "43fd7e7c1960f1c5ddbb11fa21c477db16f8fe415804f955e0ee15695805f29f",
+    "snapshotSHA256": "02322bfe74b82e30c44e90a338bef720821d079be10b2d1ae76ba254d4b16be3"
+  },
+  {
+    "name": "examples/classic/distributed/DiningPhilosophers/DiningPhilosophers5.qnt",
+    "sourceSHA256": "0bc3c88a9b6bd905492ae02fe86caca478676f76200e60ac96e144a471141617",
+    "snapshotSHA256": "d7864bbb71f1ec4e73a0be154888f2910192894d1c0feaeb83d24d74d1b298da"
+  },
+  {
+    "name": "examples/classic/distributed/ewd426/ewd426_3.qnt",
+    "sourceSHA256": "c2f830e449999a0ce41cd5d6f3c346f431dae9c6ff9724a48c131dacf779d03d",
+    "snapshotSHA256": "388180de0ca5d080628738ecc6c5cd9ceeb38dee046e4ed5fd137e858b495493"
+  },
+  {
+    "name": "examples/classic/distributed/ewd426/ewd426_4.qnt",
+    "sourceSHA256": "0b6c62d6464b9c6f0840244adb52568f46d632620f3db9ca99ad4ff688278a62",
+    "snapshotSHA256": "43e67e4f3a18a94f0d7775a2dfe82918905f9fd7aa037f7d26cebf16d78dcad4"
+  },
+  {
+    "name": "examples/classic/distributed/ewd426/ewd426.qnt",
+    "sourceSHA256": "6d1b8bb96f999da9bf8e445d793ef318bf658554f34603a499cf92b74ec4464f",
+    "snapshotSHA256": "cee1c594460dc6156b84d001e0e4641f1dbe9f2939782d834fecee0b94a20d4d"
+  },
+  {
+    "name": "examples/classic/distributed/ewd840/ewd840.qnt",
+    "sourceSHA256": "f7ffae27fc04c74c837600552f918e5314e0ecca6d480aa7dbccd49bb19ec71e",
+    "snapshotSHA256": "8b2f1d1ec955d7accd343c6336a77c89233fda8c70f2826ee9c827b2782b7568"
+  },
+  {
+    "name": "examples/classic/distributed/LamportMutex/LamportMutex.qnt",
+    "sourceSHA256": "53dafaba1a9711a757111a0d1397a7e01ca2940a354e48684cef6ec2478b57c0",
+    "snapshotSHA256": "ea96dc68a64b873fdb939e0d4502d12a221060ecc18fa728aa19aac45d917009"
+  },
+  {
+    "name": "examples/classic/distributed/Paxos/Paxos.qnt",
+    "sourceSHA256": "cffaa3557eb407149621011ee84a77f79c46b3adaa7d5e19c1205f4e476c85d3",
+    "snapshotSHA256": "992d7ea9a6716c1724cfcd42cba6eab952df1c1c8f9bc4212a833f7c19f70c7b"
+  },
+  {
+    "name": "examples/classic/distributed/Paxos/Voting.qnt",
+    "sourceSHA256": "b870adcb85b43651269d7ec33f4a63b197770ef4955ec063c733e3e2c58e8ba7",
+    "snapshotSHA256": "09bbc41de13c5d2055fee58484e115c2d98a31e58617307d3cc7c2a976ea8636"
+  },
+  {
+    "name": "examples/classic/distributed/ReadersWriters/ReadersWriters.qnt",
+    "sourceSHA256": "edc9ce10db3ede98a7025563b312d85f8f78b780411a6ec4e593e340163b545f",
+    "snapshotSHA256": "4d5fce17171710e014d3c0507d0cda727954560267ae29f398558810c5f8143d"
+  },
+  {
+    "name": "examples/classic/distributed/ReliableBroadcast/reliablebc.qnt",
+    "sourceSHA256": "4d155527d6e520e41f2ecdb7c2476ad11f76c97cd2a928c7874d17ab0befcc38",
+    "snapshotSHA256": "253daadc7a8209246ad33f0873d6f7efc215e84410e0568ab81b15d5427e09f2"
+  },
+  {
+    "name": "examples/classic/distributed/TeachingConcurrency/mutex.qnt",
+    "sourceSHA256": "7a244f70c4146f801875ce4776e4df311b56b9160792af2d5cb01c0a93baa45f",
+    "snapshotSHA256": "6088e25b473fbedd8f942328ec6eb2a420e8e0f11abccdc0ccfba4fa0dc89e93"
+  },
+  {
+    "name": "examples/classic/distributed/TeachingConcurrency/teaching.qnt",
+    "sourceSHA256": "146d2c8269f70b4373a142c9afae6c216da47bda15fe4812bab5658bb205826a",
+    "snapshotSHA256": "e61dc0211de1aebbc862411af21a115f942ed55d23f2ad3b5ddceb000e2ec7fd"
+  },
+  {
+    "name": "examples/classic/distributed/TwoLayeredCache/two_layered_cache.qnt",
+    "sourceSHA256": "674ba6f9916cedd40b09131732e2dcdc15ae312265bc1fc3e27bab33bb73fd34",
+    "snapshotSHA256": "804ae710a60a217aa181f45671ce4f1ac1ace5fed20c90d7a27db17d10e9923c"
+  },
+  {
+    "name": "examples/classic/distributed/TwoPhaseCommit/two_phase_commit_modules.qnt",
+    "sourceSHA256": "b4b95a10d8b42aeb0f430d13ca71ae85ffb4616476ac129a912f13e5ee70b699",
+    "snapshotSHA256": "8bf79024d93d2970c8e25614873add71d29da9e713a160a002fcda90ec5484b4"
+  },
+  {
+    "name": "examples/classic/distributed/TwoPhaseCommit/two_phase_commit.qnt",
+    "sourceSHA256": "0138b9a0b5d0f9e7d70f03ebcb0ac53cd743a4e66cd432be3d308f141907adb0",
+    "snapshotSHA256": "bc2ebd05afe1606dd2e2896d0d3cae49c5eea0332ac2a50c3ac1240b41b68150"
+  },
+  {
+    "name": "examples/classic/sequential/BinSearch/BinSearch.qnt",
+    "sourceSHA256": "dc07c7efc161b784dee83f63efb722dc12a5d6930fcba9f6947faec82f287802",
+    "snapshotSHA256": "23efd761c053865a68fbd399635bab279bc96189fd8e305fdbce436e48f364d6"
+  },
+  {
+    "name": "examples/cosmos/bank/bank.qnt",
+    "sourceSHA256": "7a07b5982baf3fa71a68493aa5dd7f5f2cb8ed832dad8d0d6929ec4f228b8479",
+    "snapshotSHA256": "96734bc19c8539e787e410797100b8cca0adbec50213435253ff7c8ccdf71293"
+  },
+  {
+    "name": "examples/cosmos/bank/bankTest.qnt",
+    "sourceSHA256": "79653f7f908e3a1cb4dca5ab7b77910a6c77a0a6c6c9b28313fe9f3b1cbb20ac",
+    "snapshotSHA256": "ccba347893dc67a4df9c6ba9b0ef71c4902be3aeeb494b7dcbb54f7f0a724cf4"
+  },
+  {
+    "name": "examples/cosmos/ics20/bank.qnt",
+    "sourceSHA256": "ab18d63245a655d8f4e7a1c4944269a585fc15b2a0f08535f94c80310f34e2be",
+    "snapshotSHA256": "31c99e4b1d8d056013f21681ff3e56acd801b16b4caf0fdebf6f33f54619d00c"
+  },
+  {
+    "name": "examples/cosmos/ics20/base.qnt",
+    "sourceSHA256": "2d7ff4cc64f79873401e06ecb8c6f2307d18571540c637b39f9aff1019ea1a51",
+    "snapshotSHA256": "fa6e90914f38788e32850be2cca6518e8af4b81747151d7b985872fbfed780bc"
+  },
+  {
+    "name": "examples/cosmos/ics20/denomTrace.qnt",
+    "sourceSHA256": "c6e1c0a0bbe5c9ed002e45724799a20b5700a561d877ffa86f1032d52dea7f61",
+    "snapshotSHA256": "eaa1b308a0248ab7f8be3a52044ae02d6a644188a858b1e591ec7926c0e4b000"
+  },
+  {
+    "name": "examples/cosmos/ics20/ics20.qnt",
+    "sourceSHA256": "ac83f8d23d7662f5423e3446e6605ecd3b2f4af4add0d9ac3ba37dd4c1b88f51",
+    "snapshotSHA256": "660bc08154649910bb11334d73d90d9e0fa95ec23afe16c8b8ec8e6f8aa83ecb"
+  },
+  {
+    "name": "examples/cosmos/ics23/ics23.qnt",
+    "sourceSHA256": "6b508d3bf67a71391bdd4fe08e3f7511dbc2e28819ff29256b719274eb22d340",
+    "snapshotSHA256": "f1cc755ec1fcefc9a6695cc5efeaada575d10619665cb026d75eebcc5fe2cc51"
+  },
+  {
+    "name": "examples/cosmos/lightclient/Blockchain.qnt",
+    "sourceSHA256": "203ff56c6d7e8a1de7c02cb9f7bd4d8a512ce238767b712ede45f27e0cbb63f9",
+    "snapshotSHA256": "639aabddf44a6bf9137806083196b35bd2f832fd2801725560c50f1437938c32"
+  },
+  {
+    "name": "examples/cosmos/lightclient/LCVerificationApi.qnt",
+    "sourceSHA256": "e066accff45246a83ed7463bb5d7daf6479957ca0831dc06fd4d8287694deb1f",
+    "snapshotSHA256": "320a0b8b91ca5262d934783b70acde78770ec53c6c3eb1b1fb2d7c2d02c31a70"
+  },
+  {
+    "name": "examples/cosmos/lightclient/Lightclient.qnt",
+    "sourceSHA256": "0011ed98b8d8e7cbd15c259d85ce010651a2a4291e3f387e2c255a2d58589a2a",
+    "snapshotSHA256": "8d9f2e6bcce6e05943962de9b1b6a3e713817173d65784feab58f74de268b5a5"
+  },
+  {
+    "name": "examples/cosmos/lightclient/typedefs.qnt",
+    "sourceSHA256": "5d2178e33bf76445c0effc13326812b283ab9b18750f85f47ce992cc0299dab3",
+    "snapshotSHA256": "a8aff2646a91b1f252dee4e73cd9528bc0ba619255991040c9658d23683dfed4"
+  },
+  {
+    "name": "examples/cosmos/tendermint/Tendermint.qnt",
+    "sourceSHA256": "6ab6e89aa749376809b30f6e9dfb9cf1e0ac6972cf20ead17349d055b3ae1aa2",
+    "snapshotSHA256": "2f22314aa274c79508b888d121df2e071d8ec9af1295ecb1e2b88adc8edfdce6"
+  },
+  {
+    "name": "examples/cosmos/tendermint/TendermintModels.qnt",
+    "sourceSHA256": "d618472f7e39b1e2e273e22febb1a28d71861f9416c272cd754a6b951067487d",
+    "snapshotSHA256": "10506f40e074d4b14558ba34e55fe1279a4ef1bfdb2782795657c1f660e69f10"
+  },
+  {
+    "name": "examples/cosmos/tendermint/TendermintTest.qnt",
+    "sourceSHA256": "87584f615ec4cd169f58c3e01631bbac4a2059d7e0aa16e12725eba181bc5c18",
+    "snapshotSHA256": "2fc9cdde45cd4f25e2e90fa414286dda0453a2aa04f4e19efaa8e1098af022e7"
+  },
+  {
+    "name": "examples/cosmwasm/zero-to-hero/vote.qnt",
+    "sourceSHA256": "cef68fc8d16aafa2b03072c2d67b47e47ffc41d633ddd0a14292b9ff4092e195",
+    "snapshotSHA256": "c54f9f5fc66b86e1570ce94dc0ec334aa97907ba682aebaa85e60f64baabcec6"
+  },
+  {
+    "name": "examples/cryptography/hashes/hashes.qnt",
+    "sourceSHA256": "27c7567d86fba5282f3455808b79bfcd098509bc7a251ceb003ef789ba2b2c77",
+    "snapshotSHA256": "e7f72f8ea5ce2d7071dc2f181e52f1e7ec04ad51f0c0535c4d330092247b0d6f"
+  },
+  {
+    "name": "examples/cryptography/hashes/hashesTest.qnt",
+    "sourceSHA256": "ed8d797405898e6e4b9512da54c3deec3f1dd7545812dbef104272e61d4a6ed6",
+    "snapshotSHA256": "8fd36dbdeb65408f86a16212581fdcff2c2dd3fa8a3a9821ed6e9615d27cd70c"
+  },
+  {
+    "name": "examples/cryptography/utxo/utxo.qnt",
+    "sourceSHA256": "93f73819bbdbf25f8db64a95603084a30fd077bc89800f8ff29df607050abe0d",
+    "snapshotSHA256": "19fece68edd8958c174ae26799667ba4bb9fffb88eb9b2587d43061f5af965c2"
+  },
+  {
+    "name": "examples/games/mafia_werewolf/play_mafia.qnt",
+    "sourceSHA256": "f3cbda77c7e1b498b89474ac3f2422968051fb643901af5c19950a41b6faba6b",
+    "snapshotSHA256": "815825c477fd8892c4ef2fa355f4165627593944cbe00b9d7f6690531e16027b"
+  },
+  {
+    "name": "examples/games/rock_paper_scissors/play_rock_paper_scissors.qnt",
+    "sourceSHA256": "179361f1543892a333dccab3c7e4d571db8ec99d54b0e8521be9451e3f91836d",
+    "snapshotSHA256": "0f16c27890a54824a3c6ebd902dbbf44f1dd2261a140795080212906477b98e9"
+  },
+  {
+    "name": "examples/games/secret-santa/secret_santa.qnt",
+    "sourceSHA256": "ff6938b7562752df5e8d35e551830b1b143249821ed516cf2886b72394934cb2",
+    "snapshotSHA256": "4f353efb4ec424e6c02b6b93dabdd2a2519ffe7dca2dc74ba9501aa5d935b0db"
+  },
+  {
+    "name": "examples/games/tictactoe/tictactoe.qnt",
+    "sourceSHA256": "0b369fa2093364df2be8000dc104fbd36206ada3e0ccc8d763b286b36e01a6c5",
+    "snapshotSHA256": "ac6a1aa8c9a63945a65a5f5e9061d897c2f63fe4053d484ca3a137a193b24a49"
+  },
+  {
+    "name": "examples/language-features/booleans.qnt",
+    "sourceSHA256": "ccde814cd9d7eab46e2eb2fbd311c81a8f6c2a8beb81c06b53bf66aebfeca18a",
+    "snapshotSHA256": "339389a0bd428bb58958c00cec5fc299e4f5e67fc6173083d35a98fba9287432"
+  },
+  {
+    "name": "examples/language-features/counters.qnt",
+    "sourceSHA256": "73fa5e2b001c6b77c069b728753c12ccbb34375330d705aff80b530bc5b56253",
+    "snapshotSHA256": "c96f44183161e82a25f379e61cb242d91ae2f6243d82648fe0e97258d0160faf"
+  },
+  {
+    "name": "examples/language-features/generate.qnt",
+    "sourceSHA256": "0f5806dcfe95d2689029cf17940862d72dc2810171b9bccd16cf2202acd5041d",
+    "snapshotSHA256": "de06dc19a0134ce48972f4d260f7d710d7266a26fed71d2f253d91b9af0600c3"
+  },
+  {
+    "name": "examples/language-features/importFrom.qnt",
+    "sourceSHA256": "aaa41c1315569e2b9d6cbf0ad34bd50bc2757d4339a40d86a9d1fa7cdef5c5ca",
+    "snapshotSHA256": "5a14423ec30b7b0d6a9d9c21108e9c20d277c193590c0e6229fe7273a9bd7ba5"
+  },
+  {
+    "name": "examples/language-features/imports.qnt",
+    "sourceSHA256": "53a15e63cd3a81a73b6e42b62ea31776a46442e443fb25e065b1e2b268ba1017",
+    "snapshotSHA256": "a835198a2afe400c820e7d48fcb4eb0a48e23a0699425930a7a71bfe800e58b8"
+  },
+  {
+    "name": "examples/language-features/instances.qnt",
+    "sourceSHA256": "9a5b285ce9cf407e1ed090b4b91c262eaff918639acbf6b62cad9cf2777f9b37",
+    "snapshotSHA256": "c04ac02577de032ca1f07d04cc26c2a921a2a94531004536f6977fe26c14082e"
+  },
+  {
+    "name": "examples/language-features/instancesFrom.qnt",
+    "sourceSHA256": "15d5d2b763dc4ef173c87e2eaa5b311500b62898117bd997332430e55a00a253",
+    "snapshotSHA256": "73f5a2542a22e0e888ea29ccaa9013c426faf2892d0fd39fff59c960b1b49171"
+  },
+  {
+    "name": "examples/language-features/integers.qnt",
+    "sourceSHA256": "65fc439c2a639906acb007ee6683b4333aebdd0dae0befb9e9fa6ba52265cea5",
+    "snapshotSHA256": "2b1aa98706f708be20ddc58442697c7368ae52468b796d637199f7b13e3ca9c2"
+  },
+  {
+    "name": "examples/language-features/lists.qnt",
+    "sourceSHA256": "f15bfb43714aa86f42cec578b648f1011421ad7c925ba0ec73f5d380842dd656",
+    "snapshotSHA256": "99528f47bb58bc251c1b4fb6d5a21b4d5459a5ead18d1880fada09b7392fca8c"
+  },
+  {
+    "name": "examples/language-features/maps.qnt",
+    "sourceSHA256": "6ea0a6de76c64c27b016900b37d2125074199a9a013a5e9f6cf3af055499dc9f",
+    "snapshotSHA256": "8d590c2066bd93b498712bac7945deb430b2cd032fca099da529f4e5e816e85f"
+  },
+  {
+    "name": "examples/language-features/nondetEx.qnt",
+    "sourceSHA256": "d77ad33b0b211af2906ca2f68e0c5ee15d4e9391cd55d0867e268ff9a3b59e1b",
+    "snapshotSHA256": "04ef84123a0d8655516824cae829794d72656b526f4b05c33a16a93e03bef57b"
+  },
+  {
+    "name": "examples/language-features/option.qnt",
+    "sourceSHA256": "12a62a7dc9bc63dcacab6aa4e389f59cda016216e232505e0e9149da9a3afdfb",
+    "snapshotSHA256": "f90b0410864465eaaea7b66c2451026d0638ca1ecb2ab9958f53764e8d4a8560"
+  },
+  {
+    "name": "examples/language-features/records.qnt",
+    "sourceSHA256": "0ebb2d37e6fd324fd3f04ea24fbe60f30aa05ecb59e435f02e6e314080ccf24b",
+    "snapshotSHA256": "8b120713cad0529e23df1e49eec0890753aa8aa00f0dc26e524f81d9f3bd50c7"
+  },
+  {
+    "name": "examples/language-features/sets.qnt",
+    "sourceSHA256": "ebb490f830bb97e2779b1e9f6add2399119efea07f65c6488060809d0cd35c45",
+    "snapshotSHA256": "2cc9efacbce514c459bc1af8b1f1e4c59d6413dcb801889db6a1e91bf1db2ddf"
+  },
+  {
+    "name": "examples/language-features/strongFairness.qnt",
+    "sourceSHA256": "588e21dd40e30ba454f1d1e0d04875a9d7014936a8668aba801674754ea3ba5c",
+    "snapshotSHA256": "98a51584c3490f4e6379e60f95dc5941cf34b8418e55d016b7577f2762f0fa33"
+  },
+  {
+    "name": "examples/language-features/tuples.qnt",
+    "sourceSHA256": "c2ede2c56978a72467873f80988e2b212c333228e4f46859cf5d6cc8afc6d563",
+    "snapshotSHA256": "6ea55d25749864ae92f53ef0ce52b04a01390edb6b59f3c8ee9f9aedcd4fba16"
+  },
+  {
+    "name": "examples/language-features/weakFairness.qnt",
+    "sourceSHA256": "4108f6a0db465a8d6beb9591d6543ecb69e2aae5b8770e3033f105c4fd260cd7",
+    "snapshotSHA256": "a61a0799cef1217440ef3bba5f76c3a9b3ae9179abf70300ee4cf0dbf765b5c5"
+  },
+  {
+    "name": "examples/puzzles/prisoners/prisoners.qnt",
+    "sourceSHA256": "f26958ab26d6f02f1c45d03d6db556b761f24318780abc35ccff83a45d54dc6a",
+    "snapshotSHA256": "87f1680f1e8fc39d2c78ffdc4a71ac9cbf36373856543237b51ff395ae33ec50"
+  },
+  {
+    "name": "examples/puzzles/river/river.qnt",
+    "sourceSHA256": "5bb8b0350404c2e59beba18e7ee1a0e77b96124a9452fb7e818bec87a8c057e2",
+    "snapshotSHA256": "98741d993e9b6269f68cb87fcc69aca0155c1555f4e8f548407f418bda61e61f"
+  },
+  {
+    "name": "examples/solidity/ERC20/erc20.qnt",
+    "sourceSHA256": "6f28268c98cbae8c0b104d59b4662f7a0811211185a4b1cc1d05aaeb83e2a17c",
+    "snapshotSHA256": "6b075665b7fde01106f525792c364e57a75417b92c5846e86bf3fb60a4df4573"
+  },
+  {
+    "name": "examples/solidity/GradualPonzi/gradualPonzi.qnt",
+    "sourceSHA256": "e31a4f1e11514e8d2a80cebda2039ca86e507c056e63dee252f81be38667d886",
+    "snapshotSHA256": "d127983d3ce327990e0e6fa10ea87ae86050c92ef95075fda4c97b7f2e7fa870"
+  },
+  {
+    "name": "examples/solidity/icse23-fig7/lottery.qnt",
+    "sourceSHA256": "1a3d614091e5133ad91d43f0cefbe658ed760f94b5122434bc3bf2f2ad44be17",
+    "snapshotSHA256": "d8427deeedae21235f88d97ea5de5ec21a0429ff55f8dfa585ca848d009a49d3"
+  },
+  {
+    "name": "examples/solidity/SimpleAuction/SimpleAuction.qnt",
+    "sourceSHA256": "ca24a19f4cdc5b18d7b67fe52202ac668163588bb667651387b76f8a5437e855",
+    "snapshotSHA256": "e95ce3594dbc598cba0766da3718650c7f08b212dae836f6e447e20486bb1434"
+  },
+  {
+    "name": "examples/solidity/SimplePonzi/simplePonzi.qnt",
+    "sourceSHA256": "a8ec5d2e9a8ae135480c11e4e8c6f931228e4466349bba3fbb057fd934062631",
+    "snapshotSHA256": "a3d4dd03e09fc91275581490f0e0485b70e95ff2cc246e63f4c165cd4eb82980"
+  },
+  {
+    "name": "examples/spells/basicSpells.qnt",
+    "sourceSHA256": "896045a528b95205c6d4e74cf4e0937aad06e2cf82c04d1e2045ca0fec33c4b1",
+    "snapshotSHA256": "e15379e087b7101db1a43b980aa6ca02f513a03eec13b4e0b687321ae23f1b3a"
+  },
+  {
+    "name": "examples/spells/BoundedUInt.qnt",
+    "sourceSHA256": "fc165d1cb49c3f18573d90de564eefd7684b26f19ad5540fc5e31c0adb5aa471",
+    "snapshotSHA256": "7fddc30764b3910da6173ed31aa9be834b26783fe600bc2176fd53c5aa839fde"
+  },
+  {
+    "name": "examples/spells/commonSpells.qnt",
+    "sourceSHA256": "2c67d12ee4b1f01b4f13a9583315276a888f4e4cb55f95081741156502d1a652",
+    "snapshotSHA256": "8fbafdd843b77f4c28104fe4a09a4165857d6f0d47c7bcf6ca26f8c779a09de7"
+  },
+  {
+    "name": "examples/spells/rareSpells.qnt",
+    "sourceSHA256": "f432a66a57fdb5f2a3ca891dc3f3ead758abce45d18b84f3ae3a867e4db72942",
+    "snapshotSHA256": "ba5626ce9e9ab999e8956c3b014fdfbf010de6de03bc38ffe1d6045c68cec414"
+  },
+  {
+    "name": "examples/tutorials/booleans.qnt",
+    "sourceSHA256": "bc351eed35498833ccc0247d06d3258efe102468ac7d8683f5f301ecb8dd393c",
+    "snapshotSHA256": "daa68935f7cc48946e2140eba35bd4874a67cc4b667372081ba906275001ef85"
+  },
+  {
+    "name": "examples/tutorials/coin.qnt",
+    "sourceSHA256": "bab987a06fa10781d3702b7e4040ead591a783e0256eebdaaa199bfc05eb19d4",
+    "snapshotSHA256": "b079066f80ea87ad2d434f1d0a38f0d1c8e6075a4e638dde54323b94e3c6b607"
+  },
+  {
+    "name": "examples/tutorials/hello.qnt",
+    "sourceSHA256": "601b620d809909657d9da700a24c0d0370afd90c42fd12cb672cb04112bdf302",
+    "snapshotSHA256": "97a4f16a08b23f8d5a16b2c206b24c5f1fd34645f7e4f568b506386faecac7b0"
+  },
+  {
+    "name": "examples/tutorials/integers.qnt",
+    "sourceSHA256": "82b91e24895396f10117e50d63deca60766d341735f82c116aacb76099722cfc",
+    "snapshotSHA256": "d2260c187fa9aabfe97ee22d8c6513447728e1e1bb5f1cc6052396bebadce402"
+  },
+  {
+    "name": "examples/tutorials/repl/kettle.qnt",
+    "sourceSHA256": "9ca80e95d8d5bd1b712b8c89c8f696002ff7e16a843c0e0a5d17abe12c60dfce",
+    "snapshotSHA256": "cf82885a280c020ae8ef4287fd195696cb7d0014c05c050e321912ad9a5092ed"
+  },
+  {
+    "name": "examples/tutorials/sets.qnt",
+    "sourceSHA256": "3a8b11ff1470a4d306c3148ff36afb077266afac98c8c0385d5cf46202f6553b",
+    "snapshotSHA256": "8df6faa29f18f34d4929e3d082c6c6ae4f008320fcfb84726541236b4aea2619"
+  },
+  {
+    "name": "examples/verification/defaultOpNames.qnt",
+    "sourceSHA256": "5050ea2b5bfbdce60916519c731ab1ff54bbd821ef80c79cc5952664e4834d47",
+    "snapshotSHA256": "47de05bf750bd4a1ec3ecf9501f6f6641e9bd75ae5c9aa1adec2a370838c8aa7"
+  },
+  {
+    "name": "evaluator/fixtures/instances.qnt",
+    "sourceSHA256": "33ad1da09e24739f66874ab5b98a5430d0ee3d6513184197a45afafcc6fd5e39",
+    "snapshotSHA256": "6766ca37728fdf50a8a9e2d3198f63f91fbae717f849d8ce5f41c9c9d11c19fe"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/apply_fancy.qnt",
+    "sourceSHA256": "599911db9d874857f804cfbf7d3afa039f1a54435acc163b458b93a8c02a8305",
+    "snapshotSHA256": "47e1d4a42b2dea194eb213630849ee98d163ac9c637a44107267a6c71115864a"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/apply_simple.qnt",
+    "sourceSHA256": "100200c7965e4fd07d1dc45022c4160b5e785fadef4448a3dabde3674b52c719",
+    "snapshotSHA256": "fdd58af21071c4a362b73107a8cf89f3d4a0153fa832d163c25eccad02ff785a"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/apply_state_machine.qnt",
+    "sourceSHA256": "15a32e2563264b65565cd8508a1f677d2f635f742b3784bf580ba58b13340176",
+    "snapshotSHA256": "d7bf21b683f12a3b18ce5f11f266c760d4e2828d4815f09cd214c118048ee2d0"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/completeness.qnt",
+    "sourceSHA256": "c13878b393aebf838b666098222301829d069d0288dde4edb3ef28c568710586",
+    "snapshotSHA256": "90c87164cd4f976c207badd3e299f418b737b4148206a648c55ff8e7baa0cca4"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/grug_ics23.qnt",
+    "sourceSHA256": "0b3cd7609e73aabe692c0f0ec60937ea0b1a0939713a359fe276f1688f872f5f",
+    "snapshotSHA256": "accfd8f6ae23c605e1d30e84cc7a580160ca18f86507367eef2fce356987b02e"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/hashes.qnt",
+    "sourceSHA256": "0ca48bc54fd1b5e6bd780991d715301978e00f8409466a6a1db4e8b32b9b7a7f",
+    "snapshotSHA256": "7c03e49d72117d43a1a40db2b3f42c43d248a032f555371ca24c1ae7679ae25b"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/node.qnt",
+    "sourceSHA256": "7785aec4a9e9dbe7bcf7394e347549001460b09a4ebe51538617219071b5d665",
+    "snapshotSHA256": "2016908a2b5c73ac83a85ba49d7358be1891dfae468d01862a0ed358f9ee1d44"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/proof_types.qnt",
+    "sourceSHA256": "dfb446be6d948fff8787ebcf1c48da5656642c80a490a9775fa8753e6ef303ca",
+    "snapshotSHA256": "b583425d09db92f194c37b2d8acd9687302992381c6314a4cbe54c6b9b753c8d"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/proofs.qnt",
+    "sourceSHA256": "e0634ccf6905ed83a7f4d4d5cf181b1fac15536336d6a4808f7fbfcba3467b1d",
+    "snapshotSHA256": "e5e1d6ba0832a818b03e9eb25291199ac73967a7826a1a170314c4fc9a138544"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/pruning_state_machine.qnt",
+    "sourceSHA256": "4476c97748a29341e468708a6542b229f7a38e6e70bd6566fffd1fabdb10b7ac",
+    "snapshotSHA256": "fde6d7b52f13529f62a194757b1900c799c7e104de675dfd84e6c2113c141692"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/soundness.qnt",
+    "sourceSHA256": "e792421a0d52092ec552c63fd998f09f9fc950aa2b1357be1850fd152592777d",
+    "snapshotSHA256": "4f018d6d8be5c41183d24a098260ca68c384af172ff7af6b29b21e8a97a138b6"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/spells/basicSpells.qnt",
+    "sourceSHA256": "dbc6d40baad5dad05c0915d3a1dc8a016992f67642be847c6b0b6924ec687bea",
+    "snapshotSHA256": "f0aeb8c96f174cc7340a27baf407f766ac1a19f628a0df1a2d838c87e708d8d7"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/spells/commonSpells.qnt",
+    "sourceSHA256": "69571e0bbacaa92b337378ed6280e9a339f587495b81c50c76f81881e21a135c",
+    "snapshotSHA256": "26b7c5e193bb5fb0e2b1f29f3d7d61cfecdf1748f4ba594c2ea4bcb5f1b7d70d"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/spells/rareSpells.qnt",
+    "sourceSHA256": "e8084d1c83e48dfe7e7d9774e47bc52fc9d06c1a66ed0cce213149e736befec4",
+    "snapshotSHA256": "ad417c5a56a24e2aafbb98b7d65a4675ba8040b31db26c160ff88843b80b9ccd"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/test/apply_fancy_test.qnt",
+    "sourceSHA256": "c0ecf4680a9a0e0108763efb38ea62f14298b7f15759ebe0a039b20499d90bc6",
+    "snapshotSHA256": "523e68c176bcf90e635ae777ba771eb2fa602836d2e54c675f405a0ee03f434d"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/test/apply_simple_test.qnt",
+    "sourceSHA256": "7c64ff4cd73d2522307b9fbc66b91ee433697891c8251393229344dc2e7c28e8",
+    "snapshotSHA256": "970a0212395a4fd70402823b2ad301a1d7dfbaee65b405206b9413fa7d0e92e6"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/test/instantiatable_tree.qnt",
+    "sourceSHA256": "581c86ffcb25a9c83f2c20467d3d1c46d1037abfd3b73064e908cca38f55f614",
+    "snapshotSHA256": "07b2fa0dd2380cd8fbbf225109577934cd64e103109b4dc8b0089a477453c6ae"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/test/node_test.qnt",
+    "sourceSHA256": "e9a2553864cfb736bce3f2eb9b309fb83305640aec335ef1e30be77b2348eed1",
+    "snapshotSHA256": "fe53916f6818ed7e5662311713dc033e02cb984141616b12d4085c20356c2285"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/test/proofs_test.qnt",
+    "sourceSHA256": "88fe0aebfa829696b948e90a49c3e82060cb934fbc8dd5dd1297d93ff1bb6c16",
+    "snapshotSHA256": "709282f7abb7d47cfcabe61abf631b9c72b2705487767fa570617e09fa9e516b"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/test/test_all.qnt",
+    "sourceSHA256": "9836875184f5f81c5e2bf594b4ccc157cb69e5f82492d7176d48b3ab302b292e",
+    "snapshotSHA256": "fb65265f3eb6b424bde9ee607424caa4d3849c9f335c3b8ef0a500e9d533a15b"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/test/tree_test.qnt",
+    "sourceSHA256": "c149bc4f59d83c73455b21d90fccf58ab763751f1dc32fac32d8024f60765860",
+    "snapshotSHA256": "5f2c1bc39308ec3200ac6c3123dcd820beeada38a8ae1c20341b71153bcf9cfb"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/tree.qnt",
+    "sourceSHA256": "d8ecdead02e674d75edd604668497dfed325ecaf3cd256c4ebf9d51ea207cc7d",
+    "snapshotSHA256": "0dc4ff9a9de711b5745e6d7d329dec59ed98c882e82a4e50a894f17b5c294b00"
+  },
+  {
+    "name": "evaluator/fixtures/jmt/utils.qnt",
+    "sourceSHA256": "a386a7d71199a7ca31c6c0c0d74c511f91f2363fdfb6f745e19b604420531185",
+    "snapshotSHA256": "e205eacc2c388c7a8b0f180a025001c3184c806ec516ac5273586585e165b447"
+  },
+  {
+    "name": "evaluator/fixtures/mbt_metadata.qnt",
+    "sourceSHA256": "4e1ae435fabb17e9b65da77e396f12c67cf0e5d255283490145a9a996cc8cd5d",
+    "snapshotSHA256": "56e13b014a748f2ea4dd12201ef753cb6b2534f8cd2f89f5dadb03e0c6a35f9b"
+  },
+  {
+    "name": "evaluator/fixtures/oneOf_empty_test.qnt",
+    "sourceSHA256": "de9e1eca60aad40965ed5a2a65ff964906bde701b501b0af497c4f9e6ce2de91",
+    "snapshotSHA256": "ae6d5ab5363325750952e7f12abcaf7b97b3fb52050bd2e5ea34b65a630302b7"
+  },
+  {
+    "name": "evaluator/fixtures/runs.qnt",
+    "sourceSHA256": "62d7779bc06960281cc8ce256a140df561e50b3f254d377519ff9f77706dbe8e",
+    "snapshotSHA256": "5141d797cd1192194987d96eda4158b9dee38feb5142cc97ccb6132e86da5c2c"
+  },
+  {
+    "name": "evaluator/fixtures/stop_counter.qnt",
+    "sourceSHA256": "368fa04df928b04ca766ab4ed405f0d7bb7a0800e238de0cbc02f77ffcf8d445",
+    "snapshotSHA256": "99d5ec4b08b256f2026bbef552cb53ac7da07d7ea57aee7fa1939fcac3482d81"
+  },
+  {
+    "name": "evaluator/fixtures/tictactoe.qnt",
+    "sourceSHA256": "0b369fa2093364df2be8000dc104fbd36206ada3e0ccc8d763b286b36e01a6c5",
+    "snapshotSHA256": "c70070103c1a1955867cccb30462a7a5e24d0771d03da768f5ea615209362fad"
+  },
+  {
+    "name": "docs/codetour/lesson0-helloworld/hello.qnt",
+    "sourceSHA256": "62bb05d8aa93ecc4f958052f6c04b38401520cee113b59cb8335368117ab92e6",
+    "snapshotSHA256": "e18a2b32ee333e0890858dfd6aac3171271240a43c57d097aa1382ece68b7c81"
+  },
+  {
+    "name": "docs/codetour/lesson0-helloworld/hello.template.qnt",
+    "sourceSHA256": "82a6b5063ba241de98fa8b1fd24b105957cdbe374d7f77bed0f189d0c64d26e8",
+    "snapshotSHA256": "0fd843000eb9a7826a553209b16bb90d3f9fafb4d27a6d0e73cdc8d0389df4ef"
+  },
+  {
+    "name": "docs/codetour/lesson1-booleans/booleans.qnt",
+    "sourceSHA256": "2916074acf98facd7846d6708e16068fdb289cc8995ccea893b5ae720028e5d4",
+    "snapshotSHA256": "0d6dee72155335b68e02f1b789daf5a43c3cd65ab7f637e4ebdc7708ab9351fb"
+  },
+  {
+    "name": "docs/codetour/lesson1-booleans/booleans.template.qnt",
+    "sourceSHA256": "594f99a2c9b3517937b206cea181c4519e40275e09fd936bc24f5a0dd2622f96",
+    "snapshotSHA256": "701ccf705c65431c6bac1fb4b6a86425d48761ac4fe300c0a9a9bf9b9909202d"
+  },
+  {
+    "name": "docs/codetour/lesson2-integers/integers.qnt",
+    "sourceSHA256": "82b91e24895396f10117e50d63deca60766d341735f82c116aacb76099722cfc",
+    "snapshotSHA256": "3af7ac426c08c69912edc0d28bf1d0746b1fe657ced33c0c9f65a9426d1320e4"
+  },
+  {
+    "name": "docs/codetour/lesson2-integers/integers.template.qnt",
+    "sourceSHA256": "c0c84422a2f5315ab66c6b494a0d54892c3400296c40254ea81e51967982796e",
+    "snapshotSHA256": "2669f3af7d7a3b9c30ba8a017b96fec7943aa834102b66656cf4f46a362c5359"
+  },
+  {
+    "name": "docs/codetour/lesson3-anatomy/coin.qnt",
+    "sourceSHA256": "3fe4b496f45cc717ab93d3fd383f557895b8d87988a282224aaff0d26cc07d73",
+    "snapshotSHA256": "b3b505c4342e18882cfb9227354ff6901fb983f7eaf94999885d691c78676121"
+  },
+  {
+    "name": "docs/codetour/lesson3-anatomy/coin.template.qnt",
+    "sourceSHA256": "75c174b77bc124c8d490d54ff7ac1c7160d3a9d63c62bcfc1f9add4ff6e08116",
+    "snapshotSHA256": "b368c7cc7e4634d89a8237684b21388bff3993b596b9d6e3e457362b35a7ccfa"
+  },
+  {
+    "name": "docs/codetour/lesson4-sets/sets.qnt",
+    "sourceSHA256": "3a8b11ff1470a4d306c3148ff36afb077266afac98c8c0385d5cf46202f6553b",
+    "snapshotSHA256": "1ba7946198a2cadf1aa128e16f3a2ad882583d13cad5cd6644169a53591da40c"
+  },
+  {
+    "name": "docs/codetour/lesson4-sets/sets.template.qnt",
+    "sourceSHA256": "9298bbe9d0c5d8a7e11c0d99500d4721b25dad22f3a242b5bfacc953108be165",
+    "snapshotSHA256": "f128182e14202e2f9425b1df10c4cba6cbd4bf1c7b47235fa1d4517bf2ec961e"
+  },
+  {
+    "name": "docs/generated/adr006before.qnt",
+    "sourceSHA256": "ccd66c60fae01e62671daa593285d5276edc69618f33d85b809e2bad314ff0a1",
+    "snapshotSHA256": "1ac2210b5d840592f9c3ce3348fc8067b0e1cd89a93953a50e98ad3f2630d6c1"
+  },
+  {
+    "name": "skills/quint-modeling/examples/ewd426.qnt",
+    "sourceSHA256": "9d443e24d231c606588e2712b5d46cdafac6e37a308dd32b23718d6c9c09f703",
+    "snapshotSHA256": "679c4a1fa84e6c476ef11cec8ce4eab62717ea671c1b1f29551334be4c488dd7"
+  },
+  {
+    "name": "skills/quint-modeling/examples/tendermint/choreo.qnt",
+    "sourceSHA256": "d2f93ccd70dfa7f7365acbc442dfc0fb83cb3711091202e0079b4b2dc1a5dafd",
+    "snapshotSHA256": "f1bef5a3ad0533f0728e134194847abe28c1e9dfcbfeb9ba3b5e19d3a49fdea7"
+  },
+  {
+    "name": "skills/quint-modeling/examples/tendermint/spells/basicSpells.qnt",
+    "sourceSHA256": "60e566ee21ed308c7f33069199b277fcbc9856bc16b0ac877cacc81d61926102",
+    "snapshotSHA256": "8a3ac8c2af65b6fad8efcbd4973d4e6f23a45b86da1d24818633151d4311369e"
+  },
+  {
+    "name": "skills/quint-modeling/examples/tendermint/tendermint.qnt",
+    "sourceSHA256": "ffe94743741fc2c1af988eb99c02a230d564063db76b3077578d60f4f2db0e09",
+    "snapshotSHA256": "0109f38d71a3cdeb7a9fdc3461926943368ec83f9820879babc8112a64443f9d"
+  },
+  {
+    "name": "skills/quint-modeling/examples/tendermint/tendermintTest.qnt",
+    "sourceSHA256": "0779f63de819204ce5f4ee48efdf1998d1359a33a25f666544ca317df0a2ea9f",
+    "snapshotSHA256": "3495f9bf9d4ee4e1e3fdba9d6c968e90f33767e947c5bccd9a15fa07ef187609"
+  }
+]

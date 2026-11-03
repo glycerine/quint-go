@@ -82,6 +82,11 @@ func recoveryLookaheadSyntaxIssue(recognizer antlr.Recognizer, offending interfa
 			return offending, line, column, "mismatched input '" + token.GetText() + "' expecting {':', '::'}"
 		}
 	}
+	if token, ok := offending.(antlr.Token); ok && message == "mismatched input '"+token.GetText()+"' expecting '{'" {
+		if _, module := parser.GetParserRuleContext().(*p.ModuleContext); module {
+			return offending, line, column, "mismatched input '" + token.GetText() + "' expecting {'{', '::'}"
+		}
+	}
 	if _, noAlternative := exception.(*antlr.NoViableAltException); !noAlternative {
 		return offending, line, column, message
 	}

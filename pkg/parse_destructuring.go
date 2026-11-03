@@ -8,14 +8,13 @@ import (
 // destructuredOperators returns nil for ordinary operator definitions.
 func destructuredOperators(ctx p.IOperDefContext, ids parserIDAllocator) ([]OperatorDef, error) {
 	defer parserScope(ids, ctx)()
-	var pattern p.IDestructuringPatternContext
 	var rhs p.IExprContext
 	qualifier := Val
 	switch c := ctx.(type) {
 	case *p.ValDestructuringContext:
-		pattern, rhs = c.DestructuringPattern(), c.Expr()
+		rhs = c.Expr()
 	case *p.PureValDestructuringContext:
-		pattern, rhs = c.DestructuringPattern(), c.Expr()
+		rhs = c.Expr()
 		qualifier = PureVal
 	default:
 		return nil, nil
@@ -27,6 +26,22 @@ func destructuredOperators(ctx p.IOperDefContext, ids parserIDAllocator) ([]Oper
 	id := ids.Next()
 	temp := OperatorDef{ID: id, Kind: "def", Name: "quintDestructTemp" + id.String(), Qualifier: qualifier, Expr: &value}
 	defs := []OperatorDef{temp}
+	if _, local := ctx.GetParent().(*p.LetInContext); !local {
+		destructuredFields(ctx, temp, ids, func(op OperatorDef) { defs = append(defs, op) })
+	}
+	return defs, nil
+}
+
+// Local field bindings are created by exitLetIn, after walking the body;
+// module-level bindings are created immediately by exitValDestructuring.
+func destructuredFields(ctx p.IOperDefContext, temp OperatorDef, ids parserIDAllocator, visit func(OperatorDef)) {
+	var pattern p.IDestructuringPatternContext
+	switch c := ctx.(type) {
+	case *p.ValDestructuringContext:
+		pattern = c.DestructuringPattern()
+	case *p.PureValDestructuringContext:
+		pattern = c.DestructuringPattern()
+	}
 	names := []string{}
 	tuple := pattern.TuplePattern() != nil
 	if tuple {
@@ -42,10 +57,12 @@ func destructuredOperators(ctx p.IOperDefContext, ids parserIDAllocator) ([]Oper
 		if name == "_" {
 			continue
 		}
-		defID := ids.Next()
-		appID := ids.Next()
-		target := Expr{ID: ids.Next(), Kind: "name", Name: temp.Name}
-		accessor := Expr{ID: ids.Next(), Kind: "str", Str: name}
+		restore := parserScope(ids, ctx)
+		defID := parserSyntheticID(ids)
+		appID := parserSyntheticID(ids)
+		target := Expr{ID: parserSyntheticID(ids), Kind: "name", Name: temp.Name}
+		accessor := Expr{ID: parserSyntheticID(ids), Kind: "str", Str: name}
+		restore()
 		opcode := "field"
 		if tuple {
 			opcode = "item"
@@ -54,7 +71,6 @@ func destructuredOperators(ctx p.IOperDefContext, ids parserIDAllocator) ([]Oper
 			accessor.Int, _ = ParseInteger(fmt.Sprint(i + 1))
 		}
 		access := Expr{ID: appID, Kind: "app", Opcode: opcode, Args: []Expr{target, accessor}}
-		defs = append(defs, OperatorDef{ID: defID, Kind: "def", Name: name, Qualifier: qualifier, Expr: &access})
+		visit(OperatorDef{ID: defID, Kind: "def", Name: name, Qualifier: temp.Qualifier, Expr: &access})
 	}
-	return defs, nil
 }

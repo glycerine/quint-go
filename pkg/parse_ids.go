@@ -75,6 +75,23 @@ func parserIDAt(ids parserIDAllocator, ctx antlr.ParserRuleContext) ID {
 	return ids.Next()
 }
 
+// The reference destructuring expansion uses its bare generator for field
+// bindings. Retain our public synthetic-node spans without adding raw spans
+// that the upstream listener never records.
+func parserSyntheticID(ids parserIDAllocator) ID {
+	if recovery, ok := ids.(*recoveringParserIDs); ok {
+		ids = recovery.parserIDAllocator
+	}
+	if located, ok := ids.(*locatedParserIDs); ok {
+		previous := located.upstreamCurrent
+		located.upstreamCurrent = nil
+		id := located.Next()
+		located.upstreamCurrent = previous
+		return id
+	}
+	return ids.Next()
+}
+
 // ParseModulesWithSource records source spans for module/declaration/expression
 // and parsed type IDs. Errors return no partial module list
 // or source map; use ordinary parsing when source positions are unnecessary.

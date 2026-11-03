@@ -1269,3 +1269,10 @@ classification and compares shared constant/parameter registers, captured factor
 identity, scoped caches, override order and exact diagnostic references. Source
 helpers add ownership/cancellation and JSON-fallback tests; action-label histories
 include unrelated-root adoption and nested-only source graph activation.
+
+`parser_synthetic_provenance.json` saves32 raw cases across ordinary and large
+starting IDs. `parser_repository_corpus.json` records actual upstream hashes for
+all197 repository source files: raw IR, diagnostics, source maps and next IDs.
+The optional corpus compares without normalization; all197 pass. Public Go maps
+retain useful synthesized spans while raw upstream maps preserve their omissions.
+Matching generators distinguish this from LL/SLL self-parity controls.

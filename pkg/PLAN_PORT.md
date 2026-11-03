@@ -172,8 +172,8 @@ without losing semantic information, and diagnostic locations remain stable.
   temporal syntax, and parser desugaring into IR.
 - [x] P2.5 Port the IR listener behavior, IDs, declaration documentation, and
   locations; preserve intentionally accepted deprecated syntax.
-  Numeric ID allocation order differs intentionally; consistent references and
-  exact source spans are tested, and differential IR tests normalize those IDs.
+  Raw ID allocation and upstream source provenance now match all197 repository
+  sources; public source maps additionally retain useful synthesized spans.
 - [ ] P2.6 Implement expression/declaration entry points for the REPL and CLI
   expressions, plus the type/effect parsers used by builtin signatures.
   - [x] Syntax-only expression, expanding declaration, type, and effect entry points.
@@ -198,7 +198,7 @@ without losing semantic information, and diagnostic locations remain stable.
   - [x] Match nil-type listener aborts and declaration-colon expected tokens;
     malformed reference IR containing null operands stays an explicit
     SyntaxRecoveryError frontier rather than fabricating typed expressions.
-- [ ] P2.9 Differential-test parsed IR and error codes across parser fixtures
+- [x] P2.9 Differential-test parsed IR and error codes across parser fixtures
   and the repository's `.qnt` corpus; normalize only documented ID differences.
 
 Exit gate: `parse` can load real multi-file specifications and reports expected
@@ -3697,3 +3697,12 @@ word "retained" in the commit message.
   input ownership and saved factories. Source helpers100% covered; expanded race
  1.769s, full isolated tests/vet pass (core1.253s, CLI0.466s). Transported alias
   first-selection and broader runtime-stack parity remain open.
+
+- 2026-11-02: Matched synthetic parser provenance for instance overrides, tuple
+  lambdas and nested destructuring, including allocation order and raw upstream
+  source-map omissions. Public synthesized spans remain available. Thirty-two
+  default raw cases cover ordinary/arbitrary-precision IDs; actual TypeScript
+  comparison now matches all197 repository sources without ID normalization for
+  raw IR, diagnostics, upstream spans and continued IDs. Focused0.033s, broad
+  parser/source0.364s, optional197-source hash corpus4.924s, race1.257s, full
+  isolated tests and vet pass. Standalone entrypoint audit remains separate.

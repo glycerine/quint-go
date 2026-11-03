@@ -139,11 +139,15 @@ func declarationFromContext(ctx p.IDeclarationContext, ids parserIDAllocator) (D
 			value = value[1 : len(value)-1]
 			d.FromSource = &value
 		}
-		for i, ctx := range inst.AllExpr() {
+		expressions := make([]Expr, 0, len(inst.AllExpr()))
+		for _, ctx := range inst.AllExpr() {
 			expr, err := expressionFromContext(ctx, ids)
 			if err != nil {
 				return d, err
 			}
+			expressions = append(expressions, expr)
+		}
+		for i, expr := range expressions {
 			d.Overrides = append(d.Overrides, Override{Parameter: Parameter{ID: parserIDAt(ids, inst.Name(i)), Name: inst.Name(i).GetText()}, Expr: expr})
 		}
 	case *p.ConstContext:
