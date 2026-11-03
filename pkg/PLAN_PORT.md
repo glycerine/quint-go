@@ -874,7 +874,9 @@ any remaining TypeScript client code is distinguished from language-server logic
   default Go workflows. Document any explicitly optional external backend.
   - [x] Native version/typecheck/run/test and LSP EOF smoke from outside both
     source trees with PATH=/nonexistent; both binaries build with CGO disabled.
-  - [ ] Complete every default command/backend and platform in clean packaging.
+  - [x] Exercise all13 default command/backend/LSP workflows with only native
+    binaries, outside source trees and PATH=/nonexistent on Linux/amd64.
+  - [ ] Validate other platforms and finalized release archives.
 - [ ] P12.9 Run a final command/flag/builtin/schema/diagnostic/editor matrix
   audit. Link each completed area to validation evidence; list unresolved gaps
   and agreed exclusions before declaring the port complete.
@@ -3676,3 +3678,11 @@ word "retained" in the commit message.
   All logger functions100% covered; full isolated Go tests/vet pass, eight Emacs
   ERT and four actual Vim scenarios pass. Both binaries cross-build for Darwin
   and Windows amd64/arm64; actual other-platform/VSCode host execution is unrun.
+
+- 2026-11-02: Added native installation/migration guidance, third-party asset
+  inventory and an exact module-local LICENSE copy so module zips include it.
+  The manual CI smoke now exercises13 native workflows with PATH=/nonexistent,
+  including both checker counterexamples/ITF, docs, REPL and asynchronous LSP
+  analysis/navigation. Fresh CGO-disabled builds pass; smoke0.782s and18 Python
+  driver tests0.361s pass. Public checker pinning, release archive automation and
+  other-platform execution remain explicitly open.

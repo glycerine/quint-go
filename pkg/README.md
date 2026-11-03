@@ -14,17 +14,21 @@ From the repository root, create or extend an ignored Go workspace containing
 go work init ./pkg ~/apalache/pkg
 ```
 
-Then build or test from this directory:
+Then build or test from `pkg/`:
 
 ```sh
+cd pkg
 go build -o /tmp/quint-go ./cmd/quint
 go build -o /tmp/quint-go-lsp ./cmd/quint-lsp
 go test ./...
 ```
 
-The workspace supplies the local checker dependency. Release dependency pinning
-and clean-environment packaging are still open. Ordinary Go execution uses no
-Node, Rust, Java, Scala, or downloaded Apalache JAR; upstream fixture regeneration
+The workspace supplies the local checker dependency. Public release dependency
+pinning remains open. [INSTALL.md](INSTALL.md) covers local installation,
+version information, distribution notices and the optional clean native smoke
+check; [MIGRATION.md](MIGRATION.md) covers TypeScript-to-Go migration.
+Ordinary Go execution uses no Node, Rust, Java, Scala, or downloaded Apalache JAR;
+upstream fixture regeneration
 uses the TypeScript checkout separately.
 
 The command supports `parse`, `typecheck`, `compile`, `run`, `test`, `verify`,
@@ -44,9 +48,9 @@ or a command's `--help` for its implemented options. Examples:
 Verification and TLA+ generation use the Go Apalache production API in-process.
 Bounded success is reported as bounded. Legacy Scala endpoint/version options
 and unsupported backends reject explicitly. Native Go TLC supports exhaustive
-finite-state safety checking with concrete traces; temporal/ITF TLC output remains
-open. The test filter accepts the shared JavaScript/RE2 regex subset and
-rejects unsupported features. Full output, flag, runtime, and temporal trace
+finite-state safety and its supported temporal subset, including typed ITF
+counterexamples. The test filter accepts the shared JavaScript/RE2 regex subset
+and rejects unsupported features. Full output, flag, runtime, and temporal trace
 compatibility remain checklist items.
 
 The REPL supports multiline input, incremental declarations, evaluation, state,
@@ -64,8 +68,9 @@ an explicit alternative. Its native build/development tasks and client selector
 regressions pass. Full extension compilation/lint/tests and Linux native VSIX
 packaging pass, including extracted Go and TypeScript lifecycle checks; real host
 and other-platform execution remain open. Type-directed
-field completion and selective-import rename have regression coverage; signature
-help and code actions remain open.
+field completion and selective-import rename have regression coverage. Current
+signature-help and code-action support and remaining editor boundaries are
+listed in [COMPATIBILITY.md](COMPATIBILITY.md).
 
 Default tests use saved upstream fixtures and run without the reference tools.
 The fixture manifest is in [testdata/parser/README.md](testdata/parser/README.md).
@@ -73,6 +78,14 @@ The target is less than one second of combined package test execution, excluding
 compilation; heavier corpus, race, and solver checks are separate.
 
 [BASELINE.md](BASELINE.md) records exact tool and checker revisions. Run
-`bash scripts/verify-go.sh --checker /path/to/apalache-go` for an isolated native
-build, test and vet check; its manual CI workflow requires a fetchable checker
+`bash pkg/scripts/verify-go.sh --checker /path/to/apalache-go` from the repository
+root for an isolated native build, test and vet check; its manual CI workflow
+requires a fetchable checker
 commit. The current local checker revision is not yet published remotely.
+
+The optional `pkg/scripts/smoke-go.py` check runs every native command and both
+verification backends from copied executables with an empty home directory and
+`PATH=/nonexistent`, including invariant violations with ITF output and a complete
+LSP session.
+The recorded execution platform is Linux/amd64. Distribution notices and asset
+provenance are inventoried in [THIRD_PARTY.md](THIRD_PARTY.md).

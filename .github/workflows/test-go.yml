@@ -54,12 +54,6 @@ jobs:
           --output "$RUNNER_TEMP/quint-go-bin"
       - name: Smoke native binaries outside source trees
         run: |
-          mkdir -p "$RUNNER_TEMP/quint-go-smoke"
-          cp quint-go/examples/tutorials/hello.qnt "$RUNNER_TEMP/quint-go-smoke/hello.qnt"
-          cd "$RUNNER_TEMP/quint-go-smoke"
-          export PATH=/nonexistent
-          "$RUNNER_TEMP/quint-go-bin/quint" --version
-          "$RUNNER_TEMP/quint-go-bin/quint" typecheck hello.qnt
-          "$RUNNER_TEMP/quint-go-bin/quint" run hello.qnt --seed=42 --max-steps=3 --verbosity=0
-          "$RUNNER_TEMP/quint-go-bin/quint" test hello.qnt --seed=42
-          "$RUNNER_TEMP/quint-go-bin/quint-lsp" </dev/null
+          python3 quint-go/pkg/scripts/smoke-go.py \
+            --quint "$RUNNER_TEMP/quint-go-bin/quint" \
+            --lsp "$RUNNER_TEMP/quint-go-bin/quint-lsp"
