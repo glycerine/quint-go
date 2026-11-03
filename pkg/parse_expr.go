@@ -144,6 +144,9 @@ func expressionFromContext(ctx p.IExprContext, ids parserIDAllocator) (Expr, err
 		return Expr{ID: ids.Next(), Kind: "lambda", Params: params, Qualifier: Def, Body: &body}, nil
 	}
 	if c, ok := ctx.(*p.RecordContext); ok {
+		if recoveringSyntax(ids) && ids.(*recoveringParserIDs).expressionHole(c) {
+			return recoveryRecordFromContext(c, ids.(*recoveringParserIDs))
+		}
 		pairs := []Expr{}
 		var spread *Expr
 		seen := map[string]bool{}

@@ -192,8 +192,10 @@ without losing semantic information, and diagnostic locations remain stable.
     exact listener abort/stack behavior; promote both historical pending cases.
   - [x] Route parse/typecheck/compile and docs CLI adapters through recovery;
     compare partial modules, stage JSON, source maps and Markdown on errors.
-  - [ ] Recover operand borrowing across malformed multi-field records;
-    this boundary still returns SyntaxRecoveryError with completed modules.
+  - [x] Recover operand borrowing across malformed multi-field records with
+    exact temporary Tup wrappers/zero IDs and listener reduction order.
+  - [ ] Complete nil-type listener abort edge audit; malformed reference IR
+    containing null operands stays an explicit SyntaxRecoveryError frontier.
 - [ ] P2.9 Differential-test parsed IR and error codes across parser fixtures
   and the repository's `.qnt` corpus; normalize only documented ID differences.
 
@@ -3546,3 +3548,12 @@ word "retained" in the commit message.
   complete results, references, debug, registers, traces and RNG; six counter and
   one pending-state differences are recorded. New corpus0.059s, race1.623s and
   vet pass. Nested-only pure action graph activation now has a dedicated witness.
+
+- 2026-11-02: Matched malformed record listener recovery with28 exact snapshots
+  comparing raw IR, diagnostics, public/raw spans and continued IDs. Temporary
+  field wrappers can be borrowed by later missing operands; their upstream zero
+  IDs are preserved. Duplicate/spread semantics and healthy controls remain
+  unchanged. Three reference outputs contain null IR operands; Go returns an
+  explicit SyntaxRecoveryError with completed-module snapshots instead of
+  fabricating valid IR. Recovery helper100% covered; focused0.040s, optional
+  parser/source corpus0.352s, race1.401s, vet and byte-identical regeneration pass.
