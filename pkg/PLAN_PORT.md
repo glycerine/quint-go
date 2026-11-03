@@ -433,8 +433,11 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] Source/instance variable compilation contexts, including exported aliases
     whose first compiled read fixes cell identity; assignment targets bypass memo.
   - [x] Match source instance constant/parameter registers, captured closures,
-    scoped caches and override order with34 typed/four runtime histories.
-  - [ ] Complete transported alias first-selection and broader runtime-stack audits.
+    scoped caches and override order with 34 typed/four runtime histories.
+  - [x] Transported alias first-compilation order, including lazy branches and
+    prepare-only selection, matches 15 source histories / 28 operations.
+  - [ ] Complete broader runtime-stack audit; imported callback lambda display
+    names still expose an unshadowing suffix in one saved pending history.
   - [x] Eight execution-listener hooks, owned frames, verbosity filtering, run
     ranking, choice pruning, next-state placeholders and captured source calls.
 - [x] P7.3 Port scalar arithmetic, Boolean, and comparison builtins; test
@@ -628,6 +631,8 @@ including failed actions that must not leak partially updated state.
   ordering and reproducibility across worker counts.
   - [x] Sequential simulation context cancellation before and during execution,
     nonnegative explicit limits, and private execution state per evaluator.
+  - [x] Final higher-order callback cancellation is observed after scope restoration;
+    four parsed fold regressions, explicit error precedence and independent owners.
   - [ ] Additional resource bounds and any concurrent worker policy.
 - [ ] P8.6 Run both runtime integration transcript suites with declared backend
   differences, plus stateful and model-based-testing evaluator fixtures.
@@ -654,6 +659,10 @@ TypeScript or Rust evaluator process.
     createConfig fixtures match. Unknown options reach strict service validation.
   - [x] Config-file loading and CLI flag/default wiring, including main-module
     selection when the entry filename differs from its sole module.
+  - [x] Reject ineffective native CHECK controls after effective config merging,
+    including simulation, jail/idle settings and solver resource-count aliases;
+    raw command spellings/duplicate objects cannot bypass validation.
+  - [ ] Native random-transition simulation remains unavailable.
 - [x] P9.3 Implement bounded safety checking, no-invariant deadlock checking,
   and ordinary/multiple-invariant handling with equivalent result categories.
   - [x] Bounded-check API, explicit no-invariant selection, lossless violation/
@@ -745,7 +754,10 @@ Build these items alongside the phases that supply their command behavior.
   - [x] Audit common flags against158 actual yargs cases: aliases, negation,
     missing defaults, repeated scalars, arrays, numeric spellings and REPL
     interspersed arguments; preserve explicit Go backend/resource constraints.
-  - [ ] Complete remaining help/error-prose and terminal parity audit.
+  - [x] Static native help and parser/frontend errors match 49 saved transcripts;
+    run/test color and selector precedence match 36 additional saved cases.
+  - [ ] Complete remaining help/error-prose and terminal parity audit, including
+    verification compile-flag summaries.
 - [ ] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
 - [x] P10.3 Port machine-readable stage output and diagnostics; explicitly
@@ -765,8 +777,10 @@ Build these items alongside the phases that supply their command behavior.
     sorted records/sets/maps, set equality, and last-value map replacement.
   - [x] TraceWriter connects trace naming, ITF encoding, MBT metadata, headers,
     and filesystem output with caller-owned clocks and returned errors.
-  - [ ] Audit collation across upstream locales/Unicode versions; implement
-    symbolic runtime normalization; CLI run/test/verify trace files are wired.
+  - [x] Shared-history ITF normalization and public symbolic runtime normalForm;
+    69 source fixtures cover order, domains and explicit Unicode boundaries.
+  - [ ] Collation across upstream locales/Unicode versions remains incomplete;
+    CLI run/test/verify trace files are wired.
 - [ ] P10.5 Port pretty printing, source-error rendering, value diffs, execution
   frames, trace display, statistics, and witness/invariant reports.
   - [x] Plain source excerpts and ordered multi-source/runtime callstack rendering
@@ -776,6 +790,8 @@ Build these items alongside the phases that supply their command behavior.
   - [x] Capture runtime frames/listeners and render REPL state diffs.
   - [x] Live terminal width, cached color policy, explicit context overrides and
     styled values/diagnostics/frames/statuses with248 actual snapshots.
+  - [x] Annotated trace/debug/frame display and verification console traces match
+    38 upstream cases; new formatting helpers have complete function coverage.
   - [ ] Remaining command report formatting audit.
 - [x] P10.6 Port documentation extraction and `docs`; embed builtin definitions
   and necessary runtime assets so the binary works outside the checkout.
@@ -857,6 +873,8 @@ any remaining TypeScript client code is distinguished from language-server logic
   minimized regressions for discovered failures.
   - [x] Type/row decoder compatibility checks and 21 default fuzz seeds;
     bounded fuzzing passes 1,319,538 executions without failure.
+  - [x] Public parser/LL-SLL recovery and five IR decoder families add 68 default
+    property seeds; 219,906 bounded fuzz executions pass, including ownership.
 - [ ] P12.4 Run representative and broad corpus comparisons covering parsing,
   analysis, execution, and verification. Keep a fast deterministic suite and
   a separately scheduled expensive solver/corpus suite.
@@ -874,6 +892,9 @@ any remaining TypeScript client code is distinguished from language-server logic
     structs, preserving legacy JSON semantics and complete receiver ownership.
   - [x] Encode value identity keys directly with identical bytes and use canonical
     decimal fast paths for integer/ID parsing without repeated big.Int work.
+  - [x] Reuse completed project analysis for grounded run selectors with exact
+    raw metadata/ownership tests and conservative generic/assumption fallbacks;
+    matched run benchmarks improve 16–25%, allocated bytes 14–21%.
 - [ ] P12.6 Add CI jobs that build and test the `pkg/` module with pinned
   dependencies, reproducible grammar generation, and supported OS/architecture
   targets. Keep reference-tool jobs separate from Go-only validation.
@@ -3763,3 +3784,19 @@ word "retained" in the commit message.
   race1.046s, byte-identical generation, full isolated tests/vet pass. Independent
   cross-check closes P3.4 graph integration and P9.1/P9.3 implemented adapter and
   bounded/multiple-invariant paths; their unrelated deeper gates remain open.
+
+## Pause checkpoint — 2026-11-02
+
+The ready batches are committed with their unit/reference/property tests. The
+assembled default suite, full race suite and vet pass. Coverage is 93.5% for the
+core library, 93.0% for CLI, 96.3% for the Apalache adapter, 88.7% for TLC, 92.0% for
+LSP and 99.1% for terminal policy. Generated parsers and binary entrypoints have
+separate coverage limitations; these figures do not prove every compatibility
+item above. The ordinary core package takes about 1.1–1.2 seconds on this host,
+so the total under-one-second test target is still open.
+
+The unfinished listener audit and compatibility inventory draft are preserved
+outside the checkout for resumption. One listener case shows a suffixed lambda
+parameter in an imported callback's display expression. It is pending evidence,
+not a passing test. No additional port work starts after this checkpoint until
+the user resumes the goal.

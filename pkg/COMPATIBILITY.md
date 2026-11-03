@@ -102,7 +102,8 @@ remain an audit. Backend translation of temporal operators does not make them
 executable in the concrete simulator. Temporal checking uses Go Apalache's
 supported CHECK path; unsupported backend configurations remain errors.
 
-Type-system coverage includes all 95 upstream tests across eight suite families,
+Type-system coverage inventories all 95 upstream tests across eight suite families
+(the 29-test inferrer replay is opt-in),
 with exact raw-ID generator, solver and helper replays. The tuple-prefix
 allocation cap is an explicit Go resource policy.
 
@@ -115,7 +116,8 @@ its Go context identity even when encoded in a native service response.
 
 All eight commands and a default REPL are dispatched by `cmd/quint`. Help/version
 are implemented (`--help`, `-h`, `--version`); common aliases/coercion/repeated
-flags have158 actual yargs cases; remaining help/error prose is partial. All commands accept their documented
+flags have 158 actual yargs cases; 49 help/error transcripts and 36 selector/color
+cases now have saved reference checks. Complete help/error prose remains an audit. All commands accept their documented
 input/positionals and command help. The flags below inventory upstream's active
 options; commented-out `--timeout` is not an upstream implemented option.
 
@@ -159,7 +161,7 @@ packaging remains separate validation work.
 | `QUINT_VSCODE_SERVER_BACKEND` | Development-launch override for the configured VSCode Go/TypeScript server choice; installed extensions use settings. |
 | `GOOS`, `GOARCH` | Native editor-server build targets used by compile:go; packaging must match the extension host. |
 | `QUINT_CORPUS_TESTS` | Test-only opt-in for expensive temporal/corpus checks; not a language/CLI runtime setting. |
-| `HOME`, `USERPROFILE` | Used by upstream editor logger to choose its log path; no corresponding Go logger/path behavior. |
+| `HOME`, `USERPROFILE` | Go editor logging matches the captured path precedence and owns lazy files; 17 source level/path fixtures cover configuration. |
 
 ## Data, statuses, and diagnostics
 
@@ -194,11 +196,11 @@ is an error. Unbounded or state-dependent temporal quantifier domains are reject
 | Types/effects/modes | Recursive types/rows/schemes and analysis tables | Special constraints differ from ordinary signature lookup; runtime support is independent. CLI intentionally omits `modes`, matching the actual upstream pickOutputStage function despite its broader OutputStage interface. |
 | Frontend CLI stage JSON | `stage`, `warnings`, `errors`, `modules`, `table`, `types`, `effects`, `main` as relevant | Complete per-stage field presence/order parity pending; sourceCode is internal in upstream output. |
 | Run/test/docs stage JSON | Run/test extend shared frontend fields with `stage/status/errors/trace/seed` or `stage/errors/passed/failed/ignored`; docs `stage/warnings/errors/documentation` | Run/test preserve parsed/analyzed modules and tables via coreStageFields/coreMarshalStage. Exact per-path defaults, optional fields, presentation, and timing details remain an audit. |
-| Verify result JSON | Go result `status/input/main/outcome/explanation/errors/trace/phases/maxSteps/backendData`, plus `tlc` statistics/messages/log/concrete trace for TLC | Apalache reports its transition bound. TLC omits `maxSteps`, reports exhaustive checking success, and keeps concrete TLA strings and a temporal loop target; requested typed ITF is exposed in trace. Individual invariant labels/warnings extend the result. Does not yet match upstream `stage=verifying` envelope. |
+| Verify result JSON | Go result `status/input/main/outcome/explanation/errors/trace/phases/maxSteps/backendData`, plus `tlc` statistics/messages/log/concrete trace for TLC | Apalache reports its transition bound. TLC omits `maxSteps`, reports exhaustive checking success, and keeps concrete TLA strings and a temporal loop target; requested typed ITF is exposed in trace. Individual invariant labels/warnings extend the result. CLI `--out` matches the shared `stage=verifying` envelope; backend reporting APIs have their own result schema. |
 | Checker input | Projected `stage=compiling`, exactly one module, `types`, empty `table`; validated by production importer | Removes frontend namespace/shadowing/import metadata and module docs, omits inlined typedefs; unresolved imports/type applications and compilation diagnostics rejected. Do not feed arbitrary CLI JSON through unchanged. |
 | Checker config | Source `{kind:string,format:qnt,content:<typed JSON>}`; checker length/init/next/inv/temporal and tuning `search.simulation` overrides | Raw `.qnt` is not source.content. Additional keys reach the Go checker for validation. No Scala service download/fallback. Complete config/solver feature coverage pending. |
-| ITF | Big ints, sets/maps/tuples, records/variants, indexed states, metadata, naming substitutions, MBT, lossless raw trace fields/loop preservation | Concrete normalization implemented. Symbolic runtime values and locale-wide display parity pending; Go Shai currently omits temporal loop index in generated counterexamples. |
-| Diagnostics | `code/message/reference/trace/data`, fixes/error trees; resolved `explanation/locs/traceLocs`; UTF-16 locations and plain source rendering | Complete generated runtime call stacks, colored terminal/value diff/frame parity pending. Error-code inventory exists independently from emission of every code. |
+| ITF | Big ints, sets/maps/tuples, records/variants, indexed states, metadata, naming substitutions, MBT, lossless raw trace fields/loop preservation | Concrete trace normalization shares object history across states; public runtime normalForm handles finite domains with opaque variants. Lone surrogates/invalid UTF-8 reject explicitly. Locale/Unicode-version-wide display parity remains incomplete; Go Shai currently omits temporal loop index in generated counterexamples. |
+| Diagnostics | `code/message/reference/trace/data`, fixes/error trees; resolved `explanation/locs/traceLocs`; UTF-16 locations and plain source rendering | Terminal policy, styled diagnostics and annotated trace/frame output have source fixtures; complete generated runtime call stacks and report-format parity remain pending. Error-code inventory exists independently from emission of every code. |
 
 Runtime simulation statuses are `ok`, `violation`, `error`; named test results
 are `passed`, `failed`, `ignored`. Checker outcomes are `safe`, `violation`,
@@ -251,3 +253,16 @@ Backend VersionInfo APIs report effective linked module versions/replacements
 and optional explicitly supplied checker revisions. Local/development identities
 remain unknown. Real memory-watermark Unknown and ExecutionsTooShort outcomes
 are inconclusive, preserving raw backend failure evidence and context ownership.
+
+Current native CHECK execution rejects ineffective simulation, jail/idle timeout,
+resource-count and cardinality-encoding controls explicitly after config merging.
+Supported SMT query deadlines and memory-watermark outcomes remain available.
+The guard also applies to raw command calls and native JSON field/merge spellings.
+Random-transition simulation remains unavailable.
+
+Run preparation reuses source analysis for grounded selectors, with full inference
+for generic scopes, assumptions, polymorphic additions and diagnostics. Final
+successful higher-order callbacks observe caller cancellation after restoring
+scope; explicit callback errors keep precedence. Transported alias first-selection
+has 15 saved histories; the broader listener-stack audit remains open, including
+one imported callback lambda display-name mismatch.

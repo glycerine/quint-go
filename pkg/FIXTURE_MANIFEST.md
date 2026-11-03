@@ -194,3 +194,20 @@ When a pending case is implemented, add a real Go assertion against the original
 reference evidence, preserve its source/expected outcome, update this classification,
 and record the green batch in `PLAN_PORT.md`. Changing a filename, a note, a skip
 or an expected value alone does not promote a case to passing coverage.
+
+## Final ready-batch additions
+
+The following saved source comparisons supplement the family rows above:
+
+- CLI help/frontend errors: 49 transcripts; run/test selectors and colors: 36 cases.
+- Annotated trace/verification display: 38 cases.
+- ITF shared history, symbolic normalForm and Unicode boundaries: 69 cases.
+- Transported alias compilation: 15 histories/28 operations.
+- Parser/IR properties: 68 fast seeds and 219,906 bounded fuzz executions.
+- Runtime cancellation:four parsed final-fold regressions plus scope/error and
+  independent-owner checks.
+
+Actual Go checker tests additionally cover nested instances with 40-digit integers,
+zero/one-step verdicts and independently checked counterexamples, plus explicit
+unsupported input failure. The imported callback lambda display audit is pending;
+its unfinished evidence is not included in passing default tests.

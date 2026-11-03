@@ -278,3 +278,21 @@ must be finite, acyclic IR; traversal errors do not replace full validation, and
 exit replacements remain the callback's responsibility. Transform before
 building dependent resolution, analysis or execution state, or rebuild that
 state after changing names, IDs or structure.
+
+`NewProjectEvaluatorFromAnalysis` reuses completed analysis while adding declarations
+to the selected main module. It copies caller-owned analysis/IR/IDs and preserves
+full inference for generic source scopes, assumptions, polymorphic additions and
+diagnostics. This is the run command's preparation path.
+
+`DecodeNormalizedITFTraceContext` normalizes concrete trace states with one shared
+object-hash sequence; callers may supply sequentially owned hash state.
+`NormalizeRuntimeValueContext` also handles finite symbolic domains, preserving
+opaque variant payloads. It may share immutable values and memo history; finite
+enumeration has no cardinality cap. Infinite-domain enumeration returns an error.
+ITF refuses lone UTF-16 surrogates and invalid UTF-8 instead of silently replacing
+them; raw metadata remains uninterpreted. Locale/Unicode-wide sorting parity is
+not established.
+
+`FormatTraceContext` formats states, optional execution frames, per-state and
+pending debug messages, and hidden variables. It accepts terminal context styles
+and sequentially owned object-hash history, and returns no partial text on error.
