@@ -1,0 +1,676 @@
+[
+  {
+    "name": "missing-variable-colon",
+    "source": "module M { var x } module Other { val ok=1 }",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {':', '::'}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "missing-variable-colon.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "missing-variable-colon.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "name": "missing-constant-colon",
+    "source": "module M { const x } module Other { val ok=1 }",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {':', '::'}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "missing-constant-colon.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "missing-constant-colon.qnt",
+        "start": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "name": "completed-prefix",
+    "source": "module Good { val x=1 } module Bad { var x } module Later { val z=3 }",
+    "modules": [
+      {
+        "id": 4,
+        "name": "Good",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {':', '::'}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "completed-prefix.qnt",
+        "start": {
+          "line": 0,
+          "col": 43,
+          "index": 43
+        },
+        "end": {
+          "line": 0,
+          "col": 43,
+          "index": 43
+        }
+      },
+      "2": {
+        "source": "completed-prefix.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "3": {
+        "source": "completed-prefix.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "4": {
+        "source": "completed-prefix.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "completed-prefix.qnt",
+        "start": {
+          "line": 0,
+          "col": 43,
+          "index": 43
+        },
+        "end": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        }
+      },
+      "2": {
+        "source": "completed-prefix.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "3": {
+        "source": "completed-prefix.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "4": {
+        "source": "completed-prefix.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      }
+    },
+    "nextID": 5
+  },
+  {
+    "name": "partial-declarations",
+    "source": "module Good { val x=1 } module Bad { val before=0 const x } module Later { val z=3 }",
+    "modules": [
+      {
+        "id": 4,
+        "name": "Good",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {':', '::'}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 58,
+          "index": 58
+        },
+        "end": {
+          "line": 0,
+          "col": 58,
+          "index": 58
+        }
+      },
+      "2": {
+        "source": "partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "3": {
+        "source": "partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "4": {
+        "source": "partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "5": {
+        "source": "partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      },
+      "6": {
+        "source": "partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 58,
+          "index": 58
+        },
+        "end": {
+          "line": 0,
+          "col": 59,
+          "index": 59
+        }
+      },
+      "2": {
+        "source": "partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        }
+      },
+      "3": {
+        "source": "partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "4": {
+        "source": "partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "5": {
+        "source": "partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      },
+      "6": {
+        "source": "partial-declarations.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 47,
+          "index": 47
+        }
+      }
+    },
+    "nextID": 7
+  },
+  {
+    "name": "variable-at-eof",
+    "source": "module M { var x",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '<EOF>' expecting {':', '::'}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "variable-at-eof.qnt",
+        "start": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "variable-at-eof.qnt",
+        "start": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "name": "constant-at-eof",
+    "source": "module M { const x",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '<EOF>' expecting {':', '::'}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "constant-at-eof.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "constant-at-eof.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "name": "missing-variable-name",
+    "source": "module M { var }",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'and', 'or', 'iff', 'implies', 'leadsTo', 'match', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "missing-variable-name.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "missing-variable-name.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "name": "missing-constant-name",
+    "source": "module M { const }",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'and', 'or', 'iff', 'implies', 'leadsTo', 'match', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "missing-constant-name.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "missing-constant-name.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "name": "variable-before-assignment",
+    "source": "module M { var x=1 }",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '=' expecting {':', '::'}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "variable-before-assignment.qnt",
+        "start": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        },
+        "end": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "variable-before-assignment.qnt",
+        "start": {
+          "line": 0,
+          "col": 16,
+          "index": 16
+        },
+        "end": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        }
+      }
+    },
+    "nextID": 2
+  },
+  {
+    "name": "constant-before-assignment",
+    "source": "module M { const x=1 }",
+    "modules": [],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '=' expecting {':', '::'}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "constant-before-assignment.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      }
+    },
+    "sources": {
+      "1": {
+        "source": "constant-before-assignment.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      }
+    },
+    "nextID": 2
+  }
+]

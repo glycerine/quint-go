@@ -60,6 +60,9 @@ type recoveringParserIDs struct {
 var errParserListenerAbort = fmt.Errorf("reference listener aborted after a missing type")
 
 func missingRecoveryType(ctx antlr.Tree) bool {
+	if ctx == nil {
+		return true
+	}
 	_, missing := ctx.(*p.TypeContext)
 	return missing
 }
@@ -70,6 +73,14 @@ func recoveryLookaheadSyntaxIssue(recognizer antlr.Recognizer, offending interfa
 	parser, ok := recognizer.(antlr.Parser)
 	if !ok {
 		return offending, line, column, message
+	}
+	if token, ok := offending.(antlr.Token); ok && message == "mismatched input '"+token.GetText()+"' expecting ':'" {
+		switch parser.GetParserRuleContext().(type) {
+		case *p.VarContext, *p.ConstContext:
+			// antlr4ts retains the qualified-name continuation in this
+			// expected-token set when a declaration has no type separator.
+			return offending, line, column, "mismatched input '" + token.GetText() + "' expecting {':', '::'}"
+		}
 	}
 	if _, noAlternative := exception.(*antlr.NoViableAltException); !noAlternative {
 		return offending, line, column, message

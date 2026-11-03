@@ -195,8 +195,9 @@ without losing semantic information, and diagnostic locations remain stable.
     compare partial modules, stage JSON, source maps and Markdown on errors.
   - [x] Recover operand borrowing across malformed multi-field records with
     exact temporary Tup wrappers/zero IDs and listener reduction order.
-  - [ ] Complete nil-type listener abort edge audit; malformed reference IR
-    containing null operands stays an explicit SyntaxRecoveryError frontier.
+  - [x] Match nil-type listener aborts and declaration-colon expected tokens;
+    malformed reference IR containing null operands stays an explicit
+    SyntaxRecoveryError frontier rather than fabricating typed expressions.
 - [ ] P2.9 Differential-test parsed IR and error codes across parser fixtures
   and the repository's `.qnt` corpus; normalize only documented ID differences.
 
@@ -3578,3 +3579,10 @@ word "retained" in the commit message.
   nil versus empty rather than depending on omitempty to mask them. No fixture
   normalization is used. Existing compilation/import/full-flatten/alias suites
   and new raw roundtrips pass0.172s; regeneration is byte deterministic.
+
+- 2026-11-02: Matched missing declaration-type listener aborts and recovery-only
+  colon diagnostics with ten exact actual TypeScript cases. Tests compare raw
+  modules, all diagnostics, public/raw maps and continued IDs, including later
+  modules after abort. Focused0.012s, broad parser/source0.209s, CLI recovery0.064s,
+  race1.057s, vet and byte-identical generation pass. Recovering CLI adapters can
+  now preserve these partial results rather than replace them with generic errors.
