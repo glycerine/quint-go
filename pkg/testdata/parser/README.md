@@ -1140,3 +1140,10 @@ tests run six safe/violating models through both Go Apalache assignment IR and
 native Go TLC predicate IR (24 checks); separate tests enforce TLA run removal.
 Verify recovery reuses nine exact malformed-source fixtures across both backend
 interfaces and checks neither backend runs before frontend errors are resolved.
+
+`runtime_symbolic_trace.json` saves 21 actual source cases and two typed
+`q::testOnce` cases, with zero-UID variants. Its matching grammar generator
+compares exact checked state/result serialization, exception precedence, ITF,
+RNG and object-UID history. Test and simulation drivers take snapshots at the
+reference boundary; CLI JSON/ITF exports reuse those owned expressions. Default
+helper tests cover shared nil-state allocation, cancellation and partial failures.

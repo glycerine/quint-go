@@ -575,6 +575,8 @@ including failed actions that must not leak partially updated state.
   - [x] Source expression selectors, run CLI defaults/flags/output, witnesses,
     replay seeds, metadata, JSON/ITF traces, and cancellation/error statuses.
   - [x] Individual false-invariant reports and saved plain-text command transcripts.
+  - [x] Checked selected-trace snapshots preserve compact values, serialization
+    exceptions and shared object history before driver result classification.
   - [ ] Remaining terminal/color/selector and full formatting parity audit.
 - [ ] P8.2 Implement `test` discovery/filtering, randomized repetitions,
   pass/fail/ignore results, assertion reports, and replayable failing seeds.
@@ -3470,3 +3472,12 @@ word "retained" in the commit message.
   nine malformed sources across both injected backends produce18 exact checks.
   Focused init0.030s, Verify0.218s, native TLC0.157s and vet pass. Broader generated
   semantics remain open under P9.7.
+
+- 2026-11-02: Matched checked trace snapshots at the simulation/test driver
+  boundary. Test snapshots occur before result classification and once after
+  exhaustion; simulation serializes selected successful peers even when another
+  selected trace has a diagnostic. CLI exports reuse snapshots without advancing
+  object history twice. Twenty-one source cases plus two typed q::testOnce cases
+  compare exact expressions, ITF, errors, RNG and UID history, with cancellation.
+  New trace helper100% covered; focused core0.116s/CLI0.114s, full core1.041s
+  and vet pass. Compact infinite serialization remains an explicit checked error.

@@ -17,6 +17,10 @@ type RuntimeTestResult struct {
 	Seed    Integer
 	Samples int
 	States  []RuntimeValue
+	// SerializedStates is the checked snapshot taken at the reference runtime's
+	// result boundary. Reuse it when exporting a trace to preserve display order
+	// and the evaluator's object-hash history.
+	SerializedStates []Expr
 }
 
 // Test runs a named definition up to maxSamples times. A successful sample that
@@ -25,8 +29,9 @@ type RuntimeTestResult struct {
 // commits its pending state, including false/error/ignored results. Resets clear
 // state and trace between samples without rewinding the RNG. Zero samples clears
 // the trace and reports success without evaluating or resetting registers.
-// Cancellation and invalid arguments return a Go error; runtime diagnostics are
-// returned in the result. Callers must use this evaluator sequentially.
+// Cancellation, invalid arguments, and display serialization exceptions return
+// a Go error; runtime diagnostics are returned in the result. Callers must use
+// this evaluator sequentially.
 func (e *ModuleEvaluator) Test(ctx context.Context, name string, maxSamples int) (RuntimeTestResult, error) {
 	out := RuntimeTestResult{Name: name, Status: "passed", Errors: []Diagnostic{}, Seed: e.RNG.State()}
 	if err := ctx.Err(); err != nil {
@@ -78,6 +83,13 @@ func (e *ModuleEvaluator) Test(ctx context.Context, name string, maxSamples int)
 			out.States = states
 			bestLength = len(states)
 		}
+		// The reference serializes the selected trace before classifying the
+		// result, including runtime diagnostics and ignored non-Boolean values.
+		var err error
+		out.SerializedStates, err = SerializeRuntimeTraceContext(ctx, out.States, e.ObjectHashState())
+		if err != nil {
+			return out, err
+		}
 		if evaluationError != nil {
 			var diagnostic Diagnostic
 			if !errors.As(evaluationError, &diagnostic) {
@@ -87,11 +99,17 @@ func (e *ModuleEvaluator) Test(ctx context.Context, name string, maxSamples int)
 			out.Errors = append(out.Errors, diagnostic)
 			return out, nil
 		}
-		if value.expression.Kind != "bool" {
+		// Malformed results are classified from their display expression too;
+		// a compact result can fail serialization before it is ignored.
+		expression, err := SerializeRuntimeValueContext(ctx, value, e.ObjectHashState())
+		if err != nil {
+			return out, err
+		}
+		if expression.Kind != "bool" {
 			out.Status = "ignored"
 			return out, nil
 		}
-		if !value.expression.Bool {
+		if !expression.Bool {
 			id := definition.ID
 			out.Status = "failed"
 			out.Errors = append(out.Errors, Diagnostic{Code: "QNT511", Message: "Test " + name + " returned false", Reference: &id})
@@ -100,6 +118,12 @@ func (e *ModuleEvaluator) Test(ctx context.Context, name string, maxSamples int)
 		if e.RNG.State() == out.Seed {
 			return out, nil
 		}
+	}
+	// Exhausting the sample limit takes one further snapshot before onTrace.
+	var err error
+	out.SerializedStates, err = SerializeRuntimeTraceContext(ctx, out.States, e.ObjectHashState())
+	if err != nil {
+		return out, err
 	}
 	return out, nil
 }

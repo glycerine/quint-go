@@ -331,10 +331,7 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 	serializedTraces := make([][]quint.Expr, len(outcome.BestTraces))
 	hashes := evaluator.ObjectHashState()
 	for i, trace := range outcome.BestTraces {
-		serializedTraces[i], err = runExpressions(ctx, trace.States, hashes)
-		if err != nil {
-			return fail(err)
-		}
+		serializedTraces[i] = trace.SerializedStates
 	}
 	if len(outcome.BestTraces) > 0 {
 		fields.Set("trace", serializedTraces[0])
@@ -451,18 +448,7 @@ func runValidateAction(frontend quint.FrontendResult, main, flag, text string) e
 }
 
 func runExpressions(ctx context.Context, values []quint.RuntimeValue, hashes *quint.RuntimeObjectHashState) ([]quint.Expr, error) {
-	if err := ctx.Err(); err != nil {
-		return nil, err
-	}
-	result := make([]quint.Expr, len(values))
-	for i, value := range values {
-		expression, err := quint.SerializeRuntimeValueContext(ctx, value, hashes)
-		if err != nil {
-			return nil, err
-		}
-		result[i] = expression
-	}
-	return result, nil
+	return quint.SerializeRuntimeTraceContext(ctx, values, hashes)
 }
 func runVariables(states []quint.Expr, metadata bool) []string {
 	names := []string{}

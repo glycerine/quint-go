@@ -26,6 +26,8 @@ type SimulationTrace struct {
 	States []RuntimeValue
 	Result bool
 	Seed   Integer
+	// SerializedStates is the checked display snapshot taken after ranking.
+	SerializedStates []Expr
 }
 
 type SimulationTraceStatistics struct {
@@ -48,8 +50,9 @@ type SimulationOutcome struct {
 func (e *ModuleEvaluator) Reset() { e.Trace.Reset(); e.Storage.Reset() }
 
 // Simulate reproduces the sequential TypeScript simulation policy. Runtime
-// diagnostics are returned in the outcome; cancellation and invalid API options
-// return an error. The evaluator retains its last state/trace and advanced RNG.
+// diagnostics are returned in the outcome; cancellation, invalid API options,
+// and trace serialization exceptions return an error. The evaluator retains
+// its last state/trace and advanced RNG.
 // Witnesses are checked after successful steps only; their runtime errors are
 // ignored. Each witness counts at most once per sample.
 func (e *ModuleEvaluator) Simulate(ctx context.Context, options SimulationOptions) (SimulationOutcome, error) {
@@ -248,9 +251,18 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 		out.Status = "violation"
 	}
 	selectedErrors := []Diagnostic{}
-	for _, trace := range best {
+	for i := range best {
+		trace := &best[i]
 		if trace.failure != nil {
 			selectedErrors = append(selectedErrors, *trace.failure)
+			continue
+		}
+		// The reference maps every ranked trace before merging diagnostics;
+		// successful peers still serialize when another selected trace failed.
+		var err error
+		trace.trace.SerializedStates, err = SerializeRuntimeTraceContext(ctx, trace.trace.States, e.ObjectHashState())
+		if err != nil {
+			return out, err
 		}
 	}
 	if len(selectedErrors) > 0 {

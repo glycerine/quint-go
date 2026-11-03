@@ -448,16 +448,9 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 		// Upstream calls onTrace for passed and false tests, but not for
 		// malformed results or runtime errors.
 		if options.itf != "" && (result.Status == "passed" || (result.Status == "failed" && len(result.Errors) > 0 && result.Errors[0].Code == "QNT511")) {
-			states := make([]quint.Expr, len(result.States))
-			for i, state := range result.States {
-				states[i], err = quint.SerializeRuntimeValueContext(ctx, state, evaluator.ObjectHashState())
-				if err != nil {
-					return fail(err)
-				}
-			}
 			now := time.Now()
 			writer := quint.TraceWriter{Template: options.itf, Header: quint.ITFHeader{Source: options.input, CreatedAt: now.Format(time.RFC1123Z), Timestamp: now.UnixMilli()}}
-			if _, err = writer.Write(index, result.Status, evaluator.Storage.VarNames(), states, result.Name); err != nil {
+			if _, err = writer.Write(index, result.Status, evaluator.Storage.VarNames(), result.SerializedStates, result.Name); err != nil {
 				return fail(err)
 			}
 		}

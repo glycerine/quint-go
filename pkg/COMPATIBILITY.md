@@ -76,7 +76,9 @@ hash-tree traversal. Callable values can occur in collections. Compiled
 factory-lambda reuse, shared captured parameter cells, scoped caches and literal
 identity now match the saved lifetime and incremental-session cases.
 Context-free `RuntimeValue.Expression()`/`String()` expose concrete canonical
-values or compact symbolic structure. Checked `ExpressionContext`, `EqualContext`,
+values or compact symbolic structure. Simulation/test drivers retain checked display snapshots at the reference result
+boundary, and CLI exports reuse them without advancing object history twice.
+Checked `ExpressionContext`, `EqualContext`,
 `HashContext` and `SerializeRuntimeValueContext` expose source extensional semantics,
 errors and cancellation. Serialization preserves history-dependent fresh-object
 hashes shared by evaluator collections, CLI and debug output. Source setToMap,
