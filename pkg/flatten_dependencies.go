@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/glycerine/insdict"
+	"slices"
 	"strings"
 )
 
@@ -29,7 +30,7 @@ func dependentDefinitionsInNamespace(expression Expr, table *insdict.Dict[ID, Lo
 		if def.ImportedFrom != nil {
 			hidden := def.Hidden
 			d.Hidden = &hidden
-			d.Namespaces = append([]string{}, def.Namespaces...)
+			d.Namespaces = slices.Clone(def.Namespaces)
 			d.ImportedFrom, _ = json.Marshal(def.ImportedFrom)
 		}
 		if d.Kind == "def" && def.Depth > 0 {

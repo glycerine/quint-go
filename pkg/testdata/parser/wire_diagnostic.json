@@ -1,0 +1,419 @@
+{
+  "metadata": {
+    "sourceSHA256": {
+      "quint/src/ErrorMessage.ts": "91d214f7289a88cc0ba21cf3e8f72d658f2e7bbb5f252eb0724d2c01d77b098f",
+      "quint/src/cliHelpers.ts": "fea43d2607fdf16b04b20e03042204163d6d4a35281bc2cfa8a88d8160a339f2",
+      "quint/src/jsonHelper.ts": "3ca872b33e615253761dd92f47c57533cc4cc7af4d2df6dac9e108a91efbf010",
+      "quint/src/quintError.ts": "1d6726474633d350b4c84c95e289f7f3f2b5e863723bdf8880798e8aa7ef2197"
+    },
+    "contract": "IDs are lossless JSON integers. Omitted optional arrays differ from explicitly empty arrays. Source locations retain optional ends, zero fields and source spelling. Rust #trace is revived before internal diagnostic serialization."
+  },
+  "sources": [
+    {
+      "id": 0,
+      "location": {
+        "source": "zero.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        }
+      }
+    },
+    {
+      "id": 1,
+      "location": {
+        "source": "unicode/😀.qnt",
+        "start": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        },
+        "end": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    },
+    {
+      "id": 2,
+      "location": {
+        "source": "other.qnt",
+        "start": {
+          "line": 1,
+          "col": 0,
+          "index": 7
+        }
+      }
+    },
+    {
+      "id": 340282366920938463463374607431768211456,
+      "location": {
+        "source": "huge-id.qnt",
+        "start": {
+          "line": 3,
+          "col": 4,
+          "index": 44
+        },
+        "end": {
+          "line": 3,
+          "col": 4,
+          "index": 44
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "name": "absent-optionals",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire"
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": []
+      }
+    },
+    {
+      "name": "known-reference",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "reference": 1
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": [
+          {
+            "source": "unicode/😀.qnt",
+            "start": {
+              "line": 0,
+              "col": 2,
+              "index": 2
+            },
+            "end": {
+              "line": 0,
+              "col": 5,
+              "index": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "reserved-zero-reference",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "reference": 0
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": []
+      }
+    },
+    {
+      "name": "unknown-reference",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "reference": 998
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": []
+      }
+    },
+    {
+      "name": "empty-stack-retains-reference",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "reference": 1,
+        "trace": []
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": [
+          {
+            "source": "unicode/😀.qnt",
+            "start": {
+              "line": 0,
+              "col": 2,
+              "index": 2
+            },
+            "end": {
+              "line": 0,
+              "col": 5,
+              "index": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "single-stack-overrides-reference",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "reference": 1,
+        "trace": [
+          2
+        ]
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": [
+          {
+            "source": "other.qnt",
+            "start": {
+              "line": 1,
+              "col": 0,
+              "index": 7
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "missing-stack-primary-does-not-fallback",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "reference": 1,
+        "trace": [
+          999
+        ]
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": []
+      }
+    },
+    {
+      "name": "missing-stack-tail-preserves-empty-array",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "trace": [
+          1,
+          999
+        ]
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": [
+          {
+            "source": "unicode/😀.qnt",
+            "start": {
+              "line": 0,
+              "col": 2,
+              "index": 2
+            },
+            "end": {
+              "line": 0,
+              "col": 5,
+              "index": 5
+            }
+          }
+        ],
+        "traceLocs": []
+      }
+    },
+    {
+      "name": "all-stack-frames-missing",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "trace": [
+          999,
+          998,
+          999
+        ]
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": [],
+        "traceLocs": []
+      }
+    },
+    {
+      "name": "partially-resolved-stack",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "trace": [
+          1,
+          2,
+          999,
+          1
+        ]
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": [
+          {
+            "source": "unicode/😀.qnt",
+            "start": {
+              "line": 0,
+              "col": 2,
+              "index": 2
+            },
+            "end": {
+              "line": 0,
+              "col": 5,
+              "index": 5
+            }
+          }
+        ],
+        "traceLocs": [
+          {
+            "source": "other.qnt",
+            "start": {
+              "line": 1,
+              "col": 0,
+              "index": 7
+            }
+          },
+          {
+            "source": "unicode/😀.qnt",
+            "start": {
+              "line": 0,
+              "col": 2,
+              "index": 2
+            },
+            "end": {
+              "line": 0,
+              "col": 5,
+              "index": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "reserved-zero-stack-primary",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "reference": 2,
+        "trace": [
+          0,
+          1
+        ]
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": [],
+        "traceLocs": [
+          {
+            "source": "unicode/😀.qnt",
+            "start": {
+              "line": 0,
+              "col": 2,
+              "index": 2
+            },
+            "end": {
+              "line": 0,
+              "col": 5,
+              "index": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "unbounded-reference-id",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "reference": 340282366920938463463374607431768211456
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": [
+          {
+            "source": "huge-id.qnt",
+            "start": {
+              "line": 3,
+              "col": 4,
+              "index": 44
+            },
+            "end": {
+              "line": 3,
+              "col": 4,
+              "index": 44
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "empty-data-object",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "data": {}
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": []
+      }
+    },
+    {
+      "name": "empty-fix-strings",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "",
+            "replacement": ""
+          }
+        }
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": []
+      }
+    },
+    {
+      "name": "nested-error-tree",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "data": {
+          "trace": {
+            "location": "Checking type annotation a",
+            "children": [
+              {
+                "location": "Checking variable a",
+                "message": "",
+                "children": []
+              }
+            ]
+          }
+        }
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": []
+      }
+    },
+    {
+      "name": "revived-empty-rust-stack",
+      "diagnostic": {
+        "code": "QNT501",
+        "message": "wire",
+        "trace": []
+      },
+      "located": {
+        "explanation": "[QNT501] wire",
+        "locs": []
+      }
+    }
+  ]
+}

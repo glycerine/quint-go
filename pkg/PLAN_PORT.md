@@ -145,7 +145,8 @@ boundary, with concrete gaps listed before frontend implementation starts.
   empty, and null fields where the upstream contract does.
   - [x] Strict per-variant expression/type/row/row-field JSON with unknown,
     unrelated, and mis-cased field rejection and failed-receiver preservation.
-  - [ ] Complete analysis-table wire schemas and optional empty metadata arrays.
+  - [x] Validate raw analysis/stage snapshots and preserve absent/empty/nonempty
+    metadata arrays through marshaling and import/flatten copy boundaries.
 - [ ] P1.5 Port visitors, transformers, finders, IR printers, ID refreshing,
   namespacing, and source-reference preservation.
 - [x] P1.6 Port structured errors, error trees, codes, source excerpts, and
@@ -3569,3 +3570,11 @@ word "retained" in the commit message.
   distinction tests pass. Full native TLC0.320s; the upstream coarse evaluation
   misclassification is deliberately corrected. Broader parity/hard preemption
   remain open.
+
+- 2026-11-02: Preserved explicit empty diagnostic stacks/resolved trace locations
+  and declaration namespace arrays with26 actual raw wire snapshots. Sixteen
+  diagnostic cases distinguish omitted/empty/nonempty fields; ten IR snapshots
+  cover imported/exported/flattened provenance. Three copy boundaries now preserve
+  nil versus empty rather than depending on omitempty to mask them. No fixture
+  normalization is used. Existing compilation/import/full-flatten/alias suites
+  and new raw roundtrips pass0.172s; regeneration is byte deterministic.

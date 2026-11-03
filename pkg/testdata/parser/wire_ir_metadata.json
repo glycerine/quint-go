@@ -1,0 +1,846 @@
+[
+  {
+    "name": "plain-export",
+    "source": "module A { val a=1 } module B { export A.* }",
+    "target": "B",
+    "input": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "export",
+            "defName": "*",
+            "protoName": "A"
+          }
+        ]
+      }
+    ],
+    "output": {
+      "id": 5,
+      "name": "B",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "a",
+          "qualifier": "val",
+          "expr": {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0,
+          "hidden": false,
+          "namespaces": []
+        }
+      ]
+    }
+  },
+  {
+    "name": "qualified-export",
+    "source": "module A { val a=1 } module B { export A as I }",
+    "target": "B",
+    "input": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "export",
+            "protoName": "A",
+            "qualifiedName": "I"
+          }
+        ]
+      }
+    ],
+    "output": {
+      "id": 5,
+      "name": "B",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "I::a",
+          "qualifier": "val",
+          "expr": {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0,
+          "hidden": false,
+          "namespaces": []
+        }
+      ]
+    }
+  },
+  {
+    "name": "operator-export",
+    "source": "module A { def f(x)=x+1 } module B { export A.* }",
+    "target": "B",
+    "input": [
+      {
+        "id": 7,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "f",
+            "qualifier": "def",
+            "expr": {
+              "id": 5,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 1,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 4,
+                "kind": "app",
+                "opcode": "iadd",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 8,
+            "kind": "export",
+            "defName": "*",
+            "protoName": "A"
+          }
+        ]
+      }
+    ],
+    "output": {
+      "id": 9,
+      "name": "B",
+      "declarations": [
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "def",
+          "expr": {
+            "id": 5,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "x"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "depth": 0,
+          "hidden": false,
+          "namespaces": []
+        }
+      ]
+    }
+  },
+  {
+    "name": "type-and-constant-export",
+    "source": "module A { type T=int const c:T } module B { export A.* }",
+    "target": "B",
+    "input": [
+      {
+        "id": 5,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "typedef",
+            "name": "T",
+            "type": {
+              "id": 1,
+              "kind": "int"
+            },
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "c",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "const",
+              "name": "T"
+            },
+            "id": 4,
+            "depth": 0
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "export",
+            "defName": "*",
+            "protoName": "A"
+          }
+        ]
+      }
+    ],
+    "output": {
+      "id": 7,
+      "name": "B",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "typedef",
+          "name": "T",
+          "type": {
+            "id": 1,
+            "kind": "int"
+          },
+          "depth": 0,
+          "hidden": false,
+          "namespaces": []
+        }
+      ]
+    }
+  },
+  {
+    "name": "star-import",
+    "source": "module A { val a=1 } module B { import A.* val b=a }",
+    "target": "B",
+    "input": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "A"
+          },
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "name",
+              "name": "a"
+            }
+          }
+        ]
+      }
+    ],
+    "output": {
+      "id": 7,
+      "name": "B",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "a",
+          "qualifier": "val",
+          "expr": {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "A"
+          },
+          "hidden": true
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "b",
+          "qualifier": "val",
+          "expr": {
+            "id": 5,
+            "kind": "name",
+            "name": "a"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "selective-import",
+    "source": "module A { val a=1 } module B { import A.a val b=a }",
+    "target": "B",
+    "input": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "import",
+            "defName": "a",
+            "protoName": "A"
+          },
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "name",
+              "name": "a"
+            }
+          }
+        ]
+      }
+    ],
+    "output": {
+      "id": 7,
+      "name": "B",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "a",
+          "qualifier": "val",
+          "expr": {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "defName": "a",
+            "protoName": "A"
+          },
+          "hidden": true
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "b",
+          "qualifier": "val",
+          "expr": {
+            "id": 5,
+            "kind": "name",
+            "name": "a"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "qualified-import",
+    "source": "module A { val a=1 } module B { import A as I val b=I::a }",
+    "target": "B",
+    "input": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "I"
+          },
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "name",
+              "name": "I::a"
+            }
+          }
+        ]
+      }
+    ],
+    "output": {
+      "id": 7,
+      "name": "B",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "I::a",
+          "qualifier": "val",
+          "expr": {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "I"
+          },
+          "hidden": true,
+          "namespaces": [
+            "I"
+          ]
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "b",
+          "qualifier": "val",
+          "expr": {
+            "id": 5,
+            "kind": "name",
+            "name": "I::a"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "export-then-star-import",
+    "source": "module A { val a=1 } module B { export A.* } module C { import B.* val c=a }",
+    "target": "C",
+    "input": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            "depth": 0,
+            "hidden": false,
+            "namespaces": []
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "name": "C",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "B"
+          },
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "c",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "name",
+              "name": "a"
+            }
+          }
+        ]
+      }
+    ],
+    "output": {
+      "id": 9,
+      "name": "C",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "a",
+          "qualifier": "val",
+          "expr": {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0,
+          "hidden": true,
+          "namespaces": [],
+          "importedFrom": {
+            "id": 6,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "B"
+          }
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "c",
+          "qualifier": "val",
+          "expr": {
+            "id": 7,
+            "kind": "name",
+            "name": "a"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "qualified-export-then-star-import",
+    "source": "module A { val a=1 } module B { export A as I } module C { import B.* val c=I::a }",
+    "target": "C",
+    "input": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "I::a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            "depth": 0,
+            "hidden": false,
+            "namespaces": []
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "name": "C",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "B"
+          },
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "c",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "name",
+              "name": "I::a"
+            }
+          }
+        ]
+      }
+    ],
+    "output": {
+      "id": 9,
+      "name": "C",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "I::a",
+          "qualifier": "val",
+          "expr": {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0,
+          "hidden": true,
+          "namespaces": [],
+          "importedFrom": {
+            "id": 6,
+            "kind": "import",
+            "defName": "*",
+            "protoName": "B"
+          }
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "c",
+          "qualifier": "val",
+          "expr": {
+            "id": 7,
+            "kind": "name",
+            "name": "I::a"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "export-then-qualified-import",
+    "source": "module A { val a=1 } module B { export A.* } module C { import B as J val c=J::a }",
+    "target": "C",
+    "input": [
+      {
+        "id": 3,
+        "name": "A",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "B",
+        "declarations": [
+          {
+            "id": 2,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "int",
+              "value": 1
+            },
+            "depth": 0,
+            "hidden": false,
+            "namespaces": []
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "name": "C",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "import",
+            "protoName": "B",
+            "qualifiedName": "J"
+          },
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "c",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "name",
+              "name": "J::a"
+            }
+          }
+        ]
+      }
+    ],
+    "output": {
+      "id": 9,
+      "name": "C",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "J::a",
+          "qualifier": "val",
+          "expr": {
+            "id": 1,
+            "kind": "int",
+            "value": 1
+          },
+          "depth": 0,
+          "hidden": true,
+          "namespaces": [
+            "J"
+          ],
+          "importedFrom": {
+            "id": 6,
+            "kind": "import",
+            "protoName": "B",
+            "qualifiedName": "J"
+          }
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "c",
+          "qualifier": "val",
+          "expr": {
+            "id": 7,
+            "kind": "name",
+            "name": "J::a"
+          }
+        }
+      ]
+    }
+  }
+]

@@ -1,6 +1,9 @@
 package quint
 
-import "strings"
+import (
+	"slices"
+	"strings"
+)
 
 // ImportDefinitions copies visible top-level definitions into this scope.
 // The caller resolves the source module and registers aliases for later exports.
@@ -70,7 +73,7 @@ func (s *NameScope) copyModuleDefinitions(source *NameScope, decl Declaration, h
 			def.Hidden = true
 		}
 		def.ImportedFrom = &decl
-		def.Namespaces = append([]string(nil), def.Namespaces...)
+		def.Namespaces = slices.Clone(def.Namespaces)
 		namespaces := []string{namespace}
 		if decl.Kind == "instance" {
 			instanceName := decl.ProtoName

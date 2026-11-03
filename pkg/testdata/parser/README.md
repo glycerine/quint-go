@@ -1205,3 +1205,10 @@ false-predicate models, plus typed initial-property ITF export. Specific native
 error codes distinguish incomplete evaluation failures from genuine violations;
 finite state/action PROPERTY counterexamples require no temporal lasso. These
 checks correct the reference CLI coarse exit-status misclassification.
+
+`wire_diagnostic.json` contains 16 actual diagnostic/location snapshots and
+`wire_ir_metadata.json` contains ten raw IR snapshots, with matching generators.
+Tests compare original raw JSON, preserving omitted/empty/nonempty trace arrays
+and declaration namespaces across roundtrip, import/export and flatten paths.
+Metadata cloning preserves nil versus empty explicitly; typed remarshal on both
+sides is not used to hide wire differences. Regeneration is byte deterministic.

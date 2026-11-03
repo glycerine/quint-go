@@ -1,6 +1,9 @@
 package quint
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"slices"
+)
 
 // declarationLookup retains the lookup fields carried by flattened IR. Fresh
 // source declarations omit these fields, but imported definitions can retain
@@ -9,7 +12,7 @@ func declarationLookup(declaration Declaration) LookupDefinition {
 	copy := declaration
 	definition := LookupDefinition{
 		ID: declaration.ID, Name: declaration.Name, Declaration: &copy,
-		Namespaces: append([]string(nil), declaration.Namespaces...),
+		Namespaces: slices.Clone(declaration.Namespaces),
 	}
 	if declaration.Depth != nil {
 		definition.Depth = *declaration.Depth

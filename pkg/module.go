@@ -109,18 +109,26 @@ func (d Declaration) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	if d.Kind != "instance" && !(d.Kind == "typedef" && d.Params != nil) {
+	preserveEmptyNamespaces := d.Namespaces != nil && len(d.Namespaces) == 0
+	if d.Kind != "instance" && !(d.Kind == "typedef" && d.Params != nil) && !preserveEmptyNamespaces {
 		return data, nil
 	}
 	var obj map[string]json.RawMessage
 	if err = json.Unmarshal(data, &obj); err != nil {
 		return nil, err
 	}
-	if d.Kind == "typedef" {
+	// Flattening exports deliberately clears the namespace metadata to an
+	// explicit empty array. Preserve its presence independently of omission.
+	if preserveEmptyNamespaces {
+		obj["namespaces"] = json.RawMessage("[]")
+	}
+	if d.Kind == "typedef" && d.Params != nil {
 		obj["params"], err = json.Marshal(d.Params)
 		if err != nil {
 			return nil, err
 		}
+	}
+	if d.Kind != "instance" {
 		return json.Marshal(obj)
 	}
 	overrides := d.Overrides

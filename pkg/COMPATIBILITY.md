@@ -152,6 +152,9 @@ packaging remains separate validation work.
 
 ## Data, statuses, and diagnostics
 
+Raw wire tests distinguish absent, empty and nonempty diagnostic/namespace arrays
+through serialization and import/flatten metadata copies. IDs remain lossless.
+
 Native Go TLC uses the Go Apalache TLA printer and `tlago/tlc` directly, with
 bundled `Variants.tla`; it has no Java/JAR/Scala fallback. `--tlc-config` accepts
 positive integer or `"auto"` workers, Boolean `checkDeadlock`, and nonnegative

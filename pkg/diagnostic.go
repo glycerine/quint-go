@@ -1,6 +1,7 @@
 package quint
 
 import (
+	"encoding/json"
 	"strings"
 )
 
@@ -14,10 +15,44 @@ type Diagnostic struct {
 
 func (d Diagnostic) Error() string { return "[" + d.Code + "] " + d.Message }
 
+// MarshalJSON preserves the difference between an absent stack and an explicit
+// empty stack, as serialized by the TypeScript CLI and revived Rust errors.
+func (d Diagnostic) MarshalJSON() ([]byte, error) {
+	var trace *[]ID
+	if d.Trace != nil {
+		trace = &d.Trace
+	}
+	return json.Marshal(struct {
+		Code      string          `json:"code"`
+		Message   string          `json:"message"`
+		Reference *ID             `json:"reference,omitempty"`
+		Trace     *[]ID           `json:"trace,omitempty"`
+		Data      *DiagnosticData `json:"data,omitempty"`
+	}{d.Code, d.Message, d.Reference, trace, d.Data})
+}
+
 type ErrorMessage struct {
 	Explanation    string     `json:"explanation"`
 	Locations      []Location `json:"locs"`
 	TraceLocations []Location `json:"traceLocs,omitempty"`
+}
+
+// MarshalJSON retains an explicitly empty resolved stack. It occurs when the
+// original stack has caller frames but none has an available source location.
+func (e ErrorMessage) MarshalJSON() ([]byte, error) {
+	locations := e.Locations
+	if locations == nil {
+		locations = []Location{}
+	}
+	var trace *[]Location
+	if e.TraceLocations != nil {
+		trace = &e.TraceLocations
+	}
+	return json.Marshal(struct {
+		Explanation    string      `json:"explanation"`
+		Locations      []Location  `json:"locs"`
+		TraceLocations *[]Location `json:"traceLocs,omitempty"`
+	}{e.Explanation, locations, trace})
 }
 
 // ResolveDiagnostic follows upstream: the first trace ID takes precedence over
@@ -33,6 +68,9 @@ func ResolveDiagnostic(sources SourceMap, d Diagnostic) ErrorMessage {
 		if loc, ok := sources[*reference]; ok {
 			result.Locations = append(result.Locations, loc)
 		}
+	}
+	if len(d.Trace) > 1 {
+		result.TraceLocations = []Location{}
 	}
 	for _, id := range d.Trace[minimum(1, len(d.Trace)):] {
 		if loc, ok := sources[id]; ok {
