@@ -136,6 +136,11 @@ implemented, including checked state value diffs and source action frames.
 Interactive blocked-read cancellation belongs to the
 input owner. Parser/evaluator errors leave the session available.
 
+Default run/test/REPL seeds use independent entropy in `[0, 2^53-1)` and can be
+replayed with the reported seed. Explicit REPL construction preserves the initial
+seed counter; `.seed` retains reset normalization. Lower-level zero constructors
+remain deterministic.
+
 `--seed` reduces default run/test samples to one unless `--max-samples` is
 explicit. Run/test otherwise default to 10000 samples; run defaults to 20 steps,
 one trace, init/step names and invariant true. Verify defaults to 10 transitions;

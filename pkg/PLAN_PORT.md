@@ -543,7 +543,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     including checked compact values, replay isolation and writer errors.
   - [x] Audit valid-source model-based-testing metadata, snapshot aliases and
     detached compiler registries; preserve owned public snapshot/direct APIs.
-- [ ] P7.8 Port RNG state, seed parsing, counter arithmetic, and sampling.
+- [x] P7.8 Port RNG state, seed parsing, counter arithmetic, and sampling.
   Choose and document the reference backend for seed-exact reproduction;
   compare RNG vectors and collection traversal order, not just repeatability.
   - [x] TypeScript Squares RNG core, arbitrary-precision bounded draws, exact
@@ -553,7 +553,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   - [x] CLI seed flags/replay output and finite-set sampling/traversal.
   - [x] Compare actual locked Rust evaluator with TypeScript and Go on 79 cases;
     preserve TypeScript picks/counters and record Rust differences explicitly.
-  - [ ] Complete default initialization and wider seeded behavior audits.
+  - [x] Audit default seed range and constructor-versus-reset behavior with
+    19 actual histories/414 draws/27 resets and five REPL streams.
 - [x] P7.9 Complete an opcode coverage matrix for evaluation, typing, effects,
   and symbolic conversion, distinguishing supported operations and deliberate
   context restrictions. COMPATIBILITY.md and its drift test cover every
@@ -3615,3 +3616,13 @@ word "retained" in the commit message.
   normalization, matching upstream without a second read. New source/stage helper
   APIs have100% coverage; focused source0.028s, broader CLI0.224s, race1.181s
   and vet pass. Core/verify adoption of the same raw-main wrapper is separate.
+
+- 2026-11-02: Completed P7.8 default RNG initialization and seed-lifetime audit.
+  NewRandomRNG uses owned system entropy in the reference initial range; explicit
+  seeds and reported replay remain deterministic. NewREPLSessionWithSeed preserves
+  exact negative/1024-bit constructor state, while SetSeed keeps reset
+  normalization. Existing lower-level zero constructors stay deterministic.
+  Nineteen actual histories compare414 draws/27 resets; five REPL streams cover
+  initial/.clear/.seed behavior. Both helpers100% covered; focused core0.028s/
+  CLI0.058s, races1.146s/1.194s, vet and deterministic regeneration pass. System
+  entropy algorithm is explicitly Go-specific rather than a reproducible JS RNG.

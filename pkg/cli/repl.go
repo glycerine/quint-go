@@ -65,7 +65,14 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 	}
 	session := quint.NewREPLSession()
 	if options.Seed != nil {
-		session.SetSeed(*options.Seed)
+		session = quint.NewREPLSessionWithSeed(*options.Seed)
+	} else {
+		random, err := quint.NewRandomRNG()
+		if err != nil {
+			fmt.Fprintln(stderr, err)
+			return 1
+		}
+		session.SetSeed(random.State())
 	}
 	var writeErr error
 	stdout = &replOutputWriter{writer: stdout, err: &writeErr}

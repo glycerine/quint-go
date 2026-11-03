@@ -1233,3 +1233,11 @@ errors, recoverable syntax, Unicode and main/import CRLF differences. Tests reta
 all JSON diagnostics, precise compatibility coordinates and partial modules while
 terminal reporting deduplicates equal messages. The raw-main resolver reads once;
 imported files preserve the existing LF-normalized resolver contract.
+
+`rng_initialization.json` saves 19 actual controlled-default/extreme constructor
+histories with 414 draws and 27 resets. `repl_rng_initialization.json` saves five
+actual REPL initial-seed/.clear/.seed transcripts. Matching generators preserve
+negative and 1024-bit constructor counters separately from reset normalization.
+New random-default helper tests verify range, entropy errors, ownership and seed
+replay; Go entropy differs from Math.random while the reported seed contract
+matches. Existing deterministic zero constructors and 120 core vectors remain.

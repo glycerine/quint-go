@@ -2,11 +2,9 @@ package cli
 
 import (
 	"context"
-	"crypto/rand"
 	"errors"
 	"fmt"
 	"io"
-	"math/big"
 	"os"
 	"path/filepath"
 	"slices"
@@ -343,10 +341,10 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	if options.seedSet {
 		seed, err = quint.ParseSeed(options.seed)
 	} else {
-		var random *big.Int
-		random, err = rand.Int(rand.Reader, new(big.Int).Lsh(big.NewInt(1), 64))
+		var random *quint.RNG
+		random, err = quint.NewRandomRNG()
 		if err == nil {
-			seed = quint.IntegerFromBig(random)
+			seed = random.State()
 		}
 	}
 	if err != nil {

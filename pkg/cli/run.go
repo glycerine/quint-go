@@ -2,13 +2,11 @@ package cli
 
 import (
 	"context"
-	"crypto/rand"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"math"
-	"math/big"
 	"os"
 	"path/filepath"
 	"sort"
@@ -225,9 +223,10 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 	if o.seedSet {
 		seed, err = quint.ParseSeed(o.seed)
 	} else {
-		var bytes [8]byte
-		if _, err = rand.Read(bytes[:]); err == nil {
-			seed = quint.IntegerFromBig(new(big.Int).SetBytes(bytes[:]))
+		var random *quint.RNG
+		random, err = quint.NewRandomRNG()
+		if err == nil {
+			seed = random.State()
 		}
 	}
 	if err != nil {
