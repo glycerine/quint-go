@@ -246,3 +246,8 @@ outer invalid shapes preserve storage, while record metadata may be partially
 restored before failure. Native TLC SetBound limits collection growth, not
 explored states. Adapter temporary metadata is cleaned; native resolver directory
 cleanup remains a dependency lifecycle gap.
+
+Backend VersionInfo APIs report effective linked module versions/replacements
+and optional explicitly supplied checker revisions. Local/development identities
+remain unknown. Real memory-watermark Unknown and ExecutionsTooShort outcomes
+are inconclusive, preserving raw backend failure evidence and context ownership.

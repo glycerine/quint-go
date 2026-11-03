@@ -709,7 +709,9 @@ TypeScript or Rust evaluator process.
   flags; test Go gRPC compatibility if endpoint mode is retained.
   - [x] Default in-process Go backend and explicit legacy endpoint/Scala version
     flag rejection; no Scala download or endpoint fallback.
-  - [ ] Backend version reporting and complete compatibility matrix.
+  - [x] Backend VersionInfo APIs report linked module/replacement identities and
+    explicit build-time checker revisions, with unknown local versions preserved.
+  - [ ] Complete backend configuration compatibility matrix.
 - [ ] P9.10 Propagate cancellation, solver unknown/resource exhaustion, invalid
   models, and backend errors distinctly from successful bounded checks. Close
   solver sessions, connections, temporary files, and owned child processes.
@@ -3725,3 +3727,12 @@ word "retained" in the commit message.
   metadata is not recomputed by a generic transform. All26 functions have100%
   statement coverage; focused0.085s, race1.264s, full isolated suite and vet pass.
   Existing visitors/finders/printing/refresh APIs complete P1.5/P10.7.
+
+- 2026-11-02: Added backend version APIs using only Go build metadata and optional
+  explicit linker revision strings. Local workspaces remain accurately unknown;
+  Quint VCS metadata is never misreported as a checker revision. Synthetic build
+  metadata tests cover replacements, versions and absent data. Seven actual checker
+  runs verify memory-watermark Unknown stays inconclusive, subsequent recovery,
+  empty initial executions versus deadlocks and temporary-source cleanup. Full
+  isolated tests/vet pass (Apalache0.576s). Ineffective native resource/search
+  controls remain under active explicit compatibility validation.
