@@ -525,7 +525,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     multidimensional draws and retry odometers, including empty/zero bounds.
   - [x] Capture the retry environment at process initialization, provide explicit
     context-local options, and preserve exception/diagnostic metadata precedence.
-- [ ] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
+- [x] P7.7 Port assertions, run/test combinators, tracing/debug builtins, and
   model-based-testing metadata. Explicitly reject non-executable temporal
   constructs where the reference runtime does.
   - [x] Bool runtime value, strict fail/assert Boolean behavior, temporal
@@ -537,7 +537,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     drivers, including saved closures invoked under later listener contexts.
   - [x] CLI captured-frame presentation for verbose run, failed tests and REPL,
     including checked compact values, replay isolation and writer errors.
-  - [ ] Remaining model-based-testing metadata audit.
+  - [x] Audit valid-source model-based-testing metadata, snapshot aliases and
+    detached compiler registries; preserve owned public snapshot/direct APIs.
 - [ ] P7.8 Port RNG state, seed parsing, counter arithmetic, and sampling.
   Choose and document the reference backend for seed-exact reproduction;
   compare RNG vectors and collection traversal order, not just repeatability.
@@ -558,7 +559,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   disagreements before assigning a Go expected result.
   - [x] Build and execute the actual locked Rust evaluator; save 237 responses
     across 79 arithmetic, callback, closure, error and seeded comparison cases.
-  - [ ] Expand comparison across remaining callbacks and stateful operations.
+  - [x] Add48 actual TS/Rust stateful comparisons (38 typed source and10
+    explicit IR-only), checking results/errors/references/debug/registers/traces/RNG.
+  - [ ] Finish remaining instance compiler histories under P7.2.
 
 Exit gate: Go evaluation reproduces reference semantics on the runtime corpus,
 including failed actions that must not leak partially updated state.
@@ -3532,3 +3535,14 @@ word "retained" in the commit message.
   recorder cases,66 CLI frame transcripts and source-context suites pass. Focused
   core0.202s/CLI0.170s; diff helpers100% covered. Interrupt/terminal policy remains
   separate work.
+
+- 2026-11-02: Completed the valid-source MBT metadata audit and P7.7. Private
+  evaluator recovery follows source pick-map aliases; compiler registration keeps
+  its initial dictionary after rollback detaches live metadata. A private nondet
+  bridge avoids direct-API fallback registration. Public Recover and EvalNondet
+  keep their ownership contracts. Eight snapshot sources and12 typed sessions/64
+  operations plus six valid imports pass; eight malformed direct imports remain
+  explicit pending evidence. Added48 actual TS/Rust stateful comparisons with
+  complete results, references, debug, registers, traces and RNG; six counter and
+  one pending-state differences are recorded. New corpus0.059s, race1.623s and
+  vet pass. Nested-only pure action graph activation now has a dedicated witness.

@@ -1180,3 +1180,13 @@ post-commit mutation. `runtime_action_labels.json` adds ten scenarios under sour
 and transported-IR boundaries, preserving exact original action names/IDs through
 imports, nested instances, local unshadowing and genuine qualified names. The
 metadata ActionTaken API keeps its qualified names; JSON fallback stays explicit.
+
+`runtime_state_snapshot_alias.json` saves eight actual sources;
+`runtime_mbt_metadata.json` saves 12 typed sessions/64 operations plus six valid
+direct imports, with eight malformed direct imports explicitly pending. Their
+generators verify analyzer status and preserve mutable snapshot and detached
+compiler-registration behavior. Public Go snapshot/direct APIs remain owned.
+`runtime_stateful_comparison.json` adds 48 actual TypeScript/Rust comparisons:
+38 typed source and ten classified IR-only cases. Its generator records exact
+results, errors/references, debug output, registers, trace states and RNG, with
+six Rust counter differences and one pending-state difference kept visible.

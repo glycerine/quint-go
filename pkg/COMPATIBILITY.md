@@ -90,7 +90,9 @@ separately. Symbolic variant and mixed callback keys now use checked HAMT operat
 equality preserves upstream cached-hash asymmetry privately; public EqualContext
 uses symmetric entry-bag equality and agrees with HashContext independently of
 source memo history. Source cross-type equality has 225 constructor-pair and 89 strategic/program
-comparisons; locale-wide collation remains open. Actual Rust comparison records differences in seeded picks, counter
+comparisons; locale-wide collation remains open. Valid-source MBT rollback preserves the reference pick-map aliases and detached
+compiler registry; public snapshot/direct APIs retain owned semantics. Actual Rust
+comparison includes 79 pure and 48 stateful cases and records seeded picks, counter
 overflow, folded traversal, resource bounds and error codes; Go targets TypeScript.
 
 Rejection is observable behavior: next/standalone oneOf reject lazily, whereas

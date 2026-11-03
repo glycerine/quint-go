@@ -328,7 +328,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 					}
 				}
 				binding.scope.Set(e.Opdef.Name, binding.value)
-				value, err := EvalNondet(ctx, e.Opdef.Name, storage, rng,
+				value, err := evalSourceNondet(ctx, e.Opdef.Name, storage, rng,
 					func(callContext context.Context) (RuntimeValue, error) {
 						saved := ctx
 						ctx = callContext
@@ -588,15 +588,15 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 					if listener != nil {
 						listener.OnAnyReturn(len(e.Args), index)
 					}
-					storage.Recover(storage.Snapshot())
+					storage.recoverSourceSnapshot(storage.Snapshot())
 					return boolValue(true)
 				}
-				storage.Recover(snapshot)
+				storage.recoverSourceSnapshot(snapshot)
 			}
 			if listener != nil {
 				listener.OnAnyReturn(len(e.Args), -1)
 			}
-			storage.Recover(snapshot)
+			storage.recoverSourceSnapshot(snapshot)
 			return boolValue(false)
 		case "actionAll":
 			if storage == nil {
@@ -609,7 +609,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 					return RuntimeValue{}, err
 				}
 				if !enabled {
-					storage.Recover(snapshot)
+					storage.recoverSourceSnapshot(snapshot)
 					return boolValue(false)
 				}
 			}
@@ -636,7 +636,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 			if err != nil {
 				return RuntimeValue{}, err
 			}
-			storage.Recover(snapshot)
+			storage.recoverSourceSnapshot(snapshot)
 			if trace != nil {
 				trace.DropLast()
 			}

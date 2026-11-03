@@ -17,7 +17,7 @@ const cases=[
  ['stateful_instance',"module A {const n:int var x:int action start=x'=n} module M {import A(n=1) as C action keep=C::start}",['C::start']],
  ['pure_instance','module A {const n:int action start=n==1} module M {import A(n=1) as C action keep=C::start}',['C::start']],
  ['nested_instance','module A {const n:int action start=n==1} module B {const d:int import A(n=d) as I action start=I::start} module M {import B(d=1) as C action keep=C::start}',['C::start']],
- ['local_action_import','module A {action result={action local=true;local}} module M {import A as C action keep=C::result}',['C::result']],
+ ['local_action_import','module A {val result={action local=true;local}} module M {import A as C val keep=C::result}',['C::result']],
  ['local_shadowed_action','module A {action result={action local=true; {action local=false;local} or local}} module M {import A as C action keep=C::result}',['C::result']],
  ['qualified_original_name','module A {action N::start=true} module M {import A as C action keep=C::N::start}',['C::N::start']],
  ['lambda_action_application','module A {action apply(x)=x>0} module M {import A as C action result=C::apply(1)}',['result']],

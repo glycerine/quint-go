@@ -31,6 +31,20 @@ func EvalNondet(ctx context.Context, name string, storage *VariableStorage, rng 
 	return EvalNondetWithOptions(ctx, name, storage, rng, setEval, bodyEval, options)
 }
 
+// Source compilation registers names in the builder's initial dictionary. That
+// dictionary can be detached from live metadata after action rollback, so an
+// empty source binding must not repeat the direct API's fallback registration.
+func evalSourceNondet(ctx context.Context, name string, storage *VariableStorage, rng *RNG,
+	setEval func(context.Context) (RuntimeValue, error),
+	bodyEval func(context.Context, RuntimeValue, error) (RuntimeValue, error),
+) (RuntimeValue, error) {
+	options, err := runtimeNondetOptionsForContext(ctx)
+	if err != nil {
+		return RuntimeValue{}, err
+	}
+	return evalNondetWithOptions(ctx, name, storage, rng, setEval, bodyEval, options, false)
+}
+
 // EvalNondetWithOptions uses an explicit retry limit for an execution. The
 // caller owns storage, RNG, and callback scopes and must use them sequentially.
 // Bounds and position selection use checked runtime picking helpers, including
@@ -39,6 +53,14 @@ func EvalNondetWithOptions(ctx context.Context, name string, storage *VariableSt
 	setEval func(context.Context) (RuntimeValue, error),
 	bodyEval func(context.Context, RuntimeValue, error) (RuntimeValue, error),
 	options RuntimeNondetOptions,
+) (RuntimeValue, error) {
+	return evalNondetWithOptions(ctx, name, storage, rng, setEval, bodyEval, options, true)
+}
+
+func evalNondetWithOptions(ctx context.Context, name string, storage *VariableStorage, rng *RNG,
+	setEval func(context.Context) (RuntimeValue, error),
+	bodyEval func(context.Context, RuntimeValue, error) (RuntimeValue, error),
+	options RuntimeNondetOptions, registerName bool,
 ) (RuntimeValue, error) {
 	if err := ctx.Err(); err != nil {
 		return RuntimeValue{}, err
@@ -51,8 +73,10 @@ func EvalNondetWithOptions(ctx context.Context, name string, storage *VariableSt
 	}
 	// The compiler normally discovers all names up front. Also register a name
 	// on direct use without clearing a value saved by an earlier invocation.
-	if _, exists := storage.NondetPicks.Get2(name); !exists {
-		storage.NondetPicks.Set(name, RuntimeValue{})
+	if registerName {
+		if _, exists := storage.NondetPicks.Get2(name); !exists {
+			storage.NondetPicks.Set(name, RuntimeValue{})
+		}
 	}
 	set, err := setEval(ctx)
 	if err != nil {

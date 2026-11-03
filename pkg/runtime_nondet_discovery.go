@@ -13,7 +13,8 @@ import (
 // Input IDs must be unique within the evaluator, as for reference compilation.
 // The zero value is ready to use. It is not safe for concurrent use.
 type RuntimeNondetDiscovery struct {
-	compiled map[ID]bool
+	compiled     map[ID]bool
+	initialPicks *insdict.Dict[string, RuntimeValue]
 }
 
 type runtimeDiscoveryDefinition struct {
@@ -58,6 +59,12 @@ func (d *RuntimeNondetDiscovery) PrepareWithVariableBindings(ctx context.Context
 	}
 	if storage == nil {
 		return nil
+	}
+	// The builder keeps the initial registry even when source rollback replaces
+	// the storage's live pick map. Later compilation can update that detached
+	// registry without changing the current state's metadata.
+	if d.initialPicks == nil {
+		d.initialPicks = storage.NondetPicks
 	}
 	if d.compiled == nil {
 		d.compiled = make(map[ID]bool)
@@ -141,7 +148,7 @@ func (d *RuntimeNondetDiscovery) PrepareWithVariableBindings(ctx context.Context
 				// as a normal oneOf application.
 				bound.visited = true
 				if !d.compiled[definition.ID] {
-					storage.NondetPicks.Set(definition.Name, RuntimeValue{})
+					d.initialPicks.Set(definition.Name, RuntimeValue{})
 					d.compiled[definition.ID] = true
 				}
 				if definition.Expr != nil && len(definition.Expr.Args) > 0 {
