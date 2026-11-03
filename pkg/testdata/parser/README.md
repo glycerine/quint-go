@@ -1155,3 +1155,12 @@ JavaScript integral number spellings and interspersed REPL positionals. Four
 fractional/nonfinite bound cases are explicit parse-only pending evidence; Go
 execution retains integer resource limits. Adapter tests check native backend
 constraints, TLC verbosity, hidden output override and help writer failures.
+
+The LSP `hover_symbols.json`, `override_semantics.json` and
+`identifier_completion.json` fixtures and matching generators capture 57 actual
+callbacks: 39 exact hover strings, four symbol trees, eight override-navigation
+cases and six Ctrl+Space cases. Tests preserve raw upstream responses while
+projecting documented precise-token/UTF16 corrections and one old dependency
+`List.select` documentation typo. RPC regressions verify field/lambda hover, symbol
+kinds, override rename/reanalysis and receiver type changes. Full LSP coverage is
+91.6%; advertised capabilities are complete, without inventing workspace indexing.

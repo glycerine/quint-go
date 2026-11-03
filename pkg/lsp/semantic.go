@@ -102,6 +102,9 @@ func semanticRequest(method string, params json.RawMessage, snapshot *Snapshot) 
 	if method == "textDocument/completion" {
 		return semanticCompletions(snapshot, index, *p.Position), nil
 	}
+	if method == "textDocument/hover" {
+		return semanticHoverForPosition(snapshot, index, *p.Position), nil
+	}
 	occurrence, ok := index.at(snapshot.URI, *p.Position)
 	if !ok {
 		switch method {
@@ -113,8 +116,6 @@ func semanticRequest(method string, params json.RawMessage, snapshot *Snapshot) 
 		return nil, nil
 	}
 	switch method {
-	case "textDocument/hover":
-		return semanticHoverAt(snapshot, index, occurrence), nil
 	case "textDocument/definition":
 		if !occurrence.Resolved {
 			return nil, nil
@@ -372,6 +373,31 @@ func buildSemanticIndex(snapshot *Snapshot) semanticIndex {
 			return true, nil
 		})
 	}
+	visitExpression := func(root *quint.Expr, module string) {
+		_ = quint.WalkExpr(root, func(e *quint.Expr) (bool, error) {
+			switch e.Kind {
+			case "name":
+				addReference(e.ID, e.Name)
+			case "app":
+				children := make([]quint.ID, len(e.Args))
+				for i := range e.Args {
+					children[i] = e.Args[i].ID
+				}
+				addReference(e.ID, e.Opcode, children...)
+			case "lambda":
+				for _, parameter := range e.Params {
+					addDefinition(parameter.ID, parameter.Name, "parameter", "", nil, module)
+					visitType(parameter.TypeAnnotation)
+				}
+			case "let":
+				if e.Opdef != nil {
+					addDefinition(e.Opdef.ID, e.Opdef.Name, "local", e.Opdef.Qualifier, e.Opdef.Doc, module)
+					visitType(e.Opdef.TypeAnnotation)
+				}
+			}
+			return true, nil
+		})
+	}
 	for _, module := range snapshot.Frontend.Modules {
 		for _, declaration := range module.Declarations {
 			if selected, ok := semanticSelectedMember(snapshot, module.Name, declaration); ok {
@@ -383,44 +409,11 @@ func buildSemanticIndex(snapshot *Snapshot) semanticIndex {
 			visitType(declaration.TypeAnnotation)
 			visitType(declaration.Type)
 			for _, root := range []*quint.Expr{declaration.Expr, declaration.Assumption} {
-				_ = quint.WalkExpr(root, func(e *quint.Expr) (bool, error) {
-					switch e.Kind {
-					case "name":
-						addReference(e.ID, e.Name)
-					case "app":
-						children := make([]quint.ID, len(e.Args))
-						for i := range e.Args {
-							children[i] = e.Args[i].ID
-						}
-						addReference(e.ID, e.Opcode, children...)
-					case "lambda":
-						for _, parameter := range e.Params {
-							addDefinition(parameter.ID, parameter.Name, "parameter", "", nil, module.Name)
-							visitType(parameter.TypeAnnotation)
-						}
-					case "let":
-						if e.Opdef != nil {
-							addDefinition(e.Opdef.ID, e.Opdef.Name, "local", e.Opdef.Qualifier, e.Opdef.Doc, module.Name)
-							visitType(e.Opdef.TypeAnnotation)
-						}
-					}
-					return true, nil
-				})
+				visitExpression(root, module.Name)
 			}
 			for _, override := range declaration.Overrides {
 				addReference(override.Parameter.ID, override.Parameter.Name)
-				_ = quint.WalkExpr(&override.Expr, func(e *quint.Expr) (bool, error) {
-					if e.Kind == "name" {
-						addReference(e.ID, e.Name)
-					} else if e.Kind == "app" {
-						children := make([]quint.ID, len(e.Args))
-						for i := range e.Args {
-							children[i] = e.Args[i].ID
-						}
-						addReference(e.ID, e.Opcode, children...)
-					}
-					return true, nil
-				})
+				visitExpression(&override.Expr, module.Name)
 			}
 		}
 	}
@@ -487,90 +480,16 @@ func semanticTypeDetail(snapshot *Snapshot, ids ...quint.ID) string {
 	}
 	return ""
 }
-func semanticHoverAt(snapshot *Snapshot, index semanticIndex, occurrence semanticOccurrence) any {
-	prefix := occurrence.Name
-	var doc *string
-	if occurrence.Resolved {
-		if definition, ok := index.definitions.Get2(occurrence.Target.String()); ok {
-			qualifier := definition.Kind
-			if definition.Kind == "def" || definition.Kind == "local" {
-				qualifier = quint.QualifierString(definition.Qualifier)
-			}
-			prefix = qualifier + " " + occurrence.Name
-			doc = definition.Doc
-		}
-	}
-	detail := semanticTypeDetail(snapshot, occurrence.ID, occurrence.Target)
-	if detail != "" {
-		prefix += ": " + detail
-	}
-	if detail == "" && !occurrence.Resolved {
-		if docs, err := quint.BuiltinDocs(); err == nil {
-			if entry, ok := docs.Get2(occurrence.Name); ok {
-				prefix = entry.Signature
-				doc = entry.Documentation
-			}
-		}
-	}
-	if detail == "" && doc == nil && !occurrence.Resolved {
-		return nil
-	}
-	value := "```quint\n" + prefix + "\n```"
-	if doc != nil && *doc != "" {
-		value += "\n\n" + *doc
-	}
-	if snapshot.Analysis.Effects != nil {
-		if effect, ok := snapshot.Analysis.Effects.Get2(occurrence.ID.String()); ok {
-			if effectText, err := quint.EffectSchemeString(effect); err == nil {
-				value += "\n\n**effect**: `" + effectText + "`"
-			}
-		}
-	}
-	return semanticHover{Contents: semanticMarkup{Kind: "markdown", Value: value}, Range: occurrence.Location.Range}
-}
-
-func semanticSymbolKind(kind string) int {
-	switch kind {
-	case "def", "local":
-		return 12 // Function
-	case "const":
-		return 14 // Constant
-	case "typedef":
-		return 5 // Class
-	}
-	return 13 // Variable
-}
 func semanticDocumentSymbols(snapshot *Snapshot, index semanticIndex) []semanticSymbol {
-	out := []semanticSymbol{}
-	for _, module := range snapshot.Frontend.Modules {
-		location, ok := snapshot.Frontend.Sources[module.ID]
-		if !ok || uriForSource(location.Source) != snapshot.URI {
-			continue
-		}
-		selection, ok := semanticTokenRange(snapshot, module.ID, module.Name)
-		if !ok {
-			continue
-		}
-		symbol := semanticSymbol{Name: module.Name, Kind: 2, Range: semanticRange(location), SelectionRange: selection.Range}
-		for _, declaration := range module.Declarations {
-			definition, ok := index.definitions.Get2(declaration.ID.String())
-			if !ok || definition.Location.URI != snapshot.URI {
-				continue
-			}
-			symbol.Children = append(symbol.Children, semanticSymbol{Name: declaration.Name, Detail: semanticTypeDetail(snapshot, declaration.ID), Kind: semanticSymbolKind(declaration.Kind), Range: definition.FullRange, SelectionRange: definition.Location.Range})
-		}
-		sort.SliceStable(symbol.Children, func(i, j int) bool {
-			return semanticPositionLess(symbol.Children[i].Range.Start, symbol.Children[j].Range.Start)
-		})
-		out = append(out, symbol)
-	}
-	sort.SliceStable(out, func(i, j int) bool { return semanticPositionLess(out[i].Range.Start, out[j].Range.Start) })
-	return out
+	return semanticSymbolsForSnapshot(snapshot, index)
 }
 
 func semanticCompletions(snapshot *Snapshot, index semanticIndex, position Position) semanticCompletionList {
 	if fields, handled := semanticFieldCompletions(snapshot, index, position); handled {
 		return fields
+	}
+	if members, handled := semanticTypedIdentifierCompletions(snapshot, index, position); handled {
+		return members
 	}
 	items := insdict.NewDict[string, semanticCompletionItem]()
 	addDefinition := func(name string, id quint.ID) {
@@ -628,6 +547,10 @@ func semanticCompletions(snapshot *Snapshot, index semanticIndex, position Posit
 		}
 		for _, declaration := range module.Declarations {
 			visitLocal(declaration.Expr)
+			visitLocal(declaration.Assumption)
+			for _, override := range declaration.Overrides {
+				visitLocal(&override.Expr)
+			}
 		}
 	}
 	for _, name := range append(quint.BuiltinOpcodes(), "Bool", "Int", "Nat", "getOnlyElement") {

@@ -1,0 +1,259 @@
+[
+  {
+    "name": "top-level-record-value-is-not-a-module-variable",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure val r = { count: 1 } pure val use = r }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 56
+    },
+    "triggerKind": 1,
+    "result": []
+  },
+  {
+    "name": "top-level-record-variable",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { var r: { count: int } val use = r }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 47
+    },
+    "triggerKind": 1,
+    "result": [
+      {
+        "label": "fieldNames",
+        "kind": 3
+      },
+      {
+        "label": "with",
+        "kind": 3
+      },
+      {
+        "label": "count",
+        "kind": 5,
+        "detail": "int"
+      }
+    ]
+  },
+  {
+    "name": "record-parameter",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure def use(r: { count: int }): { count: int } = { r } }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 67
+    },
+    "triggerKind": 1,
+    "result": [
+      {
+        "label": "fieldNames",
+        "kind": 3
+      },
+      {
+        "label": "with",
+        "kind": 3
+      },
+      {
+        "label": "count",
+        "kind": 5,
+        "detail": "int"
+      }
+    ]
+  },
+  {
+    "name": "list-parameter",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure def use(xs: List[int]): List[int] = { xs } }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 59
+    },
+    "triggerKind": 1,
+    "result": [
+      {
+        "label": "append",
+        "kind": 3,
+        "detail": "pure def append: (List[a], a) => List[a]",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`l.append(e)` is the list `l` with the element `e` appended.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).append(4) == List(1, 2, 3, 4))\n```"
+        }
+      },
+      {
+        "label": "concat",
+        "kind": 3,
+        "detail": "pure def concat: (List[a], List[a]) => List[a]",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`l1.concat(l2)` is the list `l1` with `l2` concatenated at the end.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).append(List(4, 5, 6)) == List(1, 2, 3, 4, 5, 6))\n```"
+        }
+      },
+      {
+        "label": "head",
+        "kind": 3,
+        "detail": "pure def head: (List[a]) => a",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`l.head()` is the first element of `l`.\n\nIf `l` is empty, the behavior is undefined.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).head() == 1)\n```"
+        }
+      },
+      {
+        "label": "tail",
+        "kind": 3,
+        "detail": "pure def tail: (List[a]) => List[a]",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`l.tail()` is the list `l` without the first element.\n\nIf `l` is empty, the behavior is undefined.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).tail() == List(2, 3))\n```"
+        }
+      },
+      {
+        "label": "length",
+        "kind": 3,
+        "detail": "pure def length: (List[a]) => int",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`l.length()` is the length of the list `l`.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).length() == 3)\n```"
+        }
+      },
+      {
+        "label": "indices",
+        "kind": 3,
+        "detail": "pure def indices: (List[a]) => Set[int]",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`l.indices()` is the set of indices of `l`.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).indices() == Set(0, 1, 2))\n```"
+        }
+      },
+      {
+        "label": "replaceAt",
+        "kind": 3,
+        "detail": "pure def replaceAt: (List[a], int, a) => List[a]",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`l.replaceAt(i, e)` is the list `l` with the `i+1`th element replaced by `e`.\n\nIf `i` is negative or greater than or equal to `l.length()`, the behavior is undefined.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).replaceAt(1, 4) == List(1, 4, 3))\n```"
+        }
+      },
+      {
+        "label": "slice",
+        "kind": 3,
+        "detail": "pure def slice: (List[a], int, int) => List[a]",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`l.slice(i, j)` is the list of elements of `l` between indices `i` and `j`.\n\n`i` is inclusive and `j` is exclusive.\n\nThe behavior is undefined when:\n\n- `i` is negative or greater than or equal to `l.length()`.\n- `j` is negative or greater than `l.length()`.\n- `i` is greater than `j`.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3, 4, 5).slice(1, 3) == List(2, 3))\n```"
+        }
+      },
+      {
+        "label": "range",
+        "kind": 3,
+        "detail": "pure def range: (int, int) => List[int]",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`range(i, j)` is the list of integers between `i` and `j`.\n\n`i` is inclusive and `j` is exclusive.\n\nThe behavior is undefined when `i` is greater than `j`.\n\n### Examples\n\n```quint\nassert(range(1, 3) == List(1, 2))\n```"
+        }
+      },
+      {
+        "label": "select",
+        "kind": 3,
+        "detail": "pure def select: (List[a], (a) => bool) => List[a]",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`l.select(p)` is the list of elements of `l` that satisfy the predicate `p`.\n\nPreserves the order of the elements.\n\n### Examples\n\n```quint\nassert(List(1, 2, 3).select(x -> x % 2 == 0) == List(2))\n```"
+        }
+      },
+      {
+        "label": "foldl",
+        "kind": 3,
+        "detail": "pure def foldl: (List[a], b, (b, a) => b) => b",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`l.foldl(z, f)` reduces the elements in `l` using `f`,\nstarting with `z` from the left.\n\nI.e., `f(f(f(z, x0), x1)..., xn)`.\n\n### Examples\n\n```quint\npure val sum = List(1, 2, 3, 4).foldl(0, (x, y) => x + y)\nassert(sum == 10)\npure val l = List(1, 2, 3, 4).foldl(List(), (l, e) => l.append(e))\nassert(l == List(1, 2, 3, 4))\n```"
+        }
+      },
+      {
+        "label": "foldr",
+        "kind": 3
+      }
+    ]
+  },
+  {
+    "name": "integer-parameter",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure def use(n: int): int = { n } }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 45
+    },
+    "triggerKind": 1,
+    "result": [
+      {
+        "label": "to",
+        "kind": 3,
+        "detail": "pure def to: (int, int) => Set[int]",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`i.to(j)` is the set of integers between `i` and `j`.\n\n`i` is inclusive and `j` is inclusive.\n\nThe behavior is undefined when `i` is greater than `j`.\n\n### Examples\n\n```quint\nassert(1.to(3) == Set(1, 2, 3))\n```"
+        }
+      }
+    ]
+  },
+  {
+    "name": "boolean-parameter-shadows-integer-value",
+    "files": [
+      {
+        "path": "main.qnt",
+        "text": "module Main { pure val flag = 1 pure def use(flag: bool): bool = { flag } }\n"
+      }
+    ],
+    "main": "main.qnt",
+    "position": {
+      "line": 0,
+      "character": 71
+    },
+    "triggerKind": 1,
+    "result": [
+      {
+        "label": "iff",
+        "kind": 3,
+        "detail": "pure def iff: (bool, bool) => bool",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`p.iff(q)` is `true` when `p` and `q` are equal values of the bool type.\n\nThis is the logical equivalence operator.\n\n### Examples\n\n```quint\nassert(iff(true, true))\nassert(iff(false, false))\nassert(not(iff(true, false)))\nassert(not(iff(false, true)))\n```"
+        }
+      },
+      {
+        "label": "implies",
+        "kind": 3,
+        "detail": "pure def implies: (bool, bool) => bool",
+        "documentation": {
+          "kind": "markdown",
+          "value": "`p.implies(q)` is true when `not(p) or q` is true.\n\nThis is the material implication operator.\n\n### Examples\n\n```quint\nassert(true.implies(true))\nassert(false.implies(false))\nassert(not(true.implies(false)))\nassert(not(false.implies(true)))\n```"
+        }
+      }
+    ]
+  }
+]

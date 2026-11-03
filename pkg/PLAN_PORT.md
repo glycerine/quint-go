@@ -776,7 +776,7 @@ This follows the core CLI milestone but remains tracked for tooling parity.
   Go stdio server lives in cmd/quint-lsp with direct frontend/analysis APIs.
 - [x] P11.2 Port document lifecycle, incremental analysis, diagnostics,
   cancellation, stale-result rejection, and UTF-16 position handling.
-- [ ] P11.3 Port hover, completion/builtin docs, definition lookup, references,
+- [x] P11.3 Port hover, completion/builtin docs, definition lookup, references,
   rename, and document symbols using the Go IR and lookup tables.
   - [x] Hover/builtin docs, definition/references, document symbols, scoped
     completion, and conservative rename with precise UTF-16 ranges.
@@ -788,7 +788,10 @@ This follows the core CLI milestone but remains tracked for tooling parity.
     current-buffer validation and safe qualifier edits with reanalysis.
   - [x] Group diagnostics by the primary reference's source and publish only the
     requested document's group; preserve origin-owned fixes and recovered navigation.
-  - [ ] Complete unsupported parser-conversion and broader workspace audits.
+  - [x] Audit actual advertised capabilities and close override expression
+    indexing, field/lambda hover, symbol kinds and typed Ctrl+Space completion.
+    Upstream has no workspace-wide symbol/index capability; malformed parser
+    conversion remains in P2, with safe LSP fallback.
 - [x] P11.4 Update editor launch/build configuration and run protocol-level
   regressions for edits, imports, incomplete syntax, and cross-file navigation.
   - [x] Protocol tests for edits, imports, malformed input, lifecycle, stale
@@ -3493,3 +3496,13 @@ word "retained" in the commit message.
   or nonfinite execution bounds remain explicitly parse-only evidence; Go keeps
   integer resource bounds, backend names and nThreads1. Help writes report I/O
   errors. Focused0.078s, race1.304s and vet pass; normalizer98.9% covered.
+
+- 2026-11-02: Completed P11.3 by fixing four actual LSP gaps: override lambda/let
+  indexing for navigation/rename, field/lambda hover, upstream document-symbol
+  kinds/filtering and typed Ctrl+Space completion. Saved39 hover strings,4 symbol
+  trees,8 override callbacks and6 identifier-completion callbacks plus protocol
+  regressions cover Unicode, rename/reanalysis and changed receiver types. Go
+  keeps precise token/UTF16 ranges where TS uses broad/raw-codepoint spans; one
+  old dependency documentation typo is projected explicitly. Full LSP0.191s,
+  coverage91.6%, race1.618s and vet pass. Workspace indexing is not an upstream
+  advertised capability; long-hover wrapping remains a cosmetic difference.

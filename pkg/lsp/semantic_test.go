@@ -187,7 +187,8 @@ func TestSemanticCrossFileTypesQualifiedRenameAndSymbols(t *testing.T) {
 		t.Fatal(problem)
 	}
 	symbols := response.([]semanticSymbol)
-	if len(symbols) != 1 || symbols[0].Name != "Main" || len(symbols[0].Children) != 2 || symbols[0].Children[0].Name != "b" || symbols[0].Children[1].Name != "a" {
+	// The upstream outline retains dependency order and qualifier-specific kinds.
+	if len(symbols) != 1 || symbols[0].Name != "Main" || len(symbols[0].Children) != 2 || symbols[0].Children[0].Name != "a" || symbols[0].Children[0].Kind != 12 || symbols[0].Children[1].Name != "b" || symbols[0].Children[1].Kind != 8 {
 		t.Fatal(symbols)
 	}
 	for _, symbol := range symbols[0].Children {

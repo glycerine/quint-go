@@ -1,0 +1,806 @@
+[
+  {
+    "name": "override-lambda-parameter",
+    "uri": "file:///override-oracle/main.qnt",
+    "text": "module Proto { const transform:int=>int pure val answer=transform(1) }\nmodule Main { import Proto(transform=(value)=>value+1) as Inst pure val result=Inst::answer }",
+    "position": {
+      "line": 1,
+      "character": 48
+    },
+    "newName": "renamed",
+    "definition": [
+      {
+        "originSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 46
+          },
+          "end": {
+            "line": 1,
+            "character": 51
+          }
+        },
+        "targetUri": "file:///override-oracle/main.qnt",
+        "targetRange": {
+          "start": {
+            "line": 1,
+            "character": 38
+          },
+          "end": {
+            "line": 1,
+            "character": 43
+          }
+        },
+        "targetSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 38
+          },
+          "end": {
+            "line": 1,
+            "character": 43
+          }
+        }
+      }
+    ],
+    "references": [
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 46
+          },
+          "end": {
+            "line": 1,
+            "character": 51
+          }
+        }
+      },
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 38
+          },
+          "end": {
+            "line": 1,
+            "character": 43
+          }
+        }
+      }
+    ],
+    "rename": {
+      "changes": {
+        "file:///override-oracle/main.qnt": [
+          {
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 46
+              },
+              "end": {
+                "line": 1,
+                "character": 51
+              }
+            },
+            "newText": "renamed"
+          },
+          {
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 38
+              },
+              "end": {
+                "line": 1,
+                "character": 43
+              }
+            },
+            "newText": "renamed"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "override-lambda-parameter-utf16",
+    "uri": "file:///override-oracle/main.qnt",
+    "text": "module Proto { const transform:int=>int pure val answer=transform(1) }\nmodule Main { pure val emoji=\"😀\" import Proto(transform=(value)=>value+1) as Inst pure val result=Inst::answer }",
+    "position": {
+      "line": 1,
+      "character": 68
+    },
+    "newName": "renamed",
+    "definition": [
+      {
+        "originSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 65
+          },
+          "end": {
+            "line": 1,
+            "character": 70
+          }
+        },
+        "targetUri": "file:///override-oracle/main.qnt",
+        "targetRange": {
+          "start": {
+            "line": 1,
+            "character": 57
+          },
+          "end": {
+            "line": 1,
+            "character": 62
+          }
+        },
+        "targetSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 57
+          },
+          "end": {
+            "line": 1,
+            "character": 62
+          }
+        }
+      }
+    ],
+    "references": [
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 65
+          },
+          "end": {
+            "line": 1,
+            "character": 70
+          }
+        }
+      },
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 57
+          },
+          "end": {
+            "line": 1,
+            "character": 62
+          }
+        }
+      }
+    ],
+    "rename": {
+      "changes": {
+        "file:///override-oracle/main.qnt": [
+          {
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 65
+              },
+              "end": {
+                "line": 1,
+                "character": 70
+              }
+            },
+            "newText": "renamed"
+          },
+          {
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 57
+              },
+              "end": {
+                "line": 1,
+                "character": 62
+              }
+            },
+            "newText": "renamed"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "override-local-value",
+    "uri": "file:///override-oracle/main.qnt",
+    "text": "module Proto { const limit:int pure val answer=limit }\nmodule Main { import Proto(limit={pure val saved=1; saved+1}) as Inst pure val result=Inst::answer }",
+    "position": {
+      "line": 1,
+      "character": 54
+    },
+    "newName": "renamed",
+    "definition": [
+      {
+        "originSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 52
+          },
+          "end": {
+            "line": 1,
+            "character": 57
+          }
+        },
+        "targetUri": "file:///override-oracle/main.qnt",
+        "targetRange": {
+          "start": {
+            "line": 1,
+            "character": 43
+          },
+          "end": {
+            "line": 1,
+            "character": 48
+          }
+        },
+        "targetSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 43
+          },
+          "end": {
+            "line": 1,
+            "character": 48
+          }
+        }
+      }
+    ],
+    "references": [
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 43
+          },
+          "end": {
+            "line": 1,
+            "character": 48
+          }
+        }
+      },
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 52
+          },
+          "end": {
+            "line": 1,
+            "character": 57
+          }
+        }
+      }
+    ],
+    "rename": null
+  },
+  {
+    "name": "override-local-operator",
+    "uri": "file:///override-oracle/main.qnt",
+    "text": "module Proto { const limit:int pure val answer=limit }\nmodule Main { import Proto(limit={pure def local(value:int):int=value+1; local(1)}) as Inst pure val result=Inst::answer }",
+    "position": {
+      "line": 1,
+      "character": 76
+    },
+    "newName": "renamed",
+    "definition": [
+      {
+        "originSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 73
+          },
+          "end": {
+            "line": 1,
+            "character": 81
+          }
+        },
+        "targetUri": "file:///override-oracle/main.qnt",
+        "targetRange": {
+          "start": {
+            "line": 1,
+            "character": 43
+          },
+          "end": {
+            "line": 1,
+            "character": 48
+          }
+        },
+        "targetSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 43
+          },
+          "end": {
+            "line": 1,
+            "character": 48
+          }
+        }
+      }
+    ],
+    "references": [
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 43
+          },
+          "end": {
+            "line": 1,
+            "character": 48
+          }
+        }
+      },
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 73
+          },
+          "end": {
+            "line": 1,
+            "character": 81
+          }
+        }
+      }
+    ],
+    "rename": null
+  },
+  {
+    "name": "override-local-operator-parameter",
+    "uri": "file:///override-oracle/main.qnt",
+    "text": "module Proto { const limit:int pure val answer=limit }\nmodule Main { import Proto(limit={pure def local(value:int):int=value+1; local(1)}) as Inst pure val result=Inst::answer }",
+    "position": {
+      "line": 1,
+      "character": 66
+    },
+    "newName": "renamed",
+    "definition": [
+      {
+        "originSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 64
+          },
+          "end": {
+            "line": 1,
+            "character": 69
+          }
+        },
+        "targetUri": "file:///override-oracle/main.qnt",
+        "targetRange": {
+          "start": {
+            "line": 1,
+            "character": 49
+          },
+          "end": {
+            "line": 1,
+            "character": 58
+          }
+        },
+        "targetSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 49
+          },
+          "end": {
+            "line": 1,
+            "character": 58
+          }
+        }
+      }
+    ],
+    "references": [
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 64
+          },
+          "end": {
+            "line": 1,
+            "character": 69
+          }
+        }
+      },
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 49
+          },
+          "end": {
+            "line": 1,
+            "character": 58
+          }
+        }
+      }
+    ],
+    "rename": {
+      "changes": {
+        "file:///override-oracle/main.qnt": [
+          {
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 64
+              },
+              "end": {
+                "line": 1,
+                "character": 69
+              }
+            },
+            "newText": "renamed"
+          },
+          {
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 49
+              },
+              "end": {
+                "line": 1,
+                "character": 58
+              }
+            },
+            "newText": "renamed"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "override-nested-lambda-shadowing",
+    "uri": "file:///override-oracle/main.qnt",
+    "text": "module Proto { const transform:int=>int pure val answer=transform(1) }\nmodule Main { import Proto(transform=(value)=>List(1).foldl(value,(value,nextValue)=>value+nextValue)) as Inst pure val result=Inst::answer }",
+    "position": {
+      "line": 1,
+      "character": 87
+    },
+    "newName": "renamed",
+    "definition": [
+      {
+        "originSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 85
+          },
+          "end": {
+            "line": 1,
+            "character": 90
+          }
+        },
+        "targetUri": "file:///override-oracle/main.qnt",
+        "targetRange": {
+          "start": {
+            "line": 1,
+            "character": 67
+          },
+          "end": {
+            "line": 1,
+            "character": 72
+          }
+        },
+        "targetSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 67
+          },
+          "end": {
+            "line": 1,
+            "character": 72
+          }
+        }
+      }
+    ],
+    "references": [
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 85
+          },
+          "end": {
+            "line": 1,
+            "character": 90
+          }
+        }
+      },
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 67
+          },
+          "end": {
+            "line": 1,
+            "character": 72
+          }
+        }
+      }
+    ],
+    "rename": {
+      "changes": {
+        "file:///override-oracle/main.qnt": [
+          {
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 85
+              },
+              "end": {
+                "line": 1,
+                "character": 90
+              }
+            },
+            "newText": "renamed"
+          },
+          {
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 67
+              },
+              "end": {
+                "line": 1,
+                "character": 72
+              }
+            },
+            "newText": "renamed"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "override-type-annotation",
+    "uri": "file:///override-oracle/main.qnt",
+    "text": "module Proto { const limit:int pure val answer=limit }\nmodule Main { type Count=int import Proto(limit={pure def local(value:Count):Count=value;local(1)}) as Inst pure val result=Inst::answer }",
+    "position": {
+      "line": 1,
+      "character": 72
+    },
+    "newName": "Renamed",
+    "definition": [
+      {
+        "originSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 70
+          },
+          "end": {
+            "line": 1,
+            "character": 75
+          }
+        },
+        "targetUri": "file:///override-oracle/main.qnt",
+        "targetRange": {
+          "start": {
+            "line": 1,
+            "character": 14
+          },
+          "end": {
+            "line": 1,
+            "character": 28
+          }
+        },
+        "targetSelectionRange": {
+          "start": {
+            "line": 1,
+            "character": 19
+          },
+          "end": {
+            "line": 1,
+            "character": 28
+          }
+        }
+      }
+    ],
+    "references": [
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 70
+          },
+          "end": {
+            "line": 1,
+            "character": 75
+          }
+        }
+      },
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 77
+          },
+          "end": {
+            "line": 1,
+            "character": 82
+          }
+        }
+      },
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 14
+          },
+          "end": {
+            "line": 1,
+            "character": 28
+          }
+        }
+      }
+    ],
+    "rename": {
+      "changes": {
+        "file:///override-oracle/main.qnt": [
+          {
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 70
+              },
+              "end": {
+                "line": 1,
+                "character": 75
+              }
+            },
+            "newText": "Renamed"
+          },
+          {
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 77
+              },
+              "end": {
+                "line": 1,
+                "character": 82
+              }
+            },
+            "newText": "Renamed"
+          },
+          {
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 19
+              },
+              "end": {
+                "line": 1,
+                "character": 24
+              }
+            },
+            "newText": "Renamed"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "ordinary-lambda-control",
+    "uri": "file:///override-oracle/main.qnt",
+    "text": "module Main { pure def identity(value:int):int=value pure val result=identity(1) }",
+    "position": {
+      "line": 0,
+      "character": 49
+    },
+    "newName": "renamed",
+    "definition": [
+      {
+        "originSelectionRange": {
+          "start": {
+            "line": 0,
+            "character": 47
+          },
+          "end": {
+            "line": 0,
+            "character": 52
+          }
+        },
+        "targetUri": "file:///override-oracle/main.qnt",
+        "targetRange": {
+          "start": {
+            "line": 0,
+            "character": 32
+          },
+          "end": {
+            "line": 0,
+            "character": 41
+          }
+        },
+        "targetSelectionRange": {
+          "start": {
+            "line": 0,
+            "character": 32
+          },
+          "end": {
+            "line": 0,
+            "character": 41
+          }
+        }
+      }
+    ],
+    "references": [
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 47
+          },
+          "end": {
+            "line": 0,
+            "character": 52
+          }
+        }
+      },
+      {
+        "uri": "file:///override-oracle/main.qnt",
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 32
+          },
+          "end": {
+            "line": 0,
+            "character": 41
+          }
+        }
+      }
+    ],
+    "rename": {
+      "changes": {
+        "file:///override-oracle/main.qnt": [
+          {
+            "range": {
+              "start": {
+                "line": 0,
+                "character": 47
+              },
+              "end": {
+                "line": 0,
+                "character": 52
+              }
+            },
+            "newText": "renamed"
+          },
+          {
+            "range": {
+              "start": {
+                "line": 0,
+                "character": 32
+              },
+              "end": {
+                "line": 0,
+                "character": 41
+              }
+            },
+            "newText": "renamed"
+          }
+        ]
+      }
+    }
+  }
+]

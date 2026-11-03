@@ -107,27 +107,7 @@ func semanticFieldCompletions(snapshot *Snapshot, index semanticIndex, position 
 		}
 		typ = resolved
 	}
-	docs, _ := quint.BuiltinDocs()
-	for _, name := range suggestedMemberBuiltins(typ) {
-		if !strings.HasPrefix(name, completion.prefix) {
-			continue
-		}
-		item := semanticCompletionItem{Label: name, Kind: 3}
-		if docs != nil {
-			if entry, ok := docs.Get2(name); ok {
-				item.Detail = entry.Signature
-				if entry.Documentation != nil && *entry.Documentation != "" {
-					item.Documentation = &semanticMarkup{Kind: "markdown", Value: *entry.Documentation}
-				}
-			}
-		}
-		out.Items = append(out.Items, item)
-	}
-	for _, item := range completionFieldsForType(typ) {
-		if strings.HasPrefix(item.Label, completion.prefix) {
-			out.Items = append(out.Items, item)
-		}
-	}
+	out.Items = completionItemsForType(typ, completion.prefix)
 	return out, true
 }
 
