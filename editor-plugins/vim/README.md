@@ -24,24 +24,20 @@ This guide will help you set up Vim for Quint, including syntax highlighting and
 
 ## Language Server
 
-1. Install the [quint-language-server][] globally using npm:
-
-```sh
-npm i @informalsystems/quint-language-server -g
-```
+1. Build `quint-lsp` using the [Go package instructions](../../pkg/README.md),
+   and put the executable on `PATH`. The Go server uses stdio directly, without
+   `--stdio` or a Node, Java, or Scala runtime.
 
 ### Neovim
 
 2. Enable language server integration by adding the following lines to your `~/.config/nvim/init.vim`:
 
 ```vim-script
-autocmd FileType quint lua vim.lsp.start({name = 'quint', cmd = {'quint-language-server', '--stdio'}, root_dir = vim.fs.dirname()})
+autocmd FileType quint lua vim.lsp.start({name = 'quint', cmd = {'quint-lsp'}, root_dir = vim.fs.dirname(vim.api.nvim_buf_get_name(0))})
 au BufRead,BufNewFile *.qnt  setfiletype quint
 ```
 
 ### Vim
-
-This requires vim built with Lua support (check with `vim --version`).
 
 2. Install [`prabirshrestha/vim-lsp`](https://github.com/prabirshrestha/vim-lsp) (e.g., via vim-plug):
 
@@ -54,10 +50,11 @@ Plug 'prabirshrestha/vim-lsp'
 ```vim-script
 au BufRead,BufNewFile *.qnt setfiletype quint
 
-if executable('quint-language-server')
+let g:quint_lsp_command = get(g:, 'quint_lsp_command', ['quint-lsp'])
+if executable(g:quint_lsp_command[0])
   au User lsp_setup call lsp#register_server({
     \ 'name': 'quint',
-    \ 'cmd': {server_info->['quint-language-server', '--stdio']},
+    \ 'cmd': {server_info->copy(g:quint_lsp_command)},
     \ 'allowlist': ['quint'],
     \ })
 endif
@@ -68,10 +65,7 @@ function! s:on_lsp_buffer_enabled() abort
   if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
   nmap <buffer> gd <plug>(lsp-definition)
   nmap <buffer> gs <plug>(lsp-document-symbol-search)
-  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
   nmap <buffer> gr <plug>(lsp-references)
-  nmap <buffer> gi <plug>(lsp-implementation)
-  nmap <buffer> gt <plug>(lsp-type-definition)
   nmap <buffer> <leader>rn <plug>(lsp-rename)
   nmap <buffer> [g <plug>(lsp-previous-diagnostic)
   nmap <buffer> ]g <plug>(lsp-next-diagnostic)
@@ -85,6 +79,28 @@ augroup lsp_install
   autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
 ```
+
+To select an absolute executable path, set `g:quint_lsp_command` before this
+configuration. Paths with spaces remain one list element:
+
+```vim-script
+let g:quint_lsp_command = ['/absolute/path/to/quint-lsp']
+```
+
+The snippets above do not launch another server if Go is unavailable. To
+explicitly use [quint-language-server][] instead, install that npm package and
+replace Neovim's `cmd` with `{'quint-language-server', '--stdio'}` or set Vim's
+`g:quint_lsp_command` to `['quint-language-server', '--stdio']`.
+
+Optional server diagnostics use `LOG_LEVEL`; see
+[logging and protocol details](../../pkg/lsp/README.md). The Go server advertises
+document symbols, definitions, references, rename, hover, completion, signature
+help, and code actions. Workspace symbols, implementation lookup, and type
+definition lookup are not advertised, so the example maps only supported methods.
+
+The Vim configuration can be checked without downloaded plugins or a running
+server using `python3 editor-plugins/vim/test-config.py`. This runs the actual
+snippet in headless Vim; full Vim/Neovim host sessions remain separate validation.
 
 [quint.vim]: ./quint.vim
 [quint-language-server]: https://www.npmjs.com/package/@informalsystems/quint-language-server

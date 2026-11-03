@@ -3668,3 +3668,11 @@ word "retained" in the commit message.
   terminal keepalive remains unsupported. Full isolated tests/vet pass (core1.056s,
   CLI0.418s, terminal0.006s); focused races and cross-builds pass. Aggregate suite
   still exceeds the one-second target.
+
+- 2026-11-02: Updated Emacs/Vim launch guidance to default to Go with an
+  explicit TypeScript choice and no missing-Go npm fallback. Optional LSP
+  LOG_LEVEL logging follows17 actual configuration/path snapshots, owns its
+  append file, supports concurrent workers and keeps stdout clean on failures.
+  All logger functions100% covered; full isolated Go tests/vet pass, eight Emacs
+  ERT and four actual Vim scenarios pass. Both binaries cross-build for Darwin
+  and Windows amd64/arm64; actual other-platform/VSCode host execution is unrun.

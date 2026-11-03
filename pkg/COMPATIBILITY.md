@@ -155,7 +155,7 @@ packaging remains separate validation work.
 | --- | --- |
 | `QUINT_RETRY_NONDET_SMALLER_THAN` | Implemented: default 100, captured at process initialization like TypeScript's module snapshot. Explicit/context-local options override it. Invalid values return a stored SyntaxError on evaluation rather than panicking during Go import. |
 | `QUINT_HOME` | Pending compatibility; no Go Scala/Rust download directory or persistent REPL history setup. Scala download/start behavior is intentionally replaced by the Go backend. |
-| `LOG_LEVEL` | TypeScript LSP logging variable; Go server does not implement that logging/config contract. |
+| `LOG_LEVEL` | TypeScript LSP logging variable; Go server implements the source thresholds/path contract with optional owned file logging. |
 | `QUINT_VSCODE_SERVER_BACKEND` | Development-launch override for the configured VSCode Go/TypeScript server choice; installed extensions use settings. |
 | `GOOS`, `GOARCH` | Native editor-server build targets used by compile:go; packaging must match the extension host. |
 | `QUINT_CORPUS_TESTS` | Test-only opt-in for expensive temporal/corpus checks; not a language/CLI runtime setting. |
@@ -228,7 +228,7 @@ Do not infer complete exit-status parity from the command dispatcher comment.
 | Signature help and code actions/quick fixes | Implemented and advertised; 39 signature and 24 handler fixtures. Qualifier fixes verify actual current tokens, correcting upstream edits that corrupt names. Unsafe/stale fixes are omitted; diagnostics/fixes stay on their primary-reference source, and each requested document publishes only its group. Unsupported parser-conversion failures remain a fallback audit. |
 | Workspace symbols | Not advertised by either inspected server; future capability, not a proven upstream regression. |
 | VSCode Go launch/configuration | Configured: Go stdio is default, TypeScript IPC is explicit; path setting selects command/bundled binary/PATH. Go startup errors do not switch backends. Native build script and development launches exist. |
-| Editor release packaging and other clients | Linux native VSIX passes full prepublish and extracted Go/TypeScript lifecycle checks. Manual Linux/macOS packaging CI exists; real host and other-platform execution remain unrun. Vim/Emacs Go launch integration remains unaudited; Go logging parity remains open. |
+| Editor release packaging and other clients | Linux native VSIX passes full prepublish and extracted Go/TypeScript lifecycle checks. Manual Linux/macOS packaging CI exists; real host and other-platform execution remain unrun. Vim/Emacs Go launch configuration and optional LSP logging are tested; real editor-host and other-platform execution remain unrun. |
 
 Existing tests exercise frontend/type/effect fixtures, concrete runtime values
 and operation trees, explicit-state helpers, command I/O, actual Go checker/TLA

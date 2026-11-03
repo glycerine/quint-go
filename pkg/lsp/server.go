@@ -20,6 +20,9 @@ type Options struct {
 	// Analyze overrides document analysis, primarily for embedding and tests.
 	// Returned snapshots become immutable server-owned values.
 	Analyze func(context.Context, Document) (*Snapshot, error)
+	// Logger receives optional diagnostics outside JSON-RPC. The caller owns
+	// its lifetime; a nil logger performs no logging or environment/file access.
+	Logger *Logger
 }
 type documentState struct {
 	Document
@@ -40,6 +43,7 @@ type Server struct {
 }
 
 func NewServer(options Options) *Server {
+	options.Logger.Log("INFO", "🚀 Quint Language Server Started!")
 	return &Server{options: options, documents: insdict.NewDict[string, *documentState](), requests: map[string]*requestState{}}
 }
 
@@ -187,12 +191,14 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 	if len(body) == 0 || body[0] != '{' || json.Unmarshal(body, &message) != nil || message.JSONRPC != "2.0" || message.Method == "" {
 		return respond(send, nil, nil, &ResponseError{Code: -32600, Message: "Invalid Request"})
 	}
+	s.options.Logger.Log("TRACE", "Received request: method=%s", message.Method)
 	if message.ID != nil {
 		if _, valid := requestKey(message.ID); !valid {
 			return respond(send, nil, nil, &ResponseError{Code: -32600, Message: "Invalid request id"})
 		}
 	}
 	fail := func(code int, text string) error {
+		s.options.Logger.Log("ERROR", "Request failed: method=%s, code=%d, error=%s", message.Method, code, text)
 		if message.ID == nil {
 			return notify(send, "window/logMessage", struct {
 				Type    int    `json:"type"`
@@ -496,6 +502,7 @@ func (s *Server) scheduleAllLocked(ctx context.Context, send func(any) error) {
 		go func() {
 			defer s.jobs.Done()
 			defer cancel()
+			s.options.Logger.Log("DEBUG", "Document changed: uri=%s, version=%d", document.URI, document.Version)
 			var snapshot *Snapshot
 			var err error
 			if s.options.Analyze != nil {
@@ -510,6 +517,7 @@ func (s *Server) scheduleAllLocked(ctx context.Context, send func(any) error) {
 				snapshot = &Snapshot{URI: document.URI, Version: document.Version, Text: document.Text, Diagnostics: []Diagnostic{}}
 			}
 			if err != nil {
+				s.options.Logger.Log("ERROR", "Analysis failed for: %s, error=%s", document.URI, err)
 				snapshot.Diagnostics = append(snapshot.Diagnostics, Diagnostic{Severity: 1, Source: "quint", Message: err.Error()})
 			}
 			if snapshot.Diagnostics == nil {
@@ -526,6 +534,7 @@ func (s *Server) scheduleAllLocked(ctx context.Context, send func(any) error) {
 			// result from being emitted after a newer didChange is accepted.
 			_ = publish(send, document.URI, &document.Version, snapshot.Diagnostics)
 			s.mu.Unlock()
+			s.options.Logger.Log("DEBUG", "Analysis completed for: %s, errors found: %d", document.URI, len(snapshot.Diagnostics))
 		}()
 	}
 }

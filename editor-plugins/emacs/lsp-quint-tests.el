@@ -1,0 +1,88 @@
+;;; lsp-quint-tests.el --- Quint server selection tests  -*- lexical-binding: t; -*-
+
+;; Run with emacs -Q --batch -l editor-plugins/emacs/lsp-quint-tests.el
+;; These test the actual client configuration with small lsp-mode boundary
+;; stubs; they require neither downloaded packages nor a running language server.
+(require 'ert)
+(require 'cl-lib)
+
+(defvar lsp-quint-test-client nil)
+(defvar lsp-language-id-configuration nil)
+(defun lsp-dependency (&rest _args))
+(defun lsp-stdio-connection (command) command)
+(defun lsp-activate-on (language) language)
+(defun make-lsp-client (&rest properties) properties)
+(defun lsp-register-client (client) (setq lsp-quint-test-client client))
+(defmacro lsp-consistency-check (&rest _args) nil)
+(defun lsp-package-path (_package) "typescript-quint-language-server")
+(defun lsp-package-ensure (&rest _args))
+(defun -partial (function &rest arguments)
+  (lambda (&rest remaining) (apply function (append arguments remaining))))
+(provide 'lsp-mode)
+(provide 'lsp-completion)
+(load (expand-file-name "lsp-quint.el" (file-name-directory load-file-name)) nil t)
+
+(ert-deftest lsp-quint-default-go-command ()
+  (should (eq lsp-quint-server-backend 'go))
+  (should (equal (funcall (plist-get lsp-quint-test-client :new-connection))
+                 '("quint-lsp"))))
+
+(ert-deftest lsp-quint-configured-go-command-is-owned ()
+  (let* ((lsp-quint-go-server-command '("/tmp/quint server" "--custom-argument"))
+         (command (lsp-quint--server-command)))
+    (should (equal command lsp-quint-go-server-command))
+    (setcar command "changed")
+    (should (equal (car lsp-quint-go-server-command) "/tmp/quint server"))))
+
+(ert-deftest lsp-quint-explicit-typescript-command ()
+  (let ((lsp-quint-server-backend 'typescript))
+    (should (equal (lsp-quint--server-command)
+                   '("typescript-quint-language-server" "--stdio")))))
+
+(ert-deftest lsp-quint-go-ensure-never-installs-npm ()
+  (let ((lsp-quint-server-backend 'go) (ready 0) (installed 0) error)
+    (cl-letf (((symbol-function 'executable-find) (lambda (_command) "/tmp/quint-lsp"))
+              ((symbol-function 'lsp-package-ensure) (lambda (&rest _args) (cl-incf installed))))
+      (lsp-quint--ensure-server nil (lambda () (cl-incf ready))
+                               (lambda (message) (setq error message)) nil))
+    (should (= ready 1))
+    (should (= installed 0))
+    (should-not error)))
+
+(ert-deftest lsp-quint-missing-go-has-actionable-error ()
+  (let ((lsp-quint-server-backend 'go) (ready 0) (installed 0) error)
+    (cl-letf (((symbol-function 'executable-find) (lambda (_command) nil))
+              ((symbol-function 'lsp-package-ensure) (lambda (&rest _args) (cl-incf installed))))
+      (lsp-quint--ensure-server nil (lambda () (cl-incf ready))
+                               (lambda (message) (setq error message)) nil))
+    (should (= ready 0))
+    (should (= installed 0))
+    (should (string-match-p "lsp-quint-go-server-command" error))))
+
+(ert-deftest lsp-quint-typescript-ensure-keeps-package-contract ()
+  (let ((lsp-quint-server-backend 'typescript) (ready 0) (installed 0))
+    (cl-letf (((symbol-function 'lsp-package-ensure)
+               (lambda (package callback _error-callback)
+                 (should (eq package 'quint-language-server))
+                 (cl-incf installed)
+                 (funcall callback))))
+      (lsp-quint--ensure-server nil (lambda () (cl-incf ready))
+                               (lambda (&rest _args) (ert-fail "unexpected error")) nil))
+    (should (= ready 1))
+    (should (= installed 2))))
+
+(ert-deftest lsp-quint-invalid-selection-is-explicit ()
+  (dolist (lsp-quint-go-server-command '(nil ("") (42) "quint-lsp"))
+    (should-error (lsp-quint--server-command) :type 'user-error))
+  (let ((lsp-quint-server-backend 'unknown))
+    (should-error (lsp-quint--server-command) :type 'user-error)
+    (should-error (lsp-quint--ensure-server nil #'ignore #'ignore nil) :type 'user-error)))
+
+(ert-deftest lsp-quint-registration-stays-quint-only ()
+  (should (equal (plist-get lsp-quint-test-client :major-modes) '(quint-mode)))
+  (should (equal (plist-get lsp-quint-test-client :activation-fn) "quint"))
+  (should (eq (plist-get lsp-quint-test-client :download-server-fn) #'lsp-quint--ensure-server))
+  (should (equal (cdr (assq 'quint-mode lsp-language-id-configuration)) "quint")))
+
+(ert-run-tests-batch-and-exit)
+;;; lsp-quint-tests.el ends here

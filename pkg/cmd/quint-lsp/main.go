@@ -11,13 +11,21 @@ import (
 )
 
 func main() {
+	os.Exit(run())
+}
+
+func run() int {
+	logger := lsp.NewEnvironmentLogger()
+	defer logger.Close()
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
-	if err := lsp.NewServer(lsp.Options{}).Serve(ctx, os.Stdin, os.Stdout); err != nil {
+	if err := lsp.NewServer(lsp.Options{Logger: logger}).Serve(ctx, os.Stdin, os.Stdout); err != nil {
 		if ctx.Err() != nil {
-			return
+			return 0
 		}
+		logger.Log("ERROR", "Language server stopped: %s", err)
 		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
+		return 1
 	}
+	return 0
 }

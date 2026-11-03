@@ -1,0 +1,238 @@
+{
+  "thresholds": [
+    {
+      "level": "",
+      "enabled": {
+        "TRACE": false,
+        "DEBUG": false,
+        "INFO": false,
+        "WARN": false,
+        "ERROR": false,
+        "NONE": true,
+        "MISSING": false
+      },
+      "lines": [],
+      "opened": []
+    },
+    {
+      "level": "",
+      "enabled": {
+        "TRACE": false,
+        "DEBUG": false,
+        "INFO": false,
+        "WARN": false,
+        "ERROR": false,
+        "NONE": true,
+        "MISSING": false
+      },
+      "lines": [],
+      "opened": []
+    },
+    {
+      "level": "NONE",
+      "enabled": {
+        "TRACE": false,
+        "DEBUG": false,
+        "INFO": false,
+        "WARN": false,
+        "ERROR": false,
+        "NONE": true,
+        "MISSING": false
+      },
+      "lines": [],
+      "opened": []
+    },
+    {
+      "level": "TRACE",
+      "enabled": {
+        "TRACE": true,
+        "DEBUG": true,
+        "INFO": true,
+        "WARN": true,
+        "ERROR": true,
+        "NONE": true,
+        "MISSING": false
+      },
+      "lines": [
+        "[2001-02-03 04:05:06.789] [TRACE] TRACE message\n",
+        "[2001-02-03 04:05:06.789] [DEBUG] DEBUG message\n",
+        "[2001-02-03 04:05:06.789] [INFO] INFO message\n",
+        "[2001-02-03 04:05:06.789] [WARN] WARN message\n",
+        "[2001-02-03 04:05:06.789] [ERROR] ERROR message\n"
+      ],
+      "opened": [
+        "home/quint-lsp.log"
+      ]
+    },
+    {
+      "level": "trace",
+      "enabled": {
+        "TRACE": true,
+        "DEBUG": true,
+        "INFO": true,
+        "WARN": true,
+        "ERROR": true,
+        "NONE": true,
+        "MISSING": false
+      },
+      "lines": [
+        "[2001-02-03 04:05:06.789] [TRACE] TRACE message\n",
+        "[2001-02-03 04:05:06.789] [DEBUG] DEBUG message\n",
+        "[2001-02-03 04:05:06.789] [INFO] INFO message\n",
+        "[2001-02-03 04:05:06.789] [WARN] WARN message\n",
+        "[2001-02-03 04:05:06.789] [ERROR] ERROR message\n"
+      ],
+      "opened": [
+        "home/quint-lsp.log"
+      ]
+    },
+    {
+      "level": "Debug",
+      "enabled": {
+        "TRACE": false,
+        "DEBUG": true,
+        "INFO": true,
+        "WARN": true,
+        "ERROR": true,
+        "NONE": true,
+        "MISSING": false
+      },
+      "lines": [
+        "[2001-02-03 04:05:06.789] [DEBUG] DEBUG message\n",
+        "[2001-02-03 04:05:06.789] [INFO] INFO message\n",
+        "[2001-02-03 04:05:06.789] [WARN] WARN message\n",
+        "[2001-02-03 04:05:06.789] [ERROR] ERROR message\n"
+      ],
+      "opened": [
+        "home/quint-lsp.log"
+      ]
+    },
+    {
+      "level": "INFO",
+      "enabled": {
+        "TRACE": false,
+        "DEBUG": false,
+        "INFO": true,
+        "WARN": true,
+        "ERROR": true,
+        "NONE": true,
+        "MISSING": false
+      },
+      "lines": [
+        "[2001-02-03 04:05:06.789] [INFO] INFO message\n",
+        "[2001-02-03 04:05:06.789] [WARN] WARN message\n",
+        "[2001-02-03 04:05:06.789] [ERROR] ERROR message\n"
+      ],
+      "opened": [
+        "home/quint-lsp.log"
+      ]
+    },
+    {
+      "level": "WARN",
+      "enabled": {
+        "TRACE": false,
+        "DEBUG": false,
+        "INFO": true,
+        "WARN": true,
+        "ERROR": true,
+        "NONE": true,
+        "MISSING": false
+      },
+      "lines": [
+        "[2001-02-03 04:05:06.789] [INFO] INFO message\n",
+        "[2001-02-03 04:05:06.789] [WARN] WARN message\n",
+        "[2001-02-03 04:05:06.789] [ERROR] ERROR message\n"
+      ],
+      "opened": [
+        "home/quint-lsp.log"
+      ]
+    },
+    {
+      "level": "ERROR",
+      "enabled": {
+        "TRACE": false,
+        "DEBUG": false,
+        "INFO": true,
+        "WARN": true,
+        "ERROR": true,
+        "NONE": true,
+        "MISSING": false
+      },
+      "lines": [
+        "[2001-02-03 04:05:06.789] [INFO] INFO message\n",
+        "[2001-02-03 04:05:06.789] [WARN] WARN message\n",
+        "[2001-02-03 04:05:06.789] [ERROR] ERROR message\n"
+      ],
+      "opened": [
+        "home/quint-lsp.log"
+      ]
+    },
+    {
+      "level": "bogus",
+      "enabled": {
+        "TRACE": false,
+        "DEBUG": false,
+        "INFO": false,
+        "WARN": false,
+        "ERROR": false,
+        "NONE": false,
+        "MISSING": false
+      },
+      "lines": [],
+      "opened": []
+    },
+    {
+      "level": " INFO ",
+      "enabled": {
+        "TRACE": false,
+        "DEBUG": false,
+        "INFO": false,
+        "WARN": false,
+        "ERROR": false,
+        "NONE": false,
+        "MISSING": false
+      },
+      "lines": [],
+      "opened": []
+    }
+  ],
+  "paths": [
+    {
+      "env": {
+        "HOME": "home",
+        "USERPROFILE": "profile"
+      },
+      "path": "home/quint-lsp.log"
+    },
+    {
+      "env": {
+        "USERPROFILE": "profile"
+      },
+      "path": "profile/quint-lsp.log"
+    },
+    {
+      "env": {},
+      "path": "temp/quint-lsp.log"
+    },
+    {
+      "env": {
+        "HOME": "",
+        "USERPROFILE": "profile"
+      },
+      "path": "quint-lsp.log"
+    },
+    {
+      "env": {
+        "USERPROFILE": ""
+      },
+      "path": "quint-lsp.log"
+    },
+    {
+      "env": {
+        "HOME": "home/with spaces"
+      },
+      "path": "home/with spaces/quint-lsp.log"
+    }
+  ],
+  "formatted": "[2001-02-03 04:05:06.789] [INFO] module=😀/M count=7\n"
+}
