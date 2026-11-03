@@ -414,8 +414,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     save/clear/restore, persistent module/REPL identity and compiled literals.
   - [x] Discover selected-definition variables lazily in compiler order, preserve
     source/import/instance provenance and ITF header order across REPL updates.
-  - [ ] Remaining compiler instance contexts, including exported variable aliases
-    whose identity depends on first compilation, and broader runtime-stack audits.
+  - [x] Source/instance variable compilation contexts, including exported aliases
+    whose first compiled read fixes cell identity; assignment targets bypass memo.
+  - [ ] Complete remaining instance closure/cache/override and runtime-stack audits.
   - [x] Eight execution-listener hooks, owned frames, verbosity filtering, run
     ranking, choice pruning, next-state placeholders and captured source calls.
 - [x] P7.3 Port scalar arithmetic, Boolean, and comparison builtins; test
@@ -3402,3 +3403,13 @@ word "retained" in the commit message.
   explicit witnesses. New tests0.153s, broader suite0.256s, race2.649s and vet pass;
   metadata helper100% covered. P6.1/P6.4/P6.7 are complete; recursive init/TLA
   conversion remains separately audited under P6.5/P9.7.
+
+- 2026-11-02: Added source-aware variable compilation contexts through private
+  source identities and immutable lookup graphs. Root/per-instance memo history
+  fixes first-read aliases while assignment targets preserve their actual instance;
+  persistent REPL graphs and metadata-free JSON fallback remain distinct. Twenty-one
+  compiler histories/52 steps, six project histories/32 steps and four original
+  saved histories/six steps pass. Source evidence is unchanged apart from promotion
+  labels. Ownership/cancellation/cycles,19 CLI headers and two REPL regressions pass;
+  focused0.059s, full core0.966s, CLI0.465s and race1.707s. Existing frontend sort
+  behavior is preserved; remaining instance closure/cache/override audits stay open.

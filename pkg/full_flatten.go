@@ -19,19 +19,50 @@ type FlatteningResult struct {
 // continue the generator used for parsing. Like upstream, this pass extends
 // sources and analysis metadata when creating instance definitions.
 func FlattenModules(modules []Module, table *insdict.Dict[ID, LookupDefinition], ids *IDGenerator, sources SourceMap, analysis AnalysisOutput) (FlatteningResult, error) {
+	var sourceGraph *runtimeSourceGraph
+	// Pure projects have no cell bindings to replay. Keep their existing
+	// flattening path free of an extra graph copy and name-resolution pass.
+	hasSourceVariables := false
+	for _, module := range modules {
+		for _, declaration := range module.Declarations {
+			if declaration.Kind == "var" {
+				hasSourceVariables = true
+			}
+		}
+		if sourceGraph == nil && module.runtimeSource != nil {
+			sourceGraph = module.runtimeSource.graph
+		}
+	}
+	if sourceGraph == nil && hasSourceVariables {
+		var err error
+		sourceGraph, err = newRuntimeSourceGraph(modules)
+		if err != nil {
+			return FlatteningResult{}, err
+		}
+	}
 	unique := make([]Module, len(modules))
 	workingTable := NewExpressionNameResolver(nil).Table
 	for id, def := range table.All() {
-		if def.Declaration != nil && def.Declaration.Kind == "var" {
+		if def.Declaration != nil {
 			declaration := seedRuntimeVariableProvenance(*def.Declaration)
+			if sourceGraph != nil {
+				declaration = sourceRuntimeDeclaration(declaration, ID{})
+			}
 			def.Declaration = &declaration
 		}
 		workingTable.Set(id, def)
 	}
 	for i, m := range modules {
+		if m.runtimeSource == nil && sourceGraph != nil {
+			m.runtimeSource = &runtimeSourceModule{graph: sourceGraph, name: m.Name}
+		}
 		m.Declarations = append([]Declaration{}, m.Declarations...)
 		for j, declaration := range m.Declarations {
-			m.Declarations[j] = seedRuntimeVariableProvenance(declaration)
+			declaration = seedRuntimeVariableProvenance(declaration)
+			if sourceGraph != nil {
+				declaration = sourceRuntimeDeclaration(declaration, ID{})
+			}
+			m.Declarations[j] = declaration
 		}
 		unique[i] = UnshadowNames(m, workingTable)
 	}

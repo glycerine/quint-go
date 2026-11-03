@@ -25,6 +25,9 @@ func InstantiateModule(owner string, instance Declaration, prototype Module, tab
 		}
 		declarations = append(declarations, dependencies...)
 		body := o.Expr
+		if prototype.runtimeSource != nil {
+			body = sourceRuntimeExpression(body, instance.ID)
+		}
 		d := Declaration{Kind: "def", Qualifier: PureVal, ID: o.Parameter.ID, Name: name + "::" + o.Parameter.Name, Expr: &body}
 		if def, ok := table.Get2(o.Parameter.ID); ok && def.Declaration != nil {
 			d.TypeAnnotation = def.Declaration.TypeAnnotation
@@ -40,6 +43,9 @@ func InstantiateModule(owner string, instance Declaration, prototype Module, tab
 			continue
 		}
 		d = instantiateRuntimeVariableProvenance(d, name)
+		if prototype.runtimeSource != nil {
+			d = sourceRuntimeDeclaration(d, instance.ID)
+		}
 		copied, err := AddNamespaceToDefinition(d, name, builtinResolutionNames)
 		if err != nil {
 			return Module{}, Declaration{}, err

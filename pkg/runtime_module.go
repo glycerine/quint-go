@@ -84,6 +84,13 @@ func NewModuleEvaluatorWithRuntimeState(module Module, rng *RNG, metadata bool, 
 }
 
 func (e *ModuleEvaluator) rebuildProgram() {
+	if e.execution.source == nil {
+		if e.module.runtimeSource != nil {
+			e.execution.source = newRuntimeSourcePreparation(e.module.runtimeSource)
+		}
+	} else {
+		e.execution.source.UpdateSource(e.module.runtimeSource)
+	}
 	e.request = &Expr{Kind: "name"}
 	e.program = e.request
 	e.prepared = map[string]bool{}
@@ -154,7 +161,16 @@ func (e *ModuleEvaluator) PrepareDefinition(ctx context.Context, name string) er
 	}
 	*e.request = Expr{ID: declaration.ID, Kind: "name", Name: name}
 	if !e.prepared[name] {
-		if err := e.execution.prepare(ctx, *e.program); err != nil {
+		handled, err := e.execution.source.PrepareDefinition(ctx, name, e.Storage)
+		if err != nil {
+			return err
+		}
+		if handled {
+			err = e.execution.prepareWithoutVariables(ctx, *e.program)
+		} else {
+			err = e.execution.prepare(ctx, *e.program)
+		}
+		if err != nil {
 			return err
 		}
 		e.prepared[name] = true

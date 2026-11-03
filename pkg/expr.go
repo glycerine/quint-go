@@ -40,6 +40,8 @@ type Parameter struct {
 // Expr represents the seven Quint expression variants. Literal values have
 // dedicated Go fields, avoiding interface{} and floating-point JSON conversion.
 type Expr struct {
+	runtimeSource *runtimeSourceIdentity
+
 	ID        ID
 	Kind      string
 	Name      string

@@ -1085,3 +1085,15 @@ upstream internal failures. Go preserves its existing nested import/instance
 support by inferring namespaces from actual import provenance, avoiding reapplying
 old namespace metadata to already-qualified local declarations. Three metadata
 integration tests and two namespace regression modes cover that correction.
+
+`runtime_instance_context.json` contains 21 actual compiler histories/52 steps;
+`runtime_instance_execution.json` has six public project histories/32 execution
+steps. Matching generators compare root/per-instance memo insertion order, cell
+registration, first-read and assignment behavior, values/errors, records and RNG.
+Four original saved variable-context histories (six steps) are now passing tests;
+only their status/boundary labels changed, preserving original reference evidence.
+The original Builder histories use their direct Resolve/Analyze/Flatten boundary;
+public-project cases preserve upstream module-sorting behavior. Private source
+identity/lookup graphs survive in-memory transforms and REPL adoption, then drop
+at JSON transport. Ownership, cancellation, cycles and transported fallback tests
+pass alongside the original 19 CLI variable headers and two REPL regressions.

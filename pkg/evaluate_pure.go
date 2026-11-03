@@ -57,11 +57,25 @@ func evaluateExpression(ctx context.Context, expression Expr, bindings *insdict.
 
 type runtimeLocalValue func([]RuntimeValue) (RuntimeValue, error)
 type runtimeEvaluation struct {
-	evaluate  func(context.Context, Expr) (RuntimeValue, error)
-	prepare   func(context.Context, Expr) error
-	objects   *RuntimeObjectHashState
-	constants *insdict.Dict[string, ID]
-	variables *insdict.Dict[string, RuntimeVariableBinding]
+	evaluate                func(context.Context, Expr) (RuntimeValue, error)
+	prepare                 func(context.Context, Expr) error
+	prepareWithoutVariables func(context.Context, Expr) error
+	objects                 *RuntimeObjectHashState
+	constants               *insdict.Dict[string, ID]
+	variables               *insdict.Dict[string, RuntimeVariableBinding]
+	source                  *runtimeSourcePreparation
+}
+
+func (e *runtimeEvaluation) variableBinding(expression Expr) (RuntimeVariableBinding, bool) {
+	if e.source != nil && expression.runtimeSource != nil {
+		if binding, exists := e.source.Binding(*expression.runtimeSource); exists {
+			return binding, true
+		}
+	}
+	if e.variables != nil {
+		return e.variables.Get2(expression.Name)
+	}
+	return RuntimeVariableBinding{}, false
 }
 
 func (e *runtimeEvaluation) evaluateOwned(ctx context.Context, expression Expr) (RuntimeValue, error) {
@@ -116,6 +130,9 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 	discovery := &RuntimeNondetDiscovery{}
 	session.prepare = func(ctx context.Context, expression Expr) error {
 		return discovery.PrepareWithVariableBindings(ctx, expression, storage, session.variables)
+	}
+	session.prepareWithoutVariables = func(ctx context.Context, expression Expr) error {
+		return discovery.Prepare(ctx, expression, storage)
 	}
 	ctx := context.Background()
 	var listener ExecutionListener
@@ -188,10 +205,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 			}
 			if storage != nil {
 				var register *RuntimeRegister
-				binding, bound := RuntimeVariableBinding{}, false
-				if session.variables != nil {
-					binding, bound = session.variables.Get2(e.Name)
-				}
+				binding, bound := session.variableBinding(e)
 				if bound {
 					register, _ = storage.current.Get2(binding.Key)
 				} else {
@@ -639,10 +653,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 				return fail(e, "Assignment target is a local binding")
 			}
 			var target *RuntimeRegister
-			binding, bound := RuntimeVariableBinding{}, false
-			if session.variables != nil {
-				binding, bound = session.variables.Get2(e.Args[0].Name)
-			}
+			binding, bound := session.variableBinding(e.Args[0])
 			if bound {
 				target, _ = storage.next.Get2(binding.Key)
 			} else {

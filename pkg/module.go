@@ -6,6 +6,8 @@ import (
 )
 
 type Module struct {
+	runtimeSource *runtimeSourceModule
+
 	ID           ID            `json:"id"`
 	Name         string        `json:"name"`
 	Declarations []Declaration `json:"declarations"`

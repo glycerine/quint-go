@@ -81,9 +81,10 @@ values or compact symbolic structure. Checked `ExpressionContext`, `EqualContext
 errors and cancellation. Serialization preserves history-dependent fresh-object
 hashes shared by evaluator collections, CLI and debug output. Source setToMap,
 allListsUpTo and 150 symbolic source cases pass. Selected variables preserve
-source/import/instance discovery order and persistent REPL cells. Exported aliases
-inside instances can still require first-compilation contexts beyond declaration
-provenance. Symbolic variant and mixed callback keys now use checked HAMT operations. Source
+source/import/instance discovery order and persistent REPL cells. Source-aware compilation now preserves first-read instance contexts and
+assignment-target bindings for exported aliases; transported JSON keeps the explicit
+flattened-IR boundary. Remaining instance closure/cache/override contexts are audited
+separately. Symbolic variant and mixed callback keys now use checked HAMT operations. Source
 equality preserves upstream cached-hash asymmetry privately; public EqualContext
 uses symmetric entry-bag equality and agrees with HashContext independently of
 source memo history. Exhaustive cross-type equality and locale-wide collation

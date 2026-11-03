@@ -1,4 +1,4 @@
-// A bounded pending case where a flattened variable has order-dependent context.
+// Historical counterexample, now covered by source-identity variable preparation.
 // Run from any directory with Go and the reference TypeScript dependencies present.
 const fs = require('fs')
 const os = require('os')
@@ -89,10 +89,10 @@ func main() {
     declarationID: reference.DeclarationID, declarationName: reference.DeclarationName,
   })) }
   const fixture = {
-    name: 'exported_alias_inside_instance_requires_reference_context', status: 'pending', source, main: 'C',
+    name: 'exported_alias_inside_instance_requires_reference_context', status: 'covered_source_variable_bindings', source, main: 'C',
     reason: 'Compiling via first and compiling direct first register the same source variable under different upstream namespace contexts. The per-instance compiler memo retains that first binding for later requests. Flattening merges both references into one variable declaration, so a fixed binding per flattened variable cannot preserve both histories.',
     upstream: { isolated, cumulative, references }, goEvidence,
-    narrowRejectionCondition: 'An instantiated prototype has a namespace export and a local definition that directly references a variable through that export, while the exported variable is also accessible directly through that instance. The two paths have different initial contexts but share one flattened declaration. Reject this context-sensitive binding with QNT501 until first-compilation context and per-instance memoization are implemented.',
+    boundary: 'In-memory source evaluation retains the original per-reference compiler identity and first-compilation history. JSON transport intentionally removes that private source graph and continues to evaluate the explicit flattened IR boundary.',
   }
   fs.writeFileSync(path.join(root, 'pkg/testdata/parser/runtime_variable_context_pending.json'), JSONbig.stringify(fixture) + '\n')
 } finally {
