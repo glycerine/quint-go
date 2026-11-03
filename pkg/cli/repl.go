@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"context"
 	"errors"
-	"flag"
 	"fmt"
 	"io"
 	"os"
@@ -27,43 +26,18 @@ type REPLLoopOptions struct {
 }
 
 func commandREPL(ctx context.Context, args []string, stdout, stderr io.Writer) int {
-	flags := flag.NewFlagSet("repl", flag.ContinueOnError)
-	flags.SetOutput(stderr)
-	options := REPLLoopOptions{Verbosity: 2}
-	flags.BoolVar(&options.Quiet, "quiet", false, "suppress banners and prompts")
-	flags.BoolVar(&options.Quiet, "q", false, "suppress banners and prompts")
-	flags.IntVar(&options.Verbosity, "verbosity", 2, "output level from 0 to 5")
-	flags.StringVar(&options.Require, "require", "", "preload filename[::module]")
-	flags.StringVar(&options.Require, "r", "", "preload filename[::module]")
-	seed := flags.String("seed", "", "random seed")
-	backend := flags.String("backend", "go", "evaluation backend (go)")
-	flags.Usage = func() {
-		fmt.Fprintln(flags.Output(), "Usage: quint repl [options] [commands...]")
-		flags.PrintDefaults()
-	}
-	if err := flags.Parse(args); err != nil {
-		if errors.Is(err, flag.ErrHelp) {
-			return 0
-		}
+	options, help, err := replParseOptions(args)
+	if err != nil {
+		fmt.Fprintln(stderr, err)
 		return 2
 	}
-	if *backend != "go" {
-		fmt.Fprintf(stderr, "repl: unsupported backend %q; use go\n", *backend)
-		return 2
-	}
-	if options.Verbosity < 0 || options.Verbosity > 5 {
-		fmt.Fprintln(stderr, "repl: --verbosity must be between 0 and 5")
-		return 2
-	}
-	if *seed != "" {
-		value, err := quint.ParseSeed(*seed)
-		if err != nil {
+	if help != "" {
+		if _, err := io.WriteString(stdout, help); err != nil {
 			fmt.Fprintln(stderr, err)
-			return 2
+			return 1
 		}
-		options.Seed = &value
+		return 0
 	}
-	options.Commands = flags.Args()
 	return RunREPL(ctx, os.Stdin, stdout, stderr, options)
 }
 

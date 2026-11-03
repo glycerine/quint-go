@@ -1147,3 +1147,11 @@ compares exact checked state/result serialization, exception precedence, ITF,
 RNG and object-UID history. Test and simulation drivers take snapshots at the
 reference boundary; CLI JSON/ITF exports reuse those owned expressions. Default
 helper tests cover shared nil-state allocation, cancellation and partial failures.
+
+`cli_options.json` contains 158 actual yargs cases from
+`cli_options_fixtures.cjs`, covering all eight commands, camel/dash aliases,
+missing scalar defaults, repeated scalars, empty arrays, Boolean negation/values,
+JavaScript integral number spellings and interspersed REPL positionals. Four
+fractional/nonfinite bound cases are explicit parse-only pending evidence; Go
+execution retains integer resource limits. Adapter tests check native backend
+constraints, TLC verbosity, hidden output override and help writer failures.

@@ -1,0 +1,4196 @@
+[
+  {
+    "name": "scalar_0",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity"
+    ],
+    "options": {
+      "verbosity": 2,
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_1",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity="
+    ],
+    "options": {
+      "verbosity": 0,
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_2",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity=abc"
+    ],
+    "options": {
+      "verbosity": "NaN",
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_3",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity=-1"
+    ],
+    "options": {
+      "verbosity": -1,
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_4",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity=2.1"
+    ],
+    "options": {
+      "verbosity": 2.1,
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_5",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity=0x10"
+    ],
+    "options": {
+      "verbosity": 16,
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_6",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity=Infinity"
+    ],
+    "options": {
+      "verbosity": "Infinity",
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_7",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity",
+      "--out=x"
+    ],
+    "options": {
+      "verbosity": 2,
+      "out": "x",
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_8",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--out"
+    ],
+    "options": {
+      "out": "",
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_9",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--out="
+    ],
+    "options": {
+      "out": "",
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_10",
+    "command": "parse",
+    "args": [
+      "parse",
+      "M.qnt",
+      "--out",
+      "--source-map=x"
+    ],
+    "options": {
+      "out": "",
+      "source-map": "x"
+    },
+    "positionals": [
+      "parse"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_11",
+    "command": "parse",
+    "args": [
+      "parse",
+      "M.qnt",
+      "--sourceMap=x"
+    ],
+    "options": {
+      "source-map": "x"
+    },
+    "positionals": [
+      "parse"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_12",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--flatten=garbage"
+    ],
+    "options": {
+      "flatten": false,
+      "target": "json",
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_13",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--flatten=TRUE"
+    ],
+    "options": {
+      "flatten": false,
+      "target": "json",
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_14",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--flatten=1"
+    ],
+    "options": {
+      "flatten": false,
+      "target": "json",
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_15",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--flatten=false"
+    ],
+    "options": {
+      "flatten": false,
+      "target": "json",
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_16",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--flatten",
+      "false"
+    ],
+    "options": {
+      "flatten": false,
+      "target": "json",
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_17",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--flatten",
+      "true"
+    ],
+    "options": {
+      "flatten": true,
+      "target": "json",
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_18",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--no-flatten"
+    ],
+    "options": {
+      "flatten": false,
+      "target": "json",
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_19",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--flatten=false",
+      "--flatten=true"
+    ],
+    "options": {
+      "flatten": true,
+      "target": "json",
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_20",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--flatten",
+      "--no-flatten"
+    ],
+    "options": {
+      "flatten": false,
+      "target": "json",
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_21",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--out",
+      "-1"
+    ],
+    "options": {
+      "out": "-1",
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_22",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--out",
+      "-.5"
+    ],
+    "options": {
+      "out": "-.5",
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_23",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--out",
+      "-x"
+    ],
+    "options": {
+      "out": "",
+      "x": true,
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "Unknown argument: x",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_24",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--main",
+      "-x"
+    ],
+    "options": {
+      "main": "",
+      "x": true,
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "Unknown argument: x",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_25",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity",
+      "-1"
+    ],
+    "options": {
+      "verbosity": -1,
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_26",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity",
+      "-.5"
+    ],
+    "options": {
+      "verbosity": -0.5,
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_27",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity",
+      "-Infinity"
+    ],
+    "options": {
+      "verbosity": 2,
+      "I": true,
+      "n": [
+        true,
+        true
+      ],
+      "f": true,
+      "i": [
+        true,
+        true
+      ],
+      "t": true,
+      "y": true,
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "Unknown arguments: I, n, f, i, t, y",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_28",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity",
+      "-0x10"
+    ],
+    "options": {
+      "0": true,
+      "verbosity": 2,
+      "x": 10,
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "Unknown arguments: 0, x",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "scalar_29",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--verbosity",
+      "-1e3"
+    ],
+    "options": {
+      "1": true,
+      "verbosity": 2,
+      "e": 3,
+      "target": "json",
+      "flatten": true,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "Unknown arguments: 1, e",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "parse_defaults",
+    "command": "parse",
+    "args": [
+      "parse",
+      "M.qnt"
+    ],
+    "options": {},
+    "positionals": [
+      "parse"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "typecheck_defaults",
+    "command": "typecheck",
+    "args": [
+      "typecheck",
+      "M.qnt"
+    ],
+    "options": {},
+    "positionals": [
+      "typecheck"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "compile_defaults",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt"
+    ],
+    "options": {
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_defaults",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt"
+    ],
+    "options": {
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_defaults",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt"
+    ],
+    "options": {
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_defaults",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt"
+    ],
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "max-steps": 10,
+      "random-transitions": false,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "docs_defaults",
+    "command": "docs",
+    "args": [
+      "docs",
+      "M.qnt"
+    ],
+    "options": {},
+    "positionals": [
+      "docs"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_defaults",
+    "command": "repl",
+    "args": [
+      "repl"
+    ],
+    "options": {
+      "quiet": false,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "default_repl",
+    "command": "repl",
+    "args": [],
+    "options": {
+      "quiet": false,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "default_repl_expressions",
+    "command": "repl",
+    "args": [
+      "1 + 2",
+      "val x=3"
+    ],
+    "options": {
+      "quiet": false,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [],
+    "commands": [
+      "1 + 2",
+      "val x=3"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "parse_interspersed_out",
+    "command": "parse",
+    "args": [
+      "parse",
+      "--out=stage.json",
+      "M.qnt"
+    ],
+    "options": {
+      "out": "stage.json"
+    },
+    "positionals": [
+      "parse"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "typecheck_interspersed_out",
+    "command": "typecheck",
+    "args": [
+      "typecheck",
+      "--out=stage.json",
+      "M.qnt"
+    ],
+    "options": {
+      "out": "stage.json"
+    },
+    "positionals": [
+      "typecheck"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "compile_interspersed_out",
+    "command": "compile",
+    "args": [
+      "compile",
+      "--out=stage.json",
+      "M.qnt"
+    ],
+    "options": {
+      "out": "stage.json",
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_interspersed_out",
+    "command": "run",
+    "args": [
+      "run",
+      "--out=stage.json",
+      "M.qnt"
+    ],
+    "options": {
+      "out": "stage.json",
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_interspersed_out",
+    "command": "test",
+    "args": [
+      "test",
+      "--out=stage.json",
+      "M.qnt"
+    ],
+    "options": {
+      "out": "stage.json",
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_interspersed_out",
+    "command": "verify",
+    "args": [
+      "verify",
+      "--out=stage.json",
+      "M.qnt"
+    ],
+    "options": {
+      "out": "stage.json",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "max-steps": 10,
+      "random-transitions": false,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "docs_interspersed_out",
+    "command": "docs",
+    "args": [
+      "docs",
+      "--out=stage.json",
+      "M.qnt"
+    ],
+    "options": {
+      "out": "stage.json"
+    },
+    "positionals": [
+      "docs"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "parse_source_map",
+    "command": "parse",
+    "args": [
+      "parse",
+      "M.qnt",
+      "--source-map=locations.json"
+    ],
+    "options": {
+      "source-map": "locations.json"
+    },
+    "positionals": [
+      "parse"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "parse_sourceMap_alias",
+    "command": "parse",
+    "args": [
+      "parse",
+      "M.qnt",
+      "--sourceMap",
+      "locations.json"
+    ],
+    "options": {
+      "source-map": "locations.json"
+    },
+    "positionals": [
+      "parse"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "parse_source_alias_repeated",
+    "command": "parse",
+    "args": [
+      "parse",
+      "M.qnt",
+      "--source-map=a",
+      "--sourceMap=b"
+    ],
+    "options": {
+      "source-map": [
+        "a",
+        "b"
+      ]
+    },
+    "positionals": [
+      "parse"
+    ],
+    "input": "M.qnt",
+    "error": "--source-map can not be specified more than once",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "compile_all_options",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--main=M",
+      "--init=begin",
+      "--step=advance",
+      "--invariant=inv",
+      "--temporal=live",
+      "--target=json",
+      "--flatten=false",
+      "--verbosity=3"
+    ],
+    "options": {
+      "main": "M",
+      "init": "begin",
+      "step": "advance",
+      "invariant": "inv",
+      "temporal": "live",
+      "target": "json",
+      "flatten": false,
+      "verbosity": 3,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "compile_tlaplus",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--target=tlaplus"
+    ],
+    "options": {
+      "target": "tlaplus",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "compile_invalid_target",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--target=go"
+    ],
+    "options": {
+      "target": "go",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "Invalid values:\n  Argument: target, Given: \"go\", Choices: \"tlaplus\", \"json\"",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "compile_server_alias",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--serverEndpoint=remote:9000",
+      "--apalacheVersion=1.2.3"
+    ],
+    "options": {
+      "server-endpoint": {
+        "hostname": "remote",
+        "port": 9000
+      },
+      "apalache-version": "1.2.3",
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "compile_invalid_endpoint",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--server-endpoint=invalid"
+    ],
+    "options": {
+      "server-endpoint": "invalid"
+    },
+    "positionals": [
+      "compile",
+      "M.qnt"
+    ],
+    "error": "Expected hostname:port, found: invalid",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "compile_noFlatten_unknown",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--noFlatten"
+    ],
+    "options": {
+      "noFlatten": true,
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "Unknown argument: noFlatten",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "compile_no_flatten_equals_unknown",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--no-flatten=false"
+    ],
+    "options": {
+      "no-flatten": "false",
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "input": "M.qnt",
+    "error": "Unknown arguments: no-flatten, noFlatten",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_named_options",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--main=M",
+      "--init=begin",
+      "--step=advance",
+      "--invariant=x > 0",
+      "--verbosity=0",
+      "--out-itf=trace-{seq}.json",
+      "--mbt"
+    ],
+    "options": {
+      "main": "M",
+      "init": "begin",
+      "step": "advance",
+      "invariant": "x > 0",
+      "verbosity": 0,
+      "out-itf": "trace-{seq}.json",
+      "mbt": true,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "invariants": [],
+      "witnesses": [],
+      "hide": [],
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_numeric_aliases",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--maxSamples=4",
+      "--maxSteps=7",
+      "--nTraces=3",
+      "--nThreads=2"
+    ],
+    "options": {
+      "max-samples": 4,
+      "max-steps": 7,
+      "n-traces": 3,
+      "n-threads": 2,
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_seed_sets_sample_default",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--seed=0x10"
+    ],
+    "options": {
+      "seed": "16",
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 1
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_seed_missing",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--seed"
+    ],
+    "options": {
+      "seed": "0",
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 1
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_seed_empty",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--seed="
+    ],
+    "options": {
+      "seed": "0",
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 1
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_seed_large_decimal",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--seed=9007199254740993123456789"
+    ],
+    "options": {
+      "seed": "9007199254740993123456789",
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 1
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_seed_octal",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--seed=0o10"
+    ],
+    "options": {
+      "seed": "8",
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 1
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_seed_binary",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--seed=0b10"
+    ],
+    "options": {
+      "seed": "2",
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 1
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_negative_seed",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--seed=-123"
+    ],
+    "options": {
+      "seed": "-123",
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 1
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_invalid_seed",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--seed=not-a-number"
+    ],
+    "options": {
+      "seed": "not-a-number",
+      "max-samples": 1
+    },
+    "positionals": [
+      "run",
+      "M.qnt"
+    ],
+    "error": "--seed must be a big integer, found: not-a-number",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_explicit_sample_with_seed",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--seed=42",
+      "--max-samples=5"
+    ],
+    "options": {
+      "seed": "42",
+      "max-samples": 5,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_empty_arrays",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--invariants",
+      "--witnesses",
+      "--hide"
+    ],
+    "options": {
+      "invariants": [],
+      "witnesses": [],
+      "hide": [],
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariant": "true",
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_arrays",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--invariants",
+      "invA",
+      "invB",
+      "--witnesses",
+      "seenA",
+      "seenB",
+      "--hide",
+      "x",
+      "y"
+    ],
+    "options": {
+      "invariants": [
+        "invA",
+        "invB"
+      ],
+      "witnesses": [
+        "seenA",
+        "seenB"
+      ],
+      "hide": [
+        "x",
+        "y"
+      ],
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariant": "true",
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_repeated_arrays",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--invariants=invA",
+      "--invariants=invB",
+      "--witnesses=seenA",
+      "--witnesses=seenB",
+      "--hide=x",
+      "--hide=y"
+    ],
+    "options": {
+      "invariants": [
+        "invA",
+        "invB"
+      ],
+      "witnesses": [
+        "seenA",
+        "seenB"
+      ],
+      "hide": [
+        "x",
+        "y"
+      ],
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariant": "true",
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_repeated_scalar",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--max-samples=2",
+      "--maxSamples=3"
+    ],
+    "options": {
+      "max-samples": [
+        2,
+        3
+      ],
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "--max-samples can not be specified more than once",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_repeated_scalar_camel_first",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--maxSamples=2",
+      "--max-samples=3"
+    ],
+    "options": {
+      "max-samples": [
+        2,
+        3
+      ],
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "--maxSamples can not be specified more than once",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_missing_max_steps",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--max-steps"
+    ],
+    "options": {
+      "max-steps": 20,
+      "n-traces": 1,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_missing_max_samples",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--max-samples"
+    ],
+    "options": {
+      "max-samples": 10000,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_repeated_boolean",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--mbt",
+      "--mbt=false"
+    ],
+    "options": {
+      "mbt": false,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_no_boolean",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--no-mbt"
+    ],
+    "options": {
+      "mbt": false,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_typescript_backend",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--backend=typescript"
+    ],
+    "options": {
+      "backend": "typescript",
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_invalid_backend",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--backend=go"
+    ],
+    "options": {
+      "backend": "go",
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "Invalid values:\n  Argument: backend, Given: \"go\", Choices: \"typescript\", \"rust\"",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_trace_limit_validation",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--max-samples=1",
+      "--n-traces=2"
+    ],
+    "options": {
+      "max-samples": 1,
+      "n-traces": 2,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "--n-traces (2) cannot be greater than --max-samples (1).",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_seed_trace_limit_validation",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--seed=1",
+      "--n-traces=2"
+    ],
+    "options": {
+      "seed": "1",
+      "n-traces": 2,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 1
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "--n-traces (2) cannot be greater than --max-samples (1).",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_named_options",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--main=M",
+      "--match=^a.*Test$",
+      "--out-itf={test}-{seq}.json",
+      "--max-samples=3",
+      "--seed=123",
+      "--verbosity=1"
+    ],
+    "options": {
+      "main": "M",
+      "match": "^a.*Test$",
+      "out-itf": "{test}-{seq}.json",
+      "max-samples": 3,
+      "seed": "123",
+      "verbosity": 1,
+      "backend": "rust"
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_hidden_output_alias",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--output={test}.json"
+    ],
+    "options": {
+      "output": "{test}.json",
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_seed_sample_default",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--seed=123"
+    ],
+    "options": {
+      "seed": "123",
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 1
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_seed_missing",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--seed"
+    ],
+    "options": {
+      "seed": "0",
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 1
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_seed_empty",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--seed="
+    ],
+    "options": {
+      "seed": "0",
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 1
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_scalar_alias_repeat",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--out-itf=a",
+      "--outItf=b"
+    ],
+    "options": {
+      "out-itf": [
+        "a",
+        "b"
+      ],
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "--out-itf can not be specified more than once",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_typescript_backend",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--backend=typescript"
+    ],
+    "options": {
+      "backend": "typescript",
+      "verbosity": 2,
+      "max-samples": 10000
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_unknown_array",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--invariants=inv"
+    ],
+    "options": {
+      "invariants": "inv",
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "Unknown argument: invariants",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_all_options",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt",
+      "--main=M",
+      "--init=begin",
+      "--step=advance",
+      "--invariant=inv",
+      "--invariants",
+      "invA",
+      "invB",
+      "--temporal=live",
+      "--inductive-invariant=ind",
+      "--out-itf=trace.json",
+      "--max-steps=5",
+      "--random-transitions",
+      "--apalache-config=apalache.json",
+      "--verbosity=0",
+      "--apalache-version=1.2.3",
+      "--server-endpoint=remote:9000",
+      "--backend=apalache",
+      "--tlc-config=tlc.json"
+    ],
+    "options": {
+      "main": "M",
+      "init": "begin",
+      "step": "advance",
+      "invariant": "inv",
+      "invariants": [
+        "invA",
+        "invB"
+      ],
+      "temporal": "live",
+      "inductive-invariant": "ind",
+      "out-itf": "trace.json",
+      "max-steps": 5,
+      "random-transitions": true,
+      "apalache-config": "apalache.json",
+      "verbosity": 0,
+      "apalache-version": "1.2.3",
+      "server-endpoint": {
+        "hostname": "remote",
+        "port": 9000
+      },
+      "backend": "apalache",
+      "tlc-config": "tlc.json"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_camel_aliases",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt",
+      "--maxSteps=3",
+      "--randomTransitions",
+      "--inductiveInvariant=ind",
+      "--outItf=trace.json",
+      "--apalacheConfig=config.json",
+      "--tlcConfig=tlc.json"
+    ],
+    "options": {
+      "max-steps": 3,
+      "random-transitions": true,
+      "inductive-invariant": "ind",
+      "out-itf": "trace.json",
+      "apalache-config": "config.json",
+      "tlc-config": "tlc.json",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_no_random",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt",
+      "--no-random-transitions"
+    ],
+    "options": {
+      "random-transitions": false,
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "max-steps": 10,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_missing_max_steps",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt",
+      "--max-steps"
+    ],
+    "options": {
+      "max-steps": 10,
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "random-transitions": false,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_missing_verbosity",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt",
+      "--verbosity"
+    ],
+    "options": {
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "max-steps": 10,
+      "random-transitions": false,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_repeated_camel_scalar",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt",
+      "--maxSteps=1",
+      "--max-steps=2"
+    ],
+    "options": {
+      "max-steps": [
+        1,
+        2
+      ],
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "random-transitions": false,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "--maxSteps can not be specified more than once",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_repeated_invariants",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt",
+      "--invariants=invA",
+      "--invariants=invB"
+    ],
+    "options": {
+      "invariants": [
+        "invA",
+        "invB"
+      ],
+      "init": "init",
+      "step": "step",
+      "max-steps": 10,
+      "random-transitions": false,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_tlc",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt",
+      "--backend=tlc"
+    ],
+    "options": {
+      "backend": "tlc",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "max-steps": 10,
+      "random-transitions": false,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_invalid_backend",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt",
+      "--backend=rust"
+    ],
+    "options": {
+      "backend": "rust",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "max-steps": 10,
+      "random-transitions": false,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "Invalid values:\n  Argument: backend, Given: \"rust\", Choices: \"apalache\", \"tlc\"",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_short_quiet_require",
+    "command": "repl",
+    "args": [
+      "repl",
+      "-q",
+      "-r",
+      "M.qnt::M"
+    ],
+    "options": {
+      "quiet": true,
+      "require": "M.qnt::M",
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_long_quiet_require",
+    "command": "repl",
+    "args": [
+      "repl",
+      "--quiet",
+      "--require=M.qnt::M"
+    ],
+    "options": {
+      "quiet": true,
+      "require": "M.qnt::M",
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_no_quiet",
+    "command": "repl",
+    "args": [
+      "repl",
+      "--no-quiet"
+    ],
+    "options": {
+      "quiet": false,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_short_quiet_false",
+    "command": "repl",
+    "args": [
+      "repl",
+      "-q",
+      "false"
+    ],
+    "options": {
+      "quiet": false,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_seed_missing",
+    "command": "repl",
+    "args": [
+      "repl",
+      "--seed"
+    ],
+    "options": {
+      "seed": "0",
+      "quiet": false,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_seed_empty",
+    "command": "repl",
+    "args": [
+      "repl",
+      "--seed="
+    ],
+    "options": {
+      "seed": "0",
+      "quiet": false,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_repeated_quiet_alias",
+    "command": "repl",
+    "args": [
+      "repl",
+      "-q",
+      "--quiet=false"
+    ],
+    "options": {
+      "quiet": false,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_repeated_require_alias",
+    "command": "repl",
+    "args": [
+      "repl",
+      "-r=a",
+      "--require=b"
+    ],
+    "options": {
+      "require": [
+        "a",
+        "b"
+      ],
+      "quiet": false,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "--r can not be specified more than once",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_all_options",
+    "command": "repl",
+    "args": [
+      "repl",
+      "--require=M.qnt::M",
+      "--verbosity=0",
+      "--seed=42",
+      "--backend=typescript",
+      "val x=1",
+      "x+1"
+    ],
+    "options": {
+      "require": "M.qnt::M",
+      "verbosity": 0,
+      "seed": "42",
+      "backend": "typescript",
+      "quiet": false
+    },
+    "positionals": [
+      "repl"
+    ],
+    "commands": [
+      "val x=1",
+      "x+1"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_interspersed_commands",
+    "command": "repl",
+    "args": [
+      "repl",
+      "1+2",
+      "-q",
+      "val x=1",
+      "--seed=0x10",
+      "x"
+    ],
+    "options": {
+      "quiet": true,
+      "seed": "16",
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "commands": [
+      "1+2",
+      "val x=1",
+      "x"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_positionals_after_terminator",
+    "command": "repl",
+    "args": [
+      "repl",
+      "--quiet",
+      "--",
+      "--help",
+      "x+1"
+    ],
+    "options": {
+      "quiet": true,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl",
+      "--help",
+      "x+1"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "default_repl_short_flags",
+    "command": "repl",
+    "args": [
+      "-q",
+      "-r=M.qnt::M",
+      "x+1"
+    ],
+    "options": {
+      "quiet": true,
+      "require": "M.qnt::M",
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [],
+    "commands": [
+      "x+1"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "parse_help_bypasses_missing_input",
+    "command": "parse",
+    "args": [
+      "parse",
+      "--help"
+    ],
+    "options": {
+      "help": true
+    },
+    "positionals": [
+      "parse"
+    ],
+    "error": "",
+    "help": true,
+    "version": false
+  },
+  {
+    "name": "parse_version_bypasses_missing_input",
+    "command": "parse",
+    "args": [
+      "parse",
+      "--version"
+    ],
+    "options": {
+      "version": true
+    },
+    "positionals": [
+      "parse"
+    ],
+    "error": "",
+    "help": false,
+    "version": true
+  },
+  {
+    "name": "typecheck_help_bypasses_missing_input",
+    "command": "typecheck",
+    "args": [
+      "typecheck",
+      "--help"
+    ],
+    "options": {
+      "help": true
+    },
+    "positionals": [
+      "typecheck"
+    ],
+    "error": "",
+    "help": true,
+    "version": false
+  },
+  {
+    "name": "typecheck_version_bypasses_missing_input",
+    "command": "typecheck",
+    "args": [
+      "typecheck",
+      "--version"
+    ],
+    "options": {
+      "version": true
+    },
+    "positionals": [
+      "typecheck"
+    ],
+    "error": "",
+    "help": false,
+    "version": true
+  },
+  {
+    "name": "compile_help_bypasses_missing_input",
+    "command": "compile",
+    "args": [
+      "compile",
+      "--help"
+    ],
+    "options": {
+      "help": true,
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "error": "",
+    "help": true,
+    "version": false
+  },
+  {
+    "name": "compile_version_bypasses_missing_input",
+    "command": "compile",
+    "args": [
+      "compile",
+      "--version"
+    ],
+    "options": {
+      "version": true,
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile"
+    ],
+    "error": "",
+    "help": false,
+    "version": true
+  },
+  {
+    "name": "run_help_bypasses_missing_input",
+    "command": "run",
+    "args": [
+      "run",
+      "--help"
+    ],
+    "options": {
+      "help": true,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run"
+    ],
+    "error": "",
+    "help": true,
+    "version": false
+  },
+  {
+    "name": "run_version_bypasses_missing_input",
+    "command": "run",
+    "args": [
+      "run",
+      "--version"
+    ],
+    "options": {
+      "version": true,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run"
+    ],
+    "error": "",
+    "help": false,
+    "version": true
+  },
+  {
+    "name": "test_help_bypasses_missing_input",
+    "command": "test",
+    "args": [
+      "test",
+      "--help"
+    ],
+    "options": {
+      "help": true,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "test"
+    ],
+    "error": "",
+    "help": true,
+    "version": false
+  },
+  {
+    "name": "test_version_bypasses_missing_input",
+    "command": "test",
+    "args": [
+      "test",
+      "--version"
+    ],
+    "options": {
+      "version": true,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "test"
+    ],
+    "error": "",
+    "help": false,
+    "version": true
+  },
+  {
+    "name": "verify_help_bypasses_missing_input",
+    "command": "verify",
+    "args": [
+      "verify",
+      "--help"
+    ],
+    "options": {
+      "help": true,
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "max-steps": 10,
+      "random-transitions": false,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "error": "",
+    "help": true,
+    "version": false
+  },
+  {
+    "name": "verify_version_bypasses_missing_input",
+    "command": "verify",
+    "args": [
+      "verify",
+      "--version"
+    ],
+    "options": {
+      "version": true,
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "max-steps": 10,
+      "random-transitions": false,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "error": "",
+    "help": false,
+    "version": true
+  },
+  {
+    "name": "repl_help_bypasses_missing_input",
+    "command": "repl",
+    "args": [
+      "repl",
+      "--help"
+    ],
+    "options": {
+      "help": true,
+      "quiet": false,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "",
+    "help": true,
+    "version": false
+  },
+  {
+    "name": "repl_version_bypasses_missing_input",
+    "command": "repl",
+    "args": [
+      "repl",
+      "--version"
+    ],
+    "options": {
+      "version": true,
+      "quiet": false,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "",
+    "help": false,
+    "version": true
+  },
+  {
+    "name": "docs_help_bypasses_missing_input",
+    "command": "docs",
+    "args": [
+      "docs",
+      "--help"
+    ],
+    "options": {
+      "help": true
+    },
+    "positionals": [
+      "docs"
+    ],
+    "error": "",
+    "help": true,
+    "version": false
+  },
+  {
+    "name": "docs_version_bypasses_missing_input",
+    "command": "docs",
+    "args": [
+      "docs",
+      "--version"
+    ],
+    "options": {
+      "version": true
+    },
+    "positionals": [
+      "docs"
+    ],
+    "error": "",
+    "help": false,
+    "version": true
+  },
+  {
+    "name": "compile_help_bypasses_repeated_scalar",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--out=a",
+      "--out=b",
+      "--help"
+    ],
+    "options": {
+      "out": [
+        "a",
+        "b"
+      ],
+      "help": true,
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile",
+      "M.qnt"
+    ],
+    "error": "",
+    "help": true,
+    "version": false
+  },
+  {
+    "name": "compile_version_bypasses_repeated_scalar",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--out=a",
+      "--out=b",
+      "--version"
+    ],
+    "options": {
+      "out": [
+        "a",
+        "b"
+      ],
+      "version": true,
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile",
+      "M.qnt"
+    ],
+    "error": "",
+    "help": false,
+    "version": true
+  },
+  {
+    "name": "run_help_bypasses_trace_validation",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--max-samples=1",
+      "--n-traces=2",
+      "--help"
+    ],
+    "options": {
+      "max-samples": 1,
+      "n-traces": 2,
+      "help": true,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run",
+      "M.qnt"
+    ],
+    "error": "",
+    "help": true,
+    "version": false
+  },
+  {
+    "name": "test_version_bypasses_backend_choices",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--backend=invalid",
+      "--version"
+    ],
+    "options": {
+      "backend": "invalid",
+      "version": true,
+      "verbosity": 2
+    },
+    "positionals": [
+      "test",
+      "M.qnt"
+    ],
+    "error": "",
+    "help": false,
+    "version": true
+  },
+  {
+    "name": "parse_positionals_after_terminator",
+    "command": "parse",
+    "args": [
+      "parse",
+      "--",
+      "--out"
+    ],
+    "options": {},
+    "positionals": [
+      "parse",
+      "--out"
+    ],
+    "error": "Not enough non-option arguments: got 0, need at least 1",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "compile_flags_after_terminator",
+    "command": "compile",
+    "args": [
+      "compile",
+      "M.qnt",
+      "--",
+      "--flatten=false"
+    ],
+    "options": {
+      "target": "json",
+      "flatten": true,
+      "verbosity": 2,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      }
+    },
+    "positionals": [
+      "compile",
+      "--flatten=false"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "docs_unknown_flag",
+    "command": "docs",
+    "args": [
+      "docs",
+      "M.qnt",
+      "--main=M"
+    ],
+    "options": {
+      "main": "M"
+    },
+    "positionals": [
+      "docs"
+    ],
+    "input": "M.qnt",
+    "error": "Unknown argument: main",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "typecheck_unknown_source_map",
+    "command": "typecheck",
+    "args": [
+      "typecheck",
+      "M.qnt",
+      "--source-map=locations.json"
+    ],
+    "options": {
+      "source-map": "locations.json"
+    },
+    "positionals": [
+      "typecheck"
+    ],
+    "input": "M.qnt",
+    "error": "Unknown arguments: source-map, sourceMap",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_integral_numeric_forms",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--max-samples=2.0",
+      "--max-steps=1e2",
+      "--n-traces=2.0",
+      "--n-threads=0x10",
+      "--verbosity=2.0"
+    ],
+    "options": {
+      "max-samples": 2,
+      "max-steps": 100,
+      "n-traces": 2,
+      "n-threads": 16,
+      "verbosity": 2,
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_integral_numeric_forms",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--max-samples=1e2",
+      "--verbosity=2.0"
+    ],
+    "options": {
+      "max-samples": 100,
+      "verbosity": 2,
+      "backend": "rust"
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_integral_numeric_forms",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt",
+      "--max-steps=0x10",
+      "--verbosity=2.0"
+    ],
+    "options": {
+      "max-steps": 16,
+      "verbosity": 2,
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "random-transitions": false,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_integral_verbosity",
+    "command": "repl",
+    "args": [
+      "repl",
+      "--verbosity=2.0"
+    ],
+    "options": {
+      "verbosity": 2,
+      "quiet": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_mbt_literal_false",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--mbt=false"
+    ],
+    "options": {
+      "mbt": false,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_mbt_repeated_negation",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--mbt",
+      "--no-mbt"
+    ],
+    "options": {
+      "mbt": false,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_mbt_inline_nonsensical_false",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--mbt=garbage"
+    ],
+    "options": {
+      "mbt": false,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_random_alias_negation",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt",
+      "--randomTransitions",
+      "--no-random-transitions"
+    ],
+    "options": {
+      "random-transitions": false,
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "max-steps": 10,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_inline_arrays_continue",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--invariants=invA",
+      "invB",
+      "--hide=x",
+      "-1",
+      "--witnesses=2",
+      "-3"
+    ],
+    "options": {
+      "invariants": [
+        "invA",
+        "invB"
+      ],
+      "hide": [
+        "x",
+        -1
+      ],
+      "witnesses": [
+        2,
+        -3
+      ],
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariant": "true",
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_fractional_counts_and_verbosity_pending",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--max-steps=1.5",
+      "--verbosity=2.5"
+    ],
+    "pending": "nonintegral/nonfinite Go execution bound",
+    "options": {
+      "max-steps": 1.5,
+      "verbosity": 2.5,
+      "n-traces": 1,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "mbt": false,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_nan_counts_and_verbosity_pending",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--max-samples=NaN",
+      "--verbosity=NaN"
+    ],
+    "pending": "nonintegral/nonfinite Go execution bound",
+    "options": {
+      "max-samples": "NaN",
+      "verbosity": "NaN",
+      "backend": "rust"
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "verify_infinite_counts_and_verbosity_pending",
+    "command": "verify",
+    "args": [
+      "verify",
+      "M.qnt",
+      "--max-steps=Infinity",
+      "--verbosity=Infinity"
+    ],
+    "pending": "nonintegral/nonfinite Go execution bound",
+    "options": {
+      "max-steps": "Infinity",
+      "verbosity": "Infinity",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "random-transitions": false,
+      "apalache-version": "0.62.4",
+      "server-endpoint": {
+        "hostname": "localhost",
+        "port": 8822
+      },
+      "backend": "apalache"
+    },
+    "positionals": [
+      "verify"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "repl_fractional_verbosity_pending",
+    "command": "repl",
+    "args": [
+      "repl",
+      "--verbosity=2.5"
+    ],
+    "pending": "nonintegral/nonfinite Go execution bound",
+    "options": {
+      "verbosity": 2.5,
+      "quiet": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "repl"
+    ],
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_help_bypasses_unknown_flag",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--unknown",
+      "--help"
+    ],
+    "options": {
+      "unknown": true,
+      "help": true,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run",
+      "M.qnt"
+    ],
+    "error": "",
+    "help": true,
+    "version": false
+  },
+  {
+    "name": "run_help_false_keeps_unknown_error",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "--unknown",
+      "--help=false"
+    ],
+    "options": {
+      "unknown": true,
+      "help": false,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "Unknown argument: unknown",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "run_short_h_contract",
+    "command": "run",
+    "args": [
+      "run",
+      "M.qnt",
+      "-h"
+    ],
+    "options": {
+      "h": true,
+      "n-traces": 1,
+      "max-steps": 20,
+      "n-threads": "<cpu-count>",
+      "init": "init",
+      "step": "step",
+      "invariants": [],
+      "invariant": "true",
+      "witnesses": [],
+      "hide": [],
+      "verbosity": 2,
+      "mbt": false,
+      "backend": "rust"
+    },
+    "positionals": [
+      "run"
+    ],
+    "input": "M.qnt",
+    "error": "Unknown argument: h",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_output_overrides_out_itf",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--out-itf=first.json",
+      "--output=second.json"
+    ],
+    "options": {
+      "out-itf": "first.json",
+      "output": "second.json",
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_output_overrides_out_itf_reverse",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--output=first.json",
+      "--out-itf=second.json"
+    ],
+    "options": {
+      "output": "first.json",
+      "out-itf": "second.json",
+      "verbosity": 2,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "docs_out_missing",
+    "command": "docs",
+    "args": [
+      "docs",
+      "M.qnt",
+      "--out"
+    ],
+    "options": {
+      "out": ""
+    },
+    "positionals": [
+      "docs"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "docs_out_empty",
+    "command": "docs",
+    "args": [
+      "docs",
+      "M.qnt",
+      "--out="
+    ],
+    "options": {
+      "out": ""
+    },
+    "positionals": [
+      "docs"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "docs_help_bypasses_missing_out",
+    "command": "docs",
+    "args": [
+      "docs",
+      "--out",
+      "--help"
+    ],
+    "options": {
+      "out": "",
+      "help": true
+    },
+    "positionals": [
+      "docs"
+    ],
+    "error": "",
+    "help": true,
+    "version": false
+  },
+  {
+    "name": "test_missing_main_before_option",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--main",
+      "--verbosity=0"
+    ],
+    "options": {
+      "main": "",
+      "verbosity": 0,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_missing_out_before_option",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--out",
+      "--verbosity=0"
+    ],
+    "options": {
+      "out": "",
+      "verbosity": 0,
+      "backend": "rust",
+      "max-samples": 10000
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  },
+  {
+    "name": "test_missing_seed_before_option",
+    "command": "test",
+    "args": [
+      "test",
+      "M.qnt",
+      "--seed",
+      "--verbosity=0"
+    ],
+    "options": {
+      "seed": "0",
+      "verbosity": 0,
+      "backend": "rust",
+      "max-samples": 1
+    },
+    "positionals": [
+      "test"
+    ],
+    "input": "M.qnt",
+    "error": "",
+    "help": false,
+    "version": false
+  }
+]

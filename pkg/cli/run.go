@@ -29,6 +29,11 @@ type runOptions struct {
 
 func runParseOptions(args []string) (runOptions, error) {
 	o := runOptions{init: "init", step: "step", invariant: "true", maxSamples: 10000, maxSteps: 20, traces: 1, verbosity: 2}
+	normalized, err := cliNormalizeOptions("run", args)
+	if err != nil {
+		return o, err
+	}
+	args = normalized
 	for i := 0; i < len(args); i++ {
 		token := args[i]
 		if token == "--" {
@@ -170,7 +175,10 @@ var errRunHelp = errors.New("run help")
 func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	o, err := runParseOptions(args)
 	if errors.Is(err, errRunHelp) {
-		fmt.Fprintln(stdout, "Usage: quint run <input> [--main M] [--init init] [--step step] [--invariant true] [--invariants names...] [--max-steps 20] [--max-samples N] [--n-traces 1] [--seed N] [--out file] [--out-itf template] [--verbosity 0..5] [--mbt] [--backend go]")
+		if _, err := fmt.Fprintln(stdout, "Usage: quint run <input> [--main M] [--init init] [--step step] [--invariant true] [--invariants names...] [--max-steps 20] [--max-samples N] [--n-traces 1] [--seed N] [--out file] [--out-itf template] [--verbosity 0..5] [--mbt] [--backend go]"); err != nil {
+			fmt.Fprintln(stderr, "error:", err)
+			return 1
+		}
 		return 0
 	}
 	if err != nil {

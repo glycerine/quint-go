@@ -718,7 +718,10 @@ Build these items alongside the phases that supply their command behavior.
     help/version, signal contexts, validation, and in-process command tests.
   - [x] Compile --out preserves stdout for JSON and TLA targets; exact saved
     stage fields/IDs, lookup provenance, effects and source indexes match upstream.
-  - [ ] Complete remaining flag/alias/help/error-prose parity audit.
+  - [x] Audit common flags against158 actual yargs cases: aliases, negation,
+    missing defaults, repeated scalars, arrays, numeric spellings and REPL
+    interspersed arguments; preserve explicit Go backend/resource constraints.
+  - [ ] Complete remaining help/error-prose and terminal parity audit.
 - [ ] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
 - [ ] P10.3 Port machine-readable stage output and diagnostics; explicitly
@@ -3481,3 +3484,12 @@ word "retained" in the commit message.
   compare exact expressions, ITF, errors, RNG and UID history, with cancellation.
   New trace helper100% covered; focused core0.116s/CLI0.114s, full core1.041s
   and vet pass. Compact infinite serialization remains an explicit checked error.
+
+- 2026-11-02: Added shared CLI option normalization across all commands with
+  158 actual yargs oracle cases. Camel/dash aliases, Boolean values/negation,
+  repeated scalar rejection, missing defaults, empty arrays, integral JS numeric
+  spellings and REPL interspersed arguments now agree. Hidden test output wins
+  its override in either order; native TLC defaults to verbosity3. Four fractional
+  or nonfinite execution bounds remain explicitly parse-only evidence; Go keeps
+  integer resource bounds, backend names and nThreads1. Help writes report I/O
+  errors. Focused0.078s, race1.304s and vet pass; normalizer98.9% covered.

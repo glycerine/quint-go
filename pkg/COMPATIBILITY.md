@@ -107,8 +107,8 @@ allocation cap is an explicit Go resource policy.
 ## Commands and flags
 
 All eight commands and a default REPL are dispatched by `cmd/quint`. Help/version
-are implemented (`--help`, `-h`, `--version`); full yargs alias/coercion/repeated
-flag/error-text parity remains partial. All commands accept their documented
+are implemented (`--help`, `-h`, `--version`); common aliases/coercion/repeated
+flags have158 actual yargs cases; remaining help/error prose is partial. All commands accept their documented
 input/positionals and command help. The flags below inventory upstream's active
 options; commented-out `--timeout` is not an upstream implemented option.
 
@@ -120,7 +120,7 @@ options; commented-out `--timeout` is not an upstream implemented option.
 | `run` | `--out`, `--main`, `--out-itf`, `--max-samples`, `--n-traces`, `--max-steps`, `--init`, `--step`, `--invariants`, `--invariant`, `--witnesses`, `--hide`, `--seed`, `--verbosity`, `--mbt`, `--no-mbt` | `--backend=go` only; TypeScript/Rust rejected. `--n-threads=1` only; parallel simulation pending. Display/trace ranking/format coverage is partial. |
 | `test` | `--out`, `--main`, `--out-itf`, hidden alias `--output`, `--max-samples`, `--seed`, `--verbosity`, `--match` | `--backend=go` only. Match uses pure Go ECMAScript translation with lookaround/backreferences and a bounded matcher; rare unsupported grammar is rejected explicitly. Saved transcript/ITF/source-report and quiet debug cases pass; full corpus remains an audit. |
 | `verify` | `--out`, `--main`, `--init`, `--step`, `--invariant`, `--invariants`, `--inductive-invariant`, `--temporal`, `--out-itf`, `--max-steps`, `--random-transitions`, `--no-random-transitions`, `--apalache-config`, `--tlc-config`, `--verbosity` | `--backend=apalache/apalache-go` uses Go Apalache. `--backend=tlc/tlc-go` uses native Go TLC for exhaustive finite-state safety and supported temporal checks; explicit max-steps, random transitions, induction and Apalache config are rejected for TLC. Typed ITF export supports structured values and temporal loops. Scala version/server flags remain rejected. |
-| `repl` / default | `--require`/`-r`, `--quiet`/`-q`, `--verbosity`, `--seed` | `--backend=go` only. Flags after the first positional command are not normalized like yargs. Readline/history persistence and full terminal parity pending. |
+| `repl` / default | `--require`/`-r`, `--quiet`/`-q`, `--verbosity`, `--seed` | `--backend=go` only. Interspersed flags, Boolean negation and aliases match the common yargs contract. Readline/history persistence and full terminal parity pending. |
 | `docs` | `--out` | Embedded builtin docs and source Markdown generation implemented. |
 
 REPL `.clear`, `.exit`/`.quit`, `.help`, `.load`, `.reload`, `.state`, `.history`,

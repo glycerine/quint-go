@@ -87,18 +87,24 @@ func TestDocsCommandOptionsAndFailures(t *testing.T) {
 	t.Parallel()
 	input := docsSourceFile(t, "module M {}")
 	for _, args := range [][]string{
-		nil, {"--unknown"}, {input, input}, {input, "--out"}, {input, "--out="},
-		{input, "--out=x", "--out=y"}, {input, "--out", "--help"},
+		nil, {"--unknown"}, {input, input},
+		{input, "--out=x", "--out=y"},
 	} {
 		var stdout, stderr bytes.Buffer
 		if status := commandDocs(context.Background(), args, &stdout, &stderr); status != 1 || stdout.Len() != 0 || stderr.Len() == 0 {
 			t.Fatal(args, status, stdout.String(), stderr.String())
 		}
 	}
-	for _, args := range [][]string{{"--help"}, {"-h"}, {input, "--help"}} {
+	for _, args := range [][]string{{"--help"}, {"-h"}, {input, "--help"}, {input, "--out", "--help"}} {
 		var stdout, stderr bytes.Buffer
 		if status := commandDocs(context.Background(), args, &stdout, &stderr); status != 0 || stdout.String() != docsHelp || stderr.Len() != 0 {
 			t.Fatal(args, status, stdout.String(), stderr.String())
+		}
+	}
+	for _, args := range [][]string{{input, "--out"}, {input, "--out="}} {
+		var stdout, stderr bytes.Buffer
+		if status := commandDocs(context.Background(), args, &stdout, &stderr); status != 0 || stdout.String() != "# Documentation for M\n\n\n" || stderr.Len() != 0 {
+			t.Fatal("empty output option differs from omitted output", args, status, stdout.String(), stderr.String())
 		}
 	}
 	var positionOut, positionErr bytes.Buffer

@@ -174,6 +174,11 @@ type coreOptions struct {
 // and rejects repeated scalar flags before any source or output file is touched.
 func coreParseOptions(command string, args []string) (coreOptions, error) {
 	o := coreOptions{target: "json", flatten: true, verbosity: 2}
+	normalized, err := cliNormalizeOptions(command, args)
+	if err != nil {
+		return o, err
+	}
+	args = normalized
 	seen := insdict.NewDict[string, bool]()
 	positionals := []string{}
 	for i := 0; i < len(args); i++ {

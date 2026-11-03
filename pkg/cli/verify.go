@@ -239,6 +239,10 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 
 func verifyParseOptions(args []string, stdout, stderr io.Writer) (verifyOptions, bool, error) {
 	options := verifyOptions{}
+	args, err := cliNormalizeOptions("verify", args)
+	if err != nil {
+		return options, false, err
+	}
 	flags := flag.NewFlagSet("verify", flag.ContinueOnError)
 	flags.SetOutput(io.Discard)
 	flags.StringVar(&options.main, "main", "", "main module name")
@@ -256,11 +260,14 @@ func verifyParseOptions(args []string, stdout, stderr io.Writer) (verifyOptions,
 	flags.IntVar(&options.maxSteps, "max-steps", 10, "maximum number of transitions")
 	flags.IntVar(&options.verbosity, "verbosity", 2, "console verbosity (0 to 5)")
 	flags.BoolVar(&options.randomTransitions, "random-transitions", false, "choose symbolic transitions at random")
-	printHelp := func() {
-		fmt.Fprintln(stdout, "Usage: quint verify <input> [options]")
-		flags.SetOutput(stdout)
+	printHelp := func() error {
+		var help bytes.Buffer
+		fmt.Fprintln(&help, "Usage: quint verify <input> [options]")
+		flags.SetOutput(&help)
 		flags.PrintDefaults()
 		flags.SetOutput(io.Discard)
+		_, err := io.WriteString(stdout, help.String())
+		return err
 	}
 	flags.Usage = func() {}
 	normalized, err := verifyInterspersedArgs(args)
@@ -269,8 +276,8 @@ func verifyParseOptions(args []string, stdout, stderr io.Writer) (verifyOptions,
 	}
 	if err = flags.Parse(normalized); err != nil {
 		if err == flag.ErrHelp {
-			printHelp()
-			return options, true, nil
+			err = printHelp()
+			return options, err == nil, err
 		}
 		return options, false, err
 	}
@@ -288,12 +295,18 @@ func verifyParseOptions(args []string, stdout, stderr io.Writer) (verifyOptions,
 		return options, false, fmt.Errorf("unsupported verification backend %q; choose a Go Apalache or Go TLC backend", options.backend)
 	}
 	if verifyUsesTLC(options) {
-		explicitBound := false
+		explicitBound, explicitVerbosity := false, false
 		flags.Visit(func(f *flag.Flag) {
 			if f.Name == "max-steps" {
 				explicitBound = true
 			}
+			if f.Name == "verbosity" {
+				explicitVerbosity = true
+			}
 		})
+		if !explicitVerbosity {
+			options.verbosity = 3
+		}
 		if explicitBound {
 			return options, false, fmt.Errorf("--max-steps is unsupported by exhaustive Go TLC checking")
 		}

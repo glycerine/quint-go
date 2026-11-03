@@ -57,6 +57,11 @@ const testUsage = `Usage: quint test <input> [options]
 
 func testParseOptions(args []string) (testCommandOptions, error) {
 	o := testCommandOptions{maxSamples: 10000, verbosity: 2}
+	normalized, err := cliNormalizeOptions("test", args)
+	if err != nil {
+		return o, err
+	}
+	args = normalized
 	seen := insdict.NewDict[string, bool]()
 	positional := false
 	for i := 0; i < len(args); i++ {

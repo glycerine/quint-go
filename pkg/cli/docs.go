@@ -165,6 +165,11 @@ func commandDocs(ctx context.Context, args []string, stdout, stderr io.Writer) i
 
 func docsParseOptions(args []string) (docsOptions, bool, error) {
 	var options docsOptions
+	normalized, err := cliNormalizeOptions("docs", args)
+	if err != nil {
+		return options, false, err
+	}
+	args = normalized
 	seenOut, positionalOnly := false, false
 	for i := 0; i < len(args); i++ {
 		argument := args[i]
@@ -188,9 +193,6 @@ func docsParseOptions(args []string) (docsOptions, bool, error) {
 						return options, false, fmt.Errorf("--out requires a filename")
 					}
 					options.out = args[i]
-				}
-				if options.out == "" {
-					return options, false, fmt.Errorf("--out requires a filename")
 				}
 				continue
 			case strings.HasPrefix(argument, "-"):

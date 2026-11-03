@@ -28,9 +28,9 @@ func TestRunOptions(t *testing.T) {
 		t.Fatal(explicit, err)
 	}
 	for _, args := range [][]string{
-		{}, {"a.qnt", "b.qnt"}, {"a.qnt", "--unknown"}, {"a.qnt", "--seed"}, {"a.qnt", "--backend=rust"},
-		{"a.qnt", "--max-steps=-1"}, {"a.qnt", "--n-traces=no"}, {"a.qnt", "--verbosity=6"}, {"a.qnt", "--mbt=maybe"},
-		{"a.qnt", "--no-mbt=false"}, {"a.qnt", "--invariants"}, {"a.qnt", "--n-threads=2"},
+		{}, {"a.qnt", "b.qnt"}, {"a.qnt", "--unknown"}, {"a.qnt", "--backend=rust"},
+		{"a.qnt", "--max-steps=-1"}, {"a.qnt", "--n-traces=no"}, {"a.qnt", "--verbosity=6"},
+		{"a.qnt", "--no-mbt=false"}, {"a.qnt", "--n-threads=2"},
 		{"a.qnt", "--seed=1", "--n-traces=2"}, {"--", "a.qnt", "b.qnt"},
 	} {
 		if _, err := runParseOptions(args); err == nil {
@@ -147,7 +147,7 @@ func TestRunPreparationRuntimeAndOutputErrors(t *testing.T) {
 		{[]string{file, "--init=wrong"}, "default --init action name 'wrong' is used by a val declaration"},
 		{[]string{file, "--init=42 +"}, "valid expression"},
 		{[]string{file, "--invariant=missing"}, "not found"},
-		{[]string{file, "--invariant=boom", "--max-steps=0"}, "Assertion failed"},
+		{[]string{file, "--invariant=boom"}, "Assertion failed"},
 		{[]string{file, "--seed=invalid"}, "--seed must be a big integer"},
 		{[]string{file, "--out", filepath.Join(t.TempDir(), "missing", "out.json")}, "no such file"},
 		{[]string{file, "--out-itf", filepath.Join(t.TempDir(), "missing", "trace.itf")}, "writing ITF trace"},

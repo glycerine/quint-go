@@ -153,10 +153,9 @@ func TestVerifyCLIInvalidInvocation(t *testing.T) {
 	t.Parallel()
 	for _, args := range [][]string{
 		nil, {"A.qnt", "B.qnt"}, {"A.qnt", "--max-steps=-1"}, {"A.qnt", "--max-steps=no"},
-		{"A.qnt", "--verbosity=6"}, {"A.qnt", "--verbosity=-1"}, {"A.qnt", "--invariants"},
+		{"A.qnt", "--verbosity=6"}, {"A.qnt", "--verbosity=-1"},
 		{"A.qnt", "--backend=java"}, {"A.qnt", "--backend=scala"}, {"A.qnt", "--unknown=1"},
 		{"A.qnt", "--server-endpoint=localhost:8822"}, {"A.qnt", "--apalache-version=1"}, {"A.qnt", "--tlc-config=config.json"},
-		{"A.qnt", "--main"},
 	} {
 		var stdout, stderr bytes.Buffer
 		code := verifyWithBackend(context.Background(), args, &stdout, &stderr, verifyTestBackend(func(context.Context, quint.CompilationResult, json.RawMessage, apalache.VerificationOptions) (apalache.VerificationResult, error) {
