@@ -109,9 +109,11 @@ reporting that evaluates expressions will also depend on P7.
   - [x] COMPATIBILITY.md inventories every opcode/builtin value, active command
     flags/environment settings, major data/status contracts, and editor features.
   - [ ] Complete field-level wire/transcript and backend semantic coverage audit.
-- [ ] P0.3 Establish reference fixtures from TypeScript tests, Rust tests,
+- [x] P0.3 Establish reference fixtures from TypeScript tests, Rust tests,
   integration transcripts, and examples. Capture expected successes and
   failures; document disagreements between reference runtimes.
+  - FIXTURE_MANIFEST.md maps all 51 TypeScript test families, six Rust families,
+    editor and integration groups, with actual comparisons, gates and differences.
 - [ ] P0.4 Wire local development to `~/apalache/pkg` using a local workspace
   or development-only replacement; choose a pinned dependency version for
   reproducible builds without committing a machine-specific absolute path.
@@ -837,9 +839,11 @@ any remaining TypeScript client code is distinguished from language-server logic
 
 ## P12 — Validation, performance, packaging, and completion audit
 
-- [ ] P12.1 Maintain a fixture manifest mapping each upstream subsystem/test
+- [x] P12.1 Maintain a fixture manifest mapping each upstream subsystem/test
   family to Go coverage, with expected failures and reasons visible. Do not
   count skipped fixtures as passes.
+  - FIXTURE_MANIFEST.md validates all 391 local links and the complete 51-file
+    TypeScript test-family inventory; pending and opt-in checks remain explicit.
 - [ ] P12.2 Run `go test ./...` and `go vet ./...` from `pkg/`; run race checks
   on concurrent library, simulation, editor, and checker integration paths.
   - [x] Full default tests and all vet analyzers pass; reproducible generator
