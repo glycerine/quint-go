@@ -848,7 +848,9 @@ any remaining TypeScript client code is distinguished from language-server logic
   on concurrent library, simulation, editor, and checker integration paths.
   - [x] Full default tests and all vet analyzers pass; reproducible generator
     postprocessing removes ANTLR unreachable tail jumps. Focused runtime,
-    documentation/cache, and LSP race checks pass.
+    documentation/cache, and LSP race checks pass. A full `go test -race ./...`
+    run also passes across every package; this does not replace the remaining
+    public-path cancellation coverage audit.
   - [ ] Complete race/cancellation audit across every public integration path.
 - [ ] P12.3 Add targeted property/fuzz checks for parsers, JSON/ITF decoders,
   type/effect substitution, flattening, and evaluation rollback. Retain
