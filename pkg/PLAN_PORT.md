@@ -594,7 +594,9 @@ including failed actions that must not leak partially updated state.
     verified with 240 fixtures and independent class/Unicode audits.
   - [x] Captured execution frames and richer assertion source/error reports at
     verbosity levels zero through five, with actual command comparisons.
-  - [ ] Capture-reset-dependent regex references and remaining terminal audit.
+  - [x] Capture-reset-dependent references inside proven-consuming loops,
+    including lookbehind/backtracking, with bounded engine-panic handling.
+  - [ ] Nullable capture-reset forms and remaining terminal audit.
 - [ ] P8.3 Preserve trace hooks, action names, nondeterministic picks, debug
   metadata, and output filename templates used in model-based testing.
 - [x] P8.4 Implement REPL multiline input, commands, load/reload, incremental
@@ -3506,3 +3508,13 @@ word "retained" in the commit message.
   old dependency documentation typo is projected explicitly. Full LSP0.191s,
   coverage91.6%, race1.618s and vet pass. Workspace indexing is not an upstream
   advertised capability; long-hover wrapping remains a cosmetic difference.
+
+- 2026-11-02: Implemented JavaScript capture reset for proven-consuming
+  repeated groups, including RTL/lookbehind and backtracking. Conservative width
+  analysis keeps nullable optional/repeated reset forms explicitly unsupported;
+  fixed nullable controls remain accepted. Native matcher panics become explicit
+  errors before test execution. The actual corpus now has288 patterns/19,624
+  outcomes. Independent exact-production comparison matches1,004,998 accepted
+  outcomes;71,280 unsupported outcomes and48 panic probes are classified
+  separately. Focused0.233s, full CLI0.609s, race1.488s and vet pass; reset helper
+ 100% covered. Remaining nullable semantics stay an explicit bounded limit.

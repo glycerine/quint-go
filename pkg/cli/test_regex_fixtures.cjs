@@ -165,6 +165,60 @@ inputs.push(...[8, 12, 10, 13, 9, 11, 0, 31].map(code => String.fromCharCode(cod
 // identifiers; the exclusion applies at both identifier positions.
 patterns.push('(?<ⸯ>a)', '(?<aⸯ>a)', '[a-' + String.fromCharCode(92))
 
+// JS discards extra zero-length iterations before changing capture values.
+// Keep nullable repeat cases alongside consuming controls, including a native
+// engine backtracking failure that callers must report as an explicit error.
+patterns.push(
+  String.raw`^(a?)+\1$`, String.raw`^(a*)+\1$`,
+  String.raw`^((a)?(b)?)+\1$`,
+  String.raw`^(?!((a)?(b)?)+?\1$)[ab]*$`,
+  String.raw`^(?!(?:a?)+?)$`, String.raw`^(?!(a?)+?)$`,
+  String.raw`^(a?)*\1$`, String.raw`^(a?)+?\1$`,
+  String.raw`^(a?){0,2}\1$`, String.raw`^(a?){2}\1$`,
+  String.raw`^(a?){2,3}\1$`,
+  String.raw`(?<=^(a?)+)\1$`, String.raw`(?<=^(a?)+?\1)$`,
+  String.raw`^((?:a|b)?)+\1$`, String.raw`^((?=a))+\1a$`,
+  String.raw`^((?:a)+)+\1$`, String.raw`^(a{0})+\1$`,
+  String.raw`^((?:a){1,2})+\1$`,
+  String.raw`^(\1)+$`, String.raw`^(\1a?)+$`,
+  String.raw`^(\b)+\1a$`, String.raw`^([ab]*)+\1$`,
+  String.raw`^([^]*)+\1$`, String.raw`^(\x61?)+\1$`,
+  String.raw`^([ab])+\1$`, String.raw`^((a)?b)+\2$`,
+)
+
+// Identity \k can contain ordinary branches and groups in its following text;
+// real named references require the entire pattern's named-capture context.
+patterns.push(
+  String.raw`^(a\k<|(?=>)>{0})+\1$`,
+  String.raw`(?<x>)^(\k<x>)+\2$`,
+)
+
+// Captures reset at every consuming ancestor iteration, including when a
+// branch skips them, backtracking retries an iteration, or lookbehind reverses
+// evaluation. Nullable assertion loops remain separate explicit limits.
+patterns.push(
+  String.raw`(?<=((a)?b)+)\2$`,
+  String.raw`(?<=((a)?b)+\2)$`,
+  String.raw`(?<=(?:(a)|(b))+\1)$`,
+  String.raw`^(?:(?=(a))a|b)+\1$`,
+  String.raw`^(?:(?!(a))b|a)+\1$`,
+  String.raw`(?<=(?:(?=(a))a|b)+)\1$`,
+  String.raw`^(?:(?<x>a)|b){2}\k<x>$`,
+  String.raw`^(?:(a)|b){1,3}?\1$`,
+  String.raw`^(?:(a)|ab)+\1b$`,
+  String.raw`^(?:a()|b)+\1$`,
+  String.raw`^(?:(()a)|b)+\2$`,
+  String.raw`^(?:(a+)|b)+\1$`,
+  String.raw`^(?:(a)+|b)+\1$`,
+  String.raw`^((a)+b|c)+\2$`,
+  String.raw`(?<=((a)+b|c)+)\2$`,
+  String.raw`^(?=(a))+a\1$`,
+  String.raw`^(?=(a)){2}a\1$`,
+  String.raw`^(?:\1|(a)b)+\1$`,
+  String.raw`^(?:a\1|(b))+?\1$`,
+  String.raw`^(?:b\1|(a)){2,3}\1$`,
+)
+
 const names = [...new Set(inputs)]
 const fixtures = ['', ...new Set(patterns)].map((pattern, index) => {
   const fixture = {

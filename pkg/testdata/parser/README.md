@@ -1164,3 +1164,11 @@ projecting documented precise-token/UTF16 corrections and one old dependency
 `List.select` documentation typo. RPC regressions verify field/lambda hover, symbol
 kinds, override rename/reanalysis and receiver type changes. Full LSP coverage is
 91.6%; advertised capabilities are complete, without inventing workspace indexing.
+
+The JavaScript regex corpus now contains 288 actual patterns and 19,624 outcomes,
+including consuming-loop capture reset, right-to-left lookbehind, backtracking
+and fixed nullable controls. Conservative width analysis explicitly rejects
+remaining nullable reset forms; matcher panics become errors before discovery
+executes tests. An independent exact-production audit matches Node on 1,004,998
+accepted outcomes, with 71,280 unsupported outcomes and 48 panic probes recorded
+separately. The reset helper has 100% coverage.

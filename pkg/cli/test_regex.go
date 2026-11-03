@@ -16,8 +16,8 @@ import (
 // name matching with regexp2's native Go ECMAScript engine. Its parser also
 // accepts .NET constructs, so the translation validates the JavaScript group
 // grammar, preserves lexical capture numbering, and translates identity escapes.
-// Backreferences to nested captures in repeated groups remain unsupported: .NET
-// retains captures that JavaScript clears on subsequent iterations.
+// Capture reset is translated for consuming loops. Backreferences in nullable
+// optional repeats remain unsupported: the engines update those differently.
 type testJavaScriptRegex struct{ compiled *regexp2.Regexp }
 
 const testRegexMatchTimeout = 25 * time.Millisecond
@@ -35,7 +35,17 @@ func testCompileJavaScriptRegex(pattern string) (*testJavaScriptRegex, error) {
 	return &testJavaScriptRegex{compiled}, nil
 }
 
-func (r *testJavaScriptRegex) MatchString(ctx context.Context, name string) (bool, error) {
+func (r *testJavaScriptRegex) MatchString(ctx context.Context, name string) (matched bool, err error) {
+	// Some valid ECMAScript expressions trigger an upstream engine backtracking
+	// panic. Treat these as unsupported expressions and abort test discovery.
+	defer func() {
+		if recover() != nil {
+			matched = false
+			if err = ctx.Err(); err == nil {
+				err = fmt.Errorf("unsupported --match expression: regular-expression engine could not evaluate this form")
+			}
+		}
+	}()
 	if err := ctx.Err(); err != nil {
 		return false, err
 	}
@@ -44,7 +54,7 @@ func (r *testJavaScriptRegex) MatchString(ctx context.Context, name string) (boo
 			return false, fmt.Errorf("--match supports ASCII Quint definition names")
 		}
 	}
-	matched, err := r.compiled.MatchString(name)
+	matched, err = r.compiled.MatchString(name)
 	if canceled := ctx.Err(); canceled != nil {
 		return false, canceled
 	}
@@ -57,6 +67,9 @@ func (r *testJavaScriptRegex) MatchString(ctx context.Context, name string) (boo
 type testRegexGroup struct {
 	firstCapture, ownCapture int
 	lookbehind               bool
+	body                     int
+	outputBody               int
+	rightToLeft, assertion   bool
 }
 
 type testRegexReference struct {
@@ -72,6 +85,11 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 	groups := []testRegexGroup{}
 	named := map[string]int{}
 	reset := map[int]bool{}
+	nullable := map[int]bool{}
+	unsafeReset := map[int]bool{}
+	clear := map[int]bool{}
+	closedGroups := []testRegexClosedGroup{}
+	edits := []testRegexEdit{}
 	references := []testRegexReference{}
 	captures := 0
 	hasNamedCapture := testRegexHasNamedCapture(pattern)
@@ -171,6 +189,9 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 			i = end
 		case '(':
 			group := testRegexGroup{firstCapture: captures + 1}
+			if len(groups) > 0 {
+				group.rightToLeft = groups[len(groups)-1].rightToLeft
+			}
 			i++
 			if i >= len(pattern) || pattern[i] != '?' {
 				captures++
@@ -183,6 +204,9 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 				}
 				switch pattern[i] {
 				case ':', '=', '!':
+					if pattern[i] != ':' {
+						group.assertion, group.rightToLeft = true, false
+					}
 					out.WriteString("(?")
 					out.WriteByte(pattern[i])
 					i++
@@ -190,6 +214,7 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 					i++
 					if i < len(pattern) && (pattern[i] == '=' || pattern[i] == '!') {
 						group.lookbehind = true
+						group.assertion, group.rightToLeft = true, true
 						out.WriteString("(?<")
 						out.WriteByte(pattern[i])
 						i++
@@ -216,6 +241,8 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 					return "", invalid("group syntax is not supported by JavaScript")
 				}
 			}
+			group.body = i
+			group.outputBody = out.Len()
 			groups = append(groups, group)
 		case ')':
 			if len(groups) == 0 {
@@ -223,17 +250,25 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 			}
 			group := groups[len(groups)-1]
 			groups = groups[:len(groups)-1]
-			quantified, repeated := testRegexQuantifier(pattern[i+1:])
+			quantified, repeated, optional := testRegexQuantifier(pattern[i+1:])
 			if group.lookbehind && quantified {
 				return "", invalid("lookbehind cannot be quantified")
 			}
 			if repeated {
+				consuming := !group.assertion && testRegexMustConsume(pattern[group.body:i], hasNamedCapture)
+				if optional && group.ownCapture != 0 && !consuming {
+					nullable[group.ownCapture] = true
+				}
 				for n := group.firstCapture; n <= captures; n++ {
 					if n != group.ownCapture {
 						reset[n] = true
+						if !consuming {
+							unsafeReset[n] = true
+						}
 					}
 				}
 			}
+			closedGroups = append(closedGroups, testRegexClosedGroup{group, out.Len(), captures, repeated})
 			out.WriteByte(c)
 			i++
 		default:
@@ -245,7 +280,6 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 		return "", invalid("unterminated character class or group")
 	}
 	translated := out.String()
-	// Replacing from the end preserves offsets recorded while translating.
 	for i := len(references) - 1; i >= 0; i-- {
 		reference := references[i]
 		n := 0
@@ -280,12 +314,18 @@ func testTranslateJavaScriptRegex(pattern string) (string, error) {
 				break
 			}
 		}
-		if reset[n] {
-			return "", unsupported("backreferences to nested captures in repeated groups require JavaScript capture-reset semantics")
+		if nullable[n] {
+			return "", unsupported("backreferences to captures with nullable repeated bodies require JavaScript empty-iteration semantics")
 		}
-		translated = translated[:reference.start] + replacement + translated[reference.end:]
+		if unsafeReset[n] {
+			return "", unsupported("backreferences to nested captures in nullable repeated groups require JavaScript empty-iteration semantics")
+		}
+		if reset[n] {
+			clear[n] = true
+		}
+		edits = append(edits, testRegexEdit{reference.start, reference.end, 2, replacement})
 	}
-	return translated, nil
+	return testRegexApplyResets(translated, closedGroups, clear, edits), nil
 }
 
 func testRegexASCIIAlpha(c byte) bool { return c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' }
@@ -328,36 +368,36 @@ func testRegexHex(s string) bool {
 	}
 	return true
 }
-func testRegexQuantifier(s string) (present, repeated bool) {
+func testRegexQuantifier(s string) (present, repeated, optional bool) {
 	if s == "" {
-		return false, false
+		return false, false, false
 	}
 	switch s[0] {
 	case '*', '+':
-		return true, true
+		return true, true, true
 	case '?':
-		return true, false
+		return true, false, true
 	case '{':
 		end := strings.IndexByte(s, '}')
 		if end < 0 {
-			return false, false
+			return false, false, false
 		}
 		lo, hi, comma := strings.Cut(s[1:end], ",")
 		minimum, err := strconv.Atoi(lo)
 		if err != nil || minimum < 0 {
-			return false, false
+			return false, false, false
 		}
 		maximum := minimum
 		if comma {
 			if hi == "" {
-				return true, true
+				return true, true, true
 			}
 			maximum, err = strconv.Atoi(hi)
 			if err != nil || maximum < 0 {
-				return false, false
+				return false, false, false
 			}
 		}
-		return true, maximum > 1
+		return true, maximum > 1, maximum > minimum
 	}
-	return false, false
+	return false, false, false
 }
