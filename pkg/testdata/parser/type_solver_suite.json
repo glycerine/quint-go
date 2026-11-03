@@ -1,0 +1,3075 @@
+[
+  {
+    "name": "solveConstraint/solves simple equality",
+    "op": "solveConstraint",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "input": {
+      "kind": "eq",
+      "types": [
+        {
+          "id": 1,
+          "kind": "var",
+          "name": "a"
+        },
+        {
+          "id": 1,
+          "kind": "int"
+        }
+      ],
+      "sourceId": 1
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      }
+    ]
+  },
+  {
+    "name": "solveConstraint/solves conjunctions",
+    "op": "solveConstraint",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "input": {
+      "kind": "conjunction",
+      "constraints": [
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "id": 1,
+              "kind": "var",
+              "name": "a"
+            },
+            {
+              "id": 1,
+              "kind": "int"
+            }
+          ],
+          "sourceId": 1
+        },
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "id": 1,
+              "kind": "var",
+              "name": "b"
+            },
+            {
+              "id": 1,
+              "kind": "var",
+              "name": "a"
+            }
+          ],
+          "sourceId": 2
+        }
+      ],
+      "sourceId": 3
+    },
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      }
+    ]
+  },
+  {
+    "name": "solveConstraint/solves isDefined constraint when unifiable type is defined",
+    "op": "solveConstraint",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "input": {
+      "kind": "isDefined",
+      "type": {
+        "kind": "sum",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "A",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "sourceId": 1
+    },
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "a",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "B",
+              "fieldType": {
+                "kind": "str"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "solveConstraint/isDefined constraint fails when type is not defined",
+    "op": "solveConstraint",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "input": {
+      "kind": "isDefined",
+      "type": {
+        "kind": "sum",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "NotDefined",
+              "fieldType": {
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "a"
+          }
+        }
+      },
+      "sourceId": 1
+    },
+    "errors": [
+      {
+        "id": "1",
+        "error": {
+          "location": "Looking for defined type unifying with (NotDefined(int))",
+          "message": "Expected type is not defined",
+          "children": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "solveConstraint/solves empty constraint",
+    "op": "solveConstraint",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "input": {
+      "kind": "empty"
+    },
+    "substitutions": []
+  },
+  {
+    "name": "solveConstraint/fails to solve equality constraint between incompatible types",
+    "op": "solveConstraint",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "input": {
+      "kind": "conjunction",
+      "constraints": [
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "id": 1,
+              "kind": "bool"
+            },
+            {
+              "id": 1,
+              "kind": "int"
+            }
+          ],
+          "sourceId": 1
+        },
+        {
+          "kind": "eq",
+          "types": [
+            {
+              "id": 2,
+              "kind": "set",
+              "elem": {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            {
+              "id": 2,
+              "kind": "list",
+              "elem": {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              }
+            }
+          ],
+          "sourceId": 2
+        }
+      ],
+      "sourceId": 3
+    },
+    "errors": [
+      {
+        "id": "1",
+        "error": {
+          "location": "Trying to unify bool and int",
+          "message": "Couldn't unify bool and int",
+          "children": []
+        }
+      },
+      {
+        "id": "2",
+        "error": {
+          "location": "Trying to unify Set[a] and List[a]",
+          "message": "Couldn't unify set and list",
+          "children": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "unify/unifies variable with other type",
+    "op": "unify",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "types": [
+      {
+        "id": 1,
+        "kind": "var",
+        "name": "a"
+      },
+      {
+        "id": 5,
+        "kind": "oper",
+        "args": [
+          {
+            "id": 2,
+            "kind": "set",
+            "elem": {
+              "id": 1,
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "id": 4,
+          "kind": "list",
+          "elem": {
+            "id": 3,
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 5,
+          "kind": "oper",
+          "args": [
+            {
+              "id": 2,
+              "kind": "set",
+              "elem": {
+                "id": 1,
+                "kind": "var",
+                "name": "b"
+              }
+            }
+          ],
+          "res": {
+            "id": 4,
+            "kind": "list",
+            "elem": {
+              "id": 3,
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "unify/returns empty substitution for equal types",
+    "op": "unify",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "types": [
+      {
+        "id": 5,
+        "kind": "oper",
+        "args": [
+          {
+            "id": 2,
+            "kind": "set",
+            "elem": {
+              "id": 1,
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "id": 4,
+          "kind": "list",
+          "elem": {
+            "id": 3,
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      },
+      {
+        "id": 5,
+        "kind": "oper",
+        "args": [
+          {
+            "id": 2,
+            "kind": "set",
+            "elem": {
+              "id": 1,
+              "kind": "var",
+              "name": "b"
+            }
+          }
+        ],
+        "res": {
+          "id": 4,
+          "kind": "list",
+          "elem": {
+            "id": 3,
+            "kind": "var",
+            "name": "b"
+          }
+        }
+      }
+    ],
+    "substitutions": []
+  },
+  {
+    "name": "unify/returns empty substitution for equal types with alias",
+    "op": "unify",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "types": [
+      {
+        "kind": "const",
+        "name": "MY_ALIAS",
+        "id": 3
+      },
+      {
+        "kind": "int"
+      }
+    ],
+    "substitutions": []
+  },
+  {
+    "name": "unify/returns empty substitution for equal uninterpreted types",
+    "op": "unify",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "types": [
+      {
+        "kind": "const",
+        "name": "MY_UNINTERPRETED",
+        "id": 4
+      },
+      {
+        "kind": "const",
+        "name": "MY_UNINTERPRETED",
+        "id": 5
+      }
+    ],
+    "substitutions": []
+  },
+  {
+    "name": "unify/returns error when uninterpreted type is unified with other type",
+    "op": "unify",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "types": [
+      {
+        "kind": "const",
+        "name": "MY_UNINTERPRETED",
+        "id": 4
+      },
+      {
+        "kind": "int"
+      }
+    ],
+    "error": {
+      "location": "Trying to unify MY_UNINTERPRETED and int",
+      "message": "Couldn't unify uninterpreted type MY_UNINTERPRETED with different type",
+      "children": []
+    }
+  },
+  {
+    "name": "unify/returns error when type alias is not found",
+    "op": "unify",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "types": [
+      {
+        "kind": "const",
+        "name": "UNEXISTING_ALIAS",
+        "id": 999
+      },
+      {
+        "kind": "int"
+      }
+    ],
+    "error": {
+      "location": "Trying to unify UNEXISTING_ALIAS and int",
+      "message": "Couldn't find type alias UNEXISTING_ALIAS",
+      "children": []
+    }
+  },
+  {
+    "name": "unify/unifies args and results of arrow and function types",
+    "op": "unify",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "types": [
+      {
+        "id": 5,
+        "kind": "oper",
+        "args": [
+          {
+            "id": 1,
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "id": 4,
+          "kind": "fun",
+          "arg": {
+            "id": 2,
+            "kind": "int"
+          },
+          "res": {
+            "id": 3,
+            "kind": "bool"
+          }
+        }
+      },
+      {
+        "id": 9,
+        "kind": "oper",
+        "args": [
+          {
+            "id": 5,
+            "kind": "oper",
+            "args": [
+              {
+                "id": 2,
+                "kind": "set",
+                "elem": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "b"
+                }
+              }
+            ],
+            "res": {
+              "id": 4,
+              "kind": "list",
+              "elem": {
+                "id": 3,
+                "kind": "var",
+                "name": "b"
+              }
+            }
+          }
+        ],
+        "res": {
+          "id": 8,
+          "kind": "fun",
+          "arg": {
+            "id": 6,
+            "kind": "var",
+            "name": "b"
+          },
+          "res": {
+            "id": 7,
+            "kind": "var",
+            "name": "c"
+          }
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "oper",
+          "args": [
+            {
+              "kind": "set",
+              "elem": {
+                "id": 2,
+                "kind": "int"
+              },
+              "id": 2
+            }
+          ],
+          "res": {
+            "kind": "list",
+            "elem": {
+              "id": 2,
+              "kind": "int"
+            },
+            "id": 4
+          },
+          "id": 5
+        }
+      },
+      {
+        "kind": "type",
+        "name": "c",
+        "value": {
+          "id": 3,
+          "kind": "bool"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "id": 2,
+          "kind": "int"
+        }
+      }
+    ]
+  },
+  {
+    "name": "unify/unifies elements of tuples, set and list types",
+    "op": "unify",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "types": [
+      {
+        "id": 5,
+        "kind": "tup",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "0",
+              "fieldType": {
+                "id": 2,
+                "kind": "set",
+                "elem": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              }
+            },
+            {
+              "fieldName": "1",
+              "fieldType": {
+                "id": 4,
+                "kind": "list",
+                "elem": {
+                  "id": 3,
+                  "kind": "var",
+                  "name": "b"
+                }
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      },
+      {
+        "id": 5,
+        "kind": "tup",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "0",
+              "fieldType": {
+                "id": 2,
+                "kind": "set",
+                "elem": {
+                  "id": 1,
+                  "kind": "int"
+                }
+              }
+            },
+            {
+              "fieldName": "1",
+              "fieldType": {
+                "id": 4,
+                "kind": "list",
+                "elem": {
+                  "id": 3,
+                  "kind": "bool"
+                }
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "id": 1,
+          "kind": "int"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "id": 3,
+          "kind": "bool"
+        }
+      }
+    ]
+  },
+  {
+    "name": "unify/unifies sum-type",
+    "op": "unify",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "types": [
+      {
+        "kind": "sum",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "A",
+              "fieldType": {
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            {
+              "fieldName": "B",
+              "fieldType": {
+                "kind": "int"
+              }
+            },
+            {
+              "fieldName": "C",
+              "fieldType": {
+                "id": 0,
+                "kind": "tup",
+                "fields": {
+                  "kind": "row",
+                  "fields": [],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      },
+      {
+        "kind": "sum",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "C",
+              "fieldType": {
+                "id": 0,
+                "kind": "tup",
+                "fields": {
+                  "kind": "row",
+                  "fields": [],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              }
+            },
+            {
+              "fieldName": "A",
+              "fieldType": {
+                "kind": "str"
+              }
+            },
+            {
+              "fieldName": "B",
+              "fieldType": {
+                "kind": "var",
+                "name": "b"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "type",
+        "name": "a",
+        "value": {
+          "kind": "str"
+        }
+      },
+      {
+        "kind": "type",
+        "name": "b",
+        "value": {
+          "kind": "int"
+        }
+      }
+    ]
+  },
+  {
+    "name": "unify/returns error when variable occurs in the other type's body",
+    "op": "unify",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "types": [
+      {
+        "id": 1,
+        "kind": "var",
+        "name": "a"
+      },
+      {
+        "id": 2,
+        "kind": "set",
+        "elem": {
+          "id": 1,
+          "kind": "var",
+          "name": "a"
+        }
+      }
+    ],
+    "error": {
+      "location": "Trying to unify a and Set[a]",
+      "message": "Can't bind a to Set[a]: cyclical binding",
+      "children": []
+    }
+  },
+  {
+    "name": "unify/returns error when unifying operator with different number of args",
+    "op": "unify",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "types": [
+      {
+        "id": 4,
+        "kind": "oper",
+        "args": [
+          {
+            "id": 1,
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "id": 2,
+            "kind": "var",
+            "name": "b"
+          }
+        ],
+        "res": {
+          "id": 3,
+          "kind": "var",
+          "name": "c"
+        }
+      },
+      {
+        "id": 3,
+        "kind": "oper",
+        "args": [
+          {
+            "id": 1,
+            "kind": "int"
+          }
+        ],
+        "res": {
+          "id": 2,
+          "kind": "var",
+          "name": "c"
+        }
+      }
+    ],
+    "error": {
+      "location": "Trying to unify (a, b) => c and (int) => c",
+      "message": "Expected 2 arguments, got 1",
+      "children": []
+    }
+  },
+  {
+    "name": "unify/returns error when unifying tuples with different number of args",
+    "op": "unify",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "types": [
+      {
+        "id": 4,
+        "kind": "tup",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "0",
+              "fieldType": {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            {
+              "fieldName": "1",
+              "fieldType": {
+                "id": 2,
+                "kind": "var",
+                "name": "b"
+              }
+            },
+            {
+              "fieldName": "2",
+              "fieldType": {
+                "id": 3,
+                "kind": "var",
+                "name": "c"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "kind": "tup",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "0",
+              "fieldType": {
+                "id": 1,
+                "kind": "int"
+              }
+            },
+            {
+              "fieldName": "1",
+              "fieldType": {
+                "id": 2,
+                "kind": "bool"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ],
+    "error": {
+      "location": "Trying to unify (a, b, c) and (int, bool)",
+      "children": [
+        {
+          "location": "Trying to unify { 0: a, 1: b, 2: c } and { 0: int, 1: bool }",
+          "children": [
+            {
+              "location": "Trying to unify { 2: c } and {}",
+              "message": "Couldn't unify row and empty",
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "unifyRows/unifies empty row with non-empty",
+    "op": "unifyRows",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "rows": [
+      {
+        "kind": "empty"
+      },
+      {
+        "kind": "row",
+        "fields": [],
+        "other": {
+          "kind": "var",
+          "name": "a"
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "a",
+        "value": {
+          "kind": "empty"
+        }
+      }
+    ]
+  },
+  {
+    "name": "unifyRows/unifies row var with row with fields",
+    "op": "unifyRows",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "rows": [
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "f",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      },
+      {
+        "kind": "row",
+        "fields": [],
+        "other": {
+          "kind": "var",
+          "name": "a"
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "a",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "f",
+              "fieldType": {
+                "id": 1,
+                "kind": "int"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "unifyRows/unifies two partial rows",
+    "op": "unifyRows",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "rows": [
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "f1",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "f2",
+            "fieldType": {
+              "id": 2,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "f3",
+            "fieldType": {
+              "id": 1,
+              "kind": "bool"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "b"
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "b",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "f1",
+              "fieldType": {
+                "id": 1,
+                "kind": "int"
+              }
+            },
+            {
+              "fieldName": "f2",
+              "fieldType": {
+                "id": 2,
+                "kind": "str"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "$a$b"
+          }
+        }
+      },
+      {
+        "kind": "row",
+        "name": "a",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "f3",
+              "fieldType": {
+                "id": 1,
+                "kind": "bool"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "$a$b"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "unifyRows/unifies partial row with complete row",
+    "op": "unifyRows",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "rows": [
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "f1",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "fieldName": "f2",
+            "fieldType": {
+              "id": 2,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "f3",
+            "fieldType": {
+              "id": 1,
+              "kind": "bool"
+            }
+          },
+          {
+            "fieldName": "f2",
+            "fieldType": {
+              "id": 2,
+              "kind": "str"
+            }
+          },
+          {
+            "fieldName": "f1",
+            "fieldType": {
+              "id": 3,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "a",
+        "value": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "f3",
+              "fieldType": {
+                "id": 1,
+                "kind": "bool"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "unifyRows/unifies two row variables",
+    "op": "unifyRows",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "rows": [
+      {
+        "kind": "row",
+        "fields": [],
+        "other": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      {
+        "kind": "row",
+        "fields": [],
+        "other": {
+          "kind": "var",
+          "name": "b"
+        }
+      }
+    ],
+    "substitutions": [
+      {
+        "kind": "row",
+        "name": "a",
+        "value": {
+          "kind": "var",
+          "name": "b"
+        }
+      }
+    ]
+  },
+  {
+    "name": "unifyRows/fails at unifying rows with incompatible fields",
+    "op": "unifyRows",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "rows": [
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "f1",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      },
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "f1",
+            "fieldType": {
+              "id": 1,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    ],
+    "error": {
+      "location": "Trying to unify { f1: int } and { f1: str }",
+      "children": [
+        {
+          "location": "Trying to unify int and str",
+          "message": "Couldn't unify int and str",
+          "children": []
+        }
+      ]
+    }
+  },
+  {
+    "name": "unifyRows/fails at unifying complete rows with distinct fields",
+    "op": "unifyRows",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "rows": [
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "shared",
+            "fieldType": {
+              "id": 1,
+              "kind": "bool"
+            }
+          },
+          {
+            "fieldName": "f1",
+            "fieldType": {
+              "id": 2,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      },
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "shared",
+            "fieldType": {
+              "id": 1,
+              "kind": "bool"
+            }
+          },
+          {
+            "fieldName": "f2",
+            "fieldType": {
+              "id": 2,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "empty"
+        }
+      }
+    ],
+    "error": {
+      "location": "Trying to unify { shared: bool, f1: int } and { shared: bool, f2: str }",
+      "children": [
+        {
+          "location": "Trying to unify { f1: int } and { f2: str }",
+          "message": "Incompatible tails for rows with disjoint fields: {} and {}",
+          "children": []
+        }
+      ]
+    }
+  },
+  {
+    "name": "unifyRows/fails at unifying rows with cyclical references",
+    "op": "unifyRows",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "rows": [
+      {
+        "kind": "row",
+        "fields": [],
+        "other": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "f1",
+            "fieldType": {
+              "id": 1,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "a"
+        }
+      }
+    ],
+    "error": {
+      "location": "Trying to unify { | a } and { f1: str | a }",
+      "message": "Can't bind a to { f1: str | a }: cyclical binding",
+      "children": []
+    }
+  },
+  {
+    "name": "unifyRows/fails at unifying rows with cyclical references on tail",
+    "op": "unifyRows",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "rows": [
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "f1",
+            "fieldType": {
+              "id": 1,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "a"
+        }
+      },
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "f2",
+            "fieldType": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "a"
+        }
+      }
+    ],
+    "error": {
+      "location": "Trying to unify { f1: str | a } and { f2: int | a }",
+      "message": "Incompatible tails for rows with disjoint fields: { | a } and { | a }",
+      "children": []
+    }
+  },
+  {
+    "name": "unifyRows/fails at unifying incompatible rows",
+    "op": "unifyRows",
+    "table": [
+      {
+        "id": 3,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_ALIAS",
+          "type": {
+            "kind": "int"
+          },
+          "id": 1
+        }
+      },
+      {
+        "id": 4,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 5,
+        "definition": {
+          "kind": "typedef",
+          "name": "MY_UNINTERPRETED",
+          "id": 2
+        }
+      },
+      {
+        "id": 6,
+        "definition": {
+          "kind": "typedef",
+          "name": "SumType",
+          "id": 7,
+          "type": {
+            "kind": "sum",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "A",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "B",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "rows": [
+      {
+        "kind": "empty"
+      },
+      {
+        "kind": "row",
+        "fields": [
+          {
+            "fieldName": "f1",
+            "fieldType": {
+              "id": 1,
+              "kind": "str"
+            }
+          }
+        ],
+        "other": {
+          "kind": "var",
+          "name": "a"
+        }
+      }
+    ],
+    "error": {
+      "location": "Trying to unify {} and { f1: str | a }",
+      "message": "Couldn't unify empty and row",
+      "children": []
+    }
+  }
+]

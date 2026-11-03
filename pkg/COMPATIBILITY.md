@@ -98,6 +98,10 @@ remain an audit. Backend translation of temporal operators does not make them
 executable in the concrete simulator. Temporal checking uses Go Apalache's
 supported CHECK path; unsupported backend configurations remain errors.
 
+Type-system coverage includes all 95 upstream tests across eight suite families,
+with exact raw-ID generator, solver and helper replays. The tuple-prefix
+allocation cap is an explicit Go resource policy.
+
 ## Commands and flags
 
 All eight commands and a default REPL are dispatched by `cmd/quint`. Help/version

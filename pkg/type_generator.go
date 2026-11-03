@@ -2,12 +2,17 @@ package quint
 
 import "github.com/glycerine/insdict"
 
+// TypeConstraintSolvingFunction supplies an alternative solver, matching the
+// upstream generator's injectable solving function. A nil Solver uses Unifier.
+type TypeConstraintSolvingFunction func(Constraint) (ConstraintSolution, error)
+
 // TypeConstraintGenerator accumulates expression types and constraints.
 // Input must be name-resolved IR with type applications already expanded.
 type TypeConstraintGenerator struct {
 	Context     TypeSignatureContext
 	Scope       *insdict.Dict[string, TypeScheme]
 	Constraints []Constraint
+	Solver      TypeConstraintSolvingFunction
 }
 
 func NewTypeConstraintGenerator(u TypeUnifier) *TypeConstraintGenerator {
@@ -34,14 +39,20 @@ func (g *TypeConstraintGenerator) record(id ID, e *ErrorTree) {
 func (g *TypeConstraintGenerator) Solve() ([]Substitution, error) {
 	cs := g.Constraints
 	g.Constraints = nil
-	solution, err := g.Context.Unifier.SolveConstraint(Constraint{Kind: "conjunction", Constraints: cs})
+	solver := g.Solver
+	if solver == nil {
+		solver = g.Context.Unifier.SolveConstraint
+	}
+	solution, err := solver(Constraint{Kind: "conjunction", Constraints: cs})
 	if err != nil {
 		return nil, err
 	}
 	failed := false
-	for id, e := range solution.Errors.All() {
-		g.Context.Errors.Set(id, e)
-		failed = true
+	if solution.Errors != nil {
+		for id, e := range solution.Errors.All() {
+			g.Context.Errors.Set(id, e)
+			failed = true
+		}
 	}
 	if failed {
 		return nil, nil

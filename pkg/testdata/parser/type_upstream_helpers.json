@@ -1,0 +1,4127 @@
+{
+  "metadata": {
+    "tests": [
+      {
+        "family": "substitutions",
+        "name": "compose / composes two substitutions"
+      },
+      {
+        "family": "substitutions",
+        "name": "compose / unifies values of substitutions with same name"
+      },
+      {
+        "family": "substitutions",
+        "name": "applySubstitution / substitutes variables in arrow type"
+      },
+      {
+        "family": "substitutions",
+        "name": "applySubstitution / substitutes variables in function type"
+      },
+      {
+        "family": "substitutions",
+        "name": "applySubstitution / substitutes variables in lists, sets and tuples types"
+      },
+      {
+        "family": "substitutions",
+        "name": "applySubstitution / substitutes variables in record type"
+      },
+      {
+        "family": "substitutions",
+        "name": "applySubstitution / substitutes variables in record type with row variable"
+      },
+      {
+        "family": "substitutions",
+        "name": "applySubstitution / substitutes with transitivity"
+      },
+      {
+        "family": "substitutions",
+        "name": "applySubstitutionToConstraint / applies substitution to types in equality constraint"
+      },
+      {
+        "family": "substitutions",
+        "name": "applySubstitutionToConstraint / does nothing to empty constraint"
+      },
+      {
+        "family": "substitutions",
+        "name": "applySubstitutionToConstraint / applies substitution recursively to constraints in conjunction"
+      },
+      {
+        "family": "simplification",
+        "name": "simplify / flattens nested row tails"
+      },
+      {
+        "family": "simplification",
+        "name": "simplify / simplifies rows with empty fields"
+      },
+      {
+        "family": "aliasInliner",
+        "name": "inlineAliases / inlines aliases in a simple module"
+      },
+      {
+        "family": "aliasInliner",
+        "name": "inlineAliases / handles nested aliases"
+      },
+      {
+        "family": "aliasInliner",
+        "name": "inlineAliases / handles nested sum types constructors"
+      }
+    ],
+    "sourceSHA256": {
+      "quint/test/types/substitutions.test.ts": "e0d382c6770b4b94788a3beb8a5f2d7a4fece5447c1e5373681ad4cd3c4a0e84",
+      "quint/test/types/simplification.test.ts": "d9fee7245b3b3157de18c295c7c92b92382cd936c4e7fd5f3be208abe3161c4b",
+      "quint/test/types/aliasInliner.test.ts": "a1c60eaa61291049a2c47a0034669b1fd2f0eb22ec2305e004a7662f9826d49a"
+    },
+    "operations": {
+      "compose": 2,
+      "applySubstitution": 6,
+      "applySubstitutionToConstraint": 3,
+      "simplify": 2,
+      "inlineTypeAliases": 3
+    }
+  },
+  "cases": [
+    {
+      "family": "substitutions",
+      "name": "compose / composes two substitutions",
+      "operation": "compose",
+      "first": [
+        {
+          "kind": "type",
+          "name": "a",
+          "value": {
+            "id": 1,
+            "kind": "int"
+          }
+        }
+      ],
+      "second": [
+        {
+          "kind": "row",
+          "name": "b",
+          "value": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "f",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "bool"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        }
+      ],
+      "output": [
+        {
+          "kind": "row",
+          "name": "b",
+          "value": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "f",
+                "fieldType": {
+                  "id": 1,
+                  "kind": "bool"
+                }
+              }
+            ],
+            "other": {
+              "kind": "empty"
+            }
+          }
+        },
+        {
+          "kind": "type",
+          "name": "a",
+          "value": {
+            "id": 1,
+            "kind": "int"
+          }
+        }
+      ]
+    },
+    {
+      "family": "substitutions",
+      "name": "compose / unifies values of substitutions with same name",
+      "operation": "compose",
+      "first": [
+        {
+          "kind": "type",
+          "name": "v1",
+          "value": {
+            "id": 1,
+            "kind": "int"
+          }
+        }
+      ],
+      "second": [
+        {
+          "kind": "type",
+          "name": "v1",
+          "value": {
+            "kind": "var",
+            "name": "q"
+          }
+        }
+      ],
+      "output": [
+        {
+          "kind": "type",
+          "name": "q",
+          "value": {
+            "id": 1,
+            "kind": "int"
+          }
+        },
+        {
+          "kind": "type",
+          "name": "v1",
+          "value": {
+            "id": 1,
+            "kind": "int"
+          }
+        }
+      ]
+    },
+    {
+      "family": "substitutions",
+      "name": "applySubstitution / substitutes variables in arrow type",
+      "operation": "applySubstitution",
+      "substitutions": [
+        {
+          "kind": "type",
+          "name": "a",
+          "value": {
+            "kind": "int",
+            "id": 1
+          }
+        },
+        {
+          "kind": "type",
+          "name": "b",
+          "value": {
+            "kind": "bool",
+            "id": 2
+          }
+        }
+      ],
+      "input": {
+        "id": 3,
+        "kind": "oper",
+        "args": [
+          {
+            "id": 1,
+            "kind": "var",
+            "name": "a"
+          }
+        ],
+        "res": {
+          "id": 2,
+          "kind": "var",
+          "name": "b"
+        }
+      },
+      "output": {
+        "kind": "oper",
+        "args": [
+          {
+            "kind": "int",
+            "id": 1
+          }
+        ],
+        "res": {
+          "kind": "bool",
+          "id": 2
+        },
+        "id": 3
+      }
+    },
+    {
+      "family": "substitutions",
+      "name": "applySubstitution / substitutes variables in function type",
+      "operation": "applySubstitution",
+      "substitutions": [
+        {
+          "kind": "type",
+          "name": "a",
+          "value": {
+            "kind": "int",
+            "id": 1
+          }
+        },
+        {
+          "kind": "type",
+          "name": "b",
+          "value": {
+            "kind": "bool",
+            "id": 2
+          }
+        }
+      ],
+      "input": {
+        "id": 3,
+        "kind": "fun",
+        "arg": {
+          "id": 1,
+          "kind": "var",
+          "name": "a"
+        },
+        "res": {
+          "id": 2,
+          "kind": "var",
+          "name": "b"
+        }
+      },
+      "output": {
+        "kind": "fun",
+        "arg": {
+          "kind": "int",
+          "id": 1
+        },
+        "res": {
+          "kind": "bool",
+          "id": 2
+        },
+        "id": 3
+      }
+    },
+    {
+      "family": "substitutions",
+      "name": "applySubstitution / substitutes variables in lists, sets and tuples types",
+      "operation": "applySubstitution",
+      "substitutions": [
+        {
+          "kind": "type",
+          "name": "a",
+          "value": {
+            "kind": "int",
+            "id": 1
+          }
+        },
+        {
+          "kind": "type",
+          "name": "b",
+          "value": {
+            "kind": "bool",
+            "id": 3
+          }
+        },
+        {
+          "kind": "type",
+          "name": "c",
+          "value": {
+            "kind": "str",
+            "id": 5
+          }
+        }
+      ],
+      "input": {
+        "id": 6,
+        "kind": "tup",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "0",
+              "fieldType": {
+                "id": 2,
+                "kind": "list",
+                "elem": {
+                  "id": 1,
+                  "kind": "var",
+                  "name": "a"
+                }
+              }
+            },
+            {
+              "fieldName": "1",
+              "fieldType": {
+                "id": 4,
+                "kind": "set",
+                "elem": {
+                  "id": 3,
+                  "kind": "var",
+                  "name": "b"
+                }
+              }
+            },
+            {
+              "fieldName": "2",
+              "fieldType": {
+                "id": 5,
+                "kind": "var",
+                "name": "c"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      },
+      "output": {
+        "kind": "tup",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "0",
+              "fieldType": {
+                "kind": "list",
+                "elem": {
+                  "kind": "int",
+                  "id": 1
+                },
+                "id": 2
+              }
+            },
+            {
+              "fieldName": "1",
+              "fieldType": {
+                "kind": "set",
+                "elem": {
+                  "kind": "bool",
+                  "id": 3
+                },
+                "id": 4
+              }
+            },
+            {
+              "fieldName": "2",
+              "fieldType": {
+                "kind": "str",
+                "id": 5
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        },
+        "id": 6
+      }
+    },
+    {
+      "family": "substitutions",
+      "name": "applySubstitution / substitutes variables in record type",
+      "operation": "applySubstitution",
+      "substitutions": [
+        {
+          "kind": "type",
+          "name": "a",
+          "value": {
+            "kind": "int",
+            "id": 1
+          }
+        },
+        {
+          "kind": "type",
+          "name": "b",
+          "value": {
+            "kind": "bool",
+            "id": 2
+          }
+        }
+      ],
+      "input": {
+        "id": 3,
+        "kind": "rec",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "a",
+              "fieldType": {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            {
+              "fieldName": "b",
+              "fieldType": {
+                "id": 2,
+                "kind": "var",
+                "name": "b"
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        }
+      },
+      "output": {
+        "kind": "rec",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "a",
+              "fieldType": {
+                "kind": "int",
+                "id": 1
+              }
+            },
+            {
+              "fieldName": "b",
+              "fieldType": {
+                "kind": "bool",
+                "id": 2
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        },
+        "id": 3
+      }
+    },
+    {
+      "family": "substitutions",
+      "name": "applySubstitution / substitutes variables in record type with row variable",
+      "operation": "applySubstitution",
+      "substitutions": [
+        {
+          "kind": "type",
+          "name": "a",
+          "value": {
+            "kind": "int",
+            "id": 1
+          }
+        },
+        {
+          "kind": "type",
+          "name": "b",
+          "value": {
+            "kind": "bool",
+            "id": 2
+          }
+        },
+        {
+          "kind": "row",
+          "name": "r",
+          "value": {
+            "kind": "empty"
+          }
+        }
+      ],
+      "input": {
+        "id": 3,
+        "kind": "rec",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "a",
+              "fieldType": {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              }
+            },
+            {
+              "fieldName": "b",
+              "fieldType": {
+                "id": 2,
+                "kind": "var",
+                "name": "b"
+              }
+            }
+          ],
+          "other": {
+            "kind": "var",
+            "name": "r"
+          }
+        }
+      },
+      "output": {
+        "kind": "rec",
+        "fields": {
+          "kind": "row",
+          "fields": [
+            {
+              "fieldName": "a",
+              "fieldType": {
+                "kind": "int",
+                "id": 1
+              }
+            },
+            {
+              "fieldName": "b",
+              "fieldType": {
+                "kind": "bool",
+                "id": 2
+              }
+            }
+          ],
+          "other": {
+            "kind": "empty"
+          }
+        },
+        "id": 3
+      }
+    },
+    {
+      "family": "substitutions",
+      "name": "applySubstitution / substitutes with transitivity",
+      "operation": "applySubstitution",
+      "substitutions": [
+        {
+          "kind": "type",
+          "name": "a",
+          "value": {
+            "kind": "var",
+            "id": 1,
+            "name": "b"
+          }
+        },
+        {
+          "kind": "type",
+          "name": "b",
+          "value": {
+            "kind": "bool",
+            "id": 2
+          }
+        }
+      ],
+      "input": {
+        "id": 1,
+        "kind": "var",
+        "name": "a"
+      },
+      "output": {
+        "kind": "bool",
+        "id": 2
+      }
+    },
+    {
+      "family": "substitutions",
+      "name": "applySubstitutionToConstraint / applies substitution to types in equality constraint",
+      "operation": "applySubstitutionToConstraint",
+      "substitutions": [
+        {
+          "kind": "type",
+          "name": "a",
+          "value": {
+            "kind": "int",
+            "id": 1
+          }
+        },
+        {
+          "kind": "type",
+          "name": "b",
+          "value": {
+            "kind": "bool",
+            "id": 1
+          }
+        }
+      ],
+      "input": {
+        "kind": "eq",
+        "types": [
+          {
+            "id": 1,
+            "kind": "var",
+            "name": "a"
+          },
+          {
+            "id": 1,
+            "kind": "var",
+            "name": "b"
+          }
+        ],
+        "sourceId": 1
+      },
+      "output": {
+        "kind": "eq",
+        "types": [
+          {
+            "kind": "int",
+            "id": 1
+          },
+          {
+            "kind": "bool",
+            "id": 1
+          }
+        ],
+        "sourceId": 1
+      }
+    },
+    {
+      "family": "substitutions",
+      "name": "applySubstitutionToConstraint / does nothing to empty constraint",
+      "operation": "applySubstitutionToConstraint",
+      "substitutions": [
+        {
+          "kind": "type",
+          "name": "a",
+          "value": {
+            "kind": "int",
+            "id": 1
+          }
+        },
+        {
+          "kind": "type",
+          "name": "b",
+          "value": {
+            "kind": "bool",
+            "id": 1
+          }
+        }
+      ],
+      "input": {
+        "kind": "empty"
+      },
+      "output": {
+        "kind": "empty"
+      }
+    },
+    {
+      "family": "substitutions",
+      "name": "applySubstitutionToConstraint / applies substitution recursively to constraints in conjunction",
+      "operation": "applySubstitutionToConstraint",
+      "substitutions": [
+        {
+          "kind": "type",
+          "name": "a",
+          "value": {
+            "kind": "int",
+            "id": 1
+          }
+        },
+        {
+          "kind": "type",
+          "name": "b",
+          "value": {
+            "kind": "bool",
+            "id": 1
+          }
+        }
+      ],
+      "input": {
+        "kind": "conjunction",
+        "constraints": [
+          {
+            "kind": "eq",
+            "types": [
+              {
+                "id": 1,
+                "kind": "var",
+                "name": "a"
+              },
+              {
+                "id": 1,
+                "kind": "var",
+                "name": "b"
+              }
+            ],
+            "sourceId": 1
+          },
+          {
+            "kind": "eq",
+            "types": [
+              {
+                "id": 1,
+                "kind": "var",
+                "name": "b"
+              },
+              {
+                "id": 1,
+                "kind": "var",
+                "name": "b"
+              }
+            ],
+            "sourceId": 1
+          }
+        ],
+        "sourceId": 1
+      },
+      "output": {
+        "kind": "conjunction",
+        "constraints": [
+          {
+            "kind": "eq",
+            "types": [
+              {
+                "kind": "int",
+                "id": 1
+              },
+              {
+                "kind": "bool",
+                "id": 1
+              }
+            ],
+            "sourceId": 1
+          },
+          {
+            "kind": "eq",
+            "types": [
+              {
+                "kind": "bool",
+                "id": 1
+              },
+              {
+                "kind": "bool",
+                "id": 1
+              }
+            ],
+            "sourceId": 1
+          }
+        ],
+        "sourceId": 1
+      }
+    },
+    {
+      "family": "simplification",
+      "name": "simplify / flattens nested row tails",
+      "operation": "simplify",
+      "input": {
+        "type": {
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "a",
+                "fieldType": {
+                  "kind": "int"
+                }
+              }
+            ],
+            "other": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "b",
+                  "fieldType": {
+                    "kind": "bool"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "c",
+                    "fieldType": {
+                      "kind": "str"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "v"
+                }
+              }
+            }
+          }
+        },
+        "typeVariables": [],
+        "rowVariables": []
+      },
+      "output": {
+        "type": {
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "a",
+                "fieldType": {
+                  "kind": "int"
+                }
+              },
+              {
+                "fieldName": "b",
+                "fieldType": {
+                  "kind": "bool"
+                }
+              },
+              {
+                "fieldName": "c",
+                "fieldType": {
+                  "kind": "str"
+                }
+              }
+            ],
+            "other": {
+              "kind": "var",
+              "name": "v"
+            }
+          }
+        },
+        "typeVariables": [],
+        "rowVariables": []
+      }
+    },
+    {
+      "family": "simplification",
+      "name": "simplify / simplifies rows with empty fields",
+      "operation": "simplify",
+      "input": {
+        "type": {
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [],
+            "other": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "b",
+                  "fieldType": {
+                    "kind": "bool"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "c",
+                    "fieldType": {
+                      "kind": "str"
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "var",
+                  "name": "v"
+                }
+              }
+            }
+          }
+        },
+        "typeVariables": [],
+        "rowVariables": []
+      },
+      "output": {
+        "type": {
+          "kind": "rec",
+          "fields": {
+            "kind": "row",
+            "fields": [
+              {
+                "fieldName": "b",
+                "fieldType": {
+                  "kind": "bool"
+                }
+              },
+              {
+                "fieldName": "c",
+                "fieldType": {
+                  "kind": "str"
+                }
+              }
+            ],
+            "other": {
+              "kind": "var",
+              "name": "v"
+            }
+          }
+        },
+        "typeVariables": [],
+        "rowVariables": []
+      }
+    },
+    {
+      "family": "aliasInliner",
+      "name": "inlineAliases / inlines aliases in a simple module",
+      "operation": "inlineTypeAliases",
+      "input": {
+        "modules": [
+          {
+            "id": 7,
+            "name": "A",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "typedef",
+                "name": "MY_ALIAS",
+                "type": {
+                  "id": 1,
+                  "kind": "int"
+                },
+                "depth": 0
+              },
+              {
+                "kind": "var",
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 3,
+                  "kind": "const",
+                  "name": "MY_ALIAS"
+                },
+                "id": 4,
+                "depth": 0
+              },
+              {
+                "id": 6,
+                "kind": "def",
+                "name": "a",
+                "qualifier": "val",
+                "expr": {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                }
+              }
+            ]
+          }
+        ],
+        "table": [
+          {
+            "id": "3",
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "id": "6"
+          },
+          {
+            "id": "5",
+            "annotation": {
+              "id": 3,
+              "kind": "const",
+              "name": "MY_ALIAS"
+            }
+          }
+        ],
+        "types": [
+          {
+            "id": "4",
+            "scheme": {
+              "type": {
+                "id": 3,
+                "kind": "const",
+                "name": "MY_ALIAS"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "5",
+            "scheme": {
+              "type": {
+                "id": 3,
+                "kind": "const",
+                "name": "MY_ALIAS"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "6",
+            "scheme": {
+              "type": {
+                "id": 3,
+                "kind": "const",
+                "name": "MY_ALIAS"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          }
+        ]
+      },
+      "output": {
+        "modules": [
+          {
+            "id": 7,
+            "name": "A",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "typedef",
+                "name": "MY_ALIAS",
+                "type": {
+                  "id": 1,
+                  "kind": "int"
+                },
+                "depth": 0
+              },
+              {
+                "kind": "var",
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 1,
+                  "kind": "int"
+                },
+                "id": 4,
+                "depth": 0
+              },
+              {
+                "id": 6,
+                "kind": "def",
+                "name": "a",
+                "qualifier": "val",
+                "expr": {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                }
+              }
+            ]
+          }
+        ],
+        "table": [
+          {
+            "id": "3",
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "id": "6"
+          },
+          {
+            "id": "5",
+            "annotation": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "types": [
+          {
+            "id": "4",
+            "scheme": {
+              "type": {
+                "id": 1,
+                "kind": "int"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "5",
+            "scheme": {
+              "type": {
+                "id": 1,
+                "kind": "int"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "6",
+            "scheme": {
+              "type": {
+                "id": 1,
+                "kind": "int"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family": "aliasInliner",
+      "name": "inlineAliases / handles nested aliases",
+      "operation": "inlineTypeAliases",
+      "input": {
+        "modules": [
+          {
+            "id": 9,
+            "name": "A",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "typedef",
+                "name": "MY_ALIAS",
+                "type": {
+                  "id": 1,
+                  "kind": "int"
+                },
+                "depth": 0
+              },
+              {
+                "id": 4,
+                "kind": "typedef",
+                "name": "MY_OTHER_ALIAS",
+                "type": {
+                  "id": 6,
+                  "kind": "const",
+                  "name": "MY_ALIAS"
+                },
+                "depth": 0
+              },
+              {
+                "kind": "var",
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 7,
+                  "kind": "const",
+                  "name": "MY_OTHER_ALIAS"
+                },
+                "id": 8,
+                "depth": 0
+              }
+            ]
+          }
+        ],
+        "table": [
+          {
+            "id": "6",
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "id": "7",
+            "type": {
+              "id": 6,
+              "kind": "const",
+              "name": "MY_ALIAS"
+            }
+          }
+        ],
+        "types": [
+          {
+            "id": "8",
+            "scheme": {
+              "type": {
+                "id": 7,
+                "kind": "const",
+                "name": "MY_OTHER_ALIAS"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          }
+        ]
+      },
+      "output": {
+        "modules": [
+          {
+            "id": 9,
+            "name": "A",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "typedef",
+                "name": "MY_ALIAS",
+                "type": {
+                  "id": 1,
+                  "kind": "int"
+                },
+                "depth": 0
+              },
+              {
+                "id": 4,
+                "kind": "typedef",
+                "name": "MY_OTHER_ALIAS",
+                "type": {
+                  "id": 1,
+                  "kind": "int"
+                },
+                "depth": 0
+              },
+              {
+                "kind": "var",
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 1,
+                  "kind": "int"
+                },
+                "id": 8,
+                "depth": 0
+              }
+            ]
+          }
+        ],
+        "table": [
+          {
+            "id": "6",
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          },
+          {
+            "id": "7",
+            "type": {
+              "id": 1,
+              "kind": "int"
+            }
+          }
+        ],
+        "types": [
+          {
+            "id": "8",
+            "scheme": {
+              "type": {
+                "id": 1,
+                "kind": "int"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family": "aliasInliner",
+      "name": "inlineAliases / handles nested sum types constructors",
+      "operation": "inlineTypeAliases",
+      "input": {
+        "modules": [
+          {
+            "id": 29,
+            "name": "A",
+            "declarations": [
+              {
+                "id": 3,
+                "kind": "typedef",
+                "name": "T1",
+                "type": {
+                  "id": 3,
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "B",
+                        "fieldType": {
+                          "id": 1,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "fieldName": "C",
+                        "fieldType": {
+                          "id": 2,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                },
+                "depth": 0
+              },
+              {
+                "id": 12,
+                "kind": "def",
+                "name": "C",
+                "qualifier": "val",
+                "typeAnnotation": {
+                  "id": 4,
+                  "kind": "const",
+                  "name": "T1"
+                },
+                "expr": {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "variant",
+                  "args": [
+                    {
+                      "id": 9,
+                      "kind": "str",
+                      "value": "C"
+                    },
+                    {
+                      "id": 10,
+                      "kind": "app",
+                      "opcode": "Tup",
+                      "args": []
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 15,
+                "kind": "typedef",
+                "name": "T2",
+                "type": {
+                  "id": 15,
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "Some",
+                        "fieldType": {
+                          "id": 13,
+                          "kind": "const",
+                          "name": "T1"
+                        }
+                      },
+                      {
+                        "fieldName": "None",
+                        "fieldType": {
+                          "id": 14,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                },
+                "depth": 0
+              },
+              {
+                "id": 8,
+                "kind": "def",
+                "name": "B",
+                "qualifier": "val",
+                "typeAnnotation": {
+                  "id": 4,
+                  "kind": "const",
+                  "name": "T1"
+                },
+                "expr": {
+                  "id": 7,
+                  "kind": "app",
+                  "opcode": "variant",
+                  "args": [
+                    {
+                      "id": 5,
+                      "kind": "str",
+                      "value": "B"
+                    },
+                    {
+                      "id": 6,
+                      "kind": "app",
+                      "opcode": "Tup",
+                      "args": []
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 22,
+                "kind": "def",
+                "name": "Some",
+                "qualifier": "def",
+                "typeAnnotation": {
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "id": 13,
+                      "kind": "const",
+                      "name": "T1"
+                    }
+                  ],
+                  "res": {
+                    "id": 16,
+                    "kind": "const",
+                    "name": "T2"
+                  }
+                },
+                "expr": {
+                  "id": 21,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 18,
+                      "name": "__SomeParam"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 20,
+                    "kind": "app",
+                    "opcode": "variant",
+                    "args": [
+                      {
+                        "id": 17,
+                        "kind": "str",
+                        "value": "Some"
+                      },
+                      {
+                        "kind": "name",
+                        "name": "__SomeParam",
+                        "id": 19
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": 26,
+                "kind": "def",
+                "name": "None",
+                "qualifier": "val",
+                "typeAnnotation": {
+                  "id": 16,
+                  "kind": "const",
+                  "name": "T2"
+                },
+                "expr": {
+                  "id": 25,
+                  "kind": "app",
+                  "opcode": "variant",
+                  "args": [
+                    {
+                      "id": 23,
+                      "kind": "str",
+                      "value": "None"
+                    },
+                    {
+                      "id": 24,
+                      "kind": "app",
+                      "opcode": "Tup",
+                      "args": []
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "var",
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 27,
+                  "kind": "const",
+                  "name": "T2"
+                },
+                "id": 28,
+                "depth": 0
+              }
+            ]
+          }
+        ],
+        "table": [
+          {
+            "id": "4",
+            "type": {
+              "id": 3,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "B",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "C",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          {
+            "id": "8",
+            "annotation": {
+              "id": 4,
+              "kind": "const",
+              "name": "T1"
+            }
+          },
+          {
+            "id": "12",
+            "annotation": {
+              "id": 4,
+              "kind": "const",
+              "name": "T1"
+            }
+          },
+          {
+            "id": "13",
+            "type": {
+              "id": 3,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "B",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "C",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          {
+            "id": "16",
+            "type": {
+              "id": 15,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "Some",
+                    "fieldType": {
+                      "id": 13,
+                      "kind": "const",
+                      "name": "T1"
+                    }
+                  },
+                  {
+                    "fieldName": "None",
+                    "fieldType": {
+                      "id": 14,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          {
+            "id": "22",
+            "annotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "const",
+                  "name": "T1"
+                }
+              ],
+              "res": {
+                "id": 16,
+                "kind": "const",
+                "name": "T2"
+              }
+            }
+          },
+          {
+            "id": "19"
+          },
+          {
+            "id": "26",
+            "annotation": {
+              "id": 16,
+              "kind": "const",
+              "name": "T2"
+            }
+          },
+          {
+            "id": "27",
+            "type": {
+              "id": 15,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "Some",
+                    "fieldType": {
+                      "id": 13,
+                      "kind": "const",
+                      "name": "T1"
+                    }
+                  },
+                  {
+                    "fieldName": "None",
+                    "fieldType": {
+                      "id": 14,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          }
+        ],
+        "types": [
+          {
+            "id": "9",
+            "scheme": {
+              "type": {
+                "kind": "str"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "10",
+            "scheme": {
+              "type": {
+                "kind": "tup",
+                "fields": {
+                  "kind": "empty"
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "11",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "C",
+                      "fieldType": {
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "B",
+                      "fieldType": {
+                        "id": 1,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "12",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "C",
+                      "fieldType": {
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "B",
+                      "fieldType": {
+                        "id": 1,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "5",
+            "scheme": {
+              "type": {
+                "kind": "str"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "6",
+            "scheme": {
+              "type": {
+                "kind": "tup",
+                "fields": {
+                  "kind": "empty"
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "7",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "B",
+                      "fieldType": {
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "C",
+                      "fieldType": {
+                        "id": 2,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "8",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "B",
+                      "fieldType": {
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "C",
+                      "fieldType": {
+                        "id": 2,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "18",
+            "scheme": {
+              "type": {
+                "id": 13,
+                "kind": "const",
+                "name": "T1"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "17",
+            "scheme": {
+              "type": {
+                "kind": "str"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "19",
+            "scheme": {
+              "type": {
+                "id": 13,
+                "kind": "const",
+                "name": "T1"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "20",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "Some",
+                      "fieldType": {
+                        "id": 13,
+                        "kind": "const",
+                        "name": "T1"
+                      }
+                    },
+                    {
+                      "fieldName": "None",
+                      "fieldType": {
+                        "id": 14,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "21",
+            "scheme": {
+              "type": {
+                "kind": "oper",
+                "args": [
+                  {
+                    "id": 13,
+                    "kind": "const",
+                    "name": "T1"
+                  }
+                ],
+                "res": {
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "Some",
+                        "fieldType": {
+                          "id": 13,
+                          "kind": "const",
+                          "name": "T1"
+                        }
+                      },
+                      {
+                        "fieldName": "None",
+                        "fieldType": {
+                          "id": 14,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "22",
+            "scheme": {
+              "type": {
+                "kind": "oper",
+                "args": [
+                  {
+                    "id": 13,
+                    "kind": "const",
+                    "name": "T1"
+                  }
+                ],
+                "res": {
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "Some",
+                        "fieldType": {
+                          "id": 13,
+                          "kind": "const",
+                          "name": "T1"
+                        }
+                      },
+                      {
+                        "fieldName": "None",
+                        "fieldType": {
+                          "id": 14,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "23",
+            "scheme": {
+              "type": {
+                "kind": "str"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "24",
+            "scheme": {
+              "type": {
+                "kind": "tup",
+                "fields": {
+                  "kind": "empty"
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "25",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "None",
+                      "fieldType": {
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "Some",
+                      "fieldType": {
+                        "id": 13,
+                        "kind": "const",
+                        "name": "T1"
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "26",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "None",
+                      "fieldType": {
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "Some",
+                      "fieldType": {
+                        "id": 13,
+                        "kind": "const",
+                        "name": "T1"
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "28",
+            "scheme": {
+              "type": {
+                "id": 27,
+                "kind": "const",
+                "name": "T2"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          }
+        ]
+      },
+      "output": {
+        "modules": [
+          {
+            "id": 29,
+            "name": "A",
+            "declarations": [
+              {
+                "id": 3,
+                "kind": "typedef",
+                "name": "T1",
+                "type": {
+                  "id": 3,
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "B",
+                        "fieldType": {
+                          "id": 1,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "fieldName": "C",
+                        "fieldType": {
+                          "id": 2,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                },
+                "depth": 0
+              },
+              {
+                "id": 12,
+                "kind": "def",
+                "name": "C",
+                "qualifier": "val",
+                "typeAnnotation": {
+                  "id": 3,
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "B",
+                        "fieldType": {
+                          "id": 1,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "fieldName": "C",
+                        "fieldType": {
+                          "id": 2,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 11,
+                  "kind": "app",
+                  "opcode": "variant",
+                  "args": [
+                    {
+                      "id": 9,
+                      "kind": "str",
+                      "value": "C"
+                    },
+                    {
+                      "id": 10,
+                      "kind": "app",
+                      "opcode": "Tup",
+                      "args": []
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 15,
+                "kind": "typedef",
+                "name": "T2",
+                "type": {
+                  "id": 15,
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "Some",
+                        "fieldType": {
+                          "id": 3,
+                          "kind": "sum",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [
+                              {
+                                "fieldName": "B",
+                                "fieldType": {
+                                  "id": 1,
+                                  "kind": "tup",
+                                  "fields": {
+                                    "kind": "row",
+                                    "fields": [],
+                                    "other": {
+                                      "kind": "empty"
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "fieldName": "C",
+                                "fieldType": {
+                                  "id": 2,
+                                  "kind": "tup",
+                                  "fields": {
+                                    "kind": "row",
+                                    "fields": [],
+                                    "other": {
+                                      "kind": "empty"
+                                    }
+                                  }
+                                }
+                              }
+                            ],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "fieldName": "None",
+                        "fieldType": {
+                          "id": 14,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                },
+                "depth": 0
+              },
+              {
+                "id": 8,
+                "kind": "def",
+                "name": "B",
+                "qualifier": "val",
+                "typeAnnotation": {
+                  "id": 3,
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "B",
+                        "fieldType": {
+                          "id": 1,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "fieldName": "C",
+                        "fieldType": {
+                          "id": 2,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 7,
+                  "kind": "app",
+                  "opcode": "variant",
+                  "args": [
+                    {
+                      "id": 5,
+                      "kind": "str",
+                      "value": "B"
+                    },
+                    {
+                      "id": 6,
+                      "kind": "app",
+                      "opcode": "Tup",
+                      "args": []
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 22,
+                "kind": "def",
+                "name": "Some",
+                "qualifier": "def",
+                "typeAnnotation": {
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "sum",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [
+                          {
+                            "fieldName": "B",
+                            "fieldType": {
+                              "id": 1,
+                              "kind": "tup",
+                              "fields": {
+                                "kind": "row",
+                                "fields": [],
+                                "other": {
+                                  "kind": "empty"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "fieldName": "C",
+                            "fieldType": {
+                              "id": 2,
+                              "kind": "tup",
+                              "fields": {
+                                "kind": "row",
+                                "fields": [],
+                                "other": {
+                                  "kind": "empty"
+                                }
+                              }
+                            }
+                          }
+                        ],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  ],
+                  "res": {
+                    "id": 15,
+                    "kind": "sum",
+                    "fields": {
+                      "kind": "row",
+                      "fields": [
+                        {
+                          "fieldName": "Some",
+                          "fieldType": {
+                            "id": 3,
+                            "kind": "sum",
+                            "fields": {
+                              "kind": "row",
+                              "fields": [
+                                {
+                                  "fieldName": "B",
+                                  "fieldType": {
+                                    "id": 1,
+                                    "kind": "tup",
+                                    "fields": {
+                                      "kind": "row",
+                                      "fields": [],
+                                      "other": {
+                                        "kind": "empty"
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "fieldName": "C",
+                                  "fieldType": {
+                                    "id": 2,
+                                    "kind": "tup",
+                                    "fields": {
+                                      "kind": "row",
+                                      "fields": [],
+                                      "other": {
+                                        "kind": "empty"
+                                      }
+                                    }
+                                  }
+                                }
+                              ],
+                              "other": {
+                                "kind": "empty"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "fieldName": "None",
+                          "fieldType": {
+                            "id": 14,
+                            "kind": "tup",
+                            "fields": {
+                              "kind": "row",
+                              "fields": [],
+                              "other": {
+                                "kind": "empty"
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "other": {
+                        "kind": "empty"
+                      }
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 21,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 18,
+                      "name": "__SomeParam"
+                    }
+                  ],
+                  "qualifier": "def",
+                  "expr": {
+                    "id": 20,
+                    "kind": "app",
+                    "opcode": "variant",
+                    "args": [
+                      {
+                        "id": 17,
+                        "kind": "str",
+                        "value": "Some"
+                      },
+                      {
+                        "kind": "name",
+                        "name": "__SomeParam",
+                        "id": 19
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": 26,
+                "kind": "def",
+                "name": "None",
+                "qualifier": "val",
+                "typeAnnotation": {
+                  "id": 15,
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "Some",
+                        "fieldType": {
+                          "id": 3,
+                          "kind": "sum",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [
+                              {
+                                "fieldName": "B",
+                                "fieldType": {
+                                  "id": 1,
+                                  "kind": "tup",
+                                  "fields": {
+                                    "kind": "row",
+                                    "fields": [],
+                                    "other": {
+                                      "kind": "empty"
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "fieldName": "C",
+                                "fieldType": {
+                                  "id": 2,
+                                  "kind": "tup",
+                                  "fields": {
+                                    "kind": "row",
+                                    "fields": [],
+                                    "other": {
+                                      "kind": "empty"
+                                    }
+                                  }
+                                }
+                              }
+                            ],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "fieldName": "None",
+                        "fieldType": {
+                          "id": 14,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                },
+                "expr": {
+                  "id": 25,
+                  "kind": "app",
+                  "opcode": "variant",
+                  "args": [
+                    {
+                      "id": 23,
+                      "kind": "str",
+                      "value": "None"
+                    },
+                    {
+                      "id": 24,
+                      "kind": "app",
+                      "opcode": "Tup",
+                      "args": []
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "var",
+                "name": "x",
+                "typeAnnotation": {
+                  "id": 15,
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "Some",
+                        "fieldType": {
+                          "id": 3,
+                          "kind": "sum",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [
+                              {
+                                "fieldName": "B",
+                                "fieldType": {
+                                  "id": 1,
+                                  "kind": "tup",
+                                  "fields": {
+                                    "kind": "row",
+                                    "fields": [],
+                                    "other": {
+                                      "kind": "empty"
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "fieldName": "C",
+                                "fieldType": {
+                                  "id": 2,
+                                  "kind": "tup",
+                                  "fields": {
+                                    "kind": "row",
+                                    "fields": [],
+                                    "other": {
+                                      "kind": "empty"
+                                    }
+                                  }
+                                }
+                              }
+                            ],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "fieldName": "None",
+                        "fieldType": {
+                          "id": 14,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                },
+                "id": 28,
+                "depth": 0
+              }
+            ]
+          }
+        ],
+        "table": [
+          {
+            "id": "4",
+            "type": {
+              "id": 3,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "B",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "C",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          {
+            "id": "8",
+            "annotation": {
+              "id": 3,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "B",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "C",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          {
+            "id": "12",
+            "annotation": {
+              "id": 3,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "B",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "C",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          {
+            "id": "13",
+            "type": {
+              "id": 3,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "B",
+                    "fieldType": {
+                      "id": 1,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "C",
+                    "fieldType": {
+                      "id": 2,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          {
+            "id": "16",
+            "type": {
+              "id": 15,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "Some",
+                    "fieldType": {
+                      "id": 3,
+                      "kind": "sum",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [
+                          {
+                            "fieldName": "B",
+                            "fieldType": {
+                              "id": 1,
+                              "kind": "tup",
+                              "fields": {
+                                "kind": "row",
+                                "fields": [],
+                                "other": {
+                                  "kind": "empty"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "fieldName": "C",
+                            "fieldType": {
+                              "id": 2,
+                              "kind": "tup",
+                              "fields": {
+                                "kind": "row",
+                                "fields": [],
+                                "other": {
+                                  "kind": "empty"
+                                }
+                              }
+                            }
+                          }
+                        ],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "None",
+                    "fieldType": {
+                      "id": 14,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          {
+            "id": "22",
+            "annotation": {
+              "kind": "oper",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "B",
+                        "fieldType": {
+                          "id": 1,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "fieldName": "C",
+                        "fieldType": {
+                          "id": 2,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              ],
+              "res": {
+                "id": 15,
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "Some",
+                      "fieldType": {
+                        "id": 3,
+                        "kind": "sum",
+                        "fields": {
+                          "kind": "row",
+                          "fields": [
+                            {
+                              "fieldName": "B",
+                              "fieldType": {
+                                "id": 1,
+                                "kind": "tup",
+                                "fields": {
+                                  "kind": "row",
+                                  "fields": [],
+                                  "other": {
+                                    "kind": "empty"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "fieldName": "C",
+                              "fieldType": {
+                                "id": 2,
+                                "kind": "tup",
+                                "fields": {
+                                  "kind": "row",
+                                  "fields": [],
+                                  "other": {
+                                    "kind": "empty"
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "other": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "None",
+                      "fieldType": {
+                        "id": 14,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "row",
+                          "fields": [],
+                          "other": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "19"
+          },
+          {
+            "id": "26",
+            "annotation": {
+              "id": 15,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "Some",
+                    "fieldType": {
+                      "id": 3,
+                      "kind": "sum",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [
+                          {
+                            "fieldName": "B",
+                            "fieldType": {
+                              "id": 1,
+                              "kind": "tup",
+                              "fields": {
+                                "kind": "row",
+                                "fields": [],
+                                "other": {
+                                  "kind": "empty"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "fieldName": "C",
+                            "fieldType": {
+                              "id": 2,
+                              "kind": "tup",
+                              "fields": {
+                                "kind": "row",
+                                "fields": [],
+                                "other": {
+                                  "kind": "empty"
+                                }
+                              }
+                            }
+                          }
+                        ],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "None",
+                    "fieldType": {
+                      "id": 14,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          },
+          {
+            "id": "27",
+            "type": {
+              "id": 15,
+              "kind": "sum",
+              "fields": {
+                "kind": "row",
+                "fields": [
+                  {
+                    "fieldName": "Some",
+                    "fieldType": {
+                      "id": 3,
+                      "kind": "sum",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [
+                          {
+                            "fieldName": "B",
+                            "fieldType": {
+                              "id": 1,
+                              "kind": "tup",
+                              "fields": {
+                                "kind": "row",
+                                "fields": [],
+                                "other": {
+                                  "kind": "empty"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "fieldName": "C",
+                            "fieldType": {
+                              "id": 2,
+                              "kind": "tup",
+                              "fields": {
+                                "kind": "row",
+                                "fields": [],
+                                "other": {
+                                  "kind": "empty"
+                                }
+                              }
+                            }
+                          }
+                        ],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "None",
+                    "fieldType": {
+                      "id": 14,
+                      "kind": "tup",
+                      "fields": {
+                        "kind": "row",
+                        "fields": [],
+                        "other": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "other": {
+                  "kind": "empty"
+                }
+              }
+            }
+          }
+        ],
+        "types": [
+          {
+            "id": "9",
+            "scheme": {
+              "type": {
+                "kind": "str"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "10",
+            "scheme": {
+              "type": {
+                "kind": "tup",
+                "fields": {
+                  "kind": "empty"
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "11",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "C",
+                      "fieldType": {
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "B",
+                      "fieldType": {
+                        "id": 1,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "12",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "C",
+                      "fieldType": {
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "B",
+                      "fieldType": {
+                        "id": 1,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "5",
+            "scheme": {
+              "type": {
+                "kind": "str"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "6",
+            "scheme": {
+              "type": {
+                "kind": "tup",
+                "fields": {
+                  "kind": "empty"
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "7",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "B",
+                      "fieldType": {
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "C",
+                      "fieldType": {
+                        "id": 2,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "8",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "B",
+                      "fieldType": {
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "C",
+                      "fieldType": {
+                        "id": 2,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "18",
+            "scheme": {
+              "type": {
+                "id": 3,
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "B",
+                      "fieldType": {
+                        "id": 1,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "row",
+                          "fields": [],
+                          "other": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "C",
+                      "fieldType": {
+                        "id": 2,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "row",
+                          "fields": [],
+                          "other": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "17",
+            "scheme": {
+              "type": {
+                "kind": "str"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "19",
+            "scheme": {
+              "type": {
+                "id": 3,
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "B",
+                      "fieldType": {
+                        "id": 1,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "row",
+                          "fields": [],
+                          "other": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "C",
+                      "fieldType": {
+                        "id": 2,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "row",
+                          "fields": [],
+                          "other": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "20",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "Some",
+                      "fieldType": {
+                        "id": 3,
+                        "kind": "sum",
+                        "fields": {
+                          "kind": "row",
+                          "fields": [
+                            {
+                              "fieldName": "B",
+                              "fieldType": {
+                                "id": 1,
+                                "kind": "tup",
+                                "fields": {
+                                  "kind": "row",
+                                  "fields": [],
+                                  "other": {
+                                    "kind": "empty"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "fieldName": "C",
+                              "fieldType": {
+                                "id": 2,
+                                "kind": "tup",
+                                "fields": {
+                                  "kind": "row",
+                                  "fields": [],
+                                  "other": {
+                                    "kind": "empty"
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "other": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "None",
+                      "fieldType": {
+                        "id": 14,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "21",
+            "scheme": {
+              "type": {
+                "kind": "oper",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "sum",
+                    "fields": {
+                      "kind": "row",
+                      "fields": [
+                        {
+                          "fieldName": "B",
+                          "fieldType": {
+                            "id": 1,
+                            "kind": "tup",
+                            "fields": {
+                              "kind": "row",
+                              "fields": [],
+                              "other": {
+                                "kind": "empty"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "fieldName": "C",
+                          "fieldType": {
+                            "id": 2,
+                            "kind": "tup",
+                            "fields": {
+                              "kind": "row",
+                              "fields": [],
+                              "other": {
+                                "kind": "empty"
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "other": {
+                        "kind": "empty"
+                      }
+                    }
+                  }
+                ],
+                "res": {
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "Some",
+                        "fieldType": {
+                          "id": 3,
+                          "kind": "sum",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [
+                              {
+                                "fieldName": "B",
+                                "fieldType": {
+                                  "id": 1,
+                                  "kind": "tup",
+                                  "fields": {
+                                    "kind": "row",
+                                    "fields": [],
+                                    "other": {
+                                      "kind": "empty"
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "fieldName": "C",
+                                "fieldType": {
+                                  "id": 2,
+                                  "kind": "tup",
+                                  "fields": {
+                                    "kind": "row",
+                                    "fields": [],
+                                    "other": {
+                                      "kind": "empty"
+                                    }
+                                  }
+                                }
+                              }
+                            ],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "fieldName": "None",
+                        "fieldType": {
+                          "id": 14,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "22",
+            "scheme": {
+              "type": {
+                "kind": "oper",
+                "args": [
+                  {
+                    "id": 3,
+                    "kind": "sum",
+                    "fields": {
+                      "kind": "row",
+                      "fields": [
+                        {
+                          "fieldName": "B",
+                          "fieldType": {
+                            "id": 1,
+                            "kind": "tup",
+                            "fields": {
+                              "kind": "row",
+                              "fields": [],
+                              "other": {
+                                "kind": "empty"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "fieldName": "C",
+                          "fieldType": {
+                            "id": 2,
+                            "kind": "tup",
+                            "fields": {
+                              "kind": "row",
+                              "fields": [],
+                              "other": {
+                                "kind": "empty"
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "other": {
+                        "kind": "empty"
+                      }
+                    }
+                  }
+                ],
+                "res": {
+                  "kind": "sum",
+                  "fields": {
+                    "kind": "row",
+                    "fields": [
+                      {
+                        "fieldName": "Some",
+                        "fieldType": {
+                          "id": 3,
+                          "kind": "sum",
+                          "fields": {
+                            "kind": "row",
+                            "fields": [
+                              {
+                                "fieldName": "B",
+                                "fieldType": {
+                                  "id": 1,
+                                  "kind": "tup",
+                                  "fields": {
+                                    "kind": "row",
+                                    "fields": [],
+                                    "other": {
+                                      "kind": "empty"
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "fieldName": "C",
+                                "fieldType": {
+                                  "id": 2,
+                                  "kind": "tup",
+                                  "fields": {
+                                    "kind": "row",
+                                    "fields": [],
+                                    "other": {
+                                      "kind": "empty"
+                                    }
+                                  }
+                                }
+                              }
+                            ],
+                            "other": {
+                              "kind": "empty"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "fieldName": "None",
+                        "fieldType": {
+                          "id": 14,
+                          "kind": "tup",
+                          "fields": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    ],
+                    "other": {
+                      "kind": "empty"
+                    }
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "23",
+            "scheme": {
+              "type": {
+                "kind": "str"
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "24",
+            "scheme": {
+              "type": {
+                "kind": "tup",
+                "fields": {
+                  "kind": "empty"
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "25",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "None",
+                      "fieldType": {
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "Some",
+                      "fieldType": {
+                        "id": 3,
+                        "kind": "sum",
+                        "fields": {
+                          "kind": "row",
+                          "fields": [
+                            {
+                              "fieldName": "B",
+                              "fieldType": {
+                                "id": 1,
+                                "kind": "tup",
+                                "fields": {
+                                  "kind": "row",
+                                  "fields": [],
+                                  "other": {
+                                    "kind": "empty"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "fieldName": "C",
+                              "fieldType": {
+                                "id": 2,
+                                "kind": "tup",
+                                "fields": {
+                                  "kind": "row",
+                                  "fields": [],
+                                  "other": {
+                                    "kind": "empty"
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "other": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "26",
+            "scheme": {
+              "type": {
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "None",
+                      "fieldType": {
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "empty"
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "Some",
+                      "fieldType": {
+                        "id": 3,
+                        "kind": "sum",
+                        "fields": {
+                          "kind": "row",
+                          "fields": [
+                            {
+                              "fieldName": "B",
+                              "fieldType": {
+                                "id": 1,
+                                "kind": "tup",
+                                "fields": {
+                                  "kind": "row",
+                                  "fields": [],
+                                  "other": {
+                                    "kind": "empty"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "fieldName": "C",
+                              "fieldType": {
+                                "id": 2,
+                                "kind": "tup",
+                                "fields": {
+                                  "kind": "row",
+                                  "fields": [],
+                                  "other": {
+                                    "kind": "empty"
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "other": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          },
+          {
+            "id": "28",
+            "scheme": {
+              "type": {
+                "id": 15,
+                "kind": "sum",
+                "fields": {
+                  "kind": "row",
+                  "fields": [
+                    {
+                      "fieldName": "Some",
+                      "fieldType": {
+                        "id": 3,
+                        "kind": "sum",
+                        "fields": {
+                          "kind": "row",
+                          "fields": [
+                            {
+                              "fieldName": "B",
+                              "fieldType": {
+                                "id": 1,
+                                "kind": "tup",
+                                "fields": {
+                                  "kind": "row",
+                                  "fields": [],
+                                  "other": {
+                                    "kind": "empty"
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "fieldName": "C",
+                              "fieldType": {
+                                "id": 2,
+                                "kind": "tup",
+                                "fields": {
+                                  "kind": "row",
+                                  "fields": [],
+                                  "other": {
+                                    "kind": "empty"
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "other": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "fieldName": "None",
+                      "fieldType": {
+                        "id": 14,
+                        "kind": "tup",
+                        "fields": {
+                          "kind": "row",
+                          "fields": [],
+                          "other": {
+                            "kind": "empty"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "other": {
+                    "kind": "empty"
+                  }
+                }
+              },
+              "typeVariables": [],
+              "rowVariables": []
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

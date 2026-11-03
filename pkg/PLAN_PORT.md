@@ -237,7 +237,7 @@ analysis, with reproducible errors for invalid module structures.
 
 ## P4 — Type system
 
-- [ ] P4.1 Port type schemes, generalization/instantiation, free variables,
+- [x] P4.1 Port type schemes, generalization/instantiation, free variables,
   substitutions, occurs checks, and simplification.
   - [x] Bind type and row variables with separate occurs checks and copied substitutions.
   - [x] Compute free scheme variables and instantiate quantified variables in order.
@@ -245,7 +245,7 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Integrate scheme/generalization helpers with constraint-generation traversal;
     local/top-level generation and the upstream inferrer suite cover both paths.
   - [x] Integrate binding checks with structural unification and substitution composition.
-- [ ] P4.2 Port constraint generation/solving for primitive, collection,
+- [x] P4.2 Port constraint generation/solving for primitive, collection,
   function/operator, tuple, record, row-polymorphic, and sum types.
   - [x] Implement structural type/row unification and ordered substitution composition.
   - [x] Compare initial type/row unification substitutions and errors exactly with upstream.
@@ -254,7 +254,7 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Integrate constraint generation with ordered solving and inference.
   - [x] Expand composition failures with 22 exact type/row overlap, occurs,
     mixed-kind and first-name cases, including discarded partial output.
-- [ ] P4.3 Port type aliases, abstract types, type applications, parameter
+- [x] P4.3 Port type aliases, abstract types, type applications, parameter
   substitution, alias inlining, and recursive-alias rejection.
   - [x] Resolve outer aliases and recursively inline type-tree aliases by lookup ID.
   - [x] Preserve abstract types and reject cyclic alias expansion.
@@ -266,7 +266,7 @@ analysis, with reproducible errors for invalid module structures.
     replay all 29 cases from the upstream inferrer test suite.
   - [x] Validate 36 broader application/annotation/alias cases with raw IDs,
     including duplicate parameter allocation/order and arity behavior.
-- [ ] P4.4 Port every builtin type signature and special constraint; maintain
+- [x] P4.4 Port every builtin type signature and special constraint; maintain
   an opcode-to-signature coverage table to catch omissions.
   - [x] Generate structural constraints for Rec, field, fieldNames, and with.
   - [x] Generate tuple construction and item-access constraints.
@@ -276,16 +276,21 @@ analysis, with reproducible errors for invalid module structures.
   - [x] Connect builtin dispatch to expression constraint traversal.
   - [x] Preserve exact fixed/dynamic builtin type-node IDs with owned copies;
     compare raw inference and CLI metadata as well as normalized schemes.
-  - [ ] Resolve tuple-prefix resource-limit parity and validate full generator parity.
-- [ ] P4.5 Port annotation checking, inference diagnostics, type printing,
+  - [x] Replay all 12 upstream generator tests, including injected solver calls.
+    Preserve the explicit Go tuple-prefix allocation limit; upstream can allocate
+    over one million fields for the saved boundary witness.
+- [x] P4.5 Port annotation checking, inference diagnostics, type printing,
   and incremental inference used by the REPL and editor.
   - [x] Preserve available provisional schemes after descendant constraint
     failures; aggregate every invalid match case and record field in order.
-- [ ] P4.6 Compare inferred schemes modulo type-variable renaming and compare
+- [x] P4.6 Compare inferred schemes modulo type-variable renaming and compare
   rejection cases against the upstream type suite and example corpus.
   - [x] Replay the full 29-case upstream inferrer suite, comparing ordered
     schemes/quantifiers, resolved declarations and errors, including raw type IDs.
-  - [ ] Broader examples and Rust/reference-runtime disagreement audit.
+  - [x] Audit all 95 tests across the eight upstream type-suite families; add
+    exact replays for 28 solver and 16 substitution/simplification/alias tests.
+    Rust has no separate type checker; its 79-case execution comparison belongs
+    to P7.8. Broader examples remain ongoing regression growth.
 
 Exit gate: analyzed fixtures carry complete, consistent type tables, including
 the information required by Go Apalache's importer.
@@ -3413,3 +3418,12 @@ word "retained" in the commit message.
   labels. Ownership/cancellation/cycles,19 CLI headers and two REPL regressions pass;
   focused0.059s, full core0.966s, CLI0.465s and race1.707s. Existing frontend sort
   behavior is preserved; remaining instance closure/cache/override audits stay open.
+
+- 2026-11-02: Completed P4 with a test-by-test inventory of all95 upstream type
+  tests across eight families. Added56 raw-ID replays:12 constraint generators
+  with exact injected solver requests,28 solver/unifier/row tests and16 helper
+  cases. A nil generator Solver preserves the production unifier; successful
+  injected results may omit errors. Existing29 inferrer cases, builtin matrices
+  and parser tests complete the inventory. Focused56 cases pass0.018s; broader
+  exact replay0.095s. The explicit tuple-prefix allocation limit remains a Go
+  resource policy; Rust supplies runtime comparisons rather than a type checker.

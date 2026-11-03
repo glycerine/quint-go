@@ -1,0 +1,2386 @@
+[
+  {
+    "name": "collects constraints from expressions",
+    "source": "module wrapper { var s: str\nvar y: int\nconst N: int\ndef d(S) = S.map(x => x + 10) }",
+    "input": [
+      {
+        "id": 17,
+        "name": "wrapper",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "s",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "str"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "int"
+            },
+            "id": 6,
+            "depth": 0
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "d",
+            "qualifier": "def",
+            "expr": {
+              "id": 15,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 7,
+                  "name": "S"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 14,
+                "kind": "app",
+                "opcode": "map",
+                "args": [
+                  {
+                    "id": 8,
+                    "kind": "name",
+                    "name": "S"
+                  },
+                  {
+                    "id": 13,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 9,
+                        "name": "x"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 12,
+                      "kind": "app",
+                      "opcode": "iadd",
+                      "args": [
+                        {
+                          "id": 10,
+                          "kind": "name",
+                          "name": "x"
+                        },
+                        {
+                          "id": 11,
+                          "kind": "int",
+                          "value": 10
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "calls": [
+      {
+        "input": {
+          "kind": "conjunction",
+          "constraints": [
+            {
+              "kind": "eq",
+              "types": [
+                {
+                  "id": 4,
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "int"
+                    },
+                    {
+                      "id": 2,
+                      "kind": "int"
+                    }
+                  ],
+                  "res": {
+                    "id": 3,
+                    "kind": "int"
+                  }
+                },
+                {
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "kind": "var",
+                      "name": "t_x_9"
+                    },
+                    {
+                      "kind": "int"
+                    }
+                  ],
+                  "res": {
+                    "kind": "var",
+                    "name": "_t0"
+                  }
+                }
+              ],
+              "sourceId": 12
+            },
+            {
+              "kind": "eq",
+              "types": [
+                {
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "kind": "set",
+                      "elem": {
+                        "kind": "var",
+                        "name": "_t1"
+                      },
+                      "id": 2
+                    },
+                    {
+                      "kind": "oper",
+                      "args": [
+                        {
+                          "kind": "var",
+                          "name": "_t1"
+                        }
+                      ],
+                      "res": {
+                        "kind": "var",
+                        "name": "_t2"
+                      },
+                      "id": 5
+                    }
+                  ],
+                  "res": {
+                    "kind": "set",
+                    "elem": {
+                      "kind": "var",
+                      "name": "_t2"
+                    },
+                    "id": 7
+                  },
+                  "id": 8
+                },
+                {
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "kind": "var",
+                      "name": "t_S_7"
+                    },
+                    {
+                      "kind": "oper",
+                      "args": [
+                        {
+                          "kind": "var",
+                          "name": "t_x_9"
+                        }
+                      ],
+                      "res": {
+                        "kind": "var",
+                        "name": "_t0"
+                      }
+                    }
+                  ],
+                  "res": {
+                    "kind": "var",
+                    "name": "_t3"
+                  }
+                }
+              ],
+              "sourceId": 14
+            }
+          ],
+          "sourceId": 0
+        },
+        "substitutions": []
+      }
+    ],
+    "types": [
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_S_7"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_S_7"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_9"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "10",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_9"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "11",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "12",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "13",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_x_9"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "14",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t3"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "15",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_S_7"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t3"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "16",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_S_7"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t3"
+            }
+          },
+          "typeVariables": [
+            "t_S_7",
+            "_t3",
+            "t_x_9",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "handles underscore",
+    "source": "module wrapper { var s: str\nvar y: int\nconst N: int\ndef d(S) = S.map(_ => 10) }",
+    "input": [
+      {
+        "id": 15,
+        "name": "wrapper",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "s",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "str"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "int"
+            },
+            "id": 6,
+            "depth": 0
+          },
+          {
+            "id": 14,
+            "kind": "def",
+            "name": "d",
+            "qualifier": "def",
+            "expr": {
+              "id": 13,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 7,
+                  "name": "S"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 12,
+                "kind": "app",
+                "opcode": "map",
+                "args": [
+                  {
+                    "id": 8,
+                    "kind": "name",
+                    "name": "S"
+                  },
+                  {
+                    "id": 11,
+                    "kind": "lambda",
+                    "params": [
+                      {
+                        "id": 9,
+                        "name": "_"
+                      }
+                    ],
+                    "qualifier": "def",
+                    "expr": {
+                      "id": 10,
+                      "kind": "int",
+                      "value": 10
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "calls": [
+      {
+        "input": {
+          "kind": "conjunction",
+          "constraints": [
+            {
+              "kind": "eq",
+              "types": [
+                {
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "kind": "set",
+                      "elem": {
+                        "kind": "var",
+                        "name": "_t1"
+                      },
+                      "id": 2
+                    },
+                    {
+                      "kind": "oper",
+                      "args": [
+                        {
+                          "kind": "var",
+                          "name": "_t1"
+                        }
+                      ],
+                      "res": {
+                        "kind": "var",
+                        "name": "_t2"
+                      },
+                      "id": 5
+                    }
+                  ],
+                  "res": {
+                    "kind": "set",
+                    "elem": {
+                      "kind": "var",
+                      "name": "_t2"
+                    },
+                    "id": 7
+                  },
+                  "id": 8
+                },
+                {
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "kind": "var",
+                      "name": "t_S_7"
+                    },
+                    {
+                      "kind": "oper",
+                      "args": [
+                        {
+                          "kind": "var",
+                          "name": "_t0"
+                        }
+                      ],
+                      "res": {
+                        "kind": "int"
+                      }
+                    }
+                  ],
+                  "res": {
+                    "kind": "var",
+                    "name": "_t3"
+                  }
+                }
+              ],
+              "sourceId": 12
+            }
+          ],
+          "sourceId": 0
+        },
+        "substitutions": []
+      }
+    ],
+    "types": [
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_S_7"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_S_7"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "10",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "11",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "_t0"
+              }
+            ],
+            "res": {
+              "kind": "int"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "12",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t3"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "13",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_S_7"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t3"
+            }
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "14",
+        "scheme": {
+          "type": {
+            "kind": "oper",
+            "args": [
+              {
+                "kind": "var",
+                "name": "t_S_7"
+              }
+            ],
+            "res": {
+              "kind": "var",
+              "name": "_t3"
+            }
+          },
+          "typeVariables": [
+            "t_S_7",
+            "_t3",
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "collects types from variable and constant definitions",
+    "source": "module wrapper { var s: str\nvar y: int\nconst N: int\ndef a = s\ndef b = N }",
+    "input": [
+      {
+        "id": 11,
+        "name": "wrapper",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "s",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "str"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "int"
+            },
+            "id": 6,
+            "depth": 0
+          },
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "def",
+            "expr": {
+              "id": 9,
+              "kind": "name",
+              "name": "N"
+            }
+          },
+          {
+            "id": 8,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "def",
+            "expr": {
+              "id": 7,
+              "kind": "name",
+              "name": "s"
+            }
+          }
+        ]
+      }
+    ],
+    "calls": [],
+    "types": [
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "10",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "collects solving errors",
+    "source": "module wrapper { var s: str\nvar y: int\nconst N: int\ndef a = 1 + true }",
+    "input": [
+      {
+        "id": 11,
+        "name": "wrapper",
+        "declarations": [
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "def",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 8,
+                  "kind": "bool",
+                  "value": true
+                }
+              ]
+            }
+          },
+          {
+            "kind": "var",
+            "name": "s",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "str"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "int"
+            },
+            "id": 6,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "calls": [
+      {
+        "input": {
+          "kind": "conjunction",
+          "constraints": [
+            {
+              "kind": "eq",
+              "types": [
+                {
+                  "id": 4,
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "int"
+                    },
+                    {
+                      "id": 2,
+                      "kind": "int"
+                    }
+                  ],
+                  "res": {
+                    "id": 3,
+                    "kind": "int"
+                  }
+                },
+                {
+                  "kind": "oper",
+                  "args": [
+                    {
+                      "kind": "int"
+                    },
+                    {
+                      "kind": "bool"
+                    }
+                  ],
+                  "res": {
+                    "kind": "var",
+                    "name": "_t0"
+                  }
+                }
+              ],
+              "sourceId": 9
+            }
+          ],
+          "sourceId": 0
+        },
+        "errors": [
+          {
+            "id": "1",
+            "error": {
+              "location": "Mocked location",
+              "message": "Mocked message",
+              "children": []
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "bool"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "10",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [
+            "_t0"
+          ],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "1",
+        "error": {
+          "location": "Mocked location",
+          "message": "Mocked message",
+          "children": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "collects internal errors",
+    "source": "module wrapper { var s: str\nvar y: int\nconst N: int\nval a: t = 1\ndef b(x) = a\ndef c = b(1)\ndef d = val m = 1 { a } }",
+    "input": [
+      {
+        "id": 22,
+        "name": "wrapper",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "s",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "str"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "int"
+            },
+            "id": 6,
+            "depth": 0
+          },
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "int",
+              "value": 1
+            },
+            "typeAnnotation": {
+              "id": 7,
+              "kind": "var",
+              "name": "t"
+            }
+          },
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "def",
+            "expr": {
+              "id": 12,
+              "kind": "lambda",
+              "params": [
+                {
+                  "id": 10,
+                  "name": "x"
+                }
+              ],
+              "qualifier": "def",
+              "expr": {
+                "id": 11,
+                "kind": "name",
+                "name": "a"
+              }
+            }
+          },
+          {
+            "id": 21,
+            "kind": "def",
+            "name": "d",
+            "qualifier": "def",
+            "expr": {
+              "id": 20,
+              "kind": "let",
+              "opdef": {
+                "id": 18,
+                "kind": "def",
+                "name": "m",
+                "qualifier": "val",
+                "expr": {
+                  "id": 17,
+                  "kind": "int",
+                  "value": 1
+                }
+              },
+              "expr": {
+                "id": 19,
+                "kind": "name",
+                "name": "a"
+              }
+            }
+          },
+          {
+            "id": 16,
+            "kind": "def",
+            "name": "c",
+            "qualifier": "def",
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "b",
+              "args": [
+                {
+                  "id": 14,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "calls": [
+      {
+        "input": {
+          "kind": "conjunction",
+          "constraints": [
+            {
+              "kind": "eq",
+              "types": [
+                {
+                  "kind": "int"
+                },
+                {
+                  "id": 7,
+                  "kind": "var",
+                  "name": "t"
+                }
+              ],
+              "sourceId": 9
+            }
+          ],
+          "sourceId": 0
+        },
+        "substitutions": [
+          {
+            "kind": "type",
+            "name": "t",
+            "value": {
+              "kind": "int",
+              "id": 6
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "10",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "t_x_10"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "17",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "14",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "7",
+        "error": {
+          "location": "Checking type annotation t",
+          "children": [
+            {
+              "location": "Checking variable t",
+              "message": "Type annotation is too general: t should be int",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "catches invalid arity on Rec operator",
+    "source": "module wrapper { var s: str\nvar y: int\nconst N: int\nval x = Rec(\"a\") }",
+    "input": [
+      {
+        "id": 10,
+        "name": "wrapper",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "s",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "str"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "int"
+            },
+            "id": 6,
+            "depth": 0
+          },
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "str",
+                  "value": "a"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "calls": [],
+    "types": [
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "8",
+        "error": {
+          "location": "Generating constraints for \"a\"",
+          "children": [
+            {
+              "location": "Checking arity for application of Rec",
+              "message": "Operator expects even number of arguments but was given 1",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "catches invalid arity on field operator",
+    "source": "module wrapper { var s: str\nvar y: int\nconst N: int\nval x = Rec(\"a\", 1).field() }",
+    "input": [
+      {
+        "id": 12,
+        "name": "wrapper",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "field",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "str",
+                      "value": "a"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "kind": "var",
+            "name": "s",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "str"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "int"
+            },
+            "id": 6,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "calls": [],
+    "types": [
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "10",
+        "error": {
+          "location": "Generating constraints for 1",
+          "children": [
+            {
+              "location": "Checking arity for application of field",
+              "message": "Operator expects 2 arguments but was given 1",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "catches invalid arity on fieldNames operator",
+    "source": "module wrapper { var s: str\nvar y: int\nconst N: int\nval x = Rec(\"a\", 1).fieldNames(1) }",
+    "input": [
+      {
+        "id": 13,
+        "name": "wrapper",
+        "declarations": [
+          {
+            "id": 12,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "fieldNames",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "str",
+                      "value": "a"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 10,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          {
+            "kind": "var",
+            "name": "s",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "str"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "int"
+            },
+            "id": 6,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "calls": [],
+    "types": [
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "10",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "11",
+        "error": {
+          "location": "Generating constraints for 1",
+          "children": [
+            {
+              "location": "Checking arity for application of fieldNames",
+              "message": "Operator expects 1 arguments but was given 2",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "catches invalid arity on with operator",
+    "source": "module wrapper { var s: str\nvar y: int\nconst N: int\nval x = Rec(\"a\", 1).with(\"a\", 1, 2) }",
+    "input": [
+      {
+        "id": 15,
+        "name": "wrapper",
+        "declarations": [
+          {
+            "id": 14,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 13,
+              "kind": "app",
+              "opcode": "with",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "str",
+                      "value": "a"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 10,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 11,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 12,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          {
+            "kind": "var",
+            "name": "s",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "str"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "int"
+            },
+            "id": 6,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "calls": [],
+    "types": [
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "10",
+        "scheme": {
+          "type": {
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "11",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "12",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "13",
+        "error": {
+          "location": "Generating constraints for 2",
+          "children": [
+            {
+              "location": "Checking arity for application of with",
+              "message": "Operator expects 3 arguments but was given 4",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "catches invalid arity on item operator",
+    "source": "module wrapper { var s: str\nvar y: int\nconst N: int\nval x = (0, 1).item() }",
+    "input": [
+      {
+        "id": 12,
+        "name": "wrapper",
+        "declarations": [
+          {
+            "id": 11,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "item",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "int",
+                      "value": 0
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "kind": "var",
+            "name": "s",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "str"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "int"
+            },
+            "id": 6,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "calls": [],
+    "types": [
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "9",
+        "scheme": {
+          "type": {
+            "kind": "var",
+            "name": "_t0"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "10",
+        "error": {
+          "location": "Generating constraints for 1",
+          "children": [
+            {
+              "location": "Checking arity for application of item",
+              "message": "Operator expects 2 arguments but was given 1",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "catches invalid arity on variant operator",
+    "source": "module wrapper { var s: str\nvar y: int\nconst N: int\nval x = variant(\"foo\") }",
+    "input": [
+      {
+        "id": 10,
+        "name": "wrapper",
+        "declarations": [
+          {
+            "kind": "var",
+            "name": "s",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "str"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "int"
+            },
+            "id": 6,
+            "depth": 0
+          },
+          {
+            "id": 9,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "app",
+              "opcode": "variant",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "str",
+                  "value": "foo"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "calls": [],
+    "types": [
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "8",
+        "error": {
+          "location": "Generating constraints for \"foo\"",
+          "children": [
+            {
+              "location": "Checking arity for application of variant",
+              "message": "Operator expects 2 arguments but was given 1",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "catches invalid arity on matchVariant operator",
+    "source": "module wrapper { var s: str\nvar y: int\nconst N: int\nval x = matchVariant(\"foo\", \"A\") }",
+    "input": [
+      {
+        "id": 11,
+        "name": "wrapper",
+        "declarations": [
+          {
+            "id": 10,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "matchVariant",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "str",
+                  "value": "foo"
+                },
+                {
+                  "id": 8,
+                  "kind": "str",
+                  "value": "A"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "var",
+            "name": "s",
+            "typeAnnotation": {
+              "id": 1,
+              "kind": "str"
+            },
+            "id": 2,
+            "depth": 0
+          },
+          {
+            "kind": "var",
+            "name": "y",
+            "typeAnnotation": {
+              "id": 3,
+              "kind": "int"
+            },
+            "id": 4,
+            "depth": 0
+          },
+          {
+            "kind": "const",
+            "name": "N",
+            "typeAnnotation": {
+              "id": 5,
+              "kind": "int"
+            },
+            "id": 6,
+            "depth": 0
+          }
+        ]
+      }
+    ],
+    "calls": [],
+    "types": [
+      {
+        "id": "7",
+        "scheme": {
+          "type": {
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "8",
+        "scheme": {
+          "type": {
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "2",
+        "scheme": {
+          "type": {
+            "id": 1,
+            "kind": "str"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "4",
+        "scheme": {
+          "type": {
+            "id": 3,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      },
+      {
+        "id": "6",
+        "scheme": {
+          "type": {
+            "id": 5,
+            "kind": "int"
+          },
+          "typeVariables": [],
+          "rowVariables": []
+        }
+      }
+    ],
+    "errors": [
+      {
+        "id": "9",
+        "error": {
+          "location": "Generating constraints for \"A\"",
+          "children": [
+            {
+              "location": "Checking arity for application of matchVariant",
+              "message": "Operator expects odd number of arguments but was given 2",
+              "children": []
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

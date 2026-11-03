@@ -1097,3 +1097,14 @@ public-project cases preserve upstream module-sorting behavior. Private source
 identity/lookup graphs survive in-memory transforms and REPL adoption, then drop
 at JSON transport. Ownership, cancellation, cycles and transported fallback tests
 pass alongside the original 19 CLI variable headers and two REPL regressions.
+
+`type_generator_suite.json`, `type_solver_suite.json` and
+`type_upstream_helpers.json` add 56 exact tests from the actual upstream suites:
+12 generators, 28 solver/unifier/row cases and 16 substitution, simplification and
+whole-project alias cases. Their matching grammar generators execute upstream
+assertions while saving raw schemes, ordered errors and injected solver calls.
+Together with 29 existing inferrer cases, builtin signature matrices and parser
+fixtures, the inventory covers all 95 tests in eight upstream type-suite families.
+The Go generator exposes the upstream optional solver injection; its default
+remains structural unification. The saved tuple-prefix resource witness remains
+an explicit allocation-policy difference.
