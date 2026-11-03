@@ -1,0 +1,1661 @@
+{
+  "cases": [
+    {
+      "name": "missing_file",
+      "files": [],
+      "directory": false,
+      "status": 1,
+      "summary": "file <fixture>/M.qnt does not exist",
+      "stdout": "",
+      "stderr": "error: file <fixture>/M.qnt does not exist\n",
+      "stage": {
+        "stage": "loading",
+        "errors": []
+      }
+    },
+    {
+      "name": "directory",
+      "files": [],
+      "directory": true,
+      "status": 1,
+      "summary": "file <fixture>/M.qnt could not be opened due to Error: EISDIR: illegal operation on a directory, read",
+      "stdout": "",
+      "stderr": "error: file <fixture>/M.qnt could not be opened due to Error: EISDIR: illegal operation on a directory, read\n",
+      "stage": {
+        "stage": "loading",
+        "errors": []
+      }
+    },
+    {
+      "name": "independent_name_errors",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { val a=missing val b=alsoMissing }"
+        }
+      ],
+      "directory": false,
+      "status": 1,
+      "summary": "parsing failed",
+      "stdout": "",
+      "stderr": "\n Error [QNT404]: Name 'missing' not found\n\n  at <fixture>/M.qnt:1:18\n  1: module M { val a=missing val b=alsoMissing }\n                      ^^^^^^^\n\n\n Error [QNT404]: Name 'alsoMissing' not found\n\n  at <fixture>/M.qnt:1:32\n  1: module M { val a=missing val b=alsoMissing }\n                                    ^^^^^^^^^^^\n\nerror: parsing failed\n",
+      "stage": {
+        "stage": "parsing",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 5,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "def",
+                "name": "a",
+                "qualifier": "val",
+                "expr": {
+                  "id": 1,
+                  "kind": "name",
+                  "name": "missing"
+                }
+              },
+              {
+                "id": 4,
+                "kind": "def",
+                "name": "b",
+                "qualifier": "val",
+                "expr": {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "alsoMissing"
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 2,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "name",
+              "name": "missing"
+            },
+            "depth": 0
+          },
+          "4": {
+            "id": 4,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "name",
+              "name": "alsoMissing"
+            },
+            "depth": 0
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT404] Name 'missing' not found",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 17,
+                  "index": 17
+                },
+                "end": {
+                  "line": 0,
+                  "col": 23,
+                  "index": 23
+                }
+              }
+            ]
+          },
+          {
+            "explanation": "[QNT404] Name 'alsoMissing' not found",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 31,
+                  "index": 31
+                },
+                "end": {
+                  "line": 0,
+                  "col": 41,
+                  "index": 41
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "recovered_expression",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { val a=+ val b=1 }"
+        }
+      ],
+      "directory": false,
+      "status": 1,
+      "summary": "parsing failed",
+      "stdout": "",
+      "stderr": "\n Error [QNT000]: extraneous input '+' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}\n\n  at <fixture>/M.qnt:1:18\n  1: module M { val a=+ val b=1 }\n                      ^\n\n\n Error [QNT000]: mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}\n\n  at <fixture>/M.qnt:1:28\n  1: module M { val a=+ val b=1 }\n                                ^\n\nerror: parsing failed\n",
+      "stage": {
+        "stage": "parsing",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 11,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 10,
+                "kind": "def",
+                "name": "a",
+                "qualifier": "val",
+                "expr": {
+                  "id": 9,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 4,
+                    "kind": "def",
+                    "name": "b",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 3,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  },
+                  "expr": {
+                    "id": 5,
+                    "kind": "let",
+                    "opdef": {
+                      "id": 6,
+                      "kind": "def",
+                      "qualifier": "val",
+                      "name": "__undefinedExprGenerated",
+                      "expr": {
+                        "id": 7,
+                        "kind": "bool",
+                        "value": true
+                      }
+                    },
+                    "expr": {
+                      "id": 8,
+                      "kind": "name",
+                      "name": "__undefinedExprGenerated"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "4": {
+            "id": 4,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "int",
+              "value": 1
+            },
+            "depth": 2
+          },
+          "6": {
+            "id": 6,
+            "kind": "def",
+            "qualifier": "val",
+            "name": "__undefinedExprGenerated",
+            "expr": {
+              "id": 7,
+              "kind": "bool",
+              "value": true
+            },
+            "depth": 3
+          },
+          "8": {
+            "id": 6,
+            "kind": "def",
+            "qualifier": "val",
+            "name": "__undefinedExprGenerated",
+            "expr": {
+              "id": 7,
+              "kind": "bool",
+              "value": true
+            },
+            "depth": 3
+          },
+          "10": {
+            "id": 10,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "let",
+              "opdef": {
+                "id": 4,
+                "kind": "def",
+                "name": "b",
+                "qualifier": "val",
+                "expr": {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                }
+              },
+              "expr": {
+                "id": 5,
+                "kind": "let",
+                "opdef": {
+                  "id": 6,
+                  "kind": "def",
+                  "qualifier": "val",
+                  "name": "__undefinedExprGenerated",
+                  "expr": {
+                    "id": 7,
+                    "kind": "bool",
+                    "value": true
+                  }
+                },
+                "expr": {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "__undefinedExprGenerated"
+                }
+              }
+            },
+            "depth": 0
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT000] extraneous input '+' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 17,
+                  "index": 17
+                },
+                "end": {
+                  "line": 0,
+                  "col": 17,
+                  "index": 17
+                }
+              }
+            ]
+          },
+          {
+            "explanation": "[QNT000] mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 27,
+                  "index": 27
+                },
+                "end": {
+                  "line": 0,
+                  "col": 27,
+                  "index": 27
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "aborted_variable",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { var x } module Other { val ok=1 }"
+        }
+      ],
+      "directory": false,
+      "status": 1,
+      "summary": "parsing failed",
+      "stdout": "",
+      "stderr": "\n Error [QNT000]: mismatched input '}' expecting {':', '::'}\n\n  at <fixture>/M.qnt:1:18\n  1: module M { var x } module Other { val ok=1 }\n                      ^\n\nerror: parsing failed\n",
+      "stage": {
+        "stage": "parsing",
+        "warnings": [],
+        "modules": [],
+        "table": {},
+        "errors": [
+          {
+            "explanation": "[QNT000] mismatched input '}' expecting {':', '::'}",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 17,
+                  "index": 17
+                },
+                "end": {
+                  "line": 0,
+                  "col": 17,
+                  "index": 17
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "unicode_type_error",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { val bad=\"😀\"+1 }"
+        }
+      ],
+      "directory": false,
+      "status": 1,
+      "summary": "typechecking failed",
+      "stdout": "",
+      "stderr": "\n Error [QNT000]: Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n\n\n  at <fixture>/M.qnt:1:20\n  1: module M { val bad=\"😀\"+1 }\n                        ^^^^^\n\nerror: typechecking failed\n",
+      "stage": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 5,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 4,
+                "kind": "def",
+                "name": "bad",
+                "qualifier": "val",
+                "expr": {
+                  "id": 3,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "str",
+                      "value": "😀"
+                    },
+                    {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "4": {
+            "id": 4,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "str",
+                  "value": "😀"
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "1": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "3": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          }
+        },
+        "effects": {
+          "1": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "3": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "4": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT000] Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 19,
+                  "index": 19
+                },
+                "end": {
+                  "line": 0,
+                  "col": 23,
+                  "index": 23
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "crlf_unicode_type_error",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M {\r\n  val emoji=\"😀\"\r\n  val bad=emoji+1\r\n}\r\n"
+        }
+      ],
+      "directory": false,
+      "status": 1,
+      "summary": "typechecking failed",
+      "stdout": "",
+      "stderr": "\n Error [QNT000]: Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n\n\n  at <fixture>/M.qnt:3:11\n  3:   val bad=emoji+1\r\n               ^^^^^^^\n\nerror: typechecking failed\n",
+      "stage": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 7,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 2,
+                "kind": "def",
+                "name": "emoji",
+                "qualifier": "val",
+                "expr": {
+                  "id": 1,
+                  "kind": "str",
+                  "value": "😀"
+                }
+              },
+              {
+                "id": 6,
+                "kind": "def",
+                "name": "bad",
+                "qualifier": "val",
+                "expr": {
+                  "id": 5,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "name",
+                      "name": "emoji"
+                    },
+                    {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 2,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "str",
+              "value": "😀"
+            },
+            "depth": 0
+          },
+          "3": {
+            "id": 2,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 1,
+              "kind": "str",
+              "value": "😀"
+            },
+            "depth": 0
+          },
+          "6": {
+            "id": 6,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 3,
+                  "kind": "name",
+                  "name": "emoji"
+                },
+                {
+                  "id": 4,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "1": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "3": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "4": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          }
+        },
+        "effects": {
+          "1": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "2": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          },
+          "3": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "4": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "5": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "6": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT000] Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 2,
+                  "col": 10,
+                  "index": 39
+                },
+                "end": {
+                  "line": 2,
+                  "col": 16,
+                  "index": 45
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "imported_type_error",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { import Lib.* from \"Lib\" val use=bad }"
+        },
+        {
+          "name": "Lib.qnt",
+          "source": "module Lib { val bad=\"😀\"+1 }"
+        }
+      ],
+      "directory": false,
+      "status": 1,
+      "summary": "typechecking failed",
+      "stdout": "",
+      "stderr": "\n Error [QNT000]: Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n\n\n  at <fixture>/Lib.qnt:1:22\n  1: module Lib { val bad=\"😀\"+1 }\n                          ^^^^^\n\nerror: typechecking failed\n",
+      "stage": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 9,
+            "name": "Lib",
+            "declarations": [
+              {
+                "id": 8,
+                "kind": "def",
+                "name": "bad",
+                "qualifier": "val",
+                "expr": {
+                  "id": 7,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 5,
+                      "kind": "str",
+                      "value": "😀"
+                    },
+                    {
+                      "id": 6,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 1,
+                "kind": "import",
+                "defName": "*",
+                "protoName": "Lib",
+                "fromSource": "Lib"
+              },
+              {
+                "id": 3,
+                "kind": "def",
+                "name": "use",
+                "qualifier": "val",
+                "expr": {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "bad"
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 8,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "😀"
+                },
+                {
+                  "id": 6,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0,
+            "importedFrom": {
+              "id": 1,
+              "kind": "import",
+              "defName": "*",
+              "protoName": "Lib",
+              "fromSource": "Lib"
+            },
+            "hidden": true
+          },
+          "3": {
+            "id": 3,
+            "kind": "def",
+            "name": "use",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "bad"
+            },
+            "depth": 0
+          },
+          "8": {
+            "id": 8,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 7,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "😀"
+                },
+                {
+                  "id": 6,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "6": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "7": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          }
+        },
+        "effects": {
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "3": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          },
+          "5": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "6": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "7": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "8": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT000] Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n",
+            "locs": [
+              {
+                "source": "<fixture>/Lib.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 21,
+                  "index": 21
+                },
+                "end": {
+                  "line": 0,
+                  "col": 25,
+                  "index": 25
+                }
+              }
+            ]
+          },
+          {
+            "explanation": "[QNT000] Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n",
+            "locs": [
+              {
+                "source": "<fixture>/Lib.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 21,
+                  "index": 21
+                },
+                "end": {
+                  "line": 0,
+                  "col": 25,
+                  "index": 25
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "imported_crlf_type_error",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M {\r\n import Lib.* from \"Lib\"\r\n val use=bad\r\n}\r\n"
+        },
+        {
+          "name": "Lib.qnt",
+          "source": "module Lib {\r\n val emoji=\"😀\"\r\n val bad=emoji+1\r\n}\r\n"
+        }
+      ],
+      "directory": false,
+      "status": 1,
+      "summary": "typechecking failed",
+      "stdout": "",
+      "stderr": "\n Error [QNT000]: Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n\n\n  at <fixture>/Lib.qnt:3:10\n  3:  val bad=emoji+1\n              ^^^^^^^\n\nerror: typechecking failed\n",
+      "stage": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 11,
+            "name": "Lib",
+            "declarations": [
+              {
+                "id": 6,
+                "kind": "def",
+                "name": "emoji",
+                "qualifier": "val",
+                "expr": {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "😀"
+                }
+              },
+              {
+                "id": 10,
+                "kind": "def",
+                "name": "bad",
+                "qualifier": "val",
+                "expr": {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "emoji"
+                    },
+                    {
+                      "id": 8,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 1,
+                "kind": "import",
+                "defName": "*",
+                "protoName": "Lib",
+                "fromSource": "Lib"
+              },
+              {
+                "id": 3,
+                "kind": "def",
+                "name": "use",
+                "qualifier": "val",
+                "expr": {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "bad"
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "2": {
+            "id": 10,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "emoji"
+                },
+                {
+                  "id": 8,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0,
+            "importedFrom": {
+              "id": 1,
+              "kind": "import",
+              "defName": "*",
+              "protoName": "Lib",
+              "fromSource": "Lib"
+            },
+            "hidden": true
+          },
+          "3": {
+            "id": 3,
+            "kind": "def",
+            "name": "use",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "name",
+              "name": "bad"
+            },
+            "depth": 0
+          },
+          "6": {
+            "id": 6,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "str",
+              "value": "😀"
+            },
+            "depth": 0
+          },
+          "7": {
+            "id": 6,
+            "kind": "def",
+            "name": "emoji",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "str",
+              "value": "😀"
+            },
+            "depth": 0
+          },
+          "10": {
+            "id": 10,
+            "kind": "def",
+            "name": "bad",
+            "qualifier": "val",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "emoji"
+                },
+                {
+                  "id": 8,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "6": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "7": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "str"
+            }
+          },
+          "8": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "9": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          }
+        },
+        "effects": {
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "3": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          },
+          "5": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "6": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          },
+          "7": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "8": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "9": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "10": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT000] Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n",
+            "locs": [
+              {
+                "source": "<fixture>/Lib.qnt",
+                "start": {
+                  "line": 2,
+                  "col": 9,
+                  "index": 37
+                },
+                "end": {
+                  "line": 2,
+                  "col": 15,
+                  "index": 43
+                }
+              }
+            ]
+          },
+          {
+            "explanation": "[QNT000] Couldn't unify int and str\nTrying to unify int and str\nTrying to unify (int, int) => int and (str, int) => _t0\n",
+            "locs": [
+              {
+                "source": "<fixture>/Lib.qnt",
+                "start": {
+                  "line": 2,
+                  "col": 9,
+                  "index": 37
+                },
+                "end": {
+                  "line": 2,
+                  "col": 15,
+                  "index": 43
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "missing_import",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { import Lib.* from \"notFound\" }"
+        }
+      ],
+      "directory": false,
+      "status": 1,
+      "summary": "parsing failed",
+      "stdout": "",
+      "stderr": "\n Error [QNT013]: import ... from 'notFound': could not load\n\n  at <fixture>/M.qnt:1:12\n  1: module M { import Lib.* from \"notFound\" }\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\n Error [QNT405]: Module 'Lib' not found\n\n  at <fixture>/M.qnt:1:12\n  1: module M { import Lib.* from \"notFound\" }\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\nerror: parsing failed\n",
+      "stage": {
+        "stage": "parsing",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 2,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 1,
+                "kind": "import",
+                "defName": "*",
+                "protoName": "Lib",
+                "fromSource": "notFound"
+              }
+            ]
+          }
+        ],
+        "table": {},
+        "errors": [
+          {
+            "explanation": "[QNT013] import ... from 'notFound': could not load",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 11,
+                  "index": 11
+                },
+                "end": {
+                  "line": 0,
+                  "col": 38,
+                  "index": 38
+                }
+              }
+            ]
+          },
+          {
+            "explanation": "[QNT405] Module 'Lib' not found",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 11,
+                  "index": 11
+                },
+                "end": {
+                  "line": 0,
+                  "col": 38,
+                  "index": 38
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "multiple_type_errors",
+      "files": [
+        {
+          "name": "M.qnt",
+          "source": "module M { val a=true+1 val b=Set(1).contains(false) }"
+        }
+      ],
+      "directory": false,
+      "status": 1,
+      "summary": "typechecking failed",
+      "stdout": "",
+      "stderr": "\n Error [QNT000]: Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (bool, int) => _t0\n\n\n  at <fixture>/M.qnt:1:18\n  1: module M { val a=true+1 val b=Set(1).contains(false) }\n                      ^^^^^^\n\nerror: typechecking failed\n",
+      "stage": {
+        "stage": "typechecking",
+        "warnings": [],
+        "modules": [
+          {
+            "id": 10,
+            "name": "M",
+            "declarations": [
+              {
+                "id": 4,
+                "kind": "def",
+                "name": "a",
+                "qualifier": "val",
+                "expr": {
+                  "id": 3,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 1,
+                      "kind": "bool",
+                      "value": true
+                    },
+                    {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 9,
+                "kind": "def",
+                "name": "b",
+                "qualifier": "val",
+                "expr": {
+                  "id": 8,
+                  "kind": "app",
+                  "opcode": "contains",
+                  "args": [
+                    {
+                      "id": 6,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": [
+                        {
+                          "id": 5,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    },
+                    {
+                      "id": 7,
+                      "kind": "bool",
+                      "value": false
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "table": {
+          "4": {
+            "id": 4,
+            "kind": "def",
+            "name": "a",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 1,
+                  "kind": "bool",
+                  "value": true
+                },
+                {
+                  "id": 2,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            },
+            "depth": 0
+          },
+          "9": {
+            "id": 9,
+            "kind": "def",
+            "name": "b",
+            "qualifier": "val",
+            "expr": {
+              "id": 8,
+              "kind": "app",
+              "opcode": "contains",
+              "args": [
+                {
+                  "id": 6,
+                  "kind": "app",
+                  "opcode": "Set",
+                  "args": [
+                    {
+                      "id": 5,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "id": 7,
+                  "kind": "bool",
+                  "value": false
+                }
+              ]
+            },
+            "depth": 0
+          }
+        },
+        "types": {
+          "1": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "bool"
+            }
+          },
+          "2": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "3": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "var",
+              "name": "_t0"
+            }
+          },
+          "5": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "int"
+            }
+          },
+          "7": {
+            "typeVariables": [],
+            "rowVariables": [],
+            "type": {
+              "kind": "bool"
+            }
+          }
+        },
+        "effects": {
+          "1": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "2": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "3": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "4": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          },
+          "5": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "6": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "7": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "8": {
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            },
+            "effectVariables": [],
+            "entityVariables": []
+          },
+          "9": {
+            "effectVariables": [],
+            "entityVariables": [],
+            "effect": {
+              "kind": "concrete",
+              "components": []
+            }
+          }
+        },
+        "errors": [
+          {
+            "explanation": "[QNT000] Couldn't unify int and bool\nTrying to unify int and bool\nTrying to unify (int, int) => int and (bool, int) => _t0\n",
+            "locs": [
+              {
+                "source": "<fixture>/M.qnt",
+                "start": {
+                  "line": 0,
+                  "col": 17,
+                  "index": 17
+                },
+                "end": {
+                  "line": 0,
+                  "col": 22,
+                  "index": 22
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

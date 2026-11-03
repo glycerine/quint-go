@@ -1226,3 +1226,10 @@ export remain independent. Backend tests preserve raw malformed-pass payloads,
 context cancellation identity, query deadlines and temporary cleanup. Temporal
 reserved-name tests prevent demonstrated false-safe loop/tableau collisions;
 ordinary safety, namespaced controls and source diagnostics are checked.
+
+`cli_frontend_stages.json` saves 22 actual run/test full-stage JSON and terminal
+failures from `cli_frontend_stage_fixtures.cjs`: missing files, multiple name/type
+errors, recoverable syntax, Unicode and main/import CRLF differences. Tests retain
+all JSON diagnostics, precise compatibility coordinates and partial modules while
+terminal reporting deduplicates equal messages. The raw-main resolver reads once;
+imported files preserve the existing LF-normalized resolver contract.

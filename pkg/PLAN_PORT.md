@@ -3607,3 +3607,11 @@ word "retained" in the commit message.
   test models improve CPU28%, bytes24% and allocations35%; tiny cases have noisy
   CPU regression13% with slightly lower allocation. Focused race1.522s and a full
   isolated suite pass. Overall one-second timing remains unmet.
+
+- 2026-11-02: Matched run/test frontend failures with22 actual full-JSON and
+  terminal snapshots. Loading/parsing/analysis stages preserve every diagnostic
+  and useful partial module; JSON keeps duplicates while terminal output removes
+  equal reports. Main input retains raw CRLF while imports retain existing LF
+  normalization, matching upstream without a second read. New source/stage helper
+  APIs have100% coverage; focused source0.028s, broader CLI0.224s, race1.181s
+  and vet pass. Core/verify adoption of the same raw-main wrapper is separate.

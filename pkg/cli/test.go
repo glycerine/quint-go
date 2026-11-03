@@ -301,8 +301,8 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 		fields.Set("errors", messages)
 		if options.out == "" {
 			duplicate := false
-			for _, message := range messages {
-				rendered := quint.RenderErrorMessage(message, code)
+			for _, message := range cliUniqueErrorMessages(messages) {
+				rendered := quint.RenderErrorMessage(message, code, quint.DiagnosticRenderOptions{InclusiveEnd: true})
 				fmt.Fprintln(stderr, rendered)
 				duplicate = duplicate || rendered == "error: "+summary
 			}
@@ -356,11 +356,16 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	if err != nil {
 		return fail(err)
 	}
+	if _, err = os.Stat(abs); errors.Is(err, os.ErrNotExist) {
+		return failMessages("file "+options.input+" does not exist", []quint.ErrorMessage{})
+	} else if err != nil {
+		return failMessages("file "+options.input+" could not be opened due to "+err.Error(), []quint.ErrorMessage{})
+	}
 	sourceCode := map[string]string{}
-	resolver := quint.NewFileSourceResolver(sourceCode, nil)
+	resolver := cliMainSourceResolver{FileSourceResolver: quint.NewFileSourceResolver(sourceCode, nil), main: abs}
 	path := resolver.LookupPath(filepath.Dir(abs), filepath.Base(abs))
-	front, err := quint.ParseProject(resolver, path)
-	sources = front.Sources
+	front, err := quint.ParseProjectRecovering(resolver, path)
+	sources = coreCompatibilitySources(front)
 	paths := make([]string, 0, len(sourceCode))
 	for path := range sourceCode {
 		paths = append(paths, path)
@@ -369,12 +374,16 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	for _, path := range paths {
 		code.Set(path, sourceCode[path])
 	}
+	var loadError *quint.SourceLoadError
+	if errors.As(err, &loadError) && loadError.Path == abs {
+		return failMessages("file "+options.input+" could not be opened due to "+loadError.Error(), []quint.ErrorMessage{})
+	}
 	fields = coreStageFields("parsing", front, nil)
 	if err != nil {
 		return fail(err)
 	}
 	if len(front.Diagnostics) > 0 {
-		return failMessages("parsing failed", coreResolveDiagnostics(front.Sources, front.Diagnostics))
+		return failMessages("parsing failed", coreResolveDiagnostics(sources, front.Diagnostics))
 	}
 	analysis, err := quint.AnalyzeModules(front.Modules, front.Table)
 	fields = coreStageFields("typechecking", front, &analysis)
@@ -382,7 +391,7 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 		return fail(err)
 	}
 	if len(analysis.Diagnostics) > 0 {
-		return failMessages("typechecking failed", coreResolveDiagnostics(front.Sources, analysis.Diagnostics))
+		return failMessages("typechecking failed", coreResolveDiagnostics(sources, analysis.Diagnostics))
 	}
 	main := quint.GuessMainModule(options.main, coreDefaultModule(front, abs), options.input)
 	if _, err = quint.SelectMainModule(front.Modules, main, "", options.input); err != nil {

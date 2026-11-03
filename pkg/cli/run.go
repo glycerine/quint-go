@@ -191,21 +191,32 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 	fields.Set("errors", []quint.ErrorMessage{})
 	sources := quint.SourceMap{}
 	sourceCode := insdict.NewDict[string, string]()
+	failMessages := func(summary string, messages []quint.ErrorMessage) int {
+		fields.Set("errors", messages)
+		if o.out != "" {
+			if writeErr := runWriteStage(o.out, fields); writeErr != nil {
+				fmt.Fprintln(stderr, "error:", writeErr)
+			}
+		} else {
+			duplicate := false
+			for _, message := range cliUniqueErrorMessages(messages) {
+				rendered := quint.RenderErrorMessage(message, sourceCode, quint.DiagnosticRenderOptions{InclusiveEnd: true})
+				fmt.Fprintln(stderr, rendered)
+				duplicate = duplicate || rendered == "error: "+summary
+			}
+			if summary != "" && !duplicate {
+				fmt.Fprintln(stderr, "error:", summary)
+			}
+		}
+		return 1
+	}
 	fail := func(err error) int {
 		var diagnostic quint.Diagnostic
 		message := quint.ErrorMessage{Explanation: err.Error(), Locations: []quint.Location{}}
 		if errors.As(err, &diagnostic) {
 			message = quint.ResolveDiagnostic(sources, diagnostic)
 		}
-		fields.Set("errors", []quint.ErrorMessage{message})
-		if o.out != "" {
-			if writeErr := runWriteStage(o.out, fields); writeErr != nil {
-				fmt.Fprintln(stderr, "error:", writeErr)
-			}
-		} else {
-			fmt.Fprintln(stderr, quint.RenderErrorMessage(message, sourceCode, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
-		}
-		return 1
+		return failMessages("", []quint.ErrorMessage{message})
 	}
 	if err := ctx.Err(); err != nil {
 		return fail(err)
@@ -226,9 +237,14 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 	if err != nil {
 		return fail(err)
 	}
+	if _, err = os.Stat(path); errors.Is(err, os.ErrNotExist) {
+		return failMessages("file "+o.input+" does not exist", []quint.ErrorMessage{})
+	} else if err != nil {
+		return failMessages("file "+o.input+" could not be opened due to "+err.Error(), []quint.ErrorMessage{})
+	}
 	loadedSources := map[string]string{}
-	resolver := quint.NewFileSourceResolver(loadedSources, nil)
-	frontend, err := quint.ParseProject(resolver, quint.SourceLookupPath{NormalizedPath: path, SourceName: path})
+	resolver := cliMainSourceResolver{FileSourceResolver: quint.NewFileSourceResolver(loadedSources, nil), main: path}
+	frontend, err := quint.ParseProjectRecovering(resolver, quint.SourceLookupPath{NormalizedPath: path, SourceName: path})
 	paths := make([]string, 0, len(loadedSources))
 	for name := range loadedSources {
 		paths = append(paths, name)
@@ -238,12 +254,16 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 		sourceCode.Set(name, loadedSources[name])
 	}
 	sources = coreCompatibilitySources(frontend)
+	var loadError *quint.SourceLoadError
+	if errors.As(err, &loadError) && loadError.Path == path {
+		return failMessages("file "+o.input+" could not be opened due to "+loadError.Error(), []quint.ErrorMessage{})
+	}
 	fields = coreStageFields("parsing", frontend, nil)
 	if err != nil {
 		return fail(err)
 	}
 	if len(frontend.Diagnostics) > 0 {
-		return fail(frontend.Diagnostics[0])
+		return failMessages("parsing failed", coreResolveDiagnostics(sources, frontend.Diagnostics))
 	}
 	if err = ctx.Err(); err != nil {
 		return fail(err)
@@ -271,7 +291,7 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 		return fail(err)
 	}
 	if len(analysis.Diagnostics) > 0 {
-		return fail(analysis.Diagnostics[0])
+		return failMessages("typechecking failed", coreResolveDiagnostics(sources, analysis.Diagnostics))
 	}
 	fields.Set("stage", "running")
 	if err = runValidateAction(frontend, o.main, "init", o.init); err != nil {
