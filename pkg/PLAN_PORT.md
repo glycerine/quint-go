@@ -3598,3 +3598,12 @@ word "retained" in the commit message.
   actual upstream stage snapshots pass; default verify0.252s, optional actual
   backend corpus1.415s, resource race1.256s and native suites pass. Shai loop/source
   omissions, hard preemption and dependency-version reporting remain open.
+
+- 2026-11-02: Reused completed source analysis when adding private test selectors,
+  avoiding full repeated type/effect inference. Updated lookup/dependency ordering
+  still includes selectors; cloned type/mode tables protect the published CLI
+  stage. A generic-alias/polymorphic/independent-instance regression checks exact
+  source IR, lookup and analysis ownership before/after execution. Matched larger
+  test models improve CPU28%, bytes24% and allocations35%; tiny cases have noisy
+  CPU regression13% with slightly lower allocation. Focused race1.522s and a full
+  isolated suite pass. Overall one-second timing remains unmet.

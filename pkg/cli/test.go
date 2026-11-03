@@ -187,11 +187,12 @@ func testSelections(front quint.FrontendResult, main string, match func(string) 
 // module, while preserving discovery order, namespaces, dependencies, and
 // independent constant-overridden instances. They are private execution entries
 // and never appear in the output stage.
-func testPrepareEvaluator(ctx context.Context, front quint.FrontendResult, main string, selections []testSelection, rng *quint.RNG) (*quint.ModuleEvaluator, error) {
+func testPrepareEvaluator(ctx context.Context, front quint.FrontendResult, previous quint.AnalysisResult, main string, selections []testSelection, rng *quint.RNG) (*quint.ModuleEvaluator, error) {
 	if err := ctx.Err(); err != nil {
 		return nil, err
 	}
-	working := append([]quint.Module{}, front.Modules...)
+	working := append([]quint.Module{}, previous.Modules...)
+	extra := make([]quint.Declaration, 0, len(selections))
 	for i, module := range working {
 		if module.Name != main {
 			continue
@@ -207,7 +208,9 @@ func testPrepareEvaluator(ctx context.Context, front quint.FrontendResult, main 
 			reference := quint.Expr{ID: front.IDs.Next(), Kind: "name", Name: selections[j].reference}
 			// The selector must not claim action metadata or add a synthetic
 			// action frame before the selected source definition is evaluated.
-			working[i].Declarations = append(working[i].Declarations, quint.Declaration{ID: id, Kind: "def", Qualifier: quint.Run, Name: name, Expr: &reference})
+			declaration := quint.Declaration{ID: id, Kind: "def", Qualifier: quint.Run, Name: name, Expr: &reference}
+			working[i].Declarations = append(working[i].Declarations, declaration)
+			extra = append(extra, declaration)
 		}
 	}
 	linked, err := quint.ResolveLinkedModules(working)
@@ -221,14 +224,16 @@ func testPrepareEvaluator(ctx context.Context, front quint.FrontendResult, main 
 	if len(diagnostics) > 0 {
 		return nil, diagnostics[0]
 	}
-	analysis, err := quint.AnalyzeModules(working, linked.Table)
+	// Resume the completed source analysis for private selectors only. Types and
+	// mode tables are live inference state, so keep the published stage separate.
+	analysis, err := quint.AnalyzeIncremental(quint.AnalysisOutput{Types: previous.Types.Clone(), Effects: previous.Effects, Modes: previous.Modes.Clone()}, linked.Table, extra)
 	if err != nil {
 		return nil, err
 	}
 	if len(analysis.Diagnostics) > 0 {
 		return nil, analysis.Diagnostics[0]
 	}
-	flat, err := quint.FlattenModules(analysis.Modules, linked.Table, front.IDs, front.Sources, quint.AnalysisOutput{Types: analysis.Types, Effects: analysis.Effects, Modes: analysis.Modes})
+	flat, err := quint.FlattenModules(working, linked.Table, front.IDs, front.Sources, quint.AnalysisOutput{Types: analysis.Types, Effects: analysis.Effects, Modes: analysis.Modes})
 	if err != nil {
 		return nil, err
 	}
@@ -398,7 +403,7 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	if len(selections) == 0 {
 		return fail(errors.New(quint.NoTestsMatchedMessage(options.match)))
 	}
-	evaluator, err := testPrepareEvaluator(ctx, front, main, selections, quint.NewRNG(seed))
+	evaluator, err := testPrepareEvaluator(ctx, front, analysis, main, selections, quint.NewRNG(seed))
 	if err != nil {
 		return fail(err)
 	}
