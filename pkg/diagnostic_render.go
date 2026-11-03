@@ -20,6 +20,9 @@ type DiagnosticRenderOptions struct {
 	LineOffset      *int
 	HideLineNumbers bool
 	InclusiveEnd    bool
+	// Decorate optionally styles call-stack text; the source excerpt remains
+	// plain. It must preserve visible width. Nil leaves the entire message plain.
+	Decorate func(string, ...string) string `json:"-"`
 }
 
 // RenderDiagnostic resolves a diagnostic and formats source excerpts and call
@@ -52,6 +55,10 @@ func RenderErrorMessage(message ErrorMessage, sourceCode *insdict.Dict[string, s
 	var option DiagnosticRenderOptions
 	if len(options) > 0 {
 		option = options[0]
+	}
+	decorate := option.Decorate
+	if decorate == nil {
+		decorate = func(text string, _ ...string) string { return text }
 	}
 	offset := 1
 	if option.LineOffset != nil {
@@ -124,7 +131,9 @@ func RenderErrorMessage(message ErrorMessage, sourceCode *insdict.Dict[string, s
 			}
 		}
 		expression := diagnosticRenderUTF16Slice(line, loc.Start.Col, last)
-		fmt.Fprintf(&output, "    at %s (%s)\n", expression, location(loc))
+		output.WriteString(decorate("    at ", "gray"))
+		output.WriteString(decorate(expression, "gray", "bold"))
+		output.WriteString(decorate(" ("+location(loc)+")\n", "gray"))
 	}
 	return output.String()
 }

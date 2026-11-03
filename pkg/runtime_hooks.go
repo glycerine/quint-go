@@ -5,10 +5,13 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/glycerine/quint-go/pkg/terminal"
 )
 
 // RuntimeHooks selects the output destination and layout for q::debug calls.
-// The default destination is stdout; a nonpositive width uses 80 columns.
+// The default destination is stdout; a nonpositive width uses the context's
+// terminal width, which falls back to 80 columns.
 // Hooks belong to one evaluation context and do not change global output.
 type RuntimeHooks struct {
 	DebugWriter io.Writer
@@ -51,9 +54,9 @@ func EvalDebugBuiltin(ctx context.Context, args []RuntimeValue, states ...*Runti
 	}
 	hooks, _ := ctx.Value(runtimeHooksKey{}).(RuntimeHooks)
 	if hooks.DebugWidth <= 0 {
-		hooks.DebugWidth = 80
+		hooks.DebugWidth = terminal.PolicyFromContext(ctx).Width()
 	}
-	formatted, err := FormatValueExpression(expression, hooks.DebugWidth, 0)
+	formatted, err := FormatValueExpressionContext(ctx, expression, hooks.DebugWidth, 0)
 	if err != nil {
 		return RuntimeValue{}, err
 	}

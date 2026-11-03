@@ -341,12 +341,16 @@ func (s *REPLSession) Reload(ctx context.Context) error {
 // RenderError reports a session diagnostic against the correct input or loaded
 // source. It never reads files, writes output, or changes the session.
 func (s *REPLSession) RenderError(err error) string {
+	return s.renderError(err, DiagnosticRenderOptions{HideLineNumbers: true})
+}
+
+func (s *REPLSession) renderError(err error, options DiagnosticRenderOptions) string {
 	if err == nil {
 		return ""
 	}
 	var diagnostic Diagnostic
 	if errors.As(err, &diagnostic) {
-		return RenderDiagnostic(diagnostic, s.sources, s.code, DiagnosticRenderOptions{HideLineNumbers: true})
+		return RenderDiagnostic(diagnostic, s.sources, s.code, options)
 	}
 	var syntax *SyntaxErrors
 	if errors.As(err, &syntax) {
@@ -357,7 +361,7 @@ func (s *REPLSession) RenderError(err error) string {
 				code = "QNT000"
 			}
 			location := Location{Source: syntax.Source, Start: issue.Position, End: &issue.Position}
-			parts = append(parts, RenderErrorMessage(ErrorMessage{Explanation: "[" + code + "] " + issue.Message, Locations: []Location{location}}, s.code, DiagnosticRenderOptions{HideLineNumbers: true}))
+			parts = append(parts, RenderErrorMessage(ErrorMessage{Explanation: "[" + code + "] " + issue.Message, Locations: []Location{location}}, s.code, options))
 		}
 		return strings.Join(parts, "\n")
 	}

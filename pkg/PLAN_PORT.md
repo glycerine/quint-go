@@ -614,7 +614,8 @@ including failed actions that must not leak partially updated state.
   - [x] Verbose captured execution frames, including loaded/replayed expressions.
   - [x] State value diffs with owned old/new snapshots and checked compact values;
     45 exact upstream streams preserve internal then/shift and replay ordering.
-  - [ ] Interrupt event handling and explicit caller-owned blocked-input contract.
+  - [x] Interrupt events and explicit borrowed-reader ownership, plus Unix process
+    signal/poll hosting that preserves the REPL session on Ctrl-C.
 - [ ] P8.5 Add cancellation and bounded resource controls. Where concurrent
   simulation is exposed, isolate RNG/state/cache ownership and define result
   ordering and reproducibility across worker counts.
@@ -764,7 +765,9 @@ Build these items alongside the phases that supply their command behavior.
   - [x] Width-aware plain value formatting, recursive concrete value diffs with
     collapse/styling options, state prefixes and captured execution-frame trees.
   - [x] Capture runtime frames/listeners and render REPL state diffs.
-  - [ ] Terminal width/colors and remaining command report formatting.
+  - [x] Live terminal width, cached color policy, explicit context overrides and
+    styled values/diagnostics/frames/statuses with248 actual snapshots.
+  - [ ] Remaining command report formatting audit.
 - [x] P10.6 Port documentation extraction and `docs`; embed builtin definitions
   and necessary runtime assets so the binary works outside the checkout.
   - [x] Reusable documentation extraction/Markdown rendering and embedded
@@ -3655,3 +3658,13 @@ word "retained" in the commit message.
   identities, owned mutation and concurrent readers. Focused0.010s/race1.371s pass.
   Representative command benchmark improves4.3% CPU/3.2% bytes;64-binding
   microbenchmarks improve70–75% CPU/92% bytes. Aggregate timing remains unmet.
+
+- 2026-11-02: Added terminal policy and REPL event/process hosting. Width remains
+  live, color is cached per bound invocation, explicit overrides support embedders
+  and redirected JSON stays clean. Actual248 style/policy snapshots and12 REPL
+  interrupt streams pass. Unix polling uses an owned wake pipe without closing
+  borrowed stdin or leaking a blocked reader; real PTY Ctrl-C preserves declarations
+  and state. Generic synchronous readers retain caller ownership; non-Unix
+  terminal keepalive remains unsupported. Full isolated tests/vet pass (core1.056s,
+  CLI0.418s, terminal0.006s); focused races and cross-builds pass. Aggregate suite
+  still exceeds the one-second target.

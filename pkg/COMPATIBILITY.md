@@ -133,8 +133,9 @@ options; commented-out `--timeout` is not an upstream implemented option.
 REPL `.clear`, `.exit`/`.quit`, `.help`, `.load`, `.reload`, `.state`, `.history`,
 `.verbosity`, `.seed`, `.save`, saved-expression replay and multiline input are
 implemented, including checked state value diffs and source action frames.
-Interactive blocked-read cancellation belongs to the
-input owner. Parser/evaluator errors leave the session available.
+RunREPLEvents supports cancellable input events; the Unix process host wakes
+blocked file input and keeps the session on Ctrl-C. Generic synchronous readers
+remain caller-owned; non-Unix terminal keepalive is unsupported. Parser/evaluator errors leave the session available.
 
 Default run/test/REPL seeds use independent entropy in `[0, 2^53-1)` and can be
 replayed with the reported seed. Explicit REPL construction preserves the initial

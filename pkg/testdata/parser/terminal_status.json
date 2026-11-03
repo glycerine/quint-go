@@ -1,0 +1,154 @@
+[
+  {
+    "name": "run-ok",
+    "kind": "run",
+    "level": 0,
+    "input": {
+      "status": "ok",
+      "elapsedMs": 17,
+      "samples": 1
+    },
+    "output": "[ok] No violation found (17ms at 59 traces/second).\n"
+  },
+  {
+    "name": "run-violation",
+    "kind": "run",
+    "level": 0,
+    "input": {
+      "status": "violation",
+      "elapsedMs": 17,
+      "samples": 1
+    },
+    "output": "[violation] Found an issue (17ms at 59 traces/second).\n"
+  },
+  {
+    "name": "run-error",
+    "kind": "run",
+    "level": 0,
+    "input": {
+      "status": "error",
+      "elapsedMs": 17,
+      "samples": 1
+    },
+    "output": "[error] Runtime error (17ms at 59 traces/second).\n"
+  },
+  {
+    "name": "test-mixed-results",
+    "kind": "test",
+    "level": 0,
+    "input": {
+      "results": [
+        {
+          "name": "passingTest",
+          "status": "passed",
+          "nsamples": 1
+        },
+        {
+          "name": "failingTest",
+          "status": "failed",
+          "nsamples": 1
+        },
+        {
+          "name": "ignoredTest",
+          "status": "ignored",
+          "nsamples": 1
+        }
+      ],
+      "elapsedMs": 17,
+      "verbosity": 1
+    },
+    "output": "    ok passingTest passed 1 test(s)\n    1) failingTest failed after 1 test(s)\n\n  1 passing (17ms)\n  1 failed\n  1 ignored\n"
+  },
+  {
+    "name": "run-witnesses",
+    "kind": "witnesses",
+    "level": 0,
+    "input": {
+      "witnesses": [
+        "x >= 0"
+      ],
+      "witnessingTraces": [
+        1
+      ],
+      "samples": 1,
+      "verbosity": 1
+    },
+    "output": "Witnesses:\nx >= 0 was witnessed in 1 trace(s) out of 1 explored (100.00%)\n"
+  },
+  {
+    "name": "run-ok",
+    "kind": "run",
+    "level": 1,
+    "input": {
+      "status": "ok",
+      "elapsedMs": 17,
+      "samples": 1
+    },
+    "output": "\u001b[32m[ok]\u001b[39m No violation found \u001b[90m(17ms at 59 traces/second).\u001b[39m\n"
+  },
+  {
+    "name": "run-violation",
+    "kind": "run",
+    "level": 1,
+    "input": {
+      "status": "violation",
+      "elapsedMs": 17,
+      "samples": 1
+    },
+    "output": "\u001b[31m[violation]\u001b[39m Found an issue \u001b[90m(17ms at 59 traces/second).\u001b[39m\n"
+  },
+  {
+    "name": "run-error",
+    "kind": "run",
+    "level": 1,
+    "input": {
+      "status": "error",
+      "elapsedMs": 17,
+      "samples": 1
+    },
+    "output": "\u001b[31m[error]\u001b[39m Runtime error \u001b[90m(17ms at 59 traces/second).\u001b[39m\n"
+  },
+  {
+    "name": "test-mixed-results",
+    "kind": "test",
+    "level": 1,
+    "input": {
+      "results": [
+        {
+          "name": "passingTest",
+          "status": "passed",
+          "nsamples": 1
+        },
+        {
+          "name": "failingTest",
+          "status": "failed",
+          "nsamples": 1
+        },
+        {
+          "name": "ignoredTest",
+          "status": "ignored",
+          "nsamples": 1
+        }
+      ],
+      "elapsedMs": 17,
+      "verbosity": 1
+    },
+    "output": "    \u001b[32mok\u001b[39m passingTest passed 1 test(s)\n    \u001b[31m1\u001b[39m) failingTest failed after 1 test(s)\n\n\u001b[32m  1 passing\u001b[39m\u001b[90m (17ms)\u001b[39m\n\u001b[31m  1 failed\u001b[39m\n\u001b[90m  1 ignored\u001b[39m\n"
+  },
+  {
+    "name": "run-witnesses",
+    "kind": "witnesses",
+    "level": 1,
+    "input": {
+      "witnesses": [
+        "x >= 0"
+      ],
+      "witnessingTraces": [
+        1
+      ],
+      "samples": 1,
+      "verbosity": 1
+    },
+    "output": "\u001b[32mWitnesses:\u001b[39m\n\u001b[33mx >= 0\u001b[39m was witnessed in \u001b[32m1\u001b[39m trace(s) out of 1 explored \u001b[90m(100.00%)\u001b[39m\n"
+  }
+]

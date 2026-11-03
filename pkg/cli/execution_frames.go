@@ -73,11 +73,12 @@ func executionPrintFrames(ctx context.Context, out io.Writer, frames []quint.Exe
 }
 
 func executionPrintFrame(ctx context.Context, out io.Writer, index int, frame quint.ExecutionFrame, objects *quint.RuntimeObjectHashState) error {
-	text, err := quint.FormatExecutionFrameContext(ctx, frame, 80, objects)
+	text, err := quint.FormatExecutionFrameContext(ctx, frame, terminalWidth(ctx), objects)
 	if err != nil {
 		return err
 	}
-	return executionWrite(ctx, out, fmt.Sprintf("[Frame %d]\n%s\n", index, text))
+	header := terminalStyle(ctx, fmt.Sprintf("Frame %d", index), "bold")
+	return executionWrite(ctx, out, fmt.Sprintf("[%s]\n%s\n", header, text))
 }
 
 func executionPrintTrace(ctx context.Context, out io.Writer, states []quint.Expr, frames []quint.ExecutionFrame, hide []string, objects *quint.RuntimeObjectHashState) error {
@@ -103,7 +104,7 @@ func executionPrintTrace(ctx context.Context, out io.Writer, states []quint.Expr
 			}
 			state.Args = filtered
 		}
-		text, err := quint.FormatTraceStateExpression(index, state, 80)
+		text, err := quint.FormatTraceStateExpressionContext(ctx, index, state, terminalWidth(ctx))
 		if err != nil {
 			return err
 		}
@@ -118,7 +119,7 @@ func executionPrintCounterExample(ctx context.Context, out io.Writer, verbosity 
 	if verbosity < 2 {
 		return ctx.Err()
 	}
-	if err := executionWrite(ctx, out, "An example execution:\n\n"); err != nil {
+	if err := executionWrite(ctx, out, terminalStyle(ctx, "An example execution:\n", "gray")+"\n"); err != nil {
 		return err
 	}
 	if verbosity < 3 {
@@ -141,6 +142,11 @@ func executionPrintTestErrors(ctx context.Context, out io.Writer, verbosity int,
 	if verbosity < 2 {
 		return ctx.Err()
 	}
+	var option quint.DiagnosticRenderOptions
+	if len(options) > 0 {
+		option = options[0]
+	}
+	option = terminalDiagnosticOptions(ctx, option)
 	if err := executionWrite(ctx, out, "\n"); err != nil {
 		return err
 	}
@@ -151,9 +157,9 @@ func executionPrintTestErrors(ctx context.Context, out io.Writer, verbosity int,
 			if err := executionWrite(ctx, out, fmt.Sprintf("  %d) %s:\n", number, failure.Name)); err != nil {
 				return err
 			}
-			for _, line := range strings.Split(quint.RenderErrorMessage(message, code, options...), "\n") {
+			for _, line := range strings.Split(quint.RenderErrorMessage(message, code, option), "\n") {
 				if strings.TrimSpace(line) != "" {
-					if err := executionWrite(ctx, out, "      "+line+"\n"); err != nil {
+					if err := executionWrite(ctx, out, terminalStyle(ctx, "      "+line, "red")+"\n"); err != nil {
 						return err
 					}
 				}
@@ -167,7 +173,7 @@ func executionPrintTestErrors(ctx context.Context, out io.Writer, verbosity int,
 			if repeat == "" {
 				repeat = fmt.Sprintf("Use --seed=0x%s --match=%s to repeat.", failure.Seed.Big().Text(16), failure.Name)
 			}
-			if err := executionWrite(ctx, out, "    "+repeat+"\n"); err != nil {
+			if err := executionWrite(ctx, out, terminalStyle(ctx, "    "+repeat, "gray")+"\n"); err != nil {
 				return err
 			}
 		}
@@ -176,7 +182,7 @@ func executionPrintTestErrors(ctx context.Context, out io.Writer, verbosity int,
 		return err
 	}
 	if verbosity < 3 {
-		return executionWrite(ctx, out, "\n  Use --verbosity=3 to show executions.\n  Further debug with: quint test --verbosity=3 "+input+"\n")
+		return executionWrite(ctx, out, terminalStyle(ctx, "\n  Use --verbosity=3 to show executions.", "gray")+"\n"+terminalStyle(ctx, "  Further debug with: quint test --verbosity=3 "+input, "gray")+"\n")
 	}
 	return nil
 }

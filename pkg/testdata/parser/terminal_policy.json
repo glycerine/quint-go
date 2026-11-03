@@ -1,0 +1,1194 @@
+{
+  "versions": {
+    "chalk": "4.1.2",
+    "supportsColor": "7.2.0",
+    "hasFlag": "4.0.0"
+  },
+  "policy": [
+    {
+      "name": "redirected_default",
+      "env": {},
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "tty_without_term",
+      "env": {},
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "tty_xterm",
+      "env": {
+        "TERM": "xterm"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "redirected_stdout_tty_stderr",
+      "env": {
+        "TERM": "xterm"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": true,
+      "stdoutLevel": 0,
+      "stderrLevel": 1
+    },
+    {
+      "name": "tty_stdout_redirected_stderr",
+      "env": {
+        "TERM": "xterm"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": false,
+      "stdoutLevel": 1,
+      "stderrLevel": 0
+    },
+    {
+      "name": "no_color_ignored",
+      "env": {
+        "TERM": "xterm",
+        "NO_COLOR": "1"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "force_0",
+      "env": {
+        "FORCE_COLOR": "0"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "force_false",
+      "env": {
+        "FORCE_COLOR": "false"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "force_true",
+      "env": {
+        "FORCE_COLOR": "true"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "force_empty",
+      "env": {
+        "FORCE_COLOR": ""
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "force_1",
+      "env": {
+        "FORCE_COLOR": "1"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "force_2",
+      "env": {
+        "FORCE_COLOR": "2"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 2,
+      "stderrLevel": 2
+    },
+    {
+      "name": "force_3",
+      "env": {
+        "FORCE_COLOR": "3"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 3,
+      "stderrLevel": 3
+    },
+    {
+      "name": "force_9",
+      "env": {
+        "FORCE_COLOR": "9"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 3,
+      "stderrLevel": 3
+    },
+    {
+      "name": "force_NaN",
+      "env": {
+        "FORCE_COLOR": "NaN"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "force_false_overrides_truecolor",
+      "env": {
+        "FORCE_COLOR": "false",
+        "COLORTERM": "truecolor"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "force_two_term_basic",
+      "env": {
+        "FORCE_COLOR": "2",
+        "TERM": "xterm"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "force_overrides_no_color_flag",
+      "env": {
+        "FORCE_COLOR": "1"
+      },
+      "args": [
+        "--no-color"
+      ],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "force_false_overrides_color_flag",
+      "env": {
+        "FORCE_COLOR": "false"
+      },
+      "args": [
+        "--color"
+      ],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "color_flag_redirected",
+      "env": {},
+      "args": [
+        "--color"
+      ],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "no_color_flag_wins_full_color",
+      "env": {},
+      "args": [
+        "--color=full",
+        "--no-color"
+      ],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "color_256_flag_redirected",
+      "env": {},
+      "args": [
+        "--color=256"
+      ],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 2,
+      "stderrLevel": 2
+    },
+    {
+      "name": "color_truecolor_flag_redirected",
+      "env": {},
+      "args": [
+        "--color=truecolor"
+      ],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 3,
+      "stderrLevel": 3
+    },
+    {
+      "name": "color_flag_after_terminator_ignored",
+      "env": {},
+      "args": [
+        "--",
+        "--color"
+      ],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "term_dumb",
+      "env": {
+        "TERM": "dumb"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "term_dumb_force",
+      "env": {
+        "TERM": "dumb",
+        "FORCE_COLOR": "2"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 2,
+      "stderrLevel": 2
+    },
+    {
+      "name": "term_256",
+      "env": {
+        "TERM": "xterm-256color"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 2,
+      "stderrLevel": 2
+    },
+    {
+      "name": "colorterm_truecolor",
+      "env": {
+        "COLORTERM": "truecolor"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 3,
+      "stderrLevel": 3
+    },
+    {
+      "name": "colorterm_presence",
+      "env": {
+        "COLORTERM": ""
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "ci_unknown_suppresses_term",
+      "env": {
+        "CI": "true",
+        "TERM": "xterm"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "ci_false_still_present",
+      "env": {
+        "CI": "false",
+        "TERM": "xterm"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "ci_github_basic",
+      "env": {
+        "CI": "true",
+        "GITHUB_ACTIONS": "false",
+        "COLORTERM": "truecolor"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "ci_codeship_basic",
+      "env": {
+        "CI": "",
+        "CI_NAME": "codeship"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "ci_unknown_preserves_force",
+      "env": {
+        "CI": "true",
+        "FORCE_COLOR": "2"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": false,
+      "stderrTTY": false,
+      "stdoutLevel": 2,
+      "stderrLevel": 2
+    },
+    {
+      "name": "teamcity_old",
+      "env": {
+        "TEAMCITY_VERSION": "9.0.5",
+        "TERM": "xterm"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 0,
+      "stderrLevel": 0
+    },
+    {
+      "name": "teamcity_new",
+      "env": {
+        "TEAMCITY_VERSION": "9.1.0"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "iterm_old",
+      "env": {
+        "TERM_PROGRAM": "iTerm.app",
+        "TERM_PROGRAM_VERSION": "2.9.0"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 2,
+      "stderrLevel": 2
+    },
+    {
+      "name": "iterm_new",
+      "env": {
+        "TERM_PROGRAM": "iTerm.app",
+        "TERM_PROGRAM_VERSION": "3.0.0"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 3,
+      "stderrLevel": 3
+    },
+    {
+      "name": "apple_terminal",
+      "env": {
+        "TERM_PROGRAM": "Apple_Terminal"
+      },
+      "args": [],
+      "platform": "linux",
+      "osRelease": "6.1.0",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 2,
+      "stderrLevel": 2
+    },
+    {
+      "name": "windows_legacy",
+      "env": {},
+      "args": [],
+      "platform": "win32",
+      "osRelease": "6.3.9600",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 1,
+      "stderrLevel": 1
+    },
+    {
+      "name": "windows_256",
+      "env": {},
+      "args": [],
+      "platform": "win32",
+      "osRelease": "10.0.10586",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 2,
+      "stderrLevel": 2
+    },
+    {
+      "name": "windows_truecolor",
+      "env": {},
+      "args": [],
+      "platform": "win32",
+      "osRelease": "10.0.14931",
+      "stdoutTTY": true,
+      "stderrTTY": true,
+      "stdoutLevel": 3,
+      "stderrLevel": 3
+    }
+  ],
+  "styles": [
+    {
+      "name": "red",
+      "level": 0,
+      "style": [
+        "red"
+      ],
+      "text": "message",
+      "output": "message"
+    },
+    {
+      "name": "gray",
+      "level": 0,
+      "style": [
+        "gray"
+      ],
+      "text": "message",
+      "output": "message"
+    },
+    {
+      "name": "bold",
+      "level": 0,
+      "style": [
+        "bold"
+      ],
+      "text": "message",
+      "output": "message"
+    },
+    {
+      "name": "yellow",
+      "level": 0,
+      "style": [
+        "yellow"
+      ],
+      "text": "message",
+      "output": "message"
+    },
+    {
+      "name": "green",
+      "level": 0,
+      "style": [
+        "green"
+      ],
+      "text": "message",
+      "output": "message"
+    },
+    {
+      "name": "blue",
+      "level": 0,
+      "style": [
+        "blue"
+      ],
+      "text": "message",
+      "output": "message"
+    },
+    {
+      "name": "magenta",
+      "level": 0,
+      "style": [
+        "magenta"
+      ],
+      "text": "message",
+      "output": "message"
+    },
+    {
+      "name": "bold_yellow",
+      "level": 0,
+      "style": [
+        "bold",
+        "yellow"
+      ],
+      "text": "[warning]",
+      "output": "[warning]"
+    },
+    {
+      "name": "gray_bold",
+      "level": 0,
+      "style": [
+        "gray",
+        "bold"
+      ],
+      "text": "called expression",
+      "output": "called expression"
+    },
+    {
+      "name": "red_nested_blue",
+      "level": 0,
+      "style": [
+        "red"
+      ],
+      "text": "before inside after",
+      "output": "before inside after"
+    },
+    {
+      "name": "red_nested_same_color",
+      "level": 0,
+      "style": [
+        "red"
+      ],
+      "text": "before inside after",
+      "output": "before inside after"
+    },
+    {
+      "name": "bold_nested_gray",
+      "level": 0,
+      "style": [
+        "bold"
+      ],
+      "text": "before inside after",
+      "output": "before inside after"
+    },
+    {
+      "name": "red_existing_ansi",
+      "level": 0,
+      "style": [
+        "red"
+      ],
+      "text": "before \u001b[32minside\u001b[39m after",
+      "output": "before \u001b[32minside\u001b[39m after"
+    },
+    {
+      "name": "bold_yellow_existing_reset",
+      "level": 0,
+      "style": [
+        "bold",
+        "yellow"
+      ],
+      "text": "before\u001b[22m middle\u001b[39m after",
+      "output": "before\u001b[22m middle\u001b[39m after"
+    },
+    {
+      "name": "red_multiline_lf",
+      "level": 0,
+      "style": [
+        "red"
+      ],
+      "text": "\nfirst\nsecond\n",
+      "output": "\nfirst\nsecond\n"
+    },
+    {
+      "name": "gray_bold_multiline_crlf",
+      "level": 0,
+      "style": [
+        "gray",
+        "bold"
+      ],
+      "text": "first\r\nsecond\r\n",
+      "output": "first\r\nsecond\r\n"
+    },
+    {
+      "name": "red_empty",
+      "level": 0,
+      "style": [
+        "red"
+      ],
+      "text": "",
+      "output": ""
+    },
+    {
+      "name": "red",
+      "level": 1,
+      "style": [
+        "red"
+      ],
+      "text": "message",
+      "output": "\u001b[31mmessage\u001b[39m"
+    },
+    {
+      "name": "gray",
+      "level": 1,
+      "style": [
+        "gray"
+      ],
+      "text": "message",
+      "output": "\u001b[90mmessage\u001b[39m"
+    },
+    {
+      "name": "bold",
+      "level": 1,
+      "style": [
+        "bold"
+      ],
+      "text": "message",
+      "output": "\u001b[1mmessage\u001b[22m"
+    },
+    {
+      "name": "yellow",
+      "level": 1,
+      "style": [
+        "yellow"
+      ],
+      "text": "message",
+      "output": "\u001b[33mmessage\u001b[39m"
+    },
+    {
+      "name": "green",
+      "level": 1,
+      "style": [
+        "green"
+      ],
+      "text": "message",
+      "output": "\u001b[32mmessage\u001b[39m"
+    },
+    {
+      "name": "blue",
+      "level": 1,
+      "style": [
+        "blue"
+      ],
+      "text": "message",
+      "output": "\u001b[34mmessage\u001b[39m"
+    },
+    {
+      "name": "magenta",
+      "level": 1,
+      "style": [
+        "magenta"
+      ],
+      "text": "message",
+      "output": "\u001b[35mmessage\u001b[39m"
+    },
+    {
+      "name": "bold_yellow",
+      "level": 1,
+      "style": [
+        "bold",
+        "yellow"
+      ],
+      "text": "[warning]",
+      "output": "\u001b[1m\u001b[33m[warning]\u001b[39m\u001b[22m"
+    },
+    {
+      "name": "gray_bold",
+      "level": 1,
+      "style": [
+        "gray",
+        "bold"
+      ],
+      "text": "called expression",
+      "output": "\u001b[90m\u001b[1mcalled expression\u001b[22m\u001b[39m"
+    },
+    {
+      "name": "red_nested_blue",
+      "level": 1,
+      "style": [
+        "red"
+      ],
+      "text": "before \u001b[34minside\u001b[39m after",
+      "output": "\u001b[31mbefore \u001b[34minside\u001b[39m\u001b[31m after\u001b[39m"
+    },
+    {
+      "name": "red_nested_same_color",
+      "level": 1,
+      "style": [
+        "red"
+      ],
+      "text": "before \u001b[31minside\u001b[39m after",
+      "output": "\u001b[31mbefore \u001b[31minside\u001b[39m\u001b[31m after\u001b[39m"
+    },
+    {
+      "name": "bold_nested_gray",
+      "level": 1,
+      "style": [
+        "bold"
+      ],
+      "text": "before \u001b[90minside\u001b[39m after",
+      "output": "\u001b[1mbefore \u001b[90minside\u001b[39m after\u001b[22m"
+    },
+    {
+      "name": "red_existing_ansi",
+      "level": 1,
+      "style": [
+        "red"
+      ],
+      "text": "before \u001b[32minside\u001b[39m after",
+      "output": "\u001b[31mbefore \u001b[32minside\u001b[39m\u001b[31m after\u001b[39m"
+    },
+    {
+      "name": "bold_yellow_existing_reset",
+      "level": 1,
+      "style": [
+        "bold",
+        "yellow"
+      ],
+      "text": "before\u001b[22m middle\u001b[39m after",
+      "output": "\u001b[1m\u001b[33mbefore\u001b[22m\u001b[1m middle\u001b[39m\u001b[33m after\u001b[39m\u001b[22m"
+    },
+    {
+      "name": "red_multiline_lf",
+      "level": 1,
+      "style": [
+        "red"
+      ],
+      "text": "\nfirst\nsecond\n",
+      "output": "\u001b[31m\u001b[39m\n\u001b[31mfirst\u001b[39m\n\u001b[31msecond\u001b[39m\n\u001b[31m\u001b[39m"
+    },
+    {
+      "name": "gray_bold_multiline_crlf",
+      "level": 1,
+      "style": [
+        "gray",
+        "bold"
+      ],
+      "text": "first\r\nsecond\r\n",
+      "output": "\u001b[90m\u001b[1mfirst\u001b[22m\u001b[39m\r\n\u001b[90m\u001b[1msecond\u001b[22m\u001b[39m\r\n\u001b[90m\u001b[1m\u001b[22m\u001b[39m"
+    },
+    {
+      "name": "red_empty",
+      "level": 1,
+      "style": [
+        "red"
+      ],
+      "text": "",
+      "output": ""
+    },
+    {
+      "name": "red",
+      "level": 2,
+      "style": [
+        "red"
+      ],
+      "text": "message",
+      "output": "\u001b[31mmessage\u001b[39m"
+    },
+    {
+      "name": "gray",
+      "level": 2,
+      "style": [
+        "gray"
+      ],
+      "text": "message",
+      "output": "\u001b[90mmessage\u001b[39m"
+    },
+    {
+      "name": "bold",
+      "level": 2,
+      "style": [
+        "bold"
+      ],
+      "text": "message",
+      "output": "\u001b[1mmessage\u001b[22m"
+    },
+    {
+      "name": "yellow",
+      "level": 2,
+      "style": [
+        "yellow"
+      ],
+      "text": "message",
+      "output": "\u001b[33mmessage\u001b[39m"
+    },
+    {
+      "name": "green",
+      "level": 2,
+      "style": [
+        "green"
+      ],
+      "text": "message",
+      "output": "\u001b[32mmessage\u001b[39m"
+    },
+    {
+      "name": "blue",
+      "level": 2,
+      "style": [
+        "blue"
+      ],
+      "text": "message",
+      "output": "\u001b[34mmessage\u001b[39m"
+    },
+    {
+      "name": "magenta",
+      "level": 2,
+      "style": [
+        "magenta"
+      ],
+      "text": "message",
+      "output": "\u001b[35mmessage\u001b[39m"
+    },
+    {
+      "name": "bold_yellow",
+      "level": 2,
+      "style": [
+        "bold",
+        "yellow"
+      ],
+      "text": "[warning]",
+      "output": "\u001b[1m\u001b[33m[warning]\u001b[39m\u001b[22m"
+    },
+    {
+      "name": "gray_bold",
+      "level": 2,
+      "style": [
+        "gray",
+        "bold"
+      ],
+      "text": "called expression",
+      "output": "\u001b[90m\u001b[1mcalled expression\u001b[22m\u001b[39m"
+    },
+    {
+      "name": "red_nested_blue",
+      "level": 2,
+      "style": [
+        "red"
+      ],
+      "text": "before \u001b[34minside\u001b[39m after",
+      "output": "\u001b[31mbefore \u001b[34minside\u001b[39m\u001b[31m after\u001b[39m"
+    },
+    {
+      "name": "red_nested_same_color",
+      "level": 2,
+      "style": [
+        "red"
+      ],
+      "text": "before \u001b[31minside\u001b[39m after",
+      "output": "\u001b[31mbefore \u001b[31minside\u001b[39m\u001b[31m after\u001b[39m"
+    },
+    {
+      "name": "bold_nested_gray",
+      "level": 2,
+      "style": [
+        "bold"
+      ],
+      "text": "before \u001b[90minside\u001b[39m after",
+      "output": "\u001b[1mbefore \u001b[90minside\u001b[39m after\u001b[22m"
+    },
+    {
+      "name": "red_existing_ansi",
+      "level": 2,
+      "style": [
+        "red"
+      ],
+      "text": "before \u001b[32minside\u001b[39m after",
+      "output": "\u001b[31mbefore \u001b[32minside\u001b[39m\u001b[31m after\u001b[39m"
+    },
+    {
+      "name": "bold_yellow_existing_reset",
+      "level": 2,
+      "style": [
+        "bold",
+        "yellow"
+      ],
+      "text": "before\u001b[22m middle\u001b[39m after",
+      "output": "\u001b[1m\u001b[33mbefore\u001b[22m\u001b[1m middle\u001b[39m\u001b[33m after\u001b[39m\u001b[22m"
+    },
+    {
+      "name": "red_multiline_lf",
+      "level": 2,
+      "style": [
+        "red"
+      ],
+      "text": "\nfirst\nsecond\n",
+      "output": "\u001b[31m\u001b[39m\n\u001b[31mfirst\u001b[39m\n\u001b[31msecond\u001b[39m\n\u001b[31m\u001b[39m"
+    },
+    {
+      "name": "gray_bold_multiline_crlf",
+      "level": 2,
+      "style": [
+        "gray",
+        "bold"
+      ],
+      "text": "first\r\nsecond\r\n",
+      "output": "\u001b[90m\u001b[1mfirst\u001b[22m\u001b[39m\r\n\u001b[90m\u001b[1msecond\u001b[22m\u001b[39m\r\n\u001b[90m\u001b[1m\u001b[22m\u001b[39m"
+    },
+    {
+      "name": "red_empty",
+      "level": 2,
+      "style": [
+        "red"
+      ],
+      "text": "",
+      "output": ""
+    },
+    {
+      "name": "red",
+      "level": 3,
+      "style": [
+        "red"
+      ],
+      "text": "message",
+      "output": "\u001b[31mmessage\u001b[39m"
+    },
+    {
+      "name": "gray",
+      "level": 3,
+      "style": [
+        "gray"
+      ],
+      "text": "message",
+      "output": "\u001b[90mmessage\u001b[39m"
+    },
+    {
+      "name": "bold",
+      "level": 3,
+      "style": [
+        "bold"
+      ],
+      "text": "message",
+      "output": "\u001b[1mmessage\u001b[22m"
+    },
+    {
+      "name": "yellow",
+      "level": 3,
+      "style": [
+        "yellow"
+      ],
+      "text": "message",
+      "output": "\u001b[33mmessage\u001b[39m"
+    },
+    {
+      "name": "green",
+      "level": 3,
+      "style": [
+        "green"
+      ],
+      "text": "message",
+      "output": "\u001b[32mmessage\u001b[39m"
+    },
+    {
+      "name": "blue",
+      "level": 3,
+      "style": [
+        "blue"
+      ],
+      "text": "message",
+      "output": "\u001b[34mmessage\u001b[39m"
+    },
+    {
+      "name": "magenta",
+      "level": 3,
+      "style": [
+        "magenta"
+      ],
+      "text": "message",
+      "output": "\u001b[35mmessage\u001b[39m"
+    },
+    {
+      "name": "bold_yellow",
+      "level": 3,
+      "style": [
+        "bold",
+        "yellow"
+      ],
+      "text": "[warning]",
+      "output": "\u001b[1m\u001b[33m[warning]\u001b[39m\u001b[22m"
+    },
+    {
+      "name": "gray_bold",
+      "level": 3,
+      "style": [
+        "gray",
+        "bold"
+      ],
+      "text": "called expression",
+      "output": "\u001b[90m\u001b[1mcalled expression\u001b[22m\u001b[39m"
+    },
+    {
+      "name": "red_nested_blue",
+      "level": 3,
+      "style": [
+        "red"
+      ],
+      "text": "before \u001b[34minside\u001b[39m after",
+      "output": "\u001b[31mbefore \u001b[34minside\u001b[39m\u001b[31m after\u001b[39m"
+    },
+    {
+      "name": "red_nested_same_color",
+      "level": 3,
+      "style": [
+        "red"
+      ],
+      "text": "before \u001b[31minside\u001b[39m after",
+      "output": "\u001b[31mbefore \u001b[31minside\u001b[39m\u001b[31m after\u001b[39m"
+    },
+    {
+      "name": "bold_nested_gray",
+      "level": 3,
+      "style": [
+        "bold"
+      ],
+      "text": "before \u001b[90minside\u001b[39m after",
+      "output": "\u001b[1mbefore \u001b[90minside\u001b[39m after\u001b[22m"
+    },
+    {
+      "name": "red_existing_ansi",
+      "level": 3,
+      "style": [
+        "red"
+      ],
+      "text": "before \u001b[32minside\u001b[39m after",
+      "output": "\u001b[31mbefore \u001b[32minside\u001b[39m\u001b[31m after\u001b[39m"
+    },
+    {
+      "name": "bold_yellow_existing_reset",
+      "level": 3,
+      "style": [
+        "bold",
+        "yellow"
+      ],
+      "text": "before\u001b[22m middle\u001b[39m after",
+      "output": "\u001b[1m\u001b[33mbefore\u001b[22m\u001b[1m middle\u001b[39m\u001b[33m after\u001b[39m\u001b[22m"
+    },
+    {
+      "name": "red_multiline_lf",
+      "level": 3,
+      "style": [
+        "red"
+      ],
+      "text": "\nfirst\nsecond\n",
+      "output": "\u001b[31m\u001b[39m\n\u001b[31mfirst\u001b[39m\n\u001b[31msecond\u001b[39m\n\u001b[31m\u001b[39m"
+    },
+    {
+      "name": "gray_bold_multiline_crlf",
+      "level": 3,
+      "style": [
+        "gray",
+        "bold"
+      ],
+      "text": "first\r\nsecond\r\n",
+      "output": "\u001b[90m\u001b[1mfirst\u001b[22m\u001b[39m\r\n\u001b[90m\u001b[1msecond\u001b[22m\u001b[39m\r\n\u001b[90m\u001b[1m\u001b[22m\u001b[39m"
+    },
+    {
+      "name": "red_empty",
+      "level": 3,
+      "style": [
+        "red"
+      ],
+      "text": "",
+      "output": ""
+    }
+  ]
+}

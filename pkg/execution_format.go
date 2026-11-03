@@ -21,17 +21,25 @@ type ExecutionFrame struct {
 // break after its prefix when the complete state does not fit the remaining
 // width. State expressions must be records. Width counts UTF-16 units.
 func FormatTraceStateExpression(index int, expression Expr, width int) (string, error) {
+	return formatTraceStateExpression(index, expression, width, nil)
+}
+
+func formatTraceStateExpression(index int, expression Expr, width int, decorate func(string, ...string) string) (string, error) {
 	if index < 0 || width < 0 {
 		return "", fmt.Errorf("trace formatting requires a nonnegative index and width")
 	}
 	if expression.Kind != "app" || expression.Opcode != "Rec" || len(expression.Args)%2 != 0 {
 		return "", fmt.Errorf("trace formatting requires a record state")
 	}
-	value, err := valueExpressionDoc(expression)
+	value, err := valueExpressionDocStyled(expression, decorate)
 	if err != nil {
 		return "", err
 	}
-	doc := vdConcat(vdGroup(vdText(fmt.Sprintf("[State %d]", index)), vdLine()), value)
+	header := vdText(fmt.Sprintf("State %d", index))
+	if decorate != nil {
+		header.text = decorate(header.text, "bold")
+	}
+	doc := vdConcat(vdGroup(vdText("["), header, vdText("]"), vdLine()), value)
 	return formatValueDoc(doc, width, 0), nil
 }
 
@@ -39,7 +47,7 @@ func FormatTraceStateExpression(index int, expression Expr, width int) (string, 
 // branch glyphs and value layout. The returned text ends with a newline. Runtime
 // values are serialized for display; no evaluator state is modified.
 func FormatExecutionFrame(frame ExecutionFrame, width int) (string, error) {
-	return formatExecutionFrame(frame, width, &RuntimeObjectHashState{}, SerializeRuntimeValue, func() error { return nil })
+	return formatExecutionFrame(frame, width, &RuntimeObjectHashState{}, SerializeRuntimeValue, func() error { return nil }, nil)
 }
 
 // FormatExecutionFrameContext also formats compact runtime domains using the
@@ -57,10 +65,10 @@ func FormatExecutionFrameContext(ctx context.Context, frame ExecutionFrame, widt
 	serialize := func(value RuntimeValue, state *RuntimeObjectHashState) (Expr, error) {
 		return SerializeRuntimeValueContext(ctx, value, state)
 	}
-	return formatExecutionFrame(frame, width, objects, serialize, ctx.Err)
+	return formatExecutionFrame(frame, width, objects, serialize, ctx.Err, terminalValueDecorator(ctx))
 }
 
-func formatExecutionFrame(frame ExecutionFrame, width int, objects *RuntimeObjectHashState, serialize func(RuntimeValue, *RuntimeObjectHashState) (Expr, error), checkContext func() error) (string, error) {
+func formatExecutionFrame(frame ExecutionFrame, width int, objects *RuntimeObjectHashState, serialize func(RuntimeValue, *RuntimeObjectHashState) (Expr, error), checkContext func() error, decorate func(string, ...string) string) (string, error) {
 	if width < 0 {
 		return "", fmt.Errorf("execution formatting requires a nonnegative width")
 	}
@@ -76,7 +84,7 @@ func formatExecutionFrame(frame ExecutionFrame, width int, objects *RuntimeObjec
 			if err != nil {
 				return err
 			}
-			args[i], err = valueExpressionDoc(expression)
+			args[i], err = valueExpressionDocStyled(expression, decorate)
 			if err != nil {
 				return err
 			}
@@ -87,7 +95,7 @@ func formatExecutionFrame(frame ExecutionFrame, width int, objects *RuntimeObjec
 			if err != nil {
 				return err
 			}
-			result, err = valueExpressionDoc(expression)
+			result, err = valueExpressionDocStyled(expression, decorate)
 			if err != nil {
 				return err
 			}

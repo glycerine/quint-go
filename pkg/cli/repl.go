@@ -1,12 +1,10 @@
 package cli
 
 import (
-	"bufio"
 	"context"
 	"errors"
 	"fmt"
 	"io"
-	"os"
 	"regexp"
 	"strings"
 
@@ -38,17 +36,15 @@ func commandREPL(ctx context.Context, args []string, stdout, stderr io.Writer) i
 		}
 		return 0
 	}
-	return RunREPL(ctx, os.Stdin, stdout, stderr, options)
+	return runREPLCommandInput(ctx, stdout, stderr, options)
 }
 
 var replVerbosity = regexp.MustCompile(`^\.verbosity\s*=?\s*([0-5])$`)
 var replSeed = regexp.MustCompile(`^\.seed\s*=?\s*(0x[0-9a-f]+|[0-9]*)$`)
 
-// RunREPL evaluates a sequential input stream. An expression error is reported
-// and leaves the session available for the next input. Cancellation is checked
-// between reads and evaluations; callers control interruption of a blocked read.
-func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, options REPLLoopOptions) int {
-	if input == nil || stdout == nil || stderr == nil {
+// runREPL owns one sequential session; each host controls how input arrives.
+func runREPL(ctx context.Context, next replNextInput, stdout, stderr io.Writer, options REPLLoopOptions) int {
+	if next == nil || stdout == nil || stderr == nil {
 		return 2
 	}
 	if err := ctx.Err(); err != nil {
@@ -75,6 +71,7 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 		session.SetSeed(random.State())
 	}
 	var writeErr error
+	ctx = terminalBind(ctx, stdout)
 	stdout = &replOutputWriter{writer: stdout, err: &writeErr}
 	ctx = quint.WithRuntimeHooks(ctx, quint.RuntimeHooks{DebugWriter: stdout})
 	out := func(text string) {
@@ -84,11 +81,11 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 	}
 	report := func(err error) {
 		if writeErr == nil {
-			_, writeErr = fmt.Fprintln(stderr, session.RenderError(err))
+			_, writeErr = io.WriteString(stderr, terminalStyle(ctx, session.RenderErrorContext(ctx, err)+"\n", "red"))
 		}
 	}
 	if level > 0 {
-		out("Quint Go REPL\nType \".exit\" to exit, or \".help\" for more information\n")
+		out(terminalStyle(ctx, "Quint Go REPL", "gray") + terminalStyle(ctx, "\nType \".exit\" to exit, or \".help\" for more information\n", "gray"))
 	}
 	pending := ""
 	braces, parens, comments := 0, 0, 0
@@ -98,7 +95,7 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 		case "declaration":
 			out("\n")
 		case "value":
-			formatted, err := session.FormatValueContext(ctx, result.Value, 80)
+			formatted, err := session.FormatValueContext(ctx, result.Value, terminalWidth(ctx))
 			if err != nil {
 				return err
 			}
@@ -107,7 +104,7 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 				return err
 			}
 			if len(result.Missing) > 0 {
-				out("[warning] some variables are undefined: " + strings.Join(result.Missing, ", ") + "\n")
+				out(terminalStyle(ctx, "[warning] some variables are undefined: "+strings.Join(result.Missing, ", ")+"\n", "yellow"))
 			}
 		}
 		return writeErr
@@ -168,7 +165,7 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 				} else {
 					level = int(match[1][0] - '0')
 					if level > 0 {
-						out(".verbosity=" + match[1] + "\n")
+						out(terminalStyle(ctx, ".verbosity="+match[1]+"\n", "gray"))
 					}
 				}
 				return false
@@ -178,7 +175,7 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 				if match == nil {
 					report(errors.New(".seed requires an integer, or no argument"))
 				} else if match[1] == "" {
-					out(".seed=" + session.Seed().String() + "\n")
+					out(terminalStyle(ctx, ".seed="+session.Seed().String()+"\n", "gray"))
 				} else {
 					seed, err := quint.ParseSeed(match[1])
 					if err != nil {
@@ -186,7 +183,7 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 					} else {
 						session.SetSeed(seed)
 						if level > 0 {
-							out(".seed=" + seed.String() + "\n")
+							out(terminalStyle(ctx, ".seed="+seed.String()+"\n", "gray"))
 						}
 					}
 				}
@@ -197,7 +194,7 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 				pending = ""
 				return true
 			case ".help":
-				out(".clear\tClear definitions and expression history\n.exit\tExit the REPL\n.help\tPrint this help message\n.load <filename> [module]\tLoad a file and optionally import a module\n.reload\tReload the last loaded file\n.save <filename>\tSave definitions and expression history\n.state\tPrint current variable values\n.history\tPrint accepted input history\n.verbosity=[0-5]\tSet output level\n.seed[=<number>]\tSet or get the random seed\n\nFinish multiline input with an empty line.\n")
+				out(terminalREPLHelp(ctx, ".clear\tClear definitions and expression history\n.exit\tExit the REPL\n.help\tPrint this help message\n.load <filename> [module]\tLoad a file and optionally import a module\n.reload\tReload the last loaded file\n.save <filename>\tSave definitions and expression history\n.state\tPrint current variable values\n.history\tPrint accepted input history\n.verbosity=[0-5]\tSet output level\n.seed[=<number>]\tSet or get the random seed\n\nFinish multiline input with an empty line.\n"))
 			case ".clear":
 				session.Reset()
 				pending, braces, parens, comments, recycling = "", 0, 0, 0, false
@@ -223,7 +220,7 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 				if err != nil {
 					report(err)
 				} else {
-					formatted, err := session.FormatValueContext(ctx, state, 80)
+					formatted, err := session.FormatValueContext(ctx, state, terminalWidth(ctx))
 					if err != nil {
 						report(err)
 					} else {
@@ -277,8 +274,6 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 			return 0
 		}
 	}
-	scanner := bufio.NewScanner(input)
-	scanner.Buffer(make([]byte, 4096), 16*1024*1024)
 	for {
 		if writeErr != nil {
 			return 1
@@ -297,16 +292,22 @@ func RunREPL(ctx context.Context, input io.Reader, stdout, stderr io.Writer, opt
 		if writeErr != nil {
 			return 1
 		}
-		if !scanner.Scan() {
+		event, err := next(ctx)
+		if err != nil {
+			report(err)
+			return 1
+		}
+		if event.Kind == REPLInputEOF {
 			break
 		}
-		if consume(scanner.Text()) {
+		if event.Kind == REPLInputInterrupt {
+			pending, braces, parens, comments, recycling = "", 0, 0, 0, false
+			out(terminalStyle(ctx, " <cancelled>\n", "yellow"))
+			continue
+		}
+		if consume(event.Line) {
 			break
 		}
-	}
-	if err := scanner.Err(); err != nil {
-		report(err)
-		return 1
 	}
 	if err := ctx.Err(); err != nil {
 		report(err)

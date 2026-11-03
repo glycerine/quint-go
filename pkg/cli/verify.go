@@ -70,6 +70,7 @@ func verifyWithBackend(ctx context.Context, args []string, stdout, stderr io.Wri
 type verifyTLCBackend func(context.Context, quint.CompilationResult, gotlc.Options) (gotlc.Result, error)
 
 func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Writer, backend verifyBackend, tlcBackend verifyTLCBackend) int {
+	ctx = terminalBind(ctx, stdout)
 	options, help, err := verifyParseOptions(args, stdout, stderr)
 	if help {
 		return 0
@@ -87,7 +88,7 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 	}
 	fail := func(err error) int {
 		stage.Explanation = err.Error()
-		return verifyOutput(options, stage, stdout, stderr)
+		return verifyOutputContext(ctx, options, stage, stdout, stderr)
 	}
 	if err = ctx.Err(); err != nil {
 		return fail(err)
@@ -136,7 +137,7 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 	if len(frontend.Diagnostics) > 0 {
 		addDiagnostics(frontend.Diagnostics)
 		stage.Explanation = "parsing failed"
-		return verifyOutput(options, stage, stdout, stderr)
+		return verifyOutputContext(ctx, options, stage, stdout, stderr)
 	}
 	analysis, err := quint.AnalyzeModules(frontend.Modules, frontend.Table)
 	stage.Fields = coreStageFields("typechecking", frontend, &analysis)
@@ -146,7 +147,7 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 	if len(analysis.Diagnostics) > 0 {
 		addDiagnostics(analysis.Diagnostics)
 		stage.Explanation = "typechecking failed"
-		return verifyOutput(options, stage, stdout, stderr)
+		return verifyOutputContext(ctx, options, stage, stdout, stderr)
 	}
 	_, invariants := quint.CompilationInvariants(options.invariant, options.invariants)
 	reportInvariants := len(invariants) > 1 || options.inductive != "" && len(invariants) > 0
@@ -175,7 +176,7 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		}
 		addDiagnostics(compiled.AnalysisDiagnostics)
 		stage.Explanation = "compilation failed"
-		return verifyOutput(options, stage, stdout, stderr)
+		return verifyOutputContext(ctx, options, stage, stdout, stderr)
 	}
 	stage.Fields.Set("stage", "verifying")
 	stage.Fields.Set("modules", coreModules(compiled.UnflattenedModules))
@@ -201,7 +202,7 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 			if errors.As(checkErr, &preparation) {
 				report := apalache.ReportVerification(apalache.VerificationResult{}, checkErr, coreCompatibilitySources(frontend))
 				stage.Errors, stage.Explanation = report.Errors, report.Explanation
-				return verifyOutput(options, stage, stdout, stderr)
+				return verifyOutputContext(ctx, options, stage, stdout, stderr)
 			}
 			stage.BackendResult = true
 			return fail(checkErr)
@@ -239,7 +240,7 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 				verifyReportInvariants(ctx, compiled, invariants, &stage)
 			}
 		}
-		return verifyOutput(options, stage, stdout, stderr)
+		return verifyOutputContext(ctx, options, stage, stdout, stderr)
 	}
 	checkOptions := apalache.CheckOptions{MaxSteps: options.maxSteps, RandomTransitions: options.randomTransitions}
 	if len(invariants) == 0 {
@@ -272,7 +273,7 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 	if reportInvariants && err == nil && stage.Status == "violation" {
 		verifyReportInvariants(ctx, compiled, invariants, &stage)
 	}
-	return verifyOutput(options, stage, stdout, stderr)
+	return verifyOutputContext(ctx, options, stage, stdout, stderr)
 }
 
 func verifyParseOptions(args []string, stdout, stderr io.Writer) (verifyOptions, bool, error) {
@@ -424,6 +425,10 @@ func verifyInterspersedArgs(args []string) ([]string, error) {
 }
 
 func verifyOutput(options verifyOptions, stage verifyStage, stdout, stderr io.Writer) int {
+	return verifyOutputContext(context.Background(), options, stage, stdout, stderr)
+}
+
+func verifyOutputContext(ctx context.Context, options verifyOptions, stage verifyStage, stdout, stderr io.Writer) int {
 	code := 1
 	if stage.Status == "ok" {
 		code = 0
@@ -468,27 +473,27 @@ func verifyOutput(options verifyOptions, stage verifyStage, stdout, stderr io.Wr
 	if code == 0 {
 		var err error
 		if verifyUsesTLC(options) {
-			_, err = fmt.Fprintln(stdout, "[ok] "+stage.Explanation)
+			_, err = fmt.Fprintln(stdout, terminalStyle(ctx, "[ok]", "green")+" "+stage.Explanation)
 		} else if options.inductive != "" {
-			_, err = fmt.Fprintln(stdout, "[ok] Inductive invariant verified.")
+			_, err = fmt.Fprintln(stdout, terminalStyle(ctx, "[ok]", "green")+" Inductive invariant verified.")
 		} else {
-			_, err = fmt.Fprintf(stdout, "[ok] No violation found up to %d steps.\n", options.maxSteps)
+			_, err = fmt.Fprintf(stdout, "%s No violation found up to %d steps.\n", terminalStyle(ctx, "[ok]", "green"), options.maxSteps)
 		}
 		if err != nil {
 			fmt.Fprintln(stderr, "write verification result:", err)
 			return 1
 		}
 	} else {
-		fmt.Fprintf(stderr, "[%s] %s\n", stage.Status, stage.Explanation)
+		fmt.Fprintf(stderr, "%s %s\n", terminalStyle(ctx, "["+stage.Status+"]", "red"), stage.Explanation)
 		for _, diagnostic := range stage.Errors {
-			fmt.Fprintln(stderr, diagnostic.Explanation)
+			fmt.Fprintln(stderr, terminalStyle(ctx, diagnostic.Explanation, "red"))
 		}
 		for _, label := range stage.ViolatedInvariants {
-			fmt.Fprintln(stdout, "❌ "+label)
+			fmt.Fprintln(stdout, terminalStyle(ctx, "❌ "+label, "red"))
 		}
 	}
 	for _, warning := range stage.Warnings {
-		fmt.Fprintln(stderr, "[warning] "+warning)
+		fmt.Fprintln(stderr, terminalStyle(ctx, "[warning] "+warning, "yellow"))
 	}
 	return code
 }

@@ -1257,3 +1257,8 @@ five resumed ID sequences and 13 substitution strings. APIs document borrowed
 visitors versus owned outputs, precise source coordinates and safe errors for
 reference pretty-printer recursion bugs. An external-package example validates
 the parse-to-evaluate public path. General replacement transforms are separate.
+
+Terminal policy/status/value fixtures capture 248 actual upstream snapshots.
+`repl_interrupt.json` saves 12 line/interrupt histories; deterministic ownership,
+cancellation and file-descriptor tests accompany a real Unix PTY smoke. Generic
+readers remain caller-owned; non-Unix terminal keepalive is an explicit limit.

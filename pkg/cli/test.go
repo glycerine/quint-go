@@ -248,6 +248,7 @@ func testPrepareEvaluator(ctx context.Context, front quint.FrontendResult, previ
 }
 
 func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) int {
+	ctx = terminalBind(ctx, stdout)
 	if stdout == nil {
 		stdout = io.Discard
 	}
@@ -300,8 +301,8 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 		if options.out == "" {
 			duplicate := false
 			for _, message := range cliUniqueErrorMessages(messages) {
-				rendered := quint.RenderErrorMessage(message, code, quint.DiagnosticRenderOptions{InclusiveEnd: true})
-				fmt.Fprintln(stderr, rendered)
+				rendered := quint.RenderErrorMessage(message, code, terminalDiagnosticOptions(ctx, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
+				fmt.Fprintln(stderr, terminalStyle(ctx, rendered, "red"))
 				duplicate = duplicate || rendered == "error: "+summary
 			}
 			if summary != "" && !duplicate {
@@ -452,12 +453,12 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 		case "passed":
 			passed = append(passed, result.Name)
 			if verbosity > 0 {
-				fmt.Fprintf(stdout, "    ok %s passed %d test(s)\n", result.Name, result.Samples)
+				fmt.Fprintf(stdout, "    %s %s passed %d test(s)\n", terminalStyle(ctx, "ok", "green"), result.Name, result.Samples)
 			}
 		case "failed":
 			failed = append(failed, result.Name)
 			if verbosity > 0 {
-				fmt.Fprintf(stdout, "    %d) %s failed after %d test(s)\n", len(failed), result.Name, result.Samples)
+				fmt.Fprintf(stdout, "    %s) %s failed after %d test(s)\n", terminalStyle(ctx, fmt.Sprint(len(failed)), "red"), result.Name, result.Samples)
 			}
 		case "ignored":
 			ignored = append(ignored, result.Name)
@@ -478,13 +479,13 @@ func commandTest(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	if verbosity > 0 {
 		fmt.Fprintln(stdout)
 		if len(passed) > 0 {
-			fmt.Fprintf(stdout, "  %d passing (%dms)\n", len(passed), time.Since(start).Milliseconds())
+			fmt.Fprintf(stdout, "%s%s\n", terminalStyle(ctx, fmt.Sprintf("  %d passing", len(passed)), "green"), terminalStyle(ctx, fmt.Sprintf(" (%dms)", time.Since(start).Milliseconds()), "gray"))
 		}
 		if len(failed) > 0 {
-			fmt.Fprintf(stdout, "  %d failed\n", len(failed))
+			fmt.Fprintln(stdout, terminalStyle(ctx, fmt.Sprintf("  %d failed", len(failed)), "red"))
 		}
 		if len(ignored) > 0 {
-			fmt.Fprintf(stdout, "  %d ignored\n", len(ignored))
+			fmt.Fprintln(stdout, terminalStyle(ctx, fmt.Sprintf("  %d ignored", len(ignored)), "gray"))
 		}
 	}
 	if verbosity >= 2 && len(failed) > 0 {

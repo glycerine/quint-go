@@ -171,6 +171,7 @@ var errRunHelp = errors.New("run help")
 // commandRun connects source preparation, sequential Go simulation and ITF output.
 // All caller-visible output is written through the supplied streams or --out.
 func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) int {
+	ctx = terminalBind(ctx, stdout)
 	o, err := runParseOptions(args)
 	if errors.Is(err, errRunHelp) {
 		if _, err := fmt.Fprintln(stdout, "Usage: quint run <input> [--main M] [--init init] [--step step] [--invariant true] [--invariants names...] [--max-steps 20] [--max-samples N] [--n-traces 1] [--seed N] [--out file] [--out-itf template] [--verbosity 0..5] [--mbt] [--backend go]"); err != nil {
@@ -198,8 +199,8 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 		} else {
 			duplicate := false
 			for _, message := range cliUniqueErrorMessages(messages) {
-				rendered := quint.RenderErrorMessage(message, sourceCode, quint.DiagnosticRenderOptions{InclusiveEnd: true})
-				fmt.Fprintln(stderr, rendered)
+				rendered := quint.RenderErrorMessage(message, sourceCode, terminalDiagnosticOptions(ctx, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
+				fmt.Fprintln(stderr, terminalStyle(ctx, rendered, "red"))
 				duplicate = duplicate || rendered == "error: "+summary
 			}
 			if summary != "" && !duplicate {
@@ -397,7 +398,13 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 			} else if outcome.Status == "error" {
 				summary = "Runtime error"
 			}
-			fmt.Fprintf(stdout, "[%s] %s (%dms at %s traces/second).\n", outcome.Status, summary, elapsed, runThroughput(outcome.Samples, elapsed))
+			statusStyle := "green"
+			if outcome.Status != "ok" {
+				statusStyle = "red"
+			}
+			status := terminalStyle(ctx, "["+outcome.Status+"]", statusStyle)
+			timing := terminalStyle(ctx, fmt.Sprintf("(%dms at %s traces/second).", elapsed, runThroughput(outcome.Samples, elapsed)), "gray")
+			fmt.Fprintf(stdout, "%s %s %s\n", status, summary, timing)
 			if outcome.Status == "violation" && len(invariantNames) > 1 && len(serializedTraces) > 0 && len(serializedTraces[0]) > 0 {
 				states := serializedTraces[0]
 				violations, reportErr := runViolatedInvariants(ctx, modules, frontend.IDs, o.main, invariantNames, states[len(states)-1])
@@ -405,35 +412,37 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 					return fail(reportErr)
 				}
 				for _, index := range violations {
-					fmt.Fprintf(stdout, "  ❌ %s\n", individualInvariants[index])
+					fmt.Fprintln(stdout, terminalStyle(ctx, "  ❌ "+individualInvariants[index], "red"))
 				}
 			}
 			if o.verbosity >= 2 {
 				if outcome.Status == "ok" {
 					s := outcome.TraceStatistics
-					fmt.Fprintf(stdout, "Trace length statistics: max=%s, min=%s, average=%.2f\n", runNumber(s.MaxTraceLength), runNumber(s.MinTraceLength), s.AverageTraceLength)
-					fmt.Fprintln(stdout, "You may increase --max-samples and --max-steps.")
-					fmt.Fprintln(stdout, "Use --verbosity to produce more (or less) output.")
+					statistics := fmt.Sprintf("Trace length statistics: max=%s, min=%s, average=%.2f", runNumber(s.MaxTraceLength), runNumber(s.MinTraceLength), s.AverageTraceLength)
+					fmt.Fprintln(stdout, terminalStyle(ctx, statistics, "gray"))
+					fmt.Fprintln(stdout, terminalStyle(ctx, "You may increase --max-samples and --max-steps.", "gray"))
+					fmt.Fprintln(stdout, terminalStyle(ctx, "Use --verbosity to produce more (or less) output.", "gray"))
 				} else if outcome.Status == "violation" {
-					fmt.Fprintln(stdout, "Use --verbosity=3 to show executions.")
+					fmt.Fprintln(stdout, terminalStyle(ctx, "Use --verbosity=3 to show executions.", "gray"))
 				}
 			}
 			if outcome.Status != "error" && len(o.witnesses) > 0 {
-				fmt.Fprintln(stdout, "Witnesses:")
+				fmt.Fprintln(stdout, terminalStyle(ctx, "Witnesses:", "green"))
 				for i, witness := range o.witnesses {
 					percentage := math.NaN()
 					if outcome.Samples > 0 {
 						percentage = 100 * float64(outcome.WitnessingTraces[i]) / float64(outcome.Samples)
 					}
-					fmt.Fprintf(stdout, "%s was witnessed in %d trace(s) out of %d explored (%.2f%%)\n", witness, outcome.WitnessingTraces[i], outcome.Samples, percentage)
+					fmt.Fprintf(stdout, "%s was witnessed in %s trace(s) out of %d explored %s\n", terminalStyle(ctx, witness, "yellow"), terminalStyle(ctx, fmt.Sprint(outcome.WitnessingTraces[i]), "green"), outcome.Samples, terminalStyle(ctx, fmt.Sprintf("(%.2f%%)", percentage), "gray"))
 				}
 			}
 		}
 		for _, message := range runUniqueMessages(messages) {
-			fmt.Fprintln(stderr, quint.RenderErrorMessage(message, sourceCode, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
+			text := quint.RenderErrorMessage(message, sourceCode, terminalDiagnosticOptions(ctx, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
+			fmt.Fprintln(stderr, terminalStyle(ctx, text, "red"))
 		}
 		if o.verbosity >= 1 && o.outITF == "" && len(outcome.BestTraces) > 0 && outcome.BestTraces[0].Seed.Big().Sign() != 0 {
-			fmt.Fprintf(stdout, "Use --seed=0x%s --backend=go to reproduce.\n", outcome.BestTraces[0].Seed.Big().Text(16))
+			fmt.Fprintln(stdout, terminalStyle(ctx, "Use --seed=0x"+outcome.BestTraces[0].Seed.Big().Text(16)+" --backend=go to reproduce.", "gray"))
 		}
 		switch outcome.Status {
 		case "violation":

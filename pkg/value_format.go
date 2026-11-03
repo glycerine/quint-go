@@ -137,13 +137,24 @@ func formatValueDoc(doc valueDoc, width, firstColumn int) string {
 }
 
 func valueExpressionDoc(expression Expr) (valueDoc, error) {
+	return valueExpressionDocStyled(expression, nil)
+}
+
+func valueExpressionDocStyled(expression Expr, decorate func(string, ...string) string) (valueDoc, error) {
+	text := func(value, style string) valueDoc {
+		doc := vdText(value)
+		if decorate != nil {
+			doc.text = decorate(value, style)
+		}
+		return doc
+	}
 	switch expression.Kind {
 	case "bool":
-		return vdText(fmt.Sprint(expression.Bool)), nil
+		return text(fmt.Sprint(expression.Bool), "yellow"), nil
 	case "int":
-		return vdText(expression.Int.String()), nil
+		return text(expression.Int.String(), "yellow"), nil
 	case "str":
-		return vdText("\"" + expression.Str + "\""), nil
+		return text("\""+expression.Str+"\"", "green"), nil
 	case "lambda":
 		params := make([]valueDoc, len(expression.Params))
 		for i, param := range expression.Params {
@@ -152,7 +163,7 @@ func valueExpressionDoc(expression Expr) (valueDoc, error) {
 		return vdConcat(vdText("{"), vdGroup(vdText("("), vdJoin(vdConcat(vdText(","), vdLine()), params), vdText(")"), vdLine(), vdText("=>"), vdLine(), vdText("...")), vdText("}")), nil
 	case "app":
 	default:
-		return vdText("unsupported operator: " + expression.Kind), nil
+		return text("unsupported operator: "+expression.Kind, "red"), nil
 	}
 	args := make([]valueDoc, 0, len(expression.Args))
 	switch expression.Opcode {
@@ -165,11 +176,11 @@ func valueExpressionDoc(expression Expr) (valueDoc, error) {
 			if key.Kind != "str" {
 				continue
 			}
-			value, err := valueExpressionDoc(expression.Args[i+1])
+			value, err := valueExpressionDocStyled(expression.Args[i+1], decorate)
 			if err != nil {
 				return valueDoc{}, err
 			}
-			args = append(args, vdGroup(vdText(key.Str), vdText(":"), vdNest("  ", vdLine(), value)))
+			args = append(args, vdGroup(vdText(key.Str), text(":", "gray"), vdNest("  ", vdLine(), value)))
 		}
 		return vdNary("{", args, "}", vdLine()), nil
 	case "Map":
@@ -178,34 +189,34 @@ func valueExpressionDoc(expression Expr) (valueDoc, error) {
 				args = append(args, vdText("<expected-pair>"))
 				continue
 			}
-			key, err := valueExpressionDoc(pair.Args[0])
+			key, err := valueExpressionDocStyled(pair.Args[0], decorate)
 			if err != nil {
 				return valueDoc{}, err
 			}
-			value, err := valueExpressionDoc(pair.Args[1])
+			value, err := valueExpressionDocStyled(pair.Args[1], decorate)
 			if err != nil {
 				return valueDoc{}, err
 			}
-			args = append(args, vdGroup(key, vdText(" ->"), vdNest("  ", vdLine(), value)))
+			args = append(args, vdGroup(key, text(" ->", "gray"), vdNest("  ", vdLine(), value)))
 		}
-		return vdGroup(vdText("Map"), vdNary("(", args, ")", vdBreak())), nil
+		return vdGroup(text("Map", "green"), vdNary("(", args, ")", vdBreak())), nil
 	case "variant":
 		if len(expression.Args) != 2 || expression.Args[0].Kind != "str" {
 			return valueDoc{}, fmt.Errorf("malformed variant value")
 		}
-		label := vdText(expression.Args[0].Str)
+		label := text(expression.Args[0].Str, "green")
 		payload := expression.Args[1]
 		if payload.Kind == "app" && payload.Opcode == "Tup" && len(payload.Args) == 0 {
 			return vdGroup(label), nil
 		}
-		value, err := valueExpressionDoc(payload)
+		value, err := valueExpressionDocStyled(payload, decorate)
 		if err != nil {
 			return valueDoc{}, err
 		}
 		return vdGroup(label, vdText("("), value, vdText(")")), nil
 	case "Set", "List", "Tup":
 		for _, arg := range expression.Args {
-			value, err := valueExpressionDoc(arg)
+			value, err := valueExpressionDocStyled(arg, decorate)
 			if err != nil {
 				return valueDoc{}, err
 			}
@@ -217,7 +228,7 @@ func valueExpressionDoc(expression Expr) (valueDoc, error) {
 		if expression.Opcode == "Tup" {
 			return vdNary("(", args, ")", vdBreak()), nil
 		}
-		return vdGroup(vdText("Set"), vdNary("(", args, ")", vdBreak())), nil
+		return vdGroup(text("Set", "green"), vdNary("(", args, ")", vdBreak())), nil
 	}
-	return vdText("unsupported operator: " + expression.Opcode + "(...)"), nil
+	return text("unsupported operator: "+expression.Opcode+"(...)", "red"), nil
 }

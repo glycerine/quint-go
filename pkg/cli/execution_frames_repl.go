@@ -34,7 +34,7 @@ func executionREPLReplay(ctx context.Context, session *quint.REPLSession, level 
 	if err != nil {
 		return ctx, quint.REPLReplayHooks{}, err
 	}
-	hooks := replReplayOutput(level, out, report, func(result quint.REPLResult) {
+	hooks := replReplayOutput(ctx, level, out, report, func(result quint.REPLResult) {
 		if err := render(result); err != nil {
 			report(err)
 		}

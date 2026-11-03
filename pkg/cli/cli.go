@@ -33,6 +33,7 @@ func Execute(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	if stderr == nil {
 		stderr = io.Discard
 	}
+	ctx = terminalBind(ctx, stdout)
 	if err := ctx.Err(); err != nil {
 		fmt.Fprintln(stderr, "error:", err)
 		return 1
@@ -362,6 +363,7 @@ func coreNumberOption(value string) float64 {
 }
 
 func coreFrontendCommand(ctx context.Context, command string, args []string, stdout, stderr io.Writer) int {
+	ctx = terminalBind(ctx, stdout)
 	o, err := coreParseOptions(command, args)
 	if err != nil {
 		fmt.Fprintln(stderr, "error:", err)
@@ -386,7 +388,8 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 		}
 		if diagnostics, ok := fields.Get("errors").([]quint.ErrorMessage); ok {
 			for _, diagnostic := range diagnostics {
-				fmt.Fprintln(stderr, quint.RenderErrorMessage(diagnostic, code, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
+				text := quint.RenderErrorMessage(diagnostic, code, terminalDiagnosticOptions(ctx, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
+				fmt.Fprintln(stderr, terminalStyle(ctx, text, "red"))
 			}
 		}
 		if failure == nil || summary != failure.Error() {

@@ -28,5 +28,5 @@ func (s *REPLSession) FormatValueContext(ctx context.Context, value RuntimeValue
 	if width <= 0 {
 		width = 80
 	}
-	return FormatValueExpression(expression, width, 0)
+	return FormatValueExpressionContext(ctx, expression, width, 0)
 }
