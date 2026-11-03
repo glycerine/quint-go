@@ -15,10 +15,15 @@ import (
 type RuntimeNondetDiscovery struct {
 	compiled     map[ID]bool
 	initialPicks *insdict.Dict[string, RuntimeValue]
+	// The evaluator also retains the first alias compiled for a definition.
+	// Public registration-only callers keep their nil-storage fast path.
+	trackDefinitions bool
+	definitions      map[ID]*OperatorDef
 }
 
 type runtimeDiscoveryDefinition struct {
 	expression *Expr
+	operator   *OperatorDef
 	scopes     []*insdict.Dict[string, *runtimeDiscoveryDefinition]
 	visited    bool
 }
@@ -57,13 +62,13 @@ func (d *RuntimeNondetDiscovery) PrepareWithVariableBindings(ctx context.Context
 	if err := ctx.Err(); err != nil {
 		return err
 	}
-	if storage == nil {
+	if storage == nil && !d.trackDefinitions {
 		return nil
 	}
 	// The builder keeps the initial registry even when source rollback replaces
 	// the storage's live pick map. Later compilation can update that detached
 	// registry without changing the current state's metadata.
-	if d.initialPicks == nil {
+	if storage != nil && d.initialPicks == nil {
 		d.initialPicks = storage.NondetPicks
 	}
 	if d.compiled == nil {
@@ -83,13 +88,22 @@ func (d *RuntimeNondetDiscovery) PrepareWithVariableBindings(ctx context.Context
 			return nil
 		}
 		definition.visited = true
+		if d.trackDefinitions && definition.operator != nil && definition.operator.ID != (ID{}) {
+			if d.definitions == nil {
+				d.definitions = map[ID]*OperatorDef{}
+			}
+			if _, compiled := d.definitions[definition.operator.ID]; !compiled {
+				copy := *definition.operator
+				d.definitions[copy.ID] = &copy
+			}
+		}
 		return visit(definition.expression, definition.scopes)
 	}
 	reference := func(name string, scopes []*insdict.Dict[string, *runtimeDiscoveryDefinition]) error {
 		if definition := lookup(name, scopes); definition != nil {
 			return compile(definition)
 		}
-		if variables != nil {
+		if storage != nil && variables != nil {
 			if binding, exists := variables.Get2(name); exists {
 				storage.Register(binding.Key, binding.Name)
 			}
@@ -138,7 +152,7 @@ func (d *RuntimeNondetDiscovery) PrepareWithVariableBindings(ctx context.Context
 			}
 			definition := expression.Opdef
 			frame := insdict.NewDict[string, *runtimeDiscoveryDefinition]()
-			bound := &runtimeDiscoveryDefinition{expression: definition.Expr}
+			bound := &runtimeDiscoveryDefinition{expression: definition.Expr, operator: definition}
 			frame.Set(definition.Name, bound)
 			local := append(append([]*insdict.Dict[string, *runtimeDiscoveryDefinition](nil), scopes...), frame)
 			bound.scopes = local
@@ -147,7 +161,7 @@ func (d *RuntimeNondetDiscovery) PrepareWithVariableBindings(ctx context.Context
 				// sampled set and body. Its definition expression is not built
 				// as a normal oneOf application.
 				bound.visited = true
-				if !d.compiled[definition.ID] {
+				if storage != nil && !d.compiled[definition.ID] {
 					d.initialPicks.Set(definition.Name, RuntimeValue{})
 					d.compiled[definition.ID] = true
 				}

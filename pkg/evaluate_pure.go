@@ -135,7 +135,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 		objects = &RuntimeObjectHashState{}
 	}
 	session := &runtimeEvaluation{objects: objects}
-	discovery := &RuntimeNondetDiscovery{}
+	discovery := &RuntimeNondetDiscovery{trackDefinitions: true}
 	session.prepare = func(ctx context.Context, expression Expr) error {
 		return discovery.PrepareWithVariableBindings(ctx, expression, storage, session.variables)
 	}
@@ -420,6 +420,18 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 			if e.Opdef.ID == (ID{}) {
 				key.definition = e.Opdef
 			}
+			actionName := alias
+			if !key.source && e.Opdef.Qualifier != Nondet && e.Opdef.ID != (ID{}) {
+				compiled, exists := discovery.definitions[e.Opdef.ID]
+				if !exists {
+					// Entering a module's lexical wrappers does not compile its
+					// unused definitions. The first selected reference freezes
+					// the getter, including an ordinary import alias's name.
+					return eval(*e.Body)
+				}
+				e.Opdef = compiled
+				actionName = compiled.Name
+			}
 			if e.Opdef.Qualifier == Nondet {
 				if e.Opdef.Expr.Kind != "app" || e.Opdef.Expr.Opcode != "oneOf" || len(e.Opdef.Expr.Args) != 1 {
 					return fail(e, "Nondeterministic definitions require a oneOf application")
@@ -484,7 +496,7 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 						actionListener.OnUserOperatorCall(actionApp)
 					}
 					if storage != nil && e.Opdef.Qualifier == Action && storage.ActionTaken == "" {
-						storage.ActionTaken = alias
+						storage.ActionTaken = actionName
 					}
 					cache := definition.cache
 					if storage != nil && topLevel && e.Opdef.Qualifier == Val && cache.generation != storage.generation {

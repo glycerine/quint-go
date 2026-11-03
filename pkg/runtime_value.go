@@ -172,7 +172,9 @@ type runtimeClosure struct {
 }
 
 // Apply invokes a runtime closure. Closure evaluations share their owning
-// evaluator's scope machinery and must not be run concurrently.
+// evaluator's scope machinery and must not be run concurrently. A successful
+// callback return observes caller cancellation after restoring that scope;
+// callback errors retain precedence over cancellation.
 func (v RuntimeValue) Apply(ctx context.Context, args []RuntimeValue) (RuntimeValue, error) {
 	if err := ctx.Err(); err != nil {
 		return RuntimeValue{}, err
@@ -185,7 +187,14 @@ func (v RuntimeValue) Apply(ctx context.Context, args []RuntimeValue) (RuntimeVa
 			return RuntimeValue{}, Diagnostic{Code: "QNT501", Message: "Invalid runtime argument"}
 		}
 	}
-	return v.closure.apply(ctx, args)
+	value, err := v.closure.apply(ctx, args)
+	if err != nil {
+		return value, err
+	}
+	if err := ctx.Err(); err != nil {
+		return RuntimeValue{}, err
+	}
+	return value, nil
 }
 
 func newRuntimeClosure(arity int, apply func(context.Context, []RuntimeValue) (RuntimeValue, error)) RuntimeValue {

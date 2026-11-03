@@ -1,0 +1,2710 @@
+[
+  {
+    "name": "reverse_first",
+    "source": "module A {action start=true} module M {import A as C import A as D action keep=all{C::start,D::start}}",
+    "module": {
+      "id": 10,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 5,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 9,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 8,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 6,
+                "kind": "name",
+                "name": "C::start"
+              },
+              {
+                "id": 7,
+                "kind": "name",
+                "name": "D::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "D::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      },
+      {
+        "kind": "evaluate",
+        "name": "C::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      }
+    ]
+  },
+  {
+    "name": "forward_first",
+    "source": "module A {action start=true} module M {import A as C import A as D action keep=all{C::start,D::start}}",
+    "module": {
+      "id": 10,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 5,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 9,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 8,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 6,
+                "kind": "name",
+                "name": "C::start"
+              },
+              {
+                "id": 7,
+                "kind": "name",
+                "name": "D::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "C::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "C::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "C::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "C::start"
+      },
+      {
+        "kind": "evaluate",
+        "name": "D::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "C::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "C::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "C::start"
+      }
+    ]
+  },
+  {
+    "name": "unrelated_then_reverse",
+    "source": "module A {action start=true} module M {import A as C import A as D val unrelated=42 action keep=all{C::start,D::start}}",
+    "module": {
+      "id": 12,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 7,
+          "kind": "def",
+          "name": "unrelated",
+          "qualifier": "val",
+          "expr": {
+            "id": 6,
+            "kind": "int",
+            "value": 42
+          }
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 5,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 11,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 10,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 8,
+                "kind": "name",
+                "name": "C::start"
+              },
+              {
+                "id": 9,
+                "kind": "name",
+                "name": "D::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "unrelated",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 42
+        },
+        "events": [],
+        "actionTaken": ""
+      },
+      {
+        "kind": "evaluate",
+        "name": "D::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      },
+      {
+        "kind": "evaluate",
+        "name": "C::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      }
+    ]
+  },
+  {
+    "name": "prepare_then_reverse",
+    "source": "module A {action start=true} module M {import A as C import A as D action keep=all{C::start,D::start}}",
+    "module": {
+      "id": 10,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 5,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 9,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 8,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 6,
+                "kind": "name",
+                "name": "C::start"
+              },
+              {
+                "id": 7,
+                "kind": "name",
+                "name": "D::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "prepare",
+        "name": "D::start",
+        "events": [],
+        "actionTaken": ""
+      },
+      {
+        "kind": "evaluate",
+        "name": "C::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      }
+    ]
+  },
+  {
+    "name": "reverse_then_clear",
+    "source": "module A {action start=true} module M {import A as C import A as D action keep=all{C::start,D::start}}",
+    "module": {
+      "id": 10,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 5,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 9,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 8,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 6,
+                "kind": "name",
+                "name": "C::start"
+              },
+              {
+                "id": 7,
+                "kind": "name",
+                "name": "D::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "D::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      },
+      {
+        "kind": "clear",
+        "events": [],
+        "actionTaken": ""
+      },
+      {
+        "kind": "evaluate",
+        "name": "C::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      }
+    ]
+  },
+  {
+    "name": "lazy_branch_compiles_first_alias",
+    "source": "module A {action start=true} module M {import A as C import A as D action keep=if(false)C::start else D::start}",
+    "module": {
+      "id": 11,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 5,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 10,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 9,
+            "kind": "app",
+            "opcode": "ite",
+            "args": [
+              {
+                "id": 6,
+                "kind": "bool",
+                "value": false
+              },
+              {
+                "id": 7,
+                "kind": "name",
+                "name": "C::start"
+              },
+              {
+                "id": 8,
+                "kind": "name",
+                "name": "D::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "keep",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "keep",
+              "args": []
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "C::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "C::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "keep",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "keep"
+      }
+    ]
+  },
+  {
+    "name": "lazy_branch_compiles_reverse_alias",
+    "source": "module A {action start=true} module M {import A as C import A as D action keep=if(false)D::start else C::start}",
+    "module": {
+      "id": 11,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 5,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 10,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 9,
+            "kind": "app",
+            "opcode": "ite",
+            "args": [
+              {
+                "id": 6,
+                "kind": "bool",
+                "value": false
+              },
+              {
+                "id": 7,
+                "kind": "name",
+                "name": "D::start"
+              },
+              {
+                "id": 8,
+                "kind": "name",
+                "name": "C::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "keep",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "keep",
+              "args": []
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "keep",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "keep"
+      }
+    ]
+  },
+  {
+    "name": "lambda_body_compiles_first_alias",
+    "source": "module A {action start=true} module M {import A as C import A as D def choose(x)=if(x)C::start else D::start action keep=choose(false)}",
+    "module": {
+      "id": 16,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 5,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "choose",
+          "qualifier": "def",
+          "expr": {
+            "id": 11,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 6,
+                "name": "x_11"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "ite",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "name",
+                  "name": "x_11"
+                },
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "C::start"
+                },
+                {
+                  "id": 9,
+                  "kind": "name",
+                  "name": "D::start"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 15,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 14,
+            "kind": "app",
+            "opcode": "choose",
+            "args": [
+              {
+                "id": 13,
+                "kind": "bool",
+                "value": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "keep",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "keep",
+              "args": []
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 14,
+              "kind": "app",
+              "opcode": "choose",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "bool",
+                  "value": false
+                }
+              ]
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "C::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "C::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 14,
+              "kind": "app",
+              "opcode": "choose",
+              "args": [
+                {
+                  "id": 13,
+                  "kind": "bool",
+                  "value": false
+                }
+              ]
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "keep",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "keep"
+      }
+    ]
+  },
+  {
+    "name": "argument_precedes_operator_body",
+    "source": "module A {action start=true} module M {import A as C import A as D def use(x)=C::start action keep=use(D::start)}",
+    "module": {
+      "id": 13,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 9,
+          "kind": "def",
+          "name": "use",
+          "qualifier": "def",
+          "expr": {
+            "id": 8,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 6,
+                "name": "x_8"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 7,
+              "kind": "name",
+              "name": "C::start"
+            }
+          }
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 5,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "use",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "D::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "keep",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "keep",
+              "args": []
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "use",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "D::start"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "use",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "D::start"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "keep",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "keep"
+      }
+    ]
+  },
+  {
+    "name": "argument_precedes_operator_body_reverse",
+    "source": "module A {action start=true} module M {import A as C import A as D def use(x)=D::start action keep=use(C::start)}",
+    "module": {
+      "id": 13,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 5,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 9,
+          "kind": "def",
+          "name": "use",
+          "qualifier": "def",
+          "expr": {
+            "id": 8,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 6,
+                "name": "x_8"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 7,
+              "kind": "name",
+              "name": "D::start"
+            }
+          }
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 4,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "use",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "C::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "keep",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "keep",
+              "args": []
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "use",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "C::start"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "C::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "C::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "C::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "C::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "use",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "C::start"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "keep",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "keep"
+      }
+    ]
+  },
+  {
+    "name": "nested_action_dependencies",
+    "source": "module A {action inner=true action start=inner} module M {import A as C import A as D action keep=all{C::start,D::start}}",
+    "module": {
+      "id": 12,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::inner",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "D::inner",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0
+        },
+        {
+          "id": 4,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 3,
+            "kind": "name",
+            "name": "C::inner"
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 6,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 4,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 3,
+            "kind": "name",
+            "name": "D::inner"
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 7,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::D::inner",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0
+        },
+        {
+          "id": 11,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 10,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 8,
+                "kind": "name",
+                "name": "C::start"
+              },
+              {
+                "id": 9,
+                "kind": "name",
+                "name": "D::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "D::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::inner",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::inner",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      },
+      {
+        "kind": "evaluate",
+        "name": "C::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::inner",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::inner",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      }
+    ]
+  },
+  {
+    "name": "nested_function_dependencies",
+    "source": "module A {def g(x)=x+1 def f(x)=g(x)} module M {import A as C import A as D val first=D::f(1) val second=C::f(2)}",
+    "module": {
+      "id": 21,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "D::g",
+          "qualifier": "def",
+          "expr": {
+            "id": 5,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "D::x_5"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "D::x_5"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "C::g",
+          "qualifier": "def",
+          "expr": {
+            "id": 5,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "C::x_5"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "C::x_5"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "depth": 0
+        },
+        {
+          "id": 11,
+          "kind": "def",
+          "name": "D::f",
+          "qualifier": "def",
+          "expr": {
+            "id": 10,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 7,
+                "name": "D::x_10"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "D::g",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "D::x_10"
+                }
+              ]
+            }
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 14,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "D::C::g",
+          "qualifier": "def",
+          "expr": {
+            "id": 5,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 1,
+                "name": "D::C::x_5"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "name",
+                  "name": "D::C::x_5"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "depth": 0
+        },
+        {
+          "id": 17,
+          "kind": "def",
+          "name": "first",
+          "qualifier": "val",
+          "expr": {
+            "id": 16,
+            "kind": "app",
+            "opcode": "D::f",
+            "args": [
+              {
+                "id": 15,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 11,
+          "kind": "def",
+          "name": "C::f",
+          "qualifier": "def",
+          "expr": {
+            "id": 10,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 7,
+                "name": "C::x_10"
+              }
+            ],
+            "qualifier": "def",
+            "expr": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "C::g",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "C::x_10"
+                }
+              ]
+            }
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 13,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "second",
+          "qualifier": "val",
+          "expr": {
+            "id": 19,
+            "kind": "app",
+            "opcode": "C::f",
+            "args": [
+              {
+                "id": 18,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "first",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 2
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 16,
+              "kind": "app",
+              "opcode": "D::f",
+              "args": [
+                {
+                  "id": 15,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "D::g",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "D::x_10"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "D::g",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "D::x_10"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 16,
+              "kind": "app",
+              "opcode": "D::f",
+              "args": [
+                {
+                  "id": 15,
+                  "kind": "int",
+                  "value": 1
+                }
+              ]
+            }
+          }
+        ],
+        "actionTaken": ""
+      },
+      {
+        "kind": "evaluate",
+        "name": "second",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 3
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 19,
+              "kind": "app",
+              "opcode": "C::f",
+              "args": [
+                {
+                  "id": 18,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "D::g",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "D::x_10"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 9,
+              "kind": "app",
+              "opcode": "D::g",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "D::x_10"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 19,
+              "kind": "app",
+              "opcode": "C::f",
+              "args": [
+                {
+                  "id": 18,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ],
+        "actionTaken": ""
+      }
+    ]
+  },
+  {
+    "name": "local_action_alias",
+    "source": "module A {action start={action local=true;local}} module M {import A as C import A as D action keep=all{C::start,D::start}}",
+    "module": {
+      "id": 13,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 5,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 4,
+            "kind": "let",
+            "opdef": {
+              "id": 2,
+              "kind": "def",
+              "name": "C::local",
+              "qualifier": "action",
+              "expr": {
+                "id": 1,
+                "kind": "bool",
+                "value": true
+              }
+            },
+            "expr": {
+              "id": 3,
+              "kind": "name",
+              "name": "C::local"
+            }
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 7,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 5,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 4,
+            "kind": "let",
+            "opdef": {
+              "id": 2,
+              "kind": "def",
+              "name": "D::local",
+              "qualifier": "action",
+              "expr": {
+                "id": 1,
+                "kind": "bool",
+                "value": true
+              }
+            },
+            "expr": {
+              "id": 3,
+              "kind": "name",
+              "name": "D::local"
+            }
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 8,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 9,
+                "kind": "name",
+                "name": "C::start"
+              },
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "D::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "D::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::local",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::local",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      },
+      {
+        "kind": "evaluate",
+        "name": "C::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::local",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::local",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      }
+    ]
+  },
+  {
+    "name": "error_action_alias",
+    "source": "module A {action start=(1/0)>0} module M {import A as C import A as D action keep=all{C::start,D::start}}",
+    "module": {
+      "id": 14,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "igt",
+            "args": [
+              {
+                "id": 3,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 8,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "igt",
+            "args": [
+              {
+                "id": 3,
+                "kind": "app",
+                "opcode": "idiv",
+                "args": [
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 2,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 9,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 13,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "C::start"
+              },
+              {
+                "id": 11,
+                "kind": "name",
+                "name": "D::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "D::start",
+        "error": {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 3
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      },
+      {
+        "kind": "evaluate",
+        "name": "C::start",
+        "error": {
+          "code": "QNT503",
+          "message": "Division by zero",
+          "reference": 3
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      }
+    ]
+  },
+  {
+    "name": "late_dependency_selection",
+    "source": "module A {action inner=true action start=inner} module M {import A as C import A as D val unrelated=42 action keep=all{C::start,D::start}}",
+    "module": {
+      "id": 14,
+      "name": "M",
+      "declarations": [
+        {
+          "id": 9,
+          "kind": "def",
+          "name": "unrelated",
+          "qualifier": "val",
+          "expr": {
+            "id": 8,
+            "kind": "int",
+            "value": 42
+          }
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::inner",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "D::inner",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0
+        },
+        {
+          "id": 4,
+          "kind": "def",
+          "name": "C::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 3,
+            "kind": "name",
+            "name": "C::inner"
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 6,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "C"
+          },
+          "hidden": true,
+          "namespaces": [
+            "C"
+          ]
+        },
+        {
+          "id": 4,
+          "kind": "def",
+          "name": "D::start",
+          "qualifier": "action",
+          "expr": {
+            "id": 3,
+            "kind": "name",
+            "name": "D::inner"
+          },
+          "depth": 0,
+          "importedFrom": {
+            "id": 7,
+            "kind": "import",
+            "protoName": "A",
+            "qualifiedName": "D"
+          },
+          "hidden": true,
+          "namespaces": [
+            "D"
+          ]
+        },
+        {
+          "id": 2,
+          "kind": "def",
+          "name": "C::D::inner",
+          "qualifier": "action",
+          "expr": {
+            "id": 1,
+            "kind": "bool",
+            "value": true
+          },
+          "depth": 0
+        },
+        {
+          "id": 13,
+          "kind": "def",
+          "name": "keep",
+          "qualifier": "action",
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "C::start"
+              },
+              {
+                "id": 11,
+                "kind": "name",
+                "name": "D::start"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "unrelated",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 42
+        },
+        "events": [],
+        "actionTaken": ""
+      },
+      {
+        "kind": "prepare",
+        "name": "D::start",
+        "events": [],
+        "actionTaken": ""
+      },
+      {
+        "kind": "evaluate",
+        "name": "C::start",
+        "output": {
+          "id": 0,
+          "kind": "bool",
+          "value": true
+        },
+        "events": [
+          {
+            "kind": "call",
+            "app": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          },
+          {
+            "kind": "call",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::inner",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 2,
+              "kind": "app",
+              "opcode": "D::inner",
+              "args": []
+            }
+          },
+          {
+            "kind": "return",
+            "app": {
+              "id": 4,
+              "kind": "app",
+              "opcode": "D::start",
+              "args": []
+            }
+          }
+        ],
+        "actionTaken": "D::start"
+      }
+    ]
+  }
+]
