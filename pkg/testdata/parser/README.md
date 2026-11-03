@@ -1199,3 +1199,9 @@ that the typed Go IR cannot represent; those cases compare the explicit
 SyntaxRecoveryError frontier and completed modules instead of counting full
 upstream IR as passing. Representable leaked temporary Tup nodes keep their
 upstream zero IDs. Recovery helper coverage is 100%.
+
+Native TLC classification tests run four actual evaluation-error and six
+false-predicate models, plus typed initial-property ITF export. Specific native
+error codes distinguish incomplete evaluation failures from genuine violations;
+finite state/action PROPERTY counterexamples require no temporal lasso. These
+checks correct the reference CLI coarse exit-status misclassification.

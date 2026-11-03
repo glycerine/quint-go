@@ -695,6 +695,8 @@ TypeScript or Rust evaluator process.
     leadsTo, weak/strong fairness, finite quantifiers and checked lasso traces.
   - [x] Typed native ITF export including empty/structured values, variants and
     temporal loops; explicit export errors preserve definitive native verdicts.
+  - [x] Distinguish native evaluation failures from false predicates and retain
+    finite initial/action PROPERTY counterexamples without inventing loops.
   - [ ] Full native semantic parity and hard preemption.
 - [ ] P9.9 Replace Scala version/download/launch behavior. Define Go backend
   selection/version reporting and the treatment of legacy endpoint/version
@@ -3557,3 +3559,13 @@ word "retained" in the commit message.
   explicit SyntaxRecoveryError with completed-module snapshots instead of
   fabricating valid IR. Recovery helper100% covered; focused0.040s, optional
   parser/source corpus0.352s, race1.401s, vet and byte-identical regeneration pass.
+
+- 2026-11-02: Corrected native TLC result classification using specific error
+  codes rather than coarse exit status. Evaluation exceptions remain incomplete
+  failures; genuine assumption/assertion/invariant/property violations remain
+  violations. Initial and action PROPERTY failures preserve finite traces and
+  typed ITF without requiring a temporal lasso. Four actual evaluation-error
+  models, six false-predicate models, typed initial-property export and code
+  distinction tests pass. Full native TLC0.320s; the upstream coarse evaluation
+  misclassification is deliberately corrected. Broader parity/hard preemption
+  remain open.

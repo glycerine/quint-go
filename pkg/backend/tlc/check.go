@@ -263,9 +263,9 @@ func checkTLA(ctx context.Context, filename, source string, options Options, var
 		if err != nil {
 			return result, fmt.Errorf("TLC counterexample: %w", err)
 		}
-		// TLC reports an initial invariant violation as an error message rather
+		// TLC reports an initial invariant/property violation as an error message rather
 		// than a state-print event, but retains the actual state on its checker.
-		if checked.ErrorCode == native.ECTLCInvariantViolatedInitial && len(result.Trace) == 0 {
+		if initialViolation(checked.ErrorCode) && len(result.Trace) == 0 {
 			if checker, ok := native.MainChecker().(*native.ModelChecker); ok && checker.ErrState != nil {
 				result.Trace = counterexample([]native.Message{{Code: native.ECTLCStatePrint1, State: checker.ErrState}}, vars)
 			}
@@ -293,6 +293,12 @@ func checkTLA(ctx context.Context, filename, source string, options Options, var
 			}
 		}
 	}
+	// Native exit statuses group several evaluation errors with genuine
+	// assumption/action-property violations. A failed predicate evaluation does
+	// not establish a counterexample, even when native TLC returns status 10–14.
+	if evaluationFailure(result.ErrorCode) {
+		return result, fmt.Errorf("TLC evaluation failed (error %d)", result.ErrorCode)
+	}
 	switch checked.ExitStatus {
 	case native.ExitStatusSuccess:
 		if result.QueueSize != 0 {
@@ -304,16 +310,19 @@ func checkTLA(ctx context.Context, filename, source string, options Options, var
 	case native.ExitStatusViolationSafety, native.ExitStatusViolationAssumption, native.ExitStatusViolationAssert:
 		result.Outcome = Violation
 	case native.ExitStatusViolationLiveness:
-		if result.Loop == nil || len(result.Trace) == 0 {
+		// State and action PROPERTY predicates can fail on a finite prefix.
+		// Only a genuine temporal counterexample needs a closing lasso marker.
+		finiteProperty := result.ErrorCode == native.ECTLCPropertyViolatedInitial || result.ErrorCode == native.ECTLCActionPropertyViolatedBehavior
+		if !finiteProperty && (result.Loop == nil || len(result.Trace) == 0) {
 			return result, fmt.Errorf("TLC temporal counterexample is missing loop metadata")
 		}
 		result.Outcome = Violation
 	default:
-		return result, fmt.Errorf("TLC failed with exit status %d (error %d)", checked.ExitStatus, checked.ErrorCode)
+		return result, fmt.Errorf("TLC failed with exit status %d (error %d)", checked.ExitStatus, result.ErrorCode)
 	}
 	if options.ITF && result.Outcome != Safe {
 		states := nativeITFStates(checked.Messages)
-		if checked.ErrorCode == native.ECTLCInvariantViolatedInitial && len(states) == 0 {
+		if initialViolation(checked.ErrorCode) && len(states) == 0 {
 			if checker, ok := native.MainChecker().(*native.ModelChecker); ok && checker.ErrState != nil {
 				states = append(states, checker.ErrState)
 			}
