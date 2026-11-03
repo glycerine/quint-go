@@ -174,13 +174,14 @@ without losing semantic information, and diagnostic locations remain stable.
   locations; preserve intentionally accepted deprecated syntax.
   Raw ID allocation and upstream source provenance now match all197 repository
   sources; public source maps additionally retain useful synthesized spans.
-- [ ] P2.6 Implement expression/declaration entry points for the REPL and CLI
+- [x] P2.6 Implement expression/declaration entry points for the REPL and CLI
   expressions, plus the type/effect parsers used by builtin signatures.
   - [x] Syntax-only expression, expanding declaration, type, and effect entry points.
   - [x] Combined declaration-or-expression selection, empty/comment input, and
     shared REPL-session ID allocation.
   - [x] Source-map and diagnostic integration for expression/declaration/REPL input.
-  - [ ] Dedicated upstream differential entry-point fixtures.
+  - [x] Compare63 expression/declaration/REPL/type and58 effect entry fixtures,
+    including exact diagnostics and explicit complete-input boundary policies.
 - [x] P2.7 Port source resolution, relative imports, file caching, duplicate
   loading behavior, import-cycle errors, and missing-file diagnostics.
 - [ ] P2.8 Match syntax-error recovery and useful partial results; test Unicode,
@@ -217,7 +218,7 @@ errors without panics or losing subsequent declarations after recoverable errors
   - [x] Port ID-based lambda/let unshadowing and reference-table updates.
   - [x] Compare transformed modules against upstream unshadowing fixtures.
   - [x] Integrate unshadowing into the complete analysis/compilation pipeline.
-- [ ] P3.4 Port call graphs, stable topological sorting, module ordering, and
+- [x] P3.4 Port call graphs, stable topological sorting, module ordering, and
   recursion/dependency-cycle diagnostics.
   - [x] Build declaration dependency graphs including types, local bindings,
     imports, exports, and instance overrides.
@@ -227,7 +228,9 @@ errors without panics or losing subsequent declarations after recoverable errors
     sorting through ParseProject, with both source maps and accumulated diagnostics.
   - [x] Verify numeric dependency-cycle order, message-name order and error
     references against upstream Immutable collection iteration.
-  - [ ] Complete parser recovery (the remaining boundary is tracked in P2).
+  - [x] Integrate recovering source loading with module/declaration sorting;
+    TestUpstreamSourceRecovery and35 cycle cases cover this graph boundary.
+    Invalid null-operand reference IR remains explicitly tracked in P2.8.
 - [x] P3.5 Preserve definition identity and lookup-table consistency across
   module boundaries and incremental declaration analysis.
   - [x] Track collected binding identity and expose unused-definition queries.
@@ -632,7 +635,7 @@ TypeScript or Rust evaluator process.
 
 ## P9 — Go Apalache verification and TLA+ generation
 
-- [ ] P9.1 Implement the adapter chosen in P0 for both checking and TLA output;
+- [x] P9.1 Implement the adapter chosen in P0 for both checking and TLA output;
   use the existing Go production pipeline, including configuration and solver
   initialization. Keep dependency-specific types out of unrelated CLI code.
   - [x] In-process CHECK/TLA executor and typed compilation input adaptation,
@@ -649,7 +652,7 @@ TypeScript or Rust evaluator process.
     createConfig fixtures match. Unknown options reach strict service validation.
   - [x] Config-file loading and CLI flag/default wiring, including main-module
     selection when the entry filename differs from its sole module.
-- [ ] P9.3 Implement bounded safety checking, no-invariant deadlock checking,
+- [x] P9.3 Implement bounded safety checking, no-invariant deadlock checking,
   and ordinary/multiple-invariant handling with equivalent result categories.
   - [x] Bounded-check API, explicit no-invariant selection, lossless violation/
     deadlock responses, and source-generated safe/violating/instance checks.
@@ -3745,3 +3748,12 @@ word "retained" in the commit message.
   explicitly rather than counted as raw recovery parity. Default0.101s, race1.555s,
   byte-identical generation, full isolated tests and vet pass. Effect entrypoint
   recovery remains the final separate P2.6 subitem.
+
+- 2026-11-02: Completed P2.6 with58 actual effect-entry cases alongside63 main
+  entry cases. A local recovery strategy preserves reference missing-close bracket
+  insertion at arrow delimiters while retaining default token deletion; generated
+  parser/global behavior is unchanged. Seventeen cases explicitly retain Go
+  complete-input rejection. Private recovery helper100% covered, focused0.008s,
+  race1.046s, byte-identical generation, full isolated tests/vet pass. Independent
+  cross-check closes P3.4 graph integration and P9.1/P9.3 implemented adapter and
+  bounded/multiple-invariant paths; their unrelated deeper gates remain open.

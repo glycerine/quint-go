@@ -1,0 +1,2392 @@
+[
+  {
+    "name": "pure",
+    "source": "Pure",
+    "policy": "shared",
+    "upstream": {
+      "effect": {
+        "kind": "concrete",
+        "components": []
+      }
+    },
+    "issues": []
+  },
+  {
+    "name": "effect-variable",
+    "source": "_effect42",
+    "policy": "shared",
+    "upstream": {
+      "effect": {
+        "kind": "variable",
+        "name": "_effect42"
+      }
+    },
+    "issues": []
+  },
+  {
+    "name": "empty-read",
+    "source": "Read[]",
+    "policy": "shared",
+    "upstream": {
+      "effect": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": []
+            }
+          }
+        ]
+      }
+    },
+    "issues": []
+  },
+  {
+    "name": "concrete-update",
+    "source": "Update['x']",
+    "policy": "shared",
+    "upstream": {
+      "effect": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "issues": []
+  },
+  {
+    "name": "temporal-variable",
+    "source": "Temporal[v]",
+    "policy": "shared",
+    "upstream": {
+      "effect": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "variable",
+              "name": "v"
+            }
+          }
+        ]
+      }
+    },
+    "issues": []
+  },
+  {
+    "name": "mixed-entity-order",
+    "source": "Read['x', v, 'x', w]",
+    "policy": "shared",
+    "upstream": {
+      "effect": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "w"
+                },
+                {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 1
+                    },
+                    {
+                      "name": "x",
+                      "reference": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "issues": []
+  },
+  {
+    "name": "repeated-entity-and-state",
+    "source": "Read[v, v, 'x', 'x']",
+    "policy": "shared",
+    "upstream": {
+      "effect": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "union",
+              "entities": [
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "variable",
+                  "name": "v"
+                },
+                {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 1
+                    },
+                    {
+                      "name": "x",
+                      "reference": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "issues": []
+  },
+  {
+    "name": "repeated-and-ordered-components",
+    "source": "Temporal['t'] & Read[r] & Update['u'] & Read['x']",
+    "policy": "shared",
+    "upstream": {
+      "effect": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "temporal",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "t",
+                  "reference": 1
+                }
+              ]
+            }
+          },
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "variable",
+              "name": "r"
+            }
+          },
+          {
+            "kind": "update",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "u",
+                  "reference": 2
+                }
+              ]
+            }
+          },
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": [
+                {
+                  "name": "x",
+                  "reference": 3
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "issues": []
+  },
+  {
+    "name": "zero-arity-arrow",
+    "source": "() => Pure",
+    "policy": "shared",
+    "upstream": {
+      "effect": {
+        "kind": "arrow",
+        "params": [],
+        "result": {
+          "kind": "concrete",
+          "components": []
+        }
+      }
+    },
+    "issues": []
+  },
+  {
+    "name": "arrow-state-occurrence-order",
+    "source": "(Read['x'], Update['x', 'x']) => Temporal['x']",
+    "policy": "shared",
+    "upstream": {
+      "effect": {
+        "kind": "arrow",
+        "params": [
+          {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "update",
+                "entity": {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 2
+                    },
+                    {
+                      "name": "x",
+                      "reference": 3
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "result": {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "temporal",
+              "entity": {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "x",
+                    "reference": 4
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "issues": []
+  },
+  {
+    "name": "nested-arrows",
+    "source": "((Read['a']) => Update['b'], e) => (Pure) => Temporal['c']",
+    "policy": "shared",
+    "upstream": {
+      "effect": {
+        "kind": "arrow",
+        "params": [
+          {
+            "kind": "arrow",
+            "params": [
+              {
+                "kind": "concrete",
+                "components": [
+                  {
+                    "kind": "read",
+                    "entity": {
+                      "kind": "concrete",
+                      "stateVariables": [
+                        {
+                          "name": "a",
+                          "reference": 1
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ],
+            "result": {
+              "kind": "concrete",
+              "components": [
+                {
+                  "kind": "update",
+                  "entity": {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "b",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "kind": "variable",
+            "name": "e"
+          }
+        ],
+        "result": {
+          "kind": "arrow",
+          "params": [
+            {
+              "kind": "concrete",
+              "components": []
+            }
+          ],
+          "result": {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "temporal",
+                "entity": {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "c",
+                      "reference": 3
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "issues": []
+  },
+  {
+    "name": "multiline-whitespace",
+    "source": "( Read[ r, 'x' ],\n\tPure )\r\n=> Update[ 'y', u ]",
+    "policy": "shared",
+    "upstream": {
+      "effect": {
+        "kind": "arrow",
+        "params": [
+          {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "union",
+                  "entities": [
+                    {
+                      "kind": "variable",
+                      "name": "r"
+                    },
+                    {
+                      "kind": "concrete",
+                      "stateVariables": [
+                        {
+                          "name": "x",
+                          "reference": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "kind": "concrete",
+            "components": []
+          }
+        ],
+        "result": {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "update",
+              "entity": {
+                "kind": "union",
+                "entities": [
+                  {
+                    "kind": "variable",
+                    "name": "u"
+                  },
+                  {
+                    "kind": "concrete",
+                    "stateVariables": [
+                      {
+                        "name": "y",
+                        "reference": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "issues": []
+  },
+  {
+    "name": "empty-input",
+    "source": "",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "mismatched input '<EOF>' expecting {'(', 'Read', 'Update', 'Temporal', 'Pure', IDENTIFIER}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 0,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": -1,
+                "index": -1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "mismatched input '<EOF>' expecting {'(', 'Read', 'Update', 'Temporal', 'Pure', IDENTIFIER}",
+        "position": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-read-argument",
+    "source": "Read",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "mismatched input '<EOF>' expecting '['",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 4,
+                "index": 4
+              },
+              "end": {
+                "line": 0,
+                "col": 3,
+                "index": 3
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "mismatched input '<EOF>' expecting '['",
+        "position": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-entity-close",
+    "source": "Read[v",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at '<EOF>'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 6,
+                "index": 6
+              },
+              "end": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "missing ']' at '<EOF>'",
+        "position": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      }
+    ]
+  },
+  {
+    "name": "wrong-delimiter",
+    "source": "Read(v)",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "mismatched input '(' expecting '['",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 4,
+                "index": 4
+              },
+              "end": {
+                "line": 0,
+                "col": 4,
+                "index": 4
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "mismatched input '(' expecting '['",
+        "position": {
+          "line": 0,
+          "col": 4,
+          "index": 4
+        }
+      }
+    ]
+  },
+  {
+    "name": "empty-state-name",
+    "source": "Update['']",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing IDENTIFIER at '''",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 8,
+                "index": 8
+              },
+              "end": {
+                "line": 0,
+                "col": 8,
+                "index": 8
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "missing IDENTIFIER at '''",
+        "position": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-state-quote",
+    "source": "Read['x]",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ''' at ']'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              },
+              "end": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "missing ''' at ']'",
+        "position": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      }
+    ]
+  },
+  {
+    "name": "numeric-state-name",
+    "source": "Read['1']",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "token recognition error at: '1'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 6,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": 6,
+                "index": 0
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "missing IDENTIFIER at '''",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              },
+              "end": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "token recognition error at: '1'",
+        "position": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      },
+      {
+        "message": "missing IDENTIFIER at '''",
+        "position": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      }
+    ]
+  },
+  {
+    "name": "invalid-single-underscore",
+    "source": "_",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "token recognition error at: '_'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 0,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": 0,
+                "index": 0
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "mismatched input '<EOF>' expecting {'(', 'Read', 'Update', 'Temporal', 'Pure', IDENTIFIER}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 1,
+                "index": 1
+              },
+              "end": {
+                "line": 0,
+                "col": 0,
+                "index": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "token recognition error at: '_'",
+        "position": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        }
+      },
+      {
+        "message": "mismatched input '<EOF>' expecting {'(', 'Read', 'Update', 'Temporal', 'Pure', IDENTIFIER}",
+        "position": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "leading-entity-comma",
+    "source": "Read[,v]",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at ','",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              },
+              "end": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "remaining": {
+      "text": ",",
+      "line": 0,
+      "col": 5,
+      "index": 5
+    },
+    "issues": [
+      {
+        "message": "missing ']' at ','",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      },
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    ]
+  },
+  {
+    "name": "leading-update-comma",
+    "source": "Update[,v]",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at ','",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              },
+              "end": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "remaining": {
+      "text": ",",
+      "line": 0,
+      "col": 7,
+      "index": 7
+    },
+    "issues": [
+      {
+        "message": "missing ']' at ','",
+        "position": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      },
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      }
+    ]
+  },
+  {
+    "name": "leading-temporal-comma",
+    "source": "Temporal[,v]",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at ','",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 9,
+                "index": 9
+              },
+              "end": {
+                "line": 0,
+                "col": 9,
+                "index": 9
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "remaining": {
+      "text": ",",
+      "line": 0,
+      "col": 9,
+      "index": 9
+    },
+    "issues": [
+      {
+        "message": "missing ']' at ','",
+        "position": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      },
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      }
+    ]
+  },
+  {
+    "name": "spaced-leading-comma",
+    "source": "Read[ , v]",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at ','",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 6,
+                "index": 6
+              },
+              "end": {
+                "line": 0,
+                "col": 6,
+                "index": 6
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "remaining": {
+      "text": ",",
+      "line": 0,
+      "col": 6,
+      "index": 6
+    },
+    "issues": [
+      {
+        "message": "missing ']' at ','",
+        "position": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      },
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      }
+    ]
+  },
+  {
+    "name": "leading-comma-before-component",
+    "source": "Read[,v] & Update[u]",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at ','",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              },
+              "end": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "remaining": {
+      "text": ",",
+      "line": 0,
+      "col": 5,
+      "index": 5
+    },
+    "issues": [
+      {
+        "message": "missing ']' at ','",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      },
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    ]
+  },
+  {
+    "name": "leading-double-comma",
+    "source": "Temporal[,,]",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at ','",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 9,
+                "index": 9
+              },
+              "end": {
+                "line": 0,
+                "col": 9,
+                "index": 9
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "remaining": {
+      "text": ",",
+      "line": 0,
+      "col": 9,
+      "index": 9
+    },
+    "issues": [
+      {
+        "message": "missing ']' at ','",
+        "position": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      },
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      }
+    ]
+  },
+  {
+    "name": "leading-comma-after-lexical-error",
+    "source": "Read[@,v]",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "token recognition error at: '@'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 5,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": 5,
+                "index": 0
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "missing ']' at ','",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 6,
+                "index": 6
+              },
+              "end": {
+                "line": 0,
+                "col": 6,
+                "index": 6
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "remaining": {
+      "text": ",",
+      "line": 0,
+      "col": 6,
+      "index": 6
+    },
+    "issues": [
+      {
+        "message": "token recognition error at: '@'",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      },
+      {
+        "message": "missing ']' at ','",
+        "position": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      },
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      }
+    ]
+  },
+  {
+    "name": "leading-comma-arrow-argument",
+    "source": "(Read[, Pure) => Update[u]",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at ','",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 6,
+                "index": 6
+              },
+              "end": {
+                "line": 0,
+                "col": 6,
+                "index": 6
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "missing ']' at ','",
+        "position": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      }
+    ]
+  },
+  {
+    "name": "leading-comma-following-argument",
+    "source": "(Read[,v], Update[u]) => Pure",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at ','",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 6,
+                "index": 6
+              },
+              "end": {
+                "line": 0,
+                "col": 6,
+                "index": 6
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "extraneous input ']' expecting {',', ')'}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 8,
+                "index": 8
+              },
+              "end": {
+                "line": 0,
+                "col": 8,
+                "index": 8
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "missing ']' at ','",
+        "position": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      },
+      {
+        "message": "extraneous input ']' expecting {',', ')'}",
+        "position": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      }
+    ]
+  },
+  {
+    "name": "leading-comma-arrow-result",
+    "source": "(Pure) => Read[,v]",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at ','",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 15,
+                "index": 15
+              },
+              "end": {
+                "line": 0,
+                "col": 15,
+                "index": 15
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "remaining": {
+      "text": ",",
+      "line": 0,
+      "col": 15,
+      "index": 15
+    },
+    "issues": [
+      {
+        "message": "missing ']' at ','",
+        "position": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      }
+    ]
+  },
+  {
+    "name": "empty-read-before-parenthesis",
+    "source": "Read[)",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at ')'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              },
+              "end": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "remaining": {
+      "text": ")",
+      "line": 0,
+      "col": 5,
+      "index": 5
+    },
+    "issues": [
+      {
+        "message": "missing ']' at ')'",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      },
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    ]
+  },
+  {
+    "name": "update-before-parenthesis",
+    "source": "Update[v)",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at ')'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 8,
+                "index": 8
+              },
+              "end": {
+                "line": 0,
+                "col": 8,
+                "index": 8
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "remaining": {
+      "text": ")",
+      "line": 0,
+      "col": 8,
+      "index": 8
+    },
+    "issues": [
+      {
+        "message": "missing ']' at ')'",
+        "position": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      },
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      }
+    ]
+  },
+  {
+    "name": "temporal-before-arrow-parenthesis",
+    "source": "(Temporal[v) => Pure",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at ')'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 11,
+                "index": 11
+              },
+              "end": {
+                "line": 0,
+                "col": 11,
+                "index": 11
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "missing ']' at ')'",
+        "position": {
+          "line": 0,
+          "col": 11,
+          "index": 11
+        }
+      }
+    ]
+  },
+  {
+    "name": "deleted-read-comma",
+    "source": "Read[,]",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "extraneous input ',' expecting ']'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              },
+              "end": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "extraneous input ',' expecting ']'",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    ]
+  },
+  {
+    "name": "deleted-update-comma",
+    "source": "Update[,]",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "extraneous input ',' expecting ']'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              },
+              "end": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "extraneous input ',' expecting ']'",
+        "position": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      }
+    ]
+  },
+  {
+    "name": "deleted-temporal-comma",
+    "source": "Temporal[,]",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "extraneous input ',' expecting ']'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 9,
+                "index": 9
+              },
+              "end": {
+                "line": 0,
+                "col": 9,
+                "index": 9
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "extraneous input ',' expecting ']'",
+        "position": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      }
+    ]
+  },
+  {
+    "name": "deleted-interior-comma",
+    "source": "Read[v,,w]",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "extraneous input ',' expecting {''', IDENTIFIER}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              },
+              "end": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "extraneous input ',' expecting {''', IDENTIFIER}",
+        "position": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-bracket-before-component",
+    "source": "Read[& Update[u]",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing ']' at '&'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              },
+              "end": {
+                "line": 0,
+                "col": 5,
+                "index": 5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "missing ']' at '&'",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    ]
+  },
+  {
+    "name": "trailing-entity-comma",
+    "source": "Read[v,]",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "mismatched input ']' expecting {''', IDENTIFIER}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              },
+              "end": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "mismatched input ']' expecting {''', IDENTIFIER}",
+        "position": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      }
+    ]
+  },
+  {
+    "name": "trailing-arrow-comma",
+    "source": "(Pure,) => Pure",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "mismatched input ')' expecting {'(', 'Read', 'Update', 'Temporal', 'Pure', IDENTIFIER}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 6,
+                "index": 6
+              },
+              "end": {
+                "line": 0,
+                "col": 6,
+                "index": 6
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "mismatched input ')' expecting {'(', 'Read', 'Update', 'Temporal', 'Pure', IDENTIFIER}",
+        "position": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-arrow-token",
+    "source": "(Pure) Pure",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "missing '=>' at 'Pure'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              },
+              "end": {
+                "line": 0,
+                "col": 10,
+                "index": 10
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "missing '=>' at 'Pure'",
+        "position": {
+          "line": 0,
+          "col": 7,
+          "index": 7
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-arrow-result",
+    "source": "(Pure) =>",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "mismatched input '<EOF>' expecting {'(', 'Read', 'Update', 'Temporal', 'Pure', IDENTIFIER}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 9,
+                "index": 9
+              },
+              "end": {
+                "line": 0,
+                "col": 8,
+                "index": 8
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "mismatched input '<EOF>' expecting {'(', 'Read', 'Update', 'Temporal', 'Pure', IDENTIFIER}",
+        "position": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      }
+    ]
+  },
+  {
+    "name": "missing-arrow-close",
+    "source": "(Pure => Pure",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "mismatched input '=>' expecting {',', ')'}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 6,
+                "index": 6
+              },
+              "end": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "mismatched input '=>' expecting {',', ')'}",
+        "position": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      }
+    ]
+  },
+  {
+    "name": "dangling-component",
+    "source": "Read[v] &",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "mismatched input '<EOF>' expecting {'Read', 'Update', 'Temporal'}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 9,
+                "index": 9
+              },
+              "end": {
+                "line": 0,
+                "col": 8,
+                "index": 8
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "mismatched input '<EOF>' expecting {'Read', 'Update', 'Temporal'}",
+        "position": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      }
+    ]
+  },
+  {
+    "name": "doubled-component-separator",
+    "source": "Read[v] && Update[u]",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "extraneous input '&' expecting {'Read', 'Update', 'Temporal'}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 9,
+                "index": 9
+              },
+              "end": {
+                "line": 0,
+                "col": 9,
+                "index": 9
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "extraneous input '&' expecting {'Read', 'Update', 'Temporal'}",
+        "position": {
+          "line": 0,
+          "col": 9,
+          "index": 9
+        }
+      }
+    ]
+  },
+  {
+    "name": "variable-as-component",
+    "source": "Read[v] & E",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "mismatched input 'E' expecting {'Read', 'Update', 'Temporal'}",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 10,
+                "index": 10
+              },
+              "end": {
+                "line": 0,
+                "col": 10,
+                "index": 10
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "mismatched input 'E' expecting {'Read', 'Update', 'Temporal'}",
+        "position": {
+          "line": 0,
+          "col": 10,
+          "index": 10
+        }
+      }
+    ]
+  },
+  {
+    "name": "lexical-error",
+    "source": "Read[@]",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "token recognition error at: '@'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 5,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": 5,
+                "index": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "token recognition error at: '@'",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    ]
+  },
+  {
+    "name": "unicode-lexical-error",
+    "source": "Read['😀']",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "token recognition error at: '😀'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 6,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": 6,
+                "index": 0
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "missing IDENTIFIER at '''",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              },
+              "end": {
+                "line": 0,
+                "col": 7,
+                "index": 7
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "token recognition error at: '😀'",
+        "position": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      },
+      {
+        "message": "missing IDENTIFIER at '''",
+        "position": {
+          "line": 0,
+          "col": 8,
+          "index": 8
+        }
+      }
+    ]
+  },
+  {
+    "name": "multiline-lexical-error",
+    "source": "Read[v,\n 😀]",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "token recognition error at: '😀'",
+          "locs": [
+            {
+              "start": {
+                "line": 1,
+                "col": 1,
+                "index": 0
+              },
+              "end": {
+                "line": 1,
+                "col": 1,
+                "index": 0
+              }
+            }
+          ]
+        },
+        {
+          "explanation": "mismatched input ']' expecting {''', IDENTIFIER}",
+          "locs": [
+            {
+              "start": {
+                "line": 1,
+                "col": 2,
+                "index": 10
+              },
+              "end": {
+                "line": 1,
+                "col": 2,
+                "index": 10
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "token recognition error at: '😀'",
+        "position": {
+          "line": 1,
+          "col": 1,
+          "index": 9
+        }
+      },
+      {
+        "message": "mismatched input ']' expecting {''', IDENTIFIER}",
+        "position": {
+          "line": 1,
+          "col": 3,
+          "index": 11
+        }
+      }
+    ]
+  },
+  {
+    "name": "trailing-effect-variable",
+    "source": "Pure extra",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "effect": {
+        "kind": "concrete",
+        "components": []
+      }
+    },
+    "remaining": {
+      "text": "extra",
+      "line": 0,
+      "col": 5,
+      "index": 5
+    },
+    "issues": [
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    ]
+  },
+  {
+    "name": "trailing-effect-component",
+    "source": "Pure Read[v]",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "effect": {
+        "kind": "concrete",
+        "components": []
+      }
+    },
+    "remaining": {
+      "text": "Read",
+      "line": 0,
+      "col": 5,
+      "index": 5
+    },
+    "issues": [
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    ]
+  },
+  {
+    "name": "trailing-delimiter",
+    "source": "Read[]]",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "effect": {
+        "kind": "concrete",
+        "components": [
+          {
+            "kind": "read",
+            "entity": {
+              "kind": "concrete",
+              "stateVariables": []
+            }
+          }
+        ]
+      }
+    },
+    "remaining": {
+      "text": "]",
+      "line": 0,
+      "col": 6,
+      "index": 6
+    },
+    "issues": [
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 6,
+          "index": 6
+        }
+      }
+    ]
+  },
+  {
+    "name": "trailing-arrow",
+    "source": "E => Pure",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "effect": {
+        "kind": "variable",
+        "name": "E"
+      }
+    },
+    "remaining": {
+      "text": "=>",
+      "line": 0,
+      "col": 2,
+      "index": 2
+    },
+    "issues": [
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 2,
+          "index": 2
+        }
+      }
+    ]
+  },
+  {
+    "name": "trailing-stateful-arrow",
+    "source": "(Read['x']) => Update['y'] extra",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "effect": {
+        "kind": "arrow",
+        "params": [
+          {
+            "kind": "concrete",
+            "components": [
+              {
+                "kind": "read",
+                "entity": {
+                  "kind": "concrete",
+                  "stateVariables": [
+                    {
+                      "name": "x",
+                      "reference": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "result": {
+          "kind": "concrete",
+          "components": [
+            {
+              "kind": "update",
+              "entity": {
+                "kind": "concrete",
+                "stateVariables": [
+                  {
+                    "name": "y",
+                    "reference": 2
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "remaining": {
+      "text": "extra",
+      "line": 0,
+      "col": 27,
+      "index": 27
+    },
+    "issues": [
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      }
+    ]
+  },
+  {
+    "name": "trailing-unlexed-junk",
+    "source": "Pure extra @",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "effect": {
+        "kind": "concrete",
+        "components": []
+      }
+    },
+    "remaining": {
+      "text": "extra",
+      "line": 0,
+      "col": 5,
+      "index": 5
+    },
+    "issues": [
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    ]
+  },
+  {
+    "name": "trailing-lexical-error",
+    "source": "Pure @",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "token recognition error at: '@'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 5,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": 5,
+                "index": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "token recognition error at: '@'",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    ]
+  },
+  {
+    "name": "unicode-after-variable",
+    "source": "E😀",
+    "policy": "shared",
+    "upstream": {
+      "errors": [
+        {
+          "explanation": "token recognition error at: '😀'",
+          "locs": [
+            {
+              "start": {
+                "line": 0,
+                "col": 1,
+                "index": 0
+              },
+              "end": {
+                "line": 0,
+                "col": 1,
+                "index": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "issues": [
+      {
+        "message": "token recognition error at: '😀'",
+        "position": {
+          "line": 0,
+          "col": 1,
+          "index": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "pure-component-boundary",
+    "source": "Pure & Read[v]",
+    "policy": "complete-input-boundary",
+    "upstream": {
+      "effect": {
+        "kind": "concrete",
+        "components": []
+      }
+    },
+    "remaining": {
+      "text": "&",
+      "line": 0,
+      "col": 5,
+      "index": 5
+    },
+    "issues": [
+      {
+        "message": "unexpected trailing input",
+        "position": {
+          "line": 0,
+          "col": 5,
+          "index": 5
+        }
+      }
+    ]
+  }
+]

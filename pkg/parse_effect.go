@@ -16,6 +16,7 @@ func ParseEffect(text string) (Effect, error) {
 	parser := p.NewEffectParser(tokens)
 	parser.RemoveErrorListeners()
 	parser.AddErrorListener(listener)
+	parser.SetErrorHandler(&effectEntryErrorStrategy{parser.GetErrorHandler().(*antlr.DefaultErrorStrategy)})
 	tree := parser.Effect()
 	if tokens.LA(1) != antlr.TokenEOF {
 		listener.trailing(tokens.LT(1))
@@ -76,4 +77,29 @@ func ParseEffect(text string) (Effect, error) {
 		panic("unreachable effect parse node")
 	}
 	return convert(tree), nil
+}
+
+// The reference standalone entry allows arrow delimiters to follow a concrete
+// effect when recovering a missing component bracket. The Go runtime's follow
+// set can omit those delimiters outside an arrow argument and consume the rest
+// of the input instead. Keep this compatibility rule local to the effect entry.
+type effectEntryErrorStrategy struct{ *antlr.DefaultErrorStrategy }
+
+func (strategy *effectEntryErrorStrategy) RecoverInline(parser antlr.Parser) antlr.Token {
+	switch parser.GetParserRuleContext().(type) {
+	case *p.ReadContext, *p.UpdateContext, *p.TemporalContext:
+		current := parser.GetTokenStream().LA(1)
+		expected := parser.GetExpectedTokens().GetIntervals()
+		if (current == p.EffectParserT__1 || current == p.EffectParserT__2) &&
+			len(expected) == 1 && expected[0].Start == p.EffectParserT__6 && expected[0].Stop == p.EffectParserT__6+1 {
+			// Preserve the default deletion rule for Read[,] and its siblings.
+			if matched := strategy.SingleTokenDeletion(parser); matched != nil {
+				parser.Consume()
+				return matched
+			}
+			strategy.ReportMissingToken(parser)
+			return strategy.GetMissingSymbol(parser)
+		}
+	}
+	return strategy.DefaultErrorStrategy.RecoverInline(parser)
 }
