@@ -1132,3 +1132,11 @@ Tests compare error references and raw source metadata as well as declaration
 order. Independent 3,000 graph-pair checks establish dependency-set construction
 history does not affect sorting. More than eight duplicate module objects are a
 separate upstream process-global identity-order limit, not a numeric graph case.
+
+`convert_init_recursive.json` adds 12 exact upstream recursive init-to-predicate
+cases from `compile_init_recursive_fixtures.cjs`, preserving raw IDs and errors.
+The prior eight conversion cases remain unchanged. Optional generation semantics
+tests run six safe/violating models through both Go Apalache assignment IR and
+native Go TLC predicate IR (24 checks); separate tests enforce TLA run removal.
+Verify recovery reuses nine exact malformed-source fixtures across both backend
+interfaces and checks neither backend runs before frontend errors are resolved.

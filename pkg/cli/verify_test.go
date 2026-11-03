@@ -212,7 +212,7 @@ func TestVerifyCLIFrontendAndConfigurationFailures(t *testing.T) {
 		{verifyTestModel, []string{"--invariant=missing"}, "compilation failed"},
 		{verifyTestModel, []string{"--apalache-config", badConfig}, "must be a JSON object"},
 		{verifyTestModel, []string{"--apalache-config", filepath.Join(dir, "missing")}, "load Apalache configuration"},
-		{"module M {", nil, "invalid module"},
+		{"module M {", nil, "parsing failed"},
 	}
 	for _, test := range cases {
 		input := verifyTestSource(t, test.source)

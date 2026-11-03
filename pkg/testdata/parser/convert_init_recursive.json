@@ -1,0 +1,3714 @@
+[
+  {
+    "name": "nondet-helper-lambda",
+    "source": "module M {\n    var x:int action write(n)=x'=n\n    action q::init=nondet n=Set(1,2).oneOf(); write(n)\n    action step=x'=x\n  }",
+    "removeRuns": false,
+    "input": {
+      "id": 22,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 17,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 16,
+            "kind": "let",
+            "opdef": {
+              "id": 13,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 12,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 11,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 9,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 10,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "write",
+              "args": [
+                {
+                  "id": 14,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 21,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 20,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 19,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 18,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [
+      {
+        "id": "13",
+        "qualifier": "pureval"
+      }
+    ],
+    "output": {
+      "id": 22,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 17,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 16,
+            "kind": "let",
+            "opdef": {
+              "id": 13,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 12,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 11,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 9,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 10,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "write",
+              "args": [
+                {
+                  "id": 14,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 21,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 20,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 19,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 18,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "nested-nondet-helper",
+    "source": "module M {\n    var x:int var y:int\n    action write(a,b)=all { x'=a, y'=b }\n    action q::init=nondet a=Set(1,2).oneOf(); nondet b=Set(a,a+1).oneOf(); write(a,b)\n    action step=all { x'=x, y'=y }\n  }",
+    "removeRuns": false,
+    "input": {
+      "id": 42,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "kind": "var",
+          "name": "y",
+          "typeAnnotation": {
+            "id": 3,
+            "kind": "int"
+          },
+          "id": 4,
+          "depth": 0
+        },
+        {
+          "id": 15,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 14,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 5,
+                "name": "a"
+              },
+              {
+                "id": 6,
+                "name": "b"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 13,
+              "kind": "app",
+              "opcode": "actionAll",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 8,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "a"
+                    }
+                  ]
+                },
+                {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 11,
+                      "kind": "name",
+                      "name": "y"
+                    },
+                    {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 33,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 32,
+            "kind": "let",
+            "opdef": {
+              "id": 20,
+              "kind": "def",
+              "name": "a",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 19,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 18,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 16,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 17,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 31,
+              "kind": "let",
+              "opdef": {
+                "id": 27,
+                "kind": "def",
+                "name": "b",
+                "qualifier": "nondet",
+                "expr": {
+                  "id": 26,
+                  "kind": "app",
+                  "opcode": "oneOf",
+                  "args": [
+                    {
+                      "id": 25,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": [
+                        {
+                          "id": 21,
+                          "kind": "name",
+                          "name": "a"
+                        },
+                        {
+                          "id": 24,
+                          "kind": "app",
+                          "opcode": "iadd",
+                          "args": [
+                            {
+                              "id": 22,
+                              "kind": "name",
+                              "name": "a"
+                            },
+                            {
+                              "id": 23,
+                              "kind": "int",
+                              "value": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 30,
+                "kind": "app",
+                "opcode": "write",
+                "args": [
+                  {
+                    "id": 28,
+                    "kind": "name",
+                    "name": "a"
+                  },
+                  {
+                    "id": 29,
+                    "kind": "name",
+                    "name": "b"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": 41,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 40,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 36,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 35,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 34,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                ]
+              },
+              {
+                "id": 39,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 38,
+                    "kind": "name",
+                    "name": "y"
+                  },
+                  {
+                    "id": 37,
+                    "kind": "name",
+                    "name": "y"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [
+      {
+        "id": "20",
+        "qualifier": "pureval"
+      },
+      {
+        "id": "27",
+        "qualifier": "pureval"
+      }
+    ],
+    "output": {
+      "id": 42,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "kind": "var",
+          "name": "y",
+          "typeAnnotation": {
+            "id": 3,
+            "kind": "int"
+          },
+          "id": 4,
+          "depth": 0
+        },
+        {
+          "id": 15,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 14,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 5,
+                "name": "a"
+              },
+              {
+                "id": 6,
+                "name": "b"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 13,
+              "kind": "app",
+              "opcode": "actionAll",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "eq",
+                  "args": [
+                    {
+                      "id": 8,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "a"
+                    }
+                  ]
+                },
+                {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "eq",
+                  "args": [
+                    {
+                      "id": 11,
+                      "kind": "name",
+                      "name": "y"
+                    },
+                    {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 33,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 32,
+            "kind": "let",
+            "opdef": {
+              "id": 20,
+              "kind": "def",
+              "name": "a",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 19,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 18,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 16,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 17,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 31,
+              "kind": "let",
+              "opdef": {
+                "id": 27,
+                "kind": "def",
+                "name": "b",
+                "qualifier": "nondet",
+                "expr": {
+                  "id": 26,
+                  "kind": "app",
+                  "opcode": "oneOf",
+                  "args": [
+                    {
+                      "id": 25,
+                      "kind": "app",
+                      "opcode": "Set",
+                      "args": [
+                        {
+                          "id": 21,
+                          "kind": "name",
+                          "name": "a"
+                        },
+                        {
+                          "id": 24,
+                          "kind": "app",
+                          "opcode": "iadd",
+                          "args": [
+                            {
+                              "id": 22,
+                              "kind": "name",
+                              "name": "a"
+                            },
+                            {
+                              "id": 23,
+                              "kind": "int",
+                              "value": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "expr": {
+                "id": 30,
+                "kind": "app",
+                "opcode": "write",
+                "args": [
+                  {
+                    "id": 28,
+                    "kind": "name",
+                    "name": "a"
+                  },
+                  {
+                    "id": 29,
+                    "kind": "name",
+                    "name": "b"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": 41,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 40,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 36,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 35,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 34,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                ]
+              },
+              {
+                "id": 39,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 38,
+                    "kind": "name",
+                    "name": "y"
+                  },
+                  {
+                    "id": 37,
+                    "kind": "name",
+                    "name": "y"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "nested-all-any-if",
+    "source": "module M {\n    var x:int var y:int\n    action pair(a,b)=all { x'=a, y'=b }\n    action q::init=any { pair(0,1), all { true, if(1<2) pair(2,3) else pair(4,5) } }\n    action step=all { x'=x, y'=y }\n  }",
+    "removeRuns": false,
+    "input": {
+      "id": 41,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "kind": "var",
+          "name": "y",
+          "typeAnnotation": {
+            "id": 3,
+            "kind": "int"
+          },
+          "id": 4,
+          "depth": 0
+        },
+        {
+          "id": 15,
+          "kind": "def",
+          "name": "pair",
+          "qualifier": "action",
+          "expr": {
+            "id": 14,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 5,
+                "name": "a"
+              },
+              {
+                "id": 6,
+                "name": "b"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 13,
+              "kind": "app",
+              "opcode": "actionAll",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 8,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "a"
+                    }
+                  ]
+                },
+                {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "assign",
+                  "args": [
+                    {
+                      "id": 11,
+                      "kind": "name",
+                      "name": "y"
+                    },
+                    {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 32,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 31,
+            "kind": "app",
+            "opcode": "actionAny",
+            "args": [
+              {
+                "id": 18,
+                "kind": "app",
+                "opcode": "pair",
+                "args": [
+                  {
+                    "id": 16,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 17,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 30,
+                "kind": "app",
+                "opcode": "actionAll",
+                "args": [
+                  {
+                    "id": 19,
+                    "kind": "bool",
+                    "value": true
+                  },
+                  {
+                    "id": 29,
+                    "kind": "app",
+                    "opcode": "ite",
+                    "args": [
+                      {
+                        "id": 22,
+                        "kind": "app",
+                        "opcode": "ilt",
+                        "args": [
+                          {
+                            "id": 20,
+                            "kind": "int",
+                            "value": 1
+                          },
+                          {
+                            "id": 21,
+                            "kind": "int",
+                            "value": 2
+                          }
+                        ]
+                      },
+                      {
+                        "id": 25,
+                        "kind": "app",
+                        "opcode": "pair",
+                        "args": [
+                          {
+                            "id": 23,
+                            "kind": "int",
+                            "value": 2
+                          },
+                          {
+                            "id": 24,
+                            "kind": "int",
+                            "value": 3
+                          }
+                        ]
+                      },
+                      {
+                        "id": 28,
+                        "kind": "app",
+                        "opcode": "pair",
+                        "args": [
+                          {
+                            "id": 26,
+                            "kind": "int",
+                            "value": 4
+                          },
+                          {
+                            "id": 27,
+                            "kind": "int",
+                            "value": 5
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 40,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 39,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 35,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 34,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 33,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                ]
+              },
+              {
+                "id": 38,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 37,
+                    "kind": "name",
+                    "name": "y"
+                  },
+                  {
+                    "id": 36,
+                    "kind": "name",
+                    "name": "y"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [],
+    "output": {
+      "id": 41,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "kind": "var",
+          "name": "y",
+          "typeAnnotation": {
+            "id": 3,
+            "kind": "int"
+          },
+          "id": 4,
+          "depth": 0
+        },
+        {
+          "id": 15,
+          "kind": "def",
+          "name": "pair",
+          "qualifier": "action",
+          "expr": {
+            "id": 14,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 5,
+                "name": "a"
+              },
+              {
+                "id": 6,
+                "name": "b"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 13,
+              "kind": "app",
+              "opcode": "actionAll",
+              "args": [
+                {
+                  "id": 9,
+                  "kind": "app",
+                  "opcode": "eq",
+                  "args": [
+                    {
+                      "id": 8,
+                      "kind": "name",
+                      "name": "x"
+                    },
+                    {
+                      "id": 7,
+                      "kind": "name",
+                      "name": "a"
+                    }
+                  ]
+                },
+                {
+                  "id": 12,
+                  "kind": "app",
+                  "opcode": "eq",
+                  "args": [
+                    {
+                      "id": 11,
+                      "kind": "name",
+                      "name": "y"
+                    },
+                    {
+                      "id": 10,
+                      "kind": "name",
+                      "name": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 32,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 31,
+            "kind": "app",
+            "opcode": "actionAny",
+            "args": [
+              {
+                "id": 18,
+                "kind": "app",
+                "opcode": "pair",
+                "args": [
+                  {
+                    "id": 16,
+                    "kind": "int",
+                    "value": 0
+                  },
+                  {
+                    "id": 17,
+                    "kind": "int",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "id": 30,
+                "kind": "app",
+                "opcode": "actionAll",
+                "args": [
+                  {
+                    "id": 19,
+                    "kind": "bool",
+                    "value": true
+                  },
+                  {
+                    "id": 29,
+                    "kind": "app",
+                    "opcode": "ite",
+                    "args": [
+                      {
+                        "id": 22,
+                        "kind": "app",
+                        "opcode": "ilt",
+                        "args": [
+                          {
+                            "id": 20,
+                            "kind": "int",
+                            "value": 1
+                          },
+                          {
+                            "id": 21,
+                            "kind": "int",
+                            "value": 2
+                          }
+                        ]
+                      },
+                      {
+                        "id": 25,
+                        "kind": "app",
+                        "opcode": "pair",
+                        "args": [
+                          {
+                            "id": 23,
+                            "kind": "int",
+                            "value": 2
+                          },
+                          {
+                            "id": 24,
+                            "kind": "int",
+                            "value": 3
+                          }
+                        ]
+                      },
+                      {
+                        "id": 28,
+                        "kind": "app",
+                        "opcode": "pair",
+                        "args": [
+                          {
+                            "id": 26,
+                            "kind": "int",
+                            "value": 4
+                          },
+                          {
+                            "id": 27,
+                            "kind": "int",
+                            "value": 5
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 40,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 39,
+            "kind": "app",
+            "opcode": "actionAll",
+            "args": [
+              {
+                "id": 35,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 34,
+                    "kind": "name",
+                    "name": "x"
+                  },
+                  {
+                    "id": 33,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                ]
+              },
+              {
+                "id": 38,
+                "kind": "app",
+                "opcode": "assign",
+                "args": [
+                  {
+                    "id": 37,
+                    "kind": "name",
+                    "name": "y"
+                  },
+                  {
+                    "id": 36,
+                    "kind": "name",
+                    "name": "y"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "deep-helper-chain",
+    "source": "module M {\n    var x:int action leaf(n)=x'=n\n    action a(n)=leaf(n) action b(n)=a(n) action c(n)=b(n)\n    action d(n)=c(n) action e(n)=d(n) action f(n)=e(n)\n    action q::init=f(7) action step=x'=x\n  }",
+    "removeRuns": false,
+    "input": {
+      "id": 46,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "leaf",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 13,
+          "kind": "def",
+          "name": "a",
+          "qualifier": "action",
+          "expr": {
+            "id": 12,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 9,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "leaf",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 18,
+          "kind": "def",
+          "name": "b",
+          "qualifier": "action",
+          "expr": {
+            "id": 17,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 14,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 16,
+              "kind": "app",
+              "opcode": "a",
+              "args": [
+                {
+                  "id": 15,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 23,
+          "kind": "def",
+          "name": "c",
+          "qualifier": "action",
+          "expr": {
+            "id": 22,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 19,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 21,
+              "kind": "app",
+              "opcode": "b",
+              "args": [
+                {
+                  "id": 20,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 28,
+          "kind": "def",
+          "name": "d",
+          "qualifier": "action",
+          "expr": {
+            "id": 27,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 24,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 26,
+              "kind": "app",
+              "opcode": "c",
+              "args": [
+                {
+                  "id": 25,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 33,
+          "kind": "def",
+          "name": "e",
+          "qualifier": "action",
+          "expr": {
+            "id": 32,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 29,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 31,
+              "kind": "app",
+              "opcode": "d",
+              "args": [
+                {
+                  "id": 30,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 38,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "action",
+          "expr": {
+            "id": 37,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 34,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 36,
+              "kind": "app",
+              "opcode": "e",
+              "args": [
+                {
+                  "id": 35,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 41,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 40,
+            "kind": "app",
+            "opcode": "f",
+            "args": [
+              {
+                "id": 39,
+                "kind": "int",
+                "value": 7
+              }
+            ]
+          }
+        },
+        {
+          "id": 45,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 44,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 43,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 42,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [],
+    "output": {
+      "id": 46,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "leaf",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 13,
+          "kind": "def",
+          "name": "a",
+          "qualifier": "action",
+          "expr": {
+            "id": 12,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 9,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "leaf",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 18,
+          "kind": "def",
+          "name": "b",
+          "qualifier": "action",
+          "expr": {
+            "id": 17,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 14,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 16,
+              "kind": "app",
+              "opcode": "a",
+              "args": [
+                {
+                  "id": 15,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 23,
+          "kind": "def",
+          "name": "c",
+          "qualifier": "action",
+          "expr": {
+            "id": 22,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 19,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 21,
+              "kind": "app",
+              "opcode": "b",
+              "args": [
+                {
+                  "id": 20,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 28,
+          "kind": "def",
+          "name": "d",
+          "qualifier": "action",
+          "expr": {
+            "id": 27,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 24,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 26,
+              "kind": "app",
+              "opcode": "c",
+              "args": [
+                {
+                  "id": 25,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 33,
+          "kind": "def",
+          "name": "e",
+          "qualifier": "action",
+          "expr": {
+            "id": 32,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 29,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 31,
+              "kind": "app",
+              "opcode": "d",
+              "args": [
+                {
+                  "id": 30,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 38,
+          "kind": "def",
+          "name": "f",
+          "qualifier": "action",
+          "expr": {
+            "id": 37,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 34,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 36,
+              "kind": "app",
+              "opcode": "e",
+              "args": [
+                {
+                  "id": 35,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 41,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 40,
+            "kind": "app",
+            "opcode": "f",
+            "args": [
+              {
+                "id": 39,
+                "kind": "int",
+                "value": 7
+              }
+            ]
+          }
+        },
+        {
+          "id": 45,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 44,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 43,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 42,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "shared-helper-diamond",
+    "source": "module M {\n    var x:int action leaf(n)=x'=n\n    action left(n)=leaf(n) action right(n)=leaf(n+1)\n    action q::init=any { left(0), right(0) }\n    action step=x'=x\n  }",
+    "removeRuns": false,
+    "input": {
+      "id": 31,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "leaf",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 13,
+          "kind": "def",
+          "name": "left",
+          "qualifier": "action",
+          "expr": {
+            "id": 12,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 9,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "leaf",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "right",
+          "qualifier": "action",
+          "expr": {
+            "id": 19,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 14,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 18,
+              "kind": "app",
+              "opcode": "leaf",
+              "args": [
+                {
+                  "id": 17,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 15,
+                      "kind": "name",
+                      "name": "n"
+                    },
+                    {
+                      "id": 16,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 26,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 25,
+            "kind": "app",
+            "opcode": "actionAny",
+            "args": [
+              {
+                "id": 22,
+                "kind": "app",
+                "opcode": "left",
+                "args": [
+                  {
+                    "id": 21,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 24,
+                "kind": "app",
+                "opcode": "right",
+                "args": [
+                  {
+                    "id": 23,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 30,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 29,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 28,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 27,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [],
+    "output": {
+      "id": 31,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "leaf",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 13,
+          "kind": "def",
+          "name": "left",
+          "qualifier": "action",
+          "expr": {
+            "id": 12,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 9,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 11,
+              "kind": "app",
+              "opcode": "leaf",
+              "args": [
+                {
+                  "id": 10,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "right",
+          "qualifier": "action",
+          "expr": {
+            "id": 19,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 14,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 18,
+              "kind": "app",
+              "opcode": "leaf",
+              "args": [
+                {
+                  "id": 17,
+                  "kind": "app",
+                  "opcode": "iadd",
+                  "args": [
+                    {
+                      "id": 15,
+                      "kind": "name",
+                      "name": "n"
+                    },
+                    {
+                      "id": 16,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 26,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 25,
+            "kind": "app",
+            "opcode": "actionAny",
+            "args": [
+              {
+                "id": 22,
+                "kind": "app",
+                "opcode": "left",
+                "args": [
+                  {
+                    "id": 21,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "id": 24,
+                "kind": "app",
+                "opcode": "right",
+                "args": [
+                  {
+                    "id": 23,
+                    "kind": "int",
+                    "value": 0
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 30,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 29,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 28,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 27,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "constants-and-pure-sharing",
+    "source": "module M {\n    const bound:int var x:int pure val offset=2 pure def plus(n)=n+offset\n    action write(n)=x'=plus(n)\n    action q::init=nondet n=Set(bound,plus(bound)).oneOf(); write(n)\n    action step=x'=plus(x)\n  }",
+    "removeRuns": false,
+    "input": {
+      "id": 35,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "const",
+          "name": "bound",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 3,
+            "kind": "int"
+          },
+          "id": 4,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "offset",
+          "qualifier": "pureval",
+          "expr": {
+            "id": 5,
+            "kind": "int",
+            "value": 2
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "plus",
+          "qualifier": "puredef",
+          "expr": {
+            "id": 11,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 7,
+                "name": "n"
+              }
+            ],
+            "qualifier": "puredef",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "n"
+                },
+                {
+                  "id": 9,
+                  "kind": "name",
+                  "name": "offset"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 19,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 18,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 13,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 17,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 16,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "plus",
+                  "args": [
+                    {
+                      "id": 14,
+                      "kind": "name",
+                      "name": "n"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 29,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 28,
+            "kind": "let",
+            "opdef": {
+              "id": 25,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 24,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 23,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 20,
+                        "kind": "name",
+                        "name": "bound"
+                      },
+                      {
+                        "id": 22,
+                        "kind": "app",
+                        "opcode": "plus",
+                        "args": [
+                          {
+                            "id": 21,
+                            "kind": "name",
+                            "name": "bound"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 27,
+              "kind": "app",
+              "opcode": "write",
+              "args": [
+                {
+                  "id": 26,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 34,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 33,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 32,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 31,
+                "kind": "app",
+                "opcode": "plus",
+                "args": [
+                  {
+                    "id": 30,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [
+      {
+        "id": "25",
+        "qualifier": "pureval"
+      }
+    ],
+    "output": {
+      "id": 35,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "const",
+          "name": "bound",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 3,
+            "kind": "int"
+          },
+          "id": 4,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "offset",
+          "qualifier": "pureval",
+          "expr": {
+            "id": 5,
+            "kind": "int",
+            "value": 2
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "plus",
+          "qualifier": "puredef",
+          "expr": {
+            "id": 11,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 7,
+                "name": "n"
+              }
+            ],
+            "qualifier": "puredef",
+            "expr": {
+              "id": 10,
+              "kind": "app",
+              "opcode": "iadd",
+              "args": [
+                {
+                  "id": 8,
+                  "kind": "name",
+                  "name": "n"
+                },
+                {
+                  "id": 9,
+                  "kind": "name",
+                  "name": "offset"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 19,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 18,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 13,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 17,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 16,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 15,
+                  "kind": "app",
+                  "opcode": "plus",
+                  "args": [
+                    {
+                      "id": 14,
+                      "kind": "name",
+                      "name": "n"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 29,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 28,
+            "kind": "let",
+            "opdef": {
+              "id": 25,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 24,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 23,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 20,
+                        "kind": "name",
+                        "name": "bound"
+                      },
+                      {
+                        "id": 22,
+                        "kind": "app",
+                        "opcode": "plus",
+                        "args": [
+                          {
+                            "id": 21,
+                            "kind": "name",
+                            "name": "bound"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 27,
+              "kind": "app",
+              "opcode": "write",
+              "args": [
+                {
+                  "id": 26,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 34,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 33,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 32,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 31,
+                "kind": "app",
+                "opcode": "plus",
+                "args": [
+                  {
+                    "id": 30,
+                    "kind": "name",
+                    "name": "x"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "local-helper-in-nondet",
+    "source": "module M {\n    var x:int\n    action q::init=nondet n=Set(1,2).oneOf(); action write(m)=x'=m+n; write(n)\n    action step=x'=x\n  }",
+    "removeRuns": false,
+    "input": {
+      "id": 25,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 19,
+            "kind": "let",
+            "opdef": {
+              "id": 7,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 6,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 5,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 18,
+              "kind": "let",
+              "opdef": {
+                "id": 15,
+                "kind": "def",
+                "name": "write",
+                "qualifier": "action",
+                "expr": {
+                  "id": 14,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 8,
+                      "name": "m"
+                    }
+                  ],
+                  "qualifier": "action",
+                  "expr": {
+                    "id": 13,
+                    "kind": "app",
+                    "opcode": "assign",
+                    "args": [
+                      {
+                        "id": 12,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 11,
+                        "kind": "app",
+                        "opcode": "iadd",
+                        "args": [
+                          {
+                            "id": 9,
+                            "kind": "name",
+                            "name": "m"
+                          },
+                          {
+                            "id": 10,
+                            "kind": "name",
+                            "name": "n"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              "expr": {
+                "id": 17,
+                "kind": "app",
+                "opcode": "write",
+                "args": [
+                  {
+                    "id": 16,
+                    "kind": "name",
+                    "name": "n"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": 24,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 23,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 22,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 21,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [
+      {
+        "id": "7",
+        "qualifier": "pureval"
+      }
+    ],
+    "output": {
+      "id": 25,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 19,
+            "kind": "let",
+            "opdef": {
+              "id": 7,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 6,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 5,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 18,
+              "kind": "let",
+              "opdef": {
+                "id": 15,
+                "kind": "def",
+                "name": "write",
+                "qualifier": "action",
+                "expr": {
+                  "id": 14,
+                  "kind": "lambda",
+                  "params": [
+                    {
+                      "id": 8,
+                      "name": "m"
+                    }
+                  ],
+                  "qualifier": "action",
+                  "expr": {
+                    "id": 13,
+                    "kind": "app",
+                    "opcode": "eq",
+                    "args": [
+                      {
+                        "id": 12,
+                        "kind": "name",
+                        "name": "x"
+                      },
+                      {
+                        "id": 11,
+                        "kind": "app",
+                        "opcode": "iadd",
+                        "args": [
+                          {
+                            "id": 9,
+                            "kind": "name",
+                            "name": "m"
+                          },
+                          {
+                            "id": 10,
+                            "kind": "name",
+                            "name": "n"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              "expr": {
+                "id": 17,
+                "kind": "app",
+                "opcode": "write",
+                "args": [
+                  {
+                    "id": 16,
+                    "kind": "name",
+                    "name": "n"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": 24,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 23,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 22,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 21,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "higher-order-helper",
+    "source": "module M {\n    var x:int action write(n)=x'=n action apply(f,n)=f(n)\n    action q::init=apply(write,1) action step=x'=x\n  }",
+    "removeRuns": false,
+    "input": {
+      "id": 23,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 14,
+          "kind": "def",
+          "name": "apply",
+          "qualifier": "action",
+          "expr": {
+            "id": 13,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 9,
+                "name": "f"
+              },
+              {
+                "id": 10,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "f",
+              "args": [
+                {
+                  "id": 11,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 18,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 17,
+            "kind": "app",
+            "opcode": "apply",
+            "args": [
+              {
+                "id": 15,
+                "kind": "name",
+                "name": "write"
+              },
+              {
+                "id": 16,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 22,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 21,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 20,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 19,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [
+      {
+        "id": "14",
+        "qualifier": "puredef"
+      }
+    ],
+    "output": {
+      "id": 23,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "eq",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 14,
+          "kind": "def",
+          "name": "apply",
+          "qualifier": "action",
+          "expr": {
+            "id": 13,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 9,
+                "name": "f"
+              },
+              {
+                "id": 10,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "f",
+              "args": [
+                {
+                  "id": 11,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 18,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 17,
+            "kind": "app",
+            "opcode": "apply",
+            "args": [
+              {
+                "id": 15,
+                "kind": "name",
+                "name": "write"
+              },
+              {
+                "id": 16,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 22,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 21,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 20,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 19,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "shared-action-through-nondet-call",
+    "source": "module M {\n    var x:int action write(n)=x'=n\n    action q::init=nondet n=Set(1,2).oneOf(); write(n)\n    action step=nondet n=Set(2,3).oneOf(); write(n)\n  }",
+    "removeRuns": false,
+    "input": {
+      "id": 27,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "lambda",
+            "params": [
+              {
+                "id": 3,
+                "name": "n"
+              }
+            ],
+            "qualifier": "action",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "assign",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "name",
+                  "name": "x"
+                },
+                {
+                  "id": 4,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 17,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 16,
+            "kind": "let",
+            "opdef": {
+              "id": 13,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 12,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 11,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 9,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 10,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 15,
+              "kind": "app",
+              "opcode": "write",
+              "args": [
+                {
+                  "id": 14,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 26,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 25,
+            "kind": "let",
+            "opdef": {
+              "id": 22,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 21,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 20,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 18,
+                        "kind": "int",
+                        "value": 2
+                      },
+                      {
+                        "id": 19,
+                        "kind": "int",
+                        "value": 3
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 24,
+              "kind": "app",
+              "opcode": "write",
+              "args": [
+                {
+                  "id": 23,
+                  "kind": "name",
+                  "name": "n"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "modes": [
+      {
+        "id": "13",
+        "qualifier": "pureval"
+      },
+      {
+        "id": "22",
+        "qualifier": "pureval"
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT409",
+        "message": "Action write is used both for init and for step, and therefore can't be converted into TLA+. You can duplicate this with a different name to use on init. Sorry Quint can't do it for you yet.",
+        "reference": 24
+      }
+    ]
+  },
+  {
+    "name": "shared-action-through-nondet-name",
+    "source": "module M {\n    var x:int action write=x'=0\n    action q::init=nondet n=Set(1,2).oneOf(); all { n>0, write }\n    action step=write\n  }",
+    "removeRuns": false,
+    "input": {
+      "id": 21,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": 18,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 17,
+            "kind": "let",
+            "opdef": {
+              "id": 11,
+              "kind": "def",
+              "name": "n",
+              "qualifier": "nondet",
+              "expr": {
+                "id": 10,
+                "kind": "app",
+                "opcode": "oneOf",
+                "args": [
+                  {
+                    "id": 9,
+                    "kind": "app",
+                    "opcode": "Set",
+                    "args": [
+                      {
+                        "id": 7,
+                        "kind": "int",
+                        "value": 1
+                      },
+                      {
+                        "id": 8,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "expr": {
+              "id": 16,
+              "kind": "app",
+              "opcode": "actionAll",
+              "args": [
+                {
+                  "id": 14,
+                  "kind": "app",
+                  "opcode": "igt",
+                  "args": [
+                    {
+                      "id": 12,
+                      "kind": "name",
+                      "name": "n"
+                    },
+                    {
+                      "id": 13,
+                      "kind": "int",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "id": 15,
+                  "kind": "name",
+                  "name": "write"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 20,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 19,
+            "kind": "name",
+            "name": "write"
+          }
+        }
+      ]
+    },
+    "modes": [
+      {
+        "id": "11",
+        "qualifier": "pureval"
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT409",
+        "message": "Action write is used both for init and for step, and therefore can't be converted into TLA+. You can duplicate this with a different name to use on init. Sorry Quint can't do it for you yet.",
+        "reference": 19
+      }
+    ]
+  },
+  {
+    "name": "run-shared-before-removal",
+    "source": "module M {\n    var x:int action write=x'=1 action q::init=write action step=x'=x\n    run sample=write.then(step)\n  }",
+    "removeRuns": false,
+    "input": {
+      "id": 17,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "name",
+            "name": "write"
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        },
+        {
+          "id": 16,
+          "kind": "def",
+          "name": "sample",
+          "qualifier": "run",
+          "expr": {
+            "id": 15,
+            "kind": "app",
+            "opcode": "then",
+            "args": [
+              {
+                "id": 13,
+                "kind": "name",
+                "name": "write"
+              },
+              {
+                "id": 14,
+                "kind": "name",
+                "name": "step"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [
+      {
+        "id": "16",
+        "qualifier": "action"
+      }
+    ],
+    "errors": [
+      {
+        "code": "QNT409",
+        "message": "Action write is used both for init and for step, and therefore can't be converted into TLA+. You can duplicate this with a different name to use on init. Sorry Quint can't do it for you yet.",
+        "reference": 13
+      }
+    ]
+  },
+  {
+    "name": "run-shared-after-removal",
+    "source": "module M {\n    var x:int action write=x'=1 action q::init=write action step=x'=x\n    run sample=write.then(step)\n  }",
+    "removeRuns": true,
+    "input": {
+      "id": 17,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "name",
+            "name": "write"
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        },
+        {
+          "id": 16,
+          "kind": "def",
+          "name": "sample",
+          "qualifier": "run",
+          "expr": {
+            "id": 15,
+            "kind": "app",
+            "opcode": "then",
+            "args": [
+              {
+                "id": 13,
+                "kind": "name",
+                "name": "write"
+              },
+              {
+                "id": 14,
+                "kind": "name",
+                "name": "step"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "modes": [
+      {
+        "id": "16",
+        "qualifier": "action"
+      }
+    ],
+    "output": {
+      "id": 17,
+      "name": "M",
+      "declarations": [
+        {
+          "kind": "var",
+          "name": "x",
+          "typeAnnotation": {
+            "id": 1,
+            "kind": "int"
+          },
+          "id": 2,
+          "depth": 0
+        },
+        {
+          "id": 6,
+          "kind": "def",
+          "name": "write",
+          "qualifier": "action",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "eq",
+            "args": [
+              {
+                "id": 4,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": 8,
+          "kind": "def",
+          "name": "q::init",
+          "qualifier": "action",
+          "expr": {
+            "id": 7,
+            "kind": "name",
+            "name": "write"
+          }
+        },
+        {
+          "id": 12,
+          "kind": "def",
+          "name": "step",
+          "qualifier": "action",
+          "expr": {
+            "id": 11,
+            "kind": "app",
+            "opcode": "assign",
+            "args": [
+              {
+                "id": 10,
+                "kind": "name",
+                "name": "x"
+              },
+              {
+                "id": 9,
+                "kind": "name",
+                "name": "x"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

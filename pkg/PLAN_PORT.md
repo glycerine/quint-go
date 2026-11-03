@@ -351,11 +351,12 @@ the baseline corpus, including state-transition legality.
     flatten selection, and forced TLA+ flattening with upstream fixtures.
   - [x] Wire the CLI command, JSON serialization, output/error reporting,
     and default flag handling end to end; track remaining output parity in P10.1.
-- [ ] P6.5 Port `initToPredicate` and removal of run definitions for the paths
+- [x] P6.5 Port `initToPredicate` and removal of run definitions for the paths
   that require them; preserve the different contracts of checking and TLA output.
   - [x] Go Apalache TLA API prepares a copied module with run removal and
     init-to-predicate conversion; checking continues to use assignment IR.
-  - [ ] Complete CLI/TLC path wiring and the recursive conversion audit.
+  - [x] Wire CLI/TLC and compare 12 additional recursive conversion cases plus
+    six generated models through both native checker paths.
 - [x] P6.6 Produce the single-module typed JSON envelope accepted by Go Apalache,
   with explicit schema adaptation rather than dropping unknown fields blindly.
   MarshalInput validates its projected envelope with the production importer;
@@ -671,7 +672,9 @@ TypeScript or Rust evaluator process.
   - [x] TLA API through the Go command service, typed preparation/backend
     failures, cancellation, and all upstream printer-postprocessing examples.
   - [x] Compile CLI output through the Go TLA API.
-  - [ ] Complete generated-TLA semantic compatibility tests.
+  - [x] Compare six representative generated models (safe and violating) through
+    assignment-IR Go Apalache and predicate-IR Go TLC:24 actual checker runs.
+  - [ ] Complete broader generated-TLA semantic compatibility tests.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.
@@ -3457,3 +3460,13 @@ word "retained" in the commit message.
   vet and deterministic regeneration pass. Upstream ordering for more than eight
   duplicate module objects depends on process-global identity history; Go keeps
   deterministic discovery order there. Parser recovery remains separately open.
+
+- 2026-11-02: Completed P6.5 recursive init/run-removal wiring and audit. Twelve
+  additional exact upstream recursive conversions pass beside eight existing
+  cases. Six generated models exercise safe/violating behavior through both Go
+  checkers (24 optional actual checks,1.824s); explicit TLA/run-removal checks
+  preserve assignment versus predicate contracts. Verify now preserves recovering
+  frontend diagnostics and compatibility locations before calling either backend;
+  nine malformed sources across both injected backends produce18 exact checks.
+  Focused init0.030s, Verify0.218s, native TLC0.157s and vet pass. Broader generated
+  semantics remain open under P9.7.

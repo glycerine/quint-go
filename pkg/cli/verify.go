@@ -110,13 +110,14 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 	if err != nil {
 		return fail(err)
 	}
-	frontend, err := quint.ParseProject(resolver, quint.SourceLookupPath{NormalizedPath: abs, SourceName: abs})
+	frontend, err := quint.ParseProjectRecovering(resolver, quint.SourceLookupPath{NormalizedPath: abs, SourceName: abs})
 	if err != nil {
 		return fail(err)
 	}
 	addDiagnostics := func(diagnostics []quint.Diagnostic) {
+		sources := coreCompatibilitySources(frontend)
 		for _, diagnostic := range diagnostics {
-			stage.Errors = append(stage.Errors, quint.ResolveDiagnostic(frontend.Sources, diagnostic))
+			stage.Errors = append(stage.Errors, quint.ResolveDiagnostic(sources, diagnostic))
 		}
 	}
 	if len(frontend.Diagnostics) > 0 {
