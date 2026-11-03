@@ -8,9 +8,10 @@
 // diagnostics and editor use, not unchecked execution.
 //
 // IR structs and analysis dictionaries are mutable caller-owned data. Visitors
-// and finders borrow their nodes. AnalyzeIncremental resumes an append-only
-// declaration batch and shares previous type and mode dictionaries; it does not
-// invalidate edited or removed declarations. Compilation may extend its supplied
+// and finders borrow their nodes; IRTransformer returns copied transport graphs
+// without rebuilding analysis or runtime provenance. AnalyzeIncremental resumes
+// an append-only declaration batch and shares previous type and mode dictionaries;
+// it does not invalidate edited or removed declarations. Compilation may extend its supplied
 // ID generator, analysis tables, and source map. Keep these objects within one
 // sequential compilation session.
 //

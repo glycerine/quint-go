@@ -147,7 +147,7 @@ boundary, with concrete gaps listed before frontend implementation starts.
     unrelated, and mis-cased field rejection and failed-receiver preservation.
   - [x] Validate raw analysis/stage snapshots and preserve absent/empty/nonempty
     metadata arrays through marshaling and import/flatten copy boundaries.
-- [ ] P1.5 Port visitors, transformers, finders, IR printers, ID refreshing,
+- [x] P1.5 Port visitors, transformers, finders, IR printers, ID refreshing,
   namespacing, and source-reference preservation.
 - [x] P1.6 Port structured errors, error trees, codes, source excerpts, and
   related locations; keep diagnostics independent of terminal formatting.
@@ -774,13 +774,14 @@ Build these items alongside the phases that supply their command behavior.
   and necessary runtime assets so the binary works outside the checkout.
   - [x] Reusable documentation extraction/Markdown rendering and embedded
     generated builtin documentation with copied results; no runtime parser/assets.
-- [ ] P10.7 Define idiomatic exported APIs corresponding to `quint/src/index.ts`,
+- [x] P10.7 Define idiomatic exported APIs corresponding to `quint/src/index.ts`,
   including parsing, analysis, IR access, formatting, and source resolution.
   Document ownership, incremental state, concurrency, and cancellation.
   - [x] API.md maps upstream exports to Go; add whole-IR visitors/finders,
     checked declaration/module and width-aware printers, compact source transport,
     resumed IDs, effect substitution printing and an external-package example.
-  - [ ] Complete the general enter/exit replacement transformer under P1.5.
+  - [x] General owned enter/exit replacement transformer with actual upstream
+    lifecycle/replacement fixtures and documented source traversal exclusions.
 - [ ] P10.8 Run CLI language/I/O/verification integration tests and JSON/ITF
   compatibility checks, including redirected output and nonzero exit paths.
   - [x] In-process tests across all commands, source imports/instances, actual
@@ -3716,3 +3717,11 @@ word "retained" in the commit message.
   Adapter metadata cleanup is checked; native resolver tlc-* directories lack a
   public close API and remain an explicit lifecycle gap. Full isolated tests/vet
   pass; native focused resource test0.058s.
+
+- 2026-11-02: Completed the generic IR replacement transformer and public API
+  documentation. Twenty-seven actual source fixtures compare1,030 callback events
+  and cover all six original upstream cases, ownership, replacement and callback
+  failures. Source traversal exclusions remain explicit; analysis/lookup/runtime
+  metadata is not recomputed by a generic transform. All26 functions have100%
+  statement coverage; focused0.085s, race1.264s, full isolated suite and vet pass.
+  Existing visitors/finders/printing/refresh APIs complete P1.5/P10.7.

@@ -1276,3 +1276,9 @@ all197 repository source files: raw IR, diagnostics, source maps and next IDs.
 The optional corpus compares without normalization; all197 pass. Public Go maps
 retain useful synthesized spans while raw upstream maps preserve their omissions.
 Matching generators distinguish this from LL/SLL self-parity controls.
+
+`api_ir_transform.json` and its actual-source generator save27 fixtures/1,030
+enter/exit callback events, covering all six original upstream transformer tests.
+Replacement ownership, callback errors and malformed input checks have100%
+function statement coverage. API.md documents source traversal exclusions and
+the requirement to recompute lookup/analysis/runtime metadata after transforms.

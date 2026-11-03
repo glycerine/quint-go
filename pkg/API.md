@@ -151,6 +151,7 @@ immutable comparable values; `Integer.Big` returns an independent `big.Int`.
 | `AnalyzeIncremental` | Reuses and extends `previous.Types` and `previous.Modes`; creates a new effects dictionary with retained scheme values. The lookup table is also mutable. Previous results are not snapshots after resuming. |
 | `CompileModules`/flattening | May consume IDs and extend supplied analysis/source maps. Module/declaration slice copies do not make all nested IR independent. Retain the complete compilation session until its consumers finish. |
 | Visitors and finders | Borrow original nodes, including nested local definitions and type annotations. Found pointers are not detached copies. Callbacks must not mutate a graph during traversal. |
+| `IRTransformer` | Returns an owned transport graph. Callback arguments and returned replacements are copied, so in-place callback edits preserve the original and externally supplied replacement graphs. Existing lookup/analysis tables and runtime provenance are not recomputed. |
 | Printers | Read input IR and return strings. New checked printers report malformed input; older diagnostic printers expect validated IR. |
 | Documentation | `BuiltinDocs`, `ProduceDocs`, and `ProduceDocsByID` return owned dictionaries and optional documentation strings. Builtin cache initialization is internal and synchronized. |
 | Runtime values | Constructors copy concrete input IR; `Expression` returns a deep structural expression copy. Closures and values containing closures retain their execution owner. |
@@ -169,8 +170,8 @@ constructor, which starts at one.
 ## Concurrency and cancellation
 
 Use independent parsing/analysis sessions and execution owners for concurrent
-jobs. An `insdict.Dict`, mutable source map, resolver, visitor instance, ID
-generator, inferrer, or incremental analysis state is not synchronized for
+jobs. An `insdict.Dict`, mutable source map, resolver, visitor or transformer,
+ID generator, inferrer, or incremental analysis state is not synchronized for
 concurrent mutation. Read-only source files and immutable concrete runtime values
 can be shared. Stateful evaluation, closure application, serialization with a
 shared object-hash state, RNG draws and trace listener callbacks belong to the
@@ -186,8 +187,8 @@ Displaying a compact domain can enumerate it and can fail or be canceled; use
 
 Context-taking evaluation, simulation, tests, domain iteration and checked
 serialization check cancellation while doing supported work. Pure parsing,
-name resolution, static inference, IR traversal/printing and compilation APIs
-without a context run synchronously. `NewProjectEvaluator` and
+name resolution, static inference, IR traversal, transformation, printing and
+compilation APIs without a context run synchronously. `NewProjectEvaluator` and
 `EvaluatePureModules` check context around static preparation, which does not
 make an individual parse/inference/flattening pass preemptible. Caller callbacks,
 resolvers and I/O must cooperate; a context cannot interrupt an arbitrary blocked
@@ -254,6 +255,7 @@ re-exports:
 | Package/API | Contract |
 | --- | --- |
 | `quint.NewREPLSession` | Retains declarations, IDs, static tables, runtime state, history and RNG across sequential `Evaluate` calls; `Load`, `Reload`, `Save`, replay hooks and value formatting share that session. |
+| `quint.IRTransformer` | General enter/exit replacement hooks for modules, declarations, definitions, expressions, types and rows, corresponding to the source's separate `ir/IRTransformer` module. Methods return independent transport IR and run synchronously. |
 | `quint.RuntimeDomain` | Compact finite/infinite domains with checked cardinality, membership, iteration, sampling and materialization. Explicit materialization/display can be expensive; infinite enumeration is an error. |
 | ITF helpers/`TraceWriter` | Encode/decode concrete traces, retain raw metadata, add headers and write caller-selected paths. `DecodeITFTrace` retains raw JSON independently of display IR; a zero-based `Loop` selects the final transition's target. |
 | `cli.Execute`/`cli.RunREPL` | Accept a context and caller-supplied streams and return exit statuses. The stream REPL cannot cancel an arbitrary blocked input read. Shared streams require caller synchronization. |
@@ -266,3 +268,13 @@ Backend dependencies are supplied by the local Go workspace described in
 [README.md](README.md). No Node, Rust, Scala, Java or network service is needed
 for these Go APIs. Saved TypeScript fixtures validate their supported behavior;
 fixture regeneration is a separate development task.
+
+`IRTransformer` traverses the children of an enter replacement and does not
+traverse an exit replacement again. It copies type-application constructors and
+instance override parameters without transforming them, matching the source.
+Sum fields must remain concrete rows and a local let definition must remain an
+operator. The transformer has no definition-depth state. Inputs and replacements
+must be finite, acyclic IR; traversal errors do not replace full validation, and
+exit replacements remain the callback's responsibility. Transform before
+building dependent resolution, analysis or execution state, or rebuild that
+state after changing names, IDs or structure.
