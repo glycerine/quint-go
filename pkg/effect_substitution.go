@@ -57,12 +57,14 @@ func cloneEntity(e Entity) Entity {
 // whole effect is unchanged. Simplification must happen between passes: resolving
 // a self-containing union recursively changes both its members and its shape.
 func ApplyEffectSubstitution(subs []EffectSubstitution, input Effect) (Effect, error) {
-	subs = append([]EffectSubstitution{}, subs...)
-	for i := range subs {
-		if subs[i].Kind == "entity" {
-			subs[i].Entity = cloneEntity(subs[i].Entity)
-		} else if subs[i].Kind == "effect" {
-			subs[i].Effect = cloneEffectSubstitutionValue(subs[i].Effect)
+	if effectSubstitutionsNeedPreparation(subs) {
+		subs = append([]EffectSubstitution{}, subs...)
+		for i := range subs {
+			if subs[i].Kind == "entity" {
+				subs[i].Entity = cloneEntity(subs[i].Entity)
+			} else if subs[i].Kind == "effect" {
+				subs[i].Effect = cloneEffectSubstitutionValue(subs[i].Effect)
+			}
 		}
 	}
 	var apply func(Effect) (Effect, error)

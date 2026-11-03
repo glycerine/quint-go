@@ -3648,3 +3648,10 @@ word "retained" in the commit message.
   closing P1.4/P1.7/P3.5 using raw schemas, large IDs, refresh ownership and
   incremental identity suites. The general IR replacement transformer remains
   explicit P1.5/P10.7 work; safe pretty-printer differences are documented.
+
+- 2026-11-02: Avoided eager substitution cloning when occurrence identities are
+  already initialized; bare occurrences keep the previous preparation path. An
+  independent old-formula oracle compares59 cases and15 guard cases, shared/distinct
+  identities, owned mutation and concurrent readers. Focused0.010s/race1.371s pass.
+  Representative command benchmark improves4.3% CPU/3.2% bytes;64-binding
+  microbenchmarks improve70–75% CPU/92% bytes. Aggregate timing remains unmet.
