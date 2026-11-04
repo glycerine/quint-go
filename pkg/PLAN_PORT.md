@@ -117,6 +117,15 @@ reporting that evaluates expressions will also depend on P7.
 - [ ] P0.4 Wire local development to `~/apalache/pkg` using a local workspace
   or development-only replacement; choose a pinned dependency version for
   reproducible builds without committing a machine-specific absolute path.
+  - [x] Local development uses the git-ignored root `go.work`; the tracked
+    `pkg/go.mod` does not require `github.com/glycerine/apalache-go`, so a
+    standalone `GOWORK=off go build ./...` fails by design.
+  - [ ] Pinned requirement. The newest published module tag `pkg/v0.62.4-go-001`
+    (commit 9942dda3b) compiles with the port but fails 53 test cases (top-level and subtests) with
+    `Go command executor does not support qnt source format`. The port needs the
+    unpublished local checker commits (7 after that tag, including the qnt
+    input and the TLA `@type` fix). Pinning requires publishing those commits to
+    `origin` or tagging a new `pkg/` version, which needs the owner's decision.
 - [x] P0.5 Feed an existing flattened, typed Quint fixture through the Go
   checker's importer, production checking path, and TLA output path. Establish
   safe, violating, and malformed-input cases without writing a new parser.
