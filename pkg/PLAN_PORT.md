@@ -721,7 +721,17 @@ TypeScript or Rust evaluator process.
     "quantifies over a temporal formula". The CLI path reports it (checked with
     `quint verify --temporal=live` on `Set(0,1).forall(n => eventually(x == n))`).
     Tests: `TestSourceToGoApalacheUnsupportedTemporalProperties`.
-  - [ ] Broader temporal scope/corpus and bounded interpretation audit.
+  - [x] Nondeterministic branching temporal corpus: `x' = x+1` or reset to 0
+    (`TestSourceToGoApalacheBranchingTemporalCorpus`, gated on
+    `QUINT_CORPUS_TESTS=1`). Two violated properties (`eventually(x == 2)`,
+    `0 leadsTo 2`) are refuted by the stay-at-zero path; three satisfied
+    properties hold on every path. Each counterexample is checked step by step
+    against the legal transition relation, and any lasso loop index is checked
+    to close a legal transition.
+  - [x] Unsupported shapes already covered: weak/strong fairness and temporal
+    quantifiers are rejected before the checker runs.
+  - [ ] Scala cross-check of the branching corpus and nested temporal operators
+    beyond `always(p implies eventually q)`.
 - [ ] P9.6 Map checker failures and counterexamples to Quint diagnostics and
   ITF, preserving variable names, integer values, loop information, and source
   references where available. Port individual-invariant violation reporting
