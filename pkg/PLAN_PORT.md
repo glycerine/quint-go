@@ -743,6 +743,20 @@ TypeScript or Rust evaluator process.
     human CLI names it after "Found an issue" (`❌ eventuallyFive`); test
     `TestVerifyOutputNamesViolatedTemporalProperty`. Per-property attribution
     for comma-separated lists and ITF `variables-to-expressions` rendering remain open.
+  - [x] Comma-separated temporal attribution matches upstream: `cli/verify.go`
+    names a property only for a single `--temporal` value, and upstream
+    `cliCommands.ts:614` conjoins the list into one `temporal q::temporalProps`
+    without naming individual violations.
+  - [ ] ITF `variables-to-expressions` text gap (2026-11-04 comparison): Go's
+    temporal tableau writes ASCII (`<>(x = 5)`, `__saved_<>(x = 5)`) via
+    `FormatTLAExpression` in `~/apalache/pkg/temporal_tableau.go:161`, while
+    Scala Apalache v0.62.2 writes the UTF form (`◇(x = 5)`,
+    `__saved_◇(x = 5)`). Quint's TS never reads this field, so the impact is
+    limited to ITF metadata. The fix belongs in the pinned `~/apalache/pkg`
+    module (`FormatUTFExpression`, with `temporal_tableau_test.go` updated), so
+    it waits on the P0.4 pin decision. Scala's temporal run of the same
+    counter spec also reported a state-invariant violation rather than a lasso;
+    that path is not yet compared.
   - [x] Multi-state loop index: a 3-state cycle after a prefix (`0→1→2→1`,
     `y` held constant) emits `loop: 2`, and the final transition returns to
     State 2 as the trace requires (2026-11-04 manual run).
