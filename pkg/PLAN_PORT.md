@@ -730,7 +730,13 @@ TypeScript or Rust evaluator process.
     false indices, inline expressions, imports/overrides and reporting failures.
   - [x] Individual-invariant CLI labels and JSON attribution for multiple or
     inductive ordinary predicates; reporting failures become visible warnings.
+  - [x] Human CLI lasso output: after the example execution, prints
+    "The final transition returns to [State N]." from the ITF `loop` field
+    (verbosity >= 2); test `TestVerifyPrintCounterExampleShowsLassoLoopTarget`;
+    end-to-end run prints `[State 3]` for the lasso fixture.
   - [ ] Rich variable/source rendering; Shai omits temporal loop indices.
+  - [ ] Stronger lasso validation: check the final state against `__saved_*`
+    values and multi-state loop indices beyond the single fixture.
 - [ ] P9.7 Implement `compile --target=tlaplus` through Go Apalache and port
   `tlaplusPostprocessing.ts`; compare parsed TLA semantics and required textual
   output against reference fixtures.
