@@ -8,6 +8,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	apalacheconfig "github.com/glycerine/apalache-go"
 	"io"
 	"os"
 	"path/filepath"
@@ -131,6 +132,10 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 		}
 		if !json.Valid(loaded) || len(bytes.TrimSpace(loaded)) == 0 || bytes.TrimSpace(loaded)[0] != '{' {
 			return fail(fmt.Errorf("Apalache configuration must be a JSON object"))
+		}
+		// Report upstream's configuration-key diagnostics, e.g. legacy Apalache configs.
+		if parsed := apalacheconfig.ParseApalacheConfigJSON(string(loaded), options.config); !parsed.IsSuccess() {
+			return fail(errors.New(strings.Join(parsed.Errors(), "\n")))
 		}
 	}
 	abs, err := filepath.Abs(options.input)

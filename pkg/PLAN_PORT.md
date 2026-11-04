@@ -878,9 +878,10 @@ Build these items alongside the phases that supply their command behavior.
   - [ ] Full upstream command transcript/format compatibility corpus.
     Opt-in `TestUpstreamIntegrationTranscripts` (`QUINT_CORPUS_TESTS=1`) runs the
     executable `in` blocks of `lang/io.md` and `verification.md` against the Go binary
-    and compares exit, stdout and stderr exactly, as txm does. Current result: 86 pass,
-    4 fail. The failures are deliberate port scope or known differences: legacy
-    Apalache config validator text (Go Apalache reports `json: unknown field`), explicit
+    and compares exit, stdout and stderr exactly, as txm does. Current result: 87 pass,
+    3 fail. Legacy Apalache config keys now use the sibling checker's upstream
+    diagnostic before any checker runs (`cli/verify_legacy_config_test.go`). The
+    remaining failures are deliberate port scope or known differences: explicit
     `--server-endpoint` rejection, Go TLC rejecting `--max-steps`, and the `Variants!`
     qualifier. Other transcript suites (`run`, `test`, `repl`, `distribution`) are not
     yet wired.
