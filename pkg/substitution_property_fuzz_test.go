@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"reflect"
+	"sort"
 	"strconv"
 	"testing"
 )
@@ -292,13 +293,71 @@ func substitutionPropertyEffectLaws(t *testing.T, seed []byte) {
 	}
 }
 
+// substitutionPropertyWire compares effects by value. Upstream treats a concrete
+// entity's state variables as a set (effects/base.ts compares them by name), so
+// their order is canonicalized here; every other list keeps its order.
 func substitutionPropertyWire(t *testing.T, value any) []byte {
 	t.Helper()
 	wire, err := json.Marshal(value)
 	if err != nil {
 		t.Fatal("invalid property-generated structure", err)
 	}
-	return wire
+	var generic any
+	if err = json.Unmarshal(wire, &generic); err != nil {
+		t.Fatal("invalid property-generated wire", err)
+	}
+	canonicalizeStateVariables(generic)
+	canonical, err := json.Marshal(generic)
+	if err != nil {
+		t.Fatal("invalid canonical wire", err)
+	}
+	return canonical
+}
+
+func canonicalizeStateVariables(value any) {
+	switch typed := value.(type) {
+	case map[string]any:
+		for key, child := range typed {
+			if list, ok := child.([]any); ok && key == "stateVariables" {
+				typed[key] = substitutionPropertySet(list)
+			}
+			canonicalizeStateVariables(child)
+		}
+	case []any:
+		for _, child := range typed {
+			canonicalizeStateVariables(child)
+		}
+	}
+}
+
+// substitutionPropertySet sorts a state-variable list and drops exact duplicates.
+// Upstream compares these lists by name membership, so repetition is not a value.
+func substitutionPropertySet(list []any) []any {
+	keys := make([]string, len(list))
+	for i, item := range list {
+		encoded, _ := json.Marshal(item)
+		keys[i] = string(encoded)
+	}
+	sort.Sort(substitutionPropertySorted{values: list, keys: keys})
+	out := make([]any, 0, len(list))
+	for i := range list {
+		if i == 0 || keys[i] != keys[i-1] {
+			out = append(out, list[i])
+		}
+	}
+	return out
+}
+
+type substitutionPropertySorted struct {
+	values []any
+	keys   []string
+}
+
+func (s substitutionPropertySorted) Len() int           { return len(s.values) }
+func (s substitutionPropertySorted) Less(i, j int) bool { return s.keys[i] < s.keys[j] }
+func (s substitutionPropertySorted) Swap(i, j int) {
+	s.values[i], s.values[j] = s.values[j], s.values[i]
+	s.keys[i], s.keys[j] = s.keys[j], s.keys[i]
 }
 
 type substitutionPropertyBinding struct {
