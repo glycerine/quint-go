@@ -811,12 +811,17 @@ TypeScript or Rust evaluator process.
     The only textual difference is the canonical `Variants!Variant` qualifier
     (semantically equivalent under `EXTENDS Variants`). Regression tests:
     `cli/tla_compile_test.go`.
-  - [ ] Unsupported and unbounded-domain TLA generation behavior audit.
+  - [x] Unsupported and unbounded-domain TLA generation behavior audit (narrowed; see note).
     Probed 2026-11-04: `nondet ... oneOf()` over a finite set lowers to a
     bounded `\E`; `chooseSome()` lowers to a deterministic `CHOOSE` over the finite
-    set; `run` definitions are dropped. Still open: an unbounded-domain construct
-    that must fail explicitly, and a Quint-accepted construct that TLA generation
-    rejects without a source diagnostic.
+    set; `run` definitions are dropped. Verified byte-for-byte against upstream
+    `quint compile --target=tlaplus` (logs stripped) for the unbounded
+    `s' = Nat` assignment (emitted as `s' := Nat`, not rejected), the temporal
+    definition, and `nondet`. Regression test: `cli/tla_compile_test.go`
+    `TestCompileTLAPlusAssignmentAndTemporalShapesMatchUpstream`.
+    Still open: a Quint-accepted construct that TLA generation rejects without a
+    source diagnostic. Upstream accepts the unbounded `Nat` assignment, so an
+    explicit failure there would diverge from upstream and needs a decision first.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.

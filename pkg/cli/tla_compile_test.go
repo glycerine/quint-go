@@ -39,3 +39,24 @@ func TestCompileTLAPlusReportsPreparationDiagnostics(t *testing.T) {
 		t.Fatal(stderr)
 	}
 }
+
+// Assignment steps use the Apalache `:=` form, matching upstream
+// verification.md. Temporal definitions and unbounded set assignments are
+// emitted as-is rather than rejected, also matching upstream output.
+func TestCompileTLAPlusAssignmentAndTemporalShapesMatchUpstream(t *testing.T) {
+	t.Parallel()
+	path := coreTestFile(t, "shapes.qnt", "module M {\n  var x: int\n  var s: Set[int]\n  action init = all { x' = 0, s' = Set(1) }\n  action step = all { x' = x + 1, s' = Nat }\n  temporal live = eventually(x == 2)\n}")
+	code, stdout, stderr := coreInvoke(t, "compile", path, "--target=tlaplus", "--verbosity=0")
+	if code != 0 || stderr != "" {
+		t.Fatal(code, stdout, stderr)
+	}
+	for _, want := range []string{
+		"step == x' := x + 1 /\\ s' := Nat\n",
+		"live == <>(x = 2)\n",
+		"init == x = 0 /\\ s = {1}\n",
+	} {
+		if !strings.Contains(stdout, want) {
+			t.Fatalf("missing %q in:\n%s", want, stdout)
+		}
+	}
+}
