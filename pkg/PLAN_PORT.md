@@ -985,6 +985,11 @@ any remaining TypeScript client code is distinguished from language-server logic
 - [ ] P12.5 Benchmark parsing, inference, flattening, large collections,
   simulation throughput, and checker handoff; track allocations and peak
   memory against recorded baselines before optimizing.
+  - [x] 2026-11-04 baseline: all 145 `go test -bench` results (builtin signatures,
+    dynamic type decoding, effect substitution, runtime normalization, parsing,
+    and CLI preparation) are recorded in `benchmarks/baseline-2026-11-04.txt`
+    with ns/op, B/op and allocs/op. Peak memory and checker-handoff throughput
+    are not yet measured.
   - [x] Profiled the default suite and removed repeated fixed-builtin type
     parsing with bounded, concurrency-safe templates and caller-owned copies;
     retained uncached variable arities and recorded warm signature benchmarks.
