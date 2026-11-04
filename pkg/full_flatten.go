@@ -20,12 +20,12 @@ type FlatteningResult struct {
 // sources and analysis metadata when creating instance definitions.
 func FlattenModules(modules []Module, table *insdict.Dict[ID, LookupDefinition], ids *IDGenerator, sources SourceMap, analysis AnalysisOutput) (FlatteningResult, error) {
 	var sourceGraph *runtimeSourceGraph
-	// Cell bindings and synthetic action frames need original source identity.
-	// Other pure projects avoid an extra graph copy and name-resolution pass.
+	// Cell bindings and recorded user calls need original source identity.
+	// Builtin-only pure projects avoid an extra graph and name-resolution pass.
 	needsSourceGraph := false
 	for _, module := range modules {
 		for _, declaration := range module.Declarations {
-			if declaration.Kind == "var" || declaration.Kind == "instance" || declaration.Expr != nil && (declaration.Qualifier == Action && declaration.Expr.Kind != "lambda" || runtimeHasSourceAction(*declaration.Expr)) {
+			if declaration.Kind == "var" || declaration.Kind == "instance" || declaration.Expr != nil && (declaration.Qualifier == Action && declaration.Expr.Kind != "lambda" || runtimeHasSourceAction(*declaration.Expr) || runtimeHasSourceCall(*declaration.Expr, table)) {
 				needsSourceGraph = true
 			}
 		}
