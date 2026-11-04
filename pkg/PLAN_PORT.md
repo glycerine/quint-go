@@ -738,8 +738,12 @@ TypeScript or Rust evaluator process.
   - [x] Multi-state loop index: a 3-state cycle after a prefix (`0→1→2→1`,
     `y` held constant) emits `loop: 2`, and the final transition returns to
     State 2 as the trace requires (2026-11-04 manual run).
-  - [ ] Stronger lasso validation: check the final state against `__saved_*`
-    values.
+  - [x] Stronger lasso validation: `validate_witness.py` now checks that the
+    final transition is a legal step back to `states[loop]` and that the cycle
+    avoids the liveness target. A trace whose successor is `loop` is accepted
+    even when the final state differs from `states[loop]`; equality is not the
+    right test. Tampered loop indexes are rejected. The `__saved_*` values are
+    not exported in ITF, so the check is trace-side only.
 - [ ] P9.7 Implement `compile --target=tlaplus` through Go Apalache and port
   `tlaplusPostprocessing.ts`; compare parsed TLA semantics and required textual
   output against reference fixtures.
