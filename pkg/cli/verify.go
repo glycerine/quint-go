@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/glycerine/insdict"
 	quint "github.com/glycerine/quint-go/pkg"
@@ -28,6 +29,8 @@ type verifyOptions struct {
 	maxSteps, verbosity                                     int
 	randomTransitions                                       bool
 	invariants                                              verifyStringFlags
+	// started anchors the elapsed time printed with a violation summary.
+	started time.Time
 }
 
 type verifyStringFlags []string
@@ -50,6 +53,7 @@ type verifyStage struct {
 	Main               string                       `json:"main,omitempty"`
 	Outcome            apalache.CheckOutcome        `json:"outcome,omitempty"`
 	Explanation        string                       `json:"explanation,omitempty"`
+	BackendLog         string                       `json:"-"`
 	Errors             []quint.ErrorMessage         `json:"errors"`
 	Trace              json.RawMessage              `json:"trace,omitempty"`
 	Phases             []apalache.VerificationPhase `json:"phases,omitempty"`
@@ -231,7 +235,10 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 			stage.Explanation = fmt.Sprintf("TLC explored all %d distinct states; no violation found.", result.DistinctStates)
 		case gotlc.Violation, gotlc.Deadlock:
 			stage.Status = "violation"
-			stage.Explanation = fmt.Sprintf("TLC found a %s.\n%s", result.Outcome, result.Log)
+			// Upstream reports every TLC violation exit status (10-14) with this text;
+			// TLC's own log is shown only at high verbosity.
+			stage.Explanation = "found a counterexample"
+			stage.BackendLog = result.Log
 		default:
 			return fail(fmt.Errorf("invalid TLC outcome %q", result.Outcome))
 		}
@@ -279,7 +286,7 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 }
 
 func verifyParseOptions(args []string, stdout, stderr io.Writer) (verifyOptions, bool, error) {
-	options := verifyOptions{}
+	options := verifyOptions{started: time.Now()}
 	args, err := cliNormalizeOptions("verify", args)
 	if err != nil {
 		return options, false, err
@@ -491,10 +498,24 @@ func verifyOutputContext(ctx context.Context, options verifyOptions, stage verif
 			return 1
 		}
 	} else {
-		fmt.Fprintf(stderr, "%s %s\n", terminalStyle(ctx, "["+stage.Status+"]", "red"), stage.Explanation)
 		for _, diagnostic := range stage.Errors {
 			fmt.Fprintln(stderr, terminalStyle(ctx, diagnostic.Explanation, "red"))
 		}
+		if stage.Status == "violation" {
+			// TLC's own messages reach stdout, as upstream's ToolIO does, at verbosity 3 and above.
+			if options.verbosity >= 3 && stage.BackendLog != "" {
+				fmt.Fprintln(stdout, stage.BackendLog)
+			}
+			if options.verbosity >= 2 {
+				var elapsed int64
+				if !options.started.IsZero() {
+					elapsed = time.Since(options.started).Milliseconds()
+				}
+				fmt.Fprintf(stdout, "\n%s Found an issue (%dms).\n", terminalStyle(ctx, "[violation]", "red"), elapsed)
+			}
+		}
+		// Upstream prints the summary as `error: <explanation>` after diagnostics.
+		fmt.Fprintf(stderr, "%s %s\n", terminalStyle(ctx, "error:", "red"), stage.Explanation)
 		for _, label := range stage.ViolatedInvariants {
 			fmt.Fprintln(stdout, terminalStyle(ctx, "❌ "+label, "red"))
 		}

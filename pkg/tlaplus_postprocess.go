@@ -4,7 +4,97 @@ import "strings"
 
 // PostprocessTLA repairs the upstream printer's single-angle action syntax.
 // Comments, strings, and already-correct double-angle actions are preserved.
-func PostprocessTLA(tla string) string { return FixAngleActions(tla) }
+func PostprocessTLA(tla string) string {
+	return FixAppliedLetOperators(FixAngleActions(tla))
+}
+
+// FixAppliedLetOperators rewrites `(LET D IN f)(args)`, which SANY and TLC reject,
+// as `(LET D IN f(args))`. The rewrite applies only when f is an operator with
+// parameters defined by D and args is non-empty, so meaning is unchanged.
+func FixAppliedLetOperators(tla string) string {
+	for {
+		rewritten, changed := rewriteFirstAppliedLet(tla)
+		if !changed {
+			return tla
+		}
+		tla = rewritten
+	}
+}
+
+// rewriteFirstAppliedLet performs at most one rewrite, scanning code outside comments and strings.
+func rewriteFirstAppliedLet(tla string) (string, bool) {
+	code := tlaCodeMask(tla)
+	for start := 0; start < len(tla); start++ {
+		if tla[start] != '(' || !code[start] || !strings.HasPrefix(tla[start+1:], "LET") {
+			continue
+		}
+		if start+4 >= len(tla) || !isTLASpace(tla[start+4]) {
+			continue
+		}
+		end := matchingTLAClose(tla, code, start, '(', ')')
+		if end < 0 || end+1 >= len(tla) || tla[end+1] != '(' || !code[end+1] {
+			continue
+		}
+		callEnd := matchingTLAClose(tla, code, end+1, '(', ')')
+		if callEnd < 0 {
+			continue
+		}
+		args := strings.TrimSpace(tla[end+2 : callEnd])
+		body := tla[start+1 : end]
+		trimmed := strings.TrimRight(body, " \t\r\n")
+		name := trailingTLAIdentifier(trimmed)
+		if name == "" || args == "" {
+			continue
+		}
+		head := strings.TrimRight(trimmed[:len(trimmed)-len(name)], " \t\r\n")
+		if !strings.HasSuffix(head, "IN") || (len(head) > 2 && isTLAIdentifierByte(head[len(head)-3])) {
+			continue
+		}
+		if !strings.Contains(body, name+"(") {
+			continue
+		}
+		rewritten := tla[:start] + "(" + trimmed + "(" + args + ")" + body[len(trimmed):] + ")" + tla[callEnd+1:]
+		return rewritten, true
+	}
+	return tla, false
+}
+
+// matchingTLAClose returns the index of the parenthesis closing the one at open, or -1.
+func matchingTLAClose(tla string, code []bool, open int, opener, closer byte) int {
+	depth := 0
+	for i := open; i < len(tla); i++ {
+		if !code[i] {
+			continue
+		}
+		switch tla[i] {
+		case opener:
+			depth++
+		case closer:
+			depth--
+			if depth == 0 {
+				return i
+			}
+		}
+	}
+	return -1
+}
+
+func trailingTLAIdentifier(text string) string {
+	i := len(text)
+	for i > 0 && isTLAIdentifierByte(text[i-1]) {
+		i--
+	}
+	if i == len(text) || (text[i] >= '0' && text[i] <= '9') {
+		return ""
+	}
+	return text[i:]
+}
+
+func isTLAIdentifierByte(c byte) bool {
+	return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_'
+}
+
+func isTLASpace(c byte) bool { return c == ' ' || c == '\t' || c == '\n' || c == '\r' }
 
 // FixAngleActions turns <A>_v into <<A>>_v outside comments and strings.
 func FixAngleActions(tla string) string {

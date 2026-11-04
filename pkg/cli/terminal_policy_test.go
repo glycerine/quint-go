@@ -86,7 +86,7 @@ func TestTerminalVerifyReportsUseInvocationContext(t *testing.T) {
 	stdout.Reset()
 	stderr.Reset()
 	stage := verifyStage{Status: "violation", Explanation: "Found an issue", Errors: []quint.ErrorMessage{{Explanation: "detail"}}, ViolatedInvariants: []string{"safe"}, Warnings: []string{"warning"}}
-	if status := verifyOutputContext(ctx, verifyOptions{verbosity: 1}, stage, &stdout, &stderr); status != 1 || stdout.String() != "\x1b[31m❌ safe\x1b[39m\n" || stderr.String() != "\x1b[31m[violation]\x1b[39m Found an issue\n\x1b[31mdetail\x1b[39m\n\x1b[33m[warning] warning\x1b[39m\n" {
+	if status := verifyOutputContext(ctx, verifyOptions{verbosity: 1}, stage, &stdout, &stderr); status != 1 || stdout.String() != "\x1b[31m❌ safe\x1b[39m\n" || stderr.String() != "\x1b[31mdetail\x1b[39m\n\x1b[31merror:\x1b[39m Found an issue\n\x1b[33m[warning] warning\x1b[39m\n" {
 		t.Fatalf("verify failure status=%d out=%q err=%q", status, stdout.String(), stderr.String())
 	}
 }

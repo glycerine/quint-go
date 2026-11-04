@@ -76,8 +76,8 @@ func TestVerifyTLCResultsAndFailures(t *testing.T) {
 		want   string
 		status string
 	}{
-		{"violation", gotlc.Result{Complete: true, Outcome: gotlc.Violation, Log: "x = 1"}, nil, "TLC found a violation", "violation"},
-		{"deadlock", gotlc.Result{Complete: true, Outcome: gotlc.Deadlock, Log: "x = 2"}, nil, "TLC found a deadlock", "violation"},
+		{"violation", gotlc.Result{Complete: true, Outcome: gotlc.Violation, Log: "x = 1"}, nil, "found a counterexample", "violation"},
+		{"deadlock", gotlc.Result{Complete: true, Outcome: gotlc.Deadlock, Log: "x = 2"}, nil, "found a counterexample", "violation"},
 		{"cancel", gotlc.Result{}, context.Canceled, "context canceled", "failure"},
 		{"error", gotlc.Result{}, errors.New("native failure"), "native failure", "failure"},
 		{"incomplete", gotlc.Result{Outcome: gotlc.Safe}, nil, "did not complete", "failure"},
@@ -92,7 +92,12 @@ func TestVerifyTLCResultsAndFailures(t *testing.T) {
 			})
 			var stdout, stderr bytes.Buffer
 			code := verifyWithCheckers(context.Background(), []string{input, "--backend=tlc"}, &stdout, &stderr, nil, checker)
-			if code != 1 || stdout.Len() != 0 || !strings.Contains(stderr.String(), tc.want) {
+			wantStdout := ""
+			if tc.status == "violation" {
+				// Upstream prints the summary to stdout and the error line to stderr.
+				wantStdout = "[violation] Found an issue"
+			}
+			if code != 1 || !strings.Contains(stdout.String(), wantStdout) || (wantStdout == "" && stdout.Len() != 0) || !strings.Contains(stderr.String(), tc.want) {
 				t.Fatal(code, stdout.String(), stderr.String())
 			}
 			out := filepath.Join(t.TempDir(), "result.json")
@@ -170,7 +175,7 @@ func TestVerifyTLCActualGoChecker(t *testing.T) {
 		safe     string
 		wantCode int
 		want     string
-	}{{"x>=0", 0, "all 2 distinct states"}, {"x==0", 1, "TLC found a violation"}} {
+	}{{"x>=0", 0, "all 2 distinct states"}, {"x==0", 1, "found a counterexample"}} {
 		input := verifyTestSource(t, "module M { var x:int action init=x'=0 action step=x'=1-x val safe="+tc.safe+" }")
 		var stdout, stderr bytes.Buffer
 		code := commandVerify(context.Background(), []string{input, "--backend=tlc", "--invariant=safe"}, &stdout, &stderr)
@@ -288,7 +293,7 @@ func TestVerifyTLCActualTemporalCorpus(t *testing.T) {
 				if stderr.Len() != 0 || !strings.Contains(stdout.String(), "all 2 distinct states") {
 					t.Fatal(stdout.String(), stderr.String())
 				}
-			} else if stdout.Len() != 0 || !strings.Contains(stderr.String(), "TLC found a violation") {
+			} else if stdout.Len() != 0 || !strings.Contains(stderr.String(), "found a counterexample") {
 				t.Fatal(stdout.String(), stderr.String())
 			}
 		})

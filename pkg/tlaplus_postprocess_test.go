@@ -40,3 +40,57 @@ func TestFixAngleActions(t *testing.T) {
 		t.Fatal(got)
 	}
 }
+
+func TestFixAppliedLetOperatorsRewritesOnlyApplicationsOfDefinedOperators(t *testing.T) {
+	t.Parallel()
+	for _, tc := range []struct{ name, in, want string }{
+		{
+			name: "single-line applied lambda",
+			in:   `v == (LET __QUINT_LAMBDA_1(old) == IF a THEN "black" ELSE old IN __QUINT_LAMBDA_1)(y[i])`,
+			want: `v == (LET __QUINT_LAMBDA_1(old) == IF a THEN "black" ELSE old IN __QUINT_LAMBDA_1(y[i]))`,
+		},
+		{
+			name: "multi-line definition with nested parentheses and two arguments",
+			in:   "v == (LET f(a, b) == (a + b)\n  IN f)(g(1), 2)\n",
+			want: "v == (LET f(a, b) == (a + b)\n  IN f(g(1), 2))\n",
+		},
+		{
+			name: "defined name is not an operator with parameters",
+			in:   `v == (LET d == 1 IN d)(2)`,
+			want: `v == (LET d == 1 IN d)(2)`,
+		},
+		{
+			name: "applied name is not the defined operator",
+			in:   `v == (LET f(a) == a IN g)(1)`,
+			want: `v == (LET f(a) == a IN g)(1)`,
+		},
+		{
+			name: "empty argument list is left unchanged",
+			in:   `v == (LET f(a) == a IN f)()`,
+			want: `v == (LET f(a) == a IN f)()`,
+		},
+		{
+			name: "comments and strings are not rewritten",
+			in:   "\\* (LET f(a) == a IN f)(1)\n(* (LET f(a) == a IN f)(1) *)\nv == \"(LET f(a) == a IN f)(1)\"",
+			want: "\\* (LET f(a) == a IN f)(1)\n(* (LET f(a) == a IN f)(1) *)\nv == \"(LET f(a) == a IN f)(1)\"",
+		},
+		{
+			name: "identifier that merely ends with IN is not a LET",
+			in:   `v == (BLOCKLET f(a) == a IN f)(1)`,
+			want: `v == (BLOCKLET f(a) == a IN f)(1)`,
+		},
+	} {
+		if got := FixAppliedLetOperators(tc.in); got != tc.want {
+			t.Errorf("%s:\n got %q\nwant %q", tc.name, got, tc.want)
+		}
+	}
+}
+
+func TestPostprocessTLAAppliesBothRewrites(t *testing.T) {
+	t.Parallel()
+	in := "A_v == <A>_v\nv == (LET f(a) == a IN f)(1)\n"
+	want := "A_v == <<A>>_v\nv == (LET f(a) == a IN f(1))\n"
+	if got := PostprocessTLA(in); got != want {
+		t.Fatalf("got %q want %q", got, want)
+	}
+}
