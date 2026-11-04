@@ -711,8 +711,12 @@ TypeScript or Rust evaluator process.
     lasso checks; independently validate transition/property witnesses.
   - [x] Actual weak/strong fairness and quantified-temporal queries fail rather
     than reporting safety success.
-  - [ ] Loop-index metadata and dedicated quantified-temporal diagnostics;
-    broader temporal scope/corpus and bounded interpretation audit.
+  - [x] Loop-index metadata: the Apalache ITF writer emits a top-level `loop`
+    index (first state with `__InLoop` true, only when it holds through the last
+    state), verified on a lasso fixture (`loop: 3`); unit test
+    `TestLassoLoopIndexFromTemporalLoopFlag` in ~/apalache/pkg.
+  - [ ] Dedicated quantified-temporal diagnostics; broader temporal
+    scope/corpus and bounded interpretation audit.
 - [ ] P9.6 Map checker failures and counterexamples to Quint diagnostics and
   ITF, preserving variable names, integer values, loop information, and source
   references where available. Port individual-invariant violation reporting
