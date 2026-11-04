@@ -19,6 +19,21 @@ SPECS = {
     'twovar':   (lambda s: s['x'] == 0 and s['y'] == 0,
                  lambda s, t: t['x'] == s['x'] + 1 and t['y'] == s['y'] + 2,
                  lambda s: s['x'] + s['y'] != 9),
+    'guard':     (lambda s: s['x'] == 0,
+                 lambda s, t: s['x'] < 5 and t['x'] == s['x'] + 1,
+                 lambda s: s['x'] != 4),
+    'sum':       (lambda s: s['x'] == 0 and s['y'] == 0,
+                 lambda s, t: t['x'] == s['x'] + 1 and t['y'] == s['y'] + 1,
+                 lambda s: s['x'] + s['y'] < 10),
+    'tlcCounter': (lambda s: s['counter'] == 0,
+                 lambda s, t: s['counter'] < 3 and t['counter'] == s['counter'] + 1,
+                 lambda s: s['counter'] >= 0),
+    'toggle':   (lambda s: s['b'] is False,
+                 lambda s, t: t['b'] == (not s['b']),
+                 lambda s: not s['b']),
+    'safe':     (lambda s: s['x'] == 0,
+                 lambda s, t: t['x'] == (s['x'] + 1) % 4,
+                 lambda s: 0 <= s['x'] < 4),
 }
 
 def states(path):
