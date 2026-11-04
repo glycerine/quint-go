@@ -436,8 +436,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     scoped caches and override order with 34 typed/four runtime histories.
   - [x] Transported alias first-compilation order, including lazy branches and
     prepare-only selection, matches 15 source histories / 28 operations.
-  - [ ] Complete broader runtime-stack audit; imported callback lambda display
-    names still expose an unshadowing suffix in one saved pending history.
+  - [x] Preserve source callback names across pure-project flattening with 37
+    exact upstream histories/223 events; transported IR keeps flattened names.
+  - [ ] Complete broader runtime-stack/error-precedence audit.
   - [x] Eight execution-listener hooks, owned frames, verbosity filtering, run
     ranking, choice pruning, next-state placeholders and captured source calls.
 - [x] P7.3 Port scalar arithmetic, Boolean, and comparison builtins; test
@@ -705,7 +706,9 @@ TypeScript or Rust evaluator process.
   - [x] Compile CLI output through the Go TLA API.
   - [x] Compare six representative generated models (safe and violating) through
     assignment-IR Go Apalache and predicate-IR Go TLC:24 actual checker runs.
-  - [ ] Complete broader generated-TLA semantic compatibility tests.
+  - [ ] Complete broader generated-TLA semantic compatibility tests, including
+    applied-LET lambda output, signed division/modulo, foldr and allListsUpTo.
+    Resume audits have concrete failing witnesses for these categories.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.
@@ -875,6 +878,8 @@ any remaining TypeScript client code is distinguished from language-server logic
     bounded fuzzing passes 1,319,538 executions without failure.
   - [x] Public parser/LL-SLL recovery and five IR decoder families add 68 default
     property seeds; 219,906 bounded fuzz executions pass, including ownership.
+  - [x] Nested failed-action rollback adds 12 seeds/35,227 bounded executions,
+    checking pending/current values, stable cells and caller-owned IR.
 - [ ] P12.4 Run representative and broad corpus comparisons covering parsing,
   analysis, execution, and verification. Keep a fast deterministic suite and
   a separately scheduled expensive solver/corpus suite.
@@ -3397,7 +3402,7 @@ word "retained" in the commit message.
   1.146s and vet pass. Multi-field record operand borrowing remains an explicit
   unsupported recovery boundary; other CLI execution/check adapters stay separate.
 
-- 2026-11-02: Added REPL .save and load/reload expression replay with37 upstream
+- 2026-11-02: Added REPL .save and load/reload expression replay with 37 upstream
   oracle entries including18 real command streams. Owned source snapshots preserve
   raw line endings, selected-module markers, relative imports and accepted history
   while keeping RNG/closures/reload state independent of save. Verified closing
@@ -3800,3 +3805,22 @@ outside the checkout for resumption. One listener case shows a suffixed lambda
 parameter in an imported callback's display expression. It is pending evidence,
 not a passing test. No additional port work starts after this checkpoint until
 the user resumes the goal.
+
+## Resume checkpoint — 2026-11-03
+
+The user resumed the goal. Finish the parallel batches already in flight, then
+continue on the main thread only; do not start additional parallel work. The
+compatibility inventory and listener evidence saved at the pause are restored
+for reconciliation.
+
+The local Go Apalache checkout is now
+`1fbd0bd6848b4008766fb787e48d19d35b463838`, with g3 v0.0.12. Existing unknown and
+empty-execution tests exposed unsafe success fallthrough in its command service.
+The adapter now uses that service for strict decoding/typechecking and invokes
+the exported bounded checker once, preserving every outcome. The isolated
+default suite passes; broader compatibility and release gates remain open.
+
+A new rollback property target adds twelve fast seeds covering nested failed
+conjunctions/choices, pending/current register values, compiled cell identity and
+caller-owned IR. It passed 35,227 bounded fuzz executions, focused race/vet checks and the
+isolated full default suite.

@@ -211,3 +211,11 @@ Actual Go checker tests additionally cover nested instances with 40-digit intege
 zero/one-step verdicts and independently checked counterexamples, plus explicit
 unsupported input failure. The imported callback lambda display audit is pending;
 its unfinished evidence is not included in passing default tests.
+
+The resumed listener audit now passes 37 source histories/223 events in
+[runtime_listener_audit_test.go](runtime_listener_audit_test.go), including the
+previous imported callback display-name witness and explicit transported-IR pairs.
+[runtime_rollback_fuzz_test.go](runtime_rollback_fuzz_test.go) adds 12 fast failed
+action rollback seeds and passed 35,227 bounded executions. The compatibility
+surface inventory is detailed in [COMPATIBILITY_AUDIT.md](COMPATIBILITY_AUDIT.md);
+its inventories distinguish coverage from pending semantic requirements.
