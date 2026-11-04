@@ -722,6 +722,12 @@ TypeScript or Rust evaluator process.
   - [x] Lower finite `allListsUpTo` through existing set folds/maps/unions and
     sequence append at both Apalache boundaries; check bounds two, zero and
     negative through assignment-IR Go Apalache and generated-TLA native TLC.
+  - [x] Typed declarations print upstream-form `@type` comments through the Go
+    Apalache TLA command; five `verification.md` TLA+ transcripts were compared.
+    The only textual difference is the canonical `Variants!Variant` qualifier
+    (semantically equivalent under `EXTENDS Variants`). Regression tests:
+    `cli/tla_compile_test.go`.
+  - [ ] Unsupported and unbounded-domain TLA generation behavior audit.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.
@@ -3911,3 +3917,25 @@ checks order-sensitive right folds, a two-element domain with bound two, and
 zero/negative bounds. Full default tests, vet, and whitespace checks pass; the
 one-second aggregate runtime target remains unmet. Broader generated-TLA fixture
 parity and unsupported/unbounded-domain behavior remain open.
+
+## Declaration annotation and TLA diagnostic checkpoint — 2026-11-04
+
+Compared with the upstream `verification.md` TLA+ transcripts, `compile --target
+tlaplus` omitted the `@type` comments Scala Apalache prints for typed declarations.
+The cause was in the sibling Go Apalache checkout: its remote TLA command used the
+unannotated formatter, although a typed annotator already existed. That command now
+calls `FormatTLAModuleWithTypes` (uncommitted in `~/apalache`, with the
+`shai` service tests passing). The Quint CLI now prints the upstream-form `VARIABLE`
+and operator annotations.
+
+Preparation failures from `compile --target tlaplus` (for example QNT409 reuse of an
+init/step action) now render the source-located diagnostics the upstream transcript
+shows, without a trailing `error:` summary. A regression test covers both behaviors.
+
+Five upstream TLA+ transcripts were rerun. The `--main`, CLI `--init/--step/--invariant`,
+`clockSync6 --main clock_sync4`, and QNT409 error outputs match. The
+`ApalacheCompilation.qnt` output differs only in the Go checker's canonical
+`Variants!Variant` qualifier where upstream prints `Variant`. That is valid TLA+
+under `EXTENDS Variants`; stripping it textually could misread a user-defined
+`Variant`, so it remains a documented difference. P9.7 stays open for unsupported and
+unbounded-domain behavior, not for these transcripts.

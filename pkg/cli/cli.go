@@ -377,7 +377,7 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 				fmt.Fprintln(stderr, text)
 			}
 		}
-		if failure == nil || summary != failure.Error() {
+		if summary != "" && (failure == nil || summary != failure.Error()) {
 			fmt.Fprintln(stderr, "error:", summary)
 		}
 		return 1
@@ -492,6 +492,12 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 		if err != nil {
 			fields.Set("stage", "outputting target")
 			fields.Set("status", "error")
+			var preparation *apalache.PreparationError
+			if errors.As(err, &preparation) {
+				// Source-located preparation diagnostics are the whole report.
+				fields.Set("errors", coreResolveDiagnostics(coreCompatibilitySources(front), preparation.Diagnostics))
+				return fail("", nil)
+			}
 			return fail(err.Error(), err)
 		}
 		if _, err = io.WriteString(stdout, tla); err != nil {
