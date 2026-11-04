@@ -735,8 +735,11 @@ TypeScript or Rust evaluator process.
     (verbosity >= 2); test `TestVerifyPrintCounterExampleShowsLassoLoopTarget`;
     end-to-end run prints `[State 3]` for the lasso fixture.
   - [ ] Rich variable/source rendering; Shai omits temporal loop indices.
+  - [x] Multi-state loop index: a 3-state cycle after a prefix (`0→1→2→1`,
+    `y` held constant) emits `loop: 2`, and the final transition returns to
+    State 2 as the trace requires (2026-11-04 manual run).
   - [ ] Stronger lasso validation: check the final state against `__saved_*`
-    values and multi-state loop indices beyond the single fixture.
+    values.
 - [ ] P9.7 Implement `compile --target=tlaplus` through Go Apalache and port
   `tlaplusPostprocessing.ts`; compare parsed TLA semantics and required textual
   output against reference fixtures.
