@@ -30,7 +30,15 @@ type documentState struct {
 	cancel     context.CancelFunc
 	snapshot   *Snapshot
 }
-type requestState struct{ cancel context.CancelFunc }
+type requestState struct {
+	cancel          context.CancelFunc
+	document        *documentState
+	generation      uint64
+	contentModified bool
+}
+
+const lspContentModified = -32801
+
 type Server struct {
 	mu          sync.Mutex
 	options     Options
@@ -317,6 +325,7 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 		if previous := s.documents.Get(doc.URI); previous != nil && previous.cancel != nil {
 			previous.cancel()
 		}
+		s.invalidateDocumentRequestsLocked(doc.URI)
 		s.documents.Set(doc.URI, &documentState{Document: doc})
 		s.scheduleAllLocked(ctx, send)
 		s.mu.Unlock()
@@ -403,6 +412,7 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 		}
 		s.mu.Lock()
 		if state := s.documents.Get(params.TextDocument.URI); state != nil {
+			s.invalidateDocumentRequestsLocked(params.TextDocument.URI)
 			if state.cancel != nil {
 				state.cancel()
 			}
@@ -431,7 +441,9 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 		s.mu.Lock()
 		state := s.documents.Get(params.TextDocument.URI)
 		var snapshot *Snapshot
+		var generation uint64
 		if state != nil {
+			generation = state.generation
 			if message.Method == "textDocument/codeAction" {
 				// Quick fixes use the current open buffer and client-supplied
 				// diagnostics, including while this version is still analyzing.
@@ -456,7 +468,7 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 			return respond(send, message.ID, nil, nil)
 		}
 		requestCtx, cancel := context.WithCancel(ctx)
-		request := &requestState{cancel: cancel}
+		request := &requestState{cancel: cancel, document: state, generation: generation}
 		key, _ := requestKey(message.ID)
 		s.mu.Lock()
 		if s.exited || s.shutdown {
@@ -472,6 +484,11 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 			s.mu.Unlock()
 			cancel()
 			return fail(-32600, "Duplicate request id")
+		}
+		if s.documents.Get(params.TextDocument.URI) != state || state.generation != generation {
+			s.mu.Unlock()
+			cancel()
+			return respond(send, message.ID, nil, &ResponseError{Code: lspContentModified, Message: "Content modified"})
 		}
 		s.requests[key] = request
 		s.jobs.start()
@@ -489,17 +506,21 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 			default:
 				result, rpcError = semanticRequest(message.Method, message.Params, snapshot)
 			}
-			if requestCtx.Err() != nil {
+			s.mu.Lock()
+			current := s.documents.Get(request.document.URI)
+			stale := current != request.document || current.generation != request.generation
+			if request.contentModified || stale {
+				result = nil
+				rpcError = &ResponseError{Code: lspContentModified, Message: "Content modified"}
+			} else if requestCtx.Err() != nil {
 				result = nil
 				rpcError = &ResponseError{Code: -32800, Message: "Request cancelled"}
 			}
-			s.mu.Lock()
 			delete(s.requests, key)
-			exited := s.exited
-			s.mu.Unlock()
-			if !exited {
+			if !s.exited {
 				_ = respond(send, message.ID, result, rpcError)
 			}
+			s.mu.Unlock()
 		}()
 		return nil
 	}
@@ -523,6 +544,7 @@ func (s *Server) scheduleAllLocked(ctx context.Context, send func(any) error) {
 		}
 	}
 	for _, state := range s.documents.All() {
+		s.invalidateDocumentRequestsLocked(state.URI)
 		if state.cancel != nil {
 			state.cancel()
 		}
@@ -573,6 +595,18 @@ func (s *Server) scheduleAllLocked(ctx context.Context, send func(any) error) {
 			s.mu.Unlock()
 			s.options.Logger.Log("DEBUG", "Analysis completed for: %s, errors found: %d", document.URI, len(snapshot.Diagnostics))
 		}()
+	}
+}
+
+// A semantic result belongs to the source generation captured when its
+// request was accepted. Mark and cancel it before replacing a snapshot so its
+// eventual response reports ContentModified instead of returning stale edits.
+func (s *Server) invalidateDocumentRequestsLocked(uri string) {
+	for _, request := range s.requests {
+		if request.document != nil && request.document.URI == uri {
+			request.contentModified = true
+			request.cancel()
+		}
 	}
 }
 func (s *Server) cancelLocked() {

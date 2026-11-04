@@ -878,8 +878,12 @@ any remaining TypeScript client code is distinguished from language-server logic
     public-path cancellation coverage audit.
   - [x] LSP stream/job/close/wait lifecycle and REPL final-success cancellation
     preserve owned resources and pending state with deterministic regressions.
-  - [ ] Complete race/cancellation audit across every public integration path,
-    including stale semantic responses after a document changes or closes.
+  - [x] Semantic requests are bound to their document generation; in-flight
+    requests are cancelled on edits, reopen, close, and reanalysis, and return
+    `ContentModified` if their snapshot is stale. Deterministic rename tests
+    cover both `didChange` and `didClose`; the focused LSP race check passes.
+  - [ ] Complete the remaining race/cancellation audit across every public
+    integration path.
 - [ ] P12.3 Add targeted property/fuzz checks for parsers, JSON/ITF decoders,
   type/effect substitution, flattening, and evaluation rollback. Retain
   minimized regressions for discovered failures.
@@ -3848,5 +3852,5 @@ suite and vet pass against the resumed local checker revision. Core coverage is
 93.5%, CLI 93.2%, Apalache 94.3%, TLC 88.7%, LSP 92.0% and terminal 99.1%; generated
 parser and binary-entrypoint coverage have separate limits. Ordinary core runtime
 is about 1.2 seconds and CLI about 0.6 seconds, so the combined one-second target
-remains open. Next concrete work includes stale semantic-request responses and
-generated-TLA applied-lambda and signed arithmetic semantics.
+remains open. Next concrete work includes generated-TLA applied-lambda and
+signed arithmetic semantics.
