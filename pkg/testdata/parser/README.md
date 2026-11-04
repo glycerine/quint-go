@@ -1167,9 +1167,9 @@ kinds, override rename/reanalysis and receiver type changes. Full LSP coverage i
 
 The JavaScript regex corpus now contains 288 actual patterns and 19,624 outcomes,
 including consuming-loop capture reset, right-to-left lookbehind, backtracking
-and fixed nullable controls. Conservative width analysis explicitly rejects
-remaining nullable reset forms; matcher panics become errors before discovery
-executes tests. An independent exact-production audit matches Node on 1,004,998
+and fixed nullable controls. The resumed 376-pattern corpus adds 16,168 match
+and capture cases for general nullable repetitions; optional progress guards
+now match those reference results. Matcher panics remain explicit errors. An independent exact-production audit matches Node on 1,004,998
 accepted outcomes, with 71,280 unsupported outcomes and 48 panic probes recorded
 separately. The reset helper has 100% coverage.
 
@@ -1183,7 +1183,8 @@ metadata ActionTaken API keeps its qualified names; JSON fallback stays explicit
 
 `runtime_state_snapshot_alias.json` saves eight actual sources;
 `runtime_mbt_metadata.json` saves 12 typed sessions/64 operations plus six valid
-direct imports, with eight malformed direct imports explicitly pending. Their
+direct imports, with eight malformed direct imports tested separately as an
+explicit Go validation policy. Their
 generators verify analyzer status and preserve mutable snapshot and detached
 compiler-registration behavior. Public Go snapshot/direct APIs remain owned.
 `runtime_stateful_comparison.json` adds 48 actual TypeScript/Rust comparisons:
@@ -1195,9 +1196,9 @@ six Rust counter differences and one pending-state difference kept visible.
 `parser_record_recovery_fixtures.cjs`: temporary field/spread wrappers, later
 operand borrowing, duplicate/spread semantics, healthy records and raw source
 metadata/continued IDs. Three malformed upstream outputs contain null operands
-that the typed Go IR cannot represent; those cases compare the explicit
-SyntaxRecoveryError frontier and completed modules instead of counting full
-upstream IR as passing. Representable leaked temporary Tup nodes keep their
+that the typed Go IR cannot represent. Ten resumed cases now compare exact
+raw malformed JSON, diagnostics, source maps and continuing IDs through
+SyntaxRecoveryError.Raw; typed prefix results remain separate. Representable leaked temporary Tup nodes keep their
 upstream zero IDs. Recovery helper coverage is 100%.
 
 Native TLC classification tests run four actual evaluation-error and six
@@ -1295,3 +1296,22 @@ reference prefix parses. Scoped recovery inserts a missing component close at
 arrow delimiters while preserving default deletion; exact diagnostics, duplicate
 state occurrence references and per-parse IDs are checked. Private recovery
 helper coverage is100%; generated parser code remains unchanged.
+
+## Resumed batches — 2026-11-03
+
+- `parser_null_frontier.json` records ten actual phase1/phase2 outputs and the
+  downstream TypeErrors; its generator is `parser_null_frontier_fixtures.cjs`.
+- `runtime_listener_audit.json` records 37 histories/223 listener events, including
+  source versus transported callback names and error boundaries.
+- `verify_compile_failures.json` records 37 complete selector stages and four
+  thrown reference cases. Canonical published output excludes private reporting
+  helpers; private predicates use collision-free names and comma conjunctions.
+- `cli/testdata/test_regex_nullable.json` adds 376 patterns/16,168 matching/capture
+  cases; 807,780 independent production-translator comparisons supplement them.
+
+The new rollback, substitution and flattening fuzz targets keep small fixed
+seeds in default tests; bounded campaigns remain separate. Final integration
+passes the full default suite, full race suite and vet. Coverage is 93.5% for core,
+93.2% for CLI and 94.3% for the Apalache adapter. The one-second combined suite
+target remains open. All parallel workers have finished; further work proceeds
+on the main thread only.

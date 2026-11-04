@@ -186,7 +186,7 @@ without losing semantic information, and diagnostic locations remain stable.
     including exact diagnostics and explicit complete-input boundary policies.
 - [x] P2.7 Port source resolution, relative imports, file caching, duplicate
   loading behavior, import-cycle errors, and missing-file diagnostics.
-- [ ] P2.8 Match syntax-error recovery and useful partial results; test Unicode,
+- [x] P2.8 Match syntax-error recovery and useful partial results; test Unicode,
   malformed declarations, incomplete editor input, and diagnostic positions.
   - [x] ParseModulesRecovering accumulates semantic conversion diagnostics and
     preserves corrected partial IR, declaration order, docs, and UTF-16 spans.
@@ -199,8 +199,9 @@ without losing semantic information, and diagnostic locations remain stable.
   - [x] Recover operand borrowing across malformed multi-field records with
     exact temporary Tup wrappers/zero IDs and listener reduction order.
   - [x] Match nil-type listener aborts and declaration-colon expected tokens;
-    malformed reference IR containing null operands stays an explicit
-    SyntaxRecoveryError frontier rather than fabricating typed expressions.
+    malformed reference IR containing null operands remains quarantined on
+    SyntaxRecoveryError.Raw with exact modules, diagnostics, source maps and
+    continuing IDs; ten actual cases include upstream downstream TypeErrors.
 - [x] P2.9 Differential-test parsed IR and error codes across parser fixtures
   and the repository's `.qnt` corpus; normalize only documented ID differences.
 
@@ -615,7 +616,10 @@ including failed actions that must not leak partially updated state.
     verbosity levels zero through five, with actual command comparisons.
   - [x] Capture-reset-dependent references inside proven-consuming loops,
     including lookbehind/backtracking, with bounded engine-panic handling.
-  - [ ] Nullable capture-reset forms and remaining terminal audit.
+  - [x] Nullable capture resets, mandatory empty iterations and optional progress
+    guards match 376 additional patterns/16,168 cases plus 807,780 independent
+    Node capture comparisons; expansion and execution budgets remain explicit.
+  - [ ] Remaining command terminal/report formatting audit.
 - [ ] P8.3 Preserve trace hooks, action names, nondeterministic picks, debug
   metadata, and output filename templates used in model-based testing.
 - [x] P8.4 Implement REPL multiline input, commands, load/reload, incremental
@@ -759,8 +763,10 @@ Build these items alongside the phases that supply their command behavior.
     interspersed arguments; preserve explicit Go backend/resource constraints.
   - [x] Static native help and parser/frontend errors match 49 saved transcripts;
     run/test color and selector precedence match 36 additional saved cases.
+  - [x] Verification selectors now match 37 raw stage/terminal cases; published
+    JSON excludes private reporter helpers, including comma/collision cases.
   - [ ] Complete remaining help/error-prose and terminal parity audit, including
-    verification compile-flag summaries.
+    command transcripts and timing/report prose.
 - [ ] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
 - [x] P10.3 Port machine-readable stage output and diagnostics; explicitly
@@ -861,7 +867,7 @@ any remaining TypeScript client code is distinguished from language-server logic
 - [x] P12.1 Maintain a fixture manifest mapping each upstream subsystem/test
   family to Go coverage, with expected failures and reasons visible. Do not
   count skipped fixtures as passes.
-  - FIXTURE_MANIFEST.md validates all 391 local links and the complete 51-file
+  - FIXTURE_MANIFEST.md maintains validated local links and the complete 51-file
     TypeScript test-family inventory; pending and opt-in checks remain explicit.
 - [ ] P12.2 Run `go test ./...` and `go vet ./...` from `pkg/`; run race checks
   on concurrent library, simulation, editor, and checker integration paths.
@@ -870,7 +876,10 @@ any remaining TypeScript client code is distinguished from language-server logic
     documentation/cache, and LSP race checks pass. A full `go test -race ./...`
     run also passes across every package; this does not replace the remaining
     public-path cancellation coverage audit.
-  - [ ] Complete race/cancellation audit across every public integration path.
+  - [x] LSP stream/job/close/wait lifecycle and REPL final-success cancellation
+    preserve owned resources and pending state with deterministic regressions.
+  - [ ] Complete race/cancellation audit across every public integration path,
+    including stale semantic responses after a document changes or closes.
 - [ ] P12.3 Add targeted property/fuzz checks for parsers, JSON/ITF decoders,
   type/effect substitution, flattening, and evaluation rollback. Retain
   minimized regressions for discovered failures.
@@ -880,6 +889,9 @@ any remaining TypeScript client code is distinguished from language-server logic
     property seeds; 219,906 bounded fuzz executions pass, including ownership.
   - [x] Nested failed-action rollback adds 12 seeds/35,227 bounded executions,
     checking pending/current values, stable cells and caller-owned IR.
+  - [x] Type/effect substitution laws and transported flattening semantics add
+    bounded structural seeds; final fuzz runs pass 10,574 type, 2,860 effect and
+    162 flatten cases without failure. ITF decoder properties remain open.
 - [ ] P12.4 Run representative and broad corpus comparisons covering parsing,
   analysis, execution, and verification. Keep a fast deterministic suite and
   a separately scheduled expensive solver/corpus suite.
@@ -900,6 +912,9 @@ any remaining TypeScript client code is distinguished from language-server logic
   - [x] Reuse completed project analysis for grounded run selectors with exact
     raw metadata/ownership tests and conservative generic/assumption fallbacks;
     matched run benchmarks improve 16–25%, allocated bytes 14–21%.
+  - [x] Bound idle collator reuse to 32 exclusive leases, discard oversized input
+    buffers and clear input references; allocation samples fall 96% for collators
+    and matched normalization/construction benchmarks improve 8–10%.
 - [ ] P12.6 Add CI jobs that build and test the `pkg/` module with pinned
   dependencies, reproducible grammar generation, and supported OS/architecture
   targets. Keep reference-tool jobs separate from Go-only validation.
@@ -3824,3 +3839,14 @@ A new rollback property target adds twelve fast seeds covering nested failed
 conjunctions/choices, pending/current register values, compiled cell identity and
 caller-owned IR. It passed 35,227 bounded fuzz executions, focused race/vet checks and the
 isolated full default suite.
+
+## Integration checkpoint — 2026-11-03
+
+All previously in-flight parallel batches are finished and committed. Further
+work uses the main thread only. The complete assembled default suite, full race
+suite and vet pass against the resumed local checker revision. Core coverage is
+93.5%, CLI 93.2%, Apalache 94.3%, TLC 88.7%, LSP 92.0% and terminal 99.1%; generated
+parser and binary-entrypoint coverage have separate limits. Ordinary core runtime
+is about 1.2 seconds and CLI about 0.6 seconds, so the combined one-second target
+remains open. Next concrete work includes stale semantic-request responses and
+generated-TLA applied-lambda and signed arithmetic semantics.

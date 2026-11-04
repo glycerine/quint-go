@@ -127,7 +127,7 @@ options; commented-out `--timeout` is not an upstream implemented option.
 | `typecheck` | `--out` | Full stage/output/transcript audit remains open. |
 | `compile` | `--out`, `--main`, `--target=json/tlaplus`, `--flatten`, `--no-flatten`, `--init`, `--step`, `--invariant`, `--temporal`, `--verbosity` | `--apalache-version`, `--server-endpoint` explicitly rejected; in-process Go backend. `--out` also preserves target stdout, matching upstream. |
 | `run` | `--out`, `--main`, `--out-itf`, `--max-samples`, `--n-traces`, `--max-steps`, `--init`, `--step`, `--invariants`, `--invariant`, `--witnesses`, `--hide`, `--seed`, `--verbosity`, `--mbt`, `--no-mbt` | `--backend=go` only; TypeScript/Rust rejected. `--n-threads=1` only; parallel simulation pending. Display/trace ranking/format coverage is partial. |
-| `test` | `--out`, `--main`, `--out-itf`, hidden alias `--output`, `--max-samples`, `--seed`, `--verbosity`, `--match` | `--backend=go` only. Match uses pure Go ECMAScript translation with lookaround/backreferences and a bounded matcher; proven-consuming capture resets are supported and nullable reset forms are rejected explicitly. Saved transcript/ITF/source-report and quiet debug cases pass; full corpus remains an audit. |
+| `test` | `--out`, `--main`, `--out-itf`, hidden alias `--output`, `--max-samples`, `--seed`, `--verbosity`, `--match` | `--backend=go` only. Match uses pure Go ECMAScript translation with lookaround/backreferences and a bounded matcher; consuming and nullable capture resets use bounded progress guards. Saved transcript/ITF/source-report and quiet debug cases pass; full corpus remains an audit. |
 | `verify` | `--out`, `--main`, `--init`, `--step`, `--invariant`, `--invariants`, `--inductive-invariant`, `--temporal`, `--out-itf`, `--max-steps`, `--random-transitions`, `--no-random-transitions`, `--apalache-config`, `--tlc-config`, `--verbosity` | `--backend=apalache/apalache-go` uses Go Apalache. `--backend=tlc/tlc-go` uses native Go TLC for exhaustive finite-state safety and supported temporal checks; explicit max-steps, random transitions, induction and Apalache config are rejected for TLC. Typed ITF export supports structured values and temporal loops. Evaluation exceptions are failures; finite state/action PROPERTY violations preserve their traces without lasso requirements. Scala version/server flags remain rejected. |
 | `repl` / default | `--require`/`-r`, `--quiet`/`-q`, `--verbosity`, `--seed` | `--backend=go` only. Interspersed flags, Boolean negation and aliases match the common yargs contract. Readline/history persistence and full terminal parity pending. |
 | `docs` | `--out` | Embedded builtin docs and source Markdown generation implemented. |
@@ -264,5 +264,23 @@ Run preparation reuses source analysis for grounded selectors, with full inferen
 for generic scopes, assumptions, polymorphic additions and diagnostics. Final
 successful higher-order callbacks observe caller cancellation after restoring
 scope; explicit callback errors keep precedence. Transported alias first-selection
-has 15 saved histories; the broader listener-stack audit remains open, including
-one imported callback lambda display-name mismatch.
+has 15 saved histories; 37 source listener histories/223 events now preserve
+callback names, while broader runtime-stack/error precedence remains an audit.
+
+Malformed parser record operands are available as owned raw JSON and provenance
+on `SyntaxRecoveryError.Raw`, independently of the valid typed prefix. Ten actual
+reference cases pin the boundary and the upstream downstream TypeErrors; strict
+typed decoders still reject malformed operands. LSP shutdown/waits and REPL
+final-success cancellation now have deterministic resource/ownership regressions.
+In-flight semantic-request staleness after document changes remains an audit.
+
+Nullable matcher repetitions now preserve mandatory empty iterations and forbid
+zero-progress optional iterations, including lookbehind. The new 376-pattern
+corpus adds 16,168 match/capture cases, with 807,780 independent production-translator
+comparisons. Flagless matching retains a 64KiB expansion bound and 25ms execution
+budget; native polling and explicit panic handling remain in place.
+
+Verification publishes canonical source compilation stages independently of private
+reporter instrumentation. Private predicates use collision-free names, support
+comma conjunctions and preserve the ordinary backend role/type boundary. 37 raw
+selector/stage cases and four captured reference exceptions pin this behavior.

@@ -296,3 +296,22 @@ not established.
 `FormatTraceContext` formats states, optional execution frames, per-state and
 pending debug messages, and hidden variables. It accepts terminal context styles
 and sequentially owned object-hash history, and returns no partial text on error.
+
+`SyntaxRecoveryError.Raw` optionally owns a `RawModuleRecovery` snapshot for
+malformed record operands exposed by the reference listener. Its raw module JSON
+can contain null operands and remains separate from valid typed IR. Diagnostics,
+both source maps and the reference continuing ID belong to that snapshot; the
+ordinary completed typed prefix and caller ID generator keep their existing
+contracts. Never feed malformed raw modules to analysis or checking.
+
+LSP waits share a completion channel rather than launching a helper per canceled
+wait. A closed server rejects new work, and closable transport input is closed
+once during shutdown. Arbitrary blocked nonclosable readers/writers and custom
+analysis callbacks that ignore context cannot be forcibly interrupted. REPL
+cancellation restores pending assignments before its final state commit; earlier
+explicit shifts inside `then` retain their established error behavior.
+
+`IDGenerator.Clone` forks the continuing counter without advancing or sharing it.
+Optional `InvariantReportNames` in compilation options/results selects private
+reporter names; defaults preserve existing callers. The CLI keeps reporter
+compilation separate from source stage JSON and resolves user-name collisions.
