@@ -120,3 +120,15 @@ for the complete generation contract:
 python3 pkg/grammar/generate.py --jar /path/to/antlr-4.13.2-complete.jar --check
 python3 -m unittest discover -s pkg/grammar -p 'test_*.py'
 ```
+
+## Resumed local checker validation — 2026-11-03
+
+The local checker has advanced to
+`1fbd0bd6848b4008766fb787e48d19d35b463838` (g3 v0.0.12). This does not replace
+the original recorded revision or establish a public dependency pin. Its CHECK
+command service silently falls through to success for unknown and too-short
+executions. Quint therefore retains the service's strict request decoder and
+TYPECHECK pipeline, then calls the exported bounded checker exactly once and
+encodes all outcomes explicitly. The existing actual resource/empty-execution
+regressions and full isolated default suite pass against this checkout. Broader
+generated-TLA compatibility remains under audit.
