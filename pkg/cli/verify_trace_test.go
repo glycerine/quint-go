@@ -156,3 +156,12 @@ func TestVerifyPrintCounterExampleShowsLassoLoopTarget(t *testing.T) {
 		t.Fatalf("lasso loop target missing from output:\n%s", out.String())
 	}
 }
+
+func TestVerifyOutputNamesViolatedTemporalProperty(t *testing.T) {
+	stage := verifyStage{Status: "violation", Explanation: "Found an issue", Errors: []quint.ErrorMessage{{Explanation: "detail"}}}
+	var stdout, stderr bytes.Buffer
+	status := verifyOutputContext(context.Background(), verifyOptions{verbosity: 1, temporal: "eventuallyFive"}, stage, &stdout, &stderr)
+	if status != 1 || !strings.Contains(stdout.String(), "eventuallyFive") {
+		t.Fatalf("status=%d stdout=%q stderr=%q", status, stdout.String(), stderr.String())
+	}
+}

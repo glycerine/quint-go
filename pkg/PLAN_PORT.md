@@ -734,7 +734,10 @@ TypeScript or Rust evaluator process.
     "The final transition returns to [State N]." from the ITF `loop` field
     (verbosity >= 2); test `TestVerifyPrintCounterExampleShowsLassoLoopTarget`;
     end-to-end run prints `[State 3]` for the lasso fixture.
-  - [ ] Rich variable/source rendering; Shai omits temporal loop indices.
+  - [x] Temporal violation attribution: with a single `--temporal` property, the
+    human CLI names it after "Found an issue" (`❌ eventuallyFive`); test
+    `TestVerifyOutputNamesViolatedTemporalProperty`. Per-property attribution
+    for comma-separated lists and ITF `variables-to-expressions` rendering remain open.
   - [x] Multi-state loop index: a 3-state cycle after a prefix (`0→1→2→1`,
     `y` held constant) emits `loop: 2`, and the final transition returns to
     State 2 as the trace requires (2026-11-04 manual run).
