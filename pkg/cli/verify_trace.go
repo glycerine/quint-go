@@ -2,6 +2,7 @@ package cli
 
 import (
 	"context"
+	"fmt"
 	"io"
 
 	quint "github.com/glycerine/quint-go/pkg"
@@ -20,5 +21,14 @@ func verifyPrintCounterExample(ctx context.Context, out io.Writer, options verif
 	}
 	// The upstream verification path displays normalized states without the
 	// runtime-only frame/debug annotations used by simulation reporting.
-	return executionPrintCounterExample(ctx, out, options.verbosity, trace.States, nil, nil, nil)
+	if err := executionPrintCounterExample(ctx, out, options.verbosity, trace.States, nil, nil, nil); err != nil {
+		return err
+	}
+	// A lasso counterexample's final transition returns to an earlier state.
+	// Show that target, which ITF records as a zero-based loop index.
+	if trace.Loop != nil && options.verbosity >= 2 {
+		text := fmt.Sprintf("The final transition returns to [State %d].\n", *trace.Loop)
+		return executionWrite(ctx, out, terminalStyle(ctx, text, "gray"))
+	}
+	return nil
 }

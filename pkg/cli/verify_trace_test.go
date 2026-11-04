@@ -136,3 +136,23 @@ func TestCLIAnnotatedTraceMatchesSharedFormatter(t *testing.T) {
 		t.Fatal("empty trace wrote to its output stream", err, writer.calls)
 	}
 }
+
+func TestVerifyPrintCounterExampleShowsLassoLoopTarget(t *testing.T) {
+	stage := verifyStage{Status: "violation", Trace: json.RawMessage(`{
+  "#meta": {"format": "ITF"},
+  "vars": ["x"],
+  "states": [
+    {"#meta": {"index": 0}, "x": 0},
+    {"#meta": {"index": 1}, "x": 1},
+    {"#meta": {"index": 2}, "x": 1}
+  ],
+  "loop": 1
+}`)}
+	var out bytes.Buffer
+	if err := verifyPrintCounterExample(context.Background(), &out, verifyOptions{verbosity: 2}, stage); err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(out.String(), "The final transition returns to [State 1].") {
+		t.Fatalf("lasso loop target missing from output:\n%s", out.String())
+	}
+}
