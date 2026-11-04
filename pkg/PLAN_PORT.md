@@ -710,9 +710,11 @@ TypeScript or Rust evaluator process.
   - [x] Compile CLI output through the Go TLA API.
   - [x] Compare six representative generated models (safe and violating) through
     assignment-IR Go Apalache and predicate-IR Go TLC:24 actual checker runs.
-  - [ ] Complete broader generated-TLA semantic compatibility tests, including
-    applied-LET lambda output, signed division/modulo, foldr and allListsUpTo.
-    Resume audits have concrete failing witnesses for these categories.
+  - [x] Check safe and violating properties over an applied lambda emitted
+    inside a TLA `LET` through native TLC and Go Apalache's assignment-IR path.
+  - [ ] Complete broader generated-TLA semantic compatibility tests for signed
+    division/modulo, `foldr` and `allListsUpTo`; resume audits retain concrete
+    failing witnesses for these categories.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.
@@ -3852,5 +3854,5 @@ suite and vet pass against the resumed local checker revision. Core coverage is
 93.5%, CLI 93.2%, Apalache 94.3%, TLC 88.7%, LSP 92.0% and terminal 99.1%; generated
 parser and binary-entrypoint coverage have separate limits. Ordinary core runtime
 is about 1.2 seconds and CLI about 0.6 seconds, so the combined one-second target
-remains open. Next concrete work includes generated-TLA applied-lambda and
-signed arithmetic semantics.
+remains open. Next concrete work includes generated-TLA signed arithmetic,
+`foldr`, and `allListsUpTo` semantics.
