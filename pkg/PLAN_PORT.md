@@ -761,8 +761,12 @@ TypeScript or Rust evaluator process.
     limited to ITF metadata. The fix belongs in the pinned `~/apalache/pkg`
     module (`FormatUTFExpression`, with `temporal_tableau_test.go` updated), so
     it waits on the P0.4 pin decision. Scala's temporal run of the same
-    counter spec also reported a state-invariant violation rather than a lasso;
-    that path is not yet compared.
+    counter spec also reported a state-invariant violation rather than a lasso.
+    Re-run 2026-11-04 with `--temporal=EventuallyFive` (the earlier run passed it
+    as an invariant): Scala reports the tableau invariant ("state invariant 0
+    violated") on the same 5-state prefix `0,1,2,3,3` with no `loop`, and Go's
+    temporal ITF for the equivalent Quint spec is identical. This matches on
+    trace shape; only the `variables-to-expressions` text differs (above).
   - [x] Multi-state loop index: a 3-state cycle after a prefix (`0→1→2→1`,
     `y` held constant) emits `loop: 2`, and the final transition returns to
     State 2 as the trace requires (2026-11-04 manual run).
