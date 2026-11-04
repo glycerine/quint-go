@@ -773,6 +773,12 @@ TypeScript or Rust evaluator process.
 - [ ] P9.12 Compare Go and reference verification verdicts at identical bounds.
   Validate counterexample transitions and violated properties independently;
   accept different valid witnesses rather than requiring identical solver models.
+  - [x] Opt-in six-model corpus compares actual Go Apalache assignment-IR and
+    generated-TLA/native-TLC safe/violating outcomes and independently checks
+    each witness state against the selected property (`generation_semantics_test.go`).
+  - [ ] Compare against the reference checker at the same configured transition
+    bound; the current native TLC half is exhaustive and is not an equivalent
+    bounded reference run.
 
 Exit gate: source-to-verification and source-to-TLA workflows use Go Apalache,
 with no automatic fallback to the Scala checker. A bounded success is reported
