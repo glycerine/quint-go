@@ -44,7 +44,7 @@ operator/name, so successful decoding must not be counted as builtin support.
 | `contains`, `in`, `subseteq`, `union`, `intersect`, `exclude`, `size`, `isFinite`, `flatten` | implemented: explicit/compact domains and checked symbolic keys | signature | rule | translated |
 | `exists`, `forall`, `map`, `filter`, `fold`, `mapBy` | implemented: finite/compact domains, lexical callbacks and symbolic keys | signature | rule | translated |
 | `select`, `foldl` | implemented: list callbacks | signature | rule | translated |
-| `foldr` | implemented: list callbacks | signature | rule | fallback |
+| `foldr` | implemented: list callbacks | signature | rule | lowered at Apalache CHECK/TLA boundary |
 | `get`, `keys`, `set`, `put`, `setBy` | implemented: concrete maps and retained children | signature | rule | translated |
 | `matchVariant` | implemented: lazy selected branch, wildcard, payload | special | rule | translated |
 | `getOnlyElement` | implemented: exact singleton/cardinality behavior | signature | rule | fallback |

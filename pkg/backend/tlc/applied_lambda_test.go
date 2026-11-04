@@ -17,13 +17,16 @@ func TestGeneratedTLAAppliedLambdaAndSignedArithmeticSemantics(t *testing.T) {
 	compiled := compileSource(t, `module M {
   var x: int
   pure def apply(f: (int) => int): int = f(1)
+  pure def subtract(value: int, acc: int): int = value - acc
   pure val result = apply(y => y + 1)
+  pure val foldedRight = List(1, 2, 3).foldr(0, (value, acc) => value - acc)
+  pure val foldedRightNamed = List(1, 2, 3).foldr(0, subtract)
   pure val signedDivision = (-7 / 3 == -2) and (7 / -3 == -2) and (-7 / -3 == 2) and (7 / 3 == 2)
   pure val signedRemainder = (-7 % 3 == -1) and (7 % -3 == 1) and (-7 % -3 == -1) and (7 % 3 == 1)
   action init = x' = 0
   action step = x' = x
-  val lambdaSafe = result == 2 and x == 0
-  val lambdaWrong = result != 2 or x != 0
+  val lambdaSafe = result == 2 and foldedRight == 2 and foldedRightNamed == 2 and x == 0
+  val lambdaWrong = result != 2 or foldedRight != 2 or foldedRightNamed != 2 or x != 0
   val divisionSafe = signedDivision and x == 0
   val remainderSafe = signedRemainder and x == 0
   val safe = lambdaSafe and divisionSafe and remainderSafe
@@ -37,12 +40,12 @@ func TestGeneratedTLAAppliedLambdaAndSignedArithmeticSemantics(t *testing.T) {
 	if err != nil {
 		t.Fatal("generate TLA:", err)
 	}
-	if !strings.Contains(tla, "LET __QUINT_LAMBDA_") || !strings.Contains(tla, "IN apply(__QUINT_LAMBDA_") || !strings.Contains(tla, `\div`) || strings.Contains(tla, "%") {
-		t.Fatalf("expected applied LET lambda, truncating division, and derived remainder in generated TLA:\n%s", tla)
+	if !strings.Contains(tla, "LET __QUINT_LAMBDA_") || !strings.Contains(tla, "IN apply(__QUINT_LAMBDA_") || !strings.Contains(tla, `\div`) || strings.Contains(tla, "%") || strings.Contains(tla, "foldr(") {
+		t.Fatalf("expected applied LET lambda, lowered foldr, truncating division, and derived remainder in generated TLA:\n%s", tla)
 	}
 	after, err := json.Marshal(compiled.MainModule)
 	if err != nil || !bytes.Equal(before, after) {
-		t.Fatal("TLA arithmetic adaptation mutated the caller's compilation", err)
+		t.Fatal("TLA adaptation mutated the caller's compilation", err)
 	}
 	for _, tc := range []struct {
 		property string
@@ -60,5 +63,9 @@ func TestGeneratedTLAAppliedLambdaAndSignedArithmeticSemantics(t *testing.T) {
 		if err != nil || symbolic.Outcome != tc.symbolic {
 			t.Fatalf("assignment IR %s semantics: %+v, %v", tc.property, symbolic, err)
 		}
+	}
+	afterChecks, err := json.Marshal(compiled.MainModule)
+	if err != nil || !bytes.Equal(before, afterChecks) {
+		t.Fatal("Apalache foldr adaptation mutated the caller's compilation", err)
 	}
 }

@@ -51,6 +51,10 @@ func (e *Executor) TLA(ctx context.Context, compiled quint.CompilationResult) (s
 	if err != nil {
 		return "", err
 	}
+	prepared, err = adaptFoldRight(prepared)
+	if err != nil {
+		return "", err
+	}
 	input, err := MarshalInput(prepared)
 	if err != nil {
 		return "", err

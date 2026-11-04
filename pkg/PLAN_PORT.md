@@ -715,8 +715,12 @@ TypeScript or Rust evaluator process.
   - [x] Preserve Quint's truncation-toward-zero signed division in generated TLA;
     derive remainder from `x - quotient*y`. Check all four sign combinations
     for both operators through native TLC and Go Apalache.
+  - [x] Lower lambda and named-operator `foldr` callbacks to `foldl` over a
+    reversed sequence at the Apalache CHECK and TLA boundaries; verify an
+    order-sensitive fold through Go Apalache assignment IR and generated-TLA
+    native TLC.
   - [ ] Complete broader generated-TLA semantic compatibility tests for
-    `foldr` and `allListsUpTo`; audits retain concrete failing witnesses.
+    `allListsUpTo`; audits retain concrete failing witnesses.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.

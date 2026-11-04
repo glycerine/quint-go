@@ -46,7 +46,11 @@ func CheckConfig(compiled quint.CompilationResult, loaded json.RawMessage, optio
 	if err := validateTemporalNames(compiled, options); err != nil {
 		return nil, err
 	}
-	input, err := MarshalInput(compiled)
+	prepared, err := adaptFoldRight(compiled)
+	if err != nil {
+		return nil, err
+	}
+	input, err := MarshalInput(prepared)
 	if err != nil {
 		return nil, err
 	}
