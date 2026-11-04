@@ -96,9 +96,14 @@ func recoveryRecordFromContext(ctx *p.RecordContext, ids *recoveringParserIDs) (
 			args = append([]Expr{field}, args...)
 		}
 		if value.Kind == "" {
-			// The reference emits an undefined operand (JSON null) here. Keep
-			// this explicit boundary rather than inventing a valid expression.
-			return Expr{}, unexpectedRecoveryNode(elem)
+			// A named field's bare stack pop may be undefined upstream.
+			// Only the isolated raw replay may retain that JSON null; it
+			// never enters the typed recovery result or normal serializers.
+			if ids.rawNullOperands && elem.SimpleId() != nil {
+				args[len(args)-1] = Expr{Kind: rawRecoveryNullKind}
+			} else {
+				return Expr{}, &nullRecordOperandError{message: unexpectedRecoveryNode(elem).Error()}
+			}
 		}
 		elems = append(elems, Expr{Kind: "app", Opcode: "Tup", Args: args})
 	}

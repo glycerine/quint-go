@@ -1,0 +1,3389 @@
+[
+  {
+    "name": "single-field-hole",
+    "source": "module M { val r={a:} }",
+    "lastID": 0,
+    "modules": [
+      {
+        "id": 5,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "a"
+                },
+                null
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "single-field-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "2": {
+        "source": "single-field-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "3": {
+        "source": "single-field-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "4": {
+        "source": "single-field-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "5": {
+        "source": "single-field-hole.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      }
+    },
+    "nextID": 6,
+    "undefinedPaths": [
+      "/modules/0/declarations/0/expr/args/1"
+    ],
+    "nullPaths": [],
+    "phase2": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 5,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  null
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 1
+        }
+      ],
+      "undefinedPaths": [
+        "/modules/0/declarations/0/expr/args/1"
+      ],
+      "nullPaths": []
+    },
+    "phase3": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "phase4": {
+      "status": "unreached",
+      "because": "phase3-threw"
+    },
+    "analysisInput": "phase2-with-empty-table",
+    "analysis": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "parse": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    }
+  },
+  {
+    "name": "unsafe-nested-record",
+    "source": "module M { val r={a:{b:}} }",
+    "lastID": 0,
+    "modules": [
+      {
+        "id": 7,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 3,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": [
+                    {
+                      "id": 2,
+                      "kind": "str",
+                      "value": "b"
+                    },
+                    null
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "unsafe-nested-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "2": {
+        "source": "unsafe-nested-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "3": {
+        "source": "unsafe-nested-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "4": {
+        "source": "unsafe-nested-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "5": {
+        "source": "unsafe-nested-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "6": {
+        "source": "unsafe-nested-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "7": {
+        "source": "unsafe-nested-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      }
+    },
+    "nextID": 8,
+    "undefinedPaths": [
+      "/modules/0/declarations/0/expr/args/1/args/1"
+    ],
+    "nullPaths": [],
+    "phase2": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 7,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 4,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "app",
+                    "opcode": "Rec",
+                    "args": [
+                      {
+                        "id": 2,
+                        "kind": "str",
+                        "value": "b"
+                      },
+                      null
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 1
+        }
+      ],
+      "undefinedPaths": [
+        "/modules/0/declarations/0/expr/args/1/args/1"
+      ],
+      "nullPaths": []
+    },
+    "phase3": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "phase4": {
+      "status": "unreached",
+      "because": "phase3-threw"
+    },
+    "analysisInput": "phase2-with-empty-table",
+    "analysis": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "parse": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    }
+  },
+  {
+    "name": "unsafe-after-completed-module",
+    "source": "module Good { val x=1 } module Bad { val r={a:} }",
+    "lastID": 0,
+    "modules": [
+      {
+        "id": 4,
+        "name": "Good",
+        "declarations": [
+          {
+            "id": 3,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 2,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Bad",
+        "declarations": [
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 5,
+                  "kind": "str",
+                  "value": "a"
+                },
+                null
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "unsafe-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "2": {
+        "source": "unsafe-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "3": {
+        "source": "unsafe-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "4": {
+        "source": "unsafe-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "5": {
+        "source": "unsafe-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      },
+      "6": {
+        "source": "unsafe-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 43,
+          "index": 43
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "7": {
+        "source": "unsafe-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        }
+      },
+      "8": {
+        "source": "unsafe-after-completed-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      }
+    },
+    "nextID": 9,
+    "undefinedPaths": [
+      "/modules/1/declarations/0/expr/args/1"
+    ],
+    "nullPaths": [],
+    "phase2": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 4,
+          "name": "Good",
+          "declarations": [
+            {
+              "id": 3,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 2,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "name": "Bad",
+          "declarations": [
+            {
+              "id": 7,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 6,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 5,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  null
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 1
+        }
+      ],
+      "undefinedPaths": [
+        "/modules/1/declarations/0/expr/args/1"
+      ],
+      "nullPaths": []
+    },
+    "phase3": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "phase4": {
+      "status": "unreached",
+      "because": "phase3-threw"
+    },
+    "analysisInput": "phase2-with-empty-table",
+    "analysis": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "parse": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    }
+  },
+  {
+    "name": "two-fields",
+    "source": "module M { val r={a:1,b:val y=2} }",
+    "lastID": 0,
+    "modules": [
+      {
+        "id": 14,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 13,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 12,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 7,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 6,
+                  "kind": "let",
+                  "opdef": {
+                    "id": 5,
+                    "kind": "def",
+                    "name": "y",
+                    "qualifier": "val",
+                    "expr": {
+                      "id": 4,
+                      "kind": "int",
+                      "value": 2
+                    }
+                  },
+                  "expr": {
+                    "id": 0,
+                    "kind": "app",
+                    "opcode": "Tup",
+                    "args": [
+                      {
+                        "id": 3,
+                        "kind": "str",
+                        "value": "a"
+                      },
+                      {
+                        "id": 2,
+                        "kind": "int",
+                        "value": 1
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "2": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "3": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "4": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "5": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        },
+        "end": {
+          "line": 0,
+          "col": 28,
+          "index": 28
+        }
+      },
+      "6": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "7": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 30,
+          "index": 30
+        }
+      },
+      "8": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "9": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "10": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "11": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "12": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 31,
+          "index": 31
+        }
+      },
+      "13": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "14": {
+        "source": "two-fields.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 33,
+          "index": 33
+        }
+      }
+    },
+    "nextID": 15,
+    "undefinedPaths": [],
+    "nullPaths": [],
+    "phase2": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 14,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 13,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 12,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "str",
+                    "value": "b"
+                  },
+                  {
+                    "id": 6,
+                    "kind": "let",
+                    "opdef": {
+                      "id": 5,
+                      "kind": "def",
+                      "name": "y",
+                      "qualifier": "val",
+                      "expr": {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    },
+                    "expr": {
+                      "id": 0,
+                      "kind": "app",
+                      "opcode": "Tup",
+                      "args": [
+                        {
+                          "id": 3,
+                          "kind": "str",
+                          "value": "a"
+                        },
+                        {
+                          "id": 2,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 1
+        }
+      ],
+      "undefinedPaths": [],
+      "nullPaths": []
+    },
+    "phase3": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 14,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 13,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 12,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "str",
+                    "value": "b"
+                  },
+                  {
+                    "id": 6,
+                    "kind": "let",
+                    "opdef": {
+                      "id": 5,
+                      "kind": "def",
+                      "name": "y",
+                      "qualifier": "val",
+                      "expr": {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    },
+                    "expr": {
+                      "id": 0,
+                      "kind": "app",
+                      "opcode": "Tup",
+                      "args": [
+                        {
+                          "id": 3,
+                          "kind": "str",
+                          "value": "a"
+                        },
+                        {
+                          "id": 2,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 1
+        }
+      ],
+      "undefinedPaths": [],
+      "nullPaths": [],
+      "lookupTable": {
+        "5": {
+          "id": 5,
+          "kind": "def",
+          "name": "y",
+          "qualifier": "val",
+          "expr": {
+            "id": 4,
+            "kind": "int",
+            "value": 2
+          },
+          "depth": 2
+        },
+        "13": {
+          "id": 13,
+          "kind": "def",
+          "name": "r",
+          "qualifier": "val",
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 7,
+                "kind": "str",
+                "value": "b"
+              },
+              {
+                "id": 6,
+                "kind": "let",
+                "opdef": {
+                  "id": 5,
+                  "kind": "def",
+                  "name": "y",
+                  "qualifier": "val",
+                  "expr": {
+                    "id": 4,
+                    "kind": "int",
+                    "value": 2
+                  }
+                },
+                "expr": {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "str",
+                      "value": "a"
+                    },
+                    {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "depth": 0
+        }
+      }
+    },
+    "phase4": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 14,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 13,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 12,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "str",
+                    "value": "b"
+                  },
+                  {
+                    "id": 6,
+                    "kind": "let",
+                    "opdef": {
+                      "id": 5,
+                      "kind": "def",
+                      "name": "y",
+                      "qualifier": "val",
+                      "expr": {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    },
+                    "expr": {
+                      "id": 0,
+                      "kind": "app",
+                      "opcode": "Tup",
+                      "args": [
+                        {
+                          "id": 3,
+                          "kind": "str",
+                          "value": "a"
+                        },
+                        {
+                          "id": 2,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 1
+        }
+      ],
+      "undefinedPaths": [],
+      "nullPaths": [],
+      "lookupTable": {
+        "5": {
+          "id": 5,
+          "kind": "def",
+          "name": "y",
+          "qualifier": "val",
+          "expr": {
+            "id": 4,
+            "kind": "int",
+            "value": 2
+          },
+          "depth": 2
+        },
+        "13": {
+          "id": 13,
+          "kind": "def",
+          "name": "r",
+          "qualifier": "val",
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 7,
+                "kind": "str",
+                "value": "b"
+              },
+              {
+                "id": 6,
+                "kind": "let",
+                "opdef": {
+                  "id": 5,
+                  "kind": "def",
+                  "name": "y",
+                  "qualifier": "val",
+                  "expr": {
+                    "id": 4,
+                    "kind": "int",
+                    "value": 2
+                  }
+                },
+                "expr": {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "str",
+                      "value": "a"
+                    },
+                    {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "depth": 0
+        }
+      }
+    },
+    "analysisInput": "phase4",
+    "analysis": {
+      "status": "returned",
+      "errors": [],
+      "types": {
+        "0": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        },
+        "2": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "int"
+          }
+        },
+        "3": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "str"
+          }
+        },
+        "4": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "int"
+          }
+        },
+        "5": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "int"
+          }
+        },
+        "6": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "tup",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "0",
+                  "fieldType": {
+                    "kind": "str"
+                  }
+                },
+                {
+                  "fieldName": "1",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        },
+        "7": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "str"
+          }
+        },
+        "12": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "rec",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "b",
+                  "fieldType": {
+                    "kind": "tup",
+                    "fields": {
+                      "kind": "row",
+                      "fields": [
+                        {
+                          "fieldName": "0",
+                          "fieldType": {
+                            "kind": "str"
+                          }
+                        },
+                        {
+                          "fieldName": "1",
+                          "fieldType": {
+                            "kind": "int"
+                          }
+                        }
+                      ],
+                      "other": {
+                        "kind": "empty"
+                      }
+                    }
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        },
+        "13": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "rec",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "b",
+                  "fieldType": {
+                    "kind": "tup",
+                    "fields": {
+                      "kind": "row",
+                      "fields": [
+                        {
+                          "fieldName": "0",
+                          "fieldType": {
+                            "kind": "str"
+                          }
+                        },
+                        {
+                          "fieldName": "1",
+                          "fieldType": {
+                            "kind": "int"
+                          }
+                        }
+                      ],
+                      "other": {
+                        "kind": "empty"
+                      }
+                    }
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      },
+      "effects": {
+        "0": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": {},
+          "entityVariables": {}
+        },
+        "2": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": {},
+          "entityVariables": {}
+        },
+        "3": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": {},
+          "entityVariables": {}
+        },
+        "4": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": {},
+          "entityVariables": {}
+        },
+        "5": {
+          "effectVariables": {},
+          "entityVariables": {},
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          }
+        },
+        "6": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": {},
+          "entityVariables": {}
+        },
+        "7": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": {},
+          "entityVariables": {}
+        },
+        "12": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": {},
+          "entityVariables": {}
+        },
+        "13": {
+          "effectVariables": {},
+          "entityVariables": {},
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          }
+        }
+      },
+      "modes": {
+        "5": "pureval",
+        "13": "pureval"
+      }
+    },
+    "parse": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 14,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 13,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 12,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 7,
+                    "kind": "str",
+                    "value": "b"
+                  },
+                  {
+                    "id": 6,
+                    "kind": "let",
+                    "opdef": {
+                      "id": 5,
+                      "kind": "def",
+                      "name": "y",
+                      "qualifier": "val",
+                      "expr": {
+                        "id": 4,
+                        "kind": "int",
+                        "value": 2
+                      }
+                    },
+                    "expr": {
+                      "id": 0,
+                      "kind": "app",
+                      "opcode": "Tup",
+                      "args": [
+                        {
+                          "id": 3,
+                          "kind": "str",
+                          "value": "a"
+                        },
+                        {
+                          "id": 2,
+                          "kind": "int",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 1
+        }
+      ],
+      "undefinedPaths": [],
+      "nullPaths": [],
+      "lookupTable": {
+        "5": {
+          "id": 5,
+          "kind": "def",
+          "name": "y",
+          "qualifier": "val",
+          "expr": {
+            "id": 4,
+            "kind": "int",
+            "value": 2
+          },
+          "depth": 2
+        },
+        "13": {
+          "id": 13,
+          "kind": "def",
+          "name": "r",
+          "qualifier": "val",
+          "expr": {
+            "id": 12,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 7,
+                "kind": "str",
+                "value": "b"
+              },
+              {
+                "id": 6,
+                "kind": "let",
+                "opdef": {
+                  "id": 5,
+                  "kind": "def",
+                  "name": "y",
+                  "qualifier": "val",
+                  "expr": {
+                    "id": 4,
+                    "kind": "int",
+                    "value": 2
+                  }
+                },
+                "expr": {
+                  "id": 0,
+                  "kind": "app",
+                  "opcode": "Tup",
+                  "args": [
+                    {
+                      "id": 3,
+                      "kind": "str",
+                      "value": "a"
+                    },
+                    {
+                      "id": 2,
+                      "kind": "int",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "depth": 0
+        }
+      }
+    }
+  },
+  {
+    "name": "healthy-record",
+    "source": "module M { val r={a:1,b:2} }",
+    "lastID": 0,
+    "modules": [
+      {
+        "id": 7,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 6,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 5,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 1,
+                  "kind": "int",
+                  "value": 1
+                },
+                {
+                  "id": 4,
+                  "kind": "str",
+                  "value": "b"
+                },
+                {
+                  "id": 3,
+                  "kind": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [],
+    "upstreamSources": {
+      "1": {
+        "source": "healthy-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "2": {
+        "source": "healthy-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "3": {
+        "source": "healthy-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "4": {
+        "source": "healthy-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "5": {
+        "source": "healthy-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 25,
+          "index": 25
+        }
+      },
+      "6": {
+        "source": "healthy-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "7": {
+        "source": "healthy-record.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 27,
+          "index": 27
+        }
+      }
+    },
+    "nextID": 8,
+    "undefinedPaths": [],
+    "nullPaths": [],
+    "phase2": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 7,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 4,
+                    "kind": "str",
+                    "value": "b"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "undefinedPaths": [],
+      "nullPaths": []
+    },
+    "phase3": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 7,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 4,
+                    "kind": "str",
+                    "value": "b"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "undefinedPaths": [],
+      "nullPaths": [],
+      "lookupTable": {
+        "6": {
+          "id": 6,
+          "kind": "def",
+          "name": "r",
+          "qualifier": "val",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 2,
+                "kind": "str",
+                "value": "a"
+              },
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 4,
+                "kind": "str",
+                "value": "b"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          },
+          "depth": 0
+        }
+      }
+    },
+    "phase4": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 7,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 4,
+                    "kind": "str",
+                    "value": "b"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "undefinedPaths": [],
+      "nullPaths": [],
+      "lookupTable": {
+        "6": {
+          "id": 6,
+          "kind": "def",
+          "name": "r",
+          "qualifier": "val",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 2,
+                "kind": "str",
+                "value": "a"
+              },
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 4,
+                "kind": "str",
+                "value": "b"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          },
+          "depth": 0
+        }
+      }
+    },
+    "analysisInput": "phase4",
+    "analysis": {
+      "status": "returned",
+      "errors": [],
+      "types": {
+        "1": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "int"
+          }
+        },
+        "2": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "str"
+          }
+        },
+        "3": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "int"
+          }
+        },
+        "4": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "str"
+          }
+        },
+        "5": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "rec",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "a",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "b",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        },
+        "6": {
+          "typeVariables": {},
+          "rowVariables": {},
+          "type": {
+            "kind": "rec",
+            "fields": {
+              "kind": "row",
+              "fields": [
+                {
+                  "fieldName": "a",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                },
+                {
+                  "fieldName": "b",
+                  "fieldType": {
+                    "kind": "int"
+                  }
+                }
+              ],
+              "other": {
+                "kind": "empty"
+              }
+            }
+          }
+        }
+      },
+      "effects": {
+        "1": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": {},
+          "entityVariables": {}
+        },
+        "2": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": {},
+          "entityVariables": {}
+        },
+        "3": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": {},
+          "entityVariables": {}
+        },
+        "4": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": {},
+          "entityVariables": {}
+        },
+        "5": {
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          },
+          "effectVariables": {},
+          "entityVariables": {}
+        },
+        "6": {
+          "effectVariables": {},
+          "entityVariables": {},
+          "effect": {
+            "kind": "concrete",
+            "components": []
+          }
+        }
+      },
+      "modes": {
+        "6": "pureval"
+      }
+    },
+    "parse": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 7,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 6,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 5,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 1,
+                    "kind": "int",
+                    "value": 1
+                  },
+                  {
+                    "id": 4,
+                    "kind": "str",
+                    "value": "b"
+                  },
+                  {
+                    "id": 3,
+                    "kind": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "undefinedPaths": [],
+      "nullPaths": [],
+      "lookupTable": {
+        "6": {
+          "id": 6,
+          "kind": "def",
+          "name": "r",
+          "qualifier": "val",
+          "expr": {
+            "id": 5,
+            "kind": "app",
+            "opcode": "Rec",
+            "args": [
+              {
+                "id": 2,
+                "kind": "str",
+                "value": "a"
+              },
+              {
+                "id": 1,
+                "kind": "int",
+                "value": 1
+              },
+              {
+                "id": 4,
+                "kind": "str",
+                "value": "b"
+              },
+              {
+                "id": 3,
+                "kind": "int",
+                "value": 2
+              }
+            ]
+          },
+          "depth": 0
+        }
+      }
+    }
+  },
+  {
+    "name": "single-field-hole-large-ids",
+    "source": "module M { val r={a:} }",
+    "lastID": 90071992547409931234567890,
+    "modules": [
+      {
+        "id": 90071992547409931234567895,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 90071992547409931234567894,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 90071992547409931234567893,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 90071992547409931234567892,
+                  "kind": "str",
+                  "value": "a"
+                },
+                null
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 90071992547409931234567891
+      }
+    ],
+    "upstreamSources": {
+      "90071992547409931234567891": {
+        "source": "single-field-hole-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "90071992547409931234567892": {
+        "source": "single-field-hole-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "90071992547409931234567893": {
+        "source": "single-field-hole-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "90071992547409931234567894": {
+        "source": "single-field-hole-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "90071992547409931234567895": {
+        "source": "single-field-hole-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      }
+    },
+    "nextID": 90071992547409931234567896,
+    "undefinedPaths": [
+      "/modules/0/declarations/0/expr/args/1"
+    ],
+    "nullPaths": [],
+    "phase2": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 90071992547409931234567895,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 90071992547409931234567894,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 90071992547409931234567893,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 90071992547409931234567892,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  null
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 90071992547409931234567891
+        }
+      ],
+      "undefinedPaths": [
+        "/modules/0/declarations/0/expr/args/1"
+      ],
+      "nullPaths": []
+    },
+    "phase3": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "phase4": {
+      "status": "unreached",
+      "because": "phase3-threw"
+    },
+    "analysisInput": "phase2-with-empty-table",
+    "analysis": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "parse": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    }
+  },
+  {
+    "name": "unsafe-nested-record-large-ids",
+    "source": "module M { val r={a:{b:}} }",
+    "lastID": 90071992547409931234567890,
+    "modules": [
+      {
+        "id": 90071992547409931234567897,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 90071992547409931234567896,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 90071992547409931234567895,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 90071992547409931234567894,
+                  "kind": "str",
+                  "value": "a"
+                },
+                {
+                  "id": 90071992547409931234567893,
+                  "kind": "app",
+                  "opcode": "Rec",
+                  "args": [
+                    {
+                      "id": 90071992547409931234567892,
+                      "kind": "str",
+                      "value": "b"
+                    },
+                    null
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 90071992547409931234567891
+      }
+    ],
+    "upstreamSources": {
+      "90071992547409931234567891": {
+        "source": "unsafe-nested-record-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "90071992547409931234567892": {
+        "source": "unsafe-nested-record-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 21,
+          "index": 21
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "90071992547409931234567893": {
+        "source": "unsafe-nested-record-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "90071992547409931234567894": {
+        "source": "unsafe-nested-record-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 23,
+          "index": 23
+        }
+      },
+      "90071992547409931234567895": {
+        "source": "unsafe-nested-record-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        }
+      },
+      "90071992547409931234567896": {
+        "source": "unsafe-nested-record-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "90071992547409931234567897": {
+        "source": "unsafe-nested-record-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 26,
+          "index": 26
+        }
+      }
+    },
+    "nextID": 90071992547409931234567898,
+    "undefinedPaths": [
+      "/modules/0/declarations/0/expr/args/1/args/1"
+    ],
+    "nullPaths": [],
+    "phase2": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 90071992547409931234567897,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 90071992547409931234567896,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 90071992547409931234567895,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 90071992547409931234567894,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  {
+                    "id": 90071992547409931234567893,
+                    "kind": "app",
+                    "opcode": "Rec",
+                    "args": [
+                      {
+                        "id": 90071992547409931234567892,
+                        "kind": "str",
+                        "value": "b"
+                      },
+                      null
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 90071992547409931234567891
+        }
+      ],
+      "undefinedPaths": [
+        "/modules/0/declarations/0/expr/args/1/args/1"
+      ],
+      "nullPaths": []
+    },
+    "phase3": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "phase4": {
+      "status": "unreached",
+      "because": "phase3-threw"
+    },
+    "analysisInput": "phase2-with-empty-table",
+    "analysis": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "parse": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    }
+  },
+  {
+    "name": "unsafe-after-completed-module-large-ids",
+    "source": "module Good { val x=1 } module Bad { val r={a:} }",
+    "lastID": 90071992547409931234567890,
+    "modules": [
+      {
+        "id": 90071992547409931234567894,
+        "name": "Good",
+        "declarations": [
+          {
+            "id": 90071992547409931234567893,
+            "kind": "def",
+            "name": "x",
+            "qualifier": "val",
+            "expr": {
+              "id": 90071992547409931234567892,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 90071992547409931234567898,
+        "name": "Bad",
+        "declarations": [
+          {
+            "id": 90071992547409931234567897,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 90071992547409931234567896,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 90071992547409931234567895,
+                  "kind": "str",
+                  "value": "a"
+                },
+                null
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 90071992547409931234567891
+      }
+    ],
+    "upstreamSources": {
+      "90071992547409931234567891": {
+        "source": "unsafe-after-completed-module-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "90071992547409931234567892": {
+        "source": "unsafe-after-completed-module-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "90071992547409931234567893": {
+        "source": "unsafe-after-completed-module-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        }
+      },
+      "90071992547409931234567894": {
+        "source": "unsafe-after-completed-module-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "90071992547409931234567895": {
+        "source": "unsafe-after-completed-module-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        },
+        "end": {
+          "line": 0,
+          "col": 45,
+          "index": 45
+        }
+      },
+      "90071992547409931234567896": {
+        "source": "unsafe-after-completed-module-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 43,
+          "index": 43
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "90071992547409931234567897": {
+        "source": "unsafe-after-completed-module-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        },
+        "end": {
+          "line": 0,
+          "col": 41,
+          "index": 41
+        }
+      },
+      "90071992547409931234567898": {
+        "source": "unsafe-after-completed-module-large-ids.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      }
+    },
+    "nextID": 90071992547409931234567899,
+    "undefinedPaths": [
+      "/modules/1/declarations/0/expr/args/1"
+    ],
+    "nullPaths": [],
+    "phase2": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 90071992547409931234567894,
+          "name": "Good",
+          "declarations": [
+            {
+              "id": 90071992547409931234567893,
+              "kind": "def",
+              "name": "x",
+              "qualifier": "val",
+              "expr": {
+                "id": 90071992547409931234567892,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": 90071992547409931234567898,
+          "name": "Bad",
+          "declarations": [
+            {
+              "id": 90071992547409931234567897,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 90071992547409931234567896,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 90071992547409931234567895,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  null
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 90071992547409931234567891
+        }
+      ],
+      "undefinedPaths": [
+        "/modules/1/declarations/0/expr/args/1"
+      ],
+      "nullPaths": []
+    },
+    "phase3": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "phase4": {
+      "status": "unreached",
+      "because": "phase3-threw"
+    },
+    "analysisInput": "phase2-with-empty-table",
+    "analysis": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "parse": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    }
+  },
+  {
+    "name": "null-before-later-module",
+    "source": "module M { val r={a:} } module Later { val ok=1 }",
+    "lastID": 0,
+    "modules": [
+      {
+        "id": 5,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "a"
+                },
+                null
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Later",
+        "declarations": [
+          {
+            "id": 7,
+            "kind": "def",
+            "name": "ok",
+            "qualifier": "val",
+            "expr": {
+              "id": 6,
+              "kind": "int",
+              "value": 1
+            }
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "null-before-later-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "2": {
+        "source": "null-before-later-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "3": {
+        "source": "null-before-later-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "4": {
+        "source": "null-before-later-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "5": {
+        "source": "null-before-later-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        }
+      },
+      "6": {
+        "source": "null-before-later-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "7": {
+        "source": "null-before-later-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 43,
+          "index": 43
+        },
+        "end": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        }
+      },
+      "8": {
+        "source": "null-before-later-module.qnt",
+        "start": {
+          "line": 0,
+          "col": 24,
+          "index": 24
+        },
+        "end": {
+          "line": 0,
+          "col": 48,
+          "index": 48
+        }
+      }
+    },
+    "nextID": 9,
+    "undefinedPaths": [
+      "/modules/0/declarations/0/expr/args/1"
+    ],
+    "nullPaths": [],
+    "phase2": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 5,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  null
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "name": "Later",
+          "declarations": [
+            {
+              "id": 7,
+              "kind": "def",
+              "name": "ok",
+              "qualifier": "val",
+              "expr": {
+                "id": 6,
+                "kind": "int",
+                "value": 1
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 1
+        }
+      ],
+      "undefinedPaths": [
+        "/modules/0/declarations/0/expr/args/1"
+      ],
+      "nullPaths": []
+    },
+    "phase3": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "phase4": {
+      "status": "unreached",
+      "because": "phase3-threw"
+    },
+    "analysisInput": "phase2-with-empty-table",
+    "analysis": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "parse": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    }
+  },
+  {
+    "name": "null-before-later-diagnostic",
+    "source": "module M { val r={a:} const mapping:Map[int,str] }",
+    "lastID": 0,
+    "modules": [
+      {
+        "id": 10,
+        "name": "M",
+        "declarations": [
+          {
+            "id": 4,
+            "kind": "def",
+            "name": "r",
+            "qualifier": "val",
+            "expr": {
+              "id": 3,
+              "kind": "app",
+              "opcode": "Rec",
+              "args": [
+                {
+                  "id": 2,
+                  "kind": "str",
+                  "value": "a"
+                },
+                null
+              ]
+            }
+          },
+          {
+            "kind": "const",
+            "name": "mapping",
+            "typeAnnotation": {
+              "id": 7,
+              "kind": "fun",
+              "arg": {
+                "id": 5,
+                "kind": "int"
+              },
+              "res": {
+                "id": 6,
+                "kind": "str"
+              }
+            },
+            "id": 9
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "QNT000",
+        "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+        "reference": 1
+      },
+      {
+        "code": "QNT015",
+        "message": "Use 'int -> str' instead of 'Map[int, str]' for map types",
+        "reference": 7,
+        "data": {
+          "fix": {
+            "kind": "replace",
+            "original": "Map[int, str]",
+            "replacement": "int -> str"
+          }
+        }
+      }
+    ],
+    "upstreamSources": {
+      "1": {
+        "source": "null-before-later-diagnostic.qnt",
+        "start": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "2": {
+        "source": "null-before-later-diagnostic.qnt",
+        "start": {
+          "line": 0,
+          "col": 18,
+          "index": 18
+        },
+        "end": {
+          "line": 0,
+          "col": 19,
+          "index": 19
+        }
+      },
+      "3": {
+        "source": "null-before-later-diagnostic.qnt",
+        "start": {
+          "line": 0,
+          "col": 17,
+          "index": 17
+        },
+        "end": {
+          "line": 0,
+          "col": 20,
+          "index": 20
+        }
+      },
+      "4": {
+        "source": "null-before-later-diagnostic.qnt",
+        "start": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        },
+        "end": {
+          "line": 0,
+          "col": 15,
+          "index": 15
+        }
+      },
+      "5": {
+        "source": "null-before-later-diagnostic.qnt",
+        "start": {
+          "line": 0,
+          "col": 40,
+          "index": 40
+        },
+        "end": {
+          "line": 0,
+          "col": 42,
+          "index": 42
+        }
+      },
+      "6": {
+        "source": "null-before-later-diagnostic.qnt",
+        "start": {
+          "line": 0,
+          "col": 44,
+          "index": 44
+        },
+        "end": {
+          "line": 0,
+          "col": 46,
+          "index": 46
+        }
+      },
+      "7": {
+        "source": "null-before-later-diagnostic.qnt",
+        "start": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        },
+        "end": {
+          "line": 0,
+          "col": 47,
+          "index": 47
+        }
+      },
+      "8": {
+        "source": "null-before-later-diagnostic.qnt",
+        "start": {
+          "line": 0,
+          "col": 36,
+          "index": 36
+        },
+        "end": {
+          "line": 0,
+          "col": 47,
+          "index": 47
+        }
+      },
+      "9": {
+        "source": "null-before-later-diagnostic.qnt",
+        "start": {
+          "line": 0,
+          "col": 22,
+          "index": 22
+        },
+        "end": {
+          "line": 0,
+          "col": 47,
+          "index": 47
+        }
+      },
+      "10": {
+        "source": "null-before-later-diagnostic.qnt",
+        "start": {
+          "line": 0,
+          "col": 0,
+          "index": 0
+        },
+        "end": {
+          "line": 0,
+          "col": 49,
+          "index": 49
+        }
+      }
+    },
+    "nextID": 11,
+    "undefinedPaths": [
+      "/modules/0/declarations/0/expr/args/1"
+    ],
+    "nullPaths": [],
+    "phase2": {
+      "status": "returned",
+      "modules": [
+        {
+          "id": 10,
+          "name": "M",
+          "declarations": [
+            {
+              "id": 4,
+              "kind": "def",
+              "name": "r",
+              "qualifier": "val",
+              "expr": {
+                "id": 3,
+                "kind": "app",
+                "opcode": "Rec",
+                "args": [
+                  {
+                    "id": 2,
+                    "kind": "str",
+                    "value": "a"
+                  },
+                  null
+                ]
+              }
+            },
+            {
+              "kind": "const",
+              "name": "mapping",
+              "typeAnnotation": {
+                "id": 7,
+                "kind": "fun",
+                "arg": {
+                  "id": 5,
+                  "kind": "int"
+                },
+                "res": {
+                  "id": 6,
+                  "kind": "str"
+                }
+              },
+              "id": 9
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "QNT000",
+          "message": "mismatched input '}' expecting {'{', 'val', 'pure', '[', 'def', 'action', 'run', 'temporal', 'nondet', 'all', 'any', 'if', '_', STRING, BOOL, INT, 'and', 'or', 'iff', 'implies', 'leadsTo', 'match', '-', '(', 'Set', 'List', 'import', 'export', 'from', 'as', LOW_ID, CAP_ID}",
+          "reference": 1
+        },
+        {
+          "code": "QNT015",
+          "message": "Use 'int -> str' instead of 'Map[int, str]' for map types",
+          "reference": 7,
+          "data": {
+            "fix": {
+              "kind": "replace",
+              "original": "Map[int, str]",
+              "replacement": "int -> str"
+            }
+          }
+        }
+      ],
+      "undefinedPaths": [
+        "/modules/0/declarations/0/expr/args/1"
+      ],
+      "nullPaths": []
+    },
+    "phase3": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "phase4": {
+      "status": "unreached",
+      "because": "phase3-threw"
+    },
+    "analysisInput": "phase2-with-empty-table",
+    "analysis": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    },
+    "parse": {
+      "status": "threw",
+      "name": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'kind')"
+    }
+  }
+]

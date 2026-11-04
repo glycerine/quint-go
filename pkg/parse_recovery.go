@@ -1,6 +1,7 @@
 package quint
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
 	"strings"
@@ -38,12 +39,21 @@ func parseModulesRecoveringWithIDs(name, text string, generator *IDGenerator) (M
 	if generator == nil {
 		generator = NewIDGenerator()
 	}
+	checkpoint := &IDGenerator{}
+	checkpoint.next.Set(&generator.next)
 	located := &locatedParserIDs{generator: generator, file: file, sources: SourceMap{}, upstreamSources: UpstreamSourceMap{}}
 	ids := &recoveringParserIDs{parserIDAllocator: located}
 	modules, err := parseModulesWithIDs(text, ids)
 	result.ModuleParseLocations = ModuleParseLocations{Modules: modules, Sources: located.sources, UpstreamSources: located.upstreamSources, IDs: located.generator}
 	result.Diagnostics = append(result.Diagnostics, ids.diagnostics...)
 	if err != nil {
+		var nullOperand *nullRecordOperandError
+		var unsupported *SyntaxRecoveryError
+		if errors.As(err, &nullOperand) && errors.As(err, &unsupported) {
+			// Raw replay owns a separate allocator and graph. The typed
+			// prefix and caller's continuation retain their existing state.
+			unsupported.Raw, _ = rawModuleRecovery(file, checkpoint)
+		}
 		return result, withSyntaxSource(err, name)
 	}
 	return result, located.err
@@ -55,6 +65,7 @@ type recoveringParserIDs struct {
 	syntaxCount     int
 	expressionHoles map[antlr.Tree]bool
 	operandFrames   []*[]Expr
+	rawNullOperands bool
 }
 
 var errParserListenerAbort = fmt.Errorf("reference listener aborted after a missing type")
@@ -103,10 +114,13 @@ func recoveryLookaheadSyntaxIssue(recognizer antlr.Recognizer, offending interfa
 	return next, next.GetLine(), next.GetColumn(), "no viable alternative at input '" + token.GetText() + next.GetText() + "'"
 }
 
-// SyntaxRecoveryError identifies a malformed parse tree whose conversion does
-// not yet reproduce the reference listener. Diagnostics and any completed
-// modules remain available; callers must not treat partial output as valid IR.
-type SyntaxRecoveryError struct{ Cause error }
+// SyntaxRecoveryError identifies a malformed parse tree that cannot produce
+// valid typed IR. Diagnostics and completed modules remain available. Raw,
+// when present, preserves the separately quarantined malformed reference IR.
+type SyntaxRecoveryError struct {
+	Cause error
+	Raw   *RawModuleRecovery `json:"raw,omitempty"`
+}
 
 func (e *SyntaxRecoveryError) Error() string {
 	return "unsupported syntax recovery: " + e.Cause.Error()
