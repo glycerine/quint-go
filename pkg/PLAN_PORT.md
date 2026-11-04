@@ -810,6 +810,11 @@ TypeScript or Rust evaluator process.
   - [ ] Compare against the reference checker at the same configured transition
     bound; the current native TLC half is exhaustive and is not an equivalent
     bounded reference run.
+  - [x] 2026-11-04: the Scala Apalache checker (`~/apalache/bin/apalache-mc`, v0.62.2)
+    and the Go Apalache checker agree on the verdict for four specs at lengths 0-4
+    (20 pairs, `testdata/reference/bounds/compare.sh`). Scala length N and Go
+    `--max-steps N` bound the same transitions. Witnesses are not yet validated
+    independently, and the corpus is four specs, so the item stays open.
 
 Exit gate: source-to-verification and source-to-TLA workflows use Go Apalache,
 with no automatic fallback to the Scala checker. A bounded success is reported
