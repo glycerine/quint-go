@@ -26,7 +26,8 @@ func TestVerifyRejectsIneffectiveRandomTransitions(t *testing.T) {
 	}
 	stdout.Reset()
 	stderr.Reset()
-	if code := commandVerify(context.Background(), append(args, "--random-transitions"), &stdout, &stderr); code != 1 || stdout.Len() != 0 || !strings.Contains(stderr.String(), "unsupported Go Apalache CHECK option") || !strings.Contains(stderr.String(), "--random-transitions") {
-		t.Fatal("unsupported sampling became a verification verdict", code, stdout.String(), stderr.String())
+	// Random transitions run the checker's simulation; the verdict is reported as sampled.
+	if code := commandVerify(context.Background(), append(args, "--random-transitions"), &stdout, &stderr); code != 0 || !strings.Contains(stdout.String(), "[ok] No violation found") || !strings.Contains(stdout.String(), "sampled runs") || stderr.Len() != 0 {
+		t.Fatal("random transitions did not report a sampled verdict", code, stdout.String(), stderr.String())
 	}
 }

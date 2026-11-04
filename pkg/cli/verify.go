@@ -482,6 +482,11 @@ func verifyPrintApalacheSuccess(ctx context.Context, options verifyOptions, stdo
 		return err
 	}
 	if options.verbosity >= 2 {
+		// Sampled random runs are not exhaustive, so the hint does not suggest a bound increase.
+		if options.randomTransitions {
+			_, err := fmt.Fprintln(stdout, "Random transitions sampled runs only; use --no-random-transitions for exhaustive bounded checking.")
+			return err
+		}
 		if _, err := fmt.Fprintln(stdout, "You may increase --max-steps."); err != nil {
 			return err
 		}

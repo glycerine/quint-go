@@ -682,7 +682,12 @@ TypeScript or Rust evaluator process.
   - [x] Reject ineffective native CHECK controls after effective config merging,
     including simulation, jail/idle settings and solver resource-count aliases;
     raw command spellings/duplicate objects cannot bypass validation.
-  - [ ] Native random-transition simulation remains unavailable.
+  - [x] Random-transition CHECK runs the checker's symbolic simulation through
+    `SimulateAndCheckWithOptions` (sibling checker commit on the current branch).
+    Violations are counterexamples; a clean run is reported as a sampled verdict
+    (`CheckResult.Sampled`, CLI message "sampled runs only"), never as exhaustive
+    bounded safety. Go TLC still rejects `--random-transitions`.
+  - [ ] Simulation seeds are not yet configurable; runs use a time-based seed.
 - [x] P9.3 Implement bounded safety checking, no-invariant deadlock checking,
   and ordinary/multiple-invariant handling with equivalent result categories.
   - [x] Bounded-check API, explicit no-invariant selection, lossless violation/

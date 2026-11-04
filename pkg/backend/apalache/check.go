@@ -37,6 +37,9 @@ type CheckResult struct {
 	Outcome         CheckOutcome
 	Counterexamples []json.RawMessage
 	Data            json.RawMessage
+	// Sampled marks a safe outcome from random-transition simulation: no violation
+	// was found in the sampled runs, which is weaker than exhaustive bounded checking.
+	Sampled bool
 }
 
 // CheckConfig merges loaded JSON with compiled input and explicit options.
@@ -143,7 +146,11 @@ func (e *Executor) Check(ctx context.Context, compiled quint.CompilationResult, 
 	if err != nil {
 		return CheckResult{}, err
 	}
-	return decodeCheckResponse(response)
+	result, err := decodeCheckResponse(response)
+	if err == nil && options.RandomTransitions && result.Outcome == CheckSafe {
+		result.Sampled = true
+	}
+	return result, err
 }
 
 func decodeCheckResponse(response *cmd.CmdResponse) (CheckResult, error) {

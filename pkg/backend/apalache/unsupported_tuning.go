@@ -50,14 +50,8 @@ func validateCheckTuning(config json.RawMessage) error {
 		value := *decoded
 		reason := ""
 		switch key {
-		case "search.simulation":
-			if value == "true" {
-				reason = "random transition simulation (--random-transitions) is not implemented by the current incremental checker"
-			}
-		case "search.simulation.maxRun":
-			if runs, err := strconv.Atoi(value); err == nil && runs > 0 {
-				reason = "simulation run limits are not applied by the current incremental checker"
-			}
+		// search.simulation and search.simulation.maxRun select randomized runs in the
+		// checker's CHECK service and are supported.
 		case "search.split.timeout.minimum":
 			if _, err := strconv.ParseInt(value, 10, 64); err == nil {
 				reason = "split/jail timeouts are not applied by the current incremental checker; use checker.timeout-smt for per-query deadlines"

@@ -15,8 +15,6 @@ func TestIneffectiveCheckControlsFailBeforeExecution(t *testing.T) {
 	directory := t.TempDir()
 	t.Setenv("TMPDIR", directory)
 	for _, test := range []struct{ key, value string }{
-		{"search.simulation", "true"},
-		{"search.simulation.maxRun", "1"},
 		{"search.split.timeout.minimum", "1"},
 		{"search.split.timeout.factor", "2"},
 		{"search.idle.timeout", "1"},
@@ -48,22 +46,22 @@ func TestIneffectiveCheckControlsFailBeforeExecution(t *testing.T) {
 func TestEffectiveCheckTuningUsesNativeJSONMergeSemantics(t *testing.T) {
 	t.Parallel()
 	for _, config := range []string{
-		`{"Checker":{"tuning":{"search.simulation":"true"}}}`,
-		`{"checker":{"Tuning":{"search.simulation":"true"}}}`,
-		`{"CHECKER":{"TUNING":{"search.simulation":"true"}}}`,
-		`{"checker":{"tuning":{"search.simulation":"true"}},"checker":{}}`,
-		`{"checker":{"tuning":{"search.simulation":"true"},"tuning":{}}}`,
-		`{"checker":{"tuning":{"search.simulation":"true"}},"CHECKER":null}`,
+		`{"Checker":{"tuning":{"search.idle.timeout":"1"}}}`,
+		`{"checker":{"Tuning":{"search.idle.timeout":"1"}}}`,
+		`{"CHECKER":{"TUNING":{"search.idle.timeout":"1"}}}`,
+		`{"checker":{"tuning":{"search.idle.timeout":"1"}},"checker":{}}`,
+		`{"checker":{"tuning":{"search.idle.timeout":"1"},"tuning":{}}}`,
+		`{"checker":{"tuning":{"search.idle.timeout":"1"}},"CHECKER":null}`,
 	} {
 		response, err := New().Run(context.Background(), cmd.Cmd_CHECK, json.RawMessage(config))
 		var unsupported *UnsupportedCheckOptionError
-		if response != nil || !errors.As(err, &unsupported) || unsupported.Option != "checker.tuning.search.simulation" {
+		if response != nil || !errors.As(err, &unsupported) || unsupported.Option != "checker.tuning.search.idle.timeout" {
 			t.Fatal("effective ignored control bypassed validation", config, response, err)
 		}
 	}
 	for _, config := range []string{
-		`{"checker":{"tuning":{"search.simulation":"true"},"TUNING":{"search.simulation":"false"}}}`,
-		`{"checker":{"tuning":{"search.simulation":"true"}},"CHECKER":{"Tuning":null}}`,
+		`{"checker":{"tuning":{"search.idle.timeout":"1"},"TUNING":{"search.idle.timeout":null}}}`,
+		`{"checker":{"tuning":{"search.idle.timeout":"1"}},"CHECKER":{"Tuning":null}}`,
 	} {
 		if err := validateCheckTuning(json.RawMessage(config)); err != nil {
 			t.Fatal("effective disabled control was rejected", config, err)
@@ -79,22 +77,18 @@ func TestEffectiveConfigurationPrecedenceAndSupportedControls(t *testing.T) {
 	if err != nil || result.Outcome != CheckSafe {
 		t.Fatal("supported controls or effective precedence changed", result, err)
 	}
+	// Random transitions run the checker'"'"'s symbolic simulation and must mark the verdict as sampled.
 	for _, verify := range []bool{false, true} {
-		var unsupported *UnsupportedCheckOptionError
 		if verify {
 			result, err := New().Verify(context.Background(), compiled, nil, VerificationOptions{CheckOptions: CheckOptions{RandomTransitions: true}})
-			var phaseError *VerificationError
-			if !errors.As(err, &unsupported) || !errors.As(err, &phaseError) || phaseError.Phase != BoundedPhase || result.Outcome != "" || len(result.Phases) != 1 {
-				t.Fatal("random transitions became a checker verdict", result, err)
+			if err != nil || result.Outcome != CheckSafe || !result.Sampled {
+				t.Fatal("random transitions did not produce a sampled verdict", result, err)
 			}
 		} else {
 			result, err := New().Check(context.Background(), compiled, nil, CheckOptions{RandomTransitions: true})
-			if !errors.As(err, &unsupported) || result.Outcome != "" {
-				t.Fatal("random transitions became a checker verdict", result, err)
+			if err != nil || result.Outcome != CheckSafe || !result.Sampled {
+				t.Fatal("random transitions did not produce a sampled verdict", result, err)
 			}
-		}
-		if unsupported.Option != "checker.tuning.search.simulation" {
-			t.Fatal(unsupported)
 		}
 	}
 	// Config construction remains available for upstream-compatible inspection;
@@ -114,7 +108,7 @@ func TestUnsupportedControlValidationLeavesStrictParsingAuthoritative(t *testing
 	}
 	for _, config := range []string{
 		`[]`, `{"checker":1}`, `{"checker":{"tuning":[]}}`,
-		`{"checker":{"tuning":{"search.simulation":true}}}`,
+		`{"checker":{"tuning":{"search.idle.timeout":1}}}`,
 		`{"checker":{"tuning":{"search.simulation":"TRUE"}}}`,
 		`{"checker":{"tuning":{"z3.rlimit":"invalid"}}}`,
 		`{"checker":{"tuning":{"search.idle.timeout":null}}}`,
