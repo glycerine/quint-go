@@ -743,6 +743,12 @@ TypeScript or Rust evaluator process.
     human CLI names it after "Found an issue" (`❌ eventuallyFive`); test
     `TestVerifyOutputNamesViolatedTemporalProperty`. Per-property attribution
     for comma-separated lists and ITF `variables-to-expressions` rendering remain open.
+  - [x] Single-invariant attribution matches upstream: with one ordinary
+    invariant, no `❌ label` line is printed, because upstream
+    `printViolatedInvariants` (`cliReporting.ts:112-117`) returns early for one
+    invariant and `cliCommands.ts:543` prints per-invariant violations only when
+    there are more than one. Compound values (sets, records, tuples, maps) render
+    through the upstream trace-display fixtures in `cli/verify_trace_test.go`.
   - [x] Comma-separated temporal attribution matches upstream: `cli/verify.go`
     names a property only for a single `--temporal` value, and upstream
     `cliCommands.ts:614` conjoins the list into one `temporal q::temporalProps`
