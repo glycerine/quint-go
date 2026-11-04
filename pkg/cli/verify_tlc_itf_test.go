@@ -107,7 +107,8 @@ func TestVerifyTLCActualITFCorpus(t *testing.T) {
 			path := filepath.Join(t.TempDir(), "trace.itf.json")
 			var stdout, stderr bytes.Buffer
 			code := commandVerify(context.Background(), []string{input, "--backend=tlc-go", "--invariant=" + tc.flags, "--out-itf", path}, &stdout, &stderr)
-			if code != tc.code || stdout.Len() != 0 || stderr.Len() != 0 {
+			// --out-itf writes the trace to a file and keeps console output, as upstream does.
+			if code != tc.code || (code == 1 && !strings.Contains(stderr.String(), "error: found a counterexample")) {
 				t.Fatal(code, stdout.String(), stderr.String())
 			}
 			data, err := os.ReadFile(path)

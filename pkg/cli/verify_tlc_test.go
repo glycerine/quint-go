@@ -293,7 +293,7 @@ func TestVerifyTLCActualTemporalCorpus(t *testing.T) {
 				if stderr.Len() != 0 || !strings.Contains(stdout.String(), "all 2 distinct states") {
 					t.Fatal(stdout.String(), stderr.String())
 				}
-			} else if stdout.Len() != 0 || !strings.Contains(stderr.String(), "found a counterexample") {
+			} else if !strings.Contains(stdout.String(), "[violation] Found an issue") || !strings.Contains(stderr.String(), "error: found a counterexample") {
 				t.Fatal(stdout.String(), stderr.String())
 			}
 		})

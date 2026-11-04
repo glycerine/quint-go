@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"bufio"
 	"bytes"
 	"context"
 	"encoding/json"
@@ -73,6 +74,19 @@ func verifyWithBackend(ctx context.Context, args []string, stdout, stderr io.Wri
 }
 
 type verifyTLCBackend func(context.Context, quint.CompilationResult, gotlc.Options) (gotlc.Result, error)
+
+// verifyStdin answers the Apalache temporal confirmation; tests replace it.
+var verifyStdin io.Reader = os.Stdin
+
+// verifyConfirmApalacheTemporal warns that Apalache's temporal support is experimental
+// and reads a yes/no answer from verifyStdin. Only an answer of "y" proceeds.
+func verifyConfirmApalacheTemporal(ctx context.Context, stdin io.Reader, stderr io.Writer) bool {
+	fmt.Fprintln(stderr, terminalStyle(ctx, "\n  WARNING: Apalache has experimental support for temporal properties and might give incorrect results.\n  Consider using --backend tlc, which fully supports temporal properties.", "yellow"))
+	fmt.Fprintln(stderr)
+	fmt.Fprint(stderr, terminalStyle(ctx, "Do you want to proceed with Apalache anyway? (y/N) ", "yellow"))
+	answer, _ := bufio.NewReader(stdin).ReadString('\n')
+	return strings.ToLower(strings.TrimSpace(answer)) == "y"
+}
 
 func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Writer, backend verifyBackend, tlcBackend verifyTLCBackend) int {
 	ctx = terminalBind(ctx, stdout)
@@ -192,6 +206,9 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 	stage.Fields.Set("main", published.Main)
 	if err = ctx.Err(); err != nil {
 		return fail(err)
+	}
+	if options.temporal != "" && !verifyUsesTLC(options) && !verifyConfirmApalacheTemporal(ctx, verifyStdin, stderr) {
+		return fail(errors.New("Aborted: re-run with --backend tlc for full temporal property support"))
 	}
 	if verifyUsesTLC(options) {
 		tlcOptions.ITF = options.outITF != "" || reportInvariants
@@ -429,6 +446,46 @@ func verifyOutput(options verifyOptions, stage verifyStage, stdout, stderr io.Wr
 	return verifyOutputContext(context.Background(), options, stage, stdout, stderr)
 }
 
+// verifyPrintApalacheSuccess prints upstream's success report for the Apalache backend:
+// inductive progress (verbosity 2 and above), the elapsed summary, and two hints.
+func verifyPrintApalacheSuccess(ctx context.Context, options verifyOptions, stdout io.Writer) error {
+	if options.verbosity >= 2 && options.inductive != "" {
+		invariants := []string{}
+		if options.invariant != "" {
+			invariants = append(invariants, options.invariant)
+		}
+		invariants = append(invariants, options.invariants...)
+		invariantText := strings.Join(invariants, " and ")
+		init, step := options.init, options.step
+		if init == "" {
+			init = "init"
+		}
+		if step == "" {
+			step = "step"
+		}
+		fmt.Fprintf(stdout, "> [1/3] Checking whether the inductive invariant '%s' holds in the initial state(s) defined by '%s'...\n", options.inductive, init)
+		fmt.Fprintf(stdout, "> [2/3] Checking whether '%s' preserves the inductive invariant '%s'...\n", step, options.inductive)
+		if invariantText != "" {
+			fmt.Fprintf(stdout, "> [3/3] Checking whether the inductive invariant '%s' implies '%s'...\n", options.inductive, invariantText)
+		}
+	}
+	var elapsed int64
+	if !options.started.IsZero() {
+		elapsed = time.Since(options.started).Milliseconds()
+	}
+	if _, err := fmt.Fprintf(stdout, "%s No violation found (%dms).\n", terminalStyle(ctx, "[ok]", "green"), elapsed); err != nil {
+		return err
+	}
+	if options.verbosity >= 2 {
+		if _, err := fmt.Fprintln(stdout, "You may increase --max-steps."); err != nil {
+			return err
+		}
+		_, err := fmt.Fprintln(stdout, "Use --verbosity to produce more (or less) output.")
+		return err
+	}
+	return nil
+}
+
 func verifyOutputContext(ctx context.Context, options verifyOptions, stage verifyStage, stdout, stderr io.Writer) int {
 	code := 1
 	if stage.Status == "ok" {
@@ -477,7 +534,7 @@ func verifyOutputContext(ctx context.Context, options verifyOptions, stage verif
 	if handled, code := verifyFrontendOutputContext(ctx, options, reported, stderr); handled {
 		return code
 	}
-	if options.out != "" || options.outITF != "" || options.verbosity == 0 {
+	if options.out != "" || options.verbosity == 0 {
 		return code
 	}
 	if err := verifyPrintCounterExample(ctx, stdout, options, stage); err != nil {
@@ -488,10 +545,8 @@ func verifyOutputContext(ctx context.Context, options verifyOptions, stage verif
 		var err error
 		if verifyUsesTLC(options) {
 			_, err = fmt.Fprintln(stdout, terminalStyle(ctx, "[ok]", "green")+" "+stage.Explanation)
-		} else if options.inductive != "" {
-			_, err = fmt.Fprintln(stdout, terminalStyle(ctx, "[ok]", "green")+" Inductive invariant verified.")
 		} else {
-			_, err = fmt.Fprintf(stdout, "%s No violation found up to %d steps.\n", terminalStyle(ctx, "[ok]", "green"), options.maxSteps)
+			err = verifyPrintApalacheSuccess(ctx, options, stdout)
 		}
 		if err != nil {
 			fmt.Fprintln(stderr, "write verification result:", err)
@@ -511,7 +566,7 @@ func verifyOutputContext(ctx context.Context, options verifyOptions, stage verif
 				if !options.started.IsZero() {
 					elapsed = time.Since(options.started).Milliseconds()
 				}
-				fmt.Fprintf(stdout, "\n%s Found an issue (%dms).\n", terminalStyle(ctx, "[violation]", "red"), elapsed)
+				fmt.Fprintf(stdout, "%s Found an issue (%dms).\n", terminalStyle(ctx, "[violation]", "red"), elapsed)
 			}
 		}
 		// Upstream prints the summary as `error: <explanation>` after diagnostics.

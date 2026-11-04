@@ -73,7 +73,7 @@ func TestVerifyCLICompileOptionsAndConfiguration(t *testing.T) {
 	})
 	var stdout, stderr bytes.Buffer
 	code := verifyWithBackend(context.Background(), []string{input, "--backend=apalache-go", "--max-steps", "7", "--invariant", "safe", "--invariants", "upper", "safe", "--inductive-invariant", "safe", "--temporal=live", "--random-transitions", "--apalache-config", config}, &stdout, &stderr, backend)
-	if code != 0 || !called || !strings.Contains(stdout.String(), "Inductive invariant verified") || stderr.Len() != 0 {
+	if code != 0 || !called || !strings.Contains(stdout.String(), "> [1/3] Checking whether the inductive invariant 'safe' holds") || !strings.Contains(stdout.String(), "[ok] No violation found (") || stderr.String() != verifyApalacheTemporalPrompt {
 		t.Fatal(code, stdout.String(), stderr.String(), called)
 	}
 }
@@ -91,7 +91,7 @@ func TestVerifyCLIBoundedDefaultsAndNoInvariant(t *testing.T) {
 	})
 	var stdout, stderr bytes.Buffer
 	code := verifyWithBackend(context.Background(), []string{input}, &stdout, &stderr, backend)
-	if code != 0 || !called || !strings.Contains(stdout.String(), "up to 10 steps") || stderr.Len() != 0 {
+	if code != 0 || !called || !strings.Contains(stdout.String(), "[ok] No violation found (") || stderr.Len() != 0 {
 		t.Fatal(code, stdout.String(), stderr.String(), called)
 	}
 }
@@ -321,7 +321,7 @@ func TestVerifyCLIProductionGoBackend(t *testing.T) {
 	input := verifyTestSource(t, "module M { var x:int action init=x'=0 action step=x'=x+1 val safe=x>=0 }")
 	var stdout, stderr bytes.Buffer
 	code := commandVerify(context.Background(), []string{input, "--invariant=safe", "--max-steps=0"}, &stdout, &stderr)
-	if code != 0 || !strings.Contains(stdout.String(), "No violation found up to 0 steps") || stderr.Len() != 0 {
+	if code != 0 || !strings.Contains(stdout.String(), "[ok] No violation found (") || stderr.Len() != 0 {
 		t.Fatal(code, stdout.String(), stderr.String())
 	}
 }

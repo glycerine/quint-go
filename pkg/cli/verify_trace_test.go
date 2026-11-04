@@ -103,8 +103,14 @@ func TestVerificationTraceDisplayErrorsAndSuppression(t *testing.T) {
 		}
 		out.Reset()
 		stderr.Reset()
-		if code := verifyOutputContext(ctx, options, stage, &out, &stderr); code != 1 || out.Len() != 0 || stderr.Len() != 0 {
-			t.Fatal("file output did not suppress console trace", kind, code, out.String(), stderr.String())
+		code := verifyOutputContext(ctx, options, stage, &out, &stderr)
+		if kind == "json" {
+			// Only --out suppresses console output, as upstream's deriveVerbosity does.
+			if code != 1 || out.Len() != 0 || stderr.Len() != 0 {
+				t.Fatal("--out did not suppress console output", code, out.String(), stderr.String())
+			}
+		} else if code != 1 || !strings.Contains(out.String(), "An example execution") || !strings.Contains(stderr.String(), "error:") {
+			t.Fatal("--out-itf should keep console output", code, out.String(), stderr.String())
 		}
 	}
 }

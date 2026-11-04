@@ -32,6 +32,8 @@ func runParseOptions(args []string) (runOptions, error) {
 		return o, err
 	}
 	args = normalized
+	// Upstream reports numeric option conflicts before an unsupported backend choice.
+	var backendErr error
 	for i := 0; i < len(args); i++ {
 		token := args[i]
 		if token == "--" {
@@ -84,8 +86,8 @@ func runParseOptions(args []string) (runOptions, error) {
 			case "--out-itf":
 				o.outITF = v
 			case "--backend":
-				if v != "go" {
-					return o, cliInvalidChoice("backend", v, "go")
+				if v != "go" && backendErr == nil {
+					backendErr = cliInvalidChoice("backend", v, "go")
 				}
 			}
 		case "--max-samples", "--max-steps", "--n-traces", "--verbosity", "--n-threads":
@@ -163,7 +165,7 @@ func runParseOptions(args []string) (runOptions, error) {
 	if o.traces > o.maxSamples {
 		return o, fmt.Errorf("--n-traces (%d) cannot be greater than --max-samples (%d).", o.traces, o.maxSamples)
 	}
-	return o, nil
+	return o, backendErr
 }
 
 var errRunHelp = errors.New("run help")

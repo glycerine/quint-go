@@ -80,7 +80,7 @@ func TestTerminalVerifyReportsUseInvocationContext(t *testing.T) {
 	level := 1
 	ctx := WithTerminalOptions(context.Background(), TerminalOptions{ColorLevel: &level})
 	var stdout, stderr bytes.Buffer
-	if status := verifyOutputContext(ctx, verifyOptions{verbosity: 1, maxSteps: 2}, verifyStage{Status: "ok"}, &stdout, &stderr); status != 0 || stdout.String() != "\x1b[32m[ok]\x1b[39m No violation found up to 2 steps.\n" || stderr.Len() != 0 {
+	if status := verifyOutputContext(ctx, verifyOptions{verbosity: 1, maxSteps: 2}, verifyStage{Status: "ok"}, &stdout, &stderr); status != 0 || stdout.String() != "\x1b[32m[ok]\x1b[39m No violation found (0ms).\n" || stderr.Len() != 0 {
 		t.Fatalf("verify success status=%d out=%q err=%q", status, stdout.String(), stderr.String())
 	}
 	stdout.Reset()

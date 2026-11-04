@@ -18,6 +18,9 @@ type CheckOptions struct {
 	Init, Next           string
 	Invariants, Temporal []string
 	RandomTransitions    bool
+	// NoDeadlock disables deadlock reporting. Inductive phases ask whether Next
+	// preserves a predicate, so a state without successors is not a violation.
+	NoDeadlock bool
 }
 
 type CheckOutcome string
@@ -107,6 +110,11 @@ func CheckConfig(compiled quint.CompilationResult, loaded json.RawMessage, optio
 	simulation := "false"
 	if options.RandomTransitions {
 		simulation = "true"
+	}
+	if options.NoDeadlock {
+		if err = checker.set("no-deadlock", true); err != nil {
+			return nil, err
+		}
 	}
 	if err = tuning.set("search.simulation", simulation); err != nil {
 		return nil, err

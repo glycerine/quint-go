@@ -96,15 +96,25 @@ func TestVerifyUpstreamCompileSelectorFailures(t *testing.T) {
 				}
 				wantOut = ""
 			}
-			if stdout.String() != wantOut || strings.ReplaceAll(stderr.String(), directory, "<fixture>") != fixture.Stderr {
-				t.Fatalf("stdout %q want %q\nstderr %q want %q", stdout.String(), wantOut, stderr.String(), fixture.Stderr)
+			wantErr := fixture.Stderr
+			// The Apalache confirmation precedes the injected checker result only when
+			// the checker runs; frontend failures stop before it.
+			if _, temporal := fixture.Options["temporal"]; temporal && fixture.Called {
+				wantErr = verifyApalacheTemporalPrompt + wantErr
+			}
+			if stdout.String() != wantOut || strings.ReplaceAll(stderr.String(), directory, "<fixture>") != wantErr {
+				t.Fatalf("stdout %q want %q\nstderr %q want %q", stdout.String(), wantOut, stderr.String(), wantErr)
 			}
 			called = false
 			stdout.Reset()
 			stderr.Reset()
 			output := filepath.Join(directory, "stage.json")
 			code = verifyWithBackend(context.Background(), append(args, "--out="+output), &stdout, &stderr, backend)
-			if code != fixture.Status || called != fixture.Called || stdout.Len() != 0 || stderr.Len() != 0 {
+			wantOutStderr := ""
+			if _, temporal := fixture.Options["temporal"]; temporal && fixture.Called {
+				wantOutStderr = verifyApalacheTemporalPrompt
+			}
+			if code != fixture.Status || called != fixture.Called || stdout.Len() != 0 || stderr.String() != wantOutStderr {
 				t.Fatal(code, called, stdout.String(), stderr.String())
 			}
 			encoded, err := os.ReadFile(output)

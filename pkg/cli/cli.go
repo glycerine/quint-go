@@ -372,8 +372,14 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 			return 1
 		}
 		if diagnostics, ok := fields.Get("errors").([]quint.ErrorMessage); ok {
+			// Upstream drops identical diagnostics before printing them.
+			printed := map[string]bool{}
 			for _, diagnostic := range diagnostics {
 				text := quint.RenderErrorMessage(diagnostic, code, terminalDiagnosticOptions(ctx, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
+				if printed[text] {
+					continue
+				}
+				printed[text] = true
 				fmt.Fprintln(stderr, text)
 			}
 		}
@@ -494,9 +500,13 @@ func coreFrontendCommand(ctx context.Context, command string, args []string, std
 			fields.Set("status", "error")
 			var preparation *apalache.PreparationError
 			if errors.As(err, &preparation) {
-				// Source-located preparation diagnostics are the whole report.
+				// Upstream reports the preparation explanation after the located diagnostics.
 				fields.Set("errors", coreResolveDiagnostics(coreCompatibilitySources(front), preparation.Diagnostics))
-				return fail("", nil)
+				explanation := preparation.Explanation
+				if explanation == "" {
+					explanation = "Failed to convert init to predicate"
+				}
+				return fail(explanation, nil)
 			}
 			return fail(err.Error(), err)
 		}

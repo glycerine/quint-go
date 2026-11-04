@@ -26,7 +26,7 @@ func TestCompileTLAPlusPrintsDeclarationTypes(t *testing.T) {
 	}
 }
 
-// Preparation failures print source-located diagnostics, not a trailing summary.
+// Preparation failures print source-located diagnostics, then the upstream explanation.
 func TestCompileTLAPlusReportsPreparationDiagnostics(t *testing.T) {
 	t.Parallel()
 	path := coreTestFile(t, "reused.qnt", "module M {\n  var x: int\n  action A = x' = 0\n  action init = A\n  action step = A\n}")
@@ -35,7 +35,7 @@ func TestCompileTLAPlusReportsPreparationDiagnostics(t *testing.T) {
 		t.Fatal(code, stdout, stderr)
 	}
 	if !strings.Contains(stderr, " Error [QNT409]: Action A is used both for init and for step") ||
-		!strings.Contains(stderr, "at ") || strings.Contains(stderr, "error:") {
+		!strings.Contains(stderr, "at ") || !strings.HasSuffix(stderr, "\nerror: Failed to convert init to predicate\n") {
 		t.Fatal(stderr)
 	}
 }

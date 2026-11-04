@@ -99,6 +99,7 @@ func verifyWithCheck(ctx context.Context, compiled quint.CompilationResult, load
 	}
 	init := options.CheckOptions
 	init.MaxSteps = 0
+	init.NoDeadlock = true
 	init.Invariants = []string{"q::inductiveInv"}
 	proceed, err := run(InitializationPhase, init)
 	if err != nil || !proceed {
