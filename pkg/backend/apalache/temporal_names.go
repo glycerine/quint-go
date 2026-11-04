@@ -73,3 +73,98 @@ func temporalGeneratedTableauName(name string) bool {
 	number, err := strconv.ParseUint(token, 36, 64)
 	return err == nil && number > 0 && strconv.FormatUint(number, 36) == token
 }
+
+// validateTemporalQuantifiers rejects quantifiers over temporal formulas before
+// the checker sees them. Otherwise Go Apalache reports an internal rewrite error
+// (variable is not assigned a value) that does not name the unsupported form.
+// The CLI requests an aggregate property (q::temporalProps), so every definition
+// reachable from the requested names is scanned.
+func validateTemporalQuantifiers(compiled quint.CompilationResult, options CheckOptions) *PreparationError {
+	if len(options.Temporal) == 0 {
+		return nil
+	}
+	definitions := map[string]*quint.Declaration{}
+	for i := range compiled.MainModule.Declarations {
+		declaration := &compiled.MainModule.Declarations[i]
+		if declaration.Kind == "def" && declaration.Expr != nil {
+			definitions[declaration.Name] = declaration
+		}
+	}
+	reached := map[string]bool{}
+	queue := append([]string{}, options.Temporal...)
+	for len(queue) > 0 {
+		name := queue[0]
+		queue = queue[1:]
+		if reached[name] || definitions[name] == nil {
+			continue
+		}
+		reached[name] = true
+		queue = append(queue, referencedNames(definitions[name].Expr)...)
+	}
+	diagnostics := []quint.Diagnostic{}
+	for _, declaration := range compiled.MainModule.Declarations {
+		if declaration.Kind != "def" || !reached[declaration.Name] || declaration.Expr == nil {
+			continue
+		}
+		if quantifier := temporalQuantifierIn(declaration.Expr); quantifier != nil {
+			id := quantifier.ID
+			diagnostics = append(diagnostics, quint.Diagnostic{
+				Code: quint.QNT000,
+				Message: fmt.Sprintf("Temporal property %q quantifies over a temporal formula with %q. "+
+					"Go Apalache does not support quantified temporal properties; state each instance as a separate temporal property.",
+					declaration.Name, quantifier.Opcode),
+				Reference: &id,
+			})
+		}
+	}
+	if len(diagnostics) == 0 {
+		return nil
+	}
+	return &PreparationError{Explanation: "Unsupported temporal property", Diagnostics: diagnostics}
+}
+
+// referencedNames collects every name and opcode in an expression tree. A
+// definition reference may appear as either, so both are over-approximated.
+func referencedNames(expression *quint.Expr) []string {
+	if expression == nil {
+		return nil
+	}
+	names := []string{expression.Name, expression.Opcode}
+	for i := range expression.Args {
+		names = append(names, referencedNames(&expression.Args[i])...)
+	}
+	return append(names, referencedNames(expression.Body)...)
+}
+
+// temporalQuantifierIn returns the first forall/exists whose body contains a
+// temporal operator, or nil. Lambda bodies are reached through Body and Args.
+func temporalQuantifierIn(expression *quint.Expr) *quint.Expr {
+	if expression == nil {
+		return nil
+	}
+	if (expression.Opcode == "forall" || expression.Opcode == "exists") && containsTemporalOperator(expression) {
+		return expression
+	}
+	for i := range expression.Args {
+		if found := temporalQuantifierIn(&expression.Args[i]); found != nil {
+			return found
+		}
+	}
+	return temporalQuantifierIn(expression.Body)
+}
+
+func containsTemporalOperator(expression *quint.Expr) bool {
+	if expression == nil {
+		return false
+	}
+	switch expression.Opcode {
+	case "always", "eventually", "leadsTo", "weakFair", "strongFair":
+		return true
+	}
+	for i := range expression.Args {
+		if containsTemporalOperator(&expression.Args[i]) {
+			return true
+		}
+	}
+	return containsTemporalOperator(expression.Body)
+}

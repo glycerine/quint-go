@@ -87,18 +87,18 @@ func TestSourceToGoApalacheUnsupportedTemporalProperties(t *testing.T) {
 	}{
 		{"weak-fairness", "weakFair(step, x)", "fairness is not supported"},
 		{"strong-fairness", "strongFair(step, x)", "fairness is not supported"},
-		// The finite quantifier reaches the Go backend, which currently fails
-		// assignment rewriting rather than issuing a dedicated unsupported-
-		// temporal-quantifier message. Pin the observed error so this query can
-		// never silently turn into a successful safety result.
-		{"temporal-quantifier", "Set(0,1).forall(n => eventually(x == n))", "is not assigned a value"},
+		// Quantifiers over temporal formulas are rejected in Quint source terms,
+		// before the checker runs, so the query can never become a safety result.
+		{"temporal-quantifier", "Set(0,1).forall(n => eventually(x == n))", "quantifies over a temporal formula"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
 			compiled := compileSource(t, fmt.Sprintf("module M { var x:int action init=x'=0 action step=x'=1-x val safe=true temporal live=%s }", test.property))
 			result, err := New().Check(context.Background(), compiled, nil, CheckOptions{MaxSteps: 2, Invariants: []string{}, Temporal: []string{"live"}})
 			var failure *CommandFailure
-			if err == nil || !errors.As(err, &failure) || !strings.Contains(err.Error(), test.message) || result.Outcome != "" {
+			var preparation *PreparationError
+			// Source-level rejections are preparation errors; checker failures are command failures.
+			if err == nil || !(errors.As(err, &failure) || errors.As(err, &preparation)) || !strings.Contains(err.Error(), test.message) || result.Outcome != "" {
 				t.Fatal("unsupported temporal query was accepted", result, err)
 			}
 		})

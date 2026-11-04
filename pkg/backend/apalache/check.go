@@ -56,6 +56,9 @@ func CheckConfig(compiled quint.CompilationResult, loaded json.RawMessage, optio
 	if err := validateTemporalNames(compiled, options); err != nil {
 		return nil, err
 	}
+	if err := validateTemporalQuantifiers(compiled, options); err != nil {
+		return nil, err
+	}
 	prepared, err := adaptFoldRight(compiled)
 	if err != nil {
 		return nil, err

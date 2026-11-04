@@ -715,8 +715,13 @@ TypeScript or Rust evaluator process.
     index (first state with `__InLoop` true, only when it holds through the last
     state), verified on a lasso fixture (`loop: 3`); unit test
     `TestLassoLoopIndexFromTemporalLoopFlag` in ~/apalache/pkg.
-  - [ ] Dedicated quantified-temporal diagnostics; broader temporal
-    scope/corpus and bounded interpretation audit.
+  - [x] Dedicated quantified-temporal diagnostics: a temporal property whose
+    definition, or any definition it references, quantifies (`forall`/`exists`)
+    over a temporal formula is rejected before Apalache runs with QNT000
+    "quantifies over a temporal formula". The CLI path reports it (checked with
+    `quint verify --temporal=live` on `Set(0,1).forall(n => eventually(x == n))`).
+    Tests: `TestSourceToGoApalacheUnsupportedTemporalProperties`.
+  - [ ] Broader temporal scope/corpus and bounded interpretation audit.
 - [ ] P9.6 Map checker failures and counterexamples to Quint diagnostics and
   ITF, preserving variable names, integer values, loop information, and source
   references where available. Port individual-invariant violation reporting
