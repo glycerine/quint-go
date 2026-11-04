@@ -36,7 +36,7 @@ type Server struct {
 	options     Options
 	documents   *insdict.Dict[string, *documentState]
 	requests    map[string]*requestState
-	jobs        sync.WaitGroup
+	jobs        jobGroup
 	initialized bool
 	shutdown    bool
 	exited      bool
@@ -50,9 +50,14 @@ func NewServer(options Options) *Server {
 var errExit = errors.New("LSP exit")
 var ErrExitBeforeShutdown = errors.New("LSP exit received before shutdown")
 
+// ErrServerClosed is returned when a closed server is used for new work.
+var ErrServerClosed = errors.New("LSP server is closed")
+
 // Serve handles Content-Length framed JSON-RPC until exit, EOF, or cancellation.
 // It serializes output across analysis workers. On return it closes an input
 // implementing io.Closer so a blocked read can finish, and drains worker jobs.
+// Arbitrary blocked readers without Close and blocked writers cannot be
+// interrupted; custom analyzers must honor cancellation for draining to finish.
 func (s *Server) Serve(ctx context.Context, input io.Reader, output io.Writer) error {
 	ctx, cancel := context.WithCancel(ctx)
 	defer func() {
@@ -63,6 +68,15 @@ func (s *Server) Serve(ctx context.Context, input io.Reader, output io.Writer) e
 		s.Close()
 		_ = s.Wait(context.Background())
 	}()
+	if err := ctx.Err(); err != nil {
+		return err
+	}
+	s.mu.Lock()
+	closed := s.exited
+	s.mu.Unlock()
+	if closed {
+		return ErrServerClosed
+	}
 	type incoming struct {
 		body []byte
 		err  error
@@ -99,9 +113,6 @@ func (s *Server) Serve(ctx context.Context, input io.Reader, output io.Writer) e
 	for {
 		select {
 		case <-ctx.Done():
-			if closer, ok := input.(io.Closer); ok {
-				_ = closer.Close()
-			}
 			return ctx.Err()
 		case err := <-writeErrors:
 			return err
@@ -178,6 +189,12 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 	if send == nil {
 		return fmt.Errorf("LSP response writer is required")
 	}
+	s.mu.Lock()
+	closed := s.exited
+	s.mu.Unlock()
+	if closed {
+		return ErrServerClosed
+	}
 	body = bytes.TrimSpace(body)
 	var message struct {
 		JSONRPC string          `json:"jsonrpc"`
@@ -220,10 +237,15 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 		if message.ID == nil {
 			return nil
 		}
-		if initialized {
+		s.mu.Lock()
+		if s.exited {
+			s.mu.Unlock()
+			return ErrServerClosed
+		}
+		if s.initialized {
+			s.mu.Unlock()
 			return fail(-32600, "Server is already initialized")
 		}
-		s.mu.Lock()
 		s.initialized = true
 		s.mu.Unlock()
 		capabilities := map[string]any{
@@ -437,16 +459,25 @@ func (s *Server) Handle(ctx context.Context, body []byte, send func(any) error) 
 		request := &requestState{cancel: cancel}
 		key, _ := requestKey(message.ID)
 		s.mu.Lock()
+		if s.exited || s.shutdown {
+			exited := s.exited
+			s.mu.Unlock()
+			cancel()
+			if exited {
+				return ErrServerClosed
+			}
+			return fail(-32600, "Server has shut down")
+		}
 		if s.requests[key] != nil {
 			s.mu.Unlock()
 			cancel()
 			return fail(-32600, "Duplicate request id")
 		}
 		s.requests[key] = request
-		s.jobs.Add(1)
+		s.jobs.start()
 		s.mu.Unlock()
 		go func() {
-			defer s.jobs.Done()
+			defer s.jobs.done()
 			defer cancel()
 			var result any
 			var rpcError *ResponseError
@@ -481,6 +512,9 @@ func publish(send func(any) error, uri string, version *int, diagnostics []Diagn
 	}{uri, version, diagnostics})
 }
 func (s *Server) scheduleAllLocked(ctx context.Context, send func(any) error) {
+	if s.shutdown || s.exited {
+		return
+	}
 	overlays := insdict.NewDict[string, string]()
 	for _, state := range s.documents.All() {
 		path, err := sourceForURI(state.URI)
@@ -498,10 +532,13 @@ func (s *Server) scheduleAllLocked(ctx context.Context, send func(any) error) {
 		document := state.Document
 		analysisCtx, cancel := context.WithCancel(ctx)
 		state.cancel = cancel
-		s.jobs.Add(1)
+		s.jobs.start()
 		go func() {
-			defer s.jobs.Done()
+			defer s.jobs.done()
 			defer cancel()
+			if analysisCtx.Err() != nil {
+				return
+			}
 			s.options.Logger.Log("DEBUG", "Document changed: uri=%s, version=%d", document.URI, document.Version)
 			var snapshot *Snapshot
 			var err error
@@ -549,15 +586,9 @@ func (s *Server) cancelLocked() {
 	}
 }
 
-// Close cancels outstanding analyses and requests. It does not own caller I/O.
+// Close cancels outstanding analyses and requests and prevents new work.
+// It is idempotent and does not own caller I/O.
 func (s *Server) Close() { s.mu.Lock(); s.exited = true; s.cancelLocked(); s.mu.Unlock() }
 func (s *Server) Wait(ctx context.Context) error {
-	done := make(chan struct{})
-	go func() { s.jobs.Wait(); close(done) }()
-	select {
-	case <-ctx.Done():
-		return ctx.Err()
-	case <-done:
-		return nil
-	}
+	return s.jobs.wait(ctx)
 }

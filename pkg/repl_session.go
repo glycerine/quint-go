@@ -134,7 +134,20 @@ func (s *REPLSession) Evaluate(ctx context.Context, text string) (REPLResult, er
 	}
 	s.history = append(s.history, strings.TrimSpace(text))
 	s.saved.expressions = append(s.saved.expressions, strings.TrimSpace(text))
+	// Register this input's variables before taking the pending-state snapshot.
+	// Cancellation must not leave new assignments for a later input to commit.
+	if err = s.runtime.PrepareDefinition(ctx, "q::input"); err != nil {
+		return result, err
+	}
+	pending := s.runtime.Storage.Snapshot()
 	result.Value, err = s.runtime.Evaluate(ctx, "q::input", nil)
+	if cancelled := ctx.Err(); cancelled != nil {
+		s.runtime.Storage.Recover(pending)
+		result.Value = RuntimeValue{}
+		if err == nil {
+			err = cancelled
+		}
+	}
 	if err != nil {
 		return result, err
 	}
@@ -150,6 +163,11 @@ func (s *REPLSession) Evaluate(ctx context.Context, text string) (REPLResult, er
 		if updated {
 			oldState, err := s.runtime.Storage.Record()
 			if err != nil {
+				return result, err
+			}
+			if err = ctx.Err(); err != nil {
+				s.runtime.Storage.Recover(pending)
+				result.Value = RuntimeValue{}
 				return result, err
 			}
 			if err = s.runtime.Shift(); err != nil {
