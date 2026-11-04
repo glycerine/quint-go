@@ -978,6 +978,10 @@ any remaining TypeScript client code is distinguished from language-server logic
 - [ ] P12.4 Run representative and broad corpus comparisons covering parsing,
   analysis, execution, and verification. Keep a fast deterministic suite and
   a separately scheduled expensive solver/corpus suite.
+  - [x] 2026-11-04: `QUINT_CORPUS_TESTS=1 go test ./...` from `pkg/` passes every
+    gated corpus suite except the upstream transcript runner, which has three known
+    deviations: `--server-endpoint` rejection, the `Variants!` qualifier, and Go TLC
+    rejecting `--max-steps`. The default and race suites pass.
 - [ ] P12.5 Benchmark parsing, inference, flattening, large collections,
   simulation throughput, and checker handoff; track allocations and peak
   memory against recorded baselines before optimizing.
