@@ -132,6 +132,22 @@ options; commented-out `--timeout` is not an upstream implemented option.
 | `repl` / default | `--require`/`-r`, `--quiet`/`-q`, `--verbosity`, `--seed` | `--backend=go` only. Interspersed flags, Boolean negation and aliases match the common yargs contract. Readline/history persistence and full terminal parity pending. |
 | `docs` | `--out` | Embedded builtin docs and source Markdown generation implemented. |
 
+### Backend selection and configuration matrix
+
+| Workflow | Selection/default | Accepted configuration | Explicitly rejected or unavailable | Version reporting |
+| --- | --- | --- | --- | --- |
+| `compile --target=tlaplus` | In-process Go Apalache TLA service | Common compile flags and TLA printer options | Scala `--apalache-version` and remote `--server-endpoint`; no download or fallback | `apalache.VersionInfo()` reports linked checker/solver modules and optional explicit checker revision |
+| `verify` with Apalache | `--backend=apalache` by default; `apalache-go` alias | `--apalache-config`, bounds, init/step, invariants, supported tuning; unknown controls reach strict validation | Random-transition simulation and legacy endpoint/version flags | `apalache.VersionInfo()` |
+| `verify` with TLC | `--backend=tlc`; `tlc-go` alias | `--tlc-config`, supported invariants/temporal properties, typed ITF export | Explicit max-step bounds, random transitions, induction, Apalache config and Scala endpoint/version flags | `tlc.VersionInfo()` reports native TLC and printer modules |
+| `run`, `test`, `repl` | Go implementation only | Each command's documented Go options | TypeScript/Rust backend choices; there is no Scala checker selection | Not applicable |
+
+The aliases select the same in-process implementation and do not contact a
+service. Version APIs report local/replaced modules as local or unknown rather
+than inventing a release version; the checker revision is unknown unless the
+build supplies it explicitly. CLI regression tests cover accepted backend
+aliases, backend-specific config rejection, and rejection of legacy Scala
+endpoint/version flags.
+
 REPL `.clear`, `.exit`/`.quit`, `.help`, `.load`, `.reload`, `.state`, `.history`,
 `.verbosity`, `.seed`, `.save`, saved-expression replay and multiline input are
 implemented, including checked state value diffs and source action frames.

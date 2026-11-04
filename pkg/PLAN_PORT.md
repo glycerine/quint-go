@@ -741,7 +741,9 @@ TypeScript or Rust evaluator process.
     flag rejection; no Scala download or endpoint fallback.
   - [x] Backend VersionInfo APIs report linked module/replacement identities and
     explicit build-time checker revisions, with unknown local versions preserved.
-  - [ ] Complete backend configuration compatibility matrix.
+  - [x] Document backend selection/defaults, aliases, per-backend config and
+    control support, legacy flag rejection, and VersionInfo behavior in the
+    compatibility matrix; CLI tests cover the selection and rejection paths.
 - [ ] P9.10 Propagate cancellation, solver unknown/resource exhaustion, invalid
   models, and backend errors distinctly from successful bounded checks. Close
   solver sessions, connections, temporary files, and owned child processes.
