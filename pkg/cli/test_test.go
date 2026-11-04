@@ -284,7 +284,7 @@ func TestTestCommandOptionDefaultsAndMatcher(t *testing.T) {
 			t.Fatalf("%v parsed=%+v err=%v", tc.args, got, err)
 		}
 	}
-	for _, pattern := range []string{`(?P<name>example)`, `(?i)name`, `(?m)name`, `(?s)name`, `(?U)name`, `(?-i)name`, `^(a?)+\1$`} {
+	for _, pattern := range []string{`(?P<name>example)`, `(?i)name`, `(?m)name`, `(?s)name`, `(?U)name`, `(?-i)name`} {
 		if _, err := testCompileJavaScriptRegex(pattern); err == nil {
 			t.Fatal("unsupported regex accepted", pattern)
 		}

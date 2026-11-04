@@ -29,16 +29,6 @@ func TestJavaScriptRegexReference(t *testing.T) {
 	if err := json.Unmarshal(data, &fixtures); err != nil {
 		t.Fatal(err)
 	}
-	unsupported := map[string]bool{
-		"pattern_240": true, "pattern_241": true, "pattern_242": true,
-		"pattern_243": true, "pattern_246": true, "pattern_247": true,
-		"pattern_248": true, "pattern_250": true,
-		"pattern_251": true, "pattern_252": true, "pattern_253": true,
-		"pattern_254": true, "pattern_256": true, "pattern_260": true,
-		"pattern_261": true, "pattern_262": true, "pattern_263": true,
-		"pattern_266": true, "pattern_267": true,
-		"pattern_283": true, "pattern_284": true, "pattern_285": true,
-	}
 	for _, fixture := range fixtures {
 		t.Run(fixture.Name, func(t *testing.T) {
 			if fixture.Pattern == "" {
@@ -50,31 +40,20 @@ func TestJavaScriptRegexReference(t *testing.T) {
 				return
 			}
 			compiled, err := testCompileJavaScriptRegex(fixture.Pattern)
-			if fixture.Invalid || unsupported[fixture.Name] {
+			if fixture.Invalid {
 				if err == nil {
-					t.Fatalf("accepted invalid/unsupported JavaScript expression %q", fixture.Pattern)
-				}
-				if !fixture.Invalid && !strings.Contains(err.Error(), "unsupported --match") {
-					t.Fatalf("unsupported JavaScript form needs an explicit limit: %v", err)
+					t.Fatalf("accepted invalid JavaScript expression %q", fixture.Pattern)
 				}
 				return
 			}
 			if err != nil {
 				t.Fatal(fixture.Pattern, err)
 			}
-			engineFailure := false
 			for _, tc := range fixture.Cases {
 				got, err := compiled.MatchString(context.Background(), tc.Input)
-				if err != nil && (fixture.Name == "pattern_244" || fixture.Name == "pattern_245") && strings.Contains(err.Error(), "unsupported --match") {
-					engineFailure = true
-					continue
-				}
 				if err != nil || got != tc.Match {
 					t.Fatalf("JavaScript /%s/ on %q=%v,%v; want %v", fixture.Pattern, tc.Input, got, err, tc.Match)
 				}
-			}
-			if (fixture.Name == "pattern_244" || fixture.Name == "pattern_245") && !engineFailure {
-				t.Fatal("native engine panic regression no longer exercises explicit failure")
 			}
 		})
 	}
@@ -101,20 +80,6 @@ func TestJavaScriptRegexConsumption(t *testing.T) {
 		if got := testRegexMustConsume(tc.body, testRegexHasNamedCapture(tc.body)); got != tc.consumes {
 			t.Errorf("must consume /%s/ = %v; want %v", tc.body, got, tc.consumes)
 		}
-	}
-}
-
-func TestTestCommandNullableCaptureRegression(t *testing.T) {
-	t.Parallel()
-	for _, pattern := range []string{`^(a?)+\1$`, `^(a*)+\1$`, `^((a)?(b)?)+\1$`, `^(?!(?:a?)+?)$`} {
-		t.Run(pattern, func(t *testing.T) {
-			t.Parallel()
-			input := testCommandFile(t, "module M { val a=assert(false) val b=assert(false) }")
-			status, stdout, stderr := testCommandCall(t, context.Background(), input, "--match="+pattern, "--seed=0")
-			if status != 1 || stdout != "" || !strings.Contains(stderr, "unsupported --match") {
-				t.Fatal("unsupported engine behavior must abort discovery before tests run", status, stdout, stderr)
-			}
-		})
 	}
 }
 
