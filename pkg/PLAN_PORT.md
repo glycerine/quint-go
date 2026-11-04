@@ -758,9 +758,18 @@ TypeScript or Rust evaluator process.
     succeeds.
   - [ ] Native TLC resolver directories have no linked dependency close API and
     may outlive an adapter check; solver/session lifecycle needs a broader audit.
-- [ ] P9.11 Exercise safe/unsafe/deadlocked specifications, zero/one-step bounds,
+- [x] P9.11 Exercise safe/unsafe/deadlocked specifications, zero/one-step bounds,
   induction, temporal properties, nested modules, large values, malformed IR,
   unsupported opcodes, and backend failures through the actual Go checker.
+  - [x] Safe/unsafe, zero/one-step, nested imports and arbitrary-size integer
+    traces through the actual command service: `input_test.go` and
+    `input_boundary_test.go`.
+  - [x] Empty executions/deadlock, real inductive phases, temporal lasso and
+    unsupported temporal features: `resource_outcomes_test.go`, `verify_test.go`
+    and `temporal_test.go`.
+  - [x] Malformed/unsupported checker input, cancellation, unknown/resource
+    exhaustion and backend failures preserve no-verdict/error distinctions:
+    `input_boundary_test.go`, `resource_test.go` and `resource_outcomes_test.go`.
 - [ ] P9.12 Compare Go and reference verification verdicts at identical bounds.
   Validate counterexample transitions and violated properties independently;
   accept different valid witnesses rather than requiring identical solver models.
