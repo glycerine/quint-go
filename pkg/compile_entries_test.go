@@ -42,7 +42,7 @@ func TestCompilationInvariantReportEntries(t *testing.T) {
 			t.Fatal(declarations[i+1])
 		}
 	}
-	if declarations[1].Expr.Opcode != "and" || declarations[2].Expr.Opcode != "ilt" || labels[0] != "x>0 and y>0" {
+	if declarations[1].Expr.Opcode != "and" || len(declarations[1].Expr.Args) != 1 || declarations[1].Expr.Args[0].Opcode != "and" || declarations[2].Expr.Opcode != "and" || len(declarations[2].Expr.Args) != 1 || declarations[2].Expr.Args[0].Opcode != "ilt" || labels[0] != "x>0 and y>0" {
 		t.Fatal("predicate boundaries or input changed", declarations)
 	}
 	empty, err := SynthesizeCompilationEntries(CompilationEntries{Target: "json", InvariantReports: true}, NewIDGenerator())

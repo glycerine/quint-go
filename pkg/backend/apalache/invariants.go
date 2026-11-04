@@ -49,8 +49,14 @@ func FindViolatedInvariants(ctx context.Context, compiled quint.CompilationResul
 	}
 	// Prepare every predicate first so lazy variable discovery completes before
 	// FromRecord restores values, including variables used only by later checks.
+	reportName := func(i int) string {
+		if i < len(compiled.InvariantReportNames) && compiled.InvariantReportNames[i] != "" {
+			return compiled.InvariantReportNames[i]
+		}
+		return quint.InvariantReportName(i)
+	}
 	for i := range labels {
-		if err := evaluator.PrepareDefinition(ctx, quint.InvariantReportName(i)); err != nil {
+		if err := evaluator.PrepareDefinition(ctx, reportName(i)); err != nil {
 			return nil, fmt.Errorf("prepare invariant %q: %w", labels[i], err)
 		}
 	}
@@ -58,7 +64,7 @@ func FindViolatedInvariants(ctx context.Context, compiled quint.CompilationResul
 		return nil, fmt.Errorf("restore invariant-report state: %w", err)
 	}
 	for i, label := range labels {
-		value, err := evaluator.Evaluate(ctx, quint.InvariantReportName(i), nil)
+		value, err := evaluator.Evaluate(ctx, reportName(i), nil)
 		if err != nil {
 			return nil, fmt.Errorf("evaluate invariant %q: %w", label, err)
 		}

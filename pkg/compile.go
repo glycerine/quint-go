@@ -20,18 +20,19 @@ type CompilationResult struct {
 	// synthesis. The CLI stage output includes this view even when the target
 	// contains only the flattened main module. Module/declaration slices are
 	// copied; nested IR remains read-only, as in the other compilation views.
-	UnflattenedModules  []Module
-	MainModule          Module
-	Main                string
-	Diagnostics         []Diagnostic
-	AnalysisDiagnostics []Diagnostic
+	UnflattenedModules   []Module
+	MainModule           Module
+	Main                 string
+	Diagnostics          []Diagnostic
+	AnalysisDiagnostics  []Diagnostic
+	InvariantReportNames []string
 }
 
 // CompileModules prepares already typechecked, dependency-ordered modules for
 // output. ids must continue the parser's sequence. As in upstream compilation,
 // incremental analysis may extend the supplied analysis tables and source map.
 func CompileModules(modules []Module, analysis AnalysisOutput, ids *IDGenerator, sources SourceMap, options CompilationOptions) (CompilationResult, error) {
-	result := CompilationResult{Diagnostics: []Diagnostic{}}
+	result := CompilationResult{Diagnostics: []Diagnostic{}, InvariantReportNames: append([]string(nil), options.InvariantReportNames...)}
 	index, err := SelectMainModule(modules, options.Main, options.DefaultModule, options.Input)
 	if err != nil {
 		return result, err

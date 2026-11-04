@@ -206,9 +206,9 @@ func TestVerifyCLIFrontendAndConfigurationFailures(t *testing.T) {
 	}{
 		{"module M { val safe=missing }", nil, "parsing failed"},
 		{"module M { val safe=1+true }", nil, "typechecking failed"},
-		{"module M { val safe=1 }", nil, "compilation failed"},
+		{"module M { val safe=1 }", nil, "Argument error"},
 		{verifyTestModel, []string{"--main=Missing"}, "does not exist"},
-		{verifyTestModel, []string{"--invariant=missing"}, "compilation failed"},
+		{verifyTestModel, []string{"--invariant=missing"}, "name resolution failed"},
 		{verifyTestModel, []string{"--apalache-config", badConfig}, "must be a JSON object"},
 		{verifyTestModel, []string{"--apalache-config", filepath.Join(dir, "missing")}, "load Apalache configuration"},
 		{"module M {", nil, "parsing failed"},
@@ -286,7 +286,7 @@ func TestVerifyCLICancellationQuietAndWriteErrors(t *testing.T) {
 	})
 	stdout.Reset()
 	stderr.Reset()
-	if code := verifyWithBackend(context.Background(), []string{input, "--verbosity=0"}, &stdout, &stderr, backend); code != 1 || stdout.Len() != 0 || stderr.Len() != 0 {
+	if code := verifyWithBackend(context.Background(), []string{input, "--verbosity=0"}, &stdout, &stderr, backend); code != 1 || stdout.Len() != 0 || stderr.String() != "error: found a counterexample\n" {
 		t.Fatal(code, stdout.String(), stderr.String())
 	}
 	stage := verifyStage{Status: "violation", Trace: json.RawMessage(`{"states":[]}`)}

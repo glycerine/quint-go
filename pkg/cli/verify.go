@@ -154,39 +154,38 @@ func verifyWithCheckers(ctx context.Context, args []string, stdout, stderr io.Wr
 	}
 	_, invariants := quint.CompilationInvariants(options.invariant, options.invariants)
 	reportInvariants := len(invariants) > 1 || options.inductive != "" && len(invariants) > 0
-	compiled, err := quint.CompileModules(analysis.Modules, quint.AnalysisOutput{Types: analysis.Types, Effects: analysis.Effects, Modes: analysis.Modes}, frontend.IDs, frontend.Sources, quint.CompilationOptions{
+	published, compiled, err := verifyCompileModules(frontend, analysis, quint.CompilationOptions{
 		Main: options.main, DefaultModule: coreDefaultModule(frontend, abs), Input: options.input,
 		CompilationEntries: quint.CompilationEntries{
 			Target: "json", Flatten: true, Init: &options.init, Step: &options.step,
 			Invariants: invariants, InductiveInvariant: options.inductive,
-			Temporal:         options.temporal,
-			InvariantReports: reportInvariants,
+			Temporal: options.temporal,
 		},
-	})
+	}, reportInvariants)
 	if err != nil {
 		return fail(err)
 	}
-	stage.Main = compiled.Main
-	if len(compiled.Diagnostics) > 0 || len(compiled.AnalysisDiagnostics) > 0 {
-		if compiled.Table != nil {
-			stage.Fields.Set("table", coreLookupTable(compiled.Table))
+	stage.Main = published.Main
+	if len(published.Diagnostics) > 0 {
+		if published.Table != nil {
+			stage.Fields.Set("table", coreLookupTable(published.Table))
 		}
-		if compiled.UnflattenedModules == nil {
-			stage.Errors = coreResolveDiagnostics(nil, compiled.Diagnostics)
+		if published.UnflattenedModules == nil {
+			stage.Errors = coreResolveDiagnostics(nil, published.Diagnostics)
+			stage.Explanation = "Argument error"
 		} else {
-			stage.Fields.Set("modules", coreModules(compiled.UnflattenedModules))
-			addDiagnostics(compiled.Diagnostics)
+			stage.Fields.Set("modules", coreModules(published.UnflattenedModules))
+			addDiagnostics(published.Diagnostics)
+			stage.Explanation = "name resolution failed"
 		}
-		addDiagnostics(compiled.AnalysisDiagnostics)
-		stage.Explanation = "compilation failed"
 		return verifyOutputContext(ctx, options, stage, stdout, stderr)
 	}
 	stage.Fields.Set("stage", "verifying")
-	stage.Fields.Set("modules", coreModules(compiled.UnflattenedModules))
-	stage.Fields.Set("table", coreLookupTable(compiled.Table))
-	stage.Fields.Set("types", coreStringTable(compiled.Analysis.Types))
-	stage.Fields.Set("effects", coreStringTable(coreCompilationEffects(compiled, analysis.Effects)))
-	stage.Fields.Set("main", compiled.Main)
+	stage.Fields.Set("modules", coreModules(published.UnflattenedModules))
+	stage.Fields.Set("table", coreLookupTable(published.Table))
+	stage.Fields.Set("types", coreStringTable(published.Analysis.Types))
+	stage.Fields.Set("effects", coreStringTable(coreCompilationEffects(published, analysis.Effects)))
+	stage.Fields.Set("main", published.Main)
 	if err = ctx.Err(); err != nil {
 		return fail(err)
 	}
@@ -462,7 +461,13 @@ func verifyOutputContext(ctx context.Context, options verifyOptions, stage verif
 			return 1
 		}
 	}
-	if handled, code := verifyFrontendOutputContext(ctx, options, stage, stderr); handled {
+	reported := stage
+	if reported.Status == "failure" {
+		// The upstream checker reporter returns a CLI failure, which uses
+		// the same source diagnostics and summary as frontend failures.
+		reported.BackendResult = false
+	}
+	if handled, code := verifyFrontendOutputContext(ctx, options, reported, stderr); handled {
 		return code
 	}
 	if options.out != "" || options.outITF != "" || options.verbosity == 0 {

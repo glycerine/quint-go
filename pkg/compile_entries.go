@@ -16,6 +16,8 @@ type CompilationEntries struct {
 	// InvariantReports preserves separately flattened predicates for reporting
 	// individual failures at a counterexample's final state.
 	InvariantReports bool
+	// InvariantReportNames optionally supplies private, collision-free names.
+	InvariantReportNames []string
 }
 
 // SynthesizeCompilationEntries parses q::* wrappers using the compilation's ID
@@ -43,7 +45,11 @@ func SynthesizeCompilationEntries(options CompilationEntries, ids *IDGenerator) 
 		texts = append(texts, "val q::inv = and("+strings.Join(options.Invariants, " and ")+")")
 		if options.InvariantReports {
 			for i, invariant := range options.Invariants {
-				texts = append(texts, "val "+InvariantReportName(i)+" = "+invariant)
+				name := InvariantReportName(i)
+				if i < len(options.InvariantReportNames) && options.InvariantReportNames[i] != "" {
+					name = options.InvariantReportNames[i]
+				}
+				texts = append(texts, "val "+name+" = and("+invariant+")")
 			}
 		}
 	}
