@@ -825,6 +825,12 @@ TypeScript or Rust evaluator process.
     whose init, step and invariant definitions are restated by hand rather than taken
     from the checker: each witness starts in init, every transition is legal, and the
     invariant fails in some state. This covers three specs only.
+  - [x] 2026-11-04: `compare.sh` now emits `--out-itf` witnesses from Go for every
+    fixture with a counterexample and runs `validate_witness.py` on all seven
+    (counter3, guard, jump, sum, tlcCounter, toggle, twovar). The validator also
+    accepts deadlock witnesses: tlcCounter reaches counter=3, where its only step
+    guard `counter < 3` is false. Tampered traces are rejected (negative tests run).
+    The corpus is still eight fixtures, so the item stays open.
 
 Exit gate: source-to-verification and source-to-TLA workflows use Go Apalache,
 with no automatic fallback to the Scala checker. A bounded success is reported

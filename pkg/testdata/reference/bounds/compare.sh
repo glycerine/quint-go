@@ -24,5 +24,21 @@ for path in "$here"/*.qnt; do
     echo "$spec n=$n scala=[$scala] go=[$go] $verdict"
   done
 done
+# Witness pass: every Go counterexample must be a genuine execution, checked
+# independently by validate_witness.py (spec semantics restated by hand there).
+witnesses=""
+for path in "$here"/*.qnt; do
+  spec=$(basename "$path" .qnt)
+  itf="$work/$spec.itf.json"
+  if "$quint" verify --backend apalache-go --max-steps=10 --invariant inv \
+      --out-itf "$itf" "$path" >/dev/null 2>&1 && [ ! -f "$itf" ]; then
+    continue # no counterexample found; nothing to validate
+  fi
+  [ -f "$itf" ] && witnesses="$witnesses $spec=$itf"
+done
+if [ -n "$witnesses" ]; then
+  # shellcheck disable=SC2086
+  python3 -I "$here/validate_witness.py" $witnesses || status=1
+fi
 rm -rf "$work"
 exit $status
