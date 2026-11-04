@@ -50,6 +50,10 @@ func CheckConfig(compiled quint.CompilationResult, loaded json.RawMessage, optio
 	if err != nil {
 		return nil, err
 	}
+	prepared, err = adaptAllListsUpTo(prepared)
+	if err != nil {
+		return nil, err
+	}
 	input, err := MarshalInput(prepared)
 	if err != nil {
 		return nil, err

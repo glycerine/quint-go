@@ -719,8 +719,9 @@ TypeScript or Rust evaluator process.
     reversed sequence at the Apalache CHECK and TLA boundaries; verify an
     order-sensitive fold through Go Apalache assignment IR and generated-TLA
     native TLC.
-  - [ ] Complete broader generated-TLA semantic compatibility tests for
-    `allListsUpTo`; audits retain concrete failing witnesses.
+  - [x] Lower finite `allListsUpTo` through existing set folds/maps/unions and
+    sequence append at both Apalache boundaries; check bounds two, zero and
+    negative through assignment-IR Go Apalache and generated-TLA native TLC.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.
@@ -3870,5 +3871,15 @@ rewrites `imod` as `x - quotient*y`. A default integration regression checks
 all operand-sign combinations and both safe and violating properties through
 generated-TLA native TLC and assignment-IR Go Apalache. The same spec checks an
 applied lambda emitted inside a TLA `LET`. The transformation preserves the
-caller-owned compilation. `foldr` and `allListsUpTo` checker semantics remain
-open; the compatibility and fixture audits record them separately.
+caller-owned compilation. Broader semantic compatibility coverage for `foldr`
+and `allListsUpTo` remained open at this checkpoint.
+
+## Checker collection lowering checkpoint — 2026-11-04
+
+Apalache CHECK and TLA inputs now lower `foldr` with inline or named callbacks
+and finite `allListsUpTo` into the Go checker's supported fold/map/sequence
+operations. The generated-TLA/native-TLC and assignment-IR/Go-Apalache regression
+checks order-sensitive right folds, a two-element domain with bound two, and
+zero/negative bounds. Full default tests, vet, and whitespace checks pass; the
+one-second aggregate runtime target remains unmet. Broader generated-TLA fixture
+parity and unsupported/unbounded-domain behavior remain open.

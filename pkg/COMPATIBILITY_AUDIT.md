@@ -97,7 +97,7 @@ fixture manifest provide the assertions.
 
 | Surface | Exact classification relevant to the audit |
 | --- | --- |
-| Go Apalache fallback operators | `foldr` is lowered at the CHECK and TLA boundaries; `getOnlyElement`, `allListsUpTo`, `expect`, `reps`, `q::debug`, `q::test`, `q::testOnce` have no dedicated importer conversion; `q::lastTrace` falls back as a name. Other successful decodes do not prove support. |
+| Go Apalache fallback operators | `foldr` is lowered at the CHECK and TLA boundaries; `allListsUpTo` is lowered for finite inputs; `getOnlyElement`, `expect`, `reps`, `q::debug`, `q::test`, `q::testOnce` have no dedicated importer conversion; `q::lastTrace` falls back as a name. Other successful decodes do not prove support. |
 | Binding-specific importer behavior | `oneOf` is recognized in a nondeterministic let and rejects standalone use; `apalache::generate` is converted in that binding context and otherwise falls back. Ordinary translated operators still require argument/type/backend semantic checks. |
 | Simulator rejection contract | `allLists`, `chooseSome`, `next`, `always`, `eventually`, `enabled`, `orKeep`, `mustChange`, `weakFair`, `strongFair`, `leadsTo` are rejected at the documented runtime boundary. [runtime_restrictions_test.go](runtime_restrictions_test.go) checks strict versus lazy argument/error ordering. Checker temporal translation does not imply concrete simulation support. |
 | Resolver-only legacy names | `applyTo`, `fields`, `of`, `cross`, `difference` are reserved names without ordinary signature/evaluator dispatch. The internal singleton helper has support despite omission from upstream's 93-opcode array. |
@@ -251,7 +251,11 @@ retains Quint's truncation-toward-zero quotient and derives remainder from it.
 Checker support for `foldr` now lowers typed two-argument lambdas and named
 operators to `foldl` over a reversed sequence, with an order-sensitive
 generated-TLA/native-TLC and assignment-IR/Go-Apalache regression.
-`allListsUpTo` checker support remains open. Temporal encoding
+`allListsUpTo` lowers finite domains, including zero and negative bounds, to
+the bounded set-fold recurrence, with actual generated-TLA/native-TLC and
+assignment-IR/Go Apalache checks. Infinite-domain rejection and broader fixtures
+remain open.
+Temporal encoding
 reserved-name collisions reject rather than report false safety. Solver
 resource exhaustion, Unknown and empty/too-short execution sets are inconclusive in
 [resource_outcomes_test.go](backend/apalache/resource_outcomes_test.go). Bounded

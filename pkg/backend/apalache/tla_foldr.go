@@ -31,12 +31,12 @@ func adaptFoldRight(compiled quint.CompilationResult) (quint.CompilationResult, 
 	}
 	newExpr := func(op string, args []quint.Expr, typ quint.Type) quint.Expr {
 		id := ids.Next()
-		types.Set(id.String(), quint.TypeScheme{Type: typ})
+		types.Set(id.String(), quint.TypeScheme{Type: typ, TypeVariables: []string{}, RowVariables: []string{}})
 		return quint.Expr{ID: id, Kind: "app", Opcode: op, Args: args}
 	}
 	newName := func(name string, typ quint.Type) (quint.Expr, quint.Parameter) {
 		id := ids.Next()
-		types.Set(id.String(), quint.TypeScheme{Type: typ})
+		types.Set(id.String(), quint.TypeScheme{Type: typ, TypeVariables: []string{}, RowVariables: []string{}})
 		return quint.Expr{ID: id, Kind: "name", Name: name}, quint.Parameter{ID: id, Name: name}
 	}
 	transformer := &quint.IRTransformer{ExitExpression: func(expression quint.Expr) (quint.Expr, error) {
@@ -59,10 +59,14 @@ func adaptFoldRight(compiled quint.CompilationResult) (quint.CompilationResult, 
 		concat := newExpr("concat", []quint.Expr{prepend, accName}, listType)
 		reverseCallbackType := quint.Type{Kind: "oper", Res: &listType, Args: []quint.Type{listType, elemType}}
 		reverseCallback := quint.Expr{ID: ids.Next(), Kind: "lambda", Params: []quint.Parameter{accParam, itemParam}, Qualifier: quint.Def, Body: &concat}
-		types.Set(reverseCallback.ID.String(), quint.TypeScheme{Type: reverseCallbackType})
+		types.Set(reverseCallback.ID.String(), quint.TypeScheme{Type: reverseCallbackType, TypeVariables: []string{}, RowVariables: []string{}})
 		empty := newExpr("List", []quint.Expr{}, listType)
 		reversed := newExpr("foldl", []quint.Expr{expression.Args[0], empty, reverseCallback}, listType)
-		foldType := types.Get(expression.ID.String()).Type
+		foldScheme, found := types.Get2(expression.ID.String())
+		if !found {
+			return quint.Expr{}, fmt.Errorf("TLA foldr lowering requires a typed result")
+		}
+		foldType := foldScheme.Type
 		callback := expression.Args[2]
 		switch callback.Kind {
 		case "lambda":
@@ -83,7 +87,7 @@ func adaptFoldRight(compiled quint.CompilationResult) (quint.CompilationResult, 
 			call := newExpr(callback.Name, []quint.Expr{item, acc}, foldType)
 			callback = quint.Expr{ID: ids.Next(), Kind: "lambda", Qualifier: "def", Params: []quint.Parameter{accParameter, itemParameter}, Body: &call}
 			callbackType := quint.Type{Kind: "oper", Res: &foldType, Args: []quint.Type{accType.Type, elemType}}
-			types.Set(callback.ID.String(), quint.TypeScheme{Type: callbackType})
+			types.Set(callback.ID.String(), quint.TypeScheme{Type: callbackType, TypeVariables: []string{}, RowVariables: []string{}})
 		default:
 			return quint.Expr{}, fmt.Errorf("TLA foldr lowering requires a lambda or named operator callback")
 		}
