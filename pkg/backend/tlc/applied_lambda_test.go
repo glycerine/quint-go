@@ -12,7 +12,7 @@ import (
 )
 
 func TestGeneratedTLAAppliedLambdaAndSignedArithmeticSemantics(t *testing.T) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	compiled := compileSource(t, `module M {
   var x: int

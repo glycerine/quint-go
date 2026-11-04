@@ -952,7 +952,9 @@ any remaining TypeScript client code is distinguished from language-server logic
     postprocessing removes ANTLR unreachable tail jumps. Focused runtime,
     documentation/cache, and LSP race checks pass. A full `go test -race ./...`
     run also passes across every package; this does not replace the remaining
-    public-path cancellation coverage audit.
+    public-path cancellation coverage audit. On 2026-11-04 the applied-lambda
+    generated-TLA check exceeded a 10-second deadline only under `-race` (3.5s
+    without it); its deadline is now 60 seconds, and the race suite passes again.
   - [x] LSP stream/job/close/wait lifecycle and REPL final-success cancellation
     preserve owned resources and pending state with deterministic regressions.
   - [x] Semantic requests are bound to their document generation; in-flight
