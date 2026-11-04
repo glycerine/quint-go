@@ -815,6 +815,11 @@ TypeScript or Rust evaluator process.
     (20 pairs, `testdata/reference/bounds/compare.sh`). Scala length N and Go
     `--max-steps N` bound the same transitions. Witnesses are not yet validated
     independently, and the corpus is four specs, so the item stays open.
+  - [x] 2026-11-04: the three Go counterexamples from `--out-itf` (counter3, jump,
+    twovar at length 4) are validated by `testdata/reference/bounds/validate_witness.py`,
+    whose init, step and invariant definitions are restated by hand rather than taken
+    from the checker: each witness starts in init, every transition is legal, and the
+    invariant fails in some state. This covers three specs only.
 
 Exit gate: source-to-verification and source-to-TLA workflows use Go Apalache,
 with no automatic fallback to the Scala checker. A bounded success is reported
