@@ -4,9 +4,6 @@ import (
 	"context"
 	"fmt"
 	"sort"
-
-	"golang.org/x/text/collate"
-	"golang.org/x/text/language"
 )
 
 // SerializeRuntimeValue implements the TypeScript runtime's toQuintEx operation
@@ -27,6 +24,7 @@ func SerializeRuntimeValue(value RuntimeValue, state *RuntimeObjectHashState) (E
 		state = &RuntimeObjectHashState{}
 	}
 	serializer := runtimeSerialization{objects: state}
+	defer func() { runtimeCollators.release(serializer.comparison) }()
 	return serializer.expression(value)
 }
 
@@ -45,13 +43,14 @@ func SerializeRuntimeValueContext(ctx context.Context, value RuntimeValue, state
 		state = &RuntimeObjectHashState{}
 	}
 	serializer := runtimeSerialization{objects: state, ctx: ctx}
+	defer func() { runtimeCollators.release(serializer.comparison) }()
 	return serializer.expression(value)
 }
 
 type runtimeSerialization struct {
 	ctx        context.Context
 	objects    *RuntimeObjectHashState
-	comparison *collate.Collator
+	comparison *runtimeCollator
 }
 
 func (s *runtimeSerialization) expression(value RuntimeValue) (Expr, error) {
@@ -184,7 +183,7 @@ func (s *runtimeSerialization) setElements(values []RuntimeValue) ([]Expr, error
 	entries := printed.Entries()
 	if len(entries) > 1 {
 		if s.comparison == nil {
-			s.comparison = collate.New(language.AmericanEnglish)
+			s.comparison = runtimeCollators.acquire()
 		}
 		sort.SliceStable(entries, func(i, j int) bool {
 			return s.comparison.CompareString(entries[i].Value.text, entries[j].Value.text) < 0

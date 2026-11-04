@@ -11,8 +11,6 @@ import (
 	"unicode/utf8"
 
 	"github.com/glycerine/insdict"
-	"golang.org/x/text/collate"
-	"golang.org/x/text/language"
 )
 
 // NormalizeValue constructs the deterministic structural form of a concrete
@@ -23,14 +21,15 @@ import (
 // Runtime display can reorder collation ties through object-hash history;
 // DecodeNormalizedITFTrace and SerializeRuntimeValueContext preserve that path.
 func NormalizeValue(input Expr) (Expr, error) {
-	var comparison *collate.Collator
+	var comparison *runtimeCollator
+	defer func() { runtimeCollators.release(comparison) }()
 	var normalize func(Expr) (Expr, error)
 	sortValues := func(values []Expr) {
 		if len(values) < 2 {
 			return
 		}
 		if comparison == nil {
-			comparison = collate.New(language.AmericanEnglish)
+			comparison = runtimeCollators.acquire()
 		}
 		type entry struct {
 			value Expr

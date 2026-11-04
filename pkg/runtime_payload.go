@@ -6,8 +6,6 @@ import (
 	"sort"
 
 	"github.com/glycerine/insdict"
-	"golang.org/x/text/collate"
-	"golang.org/x/text/language"
 )
 
 // A payload retains actual immutable children and collection node history.
@@ -67,7 +65,8 @@ func runtimeAssemble(source Expr, payload *runtimePayload) (RuntimeValue, error)
 				}
 			}
 			if len(display.Args) > 1 {
-				comparison := collate.New(language.AmericanEnglish)
+				comparison := runtimeCollators.acquire()
+				defer runtimeCollators.release(comparison)
 				sort.SliceStable(display.Args, func(i, j int) bool {
 					return comparison.CompareString(ExpressionString(display.Args[i]), ExpressionString(display.Args[j])) < 0
 				})
