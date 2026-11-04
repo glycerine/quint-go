@@ -747,6 +747,17 @@ TypeScript or Rust evaluator process.
 - [ ] P9.10 Propagate cancellation, solver unknown/resource exhaustion, invalid
   models, and backend errors distinctly from successful bounded checks. Close
   solver sessions, connections, temporary files, and owned child processes.
+  - [x] Real Go Apalache CHECK/TLA service cancellation remains a context error;
+    solver query deadlines, SMT memory-watermark `Unknown`, and empty execution
+    sets remain inconclusive rather than verdicts.
+  - [x] Unsupported opcodes/configuration and malformed IR fail without a verdict;
+    actual service tests preserve backend categories and data while cleaning
+    adapter-owned temporary source files on success and failure.
+  - [x] Native Go TLC cancellation and collection resource exhaustion remain
+    incomplete outcomes; adapter-owned metadata is removed and a later check
+    succeeds.
+  - [ ] Native TLC resolver directories have no linked dependency close API and
+    may outlive an adapter check; solver/session lifecycle needs a broader audit.
 - [ ] P9.11 Exercise safe/unsafe/deadlocked specifications, zero/one-step bounds,
   induction, temporal properties, nested modules, large values, malformed IR,
   unsupported opcodes, and backend failures through the actual Go checker.
