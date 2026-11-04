@@ -220,6 +220,12 @@ func TestUpstreamIntegrationTranscripts(t *testing.T) {
 	for _, file := range files {
 		cases := parseUpstreamTranscript(t, filepath.Join(root, file))
 		for _, c := range cases {
+			if strings.Contains(c.command, "--backend=typescript") || strings.Contains(c.command, "--backend=rust") ||
+				strings.Contains(c.command, "--backend typescript") || strings.Contains(c.command, "--backend rust") {
+				// The Go port only implements the Go backend; these cases are out of scope.
+				t.Run(file+"/"+c.name+" (out of scope: non-Go backend)", func(t *testing.T) { t.Skip("non-Go backend") })
+				continue
+			}
 			t.Run(file+"/"+c.name, func(t *testing.T) {
 				stdout, stderr, code := runTranscriptCase(t, root, pathDir, c)
 				if code != c.exit {

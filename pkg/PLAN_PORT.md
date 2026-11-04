@@ -650,6 +650,12 @@ including failed actions that must not leak partially updated state.
   - [ ] Additional resource bounds and any concurrent worker policy.
 - [ ] P8.6 Run both runtime integration transcript suites with declared backend
   differences, plus stateful and model-based-testing evaluator fixtures.
+  - Measured 2026-11-04: the typescript and rust `run`/`test`/`repl` transcripts
+    pin `--backend=typescript` or `--backend=rust` in their commands (or pipe
+    through `quint` with those flags). The opt-in runner skips those cases as out
+    of scope for the Go-only backend, so no Go pass/fail count is produced from them.
+    Go equivalents need Go-backend fixtures derived from the same intent; the
+    runtime transcripts are not a measure of the Go port.
 
 Exit gate: users can run, test, and explore specifications using Go without a
 TypeScript or Rust evaluator process.
