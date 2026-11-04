@@ -687,7 +687,12 @@ TypeScript or Rust evaluator process.
     Violations are counterexamples; a clean run is reported as a sampled verdict
     (`CheckResult.Sampled`, CLI message "sampled runs only"), never as exhaustive
     bounded safety. Go TLC still rejects `--random-transitions`.
-  - [ ] Simulation seeds are not yet configurable; runs use a time-based seed.
+  - [x] Simulation seeds are configurable via `--apalache-config` with
+    `{"checker":{"tuning":{"search.simulation.seed":"N"}}}` (a `--seed` flag is
+    not an upstream `quint verify` option). `runCheck` now routes
+    `search.simulation` to `SimulateAndCheckWithOptions`. Verified end to end:
+    seed 7 twice gives an identical trace; seed 8 gives a different one.
+    A zero seed keeps the time-based default.
 - [x] P9.3 Implement bounded safety checking, no-invariant deadlock checking,
   and ordinary/multiple-invariant handling with equivalent result categories.
   - [x] Bounded-check API, explicit no-invariant selection, lossless violation/

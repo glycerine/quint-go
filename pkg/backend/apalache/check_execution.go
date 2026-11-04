@@ -104,6 +104,23 @@ func (e *Executor) runCheck(ctx context.Context, config json.RawMessage) (*cmd.C
 		CheckDeadlocks:  checker.NoDeadlock == nil || !*checker.NoDeadlock,
 		DiscardDisabled: &discardDisabled, SMTEncoding: encoding, Tuning: tuning,
 	}
+	if tuning.Simulation() {
+		// search.simulation samples random runs seeded by search.simulation.seed.
+		// A clean simulation is not an exhaustive bounded proof.
+		report, err := pal.SimulateAndCheckWithOptions(ctx, prepared.Module, prepared.Predicates, pal.SimulationOptions{
+			MaxSteps: options.MaxSteps, MaxRuns: tuning.SimulationRuns(), Randomize: true,
+			RandomSeed: tuning.SimulationSeed(), SMTEncoding: encoding, Tuning: tuning, MaxErrors: options.MaxErrors,
+		})
+		if err != nil {
+			return unexpectedCheckResponse(err), nil
+		}
+		result := pal.BoundedSafetyResult{Outcome: pal.SafetyNoCounterexample}
+		if len(report.Counterexamples) != 0 {
+			result.Outcome = pal.SafetyCounterexample
+			result.Counterexamples = report.Counterexamples
+		}
+		return encodeBoundedCheckResponse(prepared.Module, result)
+	}
 	result, err := pal.CheckBoundedSafetyWithOptions(ctx, prepared.Module, prepared.Predicates, options)
 	if err != nil {
 		return unexpectedCheckResponse(err), nil

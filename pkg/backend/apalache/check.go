@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strconv"
 
 	cmd "github.com/glycerine/apalache-go/shai/cmdexecutor"
 	quint "github.com/glycerine/quint-go/pkg"
@@ -18,6 +19,9 @@ type CheckOptions struct {
 	Init, Next           string
 	Invariants, Temporal []string
 	RandomTransitions    bool
+	// RandomSeed fixes the simulator seed (search.simulation.seed) when
+	// RandomTransitions is set. Zero leaves the checker's time-based seed.
+	RandomSeed int64
 	// NoDeadlock disables deadlock reporting. Inductive phases ask whether Next
 	// preserves a predicate, so a state without successors is not a violation.
 	NoDeadlock bool
@@ -121,6 +125,14 @@ func CheckConfig(compiled quint.CompilationResult, loaded json.RawMessage, optio
 	}
 	if err = tuning.set("search.simulation", simulation); err != nil {
 		return nil, err
+	}
+	if options.RandomSeed < 0 {
+		return nil, fmt.Errorf("random seed cannot be negative")
+	}
+	if options.RandomTransitions && options.RandomSeed != 0 {
+		if err = tuning.set("search.simulation.seed", strconv.FormatInt(options.RandomSeed, 10)); err != nil {
+			return nil, err
+		}
 	}
 	if err = checker.set("tuning", tuning); err != nil {
 		return nil, err
