@@ -47,6 +47,10 @@ func (e *Executor) TLA(ctx context.Context, compiled quint.CompilationResult) (s
 	}
 	prepared := compiled
 	prepared.MainModule = module
+	prepared, err := adaptTLAIntegerDivision(prepared)
+	if err != nil {
+		return "", err
+	}
 	input, err := MarshalInput(prepared)
 	if err != nil {
 		return "", err

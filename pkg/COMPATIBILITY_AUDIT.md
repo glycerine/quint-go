@@ -244,12 +244,13 @@ operations can exceed them, so hard preemption is not promised.
 Default solver tests prove selected safety/temporal/result paths, not full
 Scala-Apalache/TLC equivalence. Larger temporal, fairness, typed ITF and generated
 TLA model corpora are explicitly gated. The default
-[applied_lambda_test.go](backend/tlc/applied_lambda_test.go) compares one applied
-`LET` lambda through generated TLA/native TLC and assignment-IR Go Apalache;
-signed integer division/remainder and checker support for `foldr` and
-`allListsUpTo` remain open. Temporal encoding reserved-name collisions
-reject rather than report false safety. Solver resource exhaustion, Unknown and
-empty/too-short execution sets are inconclusive in
+[applied_lambda_test.go](backend/tlc/applied_lambda_test.go) checks an applied
+`LET` lambda and all signed quotient/remainder sign combinations through
+generated TLA/native TLC and assignment-IR Go Apalache. The TLA-only rewrite
+retains Quint's truncation-toward-zero quotient and derives remainder from it.
+Checker support for `foldr` and `allListsUpTo` remains open. Temporal encoding
+reserved-name collisions reject rather than report false safety. Solver
+resource exhaustion, Unknown and empty/too-short execution sets are inconclusive in
 [resource_outcomes_test.go](backend/apalache/resource_outcomes_test.go). Bounded
 safe results are not unbounded proofs; induction records distinct initialization,
 preservation and implication phases. A publicly fetchable checker revision,

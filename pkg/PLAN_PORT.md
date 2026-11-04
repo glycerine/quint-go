@@ -712,9 +712,11 @@ TypeScript or Rust evaluator process.
     assignment-IR Go Apalache and predicate-IR Go TLC:24 actual checker runs.
   - [x] Check safe and violating properties over an applied lambda emitted
     inside a TLA `LET` through native TLC and Go Apalache's assignment-IR path.
-  - [ ] Complete broader generated-TLA semantic compatibility tests for signed
-    division/modulo, `foldr` and `allListsUpTo`; resume audits retain concrete
-    failing witnesses for these categories.
+  - [x] Preserve Quint's truncation-toward-zero signed division in generated TLA;
+    derive remainder from `x - quotient*y`. Check all four sign combinations
+    for both operators through native TLC and Go Apalache.
+  - [ ] Complete broader generated-TLA semantic compatibility tests for
+    `foldr` and `allListsUpTo`; audits retain concrete failing witnesses.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.
@@ -3854,5 +3856,15 @@ suite and vet pass against the resumed local checker revision. Core coverage is
 93.5%, CLI 93.2%, Apalache 94.3%, TLC 88.7%, LSP 92.0% and terminal 99.1%; generated
 parser and binary-entrypoint coverage have separate limits. Ordinary core runtime
 is about 1.2 seconds and CLI about 0.6 seconds, so the combined one-second target
-remains open. Next concrete work includes generated-TLA signed arithmetic,
-`foldr`, and `allListsUpTo` semantics.
+remains open. Next concrete generated-TLA gaps are `foldr` and
+`allListsUpTo` semantics.
+
+## Generated-TLA arithmetic checkpoint — 2026-11-04
+
+Generated TLA now adapts `idiv` to Quint's truncation-toward-zero behavior and
+rewrites `imod` as `x - quotient*y`. A default integration regression checks
+all operand-sign combinations and both safe and violating properties through
+generated-TLA native TLC and assignment-IR Go Apalache. The same spec checks an
+applied lambda emitted inside a TLA `LET`. The transformation preserves the
+caller-owned compilation. `foldr` and `allListsUpTo` checker semantics remain
+open; the compatibility and fixture audits record them separately.
