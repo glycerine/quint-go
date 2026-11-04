@@ -737,6 +737,11 @@ TypeScript or Rust evaluator process.
     (semantically equivalent under `EXTENDS Variants`). Regression tests:
     `cli/tla_compile_test.go`.
   - [ ] Unsupported and unbounded-domain TLA generation behavior audit.
+    Probed 2026-11-04: `nondet ... oneOf()` over a finite set lowers to a
+    bounded `\E`; `chooseSome()` lowers to a deterministic `CHOOSE` over the finite
+    set; `run` definitions are dropped. Still open: an unbounded-domain construct
+    that must fail explicitly, and a Quint-accepted construct that TLA generation
+    rejects without a source diagnostic.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.
