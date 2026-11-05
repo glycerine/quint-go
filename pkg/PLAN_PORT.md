@@ -1888,6 +1888,15 @@ any remaining TypeScript client code is distinguished from language-server logic
       the risk), and releasing kept `BestTraces[i].States` after serialization
       (public contract change). The peak-RSS bullet stays `[ ]` until the owner
       decides on those items.
+    - 2026-11-05 P12.5 serializer candidate rejected. A read-only
+      `runtimeChildrenView` (same checks as `runtimeChildren`, no defensive
+      copy) was used by the List/Tup/Rec/variant branch of
+      `runtimeSerialization.expression`. Output unchanged and `go test ./...`
+      green in every `pkg/` module. Alternating max RSS at
+      `big_10000.qnt --seed=0x1 --backend=go`: current 1245, 1223, 1171 MB
+      (mean 1213); candidate 1225, 1268, 1228 MB (mean 1240). Ranges overlap
+      and the candidate mean is higher, so it is within noise and was reverted.
+      Only the owner-gated items above remain for the peak-RSS bullet.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
