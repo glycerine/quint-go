@@ -1736,11 +1736,24 @@ any remaining TypeScript client code is distinguished from language-server logic
     results. No single allocation site is a clear low-risk fix, so no code
     change was made. The profile is cumulative allocation, not live heap at
     peak, so it does not by itself explain the 1.7 GB peak.
-  - [ ] Peak RSS at N=10000 (about 1.7 GB) is not reduced. Reducing it needs
-    structural work (fewer full-collection copies per step, or a smaller
-    `RuntimeValue` representation) and is a separate item. A peak-time
-    `inuse_space` profile, taken while the run is live, is the next measurement
-    needed before choosing that work.
+  - [x] 2026-11-05 peak-time live-heap profile at N=10000 (3×2, seed 0x1, Go
+    backend): sampled `/memory/classes/heap/objects:bytes` every 20 ms and
+    snapshotted the heap profile at each new maximum. Peak heap objects were
+    1,688,024,272 bytes (max RSS 1,729,336 KB, exit 0, 10.19 s). Live `inuse_space`
+    at that peak, about 756 MB profiled: `referenceValue` 212 MB (persistent map
+    value nodes), `copyRuntimeExpression` 194 MB, `NormalizeValue.func3` 187 MB,
+    `runtimeSerialization.expression` 55 MB, `normalizedValueKey` 47 MB,
+    `runtimeSerialization.setElements` 36 MB. The `copyRuntimeExpression` and
+    `NormalizeValue` shares are live expression trees. Each `RuntimeValue` built in
+    `runtime_payload.go` stores a deep-copied `expression`, a deep-copied `source`,
+    and an identity string. `source` is read by the rebuild and serialization
+    paths (`runtime_payload.go`, `runtime_symbolic_value.go`), so it cannot be
+    dropped without a semantic review. No code change was made.
+  - [ ] Peak RSS at N=10000 (about 1.7 GB) is not reduced. The next structural
+    step is to measure whether lazy or shared `source` expression trees reduce
+    the live share without changing serialized output. Reducing `referenceValue`
+    cost needs fewer full-collection copies per step. Both are separate design
+    items and are not scoped yet.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
