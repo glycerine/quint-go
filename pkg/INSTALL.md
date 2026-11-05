@@ -123,7 +123,9 @@ checker licenses, `THIRD_PARTY.md`, the checker's retained g3 notice, and the
 top-level license files of every module in the build graph), plus `SHA256SUMS`
 in `DIR`. It then extracts the archive and runs `quint --version` from it. The
 g3 module has no license file of its own, so that warning is expected.
-Nested notices (for example under tlago's `tlc/` tree) are not copied yet.
+Nested notices (for example under tlago's `tlc/` tree) are copied with their
+relative paths, and the Go toolchain's `LICENSE` and `PATENTS` go in
+`licenses/go-toolchain/`.
 Only the host platform is packaged unless `GOOS`/`GOARCH` are set. Other
 platforms and public release publication remain separate work.
 

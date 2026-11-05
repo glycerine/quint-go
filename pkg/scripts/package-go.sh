@@ -119,10 +119,10 @@ if [[ -d "$checker_dir/pkg/third_party_licenses" ]]; then
   cp -R -- "$checker_dir/pkg/third_party_licenses/." "$root/licenses/third_party/"
 fi
 
-# Keep the top-level license and notice files of every module in the build
-# graph, under licenses/modules/<path>@<version>/ as THIRD_PARTY.md requires.
-# Nested notices (for example under tlago's tlc/ tree) are not copied here;
-# THIRD_PARTY.md lists them and they remain a documented gap.
+# Keep the license, notice, copying and patent files of every module in the
+# build graph, including nested ones, under licenses/modules/<path>@<version>/
+# with their relative paths preserved, as THIRD_PARTY.md requires. Go source
+# files and testdata are skipped.
 (
   cd -- "$pkg_dir"
   go list -deps -f '{{with .Module}}{{if .Dir}}{{.Path}}|{{.Version}}|{{.Dir}}{{end}}{{end}}' \
@@ -132,14 +132,24 @@ while IFS='|' read -r mod_path mod_version mod_dir; do
   [[ -n "$mod_path" ]] || continue
   dest=$root/licenses/modules/$mod_path@${mod_version:-workspace}
   found=0
-  for f in "$mod_dir"/LICENSE* "$mod_dir"/COPYING* "$mod_dir"/NOTICE* "$mod_dir"/PATENTS*; do
-    [[ -f "$f" ]] || continue
-    mkdir -p -- "$dest"
-    cp -- "$f" "$dest/"
+  while IFS= read -r f; do
+    rel=${f#"$mod_dir"/}
+    mkdir -p -- "$dest/$(dirname -- "$rel")"
+    cp -- "$f" "$dest/$rel"
     found=1
-  done
-  ((found)) || printf '%s\n' "package-go: warning: no top-level license file for $mod_path" >&2
+  done < <(find "$mod_dir" -type f \
+    \( -iname '*LICENSE*' -o -iname '*NOTICE*' -o -iname '*COPYING*' -o -iname 'PATENTS*' \) \
+    ! -name '*.go' ! -path '*/testdata/*' | sort)
+  ((found)) || printf '%s\n' "package-go: warning: no license file found for $mod_path" >&2
 done < "$stage_dir/modules.txt"
+
+# The Go toolchain's own license and patent grants.
+goroot=$(go env GOROOT)
+mkdir -p -- "$root/licenses/go-toolchain"
+for f in LICENSE PATENTS; do
+  [[ -f "$goroot/$f" ]] || fail "missing Go toolchain file: $goroot/$f"
+  cp -- "$goroot/$f" "$root/licenses/go-toolchain/$f"
+done
 
 tarball=$name.tar.gz
 tar -C "$stage_dir" -czf "$output_dir/$tarball" "$name"

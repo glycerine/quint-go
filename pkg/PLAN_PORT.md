@@ -1734,8 +1734,11 @@ any remaining TypeScript client code is distinguished from language-server logic
     requiring `tlago v0.1.10`) is only reachable through a workspace. Packaging
     therefore always requires `--checker`; a self-contained build needs the
     checker published and pinned (owner decision, P0.4).
-  - [ ] Nested notices (tlago `tlc/` tree, klauspost nested files, Go toolchain
-    `LICENSE`/`PATENTS`) are listed in `THIRD_PARTY.md` but not yet copied.
+  - [x] Nested notices are copied with relative paths (tlago `tlc/` tree,
+    `sany_tests`, module-level files for every module in the build graph) and
+    the Go toolchain `LICENSE`/`PATENTS` go to `licenses/go-toolchain/`.
+    Verified by inspecting the Linux/amd64 archive. Remaining gap: the g3
+    module has no license of its own, so the checker's retained copy is used.
   - [ ] Public release publication and non-host platform archives (P12.8).
 - [ ] P12.8 Test from a clean environment without Node, Rust, Java, Scala,
   downloaded Scala Apalache, or repository-relative runtime assets for all
