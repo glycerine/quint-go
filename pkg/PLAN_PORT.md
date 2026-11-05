@@ -732,7 +732,7 @@ TypeScript or Rust evaluator process.
     structured responses.
   - [x] Higher-level bounded/inductive verification orchestration and CLI
     integration with source diagnostics, backend categories, and trace files.
-- [ ] P9.2 Port config-file/CLI precedence, init/next/invariant selection,
+- [x] P9.2 Port config-file/CLI precedence, init/next/invariant selection,
   maximum steps, random-transition simulation, and supported tuning options.
   Report unsupported options explicitly.
   - [x] Library configuration precedence, explicit bounds/init/next/invariants,
