@@ -100,6 +100,40 @@ for the next pass.
   the same insertion, or rewrite the message for this case only after three examples.
 - **Test.** Parse `{1, 2 3}` and assert `missing '}' at ','` once the fix lands.
 
+## F-02 and F-07: investigation (2026-11-05)
+
+Findings, from instrumented runs:
+
+- **Reference.** The repository's `quint/` tree has its own grammar change
+  `63a0ec82` (module body made LL(1)). The npm `quint` 0.33.1 that was used for earlier
+  comparisons parses with different states (651 against 647). All messages in this
+  section were rechecked against the repository's own compiled TypeScript parser, and
+  they agree with the npm build for every input listed here.
+- **Tables are not the cause.** The ANTLR 4.9.3 Java tool and the antlr4ts fork tool
+  produce identical `.interp` ATN dumps for the Quint grammar. With the 4.9.3 Go runtime,
+  the port's messages are unchanged, so the generator version does not explain the gap.
+- **Context is not the cause.** At the failing state (647, inside `BracesContext`),
+  the rule-context chain and invoking states are identical in antlr4ts and the Go runtime
+  (`BracesContext`, invoking 741, then `DeclarationOrExprContext`).
+- **Lookahead is the cause.** On the same ATN and the same context chain, the sets differ.
+  antlr4ts returns `{<EOF>, 2..4, 6..22, 27, 29..33, 36..66, 68}`, and the Go runtime
+  returns `{<EOF>, 13, 21..22, 27, 39..43, 45..56}`. The Go set is a subset of antlr4ts's.
+  Without context, the Go runtime returns `{EPSILON, 13, 21..22, ...}`, so the extra tokens
+  come from how the LL(1) analysis walks rule stops when a context is supplied.
+- **Consequence.** `singleTokenInsertion` in antlr4ts sees `,` in its set and reports
+  `missing '}' at ','`. The Go check does not, and reports `mismatched input`. Every
+  expected-token list that depends on this analysis (F-02) has the same cause.
+
+Fix options, none applied:
+1. Port antlr4ts's `LL1Analyzer.LOOK` rule-stop handling into a patched copy of the Go
+   runtime, and point `go.mod` at it with a `replace` directive. This fixes F-02 and F-07
+   together, and it changes a dependency, so it needs owner approval.
+2. Keep the per-case rewrites in `recoveryLookaheadSyntaxIssue` and add one case per
+   pattern with three upstream examples, as done for the colon case. This fixes the
+   observed cases and no others.
+
+Scratch probes used for this investigation are not in the repository.
+
 ## F-03: lexer error text does not escape the newline (fixed)
 
 Fixed: `escapeLexicalExcerpt` in `parse_recovery.go` is now also applied by the REPL
@@ -148,7 +182,8 @@ own canonical decimal integer. So the discarded error cannot happen. No change.
 
 ## Open items
 
-- F-02 (declaration context), F-04 and F-07: open. The Go ANTLR runtime reports a narrower expected-token set than upstream at the
+- F-02 (declaration context), F-04 and F-07: open; root cause in the Go runtime's
+  lookahead analysis (see the investigation above). Fix needs the owner's choice of option 1 or 2. The Go ANTLR runtime reports a narrower expected-token set than upstream at the
   same offending token. Next step: compare the expected set from `GetExpectedTokens()` at
   the record-value decision point against the upstream error, and find which prediction
   mode or error-strategy difference produces the narrower set.
