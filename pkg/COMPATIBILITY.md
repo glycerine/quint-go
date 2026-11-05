@@ -90,7 +90,7 @@ histories. Source alias first-selection has 15 saved histories; transported flat
 equality preserves upstream cached-hash asymmetry privately; public EqualContext
 uses symmetric entry-bag equality and agrees with HashContext independently of
 source memo history. Source cross-type equality has 225 constructor-pair and 89 strategic/program
-comparisons; locale-wide collation remains open. Valid-source MBT rollback preserves the reference pick-map aliases and detached
+comparisons; locale-wide collation is a documented divergence: upstream `localeCompare` follows the host process locale (`LANG=sv_SE` orders `å` after `z`), while Go's collator is fixed to en-US root. A 75-string probe (5625 pairs) matched Node 22/ICU 78.2 except that ICU ties `"1"` with Arabic-Indic `"١"` and Go orders them. Valid-source MBT rollback preserves the reference pick-map aliases and detached
 compiler registry; public snapshot/direct APIs retain owned semantics. Actual Rust
 comparison includes 79 pure and 48 stateful cases and records seeded picks, counter
 overflow, folded traversal, resource bounds and error codes; Go targets TypeScript.

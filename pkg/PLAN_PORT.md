@@ -1447,8 +1447,16 @@ Build these items alongside the phases that supply their command behavior.
     and filesystem output with caller-owned clocks and returned errors.
   - [x] Shared-history ITF normalization and public symbolic runtime normalForm;
     69 source fixtures cover order, domains and explicit Unicode boundaries.
-  - [ ] Collation across upstream locales/Unicode versions remains incomplete;
-    CLI run/test/verify trace files are wired.
+  - [x] Collation audit recorded: Go's pinned x/text `en-US` collator matches
+    Node 22 ICU 78.2 (Unicode 17) `localeCompare` sign on all 5625 ordered pairs
+    of a 75-string corpus (ASCII case/digits/punctuation, accents, combining
+    marks, ligatures, Turkish dotless i, Greek/Cyrillic/Hebrew/CJK, emoji, NUL,
+    zero-width space, fullwidth) except one tie: ICU returns 0 for `"1"` vs
+    Arabic-Indic `"١"`, Go orders them. Residual divergences are documented in
+    COMPATIBILITY.md: upstream follows the host process locale (`LANG=sv_SE`
+    puts `å` after `z`; `en-US`/`de-DE` do not), while Go is fixed to en-US
+    root. Locale detection is not implemented (owner decision). CLI
+    run/test/verify trace files are wired.
 - [ ] P10.5 Port pretty printing, source-error rendering, value diffs, execution
   frames, trace display, statistics, and witness/invariant reports.
   - [x] Plain source excerpts and ordered multi-source/runtime callstack rendering
