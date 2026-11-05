@@ -586,8 +586,12 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     whose first compiled read fixes cell identity; assignment targets bypass memo.
   - [x] Match source instance constant/parameter registers, captured closures,
     scoped caches and override order with 34 typed/four runtime histories.
-  - [x] Transported alias first-compilation order, including lazy branches and
-    prepare-only selection, matches 15 source histories / 28 operations.
+  - [x] Transported alias first-compilation order: source first-compilation order,
+    including lazy branches and prepare-only selection, matches 15 source
+    histories / 28 operations (`TestUpstreamSavedExportAliasContextHistories`).
+    Transported flattened IR has no per-reference order: `TestTransportedAliasFirstSelectionIsFixedAtFlatten`
+    pins that via-first and direct-first preparation both register only
+    `C::Outer::Alias::x` with identical registrations (2026-11-05).
   - [x] Preserve source callback names across pure-project flattening with 37
     exact upstream histories/223 events; transported IR keeps flattened names.
   - [x] Complete broader runtime-stack/error-precedence audit. Test-run ordering
@@ -814,8 +818,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     registration and instance memo. Pinned by `testdata/parser/runtime_instance_context.json`
     through `TestUpstreamRuntimeSourceContexts` (21 passing subtests) and
     `TestUpstreamRuntimeSourceContextExecution` plus
-    `TestUpstreamSavedExportAliasContextHistories` (both pass, 2026-11-05). Still open:
-    nested-instance memo keying (owner-blocked) and transported alias first-selection.
+    `TestUpstreamSavedExportAliasContextHistories` (both pass, 2026-11-05). Transported alias
+    first-selection is pinned by `TestTransportedAliasFirstSelectionIsFixedAtFlatten`.
+    Still open: nested-instance memo keying (owner-blocked).
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
     and remaining override audits; compiler instance contexts).
 

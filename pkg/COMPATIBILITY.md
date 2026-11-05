@@ -86,7 +86,7 @@ allListsUpTo and 150 symbolic source cases pass. Selected variables preserve
 source/import/instance discovery order and persistent REPL cells. Source-aware compilation now preserves first-read instance contexts and
 assignment-target bindings for exported aliases; transported JSON keeps the explicit
 flattened-IR boundary. Source instance closure/cache/override contexts now have34 typed and four runtime
-histories; transported alias first-selection remains a separate audit. Symbolic variant and mixed callback keys now use checked HAMT operations. Source
+histories. Source alias first-selection has 15 saved histories; transported flattened IR registers only `C::Outer::Alias::x` in either reference order (`TestTransportedAliasFirstSelectionIsFixedAtFlatten`). Symbolic variant and mixed callback keys now use checked HAMT operations. Source
 equality preserves upstream cached-hash asymmetry privately; public EqualContext
 uses symmetric entry-bag equality and agrees with HashContext independently of
 source memo history. Source cross-type equality has 225 constructor-pair and 89 strategic/program
@@ -280,8 +280,9 @@ Run preparation reuses source analysis for grounded selectors, with full inferen
 for generic scopes, assumptions, polymorphic additions and diagnostics. Final
 successful higher-order callbacks observe caller cancellation after restoring
 scope; explicit callback errors keep precedence. Transported alias first-selection
-has 15 saved histories; 37 source listener histories/223 events now preserve
-callback names, while broader runtime-stack/error precedence remains an audit.
+is pinned at the flattened-IR boundary (one declaration, order-independent); 37
+source listener histories/223 events now preserve callback names, while
+broader runtime-stack/error precedence remains an audit.
 
 Malformed parser record operands are available as owned raw JSON and provenance
 on `SyntaxRecoveryError.Raw`, independently of the valid typed prefix. Ten actual
