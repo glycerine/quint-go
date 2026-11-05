@@ -1765,11 +1765,18 @@ any remaining TypeScript client code is distinguished from language-server logic
     second run) and max RSS from 1,420,812 KB to 1,236,140 KB (-13.0%). Stdout is
     unchanged apart from the timing line. Commit `23fafeea`. Gates: gofmt clean,
     `go vet`, `go test ./...`, and `-race` on the runtime and value tests passed.
+  - [x] 2026-11-05 single-allocation value leaf: `referenceValue` now places
+    its one-entry slice inside the node allocation (`runtimeReferenceValueLeaf`),
+    removing one allocation per leaf with no call-site change. At N=10000 peak
+    heap objects fell from the same-day baseline 1,249,380,936 to 1,169,431,720
+    bytes (-6.4%). Max RSS was 1,239,956 KB against 1,236,140 KB for the
+    committed state, so this change shows no measurable RSS gain. Gates: gofmt
+    clean, `go vet`, `go test ./...`, and `-race` on the runtime and value tests
+    passed.
   - [ ] Peak RSS at N=10000 (about 1.24 GB) is still high. Remaining live shares
     are the `runtimeSerialization.expression` and `setElements` trees (about 112
-    MB and 89 MB cumulative at peak), `referenceValue` and
-    `runtimeReferenceMapNode.update` persistent-map copies per step (about 206 MB
-    live), `NormalizeValue` Set/Map `seen`, `insdict` and `sortValues`
+    MB and 89 MB cumulative at peak), `runtimeReferenceMapNode.update`
+    persistent-map path copies per step, `NormalizeValue` Set/Map `seen`, `insdict` and `sortValues`
     allocations, `runtimeWithEntries`, and `RuntimeTrace.Shift` history retention,
     which needs a larger design change. Each is a separate item and is not yet
     scoped.

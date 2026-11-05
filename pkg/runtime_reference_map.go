@@ -118,8 +118,19 @@ func (n *runtimeReferenceMapNode) lookup(shift uint, hash uint32, key RuntimeVal
 func referenceLeaf(n *runtimeReferenceMapNode) bool {
 	return n != nil && (n.kind == referenceValueNode || n.kind == referenceCollisionNode)
 }
+
+// runtimeReferenceValueLeaf stores a single-entry leaf and its entry slot in one
+// allocation. Its node's entries slice points at slot, so both live and die together.
+type runtimeReferenceValueLeaf struct {
+	node runtimeReferenceMapNode
+	slot [1]runtimeReferenceEntry
+}
+
 func referenceValue(hash uint32, entry runtimeReferenceEntry) *runtimeReferenceMapNode {
-	return &runtimeReferenceMapNode{kind: referenceValueNode, hash: hash, entries: []runtimeReferenceEntry{entry}}
+	leaf := &runtimeReferenceValueLeaf{}
+	leaf.slot[0] = entry
+	leaf.node = runtimeReferenceMapNode{kind: referenceValueNode, hash: hash, entries: leaf.slot[:]}
+	return &leaf.node
 }
 func referenceMerge(node *runtimeReferenceMapNode, shift uint, hash uint32, entry runtimeReferenceEntry) *runtimeReferenceMapNode {
 	if node.hash == hash {
