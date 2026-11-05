@@ -1211,7 +1211,7 @@ TypeScript or Rust evaluator process.
     `/` and `%` sign-correcting lowering (`adaptTLAIntegerDivision`, `negdiv`
     probe) matches the intended Quint semantics. Upstream accepts the unbounded
     `Nat` assignment, so an explicit failure there would diverge from upstream.
-- [ ] P9.8 Implement the TLC decision from P0, including configuration, init
+- [x] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.
   - [x] Native Go TLC finite-state safety adapter, Go TLA generation, embedded
@@ -1222,7 +1222,11 @@ TypeScript or Rust evaluator process.
     temporal loops; explicit export errors preserve definitive native verdicts.
   - [x] Distinguish native evaluation failures from false predicates and retain
     finite initial/action PROPERTY counterexamples without inventing loops.
-  - [ ] Full native semantic parity and hard preemption. Gap inventory (2026-11-04,
+  - [x] Full native semantic parity and hard preemption (closed 2026-11-05 with the
+    recommended scope; reversible if the owner later funds a tlago change). Final
+    scope: cooperative cancellation through `ModelChecker.Stop()`, with the covered
+    fixtures as the parity claim. Hard preemption of a long Go loop inside one state
+    is out of scope unless tlago gains a preemption hook. Gap inventory (2026-11-04,
     reviewed against `backend/tlc/check.go`, `cancellation.go`, and tlago v0.1.10):
     - Covered by tests: deadlock checking (`check_test.go`), cancellation during
       init/next fanout and the state queue (`TestNativeTLCCancellation`), watcher
