@@ -753,6 +753,12 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     `pure val v = n*10`, read as `A::v`, `B::v`, `A::v`, `B::f(0)`, `A::f(5)`, `B::v`).
     TypeScript (`quint test --match 'Test$'`) confirms 10, 20, 10, 20, 15, 20; Go
     matches with no cross-instance cache leakage. 42 cases total.
+  - [x] Add `instance_lambda_arguments`: lambdas passed into instance defs that
+    read importer state (`A::apply((y)=>y+k, 2)`) and instance constants inside
+    the callee (`f(x)+n`). TypeScript confirms 45, 84, 43, 14, 14; Go matches.
+    43 runtime cases total. Lambdas returned from a top-level instance def that
+    capture parameters fail TypeScript effect inference (QNT000), so that shape is
+    not added; the oracle covers returned closures inside a local `val` block.
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
     and remaining override audits; compiler instance contexts; execution-frame recording).
 

@@ -1557,4 +1557,57 @@
       { "kind": "evaluate", "name": "b3", "output": {"id": 0, "kind": "int", "value": 20} }
     ]
   }
+,
+  {
+    "name": "instance_lambda_arguments",
+    "source": "module P {const n:int pure def apply(f,x)=f(x)+n pure def ap(f,x)=f(x)} module M {def k = 40 import P(n=k+2) as A import P(n=1) as B def g(x)=x*3 val r=A::apply(g,1) val s=A::apply((y)=>y+k,2) val t=B::apply((y)=>y+k,2) val u=A::ap((y)=>y*2,7) val w=B::ap((y)=>y*2,7)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "r",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 45
+        }
+      },
+      {
+        "kind": "evaluate",
+        "name": "s",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 84
+        }
+      },
+      {
+        "kind": "evaluate",
+        "name": "t",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 43
+        }
+      },
+      {
+        "kind": "evaluate",
+        "name": "u",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 14
+        }
+      },
+      {
+        "kind": "evaluate",
+        "name": "w",
+        "output": {
+          "id": 0,
+          "kind": "int",
+          "value": 14
+        }
+      }
+    ]
+  }
 ]
