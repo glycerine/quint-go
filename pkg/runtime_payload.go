@@ -74,13 +74,13 @@ func runtimeAssemble(source Expr, payload *runtimePayload) (RuntimeValue, error)
 		default:
 			return RuntimeValue{}, fmt.Errorf("invalid closure collection %s", source.Opcode)
 		}
-		return RuntimeValue{expression: copyRuntimeExpression(display), source: copyRuntimeExpression(source), identity: normalizedValueKey(display), allocation: &runtimeValueAllocation{}, payload: payload, containsClosure: true}, nil
+		return RuntimeValue{expression: copyRuntimeExpression(display), source: source, identity: normalizedValueKey(display), allocation: &runtimeValueAllocation{}, payload: payload, containsClosure: true}, nil
 	}
 	normalized, err := NormalizeValue(source)
 	if err != nil {
 		return RuntimeValue{}, err
 	}
-	return RuntimeValue{expression: normalized, source: copyRuntimeExpression(source), identity: normalizedValueKey(normalized), allocation: &runtimeValueAllocation{}, payload: payload}, nil
+	return RuntimeValue{expression: normalized, source: source, identity: normalizedValueKey(normalized), allocation: &runtimeValueAllocation{}, payload: payload}, nil
 }
 
 // runtimeWithEntries wraps a retained tree without reconstructing its history.
@@ -144,7 +144,7 @@ func newRuntimeComposite(op string, args []RuntimeValue) (RuntimeValue, error) {
 		for i, child := range args {
 			display.Args[i] = copyRuntimeExpression(child.expression)
 		}
-		return RuntimeValue{expression: display, source: copyRuntimeExpression(source), identity: normalizedValueKey(display), allocation: &runtimeValueAllocation{}, payload: payload}, nil
+		return RuntimeValue{expression: display, source: source, identity: normalizedValueKey(display), allocation: &runtimeValueAllocation{}, payload: payload}, nil
 	case "Rec":
 		if len(args)%2 != 0 {
 			return RuntimeValue{}, fmt.Errorf("record requires field/value pairs")

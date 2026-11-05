@@ -59,7 +59,7 @@ func NewRuntimeValue(e Expr) (RuntimeValue, error) {
 			return newRuntimeComposite(e.Opcode, children)
 		}
 	}
-	return runtimeAssemble(e, nil)
+	return runtimeAssemble(copyRuntimeExpression(e), nil)
 }
 
 func (v RuntimeValue) Valid() bool { return v.identity != "" || v.closure != nil }
