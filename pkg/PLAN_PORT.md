@@ -896,10 +896,11 @@ TypeScript or Rust evaluator process.
     bound; the current native TLC half is exhaustive and is not an equivalent
     bounded reference run.
   - [x] 2026-11-04: the Scala Apalache checker (`~/apalache/bin/apalache-mc`, v0.62.2)
-    and the Go Apalache checker agree on the verdict for four specs at lengths 0-4
-    (20 pairs, `testdata/reference/bounds/compare.sh`). Scala length N and Go
-    `--max-steps N` bound the same transitions. Witnesses are not yet validated
-    independently, and the corpus is four specs, so the item stays open.
+    and the Go Apalache checker agree on the verdict for all eight fixtures at
+    lengths 0-4 (40 pairs, `testdata/reference/bounds/compare.sh`, rerun
+    2026-11-04 with exit 0). Scala length N and Go `--max-steps N` bound the same
+    transitions. Reference-checker traces are not validated, and the native TLC
+    half remains exhaustive, so the item stays open.
   - [x] 2026-11-04: the three Go counterexamples from `--out-itf` (counter3, jump,
     twovar at length 4) are validated by `testdata/reference/bounds/validate_witness.py`,
     whose init, step and invariant definitions are restated by hand rather than taken
