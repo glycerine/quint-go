@@ -1873,6 +1873,16 @@ any remaining TypeScript client code is distinguished from language-server logic
       `BestTraces[i].States` contract: tests and callers read those states, so
       releasing them after serialization is an API change, not an internal
       share. It is recorded as owner-decision material, not done.
+    - 2026-11-05 P12.5 status. Measured-first candidates are spent or gated:
+      spent: `normalizedValueKey` identity stack buffer (`241a7860`, no RSS
+      gain beyond noise), `runtimeWithEntries` presize (`92ae3eb7`, rejected),
+      Set shrink-to-fit (rejected and reverted in `ca53dd62`), trace-state
+      laziness (`c29a7a65`, no measured peak gain). Owner-gated: serialization
+      `setElements` and `runtimeSerialization.expression` (output-format and
+      collation risk), `referenceValue` (201.7 MB, declined as poor value for
+      the risk), and releasing kept `BestTraces[i].States` after serialization
+      (public contract change). The peak-RSS bullet stays `[ ]` until the owner
+      decides on those items.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
