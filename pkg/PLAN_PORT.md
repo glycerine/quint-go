@@ -774,6 +774,15 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     `TestInstanceCallFrames` (`pkg/runtime_instance_frames_test.go`) pins the frame
     chain `Rec` → `A::h` → `X::apply` → `f` for the nested-instance spec
     (`A::h(g,1) = 13`, `B::h((y)=>y+1,2) = 5`), with values confirmed in TypeScript.
+  - [x] Verify typechecking of two instances of one stateful module (2026-11-05).
+    Both TypeScript and Go group updates by bare variable name, so one action
+    `all { A::init, B::x' = B::x }` is rejected with QNT202 "Multiple updates of
+    variable x" (Go CLI `typecheck` exits 1; TS identical). Separate per-instance
+    runs (`A::init.then(A::inc)...`, `B::init.then(B::inc)...`) typecheck and pass
+    in TS. A `then` chain that never assigns the other instance's variable leaves
+    that variable unconstrained, so its value is not deterministic and cannot be
+    used as a separation check. Pinned by `TestInstanceStateUpdateChecks`
+    (`pkg/runtime_instance_state_test.go`). Parity, not a gap.
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
     and remaining override audits; compiler instance contexts).
 
