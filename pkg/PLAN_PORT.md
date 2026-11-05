@@ -903,9 +903,14 @@ TypeScript or Rust evaluator process.
   - [x] Opt-in six-model corpus compares actual Go Apalache assignment-IR and
     generated-TLA/native-TLC safe/violating outcomes and independently checks
     each witness state against the selected property (`generation_semantics_test.go`).
-  - [ ] Compare against the reference checker at the same configured transition
-    bound; the current native TLC half is exhaustive and is not an equivalent
-    bounded reference run.
+  - [x] 2026-11-04: native TLC has a bounded mode. `backend/tlc.Options.MaxSteps`
+    N runs TLC's DFID mode at depth N+1 (the depth counts the initial state) with
+    `CheckDeadlock` honored and one worker; explicit `Workers` above one is rejected.
+    On the eight fixtures in `backend/tlc/testdata/bounded`, TLC matches the Scala
+    verdicts for N=1-4 (`TestBoundedVerdictsMatchReferenceChecker`). The tlcCounter
+    N=4 deadlock needs `CheckDeadlock`, as in Scala. N=0 has no TLC equivalent,
+    because DFID depth 1 fails with TLC error 1000 in this harness. The Quint CLI
+    still refuses `--max-steps` for `--backend tlc`; exposing it is a user decision.
   - [x] 2026-11-04: the Scala Apalache checker (`~/apalache/bin/apalache-mc`, v0.62.2)
     and the Go Apalache checker agree on the verdict for all eight fixtures at
     lengths 0-4 (40 pairs, `testdata/reference/bounds/compare.sh`, rerun

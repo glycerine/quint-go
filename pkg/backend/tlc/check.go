@@ -22,18 +22,25 @@ import (
 	native "github.com/glycerine/tlago/tlc"
 )
 
-// Options selects exhaustive finite-state checking. Zero Workers uses
-// GOMAXPROCS workers, matching Quint's automatic worker selection. Deadlock
-// checking is opt-in, matching Quint's TLC command. Unlike
-// bounded Apalache checking, TLC has no maximum-transition bound. Temporal
-// names select TLA operators, including the compiled q_temporalProps wrapper.
-// INIT/NEXT permits implicit infinite stuttering; fairness must be explicit in
-// the requested properties when progress requires it.
+// Options selects finite-state checking. Zero Workers uses GOMAXPROCS workers,
+// matching Quint's automatic worker selection. Deadlock checking is opt-in,
+// matching Quint's TLC command. Temporal names select TLA operators, including
+// the compiled q_temporalProps wrapper. INIT/NEXT permits implicit infinite
+// stuttering; fairness must be explicit in the requested properties when
+// progress requires it.
+//
+// MaxSteps zero requests exhaustive checking. A positive MaxSteps N explores
+// only traces of at most N transitions by running TLC's depth-first iterative
+// deepening mode at depth N+1, which counts the initial state. This matches
+// Apalache's --length=N bound on the verdicts tested in
+// pkg/testdata/reference/bounds. TLC's DFID mode is single-threaded, so a
+// bounded check rejects an explicit Workers value above one.
 type Options struct {
 	Init, Next           string
 	Invariants, Temporal []string
 	Workers              int
 	CheckDeadlock        bool
+	MaxSteps             int
 	// ITF exports counterexamples using checked Quint types. Available through
 	// Check; untyped CheckTLA cannot distinguish tuples, lists, maps or variants.
 	// Conversion failures populate Result.ITFError without changing the verdict.
@@ -239,7 +246,14 @@ func checkTLA(ctx context.Context, filename, source string, options Options, var
 	if workers == 0 {
 		workers = runtime.GOMAXPROCS(0)
 	}
-	checked, runErr := native.ModelCheck(ctx, native.Options{Tool: tool, FPSet: native.NewMemFPSet(), SpecFile: filename, MetaDir: metadata, Workers: workers, Deadlock: options.CheckDeadlock, NoDeadlock: !options.CheckDeadlock, Cleanup: true, DFIDModeSet: true, DFIDMode: false, StopAfter: -1, ToolModeSet: true, ToolMode: false})
+	// tlago enables DFID whenever DFIDDepth is positive, so the depth is set
+	// only for bounded runs; exhaustive runs keep DFIDDepth zero.
+	dfidDepth := 0
+	if options.MaxSteps > 0 {
+		workers = 1
+		dfidDepth = options.MaxSteps + 1
+	}
+	checked, runErr := native.ModelCheck(ctx, native.Options{Tool: tool, FPSet: native.NewMemFPSet(), SpecFile: filename, MetaDir: metadata, Workers: workers, Deadlock: options.CheckDeadlock, NoDeadlock: !options.CheckDeadlock, Cleanup: true, DFIDModeSet: true, DFIDMode: false, DFIDDepth: dfidDepth, StopAfter: -1, ToolModeSet: true, ToolMode: false})
 	stop()
 	if checked != nil {
 		result.ExitStatus = checked.ExitStatus
@@ -377,6 +391,12 @@ func counterexample(messages []native.Message, variables []string) []State {
 func validateOptions(options Options) error {
 	if options.Workers < 0 {
 		return fmt.Errorf("TLC workers cannot be negative")
+	}
+	if options.MaxSteps < 0 {
+		return fmt.Errorf("TLC maximum steps cannot be negative")
+	}
+	if options.MaxSteps > 0 && options.Workers > 1 {
+		return fmt.Errorf("bounded TLC checking is single-threaded; Workers must be 0 or 1 when MaxSteps is set")
 	}
 	if options.MaxDuration < 0 {
 		return fmt.Errorf("TLC maximum duration cannot be negative")
