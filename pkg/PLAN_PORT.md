@@ -1932,6 +1932,28 @@ any remaining TypeScript client code is distinguished from language-server logic
       1,217 MB; candidate mean about 1,209 MB. The gap (about 8 MB, under 1%)
       is smaller than the run-to-run spread (about 60 MB), so it is not a
       measurable gain. Reverted; `runtime_serialize.go` matches HEAD.
+    - 2026-11-05 P12.5 peak in-use heap profile at `big_10000.qnt --seed=0x1`.
+      A peak sampler (live heap bytes polled every 2 ms; on a 5% rise over the
+      previous snapshot it runs `runtime.GC()` and writes the in-use heap
+      profile) captured a snapshot of about 690 MB live. Attributed in-use
+      bytes: `referenceValue` 207 MB (owner-gated, see the reference-value
+      item); `normalizeValue` 111 MB, of which the Set dedup append is 73 MB
+      and the Map `make` is 38 MB; `setElements` `args` 75 MB; `expression`
+      `out.Args` 72 MB; `normalizedValueKey` 47 MB; `runtimeWithEntries`
+      `source.Args` append 37 MB. Cumulative `RuntimeTrace.States` is 113 MB
+      (owner-gated, public contract). Each unblocked contributor was already
+      measured and rejected in earlier rounds (Set/Map normalize presize,
+      `runtimeWithEntries` presize, Set shrink, `setElements` presize,
+      `stateCapture` plain names).
+    - 2026-11-05 P12.5 `normalizeValue` Set `seen`-map presize rejected.
+      `seen := make(map[string]bool, len(out.Args))` replaced the empty map
+      literal in the Set branch. Output and ordering were unchanged. Six
+      alternating `cs_bench.sh` pairs on `big_10000.qnt --seed=0x1` (max RSS):
+      current mean about 1,258 MB (range 1,205 to 1,336 MB); candidate mean
+      about 1,227 MB (range 1,199 to 1,243 MB). The candidate was lower in five
+      of six pairs, but the mean gap (about 30 MB) is smaller than the
+      current run-to-run spread (about 130 MB). Not a measurable gain.
+      Reverted; `value_normalize.go` matches HEAD.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
