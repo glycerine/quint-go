@@ -20,10 +20,24 @@ import (
 // This does not evaluate operators or expand symbolic runtime collections.
 // Runtime display can reorder collation ties through object-hash history;
 // DecodeNormalizedITFTrace and SerializeRuntimeValueContext preserve that path.
+// The result never aliases input nodes.
 func NormalizeValue(input Expr) (Expr, error) {
+	return normalizeValue(input, false)
+}
+
+// normalizeOwnedValue is NormalizeValue for an input whose nodes the runtime
+// owns and never mutates. Canonical List, Tup and variant nodes are shared with
+// the input rather than copied, so the result may alias input.
+func normalizeOwnedValue(input Expr) (Expr, error) {
+	return normalizeValue(input, true)
+}
+
+func normalizeValue(input Expr, share bool) (Expr, error) {
 	var comparison *runtimeCollator
 	defer func() { runtimeCollators.release(comparison) }()
-	var normalize func(Expr) (Expr, error)
+	// normalize reports whether its result is observably identical to e.
+	// That lets a parent share e instead of keeping a second tree.
+	var normalize func(Expr) (Expr, bool, error)
 	sortValues := func(values []Expr) {
 		if len(values) < 2 {
 			return
@@ -44,40 +58,42 @@ func NormalizeValue(input Expr) (Expr, error) {
 			values[i] = entry.value
 		}
 	}
-	normalize = func(e Expr) (Expr, error) {
+	normalize = func(e Expr) (Expr, bool, error) {
 		switch e.Kind {
 		case "int":
-			return Expr{Kind: "int", Int: e.Int}, nil
+			return Expr{Kind: "int", Int: e.Int}, plainLeaf(e), nil
 		case "str":
-			return Expr{Kind: "str", Str: e.Str}, nil
+			return Expr{Kind: "str", Str: e.Str}, plainLeaf(e), nil
 		case "bool":
-			return Expr{Kind: "bool", Bool: e.Bool}, nil
+			return Expr{Kind: "bool", Bool: e.Bool}, plainLeaf(e), nil
 		case "app":
 		default:
-			return Expr{}, fmt.Errorf("Cannot convert %s to a runtime value", ExpressionString(e))
+			return Expr{}, false, fmt.Errorf("Cannot convert %s to a runtime value", ExpressionString(e))
 		}
 		switch e.Opcode {
 		case "List", "Tup", "Set", "Map", "Rec", "variant":
 		default:
-			return Expr{}, fmt.Errorf("Cannot convert %s to a runtime value", ExpressionString(e))
+			return Expr{}, false, fmt.Errorf("Cannot convert %s to a runtime value", ExpressionString(e))
 		}
 		out := Expr{Kind: "app", Opcode: e.Opcode, Args: make([]Expr, len(e.Args))}
+		allSame := true
 		for i, child := range e.Args {
-			value, err := normalize(child)
+			value, same, err := normalize(child)
 			if err != nil {
-				return Expr{}, err
+				return Expr{}, false, err
 			}
 			out.Args[i] = value
+			allSame = allSame && same
 		}
 		switch e.Opcode {
 		case "Rec":
 			if len(out.Args)%2 != 0 {
-				return Expr{}, fmt.Errorf("record requires field/value pairs")
+				return Expr{}, false, fmt.Errorf("record requires field/value pairs")
 			}
 			fields := insdict.NewDict[string, Expr]()
 			for i := 0; i < len(out.Args); i += 2 {
 				if out.Args[i].Kind != "str" {
-					return Expr{}, fmt.Errorf("record field must be a string")
+					return Expr{}, false, fmt.Errorf("record field must be a string")
 				}
 				fields.Set(out.Args[i].Str, out.Args[i+1])
 			}
@@ -107,7 +123,7 @@ func NormalizeValue(input Expr) (Expr, error) {
 			pairs := insdict.NewDict[string, Expr]()
 			for _, pair := range out.Args {
 				if pair.Kind != "app" || pair.Opcode != "Tup" || len(pair.Args) != 2 {
-					return Expr{}, fmt.Errorf("map requires two-element tuple entries")
+					return Expr{}, false, fmt.Errorf("map requires two-element tuple entries")
 				}
 				pairs.Set(normalizedValueKey(pair.Args[0]), pair)
 			}
@@ -118,12 +134,49 @@ func NormalizeValue(input Expr) (Expr, error) {
 			sortValues(out.Args)
 		case "variant":
 			if len(out.Args) != 2 || out.Args[0].Kind != "str" {
-				return Expr{}, fmt.Errorf("variant requires a string label and value")
+				return Expr{}, false, fmt.Errorf("variant requires a string label and value")
 			}
 		}
-		return out, nil
+		// List, Tup and variant keep their element order, so a node whose
+		// children are unchanged and whose dropped fields are empty is already
+		// canonical. Sets, maps and records are rebuilt above.
+		if share && allSame && e.Args != nil && plainApp(e) && (e.Opcode == "List" || e.Opcode == "Tup" || e.Opcode == "variant") {
+			return e, true, nil
+		}
+		return out, false, nil
 	}
-	return normalize(input)
+	out, _, err := normalize(input)
+	return out, err
+}
+
+// plainNode reports whether e carries none of the fields that normalization
+// always drops, independent of its Kind.
+func plainNode(e Expr) bool {
+	return e.runtimeSource == nil && e.ID == (ID{}) && e.Name == "" &&
+		e.Qualifier == "" && e.Body == nil && e.Opdef == nil && e.Params == nil
+}
+
+// plainLeaf reports whether normalization of a scalar leaf would reproduce e.
+// Each leaf keeps only the field named by its Kind.
+func plainLeaf(e Expr) bool {
+	if !plainNode(e) || e.Opcode != "" || len(e.Args) != 0 {
+		return false
+	}
+	switch e.Kind {
+	case "int":
+		return !e.Bool && e.Str == ""
+	case "str":
+		return !e.Bool && e.Int == (Integer{})
+	case "bool":
+		return e.Int == (Integer{}) && e.Str == ""
+	}
+	return false
+}
+
+// plainApp reports whether normalization of an app node keeps every field of e
+// except Kind, Opcode and Args.
+func plainApp(e Expr) bool {
+	return plainNode(e) && !e.Bool && e.Int == (Integer{}) && e.Str == ""
 }
 
 func utf16Less(a, b string) bool {
@@ -205,7 +258,7 @@ func appendNormalizedValueKey(dst []byte, value Expr) []byte {
 // append-only JSON string encoder; the uncommon escaping cases use v1's exact
 // string representation. Child keys stay byte slices until the final result.
 func appendValueKeyString[T ~string | ~[]byte](dst []byte, value T) []byte {
-	if bytes.IndexAny([]byte(value), "<>&\u2028\u2029") >= 0 || !utf8.Valid([]byte(value)) {
+	if bytes.IndexAny([]byte(value), "<>&  ") >= 0 || !utf8.Valid([]byte(value)) {
 		encoded, _ := json.Marshal(string(value))
 		return append(dst, encoded...)
 	}

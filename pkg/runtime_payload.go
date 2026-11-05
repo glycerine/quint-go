@@ -76,7 +76,7 @@ func runtimeAssemble(source Expr, payload *runtimePayload) (RuntimeValue, error)
 		}
 		return RuntimeValue{expression: copyRuntimeExpression(display), source: source, identity: normalizedValueKey(display), allocation: &runtimeValueAllocation{}, payload: payload, containsClosure: true}, nil
 	}
-	normalized, err := NormalizeValue(source)
+	normalized, err := normalizeOwnedValue(source)
 	if err != nil {
 		return RuntimeValue{}, err
 	}
