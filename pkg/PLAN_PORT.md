@@ -1153,7 +1153,7 @@ any remaining TypeScript client code is distinguished from language-server logic
     (`cli`) uses a 25ms match budget that failed once under `go test -race
     ./...` and passed on rerun, so it is timing-sensitive under load. Raising
     that budget is a test-budget decision and has not been made.
-- [ ] P12.3 Add targeted property/fuzz checks for parsers, JSON/ITF decoders,
+- [x] P12.3 Add targeted property/fuzz checks for parsers, JSON/ITF decoders,
   type/effect substitution, flattening, and evaluation rollback. Retain
   minimized regressions for discovered failures.
   - [x] Type/row decoder compatibility checks and 21 default fuzz seeds;
@@ -1194,8 +1194,11 @@ any remaining TypeScript client code is distinguished from language-server logic
   - [x] 2026-11-04 baseline: all 145 `go test -bench` results (builtin signatures,
     dynamic type decoding, effect substitution, runtime normalization, parsing,
     and CLI preparation) are recorded in `benchmarks/baseline-2026-11-04.txt`
-    with ns/op, B/op and allocs/op. Peak memory and checker-handoff throughput
-    are not yet measured.
+    with ns/op, B/op and allocs/op. Peak memory is not yet measured.
+  - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
+    `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
+    1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
+    Checker service round-trip time is not measured here (needs the solver).
   - [x] Profiled the default suite and removed repeated fixed-builtin type
     parsing with bounded, concurrency-safe templates and caller-owned copies;
     retained uncached variable arities and recorded warm signature benchmarks.

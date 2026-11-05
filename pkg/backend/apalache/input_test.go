@@ -10,7 +10,7 @@ import (
 	quint "github.com/glycerine/quint-go/pkg"
 )
 
-func compileSource(t *testing.T, source string, inductive ...string) quint.CompilationResult {
+func compileSource(t testing.TB, source string, inductive ...string) quint.CompilationResult {
 	t.Helper()
 	parsed, err := quint.ParseModulesWithLocations("M.qnt", source)
 	if err != nil {
