@@ -127,7 +127,7 @@ reporting that evaluates expressions will also depend on P7.
     `quint/src/**/*.ts` (31 names) each have a Go status in `COMPATIBILITY.md`.
     `apalache-version` and `server-endpoint` are explicitly rejected in Go;
     `timeout` is only a commented-out line upstream, so it is not an option.
-  - [ ] Complete field-level wire/transcript and backend semantic coverage audit.
+  - [x] Complete field-level wire/transcript and backend semantic coverage audit (closed 2026-11-05 with P10.8: the backend verdict-parity transcripts pass 0 fail in the full corpus run).
     The backend semantic pass is the verdict-parity coverage of `verification.md`
     and the `runtime/*` transcripts, which is the same material as the P10.8 full
     corpus. It closes when that run records 0 failures, so this item and P10.8 move
@@ -1510,11 +1510,18 @@ Build these items alongside the phases that supply their command behavior.
     resumed IDs, effect substitution printing and an external-package example.
   - [x] General owned enter/exit replacement transformer with actual upstream
     lifecycle/replacement fixtures and documented source traversal exclusions.
-- [ ] P10.8 Run CLI language/I/O/verification integration tests and JSON/ITF
+- [x] P10.8 Run CLI language/I/O/verification integration tests and JSON/ITF
   compatibility checks, including redirected output and nonzero exit paths.
   - [x] In-process tests across all commands, source imports/instances, actual
     Go checker/TLA smoke paths, JSON/ITF, redirected output, and error statuses.
-  - [ ] Full upstream command transcript/format compatibility corpus.
+  - [x] Full upstream command transcript/format compatibility corpus (closed
+    2026-11-05). Full run of `run`, `test`, `repl`, `distribution` and the
+    `lang/io` and `verification` transcripts with `QUINT_CORPUS_TESTS=1`
+    and `QUINT_TRANSCRIPTS`: 127 subtests pass, 0 fail, 71 skipped as recorded
+    known deviations, exit 0 (1556 s). The two distribution files that previously
+    failed now pass. The ics20 `Syntax` case stays a recorded known deviation.
+    The run appends REPL transcript inputs to `examples/tutorials/repl/kettle.qnt`
+    (about 105 lines); revert that file with `git checkout --` after each corpus run.
     Opt-in `TestUpstreamIntegrationTranscripts` (`QUINT_CORPUS_TESTS=1`) runs the
     executable `in` blocks of `lang/io.md` and `verification.md` against the Go binary
     and compares exit, stdout and stderr exactly, as txm does. Default suite result:
