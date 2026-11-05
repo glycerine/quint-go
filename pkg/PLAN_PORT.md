@@ -841,7 +841,18 @@ TypeScript or Rust evaluator process.
     temporal loops; explicit export errors preserve definitive native verdicts.
   - [x] Distinguish native evaluation failures from false predicates and retain
     finite initial/action PROPERTY counterexamples without inventing loops.
-  - [ ] Full native semantic parity and hard preemption.
+  - [ ] Full native semantic parity and hard preemption. Gap inventory (2026-11-04,
+    reviewed against `backend/tlc/check.go`, `cancellation.go`, and tlago v0.1.10):
+    - Covered by tests: deadlock checking (`check_test.go`), cancellation during
+      init/next fanout and the state queue (`TestNativeTLCCancellation`), watcher
+      stop paths (`watch_cancellation_test.go`), and collection limits.
+    - Cooperative only: tlago `ModelChecker.Stop()` calls `StateQueue.FinishAll()`,
+      so workers exit at the next dequeue. Cancellation inside tlago code with no
+      installed callback (a long Go-side loop within one state) is not interrupted.
+      Hard preemption therefore needs a tlago change or fork; it is blocked, and the
+      module cache must not be edited.
+    - Not started: parity claims beyond the covered fixtures; this item stays open
+      until the tlago preemption decision is made.
 - [ ] P9.9 Replace Scala version/download/launch behavior. Define Go backend
   selection/version reporting and the treatment of legacy endpoint/version
   flags; test Go gRPC compatibility if endpoint mode is retained.
