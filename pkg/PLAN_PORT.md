@@ -240,18 +240,17 @@ reporting that evaluates expressions will also depend on P7.
   failures; document disagreements between reference runtimes.
   - FIXTURE_MANIFEST.md maps all 51 TypeScript test families, six Rust families,
     editor and integration groups, with actual comparisons, gates and differences.
-- [ ] P0.4 Wire local development to `~/apalache/pkg` using a local workspace
+- [x] P0.4 Wire local development to `~/apalache/pkg` using a local workspace
   or development-only replacement; choose a pinned dependency version for
   reproducible builds without committing a machine-specific absolute path.
   - [x] Local development uses the git-ignored root `go.work`; the tracked
     `pkg/go.mod` does not require `github.com/glycerine/apalache-go`, so a
     standalone `GOWORK=off go build ./...` fails by design.
-  - [ ] Pinned requirement. The newest published module tag `pkg/v0.62.4-go-001`
-    (commit 9942dda3b) compiles with the port but fails 53 test cases (top-level and subtests) with
-    `Go command executor does not support qnt source format`. The port needs the
-    unpublished local checker commits (7 after that tag, including the qnt
-    input and the TLA `@type` fix). Pinning requires publishing those commits to
-    `origin` or tagging a new `pkg/` version, which needs the owner's decision.
+  - [x] Pinned requirement (closed 2026-11-05). `pkg/go.mod` requires
+    `github.com/glycerine/apalache-go/pkg v0.62.4-go-005`. The checker's module path
+    now matches `pkg/` (checker commit `e7144c7f4`). With `GOWORK=off`, gofmt, vet,
+    build and the full `pkg/` test suite pass. The earlier `-001` pin failed 53 cases
+    and is superseded.
 - [x] P0.5 Feed an existing flattened, typed Quint fixture through the Go
   checker's importer, production checking path, and TLA output path. Establish
   safe, violating, and malformed-input cases without writing a new parser.
@@ -1136,7 +1135,7 @@ TypeScript or Rust evaluator process.
     `__saved_◇(x = 5)`). Quint's TS never reads this field, so the impact is
     limited to ITF metadata. The fix is in `~/apalache/pkg`
     (`FormatUTFExpression`, `temporal_tableau_test.go` updated, full suite green).
-    It reaches Quint only through the P0.4 pin. Scala's temporal run of the same
+    It is now in the pinned tag `pkg/v0.62.4-go-005` (P0.4). Scala's temporal run of the same
     counter spec also reported a state-invariant violation rather than a lasso.
     Re-run 2026-11-04 with `--temporal=EventuallyFive` (the earlier run passed it
     as an invariant): Scala reports the tableau invariant ("state invariant 0
@@ -1478,7 +1477,7 @@ Build these items alongside the phases that supply their command behavior.
     Arabic-Indic `"١"`, Go orders them. Residual divergences are documented in
     COMPATIBILITY.md: upstream follows the host process locale (`LANG=sv_SE`
     puts `å` after `z`; `en-US`/`de-DE` do not), while Go is fixed to en-US
-    root. Locale detection is not implemented (owner decision). CLI
+    root. Locale detection is not implemented (owner decision 2026-11-05: fixed en-US). CLI
     run/test/verify trace files are wired.
 - [ ] P10.5 Port pretty printing, source-error rendering, value diffs, execution
   frames, trace display, statistics, and witness/invariant reports.
@@ -1664,10 +1663,10 @@ any remaining TypeScript client code is distinguished from language-server logic
     were not each re-verified by hand. Still open:
     `TestJavaScriptRegexNullableReference`
     (`cli`) uses a 25ms match budget that failed once under `go test -race
-    ./...` and passed on rerun, so it is timing-sensitive under load. Raising
-    that budget is a test-budget decision and has not been made. P12.2 is
-    complete for the port; the 25 ms budget is recorded as an owner decision
-    for the final report, not as an open implementation item.
+    ./...` and passed on rerun, so it is timing-sensitive under load. Decided 2026-11-05 (owner): the budget
+    is raised to 1 s in `cli/test_regex.go`. This is production behavior for
+    `test --match`, not only a test setting; the interrupt-ceiling test allows 5 s. P12.2 is
+    complete for the port; the budget decision (1 s) is recorded above.
 - [x] P12.3 Add targeted property/fuzz checks for parsers, JSON/ITF decoders,
   type/effect substitution, flattening, and evaluation rollback. Retain
   minimized regressions for discovered failures.
@@ -2045,7 +2044,7 @@ any remaining TypeScript client code is distinguished from language-server logic
     with the owner-approved run, `--check` printed "Both generated parsers match the
     committed files" (exit 0) and left the tree unchanged. The job itself has not run
     on GitHub; it is `workflow_dispatch`-only, like the rest of this workflow.
-  - [ ] Publish/pin the checker revision before automatic CI and release builds
+  - [x] Publish/pin the checker revision before automatic CI and release builds
     (owner decision, P0.4).
 - [ ] P12.7 Package `cmd/quint`, embedded assets, licenses/notices, version
   metadata, installation instructions, and a migration/compatibility guide.
