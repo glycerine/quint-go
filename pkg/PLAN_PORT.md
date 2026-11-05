@@ -693,7 +693,7 @@ including failed actions that must not leak partially updated state.
     tests, selector precedence, and the no-match `--match` diagnostic were
     compared against upstream `test/cli.test.ts` and match, including the
     `--out` JSON `errors` explanation. No upstream TypeScript colour tests exist.
-- [ ] P8.2 Implement `test` discovery/filtering, randomized repetitions,
+- [x] P8.2 Implement `test` discovery/filtering, randomized repetitions,
   pass/fail/ignore results, assertion reports, and replayable failing seeds.
   - [x] Collector-order discovery with default Test suffix/custom predicates,
     imports/instances/namespaces/hidden definitions, and empty-selection text.
@@ -714,7 +714,10 @@ including failed actions that must not leak partially updated state.
   - [x] Nullable capture resets, mandatory empty iterations and optional progress
     guards match 376 additional patterns/16,168 cases plus 807,780 independent
     Node capture comparisons; expansion and execution budgets remain explicit.
-  - [ ] Remaining command terminal/report formatting audit.
+  - [x] Command terminal/report formatting audit closed: whole-command `test_*`
+    transcripts (name error, no match, false assertion detail, missing main)
+    pass at colour levels 0 and 1 against upstream output, and the no-match
+    diagnostic matches `cliHelpers.ts`; no remaining formatting gap found.
 - [x] P8.3 Preserve trace hooks, action names, nondeterministic picks, debug
   metadata, and output filename templates used in model-based testing.
   - Nondet picks (2026-11-04): TS and Go match on `Nd.qnt` for 10 single-trace
