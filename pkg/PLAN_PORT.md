@@ -1723,9 +1723,24 @@ any remaining TypeScript client code is distinguished from language-server logic
     not a like-for-like baseline. Gates: `gofmt -l .` empty, `go vet ./...`
     and `go test -count=1 ./...` passed, and `go test -race -count=1 ./...`
     passed.
-  - [ ] Remaining peak memory is still roughly 1.6 GB at N=10000, so memory
-    per element is not yet addressed. Follow-up: a memory profile
-    (`-memprofile`) of the same run.
+  - [x] 2026-11-05 allocation profile of the N=10000 3×2 run (`runtime/pprof`
+    `allocs` written after `cli.ExecuteWithSignals`, scratch wrapper; run
+    measured at 1,700,324 KB max RSS, 10.2 s, exit 0; profile kept in scratch
+    as `allocs10k.pprof`). Total allocation is 8.12 GB over the run, spread
+    across full-collection rebuilds on each step rather than one site: 
+    `runtimeReferenceMap.Entries` 0.91 GB, `referenceValue` 0.88 GB,
+    `NormalizeValue.func3` 0.80 GB, `runtimeSerialization.expression` 0.71 GB,
+    `EvalSetHigherBuiltinContext` 0.70 GB, `runtimeObjectSet.Add` 0.43 GB.
+    Cumulative, `EvalSetHigherBuiltinContext` is 49.5%, mostly from
+    `runtimeContextSetFromEntries` and serialization of the 10000-element
+    results. No single allocation site is a clear low-risk fix, so no code
+    change was made. The profile is cumulative allocation, not live heap at
+    peak, so it does not by itself explain the 1.7 GB peak.
+  - [ ] Peak RSS at N=10000 (about 1.7 GB) is not reduced. Reducing it needs
+    structural work (fewer full-collection copies per step, or a smaller
+    `RuntimeValue` representation) and is a separate item. A peak-time
+    `inuse_space` profile, taken while the run is live, is the next measurement
+    needed before choosing that work.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
