@@ -1923,6 +1923,15 @@ any remaining TypeScript client code is distinguished from language-server logic
       a meaningful share of peak RSS at N=10000. The remaining trace-retention
       question is the `RuntimeTrace.Shift` design change, which needs a heap
       profile at the peak before any further candidate is tried.
+    - 2026-11-05 P12.5 `runtimeSerialization.setElements` presize rejected.
+      The two `runtimeObjectSet` values (expressions and printed text) were
+      created with `entries` capacity `len(values)`. Insertion, hashing and
+      the sort order were unchanged, and gofmt, vet, `go test ./...` and
+      `go test -race .` were green. Six alternating `cs_bench.sh` pairs on
+      `big_10000.qnt --seed=0x1 --backend=go` (max RSS): current mean about
+      1,217 MB; candidate mean about 1,209 MB. The gap (about 8 MB, under 1%)
+      is smaller than the run-to-run spread (about 60 MB), so it is not a
+      measurable gain. Reverted; `runtime_serialize.go` matches HEAD.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
