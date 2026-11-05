@@ -1576,6 +1576,8 @@ any remaining TypeScript client code is distinguished from language-server logic
     without it); its deadline is now 60 seconds, and the race suite passes again.
     On 2026-11-04 `go vet ./...` (exit 0), `go test -race ./...`, and
     `QUINT_CORPUS_TESTS=1 go test ./backend/apalache/` all passed from `pkg/`.
+    On 2026-11-05 `go test -race -count=1 -timeout 60m ./...` passed from `pkg/`
+    across all 10 test packages with no data-race warnings (exit 0).
   - [x] LSP stream/job/close/wait lifecycle and REPL final-success cancellation
     preserve owned resources and pending state with deterministic regressions.
   - [x] Semantic requests are bound to their document generation; in-flight
