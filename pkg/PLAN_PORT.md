@@ -135,6 +135,12 @@ reporting that evaluates expressions will also depend on P7.
 - [ ] P0.7 Compare accepted JSON envelopes, types, opcodes, and configuration
   fields against this Quint revision. Record importer gaps and deliberate
   rejections with fixtures; do not infer full compatibility from an API name.
+  Progress: the builtin opcode list matches upstream `builtinOpCodes` (93
+  names, guarded by `TestBuiltinInventoryMatchesUpstream`); every upstream
+  `verifyCmd`/`compileOpts` option is accepted by `verifyParseOptions` except
+  the documented `apalache-version` and `server-endpoint` rejections (guarded
+  by `TestVerifyAcceptsUpstreamOptionsExceptDocumentedRejections`). Still open:
+  JSON envelope and type fields.
 - [x] P0.8 Decide the TLC backend path: assess the existing Go `tlago/tlc`
   implementation for reuse, or document a separate optional external TLC
   mode. Do not retain an implicit Scala Apalache/JAR download dependency.
