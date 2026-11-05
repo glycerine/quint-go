@@ -8,7 +8,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	apalacheconfig "github.com/glycerine/apalache-go"
+	apalacheconfig "github.com/glycerine/apalache-go/pkg"
 	"io"
 	"os"
 	"path/filepath"

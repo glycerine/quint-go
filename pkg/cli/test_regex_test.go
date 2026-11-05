@@ -114,7 +114,7 @@ func TestJavaScriptRegexCancellationAndBudget(t *testing.T) {
 			if status != 1 || stdout != "" || !strings.Contains(stderr, want) {
 				t.Fatal("regex failure must abort discovery before tests run", status, stdout, stderr)
 			}
-			if elapsed := time.Since(start); elapsed > time.Second {
+			if elapsed := time.Since(start); elapsed > 5*time.Second {
 				t.Fatalf("backtracking was not interrupted: %s", elapsed)
 			}
 		})

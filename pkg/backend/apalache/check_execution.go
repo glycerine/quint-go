@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	pal "github.com/glycerine/apalache-go"
-	cmd "github.com/glycerine/apalache-go/shai/cmdexecutor"
+	pal "github.com/glycerine/apalache-go/pkg"
+	cmd "github.com/glycerine/apalache-go/pkg/shai/cmdexecutor"
 )
 
 // The command service's CHECK response does not distinguish every bounded

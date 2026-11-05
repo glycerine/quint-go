@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	checker "github.com/glycerine/apalache-go"
+	checker "github.com/glycerine/apalache-go/pkg"
 	"github.com/glycerine/insdict"
 	quint "github.com/glycerine/quint-go/pkg"
 )

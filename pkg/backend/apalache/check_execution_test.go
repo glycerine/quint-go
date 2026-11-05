@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	pal "github.com/glycerine/apalache-go"
-	cmd "github.com/glycerine/apalache-go/shai/cmdexecutor"
+	pal "github.com/glycerine/apalache-go/pkg"
+	cmd "github.com/glycerine/apalache-go/pkg/shai/cmdexecutor"
 )
 
 func TestCheckExecutionPreservesServiceValidation(t *testing.T) {

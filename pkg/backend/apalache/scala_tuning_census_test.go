@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	ap "github.com/glycerine/apalache-go"
+	ap "github.com/glycerine/apalache-go/pkg"
 )
 
 // TestScalaTuningCensusOutcomesStable pins how the Go tuning parser classifies

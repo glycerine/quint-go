@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	checker "github.com/glycerine/apalache-go"
+	checker "github.com/glycerine/apalache-go/pkg"
 	quint "github.com/glycerine/quint-go/pkg"
 )
 

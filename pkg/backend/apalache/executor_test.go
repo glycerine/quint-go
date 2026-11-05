@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	cmd "github.com/glycerine/apalache-go/shai/cmdexecutor"
+	cmd "github.com/glycerine/apalache-go/pkg/shai/cmdexecutor"
 	"strings"
 	"testing"
 )

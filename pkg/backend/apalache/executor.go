@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/glycerine/apalache-go/shai"
-	cmd "github.com/glycerine/apalache-go/shai/cmdexecutor"
+	"github.com/glycerine/apalache-go/pkg/shai"
+	cmd "github.com/glycerine/apalache-go/pkg/shai/cmdexecutor"
 )
 
 // Executor uses the production command service in-process, without a server or JVM.

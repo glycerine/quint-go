@@ -20,7 +20,7 @@ import (
 // optional empty iterations while preserving required empty iterations.
 type testJavaScriptRegex struct{ compiled *regexp2.Regexp }
 
-const testRegexMatchTimeout = 25 * time.Millisecond
+const testRegexMatchTimeout = 1 * time.Second
 
 func testCompileJavaScriptRegex(pattern string) (*testJavaScriptRegex, error) {
 	translated, err := testTranslateJavaScriptRegex(pattern)

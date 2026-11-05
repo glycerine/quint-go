@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	cmd "github.com/glycerine/apalache-go/shai/cmdexecutor"
+	cmd "github.com/glycerine/apalache-go/pkg/shai/cmdexecutor"
 )
 
 // BenchmarkCheckConfigHandoff measures the checker-input handoff: validating
