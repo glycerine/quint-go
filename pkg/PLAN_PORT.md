@@ -1468,7 +1468,13 @@ Build these items alongside the phases that supply their command behavior.
     styled values/diagnostics/frames/statuses with248 actual snapshots.
   - [x] Annotated trace/debug/frame display and verification console traces match
     38 upstream cases; new formatting helpers have complete function coverage.
-  - [ ] Remaining command report formatting audit.
+  - [x] Remaining command report formatting audit: upstream and Go `parse`,
+    `typecheck` (success and QNT404 error block, exit 1), `run --seed=1
+    --max-samples=5` (execution listing, statistics, `[ok]` line) and `test
+    --match '.*'` (passing/failing tree, QNT511 block, failure exit 1) were
+    compared side by side. Only timings and the reproduce-hint backend
+    (`--backend=rust` upstream, `--backend=go` in Go) differ, and that hint is
+    recorded as intentional. Other command reports were covered by P10.1.
 - [x] P10.6 Port documentation extraction and `docs`; embed builtin definitions
   and necessary runtime assets so the binary works outside the checkout.
   - [x] Reusable documentation extraction/Markdown rendering and embedded
