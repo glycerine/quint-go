@@ -109,13 +109,18 @@ reporting that evaluates expressions will also depend on P7.
   - [x] COMPATIBILITY.md inventories every opcode/builtin value, active command
     flags/environment settings, major data/status contracts, and editor features.
   - [ ] Complete field-level wire/transcript and backend semantic coverage audit.
-    - Partial pass (IR property names): 29 upstream `quintIr.ts`/`quintTypes.ts`
-      property names were diffed against Go string literals in `pkg/` (non-test).
-      Only `rowNames` and `typeNames` were missing. Both are TypeScript helper
-      functions and collector fields in `ir/quintTypes.ts`, not serialized
-      fields, so there is no wire gap. The pass is coarse: it covers only top-level
-      `name:` properties and does not yet check transcripts, the JSON encoder,
-      or backend semantic fields.
+    - IR property-name pass: 29 upstream `quintIr.ts`/`quintTypes.ts` property
+      names diffed against Go string literals in `pkg/`. Only `rowNames` and
+      `typeNames` were missing; both are TypeScript helpers, not serialized fields.
+    - Compile JSON pass (`compile --target json`, TS `quint` vs Go `quint-go`):
+      75 `.qnt` files under `quint/testFixture` and `src/builtin.qnt`.
+      - 26 compile on both sides and differ only in object key order (values and
+        structure are equal after parsing). Key order is formatting, not language
+        semantics, and is not treated as a contract.
+      - 0 semantic differences.
+      - 49 fail on both sides with exit 1. Their `QNT` diagnostic code sets are identical.
+      - Remaining gaps: runtime transcripts, the apalache input encoder, and backend
+        semantic fields. These are still open.
   - [x] Checker tuning key census (`testdata/scala_tuning_census.tsv`, pinned by
     `TestScalaTuningCensusOutcomesStable`). Of 484 Scala `FineTuningParser` keys,
     267 are accepted, 216 are rejected because g3 has no such parameter or module
