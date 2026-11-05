@@ -1109,7 +1109,14 @@ any remaining TypeScript client code is distinguished from language-server logic
     checking pending/current values, stable cells and caller-owned IR.
   - [x] Type/effect substitution laws and transported flattening semantics add
     bounded structural seeds; final fuzz runs pass 10,574 type, 2,860 effect and
-    162 flatten cases without failure. ITF decoder properties remain open.
+    162 flatten cases without failure.
+  - [x] Whole-trace ITF decoding (`FuzzITFTraceDecoding`, 11 seeds) found that
+    `encoding/json` matched `stAtes` as `states` and accepted a bare `true`
+    state that `EncodeITFTrace` rejects. The decoder now matches trace keys
+    exactly, as upstream `getFieldOpt` does, and requires object states, as
+    upstream `ItfJsonToTla` does ("State must be an object."). Regression
+    `TestITFTraceKeysAndStateShapeAreExact` and corpus entry `546d61f9f8bc5bff`
+    are retained; a 60 s bounded run passes 10,172,355 executions.
 - [ ] P12.4 Run representative and broad corpus comparisons covering parsing,
   analysis, execution, and verification. Keep a fast deterministic suite and
   a separately scheduled expensive solver/corpus suite.

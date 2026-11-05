@@ -31,43 +31,83 @@ type ITFTrace struct {
 // Exposed strings and names must be Unicode scalar values; unsupported lone
 // UTF-16 surrogates are errors instead of being replaced. Raw metadata is opaque.
 func DecodeITFTrace(data []byte) (ITFTrace, error) {
-	var input struct {
-		Vars, Params []json.RawMessage
-		Loop         *int
-		Metadata     json.RawMessage `json:"#meta"`
-		States       []json.RawMessage
-	}
+	// Field names are matched exactly, as upstream's getFieldOpt does. A struct
+	// target would let encoding/json match case-insensitively (e.g. "stAtes").
+	var input map[string]json.RawMessage
 	if err := json.Unmarshal(data, &input); err != nil {
 		return ITFTrace{}, err
 	}
-	if input.States == nil {
+	if input == nil {
+		return ITFTrace{}, fmt.Errorf("ITF trace must be an object")
+	}
+	states, ok := input["states"]
+	if !ok || itfIsNull(states) {
 		return ITFTrace{}, fmt.Errorf("ITF trace requires states")
 	}
-	vars, err := itfUnicodeNames("vars", input.Vars)
+	var stateList []json.RawMessage
+	if err := json.Unmarshal(states, &stateList); err != nil {
+		return ITFTrace{}, fmt.Errorf("ITF states: %w", err)
+	}
+	vars, err := itfNameList("vars", input["vars"])
 	if err != nil {
 		return ITFTrace{}, err
 	}
-	params, err := itfUnicodeNames("params", input.Params)
+	params, err := itfNameList("params", input["params"])
 	if err != nil {
 		return ITFTrace{}, err
 	}
-	result := ITFTrace{Vars: vars, Params: params, Loop: input.Loop, Metadata: input.Metadata, States: []Expr{}, StateMetadata: []json.RawMessage{}, Raw: append(json.RawMessage(nil), data...)}
+	var loop *int
+	if raw, ok := input["loop"]; ok && !itfIsNull(raw) {
+		var index int
+		if err := json.Unmarshal(raw, &index); err != nil {
+			return ITFTrace{}, fmt.Errorf("ITF loop: %w", err)
+		}
+		loop = &index
+	}
+	result := ITFTrace{Vars: vars, Params: params, Loop: loop, Metadata: input["#meta"], States: []Expr{}, StateMetadata: []json.RawMessage{}, Raw: append(json.RawMessage(nil), data...)}
 	ids := &IDGenerator{} // Upstream ofItf starts at zero and shares IDs across states.
-	for i, state := range input.States {
+	for i, state := range stateList {
+		// Upstream reads each state with allFieldsOpt, so only objects are states.
+		// Accepting a bare value here would produce a trace the encoder rejects.
+		if !itfIsObject(state) {
+			return ITFTrace{}, fmt.Errorf("ITF state %d: State must be an object.", i)
+		}
 		expression, err := DecodeITFValue(state, ids)
 		if err != nil {
 			return ITFTrace{}, fmt.Errorf("ITF state %d: %w", i, err)
 		}
-		var metadata struct {
-			Value json.RawMessage `json:"#meta"`
-		}
-		if len(state) > 0 && bytes.TrimSpace(state)[0] == '{' {
-			_ = json.Unmarshal(state, &metadata)
+		var fields map[string]json.RawMessage
+		if err := json.Unmarshal(state, &fields); err != nil {
+			return ITFTrace{}, fmt.Errorf("ITF state %d: %w", i, err)
 		}
 		result.States = append(result.States, expression)
-		result.StateMetadata = append(result.StateMetadata, metadata.Value)
+		result.StateMetadata = append(result.StateMetadata, fields["#meta"])
 	}
 	return result, nil
+}
+
+// itfIsNull reports whether raw is the JSON literal null.
+func itfIsNull(raw json.RawMessage) bool {
+	return string(bytes.TrimSpace(raw)) == "null"
+}
+
+// itfIsObject reports whether raw is a JSON object, ignoring surrounding space.
+func itfIsObject(raw json.RawMessage) bool {
+	trimmed := bytes.TrimSpace(raw)
+	return len(trimmed) > 0 && trimmed[0] == '{'
+}
+
+// itfNameList decodes an optional vars or params array. Absent and null are
+// both empty, matching upstream's optional handling of these fields.
+func itfNameList(field string, raw json.RawMessage) ([]string, error) {
+	if raw == nil || itfIsNull(raw) {
+		return nil, nil
+	}
+	var values []json.RawMessage
+	if err := json.Unmarshal(raw, &values); err != nil {
+		return nil, fmt.Errorf("ITF %s: %w", field, err)
+	}
+	return itfUnicodeNames(field, values)
 }
 
 // DecodeITFValue converts an ITF value to Quint IR without floating-point number

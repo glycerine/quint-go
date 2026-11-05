@@ -90,6 +90,27 @@ func TestITFRejectsMalformedValues(t *testing.T) {
 	}
 }
 
+// Upstream reads trace fields by exact name and requires each state to be an
+// object. Accepting a near-miss key or a bare state would yield a trace that
+// the encoder rejects, which FuzzITFTraceDecoding found.
+func TestITFTraceKeysAndStateShapeAreExact(t *testing.T) {
+	for _, input := range []string{`{"stAtes":[true]}`, `{"STATES":[]}`, `{"states":[]}` + "\n" + `{}`, `{"vars":["x"],"States":[{"x":true}]}`, `{"vars":["x"],"states":[true]}`, `{"vars":["x"],"states":["s"]}`, `{"vars":["x"],"states":[[]]}`, `{"vars":"x","states":[]}`, `{"vars":["x"],"states":[],"loop":"0"}`} {
+		if _, err := DecodeITFTrace([]byte(input)); err == nil {
+			t.Fatal("non-exact trace accepted", input)
+		}
+	}
+	trace, err := DecodeITFTrace([]byte(`{"vars":["x"],"Loop":5,"#META":{"a":1},"states":[{"x":true}]}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if trace.Loop != nil || trace.Metadata != nil || trace.StateMetadata[0] != nil {
+		t.Fatal("near-miss metadata keys were bound", trace.Loop, trace.Metadata, trace.StateMetadata)
+	}
+	if _, err := EncodeITFTrace(trace.Vars, trace.States, false); err != nil {
+		t.Fatal("exact trace did not encode", err)
+	}
+}
+
 func TestITFTraceSourceIsolation(t *testing.T) {
 	input := []byte(`{"vars":["x"],"params":["N"],"loop":0,"#meta":{"extra":42},"states":[{"#meta":{"index":0},"x":{"#bigint":"2"}}]}`)
 	trace, err := DecodeITFTrace(input)
