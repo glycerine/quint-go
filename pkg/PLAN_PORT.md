@@ -1780,6 +1780,11 @@ any remaining TypeScript client code is distinguished from language-server logic
     allocations, `runtimeWithEntries`, and `RuntimeTrace.Shift` history retention,
     which needs a larger design change. Each is a separate item and is not yet
     scoped.
+    - 2026-11-05 tried and rejected: sharing canonical `Rec` nodes in
+      `normalizeValue` when names are strictly ascending and children unchanged.
+      Peak heap objects at N=10000 averaged about 1,227 MB over four runs against
+      about 1,199 MB for the committed state (1,192 / 1,216 / 1,188 MB), so it
+      was reverted and not committed.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
