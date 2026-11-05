@@ -798,6 +798,17 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     (scratch `xoverride3.qnt`). Pinned by `TestInstanceOverrideReadsOtherInstance`
     in `pkg/runtime_instance_override_cycle_test.go`, which asserts QNT099 only
     when the override reads another instance.
+  - [ ] Eager variable registration audit (2026-11-05), open divergences. An
+    unused second instance's variable (`Q::z` never touched) is absent from both
+    passing ITF traces, so registration is not observable there (parity). Failing
+    runs differ: TypeScript `--out-itf` writes a trace for every failing test,
+    including QNT503 (`1 / 0`) and QNT508 (`expect` false), each with a one-state
+    trace. Go writes only passing tests and QNT511 failures
+    (`pkg/cli/test.go` trace gate; its comment claims upstream skips runtime
+    errors, which the observed TypeScript output contradicts). A plain `false`
+    test has ITF status `violation` in TypeScript but `failed` in Go. Scratch
+    probes: `scratchpad/eager/run4`, `run6`. Fix the trace gate and status
+    mapping to match the TypeScript reference, then pin with a Go CLI test.
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
     and remaining override audits; compiler instance contexts).
 
