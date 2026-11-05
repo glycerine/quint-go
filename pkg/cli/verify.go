@@ -391,6 +391,14 @@ func verifyUsesTLC(options verifyOptions) bool {
 	return options.backend == "tlc" || options.backend == "tlc-go"
 }
 
+// verifyElapsedMs reports the wall time since the verify command started, or zero when unset.
+func verifyElapsedMs(options verifyOptions) int64 {
+	if options.started.IsZero() {
+		return 0
+	}
+	return time.Since(options.started).Milliseconds()
+}
+
 // flag.FlagSet stops at the first positional argument; Quint accepts options on
 // either side of its input. Normalize those arguments without changing values.
 func verifyInterspersedArgs(args []string) ([]string, error) {
@@ -535,6 +543,11 @@ func verifyOutputContext(ctx context.Context, options verifyOptions, stage verif
 			return 1
 		}
 	}
+	if stage.Status == "failure" && stage.TLC != nil && verifyUsesTLC(options) && options.out == "" && options.verbosity >= 1 {
+		// Upstream's processTlcResult reports a TLC backend failure with this summary line.
+		// Parse and type failures never reach TLC, so stage.TLC is nil for them.
+		fmt.Fprintf(stdout, "\n%s TLC encountered an error (%dms).\n", terminalStyle(ctx, "[failure]", "red"), verifyElapsedMs(options))
+	}
 	reported := stage
 	if reported.Status == "failure" {
 		// The upstream checker reporter returns a CLI failure, which uses
@@ -554,7 +567,8 @@ func verifyOutputContext(ctx context.Context, options verifyOptions, stage verif
 	if code == 0 {
 		var err error
 		if verifyUsesTLC(options) {
-			_, err = fmt.Fprintln(stdout, terminalStyle(ctx, "[ok]", "green")+" "+stage.Explanation)
+			// Upstream's processTlcResult prints a leading blank line and the fixed summary.
+			_, err = fmt.Fprintf(stdout, "\n%s No violation found (%dms).\n", terminalStyle(ctx, "[ok]", "green"), verifyElapsedMs(options))
 		} else {
 			err = verifyPrintApalacheSuccess(ctx, options, stdout)
 		}
@@ -571,12 +585,13 @@ func verifyOutputContext(ctx context.Context, options verifyOptions, stage verif
 			if options.verbosity >= 3 && stage.BackendLog != "" {
 				fmt.Fprintln(stdout, stage.BackendLog)
 			}
-			if options.verbosity >= 2 {
-				var elapsed int64
-				if !options.started.IsZero() {
-					elapsed = time.Since(options.started).Milliseconds()
+			// Upstream's processTlcResult and processApalacheResult both report at verbosity 1 and above.
+			if options.verbosity >= 1 {
+				prefix := ""
+				if verifyUsesTLC(options) {
+					prefix = "\n"
 				}
-				fmt.Fprintf(stdout, "%s Found an issue (%dms).\n", terminalStyle(ctx, "[violation]", "red"), elapsed)
+				fmt.Fprintf(stdout, "%s%s Found an issue (%dms).\n", prefix, terminalStyle(ctx, "[violation]", "red"), verifyElapsedMs(options))
 			}
 		}
 		// Upstream prints the summary as `error: <explanation>` after diagnostics.

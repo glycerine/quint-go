@@ -49,7 +49,7 @@ func TestVerifyTLCOptionsAndOutput(t *testing.T) {
 		var stdout, stderr bytes.Buffer
 		args := []string{input, "--backend=" + backend, "--invariant=safe", "--temporal=live", "--tlc-config", config}
 		code := verifyWithCheckers(context.Background(), args, &stdout, &stderr, nil, checker)
-		if code != 0 || !called || stderr.Len() != 0 || !strings.Contains(stdout.String(), "all 2 distinct states") || strings.Contains(stdout.String(), "steps") {
+		if code != 0 || !called || stderr.Len() != 0 || !strings.Contains(stdout.String(), "\n[ok] No violation found (") || strings.Contains(stdout.String(), "distinct states") || strings.Contains(stdout.String(), "steps") {
 			t.Fatal(code, called, stdout.String(), stderr.String())
 		}
 		stdout.Reset()
@@ -93,9 +93,13 @@ func TestVerifyTLCResultsAndFailures(t *testing.T) {
 			var stdout, stderr bytes.Buffer
 			code := verifyWithCheckers(context.Background(), []string{input, "--backend=tlc"}, &stdout, &stderr, nil, checker)
 			wantStdout := ""
-			if tc.status == "violation" {
+			switch tc.status {
+			case "violation":
 				// Upstream prints the summary to stdout and the error line to stderr.
 				wantStdout = "[violation] Found an issue"
+			case "failure":
+				// Upstream's processTlcResult prints this summary for every TLC backend failure.
+				wantStdout = "[failure] TLC encountered an error"
 			}
 			if code != 1 || !strings.Contains(stdout.String(), wantStdout) || (wantStdout == "" && stdout.Len() != 0) || !strings.Contains(stderr.String(), tc.want) {
 				t.Fatal(code, stdout.String(), stderr.String())
@@ -295,6 +299,37 @@ func TestVerifyTLCActualTemporalCorpus(t *testing.T) {
 				}
 			} else if !strings.Contains(stdout.String(), "[violation] Found an issue") || !strings.Contains(stderr.String(), "error: found a counterexample") {
 				t.Fatal(stdout.String(), stderr.String())
+			}
+		})
+	}
+}
+
+// TestVerifyTLCVerbosityOneSummaries pins the upstream processTlcResult lines
+// that print at verbosity 1: a leading blank line and the fixed summary text.
+func TestVerifyTLCVerbosityOneSummaries(t *testing.T) {
+	t.Parallel()
+	input := verifyTestSource(t, verifyTestModel)
+	for _, tc := range []struct {
+		name   string
+		result gotlc.Result
+		err    error
+		want   string
+	}{
+		{"success", gotlc.Result{Complete: true, Outcome: gotlc.Safe, DistinctStates: 2}, nil, "\n[ok] No violation found ("},
+		{"violation", gotlc.Result{Complete: true, Outcome: gotlc.Violation, Log: "x = 1"}, nil, "\n[violation] Found an issue ("},
+		{"failure", gotlc.Result{}, errors.New("native failure"), "\n[failure] TLC encountered an error ("},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			checker := verifyTLCBackend(func(_ context.Context, _ quint.CompilationResult, _ gotlc.Options) (gotlc.Result, error) {
+				return tc.result, tc.err
+			})
+			var stdout, stderr bytes.Buffer
+			verifyWithCheckers(context.Background(), []string{input, "--backend=tlc", "--verbosity=1"}, &stdout, &stderr, nil, checker)
+			if !strings.Contains(stdout.String(), tc.want) {
+				t.Fatalf("stdout %q lacks %q (stderr %q)", stdout.String(), tc.want, stderr.String())
+			}
+			if strings.Contains(stdout.String(), "distinct states") {
+				t.Fatalf("stdout %q keeps the Go-only explanation", stdout.String())
 			}
 		})
 	}

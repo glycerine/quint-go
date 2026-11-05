@@ -1340,8 +1340,22 @@ Build these items alongside the phases that supply their command behavior.
     from one input (`REPLDiagnostics` in `repl_session.go`), matching upstream
     for `aaa + bbb`; single diagnostics keep their plain `Diagnostic` shape.
     Pinned by `TestREPLSessionReportsEveryUndefinedName`.
-  - [ ] Complete remaining help/error-prose and terminal parity audit, including
-    command transcripts and timing/report prose.
+  - [x] TLC verify summaries match upstream `processTlcResult` at verbosity 1 and
+    above: success prints `\n[ok] No violation found (Nms).` (the Go-only
+    "TLC explored all N distinct states" text is no longer on the human line;
+    `stage.Explanation` remains for JSON), violations print `\n[violation]
+    Found an issue (Nms).`, and backend failures print `\n[failure] TLC
+    encountered an error (Nms).` before the existing `error:` diagnostics.
+    Apalache lines keep no leading newline. Pinned by
+    `TestVerifyTLCVerbosityOneSummaries` and `TestVerifyTLCResultsAndFailures`.
+  - [ ] Recorded deviation: `test` failure repeat hint
+    `Use --seed=0x.. --match=^name$ --backend=go to repeat.` is intentional.
+  - [ ] Unverified against upstream: whether `verify --out` should suppress the
+    success/failure summaries. Go currently suppresses them; upstream was not
+    checked for this case.
+  - [ ] Still open: audit the `cli/test.go` failure-detail DEBUG rendering
+    (~473–500) against upstream `outputTestErrors`, then the remaining help
+    prose, command transcripts, and timing/report prose.
 - [x] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
   - [x] 2026-11-05 audit: common options and verbosity defaults (`2`, `--quiet`)
