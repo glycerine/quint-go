@@ -158,12 +158,24 @@ tar -C "$stage_dir" -czf "$output_dir/$tarball" "$name"
   sha256sum -- "$tarball" > SHA256SUMS
 )
 
-# Smoke-check the archive as a user would receive it.
+# Smoke-check the archive as a user would receive it. A target that differs
+# from the build host cannot be executed here, so its binaries are checked by
+# their embedded build target instead of being run.
 smoke_dir=$stage_dir/smoke
 mkdir -p -- "$smoke_dir"
 tar -C "$smoke_dir" -xzf "$output_dir/$tarball"
-got=$("$smoke_dir/$name/bin/quint$exe" --version)
-[[ "$got" == "$version" ]] || fail "quint --version printed '$got', expected '$version'"
 [[ -x "$smoke_dir/$name/bin/quint-lsp$exe" ]] || fail 'quint-lsp is missing from the archive'
-
-printf '%s\n' "Packaged $output_dir/$tarball (quint --version: $got)."
+host_os=$(go env GOHOSTOS)
+host_arch=$(go env GOHOSTARCH)
+if [[ "$goos" == "$host_os" && "$goarch" == "$host_arch" ]]; then
+  got=$("$smoke_dir/$name/bin/quint$exe" --version)
+  [[ "$got" == "$version" ]] || fail "quint --version printed '$got', expected '$version'"
+  printf '%s\n' "Packaged $output_dir/$tarball (quint --version: $got)."
+else
+  for bin in quint quint-lsp; do
+    info=$(go version -m "$smoke_dir/$name/bin/$bin$exe") || fail "cannot read build info of $bin"
+    grep -q "GOOS=$goos" <<<"$info" || fail "$bin is not built for GOOS=$goos"
+    grep -q "GOARCH=$goarch" <<<"$info" || fail "$bin is not built for GOARCH=$goarch"
+  done
+  printf '%s\n' "Packaged $output_dir/$tarball ($goos/$goarch cross build; binaries not executed on host $host_os/$host_arch)."
+fi

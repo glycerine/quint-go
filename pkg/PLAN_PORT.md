@@ -2084,7 +2084,13 @@ any remaining TypeScript client code is distinguished from language-server logic
     the Go toolchain `LICENSE`/`PATENTS` go to `licenses/go-toolchain/`.
     Verified by inspecting the Linux/amd64 archive. Remaining gap: the g3
     module has no license of its own, so the checker's retained copy is used.
-  - [ ] Public release publication and non-host platform archives (P12.8).
+  - [x] Non-host platform archives (2026-11-05, recommended approach): `package-go.sh`
+    cross-builds for another GOOS/GOARCH and verifies the binaries' embedded build
+    target with `go version -m` instead of running them. Verified: linux/amd64
+    archive with a `--version` smoke run, and a darwin/arm64 archive. Known gap: the
+    `github.com/glycerine/g3/pkg` module has no license file of its own, so the script
+    warns and that module's notice is absent from the archive.
+  - [ ] Public release publication. This is an owner action and is not done by the port.
 - [x] P12.8 Test from a clean environment without Node, Rust, Java, Scala,
   downloaded Scala Apalache, or repository-relative runtime assets for all
   default Go workflows. Document any explicitly optional external backend.
