@@ -150,8 +150,20 @@ reporting that evaluates expressions will also depend on P7.
         safe. This is a recorded deviation: Go reports `verification was
         inconclusive (SmtTimeout)` instead of crashing. Pinned by
         `TestCheckResponseDecoding` and `TestCheckerFailureReports`.
-      - Remaining gaps: runtime transcripts outside the Rust repl.md slice, and
-        ITF trace field equivalence for the backend. These are still open.
+      - ITF trace field equivalence (2026-11-05, against Scala
+        `ItfCounterexampleWriter.scala` and `TlaToItfJson.scala`). Scala's
+        `#meta` carries `format`, `format-description`, `description`,
+        `var-types`, and optional `variables-to-expressions`; each state carries
+        `#meta.index`. Go's Quint-level `AddITFHeader` writes `format`,
+        `format-description`, `source`, `status`, `description`, and `timestamp`,
+        and replaces an existing `#meta` as upstream's object spread does, so
+        Apalache's `var-types` is intentionally absent from the final output
+        (pinned by `TestUpstreamITFHeaders` and `TestITFHeaderValidationAndPrecision`).
+        Per-state `#meta.index` matches. Scala sorts state keys by name; Go keeps
+        backend order. JSON object key order is not semantic, so this is a
+        recorded non-semantic difference. The only semantic text gap is
+        `variables-to-expressions` (listed under P9 above).
+      - Remaining gap: runtime transcripts outside the Rust repl.md slice.
   - [x] Checker tuning key census (`testdata/scala_tuning_census.tsv`, pinned by
     `TestScalaTuningCensusOutcomesStable`). Of 484 Scala `FineTuningParser` keys,
     267 are accepted, 216 are rejected because g3 has no such parameter or module
