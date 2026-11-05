@@ -755,12 +755,14 @@ TypeScript or Rust evaluator process.
     inductive ordinary predicates; reporting failures become visible warnings.
   - [x] Human CLI lasso output: after the example execution, prints
     "The final transition returns to [State N]." from the ITF `loop` field
-    (verbosity >= 2); test `TestVerifyPrintCounterExampleShowsLassoLoopTarget`;
-    end-to-end run prints `[State 3]` for the lasso fixture.
-  - [x] Temporal violation attribution: with a single `--temporal` property, the
-    human CLI names it after "Found an issue" (`❌ eventuallyFive`); test
-    `TestVerifyOutputNamesViolatedTemporalProperty`. Per-property attribution
-    for comma-separated lists and ITF `variables-to-expressions` rendering remain open.
+    (verbosity >= 3, so the default output matches upstream, which omits it);
+    test `TestVerifyPrintCounterExampleShowsLassoLoopTarget`.
+  - [x] Temporal violation output: with a single `--temporal` property, the
+    human CLI prints only "[violation] Found an issue" and names no property,
+    matching upstream's default output (the earlier `❌ eventuallyFive` label was a
+    Go-only extra and was removed); test `TestVerifyOutputOmitsTemporalPropertyLabel`.
+    Per-property attribution for comma-separated lists and ITF
+    `variables-to-expressions` rendering remain open.
   - [x] Single-invariant attribution matches upstream: with one ordinary
     invariant, no `❌ label` line is printed, because upstream
     `printViolatedInvariants` (`cliReporting.ts:112-117`) returns early for one
@@ -816,8 +818,10 @@ TypeScript or Rust evaluator process.
     negative through assignment-IR Go Apalache and generated-TLA native TLC.
   - [x] Typed declarations print upstream-form `@type` comments through the Go
     Apalache TLA command; five `verification.md` TLA+ transcripts were compared.
-    The only textual difference is the canonical `Variants!Variant` qualifier
-    (semantically equivalent under `EXTENDS Variants`). Regression tests:
+    Two textual differences remain: the canonical `Variants!Variant` qualifier
+    (semantically equivalent under `EXTENDS Variants`) and the printer's
+    line wrapping, which upstream reflows and `pkg/tlaplus_postprocess.go` does not.
+    Both come from the pinned printer and are blocked on P0.4. Regression tests:
     `cli/tla_compile_test.go`.
   - [x] Unsupported and unbounded-domain TLA generation behavior audit (narrowed; see note).
     Probed 2026-11-04: `nondet ... oneOf()` over a finite set lowers to a
@@ -1130,8 +1134,14 @@ any remaining TypeScript client code is distinguished from language-server logic
   a separately scheduled expensive solver/corpus suite.
   - [x] 2026-11-04: `QUINT_CORPUS_TESTS=1 go test ./...` from `pkg/` passes every
     gated corpus suite except the upstream transcript runner, which has three known
-    deviations: `--server-endpoint` rejection, the `Variants!` qualifier, and Go TLC
-    rejecting `--max-steps`. The default and race suites pass.
+    deviations: `--server-endpoint` rejection, the `Variants!` qualifier and line
+    wrapping in the `ApalacheCompliation.qnt` TLA+ output, and Go TLC rejecting
+    `--max-steps`. Those three are listed in `transcriptKnownDeviations`
+    (`cli/transcript_corpus_test.go`); each still runs, is skipped with its reason,
+    and fails if it starts matching upstream.
+  - [x] 2026-11-04: `verification.md` gated rerun with known deviations: all cases
+    pass or skip as listed. The temporal violation case passes after removing the
+    Go-only `❌ label` and default lasso line.
 - [ ] P12.5 Benchmark parsing, inference, flattening, large collections,
   simulation throughput, and checker handoff; track allocations and peak
   memory against recorded baselines before optimizing.
@@ -4132,5 +4142,7 @@ Five upstream TLA+ transcripts were rerun. The `--main`, CLI `--init/--step/--in
 `ApalacheCompilation.qnt` output differs only in the Go checker's canonical
 `Variants!Variant` qualifier where upstream prints `Variant`. That is valid TLA+
 under `EXTENDS Variants`; stripping it textually could misread a user-defined
-`Variant`, so it remains a documented difference. P9.7 stays open for unsupported and
-unbounded-domain behavior, not for these transcripts.
+`Variant`, so it remains a documented difference. The printer also does not reflow
+long lines the way upstream does, so the output differs in line wrapping as well.
+Both come from the pinned printer and wait on P0.4. P9.7 stays open for unsupported
+and unbounded-domain behavior, not for these transcripts.

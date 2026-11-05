@@ -584,11 +584,8 @@ func verifyOutputContext(ctx context.Context, options verifyOptions, stage verif
 		for _, label := range stage.ViolatedInvariants {
 			fmt.Fprintln(stdout, terminalStyle(ctx, "❌ "+label, "red"))
 		}
-		// A temporal violation has no invariant label. With exactly one property
-		// requested, name it so a lasso counterexample is attributed to it.
-		if stage.Status == "violation" && len(stage.ViolatedInvariants) == 0 && options.temporal != "" && !strings.Contains(options.temporal, ",") {
-			fmt.Fprintln(stdout, terminalStyle(ctx, "❌ "+options.temporal, "red"))
-		}
+		// Upstream names no temporal property in the violation summary, so a
+		// temporal violation prints only "[violation] Found an issue".
 	}
 	for _, warning := range stage.Warnings {
 		fmt.Fprintln(stderr, terminalStyle(ctx, "[warning] "+warning, "yellow"))

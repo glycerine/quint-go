@@ -202,6 +202,15 @@ func runTranscriptCase(t *testing.T, root, pathDir string, c transcriptCase) (st
 	return strings.TrimRight(outBuffer.String(), "\n"), strings.TrimRight(errBuffer.String(), "\n"), code
 }
 
+// transcriptKnownDeviations lists upstream transcript cases that the Go port
+// documents as deliberate or blocked differences. Keys are "file/case name".
+// Each case still runs, and fails the test if it starts matching upstream.
+var transcriptKnownDeviations = map[string]string{
+	"integration-tests/verification.md/can specify --server-endpoint":               "in-process Go backend has no server endpoint (see PLAN_PORT.md)",
+	"integration-tests/verification.md/TLC violation":                               "P9.12: --max-steps is rejected for --backend tlc; exposing it is a user decision",
+	"integration-tests/verification.md/can convert ApalacheCompliation.qnt to TLA+": "P0.4 / pinned printer: Variants! qualifier and line wrapping differ from upstream",
+}
+
 // TestUpstreamIntegrationTranscripts runs the executable `in` cases of selected upstream
 // transcript documents against the Go binary. Set QUINT_CORPUS_TESTS=1 to run it.
 func TestUpstreamIntegrationTranscripts(t *testing.T) {
@@ -228,6 +237,17 @@ func TestUpstreamIntegrationTranscripts(t *testing.T) {
 			}
 			t.Run(file+"/"+c.name, func(t *testing.T) {
 				stdout, stderr, code := runTranscriptCase(t, root, pathDir, c)
+				if reason, known := transcriptKnownDeviations[file+"/"+c.name]; known {
+					// A known deviation must still deviate. If it now matches upstream,
+					// remove its entry so the case is checked strictly.
+					matches := code == c.exit &&
+						(c.stdout == nil || stdout == *c.stdout) &&
+						(c.stderr == nil || stderr == *c.stderr)
+					if matches {
+						t.Errorf("known deviation now matches upstream; remove it from transcriptKnownDeviations (%s)", reason)
+					}
+					t.Skip("known deviation: " + reason)
+				}
 				if code != c.exit {
 					t.Errorf("exit = %d, want %d\nstdout:\n%s\nstderr:\n%s", code, c.exit, stdout, stderr)
 				}

@@ -149,19 +149,28 @@ func TestVerifyPrintCounterExampleShowsLassoLoopTarget(t *testing.T) {
   "loop": 1
 }`)}
 	var out bytes.Buffer
-	if err := verifyPrintCounterExample(context.Background(), &out, verifyOptions{verbosity: 2}, stage); err != nil {
+	if err := verifyPrintCounterExample(context.Background(), &out, verifyOptions{verbosity: 3}, stage); err != nil {
 		t.Fatal(err)
 	}
 	if !strings.Contains(out.String(), "The final transition returns to [State 1].") {
 		t.Fatalf("lasso loop target missing from output:\n%s", out.String())
 	}
+	out.Reset()
+	if err := verifyPrintCounterExample(context.Background(), &out, verifyOptions{verbosity: 2}, stage); err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(out.String(), "returns to") {
+		t.Fatalf("lasso loop target shown at default verbosity:\n%s", out.String())
+	}
 }
 
-func TestVerifyOutputNamesViolatedTemporalProperty(t *testing.T) {
+// Upstream's default output for a temporal violation has no property label, so
+// the summary must not name the property.
+func TestVerifyOutputOmitsTemporalPropertyLabel(t *testing.T) {
 	stage := verifyStage{Status: "violation", Explanation: "Found an issue", Errors: []quint.ErrorMessage{{Explanation: "detail"}}}
 	var stdout, stderr bytes.Buffer
-	status := verifyOutputContext(context.Background(), verifyOptions{verbosity: 1, temporal: "eventuallyFive"}, stage, &stdout, &stderr)
-	if status != 1 || !strings.Contains(stdout.String(), "eventuallyFive") {
+	status := verifyOutputContext(context.Background(), verifyOptions{verbosity: 2, temporal: "eventuallyFive"}, stage, &stdout, &stderr)
+	if status != 1 || strings.Contains(stdout.String(), "eventuallyFive") {
 		t.Fatalf("status=%d stdout=%q stderr=%q", status, stdout.String(), stderr.String())
 	}
 }
