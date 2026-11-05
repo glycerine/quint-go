@@ -2071,13 +2071,11 @@ any remaining TypeScript client code is distinguished from language-server logic
     (`8ce2cd13909d4e2f447d5715368b8a2f4faa5697`, passed via
     `--checker-revision`) in the scratchpad. `~/apalache` itself was not used
     because it has uncommitted owner changes and is not at the pinned revision.
-  - [x] Standalone `pkg/` build finding: `pkg/go.mod` does not require
-    `github.com/glycerine/apalache-go` or `github.com/glycerine/tlago`, so
-    `GOWORK=off go build ./cmd/quint` fails with "no required module provides
-    package". The checker module (`module github.com/glycerine/apalache-go`,
-    requiring `tlago v0.1.10`) is only reachable through a workspace. Packaging
-    therefore always requires `--checker`; a self-contained build needs the
-    checker published and pinned (owner decision, P0.4).
+  - [x] Standalone `pkg/` build (updated 2026-11-05): the earlier finding is
+    superseded. `pkg/go.mod` requires `github.com/glycerine/apalache-go/pkg v0.62.4-go-007`,
+    so `GOWORK=off go build ./cmd/quint` and `GOWORK=off go test ./...` succeed
+    without a workspace. The root `go.work` is git-ignored and is only needed to test
+    uncommitted checker changes alongside the port.
   - [x] Nested notices are copied with relative paths (tlago `tlc/` tree,
     `sany_tests`, module-level files for every module in the build graph) and
     the Go toolchain `LICENSE`/`PATENTS` go to `licenses/go-toolchain/`.
