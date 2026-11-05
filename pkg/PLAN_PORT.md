@@ -1363,8 +1363,18 @@ Build these items alongside the phases that supply their command behavior.
     frames for every backend at verbosity ≥ 3, while upstream skips frames for
     traced (Rust) results. The Go backend has no traces, so this does not
     affect the Go CLI.
-  - [ ] Still open: the remaining help prose, command transcripts, and
-    timing/report prose audit.
+  - [x] 2026-11-05 help-prose audit: top-level and every subcommand's `--help`
+    (`parse`, `typecheck`, `compile`, `repl`, `run`, `test`, `verify`, `docs`)
+    diffed against upstream `cli.ts`. Wording and flags match except for
+    documented port divergences in `COMPATIBILITY.md`: program name, the
+    `go`-only backend choice, Go Apalache/TLC verify wording, and the
+    unsupported Scala-only `--apalache-version`, `--server-endpoint`,
+    `--n-threads` semantics, and `--tlc-config` wording. Only `run --n-threads`
+    and `compile` help text differ in wording; no flag is missing except the
+    two rejected Apalache flags on `compile`, which are documented as explicit
+    rejections.
+  - [ ] Still open: error-prose parity for commands outside the verify/test
+    summaries, and the timing/report prose audit for `run` and `repl`.
 - [x] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
   - [x] 2026-11-05 audit: common options and verbosity defaults (`2`, `--quiet`)
