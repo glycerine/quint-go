@@ -1681,6 +1681,15 @@ any remaining TypeScript client code is distinguished from language-server logic
     trivial spec is about 6.7 samples/s, so it is a candidate for profiling, not
     yet optimized. Still open: a peak-memory baseline for large collections and
     the checker handoff.
+  - [x] 2026-11-05 large-collection peak-RSS sample (scratch spec: a `Set[int]`
+    of N elements and an `int -> int` map built from `0.to(N-1)`, one `map` and
+    `filter` step per run; `run --max-samples … --max-steps … --seed=1`, default
+    Go Apalache backend). N=10000, 3 samples × 2 steps: 625 MB, 17.29 s, exit 0,
+    no violation. N=100000, 1 sample × 1 step: 2.39 GB (2,392,360 KB), 661 s,
+    exit 0, no violation. A 3 × 2 run at N=100000 exceeded a 110 s wrapper and
+    was not measured. Memory grows about linearly with N, but the 100k run is
+    about 38× slower than the 10k run for the same work, so collection
+    operations are a throughput hotspot to profile before any optimization.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
