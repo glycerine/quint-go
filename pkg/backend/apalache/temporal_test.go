@@ -90,6 +90,9 @@ func TestSourceToGoApalacheUnsupportedTemporalProperties(t *testing.T) {
 		// Quantifiers over temporal formulas are rejected in Quint source terms,
 		// before the checker runs, so the query can never become a safety result.
 		{"temporal-quantifier", "Set(0,1).forall(n => eventually(x == n))", "quantifies over a temporal formula"},
+		// Upstream rejects a leadsTo nested in another leadsTo (TemporalPass).
+		{"nested-leads-to-right", "x == 0 leadsTo (x == 1 leadsTo x == 2)", "nests a leadsTo"},
+		{"nested-leads-to-left", "(x == 1 leadsTo x == 2) leadsTo x == 0", "nests a leadsTo"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()

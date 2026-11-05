@@ -704,7 +704,7 @@ TypeScript or Rust evaluator process.
   of ordinary invariants at bound 0.
   Executor.Verify records phases, stops on failures/errors/cancellation, and
   passes a stateful three-phase Go-checker test plus protocol/error unit tests.
-- [ ] P9.5 Integrate temporal-property handling and document the actual Go
+- [x] P9.5 Integrate temporal-property handling and document the actual Go
   checker's supported scope. Test lasso traces and bounded interpretations;
   never turn an unsupported temporal query into a successful safety result.
   - [x] Actual source-to-checker bounded always/eventually/leadsTo and stuttering
@@ -730,8 +730,16 @@ TypeScript or Rust evaluator process.
     to close a legal transition.
   - [x] Unsupported shapes already covered: weak/strong fairness and temporal
     quantifiers are rejected before the checker runs.
-  - [ ] Scala cross-check of the branching corpus and nested temporal operators
-    beyond `always(p implies eventually q)`.
+  - [x] Scala cross-check of the branching corpus: all five verdicts agree with
+    upstream `quint verify --temporal=live --backend=apalache` (violated:
+    `eventually(x == 2)`, `0 leadsTo 2`; satisfied: `always(x >= 0 and x <= 2)`,
+    `2 leadsTo 0`, `always(x == 0 implies eventually(x == 0))`).
+  - [x] Nested temporal cross-check: N1-N4 and N6-N8 agree with upstream; L3-L7
+    agree. A leadsTo nested in another leadsTo is rejected by both Scala
+    (TemporalPass, "Unexpected expressions") and Go. Go now reports QNT000 "nests a
+    leadsTo inside another leadsTo" from `validateTemporalQuantifiers` instead of
+    leaking the internal desugarer error. Tests: two rows in
+    `TestSourceToGoApalacheUnsupportedTemporalProperties`.
 - [ ] P9.6 Map checker failures and counterexamples to Quint diagnostics and
   ITF, preserving variable names, integer values, loop information, and source
   references where available. Port individual-invariant violation reporting

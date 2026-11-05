@@ -116,6 +116,16 @@ func validateTemporalQuantifiers(compiled quint.CompilationResult, options Check
 				Reference: &id,
 			})
 		}
+		if nested := nestedLeadsToIn(declaration.Expr); nested != nil {
+			id := nested.ID
+			diagnostics = append(diagnostics, quint.Diagnostic{
+				Code: quint.QNT000,
+				Message: fmt.Sprintf("Temporal property %q nests a leadsTo inside another leadsTo. "+
+					"Apalache rejects this shape; rewrite it with a conjunction or a separate temporal property.",
+					declaration.Name),
+				Reference: &id,
+			})
+		}
 	}
 	if len(diagnostics) == 0 {
 		return nil
@@ -151,6 +161,43 @@ func temporalQuantifierIn(expression *quint.Expr) *quint.Expr {
 		}
 	}
 	return temporalQuantifierIn(expression.Body)
+}
+
+// nestedLeadsToIn returns the first leadsTo that has another leadsTo in either
+// operand, or nil. Upstream Apalache rejects this shape ("Unexpected expressions"),
+// and the Go checker would otherwise leak an internal desugarer error.
+func nestedLeadsToIn(expression *quint.Expr) *quint.Expr {
+	if expression == nil {
+		return nil
+	}
+	if expression.Opcode == "leadsTo" {
+		for i := range expression.Args {
+			if containsOpcode(&expression.Args[i], "leadsTo") {
+				return expression
+			}
+		}
+	}
+	for i := range expression.Args {
+		if found := nestedLeadsToIn(&expression.Args[i]); found != nil {
+			return found
+		}
+	}
+	return nestedLeadsToIn(expression.Body)
+}
+
+func containsOpcode(expression *quint.Expr, opcode string) bool {
+	if expression == nil {
+		return false
+	}
+	if expression.Opcode == opcode {
+		return true
+	}
+	for i := range expression.Args {
+		if containsOpcode(&expression.Args[i], opcode) {
+			return true
+		}
+	}
+	return containsOpcode(expression.Body, opcode)
 }
 
 func containsTemporalOperator(expression *quint.Expr) bool {
