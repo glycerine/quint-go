@@ -1897,6 +1897,15 @@ any remaining TypeScript client code is distinguished from language-server logic
       (mean 1213); candidate 1225, 1268, 1228 MB (mean 1240). Ranges overlap
       and the candidate mean is higher, so it is within noise and was reverted.
       Only the owner-gated items above remain for the peak-RSS bullet.
+    - 2026-11-05 P12.5 combined presize rejected. The Set `seen`/`values`
+      presize and the Map `pairs` presize (`insdict.NewDictSize`) were applied
+      together in `normalizeValue`. gofmt, vet and tests were green. Three
+      alternating runs of `big_10000.qnt --seed=0x1 --backend=go` (RSS only,
+      `peakquint_cur` prints no heap sample): current 1,257.9 / 1,228.5 /
+      1,242.4 MB (mean about 1,242.9 MB); candidate 1,201.6 / 1,273.9 /
+      1,254.8 MB (mean about 1,243.4 MB). The spread (about 70 MB) is larger
+      than the difference, so it is within noise. Reverted; `value_normalize.go`
+      matches HEAD.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
