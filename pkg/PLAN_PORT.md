@@ -1783,6 +1783,13 @@ any remaining TypeScript client code is distinguished from language-server logic
     allocations, `runtimeWithEntries`, and `RuntimeTrace.Shift` history retention,
     which needs a larger design change. Each is a separate item and is not yet
     scoped.
+    - 2026-11-05 tried and rejected: presizing the Set dedup `values` slice in
+      `normalizeValue` to `len(out.Args)`. Max RSS at N=10000 over three alternating
+      pairs (`big_10000.qnt --seed=0x1 --backend=go`): committed state 1,257,568 /
+      1,206,328 / 1,260,728 KB (mean about 1,241.5 MB) against 1,226,364 /
+      1,365,024 / 1,249,744 KB (mean about 1,280.4 MB) for the candidate. The
+      candidate is not better and its range overlaps the committed state's, so it
+      was reverted and not committed.
     - 2026-11-05 tried and rejected: presizing the `source.Args` slice in
       `runtimeWithEntries` to `m.Len()`. Max RSS at N=10000 over three alternating
       pairs (`cs_bench`-style, `big_10000.qnt --seed=0x1 --backend=go`): committed
