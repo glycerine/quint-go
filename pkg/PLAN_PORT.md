@@ -770,8 +770,12 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     and no fixture pins 26 or 11 as correct. Pending owner decision: keep matching
     upstream for parity, or fix both implementations to key the memo by the full
     instance chain.
+  - [x] Verify execution-frame recording for instance calls (2026-11-05). Go
+    `TestInstanceCallFrames` (`pkg/runtime_instance_frames_test.go`) pins the frame
+    chain `Rec` → `A::h` → `X::apply` → `f` for the nested-instance spec
+    (`A::h(g,1) = 13`, `B::h((y)=>y+1,2) = 5`), with values confirmed in TypeScript.
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
-    and remaining override audits; compiler instance contexts; execution-frame recording).
+    and remaining override audits; compiler instance contexts).
 
 Exit gate: Go evaluation reproduces reference semantics on the runtime corpus,
 including failed actions that must not leak partially updated state.
