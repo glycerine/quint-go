@@ -1353,9 +1353,18 @@ Build these items alongside the phases that supply their command behavior.
   - [ ] Unverified against upstream: whether `verify --out` should suppress the
     success/failure summaries. Go currently suppresses them; upstream was not
     checked for this case.
-  - [ ] Still open: audit the `cli/test.go` failure-detail DEBUG rendering
-    (~473–500) against upstream `outputTestErrors`, then the remaining help
-    prose, command transcripts, and timing/report prose.
+  - [x] 2026-11-05 audit: `cli/test.go` failure details match upstream
+    `outputTestErrors` (`cliReporting.ts:394`) in gating and order. Details
+    print at verbosity ≥ 2 and frames at ≥ 3 (upstream `hasTestDetails` and
+    `hasActionTracking`). Each failure prints `  N) name:`, red error lines,
+    then a gray repeat hint, followed by a trailing blank line. The
+    `error: Tests failed` line goes to stderr only without `--out`, as upstream
+    `cliCommands.ts:378-380` does through `cliErr`. Known difference: Go prints
+    frames for every backend at verbosity ≥ 3, while upstream skips frames for
+    traced (Rust) results. The Go backend has no traces, so this does not
+    affect the Go CLI.
+  - [ ] Still open: the remaining help prose, command transcripts, and
+    timing/report prose audit.
 - [x] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
   - [x] 2026-11-05 audit: common options and verbosity defaults (`2`, `--quiet`)
