@@ -112,14 +112,14 @@ func (s *REPLSession) Evaluate(ctx context.Context, text string) (REPLResult, er
 		return REPLResult{}, err
 	}
 	if len(linked.Errors) > 0 {
-		return REPLResult{}, linked.Errors[0]
+		return REPLResult{}, replDiagnosticsError(linked.Errors)
 	}
 	analysis, err := AnalyzeIncremental(replCopyAnalysis(s.analysis), linked.Table, []Declaration{input})
 	if err != nil {
 		return REPLResult{}, err
 	}
 	if len(analysis.Diagnostics) > 0 {
-		return REPLResult{}, analysis.Diagnostics[0]
+		return REPLResult{}, replDiagnosticsError(analysis.Diagnostics)
 	}
 	output := AnalysisOutput{Types: analysis.Types, Effects: analysis.Effects, Modes: analysis.Modes}
 	runtime, err := s.prepareRuntime(ctx, candidate, linked, output)
@@ -369,9 +369,39 @@ func (s *REPLSession) RenderError(err error) string {
 	return s.renderError(err, DiagnosticRenderOptions{HideLineNumbers: true})
 }
 
+// REPLDiagnostics carries every name-resolution or analysis diagnostic reported
+// for one REPL input, in analyzer order. A single diagnostic is returned as a
+// plain Diagnostic so existing single-error callers see no change.
+type REPLDiagnostics struct {
+	Diagnostics []Diagnostic
+}
+
+func (e *REPLDiagnostics) Error() string {
+	parts := make([]string, 0, len(e.Diagnostics))
+	for _, d := range e.Diagnostics {
+		parts = append(parts, d.Error())
+	}
+	return strings.Join(parts, "\n")
+}
+
+func replDiagnosticsError(diagnostics []Diagnostic) error {
+	if len(diagnostics) == 1 {
+		return diagnostics[0]
+	}
+	return &REPLDiagnostics{Diagnostics: append([]Diagnostic{}, diagnostics...)}
+}
+
 func (s *REPLSession) renderError(err error, options DiagnosticRenderOptions) string {
 	if err == nil {
 		return ""
+	}
+	var list *REPLDiagnostics
+	if errors.As(err, &list) {
+		parts := make([]string, 0, len(list.Diagnostics))
+		for _, diagnostic := range list.Diagnostics {
+			parts = append(parts, RenderDiagnostic(diagnostic, s.sources, s.code, options))
+		}
+		return strings.Join(parts, "\n")
 	}
 	var diagnostic Diagnostic
 	if errors.As(err, &diagnostic) {

@@ -1336,6 +1336,10 @@ Build these items alongside the phases that supply their command behavior.
     run/test color and selector precedence match 36 additional saved cases.
   - [x] Verification selectors now match 37 raw stage/terminal cases; published
     JSON excludes private reporter helpers, including comma/collision cases.
+  - [x] REPL expression input reports every undefined name or analysis diagnostic
+    from one input (`REPLDiagnostics` in `repl_session.go`), matching upstream
+    for `aaa + bbb`; single diagnostics keep their plain `Diagnostic` shape.
+    Pinned by `TestREPLSessionReportsEveryUndefinedName`.
   - [ ] Complete remaining help/error-prose and terminal parity audit, including
     command transcripts and timing/report prose.
 - [x] P10.2 Port common options, environment/config handling, output paths,

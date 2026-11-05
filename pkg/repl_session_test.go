@@ -287,3 +287,26 @@ func TestREPLSessionErrorRenderingAndRetainedAnalysisOwnership(t *testing.T) {
 	}
 	replEvaluate(t, session, "b", "9")
 }
+
+func TestREPLSessionReportsEveryUndefinedName(t *testing.T) {
+	t.Parallel()
+	session := NewREPLSession()
+	ctx := context.Background()
+	_, err := session.Evaluate(ctx, "aaa + bbb")
+	var list *REPLDiagnostics
+	if !errors.As(err, &list) || len(list.Diagnostics) != 2 {
+		t.Fatalf("want two diagnostics, got %v", err)
+	}
+	rendered := session.RenderError(err)
+	if strings.Count(rendered, "aaa") == 0 || strings.Count(rendered, "bbb") == 0 {
+		t.Fatalf("rendered output misses a name:\n%s", rendered)
+	}
+	if len(session.History()) != 0 {
+		t.Fatal("rejected input entered history", session.History())
+	}
+	_, err = session.Evaluate(ctx, "unknown + 1")
+	var single Diagnostic
+	if !errors.As(err, &single) || errors.As(err, &list) {
+		t.Fatalf("single undefined name must stay a plain Diagnostic, got %v", err)
+	}
+}
