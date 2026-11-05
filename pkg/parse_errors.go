@@ -66,6 +66,7 @@ func (e *effectSyntaxErrors) SyntaxError(recognizer antlr.Recognizer, offending 
 			runeColumn++
 		}
 	}
+	message = escapeLexicalExcerpt(message)
 	issue := SyntaxIssue{Message: message, Position: pos}
 	if len(message) >= 8 && strings.HasPrefix(message, "[QNT") && message[7] == ']' {
 		issue.Code = message[1:7]

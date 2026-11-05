@@ -12,8 +12,8 @@ differently from upstream, Go matches upstream unless the owner decides otherwis
 | --- | --- | --- | --- |
 | F-01 | `foldr` and `allListsUpTo` on CHECK, TLA, verify and TLC paths | High (accepts what upstream rejects) | Fixed in `9512e41b`, `cb292136` |
 | F-02 | Parse error: expected-token list | Low (diagnostic text) | Open |
-| F-03 | Lexer error: newline in token text | Low (diagnostic text) | Open |
-| F-04 | Error block for an empty source line prints a caret | Low (diagnostic text) | Open |
+| F-03 | Lexer error: newline in token text | Low (diagnostic text) | Fixed (REPL path now escapes like the recovering parser) |
+| F-04 | REPL error block for an empty source line prints a caret | Low (diagnostic text) | Open; the shared renderer must keep the caret (see F-04) |
 | F-05 | REPL error headers on stdout | Known | Already recorded (`replStreamDeviation`) |
 | F-06 | Discarded `strconv` errors in `backend/tlc/itf_value.go` | None | Reviewed, safe |
 
@@ -82,7 +82,10 @@ for the next pass.
 - **Test.** Add a case to the parser error tests that parses the record input above and
   asserts the exact upstream message. Use the same expected token list as upstream.
 
-## F-03: lexer error text does not escape the newline
+## F-03: lexer error text does not escape the newline (fixed)
+
+Fixed: `escapeLexicalExcerpt` in `parse_recovery.go` is now also applied by the REPL
+listener in `parse_errors.go`. Tests: `parse_lexical_escape_test.go`.
 
 - **Divergence.** For `val x = "abc` followed by a newline, upstream prints
   `token recognition error at: '"abc\n'` with the newline as the two characters `\n`.
@@ -92,15 +95,25 @@ for the next pass.
 - **Test.** Parse `val x = "abc` plus a newline and assert the message contains the
   escape `\n` and no raw newline inside the quotes.
 
-## F-04: empty source line gets a caret
+## F-04: REPL error block for an empty source line prints a caret (open)
 
-- **Divergence.** After the first error, upstream's second error block shows an empty
-  source line with no caret. Go prints `  ^` under it.
-- **Fix.** In the diagnostic renderer, do not print a caret line when the source line is
-  empty. Check the renderer in the `cli` and `lsp` packages, since both render
-  diagnostics.
-- **Test.** Render a diagnostic whose source line is empty and assert no caret line
-  follows it. Use the second block of the unterminated-string input as the fixture.
+- **Divergence.** For `val x = "abc` plus a newline, the second REPL block (`no viable
+  alternative`, at `1:1` on an empty line) ends with a caret row `  ^`. Upstream's REPL
+  prints no caret there.
+- **Why not fixed in the renderer.** The shared renderer in `diagnostic_render.go` must
+  keep the caret. The upstream fixtures in `testdata/parser/diagnostic_render.json`
+  (`empty_source_point`, `trailing_empty_line`, `trailing_eof_point`) expect `     ^` on
+  empty lines. An attempt to drop the caret in the renderer broke three of them and was
+  reverted.
+- **Likely cause.** The REPL path (`repl_session.go`, the `SyntaxErrors` branch) builds a
+  zero-width location at the offending token. For end-of-input that token has no text,
+  and upstream's REPL does not draw a caret for it.
+- **Fix.** In the `SyntaxErrors` branch of `repl_session.go`, when the issue's index is at
+  or past the end of the input text, render the excerpt with the caret row omitted for
+  that block. Keep the renderer unchanged.
+- **Test.** Add a REPL-level test (`repl` package tests) that runs
+  `val x = "abc` plus a newline through the session and asserts the second block has no
+  caret row. Keep `TestUpstreamDiagnosticRendering` passing unchanged.
 
 ## F-05: REPL error headers (known deviation)
 
@@ -117,6 +130,9 @@ own canonical decimal integer. So the discarded error cannot happen. No change.
 
 ## Open items
 
-- F-02, F-03, F-04: fix and add the tests above.
+- F-02 and F-04: open. The Go ANTLR runtime reports a narrower expected-token set than upstream at the
+  same offending token. Next step: compare the expected set from `GetExpectedTokens()` at
+  the record-value decision point against the upstream error, and find which prediction
+  mode or error-strategy difference produces the narrower set.
 - Next pass: the eight `panic` sites, the ITF and JSON output paths for `verify` and
   `run`, the TLC generator, and the LSP diagnostic path (shared with F-04).

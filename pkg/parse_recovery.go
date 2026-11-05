@@ -134,9 +134,7 @@ func (ids *recoveringParserIDs) syntaxIssue(offending interface{}, line, column 
 	id := ids.Next()
 	// antlr4ts escapes whitespace in lexical error excerpts; the Go lexer
 	// supplies it literally. Preserve the reference diagnostic text.
-	if strings.HasPrefix(message, "token recognition error at:") {
-		message = strings.NewReplacer("\n", `\n`, "\t", `\t`, "\r", `\r`).Replace(message)
-	}
+	message = escapeLexicalExcerpt(message)
 	code := parserDiagnosticCode.FindString(message)
 	if code == "" {
 		code = QNT000
@@ -276,4 +274,14 @@ func parserUndefinedExpression(ids parserIDAllocator) Expr {
 	body := Expr{ID: bodyID, Kind: "bool", Bool: true}
 	reference := Expr{ID: referenceID, Kind: "name", Name: name}
 	return Expr{ID: id, Kind: "let", Opdef: &OperatorDef{ID: definitionID, Kind: "def", Qualifier: Val, Name: name, Expr: &body}, Body: &reference}
+}
+
+// escapeLexicalExcerpt escapes whitespace in an ANTLR lexical error excerpt the
+// way antlr4ts does, so the REPL and the recovering parser report the same text.
+// The escape is idempotent: escaped text contains no raw line breaks.
+func escapeLexicalExcerpt(message string) string {
+	if !strings.HasPrefix(message, "token recognition error at:") {
+		return message
+	}
+	return strings.NewReplacer("\n", `\n`, "\t", `\t`, "\r", `\r`).Replace(message)
 }
