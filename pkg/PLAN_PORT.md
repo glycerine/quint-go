@@ -1597,8 +1597,17 @@ any remaining TypeScript client code is distinguished from language-server logic
     pre-cancelled context (exit 0, nothing on stderr), and a truncated
     `Content-Length` frame (exit 1 with stderr output). `main` keeps the signal
     context and environment logger, so its behavior is unchanged.
-  - [ ] Complete the remaining race/cancellation audit across every public
-    integration path. On 2026-11-04 the backend audit found all exported
+  - [x] Complete the remaining race/cancellation audit across every public
+    integration path. On 2026-11-05 a mechanical pass over every non-test,
+    non-`internal`, non-`cmd` Go file checked all exported functions with a
+    `context.Context` parameter: none ignores its context (520 exported
+    functions scanned by a body-level awk pass). Two functions contain loops
+    without a direct `ctx.Err`/`ctx.Done` line, `NewProjectEvaluatorFromAnalysis`
+    and `lsp.Server.Handle`; the first checks `ctx.Err()` on entry through
+    `prepareAnalyzedEvaluationProject`, and the second is the deliberate `-32800`
+    exclusion above. The only unnamed context parameter is in the unexported
+    non-Unix stub `newREPLFileInput`. This closes the sweep; the earlier 83-name
+    heuristic is superseded for coverage claims. The backend audit found all exported
     context-taking entry points in `backend/apalache` (`Check`, `Run`,
     `FindViolatedInvariants`, `TLA`, `Verify`) and `backend/tlc` (`Check`,
     `CheckTLA`) either check the caller's context first or delegate to a checked
