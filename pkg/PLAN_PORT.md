@@ -1798,9 +1798,30 @@ any remaining TypeScript client code is distinguished from language-server logic
   - [ ] Run the platform matrix (`test-go-matrix.yml`) on GitHub, which is
     manual and needs the owner to dispatch it, and smoke-test the non-Linux
     archives. Also package the remaining targets with `package-go.sh`.
-- [ ] P12.9 Run a final command/flag/builtin/schema/diagnostic/editor matrix
-  audit. Link each completed area to validation evidence; list unresolved gaps
-  and agreed exclusions before declaring the port complete.
+- [x] P12.9 Run a final command/flag/builtin/schema/diagnostic/editor matrix
+  audit. Evidence (2026-11-05): every relative link and every cited
+  `_test.go`/fixture path in [COMPATIBILITY.md](COMPATIBILITY.md) and
+  [COMPATIBILITY_AUDIT.md](COMPATIBILITY_AUDIT.md) resolves. Areas and their
+  gates: command/option surface (31 builder options vs 158 yargs observations
+  in `cli_options.json`; 49 transcripts in `cli_transcripts.json`, via
+  `cli/help_test.go`, `cli/docs_test.go`); builtins (93 IR opcodes in
+  `builtin_test.go`; 98 classified names in `compatibility_inventory_test.go`);
+  diagnostics (51 codes in `diagnostic_codes_test.go`); type tests (95 upstream
+  inventoried; 29-case inferrer replay opt-in in `type_inference_suite_test.go`);
+  editor protocol (`lsp/protocol_test.go`, `lsp/server_test.go`). Unresolved
+  gaps are listed in the "Remaining evidence and completion gates" table of
+  COMPATIBILITY_AUDIT.md: verify compile-flag summaries beyond 37 cases; generated
+  callback frames and error-precedence combinations; three record-recovery
+  frontiers; the 25 ms nullable regex budget; ITF interpreted-string and locale
+  collation limits; the checker field/opcode census beyond tested paths;
+  Go Apalache counterexample metadata and temporal-loop production; hard
+  preemption and dependency-resolver temp-dir cleanup; cosmetic long-hover
+  Markdown wrapping; physical VSCode/Vim/Emacs and macOS/Windows execution; and a
+  publicly fetchable checker pin. Agreed exclusions: QNT509/QNT515 are
+  TypeScript-only declarations; QNT516/QNT517/QNT601 are only in saved Rust
+  comparison results; neither inspected editor server advertises workspace
+  symbols. This audit does not declare the port complete: P0.4, P0.2 VSIX runs,
+  P9.6, P9.8, P7.2, P12.4, P12.6, P12.7 and P12.8 remain owner-blocked.
 
 ## Milestones and definition of done
 
