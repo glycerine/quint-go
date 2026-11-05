@@ -1084,11 +1084,16 @@ any remaining TypeScript client code is distinguished from language-server logic
     last job). The Apalache executor is in-process with no child process to
     kill; its cancellation path is covered by `executor_test.go` and
     `resource_test.go`.
+  - [x] `cmd/quint-lsp` now delegates to `runWith(ctx, logger, in, out, errOut)`.
+    `cmd/quint-lsp/main_test.go` covers EOF on empty input (exit 0), a
+    pre-cancelled context (exit 0, nothing on stderr), and a truncated
+    `Content-Length` frame (exit 1 with stderr output). `main` keeps the signal
+    context and environment logger, so its behavior is unchanged.
   - [ ] Complete the remaining race/cancellation audit across every public
-    integration path. Still open: `cmd/quint-lsp` `run()` has no test because
-    it reads `os.Stdin` directly, and `TestJavaScriptRegexNullableReference`
+    integration path. Still open: `TestJavaScriptRegexNullableReference`
     (`cli`) uses a 25ms match budget that failed once under `go test -race
-    ./...` and passed on rerun, so it is timing-sensitive under load.
+    ./...` and passed on rerun, so it is timing-sensitive under load. Raising
+    that budget is a test-budget decision and has not been made.
 - [ ] P12.3 Add targeted property/fuzz checks for parsers, JSON/ITF decoders,
   type/effect substitution, flattening, and evaluation rollback. Retain
   minimized regressions for discovered failures.
