@@ -757,7 +757,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
   and symbolic conversion, distinguishing supported operations and deliberate
   context restrictions. COMPATIBILITY.md and its drift test cover every
   opcode/builtin value; statuses distinguish execution from backend importing.
-- [ ] P7.10 Differential-test pure results, errors, state transitions, rollback,
+- [x] P7.10 Differential-test pure results, errors, state transitions, rollback,
   and nondeterministic behavior against both reference runtimes. Investigate
   disagreements before assigning a Go expected result.
   - [x] Build and execute the actual locked Rust evaluator; save 237 responses
@@ -847,8 +847,13 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     `TestUpstreamSavedExportAliasContextHistories` (both pass, 2026-11-05). Transported alias
     first-selection is pinned by `TestTransportedAliasFirstSelectionIsFixedAtFlatten`.
     Nested-instance memo keying is decided (parity, see P7.10; 2026-11-05).
-  - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
-    and remaining override audits; compiler instance contexts).
+  - [x] Finish remaining instance compiler histories under P7.2 (closed 2026-11-05).
+    Cache: interleaved instance `pure val` caches have no cross-instance leakage
+    (`interleaved_instance_val_caches`). Closure: lambdas across instances resolve
+    to the defining instance (`instance_closures_across_instances`). Override: chained
+    and wrapper calls (`override_chained_and_wrapper_calls`). All in
+    `testdata/parser/runtime_instance_values.json`. The named instance tests pass
+    with `GOWORK=off` against the pinned checker.
 
 Exit gate: Go evaluation reproduces reference semantics on the runtime corpus,
 including failed actions that must not leak partially updated state.
