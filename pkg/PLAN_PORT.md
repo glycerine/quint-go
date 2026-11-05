@@ -181,8 +181,13 @@ reporting that evaluates expressions will also depend on P7.
   names, guarded by `TestBuiltinInventoryMatchesUpstream`); every upstream
   `verifyCmd`/`compileOpts` option is accepted by `verifyParseOptions` except
   the documented `apalache-version` and `server-endpoint` rejections (guarded
-  by `TestVerifyAcceptsUpstreamOptionsExceptDocumentedRejections`). Still open:
-  JSON envelope and type fields.
+  by `TestVerifyAcceptsUpstreamOptionsExceptDocumentedRejections`). Type JSON
+  is closed: the decoder in `types.go` uses exactly upstream's kinds and field
+  keys (`name`, `elem`, `arg`, `res`, `args`, `ctor`, `fields`, `id`; row kinds
+  `empty`, `var`, `row` with `fields`/`other`; row fields `fieldName`/`fieldType`).
+  `TestTypeJSONVariantFields` decodes and round-trips every upstream kind and
+  rejects cross-variant fields, and `type_decode_validation_test.go` pins the
+  error priority for malformed envelopes.
   - Envelope and type-field pass (compile JSON, 26 both-compiling fixtures): the
     top-level key sets are identical (`effects, errors, main, modules, stage,
     table, types, warnings`), and `main`, `effects`, `warnings`, and `errors`
