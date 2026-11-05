@@ -759,6 +759,17 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     43 runtime cases total. Lambdas returned from a top-level instance def that
     capture parameters fail TypeScript effect inference (QNT000), so that shape is
     not added; the oracle covers returned closures inside a local `val` block.
+  - [x] Record nested-instance cache sharing as an upstream TypeScript defect (2026-11-05).
+    Spec: `module Q { const m; import P(n = m * 2) as X }` with `import Q(m = 5) as A`
+    and `import Q(m = 1) as B` gives `A::g(0)+B::g(0) = 18` (`g(x) = X::f(x)+m`,
+    `f(x) = n+x`), and `B::g(0) = 3` on its own. TypeScript gives 26 for the sum
+    and 11 for `B::g(0)` once `A::g(0)` has run in the same session. Cause:
+    `quint/src/runtime/impl/builder.ts` keys `memoByInstance` by `instance.id`
+    only, so the nested `X` memo (and its evaluated override `m * 2`) is shared
+    across both `Q` instances. Go reproduces the same values. Go is not changed,
+    and no fixture pins 26 or 11 as correct. Pending owner decision: keep matching
+    upstream for parity, or fix both implementations to key the memo by the full
+    instance chain.
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
     and remaining override audits; compiler instance contexts; execution-frame recording).
 
