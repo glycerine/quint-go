@@ -226,12 +226,17 @@ reporting that evaluates expressions will also depend on P7.
     (a non-z3 key the Go parser does not model, rejected as an unexpected field).
     `z3.smt.dack` is accepted at value 2; value 5 is out of range and g3 reports
     `AST source precondition`, so the census probe uses 2.
-  - [ ] Open gap in `~/apalache/pkg` (external, owner decision): `newG3SolverContextWithOptions`
+  - [ ] Gap in `~/apalache/pkg`: `newG3SolverContextWithOptions`
     (`smt_g3.go`) routes values with `strconv.ParseBool` first, so `0` and `1` become
     Booleans. `z3.pp.max_depth=0` fails with an unsigned-integer error, while `=5` is
     accepted. Scala's UnsignedInt field accepts `0`. Fix: route by value form, using
     bool only for `true`/`false`. Route Booleans by the Scala field type, not by
-    the value text. The fix needs a new `pkg/` tag, so it is not applied here.
+    the value text.
+    Status 2026-11-05: implemented in `~/apalache/pkg/smt_g3.go`
+    (`routeG3TextOptions`, only the literals `true`/`false` are Booleans) with
+    regression test `smt_g3_options_route_test.go`. The full checker suite passes.
+    Still open until the checker is committed and tagged `pkg/v0.62.4-go-006`
+    (owner), then quint-go re-pins to `-006` and reruns the gates with `GOWORK=off`.
   - [x] Improve the message for g3-unknown keys (`checker_tuning_error.go`): the
     rejection stays, and the message now says g3 does not expose the key and that
     Scala may accept it. Pinned by `TestCheckerTuningErrorExplainsG3UnknownKeys`.
