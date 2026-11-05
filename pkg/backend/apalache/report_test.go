@@ -23,6 +23,7 @@ func TestCheckerFailureReports(t *testing.T) {
 		{"types", CommandFailure{Type: "PASS_FAILURE", Data: `{"pass_name":"TypeCheckerSnowcat","error_data":"bad type"}`}, "internal error: while type checking in Apalache:\n'bad type'\nPlease report an issue: https://github.com/informalsystems/quint/issues/new"},
 		{"unknown", CommandFailure{Type: "PASS_FAILURE", Data: `{"pass_name":"BoundedChecker","error_data":{"checking_result":"Unknown"}}`}, "verification was inconclusive (Unknown)"},
 		{"short", CommandFailure{Type: "PASS_FAILURE", Data: `{"pass_name":"BoundedChecker","error_data":{"checking_result":"ExecutionsTooShort"}}`}, "verification was inconclusive (ExecutionsTooShort)"},
+		{"smt-timeout", CommandFailure{Type: "PASS_FAILURE", Data: `{"pass_name":"BoundedChecker","error_data":{"checking_result":"SmtTimeout","ntimeouts":1}}`}, "verification was inconclusive (SmtTimeout)"},
 		{"future", CommandFailure{Type: "FUTURE", Data: `{"x":1}`}, `FUTURE: {"x":1}`},
 		{"malformed", CommandFailure{Type: "PASS_FAILURE", Data: `{`}, "PASS_FAILURE: {"},
 		{"bad-message", CommandFailure{Type: "UNEXPECTED", Data: `{"msg":42}`}, `UNEXPECTED: {"msg":42}`},

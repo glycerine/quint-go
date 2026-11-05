@@ -140,8 +140,18 @@ reporting that evaluates expressions will also depend on P7.
         wording, 1 `q::debug` format (`[DEBUG]` vs `> `), and 1 `q::debug`
         verbosity gating. Clean REPL EOF now emits a trailing `\n`, matching
         upstream `shutdownAndExit` (commit `7a5d9305`).
+      - Backend checker-response pass: Scala `Checker.scala` emits
+        `checking_result` as `Error` (with `nerrors`, `counterexamples`),
+        `Deadlock`, `SmtTimeout` (with `ntimeouts`), or `NoError` /
+        `ExecutionsTooShort` via `toString`. TS `apalache.ts` maps `Error` and
+        `Deadlock` and throws `internal error: unhandled verification error` for
+        everything else. Go maps `Error` and `Deadlock` to violation/deadlock and
+        reports every other status as an inconclusive `PASS_FAILURE`, never as
+        safe. This is a recorded deviation: Go reports `verification was
+        inconclusive (SmtTimeout)` instead of crashing. Pinned by
+        `TestCheckResponseDecoding` and `TestCheckerFailureReports`.
       - Remaining gaps: runtime transcripts outside the Rust repl.md slice, and
-        backend semantic fields (checker-response/ITF fields). These are still open.
+        ITF trace field equivalence for the backend. These are still open.
   - [x] Checker tuning key census (`testdata/scala_tuning_census.tsv`, pinned by
     `TestScalaTuningCensusOutcomesStable`). Of 484 Scala `FineTuningParser` keys,
     267 are accepted, 216 are rejected because g3 has no such parameter or module

@@ -76,10 +76,10 @@ func TestCheckResponseDecoding(t *testing.T) {
 	if err != nil || safe.Outcome != CheckSafe {
 		t.Fatal(safe, err)
 	}
-	for _, status := range []string{"Error", "Deadlock", "Unknown", "ExecutionsTooShort"} {
+	for _, status := range []string{"Error", "Deadlock", "Unknown", "ExecutionsTooShort", "SmtTimeout", "NoError"} {
 		payload := `{"pass_name":"BoundedChecker","error_data":{"checking_result":"` + status + `","counterexamples":[{"states":[{"x":9007199254740993}],"#meta":{"loop":0}}]}}`
 		result, err := decodeCheckResponse(&cmd.CmdResponse{Result: &cmd.CmdResponse_Failure{Failure: &cmd.CmdError{Data: payload}}})
-		if status == "Unknown" || status == "ExecutionsTooShort" {
+		if status == "Unknown" || status == "ExecutionsTooShort" || status == "SmtTimeout" || status == "NoError" {
 			var failure *CommandFailure
 			if !errors.As(err, &failure) || failure.Data != payload {
 				t.Fatal("incomplete check reported as safe", result, err)
