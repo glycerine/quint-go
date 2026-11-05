@@ -157,6 +157,21 @@ reporting that evaluates expressions will also depend on P7.
         not decoded, but they survive in `BackendData` because reports keep the
         raw payload (`TestCheckerFailureReports` asserts this for SmtTimeout).
         No Scala field is dropped on the Go side.
+      - CLI flag and environment pass (2026-11-05): the upstream `quint/src/cli.ts`
+        option set (30 names) is covered by the `COMPATIBILITY.md` flag table, except
+        negated forms (`--no-flatten`, `--no-mbt`, `--no-random-transitions`), which
+        are in `cli/cli.go`, and commented-out `--timeout`, which Go rejects with
+        `Unknown argument: timeout` like upstream. Upstream reads
+        `QUINT_RETRY_NONDET_SMALLER_THAN` and `QUINT_HOME`; Go reads the first
+        (`runtime_nondet_options.go`) and documents `QUINT_HOME` as pending.
+        `QUINT_VSCODE_SERVER_BACKEND` lives in `vscode/quint-vscode`, and
+        `QUINT_CORPUS_TESTS` is test-only. Evidence: `go test ./cli/ .` with
+        `CLIOptions|CLICore|Options|Environment|Env` filters passes.
+        Editor features are still open. Capability pass (2026-11-05): Go
+        advertises `renameProvider.prepareProvider` and
+        `completionProvider.resolveProvider: false`; upstream TypeScript
+        advertises neither. Go's prepareRename is a recorded superset
+        (`pkg/lsp/semantic.go`, `COMPATIBILITY.md` editor section).
       - ITF trace field equivalence (2026-11-05, against Scala
         `ItfCounterexampleWriter.scala` and `TlaToItfJson.scala`). Scala's
         `#meta` carries `format`, `format-description`, `description`,
