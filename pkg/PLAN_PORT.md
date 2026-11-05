@@ -744,6 +744,17 @@ including failed actions that must not leak partially updated state.
     `flag_n_traces_exceeds_default_max_samples`, and `flag_max_steps_repeated` in
     `pkg/cli/testdata/run_transcripts.json`. Still open: `test`/`repl` Go fixtures
     and stateful/MBT evaluator fixtures.
+  - Progress 2026-11-04: the transcript runner now runs backend-pinned upstream
+    cases on the Go backend with the `--backend=typescript|rust` flag stripped
+    (`stripNonGoBackend`), named `... (backend flag stripped)`. On
+    `integration-tests/runtime/typescript/test.md` (run with `-timeout 120m`):
+    26 cases pass, including Tendermint, erc20 and ics20_denomTrace. Five cases
+    differ only in the repro hint line. Go prints
+    `--seed=0x1 --match=^name$ --backend=go` where upstream prints
+    `--seed=0x1 --match=name`. Recorded as known deviations in
+    `transcriptKnownDeviations`; the CLI text is unchanged. `ics20_-_Syntax`
+    exceeds the 5-minute per-case runner limit and is not yet verified. Runtime
+    rust transcripts and the repl transcripts remain to be run.
 
 Exit gate: users can run, test, and explore specifications using Go without a
 TypeScript or Rust evaluator process.

@@ -209,6 +209,24 @@ var transcriptKnownDeviations = map[string]string{
 	"integration-tests/verification.md/can specify --server-endpoint":               "in-process Go backend has no server endpoint (see PLAN_PORT.md)",
 	"integration-tests/verification.md/TLC violation":                               "P9.12: --max-steps is rejected for --backend tlc; exposing it is a user decision",
 	"integration-tests/verification.md/can convert ApalacheCompliation.qnt to TLA+": "P0.4 / pinned printer: Variants! qualifier and line wrapping differ from upstream",
+	"integration-tests/runtime/typescript/test.md/test runs":                        "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
+	"integration-tests/runtime/typescript/test.md/test empty trace":                 "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
+	"integration-tests/runtime/typescript/test.md/verbose test":                     "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
+	"integration-tests/runtime/typescript/test.md/test compile error":               "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
+	"integration-tests/runtime/typescript/test.md/then error messages":              "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
+}
+
+// nonGoBackendFlag matches `--backend=typescript`, `--backend typescript`, and the
+// same forms for rust, including the trailing-space form used before a line break.
+var nonGoBackendFlag = regexp.MustCompile(`\s--backend(=|\s+)(typescript|rust)\b`)
+
+// stripNonGoBackend removes non-Go backend flags from a command line. The second
+// result reports whether the command pinned a non-Go backend.
+func stripNonGoBackend(command string) (string, bool) {
+	if !nonGoBackendFlag.MatchString(" " + command) {
+		return command, false
+	}
+	return strings.TrimSpace(nonGoBackendFlag.ReplaceAllString(" "+command, "")), true
 }
 
 // TestUpstreamIntegrationTranscripts runs the executable `in` cases of selected upstream
@@ -229,13 +247,15 @@ func TestUpstreamIntegrationTranscripts(t *testing.T) {
 	for _, file := range files {
 		cases := parseUpstreamTranscript(t, filepath.Join(root, file))
 		for _, c := range cases {
-			if strings.Contains(c.command, "--backend=typescript") || strings.Contains(c.command, "--backend=rust") ||
-				strings.Contains(c.command, "--backend typescript") || strings.Contains(c.command, "--backend rust") {
-				// The Go port only implements the Go backend; these cases are out of scope.
-				t.Run(file+"/"+c.name+" (out of scope: non-Go backend)", func(t *testing.T) { t.Skip("non-Go backend") })
-				continue
+			name := file + "/" + c.name
+			if stripped, pinned := stripNonGoBackend(c.command); pinned {
+				// The Go port only implements the Go backend. The upstream case pins a
+				// different backend, so run the same command on the Go backend with that
+				// flag removed and check it against the upstream expectations.
+				c.command = stripped
+				name += " (backend flag stripped)"
 			}
-			t.Run(file+"/"+c.name, func(t *testing.T) {
+			t.Run(name, func(t *testing.T) {
 				stdout, stderr, code := runTranscriptCase(t, root, pathDir, c)
 				if reason, known := transcriptKnownDeviations[file+"/"+c.name]; known {
 					// A known deviation must still deviate. If it now matches upstream,
