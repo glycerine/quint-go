@@ -123,6 +123,10 @@ reporting that evaluates expressions will also depend on P7.
     does not read are test-only knobs (`QUINT_CORPUS_*`, `QUINT_TRANSCRIPTS`,
     `QUINT_GO_NONDET_SNAPSHOT`, `QUINT_RUST_EVALUATOR`); `COMPATIBILITY.md` now
     lists them as test-only rather than leaving them undocumented.
+  - [x] CLI option pass (2026-11-05): the upstream `.option('name')` declarations in
+    `quint/src/**/*.ts` (31 names) each have a Go status in `COMPATIBILITY.md`.
+    `apalache-version` and `server-endpoint` are explicitly rejected in Go;
+    `timeout` is only a commented-out line upstream, so it is not an option.
   - [ ] Complete field-level wire/transcript and backend semantic coverage audit.
     - IR property-name pass: 29 upstream `quintIr.ts`/`quintTypes.ts` property
       names diffed against Go string literals in `pkg/`. Only `rowNames` and
