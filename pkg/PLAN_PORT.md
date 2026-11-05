@@ -690,7 +690,7 @@ including failed actions that must not leak partially updated state.
     guards match 376 additional patterns/16,168 cases plus 807,780 independent
     Node capture comparisons; expansion and execution budgets remain explicit.
   - [ ] Remaining command terminal/report formatting audit.
-- [ ] P8.3 Preserve trace hooks, action names, nondeterministic picks, debug
+- [x] P8.3 Preserve trace hooks, action names, nondeterministic picks, debug
   metadata, and output filename templates used in model-based testing.
   - Nondet picks (2026-11-04): TS and Go match on `Nd.qnt` for 10 single-trace
     seeds and 2 multi-trace runs (seed 0x12). An earlier 3,3,2 reading did not
@@ -702,8 +702,16 @@ including failed actions that must not leak partially updated state.
     `["x","mbt::actionTaken","mbt::nondetPicks"]`, which the Go output and
     committed fixtures match. Treated as an upstream rust-path quirk; Go has
     no rust backend.
-  - Still open: nondet transcript fixture, and the debug metadata and output
-    filename template audit.
+  - Nondet transcript fixture `metadata_nondet_one_of_picks` added to
+    `cli/testdata/run_transcripts.json` (picks None, Some 2, Some 2, Some 3 at
+    seed 0x12), matching the TypeScript backend output.
+  - Output filename templates: Go `ExpandOutputTemplate` and
+    `ExpandNamedOutputTemplate` match upstream `cliHelpers.ts` (`{seq}` and
+    `{test}` replacement, autoAppend before the first dot), with unit tests in
+    `trace_output_test.go`. The literal `${TRACE}` seen earlier was a shell
+    quoting artifact, not a template feature.
+  - Debug metadata: ITF `#meta` (source, description, timestamp) is compared
+    by the transcript harness.
 - [x] P8.4 Implement REPL multiline input, commands, load/reload, incremental
   definitions and analysis, evaluation, state display, history, and quiet mode.
   - [x] Save source snapshots and accepted expression history, load/reload with
