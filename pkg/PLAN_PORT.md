@@ -790,6 +790,14 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     `r1=8, r2=26, r3=34, r4=52` (scratch `closurecross.log`). Go matches through
     fixture `instance_closures_across_instances` in
     `pkg/testdata/parser/runtime_instance_values.json`.
+  - [x] Audit cross-instance overrides (2026-11-05). An override that reads
+    another instance's constant, `import P(n = A::k + 1) as B`, is rejected with
+    QNT099 "Found cyclic declarations" in both TypeScript and Go (parity, not a
+    gap). The same override reading an importer definition, `pure val j = 5`
+    with `import P(n = j + 1) as B`, is accepted in TypeScript with `B::f(0) == 6`
+    (scratch `xoverride3.qnt`). Pinned by `TestInstanceOverrideReadsOtherInstance`
+    in `pkg/runtime_instance_override_cycle_test.go`, which asserts QNT099 only
+    when the override reads another instance.
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
     and remaining override audits; compiler instance contexts).
 
