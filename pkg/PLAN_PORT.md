@@ -1164,9 +1164,20 @@ TypeScript or Rust evaluator process.
     `s' = Nat` assignment (emitted as `s' := Nat`, not rejected), the temporal
     definition, and `nondet`. Regression test: `cli/tla_compile_test.go`
     `TestCompileTLAPlusAssignmentAndTemporalShapesMatchUpstream`.
-    Still open: a Quint-accepted construct that TLA generation rejects without a
-    source diagnostic. Upstream accepts the unbounded `Nat` assignment, so an
-    explicit failure there would diverge from upstream and needs a decision first.
+    Probed 2026-11-05 across 64 specs (upstream `quint compile --target=tlaplus`
+    vs Go, exit codes and normalized module bodies): `foldr` with named-operator
+    and lambda callbacks over lists, sets, strings, records, tuples and maps;
+    `allListsUpTo` over strings, bools and records; integer `/` and `%` in
+    assignments, invariants and guards. No Quint-accepted construct was found
+    that Go rejects without a source diagnostic. Upstream rejects the
+    `foldr` and `allListsUpTo` shapes above with an Apalache-side "No entry
+    found for id" lookup error that the Go adapters avoid, so these are
+    permissive divergences, not raw Go rejections. Still open for the owner:
+    (1) whether Go should match upstream's rejection of `allListsUpTo` on
+    non-literal or non-numeric shapes and with what diagnostic; (2) whether the
+    `/` and `%` sign-correcting lowering (`adaptTLAIntegerDivision`, `negdiv`
+    probe) matches the intended Quint semantics. Upstream accepts the unbounded
+    `Nat` assignment, so an explicit failure there would diverge from upstream.
 - [ ] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
   deferred TLC support must be explicitly identified in the compatibility matrix.
