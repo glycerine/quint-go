@@ -1747,7 +1747,12 @@ any remaining TypeScript client code is distinguished from language-server logic
     source trees with PATH=/nonexistent; both binaries build with CGO disabled.
   - [x] Exercise all13 default command/backend/LSP workflows with only native
     binaries, outside source trees and PATH=/nonexistent on Linux/amd64.
-  - [ ] Validate other platforms and finalized release archives.
+  - [x] Cross-compile `quint` and `quint-lsp` with `CGO_ENABLED=0 -trimpath`
+    for linux/amd64, linux/arm64, darwin/arm64, and windows/amd64 through the
+    checker workspace (compile only; binaries were not run on those targets).
+  - [ ] Run the platform matrix (`test-go-matrix.yml`) on GitHub, which is
+    manual and needs the owner to dispatch it, and smoke-test the non-Linux
+    archives. Also package the remaining targets with `package-go.sh`.
 - [ ] P12.9 Run a final command/flag/builtin/schema/diagnostic/editor matrix
   audit. Link each completed area to validation evidence; list unresolved gaps
   and agreed exclusions before declaring the port complete.
