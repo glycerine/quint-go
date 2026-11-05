@@ -1877,8 +1877,13 @@ any remaining TypeScript client code is distinguished from language-server logic
       spent: `normalizedValueKey` identity stack buffer (`241a7860`, no RSS
       gain beyond noise), `runtimeWithEntries` presize (`92ae3eb7`, rejected),
       Set shrink-to-fit (rejected and reverted in `ca53dd62`), trace-state
-      laziness (`c29a7a65`, no measured peak gain). Owner-gated: serialization
-      `setElements` and `runtimeSerialization.expression` (output-format and
+      laziness (`c29a7a65`, no measured peak gain), and an index-based
+      `setElements` `printedExpression` (no `Expr` copy in the printed set;
+      output unchanged, `go test ./...` green, reverted as noise). Max RSS
+      at `big_10000.qnt --seed=0x1 --backend=go`, alternating runs: current
+      1204, 1199, 1247 MB (mean 1217); candidate 1251, 1223, 1214 MB (mean
+      1229). `peakquint_cur` prints no heap sample, so only RSS was compared.
+      Owner-gated: `runtimeSerialization.expression` (output-format and
       collation risk), `referenceValue` (201.7 MB, declined as poor value for
       the risk), and releasing kept `BestTraces[i].States` after serialization
       (public contract change). The peak-RSS bullet stays `[ ]` until the owner
