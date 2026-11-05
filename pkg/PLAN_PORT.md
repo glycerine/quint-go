@@ -1846,6 +1846,21 @@ any remaining TypeScript client code is distinguished from language-server logic
       (mean about 1,244.7 MB against 1,242.4 MB). No peak-memory gain is shown;
       the change is kept for the deferred build, not for a measured reduction.
       The peak-RSS bullet stays `[ ]`.
+    - 2026-11-05 peak heap profile of the committed build (`c29a7a65`,
+      `big_10000.qnt --seed=0x1 --backend=go`, heap pprof captured at the
+      sampler's peak; peak heap objects 1,207.6 MB in that run). In-use ranking:
+      `referenceValue` 201.7 MB (35%, persistent reference map leaves, declined
+      earlier as poor value for the risk); `normalizeValue` Set/Map growth
+      115.3 MB (Set `values` append 77.1 MB, Map `pairs` slice 37.7 MB; the
+      Set presize and Map index-map variants were measured and rejected above);
+      `runtimeSerialization.expression` 121.9 MB cumulative and `setElements`
+      98.6 MB cumulative, both from `SerializeRuntimeTraceContext` on kept
+      traces; `normalizedValueKey` 44.2 MB; `runtimeWithEntries` 44.1 MB;
+      `RuntimeTrace.States` 111.0 MB cumulative, the kept traces' records.
+      The remaining serialization and trace-record share is the kept
+      `BestTraces[i].States` contract: tests and callers read those states, so
+      releasing them after serialization is an API change, not an internal
+      share. It is recorded as owner-decision material, not done.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
