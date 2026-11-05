@@ -563,7 +563,11 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     prepare-only selection, matches 15 source histories / 28 operations.
   - [x] Preserve source callback names across pure-project flattening with 37
     exact upstream histories/223 events; transported IR keeps flattened names.
-  - [ ] Complete broader runtime-stack/error-precedence audit.
+  - [x] Complete broader runtime-stack/error-precedence audit. Test-run ordering
+    (Left→failed, non-Boolean→ignored, false→QNT511 with ITF, rerun while RNG
+    advances, sample counts) matches `evaluator.ts`, pinned by
+    `TestUpstreamRuntimeTesting`; stack frames stay Rust-only, as the compiled
+    TypeScript CLI prints none.
   - [x] Eight execution-listener hooks, owned frames, verbosity filtering, run
     ranking, choice pruning, next-state placeholders and captured source calls.
 - [x] P7.3 Port scalar arithmetic, Boolean, and comparison builtins; test
