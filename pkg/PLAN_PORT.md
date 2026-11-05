@@ -1065,8 +1065,19 @@ any remaining TypeScript client code is distinguished from language-server logic
     requests are cancelled on edits, reopen, close, and reanalysis, and return
     `ContentModified` if their snapshot is stale. Deterministic rename tests
     cover both `didChange` and `didClose`; the focused LSP race check passes.
+  - [x] Added deterministic `watchCancellation` tests in
+    `backend/tlc/watch_cancellation_test.go` (cancel before a checker is
+    published, cancel with an active checker, and an uncancelled join that
+    leaves the checker running), and `lsp/jobs_test.go` for `jobGroup.wait`
+    (idle, pre-cancelled, cancelled while pending, and completion after the
+    last job). The Apalache executor is in-process with no child process to
+    kill; its cancellation path is covered by `executor_test.go` and
+    `resource_test.go`.
   - [ ] Complete the remaining race/cancellation audit across every public
-    integration path.
+    integration path. Still open: `cmd/quint-lsp` `run()` has no test because
+    it reads `os.Stdin` directly, and `TestJavaScriptRegexNullableReference`
+    (`cli`) uses a 25ms match budget that failed once under `go test -race
+    ./...` and passed on rerun, so it is timing-sensitive under load.
 - [ ] P12.3 Add targeted property/fuzz checks for parsers, JSON/ITF decoders,
   type/effect substitution, flattening, and evaluation rollback. Retain
   minimized regressions for discovered failures.
