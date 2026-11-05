@@ -117,6 +117,12 @@ reporting that evaluates expressions will also depend on P7.
     `pending_diagnostics` and `diagnostics` each appear as a string literal in
     production Go code. This is a presence check only; key usage is covered by the
     ITF fixtures under P10.4, not by this pass.
+  - [x] Environment-variable pass (2026-11-05): the upstream `process.env` names
+    (`QUINT_HOME`, `QUINT_RETRY_NONDET_SMALLER_THAN`) are both in Go's handling
+    (`QUINT_HOME` is recorded as inert by design). The Go-read names that upstream
+    does not read are test-only knobs (`QUINT_CORPUS_*`, `QUINT_TRANSCRIPTS`,
+    `QUINT_GO_NONDET_SNAPSHOT`, `QUINT_RUST_EVALUATOR`); `COMPATIBILITY.md` now
+    lists them as test-only rather than leaving them undocumented.
   - [ ] Complete field-level wire/transcript and backend semantic coverage audit.
     - IR property-name pass: 29 upstream `quintIr.ts`/`quintTypes.ts` property
       names diffed against Go string literals in `pkg/`. Only `rowNames` and

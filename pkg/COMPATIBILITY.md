@@ -177,6 +177,8 @@ packaging remains separate validation work.
 | `QUINT_VSCODE_SERVER_BACKEND` | Development-launch override for the configured VSCode Go/TypeScript server choice; installed extensions use settings. |
 | `GOOS`, `GOARCH` | Native editor-server build targets used by compile:go; packaging must match the extension host. |
 | `QUINT_CORPUS_TESTS` | Test-only opt-in for expensive temporal/corpus checks; not a language/CLI runtime setting. |
+| `QUINT_CORPUS_CASE_TIMEOUT`, `QUINT_TRANSCRIPTS` | Test-only knobs for the upstream transcript runner (`cli/transcript_corpus_test.go`): per-case timeout and the comma-separated list of transcript files. Not read by the binary. |
+| `QUINT_GO_NONDET_SNAPSHOT`, `QUINT_RUST_EVALUATOR` | Test-only knobs read from `_test.go` files: nondeterminism snapshot fixtures and the locked Rust evaluator used by comparison tests. Not read by the binary. |
 | `HOME`, `USERPROFILE` | Go editor logging matches the captured path precedence and owns lazy files; 17 source level/path fixtures cover configuration. |
 
 ## Data, statuses, and diagnostics
