@@ -8,16 +8,26 @@ import (
 )
 
 // adaptAllListsUpTo rejects every allListsUpTo application in the module, as
-// upstream Quint does for CHECK and TLA input: the Apalache QuintIR parser has
-// no conversion for the operator, so any use, including an unused definition,
-// fails. The diagnostic keeps upstream's wording. Apalache's internal lookup-table
-// ID and its argument rendering are not reproduced exactly.
+// upstream Quint does for CHECK, TLA and verify input.
 func adaptAllListsUpTo(compiled quint.CompilationResult) (quint.CompilationResult, error) {
+	return rejectDefinedOperator(compiled, "allListsUpTo")
+}
+
+// adaptFoldRight rejects every foldr application, as upstream does for CHECK and
+// TLA input: the Apalache QuintIR parser has no conversion for the operator.
+func adaptFoldRight(compiled quint.CompilationResult) (quint.CompilationResult, error) {
+	return rejectDefinedOperator(compiled, "foldr")
+}
+
+// rejectDefinedOperator fails on any application of op, including one in an
+// unused definition. The diagnostic keeps upstream's wording. The lookup ID and
+// the argument rendering match upstream on the probed specs.
+func rejectDefinedOperator(compiled quint.CompilationResult, op string) (quint.CompilationResult, error) {
 	transformer := &quint.IRTransformer{ExitExpression: func(expression quint.Expr) (quint.Expr, error) {
-		if expression.Kind != "app" || expression.Opcode != "allListsUpTo" {
+		if expression.Kind != "app" || expression.Opcode != op {
 			return expression, nil
 		}
-		return quint.Expr{}, fmt.Errorf("internal error: while parsing in Apalache:\n'Input was not a valid representation of the QuintIR: While converting operator application of defined operator 'allListsUpTo' to arguments %s: Input was not a valid representation of the QuintIR: No entry found for id %s in lookup table'\nPlease report an issue: https://github.com/informalsystems/quint/issues/new", upstreamIRList(expression.Args), expression.ID.String())
+		return quint.Expr{}, fmt.Errorf("internal error: while parsing in Apalache:\n'Input was not a valid representation of the QuintIR: While converting operator application of defined operator '%s' to arguments %s: Input was not a valid representation of the QuintIR: No entry found for id %s in lookup table'\nPlease report an issue: https://github.com/informalsystems/quint/issues/new", op, upstreamIRList(expression.Args), expression.ID.String())
 	}}
 	if _, err := transformer.TransformModule(compiled.MainModule); err != nil {
 		return compiled, err
@@ -48,6 +58,16 @@ func upstreamIR(e quint.Expr) string {
 		return fmt.Sprintf("QuintBool(%s,%t)", id, e.Bool)
 	case "app":
 		return fmt.Sprintf("QuintApp(%s,%s,%s)", id, e.Opcode, upstreamIRList(e.Args))
+	case "lambda":
+		params := make([]string, len(e.Params))
+		for i, param := range e.Params {
+			params[i] = fmt.Sprintf("QuintLambdaParameter(%s,%s)", param.ID.String(), param.Name)
+		}
+		body := ""
+		if e.Body != nil {
+			body = upstreamIR(*e.Body)
+		}
+		return fmt.Sprintf("QuintLambda(%s,List(%s),%s,%s)", id, strings.Join(params, ", "), string(e.Qualifier), body)
 	}
 	return quint.ExpressionString(e)
 }

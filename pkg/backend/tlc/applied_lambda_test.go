@@ -17,16 +17,13 @@ func TestGeneratedTLAAppliedLambdaAndSignedArithmeticSemantics(t *testing.T) {
 	compiled := compileSource(t, `module M {
   var x: int
   pure def apply(f: (int) => int): int = f(1)
-  pure def subtract(value: int, acc: int): int = value - acc
   pure val result = apply(y => y + 1)
-  pure val foldedRight = List(1, 2, 3).foldr(0, (value, acc) => value - acc)
-  pure val foldedRightNamed = List(1, 2, 3).foldr(0, subtract)
   pure val signedDivision = (-7 / 3 == -2) and (7 / -3 == -2) and (-7 / -3 == 2) and (7 / 3 == 2)
   pure val signedRemainder = (-7 % 3 == -1) and (7 % -3 == 1) and (-7 % -3 == -1) and (7 % 3 == 1)
   action init = x' = 0
   action step = x' = x
-  val lambdaSafe = result == 2 and foldedRight == 2 and foldedRightNamed == 2 and x == 0
-  val lambdaWrong = result != 2 or foldedRight != 2 or foldedRightNamed != 2 or x != 0
+  val lambdaSafe = result == 2 and x == 0
+  val lambdaWrong = result != 2 or x != 0
   val divisionSafe = signedDivision and x == 0
   val remainderSafe = signedRemainder and x == 0
   val safe = lambdaSafe and divisionSafe and remainderSafe
