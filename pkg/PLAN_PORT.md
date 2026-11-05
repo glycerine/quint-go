@@ -1805,6 +1805,23 @@ any remaining TypeScript client code is distinguished from language-server logic
       1,262.1 MB. The RSS mean is about 4% lower, but the run-to-run spread
       (110-150 MB) is larger than that gap, so it is not counted as a gain. The
       change was reverted and not committed.
+    - 2026-11-05 tried and rejected: presizing the `normalizeValue` Set `seen`
+      map and `values` slice. Three alternating runs each at N=10000: peak heap
+      objects 1,236.6 / 1,194.2 / 1,158.0 MB for the committed state (mean about
+      1,196.3 MB) against 1,218.5 / 1,187.1 / 1,194.7 MB for the candidate (mean
+      about 1,200.1 MB), so about 0.3% worse. Max RSS 1,199.1 / 1,246.6 /
+      1,223.6 MB against 1,215.0 / 1,244.8 / 1,239.4 MB. Reverted, not committed.
+    - 2026-11-05 tried and rejected: presizing the persistent-map path copies in
+      `runtimeReferenceMapNode.update` (array/collision insert and bitmap insert,
+      built with `make` plus `copy` instead of `append` to nil, which grew twice
+      on insert). Three alternating runs each at N=10000: peak heap objects
+      1,173.5 / 1,211.4 / 1,225.7 MB for the committed state (mean about
+      1,203.5 MB) against 1,192.8 / 1,207.7 / 1,188.8 MB for the candidate (mean
+      about 1,196.4 MB), about 0.6% lower and inside the run-to-run spread. Max
+      RSS 1,216.6 / 1,219.7 / 1,241.0 MB against 1,258.4 / 1,234.3 / 1,241.7 MB
+      (mean about 1.6% higher). Gates for the candidate: gofmt clean, `go vet
+      ./...`, `go test -count=1 ./...`, and `go test -race -count=1 .` passed.
+      Reverted, not committed.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
