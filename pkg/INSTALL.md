@@ -108,8 +108,24 @@ Binary distributions must include the original project and dependency notices,
 not only the executables. [THIRD_PARTY.md](THIRD_PARTY.md) inventories the linked
 modules, generated/embedded assets, Go runtime notices, nested licenses and the
 checker's retained g3 notice. Keep this inventory, the migration guide and the
-compatibility/baseline records with a local distribution. Automated release
-archives and a complete per-platform distribution check remain separate work.
+compatibility/baseline records with a local distribution.
+
+To build a release archive, run:
+
+```sh
+pkg/scripts/package-go.sh --checker "$HOME/apalache" --version VERSION --output DIR
+```
+
+The script uses the same isolated checker workspace as `verify-go.sh`, stamps
+`cli.Version`, and writes `quint-go-VERSION-GOOS-GOARCH.tar.gz` with
+`bin/quint`, `bin/quint-lsp`, these documents, a `licenses/` tree (root and
+checker licenses, `THIRD_PARTY.md`, the checker's retained g3 notice, and the
+top-level license files of every module in the build graph), plus `SHA256SUMS`
+in `DIR`. It then extracts the archive and runs `quint --version` from it. The
+g3 module has no license file of its own, so that warning is expected.
+Nested notices (for example under tlago's `tlc/` tree) are not copied yet.
+Only the host platform is packaged unless `GOOS`/`GOARCH` are set. Other
+platforms and public release publication remain separate work.
 
 The recorded checker revision is available locally but is not pinned as a
 fetchable dependency in `pkg/go.mod`. Consequently a reproducible public

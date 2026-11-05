@@ -1719,6 +1719,24 @@ any remaining TypeScript client code is distinguished from language-server logic
     (owner decision, P0.4).
 - [ ] P12.7 Package `cmd/quint`, embedded assets, licenses/notices, version
   metadata, installation instructions, and a migration/compatibility guide.
+  - [x] `pkg/scripts/package-go.sh` builds `quint` and `quint-lsp` from a
+    checker workspace with `cli.Version` stamped, copies the license and
+    module notices into `licenses/`, writes `SHA256SUMS`, and smoke-checks
+    `quint --version` from the extracted archive. Verified on Linux/amd64
+    against a clean clone of the checker's committed HEAD
+    (`8ce2cd13909d4e2f447d5715368b8a2f4faa5697`, passed via
+    `--checker-revision`) in the scratchpad. `~/apalache` itself was not used
+    because it has uncommitted owner changes and is not at the pinned revision.
+  - [x] Standalone `pkg/` build finding: `pkg/go.mod` does not require
+    `github.com/glycerine/apalache-go` or `github.com/glycerine/tlago`, so
+    `GOWORK=off go build ./cmd/quint` fails with "no required module provides
+    package". The checker module (`module github.com/glycerine/apalache-go`,
+    requiring `tlago v0.1.10`) is only reachable through a workspace. Packaging
+    therefore always requires `--checker`; a self-contained build needs the
+    checker published and pinned (owner decision, P0.4).
+  - [ ] Nested notices (tlago `tlc/` tree, klauspost nested files, Go toolchain
+    `LICENSE`/`PATENTS`) are listed in `THIRD_PARTY.md` but not yet copied.
+  - [ ] Public release publication and non-host platform archives (P12.8).
 - [ ] P12.8 Test from a clean environment without Node, Rust, Java, Scala,
   downloaded Scala Apalache, or repository-relative runtime assets for all
   default Go workflows. Document any explicitly optional external backend.
