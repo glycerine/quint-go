@@ -1135,9 +1135,20 @@ any remaining TypeScript client code is distinguished from language-server logic
     `RunREPL`, `RunREPLEvents`, and `ExecuteWithSignals` now each have a
     pre-cancelled test (`cli_test.go`, `repl_test.go`, `repl_events_test.go`,
     `repl_signals_test.go`); `WithTerminalOptions` only wraps the context and
-    does no work. The remaining exported context-taking functions in `lsp`,
-    `terminal`, and the runtime (about 50 across `pkg/*.go` and `cli/`) are not
-    yet audited. Still open:
+    does no work. In `lsp`, `Serve` and `Wait` now have a pre-cancelled test
+    (`lsp/public_cancellation_test.go`). `Handle` is deliberately excluded: a
+    cancelled request must be answered with JSON-RPC `-32800` (RequestCancelled),
+    which `TestServerCancelledRequestAndWorkerShutdown` and
+    `TestSignatureHelpCurrentBuffersAndMissingAnalysis` pin. In `terminal`,
+    `WithOptions` and `Bind` only wrap context values and `PolicyFromContext` is a
+    pure lookup, so no pre-cancel check applies. The root `REPLSession.Reload`
+    now has a pre-cancelled test (`repl_reload_cancellation_test.go`). Of the 83
+    exported context-taking root functions, the name-match sweep over test
+    bodies that call `cancel()` left four unmatched: `EvalSetToMapBuiltin` and
+    `PrepareWithVariableBindings` check `ctx.Err()` first, and
+    `ExecutionListenerFromContext` is a pure lookup. `Reload` is covered by the
+    new test. The sweep is a name heuristic, not a per-call proof, so the 83
+    were not each re-verified by hand. Still open:
     `TestJavaScriptRegexNullableReference`
     (`cli`) uses a 25ms match budget that failed once under `go test -race
     ./...` and passed on rerun, so it is timing-sensitive under load. Raising
