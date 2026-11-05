@@ -1661,13 +1661,26 @@ any remaining TypeScript client code is distinguished from language-server logic
   - [x] 2026-11-04: `verification.md` gated rerun with known deviations: all cases
     pass or skip as listed. The temporal violation case passes after removing the
     Go-only `❌ label` and default lasso line.
+  - [ ] Scheduled expensive suite: `.github/workflows/test-go.yml` splits the fast
+    default run from the slow corpora via the manual `corpus` input, but has no
+    `schedule:` trigger. Its comment keeps it manual until a published, compatible
+    checker is pinned (owner decision, P0.4). Open until that pin exists.
 - [ ] P12.5 Benchmark parsing, inference, flattening, large collections,
   simulation throughput, and checker handoff; track allocations and peak
   memory against recorded baselines before optimizing.
   - [x] 2026-11-04 baseline: all 145 `go test -bench` results (builtin signatures,
     dynamic type decoding, effect substitution, runtime normalization, parsing,
     and CLI preparation) are recorded in `benchmarks/baseline-2026-11-04.txt`
-    with ns/op, B/op and allocs/op. Peak memory is not yet measured.
+    with ns/op, B/op and allocs/op. Peak memory is not yet measured by the
+    benchmarks.
+  - [ ] 2026-11-05 first peak-RSS sample (`/usr/bin/time -f %M`, Go binary built
+    from `pkg/cmd/quint`): `parse cosmos/ics20/ics20.qnt` 76 MB, 0.44 s;
+    `typecheck` of the same spec 97 MB, 1.04 s. `run` on a scratch counter spec
+    (no constants; `examples/` specs need constants that `run` cannot supply):
+    100 samples 310 MB, 15 s; 1000 samples 306 MB, 150 s. Throughput for this
+    trivial spec is about 6.7 samples/s, so it is a candidate for profiling, not
+    yet optimized. Still open: a peak-memory baseline for large collections and
+    the checker handoff.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
