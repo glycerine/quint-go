@@ -675,7 +675,7 @@ including failed actions that must not leak partially updated state.
 
 ## P8 — Simulation, test runner, and REPL
 
-- [ ] P8.1 Implement `run` with init/step selection, sample/step limits,
+- [x] P8.1 Implement `run` with init/step selection, sample/step limits,
   invariants, witnesses, deadlocks, stopping conditions, and trace selection.
   - [x] Sequential library simulation of prepared modules/projects with named
     init/step/invariant/witness definitions, explicit sample/step/error limits,
@@ -687,7 +687,12 @@ including failed actions that must not leak partially updated state.
   - [x] Individual false-invariant reports and saved plain-text command transcripts.
   - [x] Checked selected-trace snapshots preserve compact values, serialization
     exceptions and shared object history before driver result classification.
-  - [ ] Remaining terminal/color/selector and full formatting parity audit.
+  - [x] Terminal/color/selector and formatting parity audit closed: whole-command
+    terminal transcripts pass at colour levels 0 and 1 (only the two REPL-style
+    runtime-error deviations are skipped, as recorded); colour policy and style
+    tests, selector precedence, and the no-match `--match` diagnostic were
+    compared against upstream `test/cli.test.ts` and match, including the
+    `--out` JSON `errors` explanation. No upstream TypeScript colour tests exist.
 - [ ] P8.2 Implement `test` discovery/filtering, randomized repetitions,
   pass/fail/ignore results, assertion reports, and replayable failing seeds.
   - [x] Collector-order discovery with default Test suffix/custom predicates,
