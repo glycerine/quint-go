@@ -733,7 +733,12 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     across 79 arithmetic, callback, closure, error and seeded comparison cases.
   - [x] Add48 actual TS/Rust stateful comparisons (38 typed source and10
     explicit IR-only), checking results/errors/references/debug/registers/traces/RNG.
-  - [ ] Finish remaining instance compiler histories under P7.2.
+  - [x] Add `override_uses_importer_def` to `testdata/parser/runtime_instance_values.json`
+    (`import P(n = k + 2) as A`, `A::f(0)` with `k` defined in the importer). The
+    TypeScript reference (`quint test --match 'okTest|wrongTest'`) confirms
+    `result == 42` passes and `result == 41` fails; Go matches.
+  - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
+    and remaining override audits; compiler instance contexts; execution-frame recording).
 
 Exit gate: Go evaluation reproduces reference semantics on the runtime corpus,
 including failed actions that must not leak partially updated state.

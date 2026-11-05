@@ -1512,4 +1512,16 @@
       }
     ]
   }
+  ,{
+    "name": "override_uses_importer_def",
+    "source": "module P {const n:int def f(x)=n+x} module M {def k = 40 import P(n=k+2) as A val result=A::f(0)}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {"id": 0, "kind": "int", "value": 42}
+      }
+    ]
+  }
 ]
