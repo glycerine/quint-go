@@ -172,6 +172,11 @@ reporting that evaluates expressions will also depend on P7.
         `completionProvider.resolveProvider: false`; upstream TypeScript
         advertises neither. Go's prepareRename is a recorded superset
         (`pkg/lsp/semantic.go`, `COMPATIBILITY.md` editor section).
+        Test evidence (2026-11-05): `go test -count=1 -run
+        'Completion|SignatureHelp|CodeAction|Upstream' ./lsp/` passes
+        (exit 0), covering identifier/field/override completion, signature
+        help fixtures, and upstream code-action fixtures. Still open: real
+        editor-host and other-platform VSIX execution (packaging row).
       - ITF trace field equivalence (2026-11-05, against Scala
         `ItfCounterexampleWriter.scala` and `TlaToItfJson.scala`). Scala's
         `#meta` carries `format`, `format-description`, `description`,
