@@ -150,6 +150,13 @@ reporting that evaluates expressions will also depend on P7.
         safe. This is a recorded deviation: Go reports `verification was
         inconclusive (SmtTimeout)` instead of crashing. Pinned by
         `TestCheckResponseDecoding` and `TestCheckerFailureReports`.
+        Field-level pass (2026-11-05): Scala emits `checking_result` on every
+        status, `counterexamples` for Error and Deadlock, `nerrors` only for
+        Error, and `ntimeouts` only for SmtTimeout. Go's decoder reads
+        `checking_result` and `counterexamples`; `nerrors` and `ntimeouts` are
+        not decoded, but they survive in `BackendData` because reports keep the
+        raw payload (`TestCheckerFailureReports` asserts this for SmtTimeout).
+        No Scala field is dropped on the Go side.
       - ITF trace field equivalence (2026-11-05, against Scala
         `ItfCounterexampleWriter.scala` and `TlaToItfJson.scala`). Scala's
         `#meta` carries `format`, `format-description`, `description`,
