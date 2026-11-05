@@ -3619,6 +3619,16 @@ word "retained" in the commit message.
   pending oracle is evidence for an evaluator-owned execution graph/cache fix,
   not passing Go parity coverage and not resolved by lambda token memoization.
 
+- 2026-11-05: Re-checked the closure-lifetime corpus now recorded as
+  `testdata/parser/runtime_closure_lifetime.json` (status "supported"). Running
+  `go test -count=1 -run UpstreamCompiledClosureLifetime .` in `pkg/` passes
+  all 22 subtests: 16 expression cases, factory/child-call sessions with
+  identity and value checks, and four persistent module evaluations. The
+  2026-11-02 "open gap" note above is superseded for the covered scenarios.
+  Remaining P7.2 audits (compiler instance contexts, execution-frame recording)
+  stay open; per-call captured scopes in `evaluate_pure.go` are not a known
+  divergence for the covered cases.
+
 - 2026-11-02: Profiled the expanded core suite: Expr.UnmarshalJSON accounted
   for 12.85% sampled CPU and 37.54MB allocations. Replaced two per-node maps with
   a strict raw-field struct using the required Go 1.27 standard JSON APIs. New
