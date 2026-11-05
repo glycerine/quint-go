@@ -1216,16 +1216,19 @@ TypeScript or Rust evaluator process.
   - [x] Native Go TLC cancellation and collection resource exhaustion remain
     incomplete outcomes; adapter-owned metadata is removed and a later check
     succeeds.
-  - [ ] Native TLC resolver directories have no linked dependency close API and
-    may outlive an adapter check; solver/session lifecycle needs a broader audit.
-    Verified: `tlago` v0.1.10 `NewSimpleFilenameToStream` calls
-    `filenameTempDirectory()` (`os.MkdirTemp("", "tlc-")`) and nothing removes
-    it; only the distributed resolver registers delete-on-exit. A probe check
-    with `TMPDIR` isolated left three `tlc-*` directories after one successful
-    run. Fixing this needs a `tlago` change (a close method or a removal hook)
-    or a fork. quint-go cannot remove them from `pkg` without touching the
-    dependency's internals. Blocked on that dependency change or on a user
-    decision to accept it as a documented gap.
+  - [x] Native TLC resolver directories no longer outlive an adapter check.
+    `tlago` v0.1.10 `NewSimpleFilenameToStream` calls `filenameTempDirectory()`
+    (`os.MkdirTemp("", "tlc-")`) and never removes it. `checkTLA` now sets
+    `TMPDIR` to its own metadata directory for the duration of the check, under
+    the `ownership` semaphore, and restores it afterwards, so those directories
+    are removed with the metadata. No `tlago` change or fork is needed.
+    `TestCheckLeavesNoTLAGOTempDirectories` (`backend/tlc/tempdir_test.go`)
+    failed before the change (three `tlc-*` left) and passes after it.
+    Known limit: `TMPDIR` is process-global for the length of a native check, so
+    concurrent non-TLC code that reads `TMPDIR` during that window sees the
+    metadata directory.
+  - [ ] Solver/session lifecycle audit beyond the native TLC resolver remains
+    open under P9.10.
 - [x] P9.11 Exercise safe/unsafe/deadlocked specifications, zero/one-step bounds,
   induction, temporal properties, nested modules, large values, malformed IR,
   unsupported opcodes, and backend failures through the actual Go checker.

@@ -218,6 +218,12 @@ func checkTLA(ctx context.Context, filename, source string, options Options, var
 		return result, err
 	}
 	defer os.RemoveAll(metadata)
+	// tlago allocates its own "tlc-*" resolver directory under TMPDIR for each
+	// parse and never removes it. Point TMPDIR at the metadata directory for the
+	// duration of this check, under the ownership semaphore, so those
+	// allocations are removed with it.
+	restoreTMPDIR := redirectTempDir(metadata)
+	defer restoreTMPDIR()
 	config, err := modelConfig(options)
 	if err != nil {
 		return result, err
@@ -536,4 +542,19 @@ func ParseConfig(data json.RawMessage) (Options, error) {
 	}
 	options.MaxDuration = time.Duration(timeoutMillis) * time.Millisecond
 	return options, validateOptions(options)
+}
+
+// redirectTempDir sets TMPDIR to dir and returns a function that restores the
+// previous value, or unsets it when it was not set. Callers must hold the
+// ownership semaphore so that only one native check redirects at a time.
+func redirectTempDir(dir string) func() {
+	previous, had := os.LookupEnv("TMPDIR")
+	os.Setenv("TMPDIR", dir)
+	return func() {
+		if had {
+			os.Setenv("TMPDIR", previous)
+		} else {
+			os.Unsetenv("TMPDIR")
+		}
+	}
 }
