@@ -1783,6 +1783,12 @@ any remaining TypeScript client code is distinguished from language-server logic
     allocations, `runtimeWithEntries`, and `RuntimeTrace.Shift` history retention,
     which needs a larger design change. Each is a separate item and is not yet
     scoped.
+    - 2026-11-05 tried and rejected: presizing the `source.Args` slice in
+      `runtimeWithEntries` to `m.Len()`. Max RSS at N=10000 over three alternating
+      pairs (`cs_bench`-style, `big_10000.qnt --seed=0x1 --backend=go`): committed
+      state 1,231,824 / 1,256,588 / 1,213,592 KB (mean about 1,234.0 MB) against
+      1,239,652 / 1,258,908 / 1,239,164 KB (mean about 1,245.9 MB) for the
+      candidate, about 12 MB higher. The candidate was reverted and not committed.
     - 2026-11-05 tried and rejected: sharing canonical `Rec` nodes in
       `normalizeValue` when names are strictly ascending and children unchanged.
       Peak heap objects at N=10000 averaged about 1,227 MB over four runs against
