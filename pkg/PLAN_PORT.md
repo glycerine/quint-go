@@ -1125,7 +1125,16 @@ any remaining TypeScript client code is distinguished from language-server logic
     `Content-Length` frame (exit 1 with stderr output). `main` keeps the signal
     context and environment logger, so its behavior is unchanged.
   - [ ] Complete the remaining race/cancellation audit across every public
-    integration path. Still open: `TestJavaScriptRegexNullableReference`
+    integration path. On 2026-11-04 the backend audit found all exported
+    context-taking entry points in `backend/apalache` (`Check`, `Run`,
+    `FindViolatedInvariants`, `TLA`, `Verify`) and `backend/tlc` (`Check`,
+    `CheckTLA`) either check the caller's context first or delegate to a checked
+    path. Pre-cancelled tests now pin `Check`, `Run`, `FindViolatedInvariants`
+    (`backend/apalache/public_cancellation_test.go`) and `CheckTLA`
+    (`backend/tlc/public_cancellation_test.go`). The remaining exported
+    context-taking functions in `cli`, `lsp`, `terminal`, and the runtime
+    (about 50 across `pkg/*.go` and `cli/`) are not yet audited. Still open:
+    `TestJavaScriptRegexNullableReference`
     (`cli`) uses a 25ms match budget that failed once under `go test -race
     ./...` and passed on rerun, so it is timing-sensitive under load. Raising
     that budget is a test-budget decision and has not been made.
