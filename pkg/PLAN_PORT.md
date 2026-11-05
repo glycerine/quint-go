@@ -1757,11 +1757,22 @@ any remaining TypeScript client code is distinguished from language-server logic
     1,729,336 KB to 1,420,812 KB (-17.8%). Stdout is unchanged apart from the
     timing line. Gates: gofmt clean, `go vet`, `go test ./...`, and `-race` on
     the runtime and value tests all passed.
-  - [ ] Peak RSS at N=10000 (about 1.4 GB) is still high. Remaining live shares
-    are `copyRuntimeExpression` and `NormalizeValue` output in each
-    `RuntimeValue.expression`, the `runtimeSerialization.expression` tree, and
-    `referenceValue` persistent-map copies per step. Each is a separate design
-    item and is not scoped yet.
+  - [x] 2026-11-05 normalizer sharing in `runtimeAssemble`: `normalizeOwnedValue`
+    reuses canonical List, Tup and variant nodes whose children and fields are
+    unchanged, since the runtime owns and never mutates its source trees.
+    `NormalizeValue` keeps its never-alias contract. At N=10000 peak heap objects
+    fell from 1,375,088,392 to 1,234,117,104 bytes on one run (1,198,792,720 on a
+    second run) and max RSS from 1,420,812 KB to 1,236,140 KB (-13.0%). Stdout is
+    unchanged apart from the timing line. Commit `23fafeea`. Gates: gofmt clean,
+    `go vet`, `go test ./...`, and `-race` on the runtime and value tests passed.
+  - [ ] Peak RSS at N=10000 (about 1.24 GB) is still high. Remaining live shares
+    are the `runtimeSerialization.expression` and `setElements` trees (about 112
+    MB and 89 MB cumulative at peak), `referenceValue` and
+    `runtimeReferenceMapNode.update` persistent-map copies per step (about 206 MB
+    live), `NormalizeValue` Set/Map `seen`, `insdict` and `sortValues`
+    allocations, `runtimeWithEntries`, and `RuntimeTrace.Shift` history retention,
+    which needs a larger design change. Each is a separate item and is not yet
+    scoped.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
