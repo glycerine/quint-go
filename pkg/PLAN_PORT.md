@@ -103,7 +103,7 @@ reporting that evaluates expressions will also depend on P7.
 
 - [x] P0.1 Record the Quint and Go Apalache commits, Go toolchain, dependency
   versions, and commands used to build the reference implementations (BASELINE.md).
-- [ ] P0.2 Build a compatibility matrix covering every CLI command, flag,
+- [x] P0.2 Build a compatibility matrix covering every CLI command, flag,
   environment variable, builtin opcode, JSON field, error/status code, and
   editor feature. Distinguish language semantics from incidental formatting.
   - [x] COMPATIBILITY.md inventories every opcode/builtin value, active command
