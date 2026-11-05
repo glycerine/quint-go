@@ -1796,6 +1796,15 @@ any remaining TypeScript client code is distinguished from language-server logic
       1,209.2 / 1,234.7 MB (mean about 1,221.6 MB), so RSS shows no measurable
       gain and the ranges overlap. Gates: gofmt clean, `go vet ./...`,
       `go test -count=1 ./...`, and `go test -race -count=1 .` passed.
+    - 2026-11-05 tried and rejected: presizing the `runtimeWithEntries` source
+      `Args` slice with `make([]Expr, 0, m.Len())`. Three alternating runs each
+      at N=10000: peak heap objects 1,187.0 / 1,180.4 / 1,216.8 MB for the
+      committed state (mean about 1,194.7 MB) against 1,192.2 / 1,202.8 /
+      1,197.4 MB for the candidate (mean about 1,197.5 MB), so no heap gain.
+      Max RSS 1,280.5 / 1,245.8 / 1,356.7 MB against 1,255.6 / 1,210.2 /
+      1,262.1 MB. The RSS mean is about 4% lower, but the run-to-run spread
+      (110-150 MB) is larger than that gap, so it is not counted as a gain. The
+      change was reverted and not committed.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
