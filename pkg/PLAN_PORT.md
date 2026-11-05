@@ -128,6 +128,10 @@ reporting that evaluates expressions will also depend on P7.
     `apalache-version` and `server-endpoint` are explicitly rejected in Go;
     `timeout` is only a commented-out line upstream, so it is not an option.
   - [ ] Complete field-level wire/transcript and backend semantic coverage audit.
+    The backend semantic pass is the verdict-parity coverage of `verification.md`
+    and the `runtime/*` transcripts, which is the same material as the P10.8 full
+    corpus. It closes when that run records 0 failures, so this item and P10.8 move
+    together; the source-level passes above are already recorded.
     - IR property-name pass: 29 upstream `quintIr.ts`/`quintTypes.ts` property
       names diffed against Go string literals in `pkg/`. Only `rowNames` and
       `typeNames` were missing; both are TypeScript helpers, not serialized fields.
