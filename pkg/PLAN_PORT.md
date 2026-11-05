@@ -1906,6 +1906,23 @@ any remaining TypeScript client code is distinguished from language-server logic
       1,254.8 MB (mean about 1,243.4 MB). The spread (about 70 MB) is larger
       than the difference, so it is within noise. Reverted; `value_normalize.go`
       matches HEAD.
+    - 2026-11-05 P12.5 `stateCapture` plain-name candidate rejected. `capture()`
+      stored each register and pick name as a `text(name)` RuntimeValue, which
+      runs `runtimeAssemble` and builds an identity key per name per step, and
+      every pending trace entry kept those values alive until `States()`. The
+      candidate kept names as plain strings in `fieldNames`/`pickNames`
+      (parallel to the value slices) and built the name values only in
+      `materialize`, with the same record order. gofmt, vet, `go test ./...`
+      and `go test -race .` were green, so the output was unchanged. Three
+      alternating `scratchpad/memprof/cs_bench.sh` runs of
+      `big_10000.qnt --seed=0x1 --backend=go` (max RSS, KB): current 1,227,112 /
+      1,281,244 / 1,200,876 (mean about 1,207 MB); candidate 1,238,756 /
+      1,239,368 / 1,222,960 (mean about 1,205 MB). The difference (about 2.6 MB)
+      is well inside the spread, so the change was reverted and
+      `runtime_storage.go` matches HEAD. Pending-capture name retention is not
+      a meaningful share of peak RSS at N=10000. The remaining trace-retention
+      question is the `RuntimeTrace.Shift` design change, which needs a heap
+      profile at the peak before any further candidate is tried.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
