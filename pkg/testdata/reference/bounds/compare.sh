@@ -13,8 +13,16 @@ for path in "$here"/*.qnt; do
   "$quint" compile --target tlaplus --invariant inv --init init --step step \
     "$path" > "$work/$spec.tla"
   for n in 0 1 2 3 4; do
+    scala_out="$work/scala/$spec/$n"
     scala=$("$apalache" check --length="$n" --init=q_init --next=q_step --inv=q_inv \
-      "$work/$spec.tla" 2>&1 | sed -n 's/.*EXITCODE: \(.*\)/\1/p' | tail -1)
+      --out-dir="$scala_out" "$work/$spec.tla" 2>&1 | sed -n 's/.*EXITCODE: \(.*\)/\1/p' | tail -1)
+    # Reference-checker counterexamples at this bound are validated too, so
+    # the Scala witnesses are held to the same independent check as Go's.
+    if [ "$scala" = "ERROR (12)" ]; then
+      for itf in $(find "$scala_out" -name 'violation*.itf.json'); do
+        scala_witnesses="${scala_witnesses:-} $spec=$itf"
+      done
+    fi
     go=$("$quint" verify --backend apalache-go --max-steps="$n" --invariant inv \
       "$path" 2>&1 | grep -oE '\[ok\]|\[violation\]' | head -1)
     case "$scala:$go" in
@@ -26,7 +34,7 @@ for path in "$here"/*.qnt; do
 done
 # Witness pass: every Go counterexample must be a genuine execution, checked
 # independently by validate_witness.py (spec semantics restated by hand there).
-witnesses=""
+witnesses="${scala_witnesses:-}"
 for path in "$here"/*.qnt; do
   spec=$(basename "$path" .qnt)
   itf="$work/$spec.itf.json"

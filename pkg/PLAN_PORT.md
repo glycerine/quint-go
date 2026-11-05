@@ -910,8 +910,11 @@ TypeScript or Rust evaluator process.
     and the Go Apalache checker agree on the verdict for all eight fixtures at
     lengths 0-4 (40 pairs, `testdata/reference/bounds/compare.sh`, rerun
     2026-11-04 with exit 0). Scala length N and Go `--max-steps N` bound the same
-    transitions. Reference-checker traces are not validated, and the native TLC
-    half remains exhaustive, so the item stays open.
+    transitions. The native TLC half remains exhaustive, so the item stays open.
+  - [x] 2026-11-04: reference-checker counterexamples are validated too.
+    `compare.sh` keeps each Scala `violation*.itf.json` for every `ERROR (12)` bound
+    (found with `find`) and passes it through `validate_witness.py` alongside the Go
+    witnesses. The run exits 0, so every Scala and Go trace is accepted.
   - [x] 2026-11-04: the three Go counterexamples from `--out-itf` (counter3, jump,
     twovar at length 4) are validated by `testdata/reference/bounds/validate_witness.py`,
     whose init, step and invariant definitions are restated by hand rather than taken
@@ -922,7 +925,8 @@ TypeScript or Rust evaluator process.
     (counter3, guard, jump, sum, tlcCounter, toggle, twovar). The validator also
     accepts deadlock witnesses: tlcCounter reaches counter=3, where its only step
     guard `counter < 3` is false. Tampered traces are rejected (negative tests run).
-    The corpus is still eight fixtures, so the item stays open.
+    The corpus is still eight fixtures, and the native TLC bounded comparison is
+    still missing, so the item stays open.
 
 Exit gate: source-to-verification and source-to-TLA workflows use Go Apalache,
 with no automatic fallback to the Scala checker. A bounded success is reported
