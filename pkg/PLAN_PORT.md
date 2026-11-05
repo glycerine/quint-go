@@ -1393,8 +1393,22 @@ Build these items alongside the phases that supply their command behavior.
     `static analysis error: ` header line, and Go prints only the
     `Error [QNT404]` block. The header is not in the stream deviation note,
     so it needs either a documented deviation or a fix.
-  - [ ] Still open: error-prose parity for commands outside the verify/test
-    summaries, and the REPL `static analysis error:` header decision.
+  - [x] 2026-11-05 error prose outside verify/test: `run`, `compile`, `docs`,
+    `parse` on a missing or invalid file, `--bogus`, `verify` with no spec, and
+    `typecheck --backend=tlc` produce identical stdout, stderr, and exit codes to
+    upstream. Two differences recorded: (a) `--verbosity=9` makes upstream's Rust
+    evaluator crash with a serde message (`[QNT516]`, `src/main.rs:325`), which
+    is upstream defect output with no prose to match. Go prints a clean
+    `--verbosity must be between 0 and 5`, but its wording differs by command
+    (`--verbosity must ...` in `run`/`test`, `verbosity must ...` in `verify`,
+    `repl: ...` in `repl`); unifying the wording is open. (b) A bare
+    non-command positional such as `frobnicate` falls into the REPL path.
+    Upstream echoes `>>> frobnicate` and reports the name error on stdout with
+    the `static analysis error:` header. Go reports it on stderr without the
+    header, which is the same known REPL stream/header difference as above.
+  - [ ] Still open: the REPL `static analysis error:` header decision, the
+    per-command verbosity-range wording, and the unchecked `test` repeat-hint and
+    `verify --out` sub-items above.
 - [x] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
   - [x] 2026-11-05 audit: common options and verbosity defaults (`2`, `--quiet`)
