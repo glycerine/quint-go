@@ -86,7 +86,7 @@ func (e *Executor) runCheck(ctx context.Context, config json.RawMessage) (*cmd.C
 	}
 	tuning, err := pal.ParseCheckerTuning(checker.Tuning)
 	if err != nil {
-		return unexpectedCheckResponse(err), nil
+		return unexpectedCheckResponse(checkerTuningError(err)), nil
 	}
 	encoding := pal.SMTEncodingOOPSLA19
 	if checker.SMTEncoding != nil {
@@ -130,7 +130,7 @@ func (e *Executor) runCheck(ctx context.Context, config json.RawMessage) (*cmd.C
 
 func (checker commandCheckerOptions) validate() error {
 	if _, err := pal.ParseCheckerTuning(checker.Tuning); err != nil {
-		return fmt.Errorf("invalid checker tuning: %w", err)
+		return fmt.Errorf("invalid checker tuning: %w", checkerTuningError(err))
 	}
 	if checker.Algorithm != nil && !strings.EqualFold(*checker.Algorithm, "incremental") {
 		return fmt.Errorf("unsupported checker algorithm %q (Go port currently supports incremental)", *checker.Algorithm)

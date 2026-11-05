@@ -407,7 +407,7 @@ z3.smt.core.extend_patterns.max_distance	UnsignedIntFieldType	5	accept
 z3.smt.core.minimize	BoolFieldType	true	accept
 z3.smt.core.validate	BoolFieldType	true	accept
 z3.smt.cube_depth	UnsignedIntFieldType	5	g3-unknown
-z3.smt.dack	UnsignedIntFieldType	5	g3-rejected
+z3.smt.dack	UnsignedIntFieldType	2	accept
 z3.smt.dack.eq	BoolFieldType	true	accept
 z3.smt.dack.factor	DoubleFieldType	0.5	accept
 z3.smt.dack.gc	UnsignedIntFieldType	5	accept
