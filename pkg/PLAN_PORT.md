@@ -119,8 +119,22 @@ reporting that evaluates expressions will also depend on P7.
         semantics, and is not treated as a contract.
       - 0 semantic differences.
       - 49 fail on both sides with exit 1. Their `QNT` diagnostic code sets are identical.
-      - Remaining gaps: runtime transcripts, the apalache input encoder, and backend
-        semantic fields. These are still open.
+    - Apalache input projection pass: in-process CLI pipeline (same main-module
+      rule as `cli.coreDefaultModule`) fed through `backend/apalache.MarshalInput`
+      for all 26 both-compiling fixtures. All 26 succeed, and each output validates
+      through `checker.ParseQuintJSON`. Compared with the TS `compile --target json`
+      output after the same projection (drop `typedef`, strip `hidden`, `shadowing`,
+      `importedFrom`, `namespaces`, `doc`; `table` = `{}`): 26 of 26 are equal in
+      value, 0 semantic differences. The only difference is `types` key order in all
+      26: TS (JavaScript) emits integer-like keys in ascending order, while Go keeps
+      insertion order, which the checker input relies on and `TestInputProjectionAndOrderedTypes`
+      enforces. The 4 fixtures that failed earlier with `[QNT404] Name 'init'`
+      (`apalache/genericRowParam.qnt`, `apalache/inferredStateVar.qnt`,
+      `apalache/polyStateVar.qnt`, `bug2027instanceAssignRhs.qnt`) were a harness
+      error: the replica used the wrong main module. The CLI selects the file
+      basename when the file has more than one module.
+      - Remaining gaps: runtime transcripts and backend semantic fields
+        (checker-response/ITF fields). These are still open.
   - [x] Checker tuning key census (`testdata/scala_tuning_census.tsv`, pinned by
     `TestScalaTuningCensusOutcomesStable`). Of 484 Scala `FineTuningParser` keys,
     267 are accepted, 216 are rejected because g3 has no such parameter or module
