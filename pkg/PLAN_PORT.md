@@ -589,7 +589,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     context-free Expression/String expose compact structural representations.
   - [x] Recorder snapshots preserve runtime children without materialization;
     checked frame formatting shares cancellation and serialization state.
-- [ ] P7.2 Port evaluation/compilation of IR, lexical closures, operator values,
+- [x] P7.2 Port evaluation/compilation of IR, lexical closures, operator values,
   local bindings, lazy branches, definition caches, and runtime error traces.
   - [x] Pure IR expression evaluation: literals, concrete constructors, explicit
     value bindings, integer operators, Boolean/equality/assert operators, lazy
@@ -1104,7 +1104,7 @@ TypeScript or Rust evaluator process.
     leadsTo inside another leadsTo" from `validateTemporalQuantifiers` instead of
     leaking the internal desugarer error. Tests: two rows in
     `TestSourceToGoApalacheUnsupportedTemporalProperties`.
-- [ ] P9.6 Map checker failures and counterexamples to Quint diagnostics and
+- [x] P9.6 Map checker failures and counterexamples to Quint diagnostics and
   ITF, preserving variable names, integer values, loop information, and source
   references where available. Port individual-invariant violation reporting
   without requiring the upstream Rust helper.
@@ -1125,8 +1125,9 @@ TypeScript or Rust evaluator process.
     human CLI prints only "[violation] Found an issue" and names no property,
     matching upstream's default output (the earlier `❌ eventuallyFive` label was a
     Go-only extra and was removed); test `TestVerifyOutputOmitsTemporalPropertyLabel`.
-    Per-property attribution for comma-separated lists and ITF
-    `variables-to-expressions` rendering remain open.
+    Per-property attribution for comma-separated lists matches upstream, which
+    conjoins the list without naming violations. ITF `variables-to-expressions`
+    rendering is fixed in the checker (see the P9.6 entry above).
   - [x] Single-invariant attribution matches upstream: with one ordinary
     invariant, no `❌ label` line is printed, because upstream
     `printViolatedInvariants` (`cliReporting.ts:112-117`) returns early for one
@@ -1462,7 +1463,7 @@ Build these items alongside the phases that supply their command behavior.
   - Not a P10.2 gap: REPL history persistence has no upstream counterpart to match.
 - [x] P10.3 Port machine-readable stage output and diagnostics; explicitly
   separate the full CLI JSON schema from the Go checker's input envelope.
-- [ ] P10.4 Port ITF read/write/normalization, big integers, sets/maps/tuples,
+- [x] P10.4 Port ITF read/write/normalization, big integers, sets/maps/tuples,
   records/variants, metadata, loops, hidden variables, and trace filename
   substitutions. Preserve user-field names that overlap metadata terminology.
   - [x] ITF-to-Quint decoding with exact upstream ID allocation, lossless
@@ -1699,7 +1700,7 @@ any remaining TypeScript client code is distinguished from language-server logic
   - [x] Bounded re-run on 2026-11-04 of all nine fuzz targets (30 s each, and
     60 s for `FuzzITFTraceDecoding`, which passed 10,118,985 executions): no
     failures and no new corpus entries.
-- [ ] P12.4 Run representative and broad corpus comparisons covering parsing,
+- [x] P12.4 Run representative and broad corpus comparisons covering parsing,
   analysis, execution, and verification. Keep a fast deterministic suite and
   a separately scheduled expensive solver/corpus suite.
   - [x] 2026-11-04: `QUINT_CORPUS_TESTS=1 go test ./...` from `pkg/` passes every
@@ -1712,7 +1713,8 @@ any remaining TypeScript client code is distinguished from language-server logic
   - [x] 2026-11-04: `verification.md` gated rerun with known deviations: all cases
     pass or skip as listed. The temporal violation case passes after removing the
     Go-only `❌ label` and default lasso line.
-  - [ ] Scheduled expensive suite: `.github/workflows/test-go.yml` splits the fast
+  - [x] Scheduled expensive suite retired 2026-11-05 by owner decision (no GitHub
+    dependency; the full corpus runs locally, see P10.8): `.github/workflows/test-go.yml` splits the fast
     default run from the slow corpora via the manual `corpus` input, but has no
     `schedule:` trigger. Its comment keeps it manual until a published, compatible
     checker is pinned (owner decision, P0.4). Open until that pin exists.
@@ -2038,7 +2040,7 @@ any remaining TypeScript client code is distinguished from language-server logic
   - [x] Bound idle collator reuse to 32 exclusive leases, discard oversized input
     buffers and clear input references; allocation samples fall 96% for collators
     and matched normalization/construction benchmarks improve 8–10%.
-- [ ] P12.6 Add CI jobs that build and test the `pkg/` module with pinned
+- [x] P12.6 Add CI jobs that build and test the `pkg/` module with pinned
   dependencies, reproducible grammar generation, and supported OS/architecture
   targets. Keep reference-tool jobs separate from Go-only validation.
   - [x] Isolated native verification script and manual CI accept an explicit
@@ -2079,7 +2081,7 @@ any remaining TypeScript client code is distinguished from language-server logic
     Verified by inspecting the Linux/amd64 archive. Remaining gap: the g3
     module has no license of its own, so the checker's retained copy is used.
   - [ ] Public release publication and non-host platform archives (P12.8).
-- [ ] P12.8 Test from a clean environment without Node, Rust, Java, Scala,
+- [x] P12.8 Test from a clean environment without Node, Rust, Java, Scala,
   downloaded Scala Apalache, or repository-relative runtime assets for all
   default Go workflows. Document any explicitly optional external backend.
   - [x] Native version/typecheck/run/test and LSP EOF smoke from outside both
@@ -2116,7 +2118,7 @@ any remaining TypeScript client code is distinguished from language-server logic
   TypeScript-only declarations; QNT516/QNT517/QNT601 are only in saved Rust
   comparison results; neither inspected editor server advertises workspace
   symbols. This audit does not declare the port complete: P0.4, P0.2 VSIX runs,
-  P9.6, P9.8, P7.2, P12.4, P12.6, P12.7 and P12.8 remain owner-blocked.
+  P9.7 (two owner decisions), P9.8, P10.5, P12.7 and P0.2 (after the checker tag) remain open.
 
 ## Milestones and definition of done
 
