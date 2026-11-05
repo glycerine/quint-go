@@ -425,6 +425,28 @@
     ]
   },
   {
+    "name": "instance_closures_across_instances",
+    "source": "module P {const n:int pure def f(x)=x+n pure def apply(g,x)=g(x)*2} module M {import P(n=1) as A import P(n=10) as B pure def k(y)=A::f(y)+B::f(y) val result=List(B::apply((y)=>A::f(y),3),A::apply((y)=>B::f(y),3),B::apply(k,3),A::apply((y)=>A::apply((z)=>B::f(z),y),3))}",
+    "module": "M",
+    "steps": [
+      {
+        "kind": "evaluate",
+        "name": "result",
+        "output": {
+          "id": 0,
+          "kind": "app",
+          "opcode": "List",
+          "args": [
+            {"id": 0, "kind": "int", "value": 8},
+            {"id": 0, "kind": "int", "value": 26},
+            {"id": 0, "kind": "int", "value": 34},
+            {"id": 0, "kind": "int", "value": 52}
+          ]
+        }
+      }
+    ]
+  },
+  {
     "name": "scoped_operator_alias",
     "source": "module P {const n:int def f(x)=n+x} module M {import P(n=1) as A import P(n=100) as B def use(f,g)={def a=f def b=g List(a(0),b(0))} val result=use(A::f,B::f)}",
     "module": "M",

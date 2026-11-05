@@ -44,6 +44,7 @@ scalar('shared_parameter_unused_callback', 'module P {const n:int def f(x,g)={va
 scalar('shared_scoped_value_first_read_after_callback', 'module P {const n:int def f(x,g)={val z=x g(20)+z}}', `${instances} val result=A::f(10,(z)=>B::f(z,(v)=>v))`)
 scalar('shared_scoped_value_cached_before_callback', 'module P {const n:int def f(x,g)={val z=x z+g(20)+z}}', `${instances} val result=A::f(10,(z)=>B::f(z,(v)=>v))`)
 scalar('shared_scoped_const_cached_before_callback', 'module P {const n:int def f(x,g)={val z=n z+g(20)+z}}', `${instances} val result=A::f(10,(z)=>B::f(z,(v)=>v))`)
+scalar('instance_closures_across_instances', 'module P {const n:int pure def f(x)=x+n pure def apply(g,x)=g(x)*2}', `import P(n=1) as A import P(n=10) as B pure def k(y)=A::f(y)+B::f(y) val result=List(B::apply((y)=>A::f(y),3),A::apply((y)=>B::f(y),3),B::apply(k,3),A::apply((y)=>A::apply((z)=>B::f(z),y),3))`)
 scalar('scoped_operator_alias', p, `${instances} def use(f,g)={def a=f def b=g List(a(0),b(0))} val result=use(A::f,B::f)`)
 scalar('unused_error_override', 'module P {const n:int def f(x)=x}', 'def bad(x)=1/0 import P(n=bad(0)) as A val result=A::f(2)')
 scalar('later_error_override', p, 'import P(n=1) as A import P(n=1/0) as B '+both+' val result=both(A::f,B::f)')

@@ -783,6 +783,13 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     that variable unconstrained, so its value is not deterministic and cannot be
     used as a separation check. Pinned by `TestInstanceStateUpdateChecks`
     (`pkg/runtime_instance_state_test.go`). Parity, not a gap.
+  - [x] Verify closures passed across instances (2026-11-05). In
+    `module M { import P(n=1) as A import P(n=10) as B ... }`, a lambda built in
+    one instance's scope and applied through another instance (`B::apply((y) =>
+    A::f(y), 3)`) resolves `A::f` to A's instance constant. TypeScript gives
+    `r1=8, r2=26, r3=34, r4=52` (scratch `closurecross.log`). Go matches through
+    fixture `instance_closures_across_instances` in
+    `pkg/testdata/parser/runtime_instance_values.json`.
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
     and remaining override audits; compiler instance contexts).
 
