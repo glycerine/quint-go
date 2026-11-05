@@ -172,7 +172,7 @@ packaging remains separate validation work.
 | Environment variable | Status |
 | --- | --- |
 | `QUINT_RETRY_NONDET_SMALLER_THAN` | Implemented: default 100, captured at process initialization like TypeScript's module snapshot. Explicit/context-local options override it. Invalid values return a stored SyntaxError on evaluation rather than panicking during Go import. |
-| `QUINT_HOME` | Pending compatibility; no Go Scala/Rust download directory or persistent REPL history setup. Scala download/start behavior is intentionally replaced by the Go backend. |
+| `QUINT_HOME` | Accepted and inert by design (2026-11-05). Upstream `config.ts` reads it only to locate the Apalache distribution and Rust evaluator download caches, and upstream keeps no REPL history file. The Go backend downloads nothing and writes no config directory, so the variable has no effect and is not read. |
 | `LOG_LEVEL` | TypeScript LSP logging variable; Go server implements the source thresholds/path contract with optional owned file logging. |
 | `QUINT_VSCODE_SERVER_BACKEND` | Development-launch override for the configured VSCode Go/TypeScript server choice; installed extensions use settings. |
 | `GOOS`, `GOARCH` | Native editor-server build targets used by compile:go; packaging must match the extension host. |

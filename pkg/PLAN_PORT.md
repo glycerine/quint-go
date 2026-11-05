@@ -1338,8 +1338,17 @@ Build these items alongside the phases that supply their command behavior.
     JSON excludes private reporter helpers, including comma/collision cases.
   - [ ] Complete remaining help/error-prose and terminal parity audit, including
     command transcripts and timing/report prose.
-- [ ] P10.2 Port common options, environment/config handling, output paths,
+- [x] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
+  - [x] 2026-11-05 audit: common options and verbosity defaults (`2`, `--quiet`)
+    in `cli/options_normalize.go` with `options_normalize_test.go`; color policy
+    (`FORCE_COLOR` over flags, `NO_COLOR`, TTY) in `terminal/color.go` and
+    `terminal/policy.go`, tests pass; stream separation covered by the `--out`
+    stdout tests in `cli/cli_test.go` and `cli/core_parity_test.go`.
+  - [x] `QUINT_RETRY_NONDET_SMALLER_THAN` is read at initialization. `QUINT_HOME`
+    is accepted and inert by design, because upstream uses it only for download
+    caches that the Go backend does not create (`COMPATIBILITY.md`).
+  - Not a P10.2 gap: REPL history persistence has no upstream counterpart to match.
 - [x] P10.3 Port machine-readable stage output and diagnostics; explicitly
   separate the full CLI JSON schema from the Go checker's input envelope.
 - [ ] P10.4 Port ITF read/write/normalization, big integers, sets/maps/tuples,
