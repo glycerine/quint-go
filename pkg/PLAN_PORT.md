@@ -1749,11 +1749,19 @@ any remaining TypeScript client code is distinguished from language-server logic
     and an identity string. `source` is read by the rebuild and serialization
     paths (`runtime_payload.go`, `runtime_symbolic_value.go`), so it cannot be
     dropped without a semantic review. No code change was made.
-  - [ ] Peak RSS at N=10000 (about 1.7 GB) is not reduced. The next structural
-    step is to measure whether lazy or shared `source` expression trees reduce
-    the live share without changing serialized output. Reducing `referenceValue`
-    cost needs fewer full-collection copies per step. Both are separate design
-    items and are not scoped yet.
+  - [x] 2026-11-05 removed the redundant deep copy of the fresh `source` in
+    `runtimeAssemble` and its concrete and closure callers; the leaf
+    `NewRuntimeValue` path keeps its copy because the caller owns `e`. At
+    N=10000 (`run big_10000.qnt --seed=0x1 --backend=go`) peak heap objects fell
+    from 1,688,024,272 to 1,375,088,392 bytes (-18.5%) and max RSS from
+    1,729,336 KB to 1,420,812 KB (-17.8%). Stdout is unchanged apart from the
+    timing line. Gates: gofmt clean, `go vet`, `go test ./...`, and `-race` on
+    the runtime and value tests all passed.
+  - [ ] Peak RSS at N=10000 (about 1.4 GB) is still high. Remaining live shares
+    are `copyRuntimeExpression` and `NormalizeValue` output in each
+    `RuntimeValue.expression`, the `runtimeSerialization.expression` tree, and
+    `referenceValue` persistent-map copies per step. Each is a separate design
+    item and is not scoped yet.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
