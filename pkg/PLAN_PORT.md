@@ -1707,8 +1707,16 @@ any remaining TypeScript client code is distinguished from language-server logic
   targets. Keep reference-tool jobs separate from Go-only validation.
   - [x] Isolated native verification script and manual CI accept an explicit
     full checker SHA and build/test/vet without reference-tool dependencies.
-  - [ ] Publish/pin the checker revision before automatic CI and release builds;
-    complete reproducible grammar and platform matrix jobs.
+  - [x] Platform matrix: `.github/workflows/test-go-matrix.yml` (manual
+    `workflow_dispatch`, no checker checkout) runs gofmt, vet, and the full test
+    suite for `pkg/` on linux/amd64, linux/arm64, darwin/arm64, and
+    windows/amd64. Added 2026-11-05; the Linux steps were run locally, and the
+    other runners have not yet run it, so those legs are unverified.
+  - [ ] Reproducible grammar job: `pkg/grammar/generate.py --check` is not in CI.
+    The pinned ANTLR 4.13.2 jar was fetched to the scratchpad and its SHA-256
+    matches, but running the generator was denied, so the check has not run.
+  - [ ] Publish/pin the checker revision before automatic CI and release builds
+    (owner decision, P0.4).
 - [ ] P12.7 Package `cmd/quint`, embedded assets, licenses/notices, version
   metadata, installation instructions, and a migration/compatibility guide.
 - [ ] P12.8 Test from a clean environment without Node, Rust, Java, Scala,
