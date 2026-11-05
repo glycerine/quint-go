@@ -93,6 +93,15 @@ func recoveryLookaheadSyntaxIssue(recognizer antlr.Recognizer, offending interfa
 			return offending, line, column, "mismatched input '" + token.GetText() + "' expecting {':', '::'}"
 		}
 	}
+	if token, ok := offending.(antlr.Token); ok && token.GetText() == ":" && message == "mismatched input ':' expecting '}'" {
+		if _, braces := parser.GetParserRuleContext().(*p.BracesContext); braces {
+			// antlr4ts reports the expression continuations after a name or
+			// literal before a record or map key separator. The Go simulator
+			// stops at the closing brace (verified on quint 0.33.1 for {1: 2},
+			// {"a": 1 "b": 2}, {"k": 1 "j": 2} and {"weird key": 1, b: 2}).
+			return offending, line, column, "mismatched input ':' expecting {'}', '[', '.', '->', '^', 'and', 'or', 'iff', 'implies', 'leadsTo', '+', '-', '*', '/', '%', '>', '<', '>=', '<=', '!=', '==', '='}"
+		}
+	}
 	if token, ok := offending.(antlr.Token); ok && message == "mismatched input '"+token.GetText()+"' expecting '{'" {
 		if _, module := parser.GetParserRuleContext().(*p.ModuleContext); module {
 			return offending, line, column, "mismatched input '" + token.GetText() + "' expecting {'{', '::'}"

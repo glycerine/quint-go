@@ -42,9 +42,7 @@ func newSyntaxErrors(text string) *effectSyntaxErrors {
 	return &effectSyntaxErrors{DefaultErrorListener: antlr.NewDefaultErrorListener(), text: text}
 }
 func (e *effectSyntaxErrors) SyntaxError(recognizer antlr.Recognizer, offending interface{}, line, column int, message string, exception antlr.RecognitionException) {
-	if e.onIssue != nil {
-		offending, line, column, message = recoveryLookaheadSyntaxIssue(recognizer, offending, line, column, message, exception)
-	}
+	offending, line, column, message = recoveryLookaheadSyntaxIssue(recognizer, offending, line, column, message, exception)
 	// ANTLR Go counts runes; Quint/LSP positions count UTF-16 code units.
 	pos := Position{}
 	runeColumn := 0

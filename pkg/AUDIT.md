@@ -11,10 +11,11 @@ differently from upstream, Go matches upstream unless the owner decides otherwis
 | ID | Area | Severity | Status |
 | --- | --- | --- | --- |
 | F-01 | `foldr` and `allListsUpTo` on CHECK, TLA, verify and TLC paths | High (accepts what upstream rejects) | Fixed in `9512e41b`, `cb292136` |
-| F-02 | Parse error: expected-token list | Low (diagnostic text) | Open |
+| F-02 | Parse error: expected-token list | Low (diagnostic text) | Partly fixed (a `:` after an expression in braces); the rest open |
 | F-03 | Lexer error: newline in token text | Low (diagnostic text) | Fixed (REPL path now escapes like the recovering parser) |
 | F-04 | REPL error block for an empty source line prints a caret | Low (diagnostic text) | Open; the shared renderer must keep the caret (see F-04) |
 | F-05 | REPL error headers on stdout | Known | Already recorded (`replStreamDeviation`) |
+| F-07 | Missing `}` reported as `mismatched input` instead of `missing '}' at` | Low (diagnostic kind) | Open |
 | F-06 | Discarded `strconv` errors in `backend/tlc/itf_value.go` | None | Reviewed, safe |
 
 ## Coverage
@@ -64,23 +65,40 @@ for the next pass.
   adapter, and assert the error string. Verify the expected text with
   `quint compile --target=tlaplus` first.
 
-## F-02: parse error lists fewer expected tokens
+## F-02: parse error lists fewer expected tokens (partly fixed)
 
-- **Divergence.** For `{"weird key": 1, b: 2}` upstream prints
+- **Divergence.** Upstream lists the expression continuations after a name or literal,
+  as well as the caller's follow set. Go lists only the follow set, for example
+  `mismatched input ':' expecting '}'`. Upstream's text is
   `mismatched input ':' expecting {'}', '[', '.', '->', '^', 'and', 'or', 'iff',
   'implies', 'leadsTo', '+', '-', '*', '/', '%', '>', '<', '>=', '<=', '!=', '==', '='}`.
-  Go prints `mismatched input ':' expecting '}'`. The position and the offending token
-  match. The end-of-input cases differ the same way: upstream lists `{<EOF>, ...}` and
-  Go lists `<EOF>`.
-- **Likely cause.** Upstream reports the expected set from the full prediction context
-  at the offending token. Go's report uses a narrower context. This is an inference,
-  not verified against the ANTLR runtime source.
-- **Fix.** In `internal/quintparser`, find where the Go error listener builds the
-  `expecting` text. Compute the expected set with the parser's full context stack at
-  the offending token, and format it the way upstream does: sorted by the grammar's
-  order, with `{...}` braces when there is more than one token.
-- **Test.** Add a case to the parser error tests that parses the record input above and
-  asserts the exact upstream message. Use the same expected token list as upstream.
+- **Fixed (`recoveryLookaheadSyntaxIssue` in `parse_recovery.go`).** A `:` that is the
+  offending token inside braces, with `expecting '}'`, now gets upstream's set. The
+  REPL listener now also calls the rewrite; before, it only ran on the recovering path.
+  Verified against upstream for `{1: 2}`, `{"a": 1 "b": 2}`, `{"k": 1 "j": 2}` and
+  `{"weird key": 1, b: 2}`, in the REPL and in `quint parse` on a `.qnt` file.
+  Tests: `parse_braces_expected_test.go`.
+- **Open.** `{a: 1 b: 2}` already matches (`expecting {'}', ','}`). The declaration case
+  `Set(1 2)` still differs: upstream reports `mismatched input '(' expecting {<EOF>, '[',
+  ..., '::', ...}` and Go reports `expecting <EOF>`. Upstream's set depends on the
+  prediction at the offending token, so a general fix needs the same expected-set
+  computation as antlr4ts, not another per-token rewrite.
+- **Next step.** Compare the expected-set computation for the declaration context, add
+  one more rewrite only if a pattern with at least three upstream examples is found, and
+  otherwise record the remaining cases here.
+
+## F-07: missing `}` is reported as `mismatched input` (open)
+
+- **Divergence.** For `{1, 2 3}` upstream prints `missing '}' at ','`. That is ANTLR's
+  single-token insertion recovery. Go prints `mismatched input ',' expecting '}'`. The
+  position matches, and both report one error.
+- **Likely cause.** The parser state at the error differs (the same prediction difference
+  as F-02), so Go's single-token-insertion check rejects the insertion that antlr4ts
+  accepts.
+- **Fix.** Not started. It belongs with F-02's expected-set work: find where the
+  recovering path calls `ReportMissingToken` in antlr4ts and make the Go strategy accept
+  the same insertion, or rewrite the message for this case only after three examples.
+- **Test.** Parse `{1, 2 3}` and assert `missing '}' at ','` once the fix lands.
 
 ## F-03: lexer error text does not escape the newline (fixed)
 
@@ -130,7 +148,7 @@ own canonical decimal integer. So the discarded error cannot happen. No change.
 
 ## Open items
 
-- F-02 and F-04: open. The Go ANTLR runtime reports a narrower expected-token set than upstream at the
+- F-02 (declaration context), F-04 and F-07: open. The Go ANTLR runtime reports a narrower expected-token set than upstream at the
   same offending token. Next step: compare the expected set from `GetExpectedTokens()` at
   the record-value decision point against the upstream error, and find which prediction
   mode or error-strategy difference produces the narrower set.
