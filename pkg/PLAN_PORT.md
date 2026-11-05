@@ -737,6 +737,13 @@ including failed actions that must not leak partially updated state.
     of scope for the Go-only backend, so no Go pass/fail count is produced from them.
     Go equivalents need Go-backend fixtures derived from the same intent; the
     runtime transcripts are not a measure of the Go port.
+  - Progress 2026-11-04: the three io.md `run` error cases that pin
+    `--backend=rust` are backend-neutral (flag validation). With the flag removed,
+    the Go CLI matches the upstream exit code (1) and stderr exactly. Added as
+    Go-backend fixtures `flag_n_traces_exceeds_max_samples`,
+    `flag_n_traces_exceeds_default_max_samples`, and `flag_max_steps_repeated` in
+    `pkg/cli/testdata/run_transcripts.json`. Still open: `test`/`repl` Go fixtures
+    and stateful/MBT evaluator fixtures.
 
 Exit gate: users can run, test, and explore specifications using Go without a
 TypeScript or Rust evaluator process.

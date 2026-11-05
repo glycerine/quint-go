@@ -558,7 +558,7 @@
       "positive"
     ],
     "exitCode": 1,
-    "stdout": "[violation] Found an issue (<elapsed>ms at <rate> traces/second).\n  ❌ safe\nUse --seed=0x12 --backend=go to reproduce.\n",
+    "stdout": "[violation] Found an issue (<elapsed>ms at <rate> traces/second).\n  \u274c safe\nUse --seed=0x12 --backend=go to reproduce.\n",
     "stderr": "error: Invariant violated\n"
   },
   {
@@ -573,7 +573,7 @@
       "positive"
     ],
     "exitCode": 1,
-    "stdout": "[violation] Found an issue (<elapsed>ms at <rate> traces/second).\n  ❌ x < 2\nUse --seed=0x12 --backend=go to reproduce.\n",
+    "stdout": "[violation] Found an issue (<elapsed>ms at <rate> traces/second).\n  \u274c x < 2\nUse --seed=0x12 --backend=go to reproduce.\n",
     "stderr": "error: Invariant violated\n"
   },
   {
@@ -1049,5 +1049,42 @@
         }
       }
     ]
+  },
+  {
+    "name": "flag_n_traces_exceeds_max_samples",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 }",
+    "args": [
+      "--n-traces",
+      "10",
+      "--max-samples",
+      "5"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "--n-traces (10) cannot be greater than --max-samples (5).\n"
+  },
+  {
+    "name": "flag_n_traces_exceeds_default_max_samples",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 }",
+    "args": [
+      "--n-traces",
+      "20000"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "--n-traces (20000) cannot be greater than --max-samples (10000).\n"
+  },
+  {
+    "name": "flag_max_steps_repeated",
+    "source": "module Counter { var x:int action init=x'=0 action step=x'=x+1 }",
+    "args": [
+      "--max-steps",
+      "10",
+      "--max-steps",
+      "15"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "--max-steps can not be specified more than once\n"
   }
 ]
