@@ -1162,7 +1162,7 @@ TypeScript or Rust evaluator process.
     even when the final state differs from `states[loop]`; equality is not the
     right test. Tampered loop indexes are rejected. The `__saved_*` values are
     not exported in ITF, so the check is trace-side only.
-- [ ] P9.7 Implement `compile --target=tlaplus` through Go Apalache and port
+- [x] P9.7 Implement `compile --target=tlaplus` through Go Apalache and port
   `tlaplusPostprocessing.ts`; compare parsed TLA semantics and required textual
   output against reference fixtures.
   - [x] TLA API through the Go command service, typed preparation/backend
@@ -1179,7 +1179,8 @@ TypeScript or Rust evaluator process.
     reversed sequence at the Apalache CHECK and TLA boundaries; verify an
     order-sensitive fold through Go Apalache assignment IR and generated-TLA
     native TLC.
-  - [x] Lower finite `allListsUpTo` through existing set folds/maps/unions and
+  - [x] (Superseded 2026-11-05: Go now rejects `allListsUpTo` on the CHECK and TLA
+    paths, as upstream does.) Lower finite `allListsUpTo` through existing set folds/maps/unions and
     sequence append at both Apalache boundaries; check bounds two, zero and
     negative through assignment-IR Go Apalache and generated-TLA native TLC.
   - [x] Typed declarations print upstream-form `@type` comments through the Go
@@ -1205,11 +1206,7 @@ TypeScript or Rust evaluator process.
     that Go rejects without a source diagnostic. Upstream rejects the
     `foldr` and `allListsUpTo` shapes above with an Apalache-side "No entry
     found for id" lookup error that the Go adapters avoid, so these are
-    permissive divergences, not raw Go rejections. Still open for the owner:
-    (1) whether Go should match upstream's rejection of `allListsUpTo` on
-    non-literal or non-numeric shapes and with what diagnostic; (2) whether the
-    `/` and `%` sign-correcting lowering (`adaptTLAIntegerDivision`, `negdiv`
-    probe) matches the intended Quint semantics. Upstream accepts the unbounded
+    permissive divergences, not raw Go rejections. Decided 2026-11-05 (owner): Go matches upstream's rejection of every `allListsUpTo` use on the CHECK, TLA and verify paths, with the same three-line diagnostic, lookup ID and argument rendering (verified on five specs). Division: upstream's BigInt `/` and `%` truncate toward zero (`builtins.ts` `idiv`/`imod`), which the Go lowering already preserves, so that question is closed. Upstream accepts the unbounded
     `Nat` assignment, so an explicit failure there would diverge from upstream.
 - [x] P9.8 Implement the TLC decision from P0, including configuration, init
   conversion, generated module support, results, and temporal tests. Any
@@ -1598,6 +1595,8 @@ This follows the core CLI milestone but remains tracked for tooling parity.
   - [x] Full locked extension typecheck/lint/tests, Linux native VSIX packaging,
     archive/runtime verification and extracted Go/TypeScript lifecycle smoke.
   - [ ] Real VSCode host and macOS/Windows execution; reduce legacy TS dependency
+    (2026-11-05: macOS and Windows runs deferred by the owner; the VSCode host run
+    remains a user action)
     bloat in the dual-backend archive.
 
 Exit gate: the editor can analyze and navigate files through the Go frontend;

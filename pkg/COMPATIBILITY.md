@@ -48,7 +48,7 @@ operator/name, so successful decoding must not be counted as builtin support.
 | `get`, `keys`, `set`, `put`, `setBy` | implemented: concrete maps and retained children | signature | rule | translated |
 | `matchVariant` | implemented: lazy selected branch, wildcard, payload | special | rule | translated |
 | `getOnlyElement` | implemented: exact singleton/cardinality behavior | signature | rule | fallback |
-| `allListsUpTo` | implemented: source dispatch with shared object-hash state | signature | rule | lowered at Apalache CHECK/TLA boundary for finite inputs |
+| `allListsUpTo` | implemented: source dispatch with shared object-hash state | signature | rule | rejected at the Apalache CHECK/TLA/verify boundary, as upstream (same three-line QuintIR diagnostic; lookup ID and arguments match upstream) |
 | `setToMap` | implemented: source dispatch with shared object-hash state | signature | rule | translated |
 | `to` | implemented: compact inclusive integer interval | signature | rule | translated |
 | `powerset`, `tuples`, `setOfMaps` | implemented: compact domains, checked iteration/identity/display | signature | rule | translated |
