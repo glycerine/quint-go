@@ -174,7 +174,7 @@ reporting that evaluates expressions will also depend on P7.
 - [x] P0.6 Inspect the Go checker's exported entry points and Shai implementation;
   choose the smallest reusable production boundary for checking and TLA output.
   Identify any required upstream API exposure as a separate dependency task.
-- [ ] P0.7 Compare accepted JSON envelopes, types, opcodes, and configuration
+- [x] P0.7 Compare accepted JSON envelopes, types, opcodes, and configuration
   fields against this Quint revision. Record importer gaps and deliberate
   rejections with fixtures; do not infer full compatibility from an API name.
   Progress: the builtin opcode list matches upstream `builtinOpCodes` (93
@@ -207,12 +207,15 @@ reporting that evaluates expressions will also depend on P7.
     checks byte equality of the file. The `run`/`test` header matches
     `addItfHeader` (`TestUpstreamITFHeaders`), and `#meta.index`, `loop`, and
     `params` are covered by `verify_trace_test.go` and `verify_tlc_itf_test.go`.
-  - Still open for P0.7: configuration fields the commands accept beyond the
-    option-name checks above. Upstream `loadApalacheConfig` only parses the file
-    as JSON and passes every key through; Go rejects legacy keys with
+  - Configuration audit is closed. Upstream `loadApalacheConfig` only parses the
+    file as JSON and passes every key through; Go rejects legacy keys with
     upstream's diagnostic (`TestVerifyRejectsLegacyApalacheConfigBeforeChecking`)
     and validates the rest in the external `glycerine/apalache-go` parser. The
-    accepted-key inventory has not been audited yet.
+    accepted top-level and nested key sets match the Scala parser, and value
+    helpers match it for non-null values. The parser also rejects JSON `null`
+    for string, boolean, list, map, object, and `source` fields, as Scala does.
+    Regression cases are in `TestParseApalacheConfigJSONStrictSchemaAndEnums`
+    in the apalache-go module (`~/apalache/pkg`, uncommitted there).
 - [x] P0.8 Decide the TLC backend path: assess the existing Go `tlago/tlc`
   implementation for reuse, or document a separate optional external TLC
   mode. Do not retain an implicit Scala Apalache/JAR download dependency.
