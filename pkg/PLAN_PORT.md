@@ -1813,6 +1813,14 @@ any remaining TypeScript client code is distinguished from language-server logic
     allocations, `runtimeWithEntries`, and `RuntimeTrace.Shift` history retention,
     which needs a larger design change. Each is a separate item and is not yet
     scoped.
+    - 2026-11-05 tried and rejected: replacing `sort.SliceStable` with
+      `slices.SortStableFunc` for the `sortValues` entries in `normalizeValue`.
+      Max RSS at N=10000 over six alternating pairs: committed state 1,233,764 /
+      1,233,488 / 1,234,904 / 1,260,436 / 1,260,264 / 1,235,204 KB (mean about
+      1,243.0 MB) against 1,265,576 / 1,200,816 / 1,181,872 / 1,241,544 /
+      1,380,580 / 1,266,564 KB (mean about 1,256.2 MB) for the candidate. The
+      candidate's range (about 1.18–1.38 GB) is wider than the mean gap, and the
+      mean is higher, so it was reverted and not committed.
     - 2026-11-05 tried and rejected: presizing the Set dedup `values` slice in
       `normalizeValue` to `len(out.Args)`. Max RSS at N=10000 over three alternating
       pairs (`big_10000.qnt --seed=0x1 --backend=go`): committed state 1,257,568 /
