@@ -1785,6 +1785,17 @@ any remaining TypeScript client code is distinguished from language-server logic
       Peak heap objects at N=10000 averaged about 1,227 MB over four runs against
       about 1,199 MB for the committed state (1,192 / 1,216 / 1,188 MB), so it
       was reverted and not committed.
+    - 2026-11-05 identity key encoded directly on one stack buffer:
+      `normalizedValueKey` writes the JSON key into a single `[]byte` shared by
+      the whole tree instead of allocating a slice per child (keys are
+      byte-identical, checked by a temporary equivalence test that was deleted).
+      Peak heap objects at N=10000 over three runs: 1,139.4 / 1,182.1 / 1,154.9
+      MB (mean about 1,158.8 MB) against 1,235.7 / 1,178.7 / 1,225.8 MB (mean
+      about 1,213.4 MB) for the committed state, about 4.5% lower. Max RSS was
+      1,242.9 / 1,241.3 / 1,268.4 MB (mean about 1,250.9 MB) against 1,220.9 /
+      1,209.2 / 1,234.7 MB (mean about 1,221.6 MB), so RSS shows no measurable
+      gain and the ranges overlap. Gates: gofmt clean, `go vet ./...`,
+      `go test -count=1 ./...`, and `go test -race -count=1 .` passed.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.

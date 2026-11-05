@@ -192,18 +192,30 @@ func utf16Less(a, b string) bool {
 // Identity is independent of locale-sort ties: distinct Unicode strings may
 // collate equally, but sets/maps still compare by their exact values.
 func normalizedValueKey(value Expr) string {
-	return string(appendNormalizedValueKey(nil, value))
+	return string(appendKeyOnStack(nil, value))
 }
 
-func appendNormalizedValueKey(dst []byte, value Expr) []byte {
-	var localChildren [8][]byte
-	children := localChildren[:]
-	if len(value.Args) > len(localChildren) {
-		children = make([][]byte, len(value.Args))
-	} else {
-		children = children[:len(value.Args)]
+// appendKeyOnStack appends the identity key of value to stack and returns the
+// extended stack. The key occupies stack[len(stack_in):]. Children are written
+// onto the same stack, then each is escaped into the parent's key and removed,
+// so one buffer serves the whole tree instead of one slice per child.
+func appendKeyOnStack(stack []byte, value Expr) []byte {
+	base := len(stack)
+	var localSpans [8][2]int
+	spans := localSpans[:0]
+	if len(value.Args) > len(localSpans) {
+		spans = make([][2]int, 0, len(value.Args))
 	}
-	capacity := len(value.Kind) + len(value.Opcode) + 16
+	for _, child := range value.Args {
+		start := len(stack)
+		stack = appendKeyOnStack(stack, child)
+		spans = append(spans, [2]int{start, len(stack)})
+	}
+	if value.Opcode == "Set" || value.Opcode == "Map" {
+		slices.SortFunc(spans, func(a, b [2]int) int {
+			return bytes.Compare(stack[a[0]:a[1]], stack[b[0]:b[1]])
+		})
+	}
 	literal := ""
 	switch value.Kind {
 	case "int":
@@ -216,41 +228,34 @@ func appendNormalizedValueKey(dst []byte, value Expr) []byte {
 			literal = "true"
 		}
 	}
-	capacity += len(literal)
-	for i, child := range value.Args {
-		children[i] = appendNormalizedValueKey(nil, child)
-		// Child keys are already valid JSON with HTML/separators escaped.
-		// Only their quotes and backslashes need another escaping level.
-		capacity += len(children[i]) + 3 + bytes.Count(children[i], []byte{'"'}) + bytes.Count(children[i], []byte{'\\'})
-	}
-	if cap(dst)-len(dst) < capacity {
-		grown := make([]byte, len(dst), len(dst)+capacity)
-		copy(grown, dst)
-		dst = grown
-	}
-	dst = append(dst, '[')
-	dst = appendValueKeyString(dst, value.Kind)
-	dst = append(dst, ',')
-	dst = appendValueKeyString(dst, value.Opcode)
+	out := len(stack)
+	stack = append(stack, '[')
+	stack = appendValueKeyString(stack, value.Kind)
+	stack = append(stack, ',')
+	stack = appendValueKeyString(stack, value.Opcode)
 	switch value.Kind {
-	case "int":
-		dst = append(dst, ',')
-		dst = appendValueKeyString(dst, literal)
-	case "str":
-		dst = append(dst, ',')
-		dst = appendValueKeyString(dst, literal)
-	case "bool":
-		dst = append(dst, ',')
-		dst = appendValueKeyString(dst, literal)
+	case "int", "str", "bool":
+		stack = append(stack, ',')
+		stack = appendValueKeyString(stack, literal)
 	}
-	if value.Opcode == "Set" || value.Opcode == "Map" {
-		slices.SortFunc(children, bytes.Compare)
+	for _, span := range spans {
+		stack = append(stack, ',', '"')
+		// Child keys are already valid JSON with HTML/separators escaped, and
+		// are never invalid UTF-8 or raw control bytes. Only their quotes and
+		// backslashes need another escaping level, as jsontext.AppendQuote
+		// would produce.
+		for i := span[0]; i < span[1]; i++ {
+			c := stack[i]
+			if c == '"' || c == '\\' {
+				stack = append(stack, '\\')
+			}
+			stack = append(stack, c)
+		}
+		stack = append(stack, '"')
 	}
-	for _, child := range children {
-		dst = append(dst, ',')
-		dst, _ = jsontext.AppendQuote(dst, child)
-	}
-	return append(dst, ']')
+	stack = append(stack, ']')
+	n := copy(stack[base:], stack[out:])
+	return stack[:base+n]
 }
 
 // Preserve the original json.Marshal([]string) identity bytes, including HTML,
