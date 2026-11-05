@@ -1056,6 +1056,8 @@ any remaining TypeScript client code is distinguished from language-server logic
     public-path cancellation coverage audit. On 2026-11-04 the applied-lambda
     generated-TLA check exceeded a 10-second deadline only under `-race` (3.5s
     without it); its deadline is now 60 seconds, and the race suite passes again.
+    On 2026-11-04 `go vet ./...` (exit 0), `go test -race ./...`, and
+    `QUINT_CORPUS_TESTS=1 go test ./backend/apalache/` all passed from `pkg/`.
   - [x] LSP stream/job/close/wait lifecycle and REPL final-success cancellation
     preserve owned resources and pending state with deterministic regressions.
   - [x] Semantic requests are bound to their document generation; in-flight
