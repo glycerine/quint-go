@@ -208,7 +208,7 @@ func TestREPLFileHostUsesSharedStateLoop(t *testing.T) {
 	write.Close()
 	var out, stderr bytes.Buffer
 	status := runREPL(ctx, input.Next, &out, &stderr, REPLLoopOptions{Quiet: true})
-	if status != 0 || out.String() != "\ntrue\n1\n" || stderr.Len() != 0 {
+	if status != 0 || out.String() != "\ntrue\n1\n\n" || stderr.Len() != 0 {
 		t.Fatal(status, out.String(), stderr.String())
 	}
 	if _, err := read.Stat(); err != nil {
@@ -232,7 +232,7 @@ func TestREPLProcessHostReadsBorrowedFile(t *testing.T) {
 	signals := make(chan os.Signal)
 	close(signals)
 	status := executeWithSignalEvents(context.Background(), []string{"repl", "-q", "--seed=17"}, read, &out, &stderr, signals)
-	if status != 0 || out.String() != "\n42\n" || stderr.Len() != 0 {
+	if status != 0 || out.String() != "\n42\n\n" || stderr.Len() != 0 {
 		t.Fatal(status, out.String(), stderr.String())
 	}
 	if _, err := read.Stat(); err != nil {

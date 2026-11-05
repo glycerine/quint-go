@@ -77,16 +77,16 @@ func TestREPLEventBoundaries(t *testing.T) {
 		status       int
 		out, message string
 	}{
-		{"closed", nil, 0, "", ""},
-		{"eof", []REPLInputEvent{{Kind: REPLInputEOF}, {Line: "42"}}, 0, "", ""},
+		{"closed", nil, 0, "\n", ""},
+		{"eof", []REPLInputEvent{{Kind: REPLInputEOF}, {Line: "42"}}, 0, "\n", ""},
 		{"pending_eof", []REPLInputEvent{{Line: "{"}, {Kind: REPLInputEOF}}, 1, "", "Unexpected end of input"},
-		{"pending_interrupt_eof", []REPLInputEvent{{Line: "{"}, {Kind: REPLInputInterrupt}, {Kind: REPLInputEOF}}, 0, " <cancelled>\n", ""},
+		{"pending_interrupt_eof", []REPLInputEvent{{Line: "{"}, {Kind: REPLInputInterrupt}, {Kind: REPLInputEOF}}, 0, " <cancelled>\n\n", ""},
 		{"invalid", []REPLInputEvent{{Kind: REPLInputKind(255)}}, 1, "", "unknown REPL input event kind 255"},
 		{"input_error", []REPLInputEvent{{Err: failure, Line: "42"}}, 1, "", "input failed"},
 		{"interrupt_error", []REPLInputEvent{{Kind: REPLInputInterrupt, Err: failure}}, 1, "", "input failed"},
 		{"exit", []REPLInputEvent{{Line: ".exit"}, {Line: "42"}}, 0, "", ""},
-		{"abandoned_definition", []REPLInputEvent{{Line: "{"}, {Line: "pure val forgotten=1"}, {Kind: REPLInputInterrupt}, {Line: "forgotten"}, {Line: "42"}}, 0, " <cancelled>\n42\n", "Name 'forgotten' not found"},
-		{"paste_interrupt", []REPLInputEvent{{Line: ">>> {"}, {Line: "... 1"}, {Kind: REPLInputInterrupt}, {Line: "42"}}, 0, " <cancelled>\n42\n", ""},
+		{"abandoned_definition", []REPLInputEvent{{Line: "{"}, {Line: "pure val forgotten=1"}, {Kind: REPLInputInterrupt}, {Line: "forgotten"}, {Line: "42"}}, 0, " <cancelled>\n42\n\n", "Name 'forgotten' not found"},
+		{"paste_interrupt", []REPLInputEvent{{Line: ">>> {"}, {Line: "... 1"}, {Kind: REPLInputInterrupt}, {Line: "42"}}, 0, " <cancelled>\n42\n\n", ""},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()

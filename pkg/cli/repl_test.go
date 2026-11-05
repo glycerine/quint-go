@@ -19,9 +19,9 @@ func TestREPLQuietDefinitionsMultilineAndPastedOutput(t *testing.T) {
 		{"values", "val x = 2\nx + 3\n.exit\n99\n", "\n5\n"},
 		{"multiline", "{\nval x = 2\nx + 1\n}\n\n.exit\n", "3\n"},
 		{"pasted", ">>> 1 + 2\n3\n4\n.quit\n", "3\n4\n"},
-		{"comments", "// comment\n\n/* comment\nmore */\n\n1\n", "1\n"},
-		{"history", "val x = 2\nx + 1\n.history\n.clear\n.history\n", "\n3\nval x = 2\nx + 1\n\n"},
-		{"seed", ".seed=0x2a\n.seed\n.clear\n.seed\n", ".seed=42\n\n.seed=42\n"},
+		{"comments", "// comment\n\n/* comment\nmore */\n\n1\n", "1\n\n"},
+		{"history", "val x = 2\nx + 1\n.history\n.clear\n.history\n", "\n3\nval x = 2\nx + 1\n\n\n"},
+		{"seed", ".seed=0x2a\n.seed\n.clear\n.seed\n", ".seed=42\n\n.seed=42\n\n"},
 		{"exitMultiline", "{\n.exit\n", ""},
 	} {
 		t.Run(test.name, func(t *testing.T) {
@@ -39,7 +39,7 @@ func TestREPLErrorsKeepSessionUsable(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	input := "val x = 2\nx + true\nx\n.load\n.reload\n.save\n.verbosity=9\n.seed=-1\n.nope\n1\n"
 	status := RunREPL(context.Background(), strings.NewReader(input), &stdout, &stderr, REPLLoopOptions{Quiet: true})
-	if status != 0 || !strings.Contains(stdout.String(), "2\n.save requires a filename\n") || !strings.HasSuffix(stdout.String(), "1\n") {
+	if status != 0 || !strings.Contains(stdout.String(), "2\n.save requires a filename\n") || !strings.HasSuffix(stdout.String(), "1\n\n") {
 		t.Fatalf("status=%d stdout=%q stderr=%q", status, stdout.String(), stderr.String())
 	}
 	for _, want := range []string{".load requires", "reload", ".verbosity requires", ".seed requires", "Unexpected command"} {
@@ -81,7 +81,7 @@ func TestREPLLoadReloadAndState(t *testing.T) {
 	stdout.Reset()
 	stderr.Reset()
 	status = RunREPL(context.Background(), strings.NewReader(".load "+file+" M\nanswer\n"), &stdout, &stderr, REPLLoopOptions{Quiet: true})
-	if status != 0 || stderr.Len() != 0 || stdout.String() != "42\n" {
+	if status != 0 || stderr.Len() != 0 || stdout.String() != "42\n\n" {
 		t.Fatalf("status=%d stdout=%q stderr=%q", status, stdout.String(), stderr.String())
 	}
 	status = RunREPL(context.Background(), strings.NewReader(""), &stdout, &stderr, REPLLoopOptions{Quiet: true, Require: file + ".missing"})

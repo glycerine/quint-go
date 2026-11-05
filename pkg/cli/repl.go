@@ -293,6 +293,10 @@ func runREPL(ctx context.Context, next replNextInput, stdout, stderr io.Writer, 
 			return 1
 		}
 		if event.Kind == REPLInputEOF {
+			// Upstream shutdownAndExit writes a final newline when stdin closes.
+			if pending == "" {
+				out("\n")
+			}
 			break
 		}
 		if event.Kind == REPLInputInterrupt {

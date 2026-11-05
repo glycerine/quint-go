@@ -226,6 +226,19 @@ const replStreamDeviation = "Go REPL writes error blocks to stderr; upstream Typ
 // from the upstream TypeScript transcript text.
 const replPromptDeviation = "Go REPL banner and prompt-echo format differ from the upstream TypeScript transcript"
 
+// replDebugFormatDeviation: Go's q::debug writes "> label value" lines (the
+// TypeScript REPL format), while the Rust transcript expects "[DEBUG] label value".
+const replDebugFormatDeviation = "Go prints q::debug as '> label value' (TypeScript format); Rust prints '[DEBUG] ...' (output format, not evaluation)"
+
+// replVerbosityDeviation: Rust silences q::debug at verbosity 1 and prints it at
+// level 3. Go's REPL DebugWriter is set once and ignores the level, so q::debug
+// stays visible at every level. Gating it would change pinned Go tests.
+const replVerbosityDeviation = "Go REPL q::debug ignores verbosity (always visible); Rust gates it at verbosity >= 3. Gating would change pinned Go debug tests"
+
+// replMalformedWordingDeviation: Go reports malformed input as QNT000 on stderr
+// and exits 0; the Rust transcript expects its "syntax error:" wording.
+const replMalformedWordingDeviation = "Go reports malformed expressions as QNT000 on stderr with exit 0; Rust expects 'syntax error:' wording"
+
 // transcriptKnownDeviations lists upstream transcript cases that the Go port
 // documents as deliberate or blocked differences. Keys are "file/case name".
 // Each case still runs, and fails the test if it starts matching upstream.
@@ -249,6 +262,25 @@ var transcriptKnownDeviations = map[string]string{
 	"integration-tests/runtime/typescript/repl.md/compile instances":                                 replPromptDeviation,
 	"integration-tests/runtime/typescript/repl.md/repl with instance vars":                           replPromptDeviation,
 	"integration-tests/runtime/typescript/repl.md/repl diff":                                         replPromptDeviation,
+	"integration-tests/runtime/rust/repl.md/repl loads a file and a module":                          replPromptDeviation,
+	"integration-tests/runtime/rust/repl.md/repl loads module that is not the last":                  replPromptDeviation,
+	"integration-tests/runtime/rust/repl.md/repl resolves imports relative to the loaded file":       replPromptDeviation,
+	"integration-tests/runtime/rust/repl.md/repl loads a module directly":                            replPromptDeviation,
+	"integration-tests/runtime/rust/repl.md/repl evaluates coin":                                     replPromptDeviation,
+	"integration-tests/runtime/rust/repl.md/compile imports":                                         replPromptDeviation,
+	"integration-tests/runtime/rust/repl.md/compile instances":                                       replPromptDeviation,
+	"integration-tests/runtime/rust/repl.md/repl with instance vars":                                 replPromptDeviation,
+	"integration-tests/runtime/rust/repl.md/repl diff":                                               replPromptDeviation,
+	"integration-tests/runtime/rust/repl.md/repl reload resets state":                                replPromptDeviation,
+	"integration-tests/runtime/rust/repl.md/repl works after name error":                             replStreamDeviation,
+	"integration-tests/runtime/rust/repl.md/repl works after unknown type alias error":               replStreamDeviation,
+	"integration-tests/runtime/rust/repl.md/repl works after type application arity error":           replStreamDeviation,
+	"integration-tests/runtime/rust/repl.md/repl works after conflict":                               replStreamDeviation,
+	"integration-tests/runtime/rust/repl.md/repl works after type errors":                            replStreamDeviation,
+	"integration-tests/runtime/rust/repl.md/regression 428":                                          replStreamDeviation,
+	"integration-tests/runtime/rust/repl.md/repl malformed expressions":                              replMalformedWordingDeviation,
+	"integration-tests/runtime/rust/repl.md/repl debug prints value to stdout and returns value":     replDebugFormatDeviation,
+	"integration-tests/runtime/rust/repl.md/repl testOnce verbosity":                                 replVerbosityDeviation,
 	"integration-tests/verification.md/can convert ApalacheCompliation.qnt to TLA+":                  "P0.4 / pinned printer: Variants! qualifier and line wrapping differ from upstream",
 	"integration-tests/runtime/typescript/test.md/test runs":                                         "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
 	"integration-tests/runtime/typescript/test.md/test empty trace":                                  "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",

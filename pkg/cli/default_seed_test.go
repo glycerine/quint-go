@@ -90,7 +90,7 @@ func TestREPLDefaultSeedRangeAndExplicitReplay(t *testing.T) {
 	if code := RunREPL(context.Background(), strings.NewReader(".seed\n"), &stdout, &stderr, REPLLoopOptions{Quiet: true}); code != 0 || stderr.Len() != 0 {
 		t.Fatal(code, stdout.String(), stderr.String())
 	}
-	seedText := strings.TrimSuffix(strings.TrimPrefix(stdout.String(), ".seed="), "\n")
+	seedText := strings.TrimSuffix(strings.TrimPrefix(stdout.String(), ".seed="), "\n\n")
 	seed, err := quint.ParseSeed(seedText)
 	if err != nil {
 		t.Fatal(err, stdout.String())
@@ -100,7 +100,7 @@ func TestREPLDefaultSeedRangeAndExplicitReplay(t *testing.T) {
 	if code := RunREPL(context.Background(), strings.NewReader(".seed\n.clear\n.seed\n"), &stdout, &stderr, REPLLoopOptions{Quiet: true, Seed: &seed}); code != 0 || stderr.Len() != 0 {
 		t.Fatal(code, stdout.String(), stderr.String())
 	}
-	if want := ".seed=" + seed.String() + "\n\n.seed=" + seed.String() + "\n"; stdout.String() != want {
+	if want := ".seed=" + seed.String() + "\n\n.seed=" + seed.String() + "\n\n"; stdout.String() != want {
 		t.Fatal("explicit seed or .clear changed the replay state", stdout.String(), want)
 	}
 }
