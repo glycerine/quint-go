@@ -1215,7 +1215,7 @@ TypeScript or Rust evaluator process.
     test is required. `--server-endpoint` and `--apalache-version` are rejected
     with "unsupported by the in-process Go Apalache backend"
     (`cli/cli_test.go`, `cli/verify_test.go`, `cli/verify_upstream_flags_test.go`).
-- [ ] P9.10 Propagate cancellation, solver unknown/resource exhaustion, invalid
+- [x] P9.10 Propagate cancellation, solver unknown/resource exhaustion, invalid
   models, and backend errors distinctly from successful bounded checks. Close
   solver sessions, connections, temporary files, and owned child processes.
   - [x] Real Go Apalache CHECK/TLA service cancellation remains a context error;
@@ -1238,8 +1238,24 @@ TypeScript or Rust evaluator process.
     Known limit: `TMPDIR` is process-global for the length of a native check, so
     concurrent non-TLC code that reads `TMPDIR` during that window sees the
     metadata directory.
-  - [ ] Solver/session lifecycle audit beyond the native TLC resolver remains
-    open under P9.10.
+  - [x] Solver/session lifecycle audit beyond the native TLC resolver (2026-11-05).
+    Audited paths: Apalache CHECK/TLA run in-process through `shai` services with
+    no sockets, connections, or quint-go-owned child processes;
+    `internal/oraclectl` (the only `exec.Command` in the Apalache library) is used
+    solely by the `apalache-oracle` command, not by the Go executor. Apalache
+    `shai`, `frontend`, `frontend_stdlib`, `exploration_service`, `config_json`
+    and `oraclectl` temp directories are each removed with `defer`/cleanup.
+    TLC metadata, the `TMPDIR` restore, the cancellation watcher join, and the
+    `ownership` semaphore were reviewed in `backend/tlc/check.go`.
+    Defect found and fixed: `TestScalaTuningCensusOutcomesStable` passes the
+    census key `z3.trace=true` through `ParseCheckerTuning`, which makes g3 write
+    its default `z3.log` trace file into the working directory. The test ran in
+    the package source directory, so every run left an untracked
+    `backend/apalache/z3.log`. The test now runs under `t.Chdir(t.TempDir())`,
+    and a run leaves no `z3.log` in the package directory.
+    Known limit: a user tuning that sets `z3.trace=true` still writes `z3.log`
+    into the process working directory. That is the documented behavior of g3
+    and the owner may decide whether to reject or redirect it.
 - [x] P9.11 Exercise safe/unsafe/deadlocked specifications, zero/one-step bounds,
   induction, temporal properties, nested modules, large values, malformed IR,
   unsupported opcodes, and backend failures through the actual Go checker.

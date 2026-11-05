@@ -3,6 +3,7 @@ package apalache
 import (
 	"bufio"
 	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -22,7 +23,15 @@ import (
 // A change in any outcome means either g3 or the Go parser changed. Review it
 // before updating testdata/scala_tuning_census.tsv.
 func TestScalaTuningCensusOutcomesStable(t *testing.T) {
-	f, err := os.Open("testdata/scala_tuning_census.tsv")
+	// The census includes z3.trace=true, which makes g3 write its default
+	// "z3.log" trace file into the working directory. Run in a temporary
+	// directory so validation never leaves that file in the package source tree.
+	fixture, err := filepath.Abs("testdata/scala_tuning_census.tsv")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Chdir(t.TempDir())
+	f, err := os.Open(fixture)
 	if err != nil {
 		t.Fatal(err)
 	}
