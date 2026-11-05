@@ -1190,7 +1190,7 @@ TypeScript or Rust evaluator process.
       module cache must not be edited.
     - Not started: parity claims beyond the covered fixtures; this item stays open
       until the tlago preemption decision is made.
-- [ ] P9.9 Replace Scala version/download/launch behavior. Define Go backend
+- [x] P9.9 Replace Scala version/download/launch behavior. Define Go backend
   selection/version reporting and the treatment of legacy endpoint/version
   flags; test Go gRPC compatibility if endpoint mode is retained.
   - [x] Default in-process Go backend and explicit legacy endpoint/Scala version
@@ -1200,6 +1200,10 @@ TypeScript or Rust evaluator process.
   - [x] Document backend selection/defaults, aliases, per-backend config and
     control support, legacy flag rejection, and VersionInfo behavior in the
     compatibility matrix; CLI tests cover the selection and rejection paths.
+  - [x] 2026-11-05: the endpoint mode is not retained, so no gRPC compatibility
+    test is required. `--server-endpoint` and `--apalache-version` are rejected
+    with "unsupported by the in-process Go Apalache backend"
+    (`cli/cli_test.go`, `cli/verify_test.go`, `cli/verify_upstream_flags_test.go`).
 - [ ] P9.10 Propagate cancellation, solver unknown/resource exhaustion, invalid
   models, and backend errors distinctly from successful bounded checks. Close
   solver sessions, connections, temporary files, and owned child processes.
@@ -1234,7 +1238,7 @@ TypeScript or Rust evaluator process.
   - [x] Malformed/unsupported checker input, cancellation, unknown/resource
     exhaustion and backend failures preserve no-verdict/error distinctions:
     `input_boundary_test.go`, `resource_test.go` and `resource_outcomes_test.go`.
-- [ ] P9.12 Compare Go and reference verification verdicts at identical bounds.
+- [x] P9.12 Compare Go and reference verification verdicts at identical bounds.
   Validate counterexample transitions and violated properties independently;
   accept different valid witnesses rather than requiring identical solver models.
   - [x] Opt-in six-model corpus compares actual Go Apalache assignment-IR and
@@ -1252,7 +1256,7 @@ TypeScript or Rust evaluator process.
     and the Go Apalache checker agree on the verdict for all eight fixtures at
     lengths 0-4 (40 pairs, `testdata/reference/bounds/compare.sh`, rerun
     2026-11-04 with exit 0). Scala length N and Go `--max-steps N` bound the same
-    transitions. The native TLC half remains exhaustive, so the item stays open.
+    transitions. The native TLC bounded half is covered by the next entry.
   - [x] 2026-11-04: reference-checker counterexamples are validated too.
     `compare.sh` keeps each Scala `violation*.itf.json` for every `ERROR (12)` bound
     (found with `find`) and passes it through `validate_witness.py` alongside the Go
@@ -1267,8 +1271,18 @@ TypeScript or Rust evaluator process.
     (counter3, guard, jump, sum, tlcCounter, toggle, twovar). The validator also
     accepts deadlock witnesses: tlcCounter reaches counter=3, where its only step
     guard `counter < 3` is false. Tampered traces are rejected (negative tests run).
-    The corpus is still eight fixtures, and the native TLC bounded comparison is
-    still missing, so the item stays open.
+    The corpus is still eight fixtures.
+  - [x] 2026-11-05: the native TLC bounded side has a witness check.
+    `TestBoundedTLCWitnessesValidate` (`backend/tlc/bounded_test.go`) takes every
+    TLC violation and deadlock trace from the bounded fixtures at N=1-4, converts
+    the TLA-syntax values to ITF JSON, and passes them to `validate_witness.py`
+    with `python3 -I`. The validator restates each spec by hand. Twelve TLC
+    witnesses are accepted. This test is skipped when `python3` is absent.
+  - Known limit: the TLC expected verdicts in `TestBoundedVerdictsMatchReferenceChecker`
+    are the recorded Scala results, not a live Scala run. `compare.sh` runs
+    Scala and Go only. Making TLC part of the live script needs a bounded TLC
+    entry point in the Quint CLI, which refuses `--max-steps` for `--backend tlc`
+    (user decision, see the open owner decisions).
 
 Exit gate: source-to-verification and source-to-TLA workflows use Go Apalache,
 with no automatic fallback to the Scala checker. A bounded success is reported

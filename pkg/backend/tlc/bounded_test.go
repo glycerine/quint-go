@@ -2,8 +2,12 @@ package tlc
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"strconv"
 	"testing"
 )
 
@@ -52,6 +56,88 @@ func TestBoundedVerdictsMatchReferenceChecker(t *testing.T) {
 			}
 		})
 	}
+}
+
+// tlaValueToITF converts the TLA-syntax values in a native trace to ITF JSON for
+// the boolean and integer variables in the bounded fixtures.
+func tlaValueToITF(t *testing.T, value string) any {
+	t.Helper()
+	switch value {
+	case "TRUE":
+		return true
+	case "FALSE":
+		return false
+	}
+	n, err := strconv.ParseInt(value, 10, 64)
+	if err != nil {
+		t.Fatalf("unsupported witness value %q", value)
+	}
+	return map[string]string{"#bigint": fmt.Sprint(n)}
+}
+
+// TestBoundedTLCWitnessesValidate passes every TLC violation and deadlock trace
+// from the bounded fixtures to the independent witness validator. The validator
+// restates each spec by hand, so it does not trust TLC's own state evaluation.
+func TestBoundedTLCWitnessesValidate(t *testing.T) {
+	python, err := exec.LookPath("python3")
+	if err != nil {
+		t.Skip("python3 not available for independent witness validation")
+	}
+	validator, err := filepath.Abs(filepath.Join("..", "..", "testdata", "reference", "bounds", "validate_witness.py"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	dir := t.TempDir()
+	var args []string
+	for _, fixture := range boundedVerdicts {
+		source, err := os.ReadFile(filepath.Join("testdata", "bounded", fixture.name+".tla"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		for n := 1; n <= 4; n++ {
+			outcome := fixture.outcomes[n-1]
+			if outcome != Violation && outcome != Deadlock {
+				continue
+			}
+			result, err := CheckTLA(context.Background(), fixture.name+".tla", string(source), Options{
+				Init: "q_init", Next: "q_step", Invariants: []string{"q_inv"},
+				CheckDeadlock: true, MaxSteps: n,
+			})
+			if err != nil {
+				t.Fatalf("%s N=%d: %v", fixture.name, n, err)
+			}
+			if len(result.Trace) == 0 {
+				t.Fatalf("%s N=%d: %s verdict has no counterexample trace", fixture.name, n, outcome)
+			}
+			witness := struct {
+				States []map[string]any `json:"states"`
+			}{}
+			for _, state := range result.Trace {
+				values := map[string]any{}
+				for _, a := range state.Values {
+					values[a.Name] = tlaValueToITF(t, a.Value)
+				}
+				witness.States = append(witness.States, values)
+			}
+			data, err := json.Marshal(witness)
+			if err != nil {
+				t.Fatal(err)
+			}
+			path := filepath.Join(dir, fmt.Sprintf("%s-%d.itf.json", fixture.name, n))
+			if err := os.WriteFile(path, data, 0600); err != nil {
+				t.Fatal(err)
+			}
+			args = append(args, fixture.name+"="+path)
+		}
+	}
+	if len(args) == 0 {
+		t.Fatal("no violation or deadlock witnesses were produced")
+	}
+	out, err := exec.Command(python, append([]string{"-I", validator}, args...)...).CombinedOutput()
+	if err != nil {
+		t.Fatalf("witness validation failed: %v\n%s", err, out)
+	}
+	t.Logf("%s", out)
 }
 
 func TestBoundedOptionsValidation(t *testing.T) {
