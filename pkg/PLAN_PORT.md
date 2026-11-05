@@ -1495,7 +1495,8 @@ Build these items alongside the phases that supply their command behavior.
     Opt-in `TestUpstreamIntegrationTranscripts` (`QUINT_CORPUS_TESTS=1`) runs the
     executable `in` blocks of `lang/io.md` and `verification.md` against the Go binary
     and compares exit, stdout and stderr exactly, as txm does. Default suite result:
-    88 pass, 0 fail, 3 skipped as recorded known deviations. Legacy Apalache config
+    88 pass, 0 fail, 3 skipped as recorded known deviations (re-run 2026-11-05 with
+    `QUINT_CORPUS_TESTS=1`: exit 0, 121.7 s, same counts). Legacy Apalache config
     keys now use the sibling checker's upstream diagnostic before any checker runs
     (`cli/verify_legacy_config_test.go`). The skipped deviations are deliberate port
     scope or known differences: explicit `--server-endpoint` rejection, Go TLC
@@ -1985,9 +1986,12 @@ any remaining TypeScript client code is distinguished from language-server logic
     suite for `pkg/` on linux/amd64, linux/arm64, darwin/arm64, and
     windows/amd64. Added 2026-11-05; the Linux steps were run locally, and the
     other runners have not yet run it, so those legs are unverified.
-  - [ ] Reproducible grammar job: `pkg/grammar/generate.py --check` is not in CI.
-    The pinned ANTLR 4.13.2 jar was fetched to the scratchpad and its SHA-256
-    matches, but running the generator was denied, so the check has not run.
+  - [x] Reproducible grammar job (2026-11-05): `.github/workflows/test-go.yml` has a
+    `grammar` job that downloads the pinned ANTLR 4.13.2 jar, verifies its SHA-256,
+    and runs `pkg/grammar/generate.py --check` with no checker checkout. Locally,
+    with the owner-approved run, `--check` printed "Both generated parsers match the
+    committed files" (exit 0) and left the tree unchanged. The job itself has not run
+    on GitHub; it is `workflow_dispatch`-only, like the rest of this workflow.
   - [ ] Publish/pin the checker revision before automatic CI and release builds
     (owner decision, P0.4).
 - [ ] P12.7 Package `cmd/quint`, embedded assets, licenses/notices, version

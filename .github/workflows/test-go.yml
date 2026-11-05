@@ -57,3 +57,30 @@ jobs:
           python3 quint-go/pkg/scripts/smoke-go.py \
             --quint "$RUNNER_TEMP/quint-go-bin/quint" \
             --lsp "$RUNNER_TEMP/quint-go-bin/quint-lsp"
+  grammar:
+    # Regenerates both Go parsers from the pinned ANTLR tool and fails if the
+    # committed output differs. It needs no checker checkout.
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out Quint
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch and verify the pinned ANTLR tool
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/antlr-4.13.2-complete.jar" \
+            https://www.antlr.org/download/antlr-4.13.2-complete.jar
+          echo "eae2dfa119a64327444672aff63e9ec35a20180dc5b8090b7a6ab85125df4d76  $RUNNER_TEMP/antlr-4.13.2-complete.jar" | sha256sum -c -
+      - name: Check generated parsers are reproducible
+        working-directory: pkg
+        run: >-
+          python3 grammar/generate.py
+          --jar "$RUNNER_TEMP/antlr-4.13.2-complete.jar" --check
