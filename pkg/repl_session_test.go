@@ -126,6 +126,24 @@ func TestREPLSessionStateCommitsAndDefinitionEdits(t *testing.T) {
 	replEvaluate(t, session, "q::lastTrace.length()", "3")
 }
 
+// A top-level q::testOnce names action definitions whose bodies read state
+// variables that init has already bound. It must not evaluate those actions
+// before the simulation binds the variables (QNT502 "Variable n not set").
+func TestREPLSessionTestOnceBindsActionStateVariables(t *testing.T) {
+	t.Parallel()
+	ctx := context.Background()
+	path := filepath.Join(t.TempDir(), "plain.qnt")
+	source := "module plain {\n  var n: int\n  action init = n' = 0\n  action step = n' = n + 1\n  val inv = n < 3\n}\n"
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	session := NewREPLSession()
+	if err := session.Load(ctx, path, "plain"); err != nil {
+		t.Fatal(err)
+	}
+	replEvaluate(t, session, "q::testOnce(10, 1, init, step, inv)", `"violation"`)
+}
+
 func TestREPLSessionLoadImportsReloadAndClear(t *testing.T) {
 	t.Parallel()
 	ctx := context.Background()

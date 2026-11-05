@@ -140,7 +140,14 @@ func (s *REPLSession) Evaluate(ctx context.Context, text string) (REPLResult, er
 		return result, err
 	}
 	pending := s.runtime.Storage.Snapshot()
-	result.Value, err = s.runtime.Evaluate(ctx, "q::input", nil)
+	// A top-level q::test/q::testOnce must reach the simulation adapter directly.
+	// Evaluating it as a definition would eagerly evaluate the action arguments
+	// before their state variables are bound.
+	if parsed.Expr.Kind == "app" && RuntimeCombinatorArity(parsed.Expr.Opcode) != 0 {
+		result.Value, err = s.runtime.EvaluateExpression(ctx, *parsed.Expr)
+	} else {
+		result.Value, err = s.runtime.Evaluate(ctx, "q::input", nil)
+	}
 	if cancelled := ctx.Err(); cancelled != nil {
 		s.runtime.Storage.Recover(pending)
 		result.Value = RuntimeValue{}
