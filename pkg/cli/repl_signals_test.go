@@ -5,6 +5,7 @@ import (
 	"context"
 	"io"
 	"os"
+	"strings"
 	"testing"
 )
 
@@ -60,5 +61,18 @@ func TestREPLProcessEntryAndInputErrors(t *testing.T) {
 	write.Close()
 	if _, err := replInputFD(read); err == nil {
 		t.Fatal("closed process input accepted")
+	}
+}
+
+// ExecuteWithSignals must report the caller's cancellation before running the
+// command, so a pre-cancelled context produces no command output.
+func TestExecuteWithSignalsRejectsCancelledContext(t *testing.T) {
+	t.Parallel()
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	var stdout, stderr bytes.Buffer
+	status := ExecuteWithSignals(ctx, []string{"--version"}, nil, &stdout, &stderr)
+	if status != 1 || stdout.Len() != 0 || !strings.Contains(stderr.String(), "context canceled") {
+		t.Fatal(status, stdout.String(), stderr.String())
 	}
 }

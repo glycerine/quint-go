@@ -1131,9 +1131,13 @@ any remaining TypeScript client code is distinguished from language-server logic
     `CheckTLA`) either check the caller's context first or delegate to a checked
     path. Pre-cancelled tests now pin `Check`, `Run`, `FindViolatedInvariants`
     (`backend/apalache/public_cancellation_test.go`) and `CheckTLA`
-    (`backend/tlc/public_cancellation_test.go`). The remaining exported
-    context-taking functions in `cli`, `lsp`, `terminal`, and the runtime
-    (about 50 across `pkg/*.go` and `cli/`) are not yet audited. Still open:
+    (`backend/tlc/public_cancellation_test.go`). In `cli`, `Execute`,
+    `RunREPL`, `RunREPLEvents`, and `ExecuteWithSignals` now each have a
+    pre-cancelled test (`cli_test.go`, `repl_test.go`, `repl_events_test.go`,
+    `repl_signals_test.go`); `WithTerminalOptions` only wraps the context and
+    does no work. The remaining exported context-taking functions in `lsp`,
+    `terminal`, and the runtime (about 50 across `pkg/*.go` and `cli/`) are not
+    yet audited. Still open:
     `TestJavaScriptRegexNullableReference`
     (`cli`) uses a 25ms match budget that failed once under `go test -race
     ./...` and passed on rerun, so it is timing-sensitive under load. Raising

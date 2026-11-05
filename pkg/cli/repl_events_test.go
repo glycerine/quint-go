@@ -150,3 +150,16 @@ func (w replEventReadyWriter) Write(data []byte) (int, error) {
 	}
 	return len(data), nil
 }
+
+// A caller's cancellation is reported before any event is evaluated, even when
+// the producer already has a completed line queued.
+func TestREPLEventsRejectsCancelledContext(t *testing.T) {
+	t.Parallel()
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	var stdout, stderr bytes.Buffer
+	status := RunREPLEvents(ctx, replEventChannel(REPLInputEvent{Line: "1"}), &stdout, &stderr, REPLLoopOptions{Quiet: true})
+	if status != 1 || stdout.Len() != 0 || !strings.Contains(stderr.String(), "context canceled") {
+		t.Fatal(status, stdout.String(), stderr.String())
+	}
+}
