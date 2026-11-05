@@ -76,26 +76,55 @@ func valueDocPush(stack []valueLayout, element valueLayout, children []valueDoc)
 	}
 	return stack
 }
-func valueDocFits(budget int, stack []valueLayout) bool {
-	for len(stack) > 0 && budget >= 0 {
-		element := stack[len(stack)-1]
-		stack = stack[:len(stack)-1]
-		switch element.doc.kind {
+
+// valueFitsFrame is a cursor over the children of one pending container. Its
+// children are visited lazily, so a fit check never copies the layout stack or
+// expands a large group beyond the text it actually scans.
+type valueFitsFrame struct {
+	layout   valueLayout
+	children []valueDoc
+	next     int
+}
+
+// valueGroupFits reports whether the children of group, followed by the
+// pending layouts in stack, fit within budget columns when laid out flat. It
+// reads stack in place and never modifies it. The walk order matches a
+// valueDocPush of group's children onto a copy of stack.
+func valueGroupFits(budget int, stack []valueLayout, group valueLayout) bool {
+	frames := []valueFitsFrame{{layout: group, children: group.doc.children}}
+	stackIndex := len(stack)
+	for budget >= 0 {
+		var cur valueLayout
+		if n := len(frames); n > 0 {
+			top := &frames[n-1]
+			if top.next == len(top.children) {
+				frames = frames[:n-1]
+				continue
+			}
+			cur = valueLayout{doc: top.children[top.next], flat: top.layout.flat, indent: top.layout.indent}
+			top.next++
+		} else if stackIndex > 0 {
+			stackIndex--
+			cur = stack[stackIndex]
+		} else {
+			break
+		}
+		switch cur.doc.kind {
 		case valueText:
-			budget -= element.doc.width
+			budget -= cur.doc.width
 		case valueLine:
-			if !element.flat {
+			if !cur.flat {
 				return true
 			}
-			budget -= diagnosticRenderUTF16Len(element.doc.flat)
+			budget -= diagnosticRenderUTF16Len(cur.doc.flat)
 		case valueNest:
-			element.indent += element.doc.text
-			stack = valueDocPush(stack, element, element.doc.children)
+			cur.indent += cur.doc.text
+			frames = append(frames, valueFitsFrame{layout: cur, children: cur.doc.children})
 		case valueGroup:
-			element.flat = true
-			stack = valueDocPush(stack, element, element.doc.children)
+			cur.flat = true
+			frames = append(frames, valueFitsFrame{layout: cur, children: cur.doc.children})
 		case valueConcat:
-			stack = valueDocPush(stack, element, element.doc.children)
+			frames = append(frames, valueFitsFrame{layout: cur, children: cur.doc.children})
 		}
 	}
 	return budget >= 0
@@ -125,9 +154,7 @@ func formatValueDoc(doc valueDoc, width, firstColumn int) string {
 			stack = valueDocPush(stack, element, element.doc.children)
 		case valueGroup:
 			element.flat = true
-			trial := append([]valueLayout(nil), stack...)
-			trial = valueDocPush(trial, element, element.doc.children)
-			element.flat = valueDocFits(width-column, trial)
+			element.flat = valueGroupFits(width-column, stack, element)
 			stack = valueDocPush(stack, element, element.doc.children)
 		case valueConcat:
 			stack = valueDocPush(stack, element, element.doc.children)

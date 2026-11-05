@@ -61,6 +61,9 @@ type runtimeObjectEntry[T any] struct {
 type runtimeObjectSet[T any] struct {
 	entries []runtimeObjectEntry[T]
 	trie    bool
+	// dirty marks entries appended in trie mode but not yet sorted. Sorting is
+	// deferred to Entries so each insert is O(1) instead of shifting the tail.
+	dirty bool
 	// Lookup only; traversal always comes from entries.
 	seen map[*runtimeObjectIdentity]bool
 }
@@ -97,13 +100,13 @@ func (s *runtimeObjectSet[T]) Add(state *RuntimeObjectHashState, key *runtimeObj
 			return runtimeObjectHashLess(s.entries[i].Key.hash, s.entries[j].Key.hash)
 		})
 	} else {
+		// An incremental insert placed each key after every existing entry whose
+		// hash is not greater, so equal hashes keep insertion order. A stable
+		// sort of the insertion-ordered slice gives the same order, so the sort
+		// is deferred to Entries.
 		s.seen[key] = true
-		index := sort.Search(len(s.entries), func(i int) bool {
-			return runtimeObjectHashLess(key.hash, s.entries[i].Key.hash)
-		})
 		s.entries = append(s.entries, entry)
-		copy(s.entries[index+1:], s.entries[index:])
-		s.entries[index] = entry
+		s.dirty = true
 	}
 }
 
@@ -118,5 +121,11 @@ func runtimeObjectHashLess(left, right uint32) bool {
 }
 
 func (s *runtimeObjectSet[T]) Entries() []runtimeObjectEntry[T] {
+	if s.dirty {
+		sort.SliceStable(s.entries, func(i, j int) bool {
+			return runtimeObjectHashLess(s.entries[i].Key.hash, s.entries[j].Key.hash)
+		})
+		s.dirty = false
+	}
 	return append([]runtimeObjectEntry[T]{}, s.entries...)
 }

@@ -1690,6 +1690,33 @@ any remaining TypeScript client code is distinguished from language-server logic
     was not measured. Memory grows about linearly with N, but the 100k run is
     about 38× slower than the 10k run for the same work, so collection
     operations are a throughput hotspot to profile before any optimization.
+  - [x] 2026-11-05 CPU profile of the N=10000 run (same spec, 17.6 s wall,
+    63.9 s CPU, profile kept in scratch as `big10k.cpu.pprof`). GC dominates
+    (`gcDrain` about 64% cumulative). `runtime.memmove` is about 15% flat, most
+    of it under `typedslicecopy` from two sources: `runtimeObjectSet.Add`
+    (sorted-insert `copy` of the tail on every trie-mode add, about 6.2 s across
+    the pair, text and identity instances) and `formatValueDoc` (per-group copy
+    of the whole layout stack, about 4.1 s). `EvalSetToMapBuiltinContext` is
+    about 4.8 s cumulative, nearly all in `runtimeObjectSet.Add`. Trace
+    printing (`formatTraceStateExpression`) is about 6.8 s cumulative.
+    Both quadratic paths were changed (see the next bullet).
+  - [x] 2026-11-05 quadratic-path fixes, output unchanged: `formatValueDoc`
+    checks group fit with a cursor over the pending layouts instead of copying
+    the stack per group (`valueGroupFits`, replacing `valueDocFits`);
+    `runtimeObjectSet.Add` appends in trie mode and marks the set dirty, and
+    `Entries` stable-sorts once. The stable sort gives the same order as the
+    incremental insert, since equal hashes keep insertion order either way.
+  - [x] 2026-11-05 measured after the fix, N=10000 3×2 with `run --seed=0x1
+    --backend=go`, same session and arguments: before 2.04 GB peak RSS and
+    58.4 s; after 1.65 GB and 10.0 s. Stdout is byte-identical except the
+    `[ok] ... (ms at ...)` timing line. The 625 MB / 17.29 s figure recorded
+    above did not reproduce under these arguments, so the earlier number is
+    not a like-for-like baseline. Gates: `gofmt -l .` empty, `go vet ./...`
+    and `go test -count=1 ./...` passed, and `go test -race -count=1 ./...`
+    passed.
+  - [ ] Remaining peak memory is still roughly 1.6 GB at N=10000, so memory
+    per element is not yet addressed. Follow-up: a memory profile
+    (`-memprofile`) of the same run.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.
