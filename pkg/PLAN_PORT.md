@@ -109,6 +109,20 @@ reporting that evaluates expressions will also depend on P7.
   - [x] COMPATIBILITY.md inventories every opcode/builtin value, active command
     flags/environment settings, major data/status contracts, and editor features.
   - [ ] Complete field-level wire/transcript and backend semantic coverage audit.
+  - [x] Checker tuning key census (`testdata/scala_tuning_census.tsv`, pinned by
+    `TestScalaTuningCensusOutcomesStable`). Of 484 Scala `FineTuningParser` keys,
+    266 are accepted, 216 are rejected because g3 has no such parameter or module
+    (an intentional rejection: the option cannot be applied), 1 is `cvc5.smt.logic`
+    (a non-z3 key the Go parser does not model), and 1 is `z3.smt.dack`, rejected by
+    g3 with `AST source precondition`.
+  - [ ] Open gap in `~/apalache/pkg` (external, owner decision): `newG3SolverContextWithOptions`
+    (`smt_g3.go`) routes values with `strconv.ParseBool` first, so `0` and `1` become
+    Booleans. `z3.pp.max_depth=0` fails with an unsigned-integer error, while `=5` is
+    accepted. Scala's UnsignedInt field accepts `0`. Fix: route by value form, using
+    bool only for `true`/`false`. Route Booleans by the Scala field type, not by
+    the value text. The fix needs a new `pkg/` tag, so it is not applied here.
+  - [ ] Improve the message for g3-unknown keys so it does not read like a Go
+    rejection of a key Scala knows (for example, "g3 does not expose this parameter").
 - [x] P0.3 Establish reference fixtures from TypeScript tests, Rust tests,
   integration transcripts, and examples. Capture expected successes and
   failures; document disagreements between reference runtimes.
