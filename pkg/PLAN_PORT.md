@@ -1380,8 +1380,21 @@ Build these items alongside the phases that supply their command behavior.
     throughput formula `round(1000*samples/elapsedMs)` matches JS, including
     `Infinity` and `NaN` when the run finishes in 0ms. Only the backend name in
     the repeat hint differs, which is the documented `go` backend choice.
+  - [x] 2026-11-05 `repl` report prose: a scripted session (`1 + 1`, an
+    undefined `missing`, `.load <file>`, `.state`, `.verbosity=1`, `.foo`,
+    `.exit`) run against upstream TypeScript (`src/repl.ts`) and Go. Results
+    match for `1 + 1` (`2`), silent `.load` and `.verbosity=1`, and the
+    `Unexpected command` reply for an unknown command. Documented differences:
+    the banner (`Quint Go REPL` versus the Rust-backend banner, covered by
+    `replPromptDeviation`) and error blocks on stderr (covered by
+    `replStreamDeviation`). `.state` is a Go-only command: upstream reports
+    `Unexpected command: .state`, and COMPATIBILITY.md already lists `.state`
+    as implemented. Still unrecorded: upstream prefixes name errors with a
+    `static analysis error: ` header line, and Go prints only the
+    `Error [QNT404]` block. The header is not in the stream deviation note,
+    so it needs either a documented deviation or a fix.
   - [ ] Still open: error-prose parity for commands outside the verify/test
-    summaries, and the `repl` report prose audit.
+    summaries, and the REPL `static analysis error:` header decision.
 - [x] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
   - [x] 2026-11-05 audit: common options and verbosity defaults (`2`, `--quiet`)
