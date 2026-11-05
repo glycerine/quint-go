@@ -692,6 +692,18 @@ including failed actions that must not leak partially updated state.
   - [ ] Remaining command terminal/report formatting audit.
 - [ ] P8.3 Preserve trace hooks, action names, nondeterministic picks, debug
   metadata, and output filename templates used in model-based testing.
+  - Nondet picks (2026-11-04): TS and Go match on `Nd.qnt` for 10 single-trace
+    seeds and 2 multi-trace runs (seed 0x12). An earlier 3,3,2 reading did not
+    reproduce and came from a run with overridden `--step`. No Go change needed.
+  - Duplicate MBT names (2026-11-04): `mbt::actionTaken` and `mbt::nondetPicks`
+    appear twice in `vars` only on upstream's default rust backend
+    (`quint/src/rust/commandWrapper.ts` returns them as state keys, and
+    `toItf` appends them again). The typescript backend emits the clean list
+    `["x","mbt::actionTaken","mbt::nondetPicks"]`, which the Go output and
+    committed fixtures match. Treated as an upstream rust-path quirk; Go has
+    no rust backend.
+  - Still open: nondet transcript fixture, and the debug metadata and output
+    filename template audit.
 - [x] P8.4 Implement REPL multiline input, commands, load/reload, incremental
   definitions and analysis, evaluation, state display, history, and quiet mode.
   - [x] Save source snapshots and accepted expression history, load/reload with
