@@ -5,7 +5,7 @@ go 1.27.3
 require (
 	github.com/antlr4-go/antlr/v4 v4.13.1
 	github.com/dlclark/regexp2 v1.11.5
-	github.com/glycerine/apalache-go/pkg v0.62.4-go-005
+	github.com/glycerine/apalache-go/pkg v0.62.4-go-007
 	github.com/glycerine/insdict v0.14.6
 	github.com/glycerine/tlago v0.1.10
 	golang.org/x/sys v0.37.0
