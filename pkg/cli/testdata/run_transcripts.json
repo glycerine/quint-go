@@ -942,7 +942,27 @@
             }
           ]
         }
-      ]
+      ],
+      "trace": [
+        {
+          "args": [
+            {
+              "id": 0,
+              "kind": "str",
+              "value": "x"
+            },
+            {
+              "id": 0,
+              "kind": "int",
+              "value": 0
+            }
+          ],
+          "id": 0,
+          "kind": "app",
+          "opcode": "Rec"
+        }
+      ],
+      "seed": 18
     }
   },
   {

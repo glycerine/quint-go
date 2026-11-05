@@ -355,20 +355,26 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 		messages[i] = quint.ResolveDiagnostic(sources, d)
 	}
 	fields.Set("errors", messages)
-	serializedTraces := make([][]quint.Expr, len(outcome.BestTraces))
+	// The default Rust simulator reports the failing trace as the best trace, so
+	// the run command falls back to the error traces when no best trace is kept.
+	reported := outcome.BestTraces
+	if len(reported) == 0 {
+		reported = outcome.ErrorTraces
+	}
+	serializedTraces := make([][]quint.Expr, len(reported))
 	hashes := evaluator.ObjectHashState()
-	for i, trace := range outcome.BestTraces {
+	for i, trace := range reported {
 		serializedTraces[i] = trace.SerializedStates
 	}
-	if len(outcome.BestTraces) > 0 {
+	if len(reported) > 0 {
 		fields.Set("trace", serializedTraces[0])
-		fields.Set("seed", outcome.BestTraces[0].Seed)
+		fields.Set("seed", reported[0].Seed)
 	}
 	elapsed := time.Since(started).Milliseconds()
 	if o.outITF != "" {
 		now := time.Now()
 		writer := quint.TraceWriter{Template: o.outITF, TraceCount: o.traces, Metadata: o.metadata, Header: quint.ITFHeader{Source: o.input, Timestamp: now.UnixMilli(), CreatedAt: now.Format(time.RFC1123)}}
-		for i, trace := range outcome.BestTraces {
+		for i, trace := range reported {
 			states := serializedTraces[i]
 			status := "ok"
 			if !trace.Result {
@@ -440,8 +446,8 @@ func commandRun(ctx context.Context, args []string, stdout, stderr io.Writer) in
 			text := quint.RenderErrorMessage(message, sourceCode, terminalDiagnosticOptions(ctx, quint.DiagnosticRenderOptions{InclusiveEnd: true}))
 			fmt.Fprintln(stderr, text)
 		}
-		if o.verbosity >= 1 && o.outITF == "" && len(outcome.BestTraces) > 0 && outcome.BestTraces[0].Seed.Big().Sign() != 0 {
-			fmt.Fprintln(stdout, terminalStyle(ctx, "Use --seed=0x"+outcome.BestTraces[0].Seed.Big().Text(16)+" --backend=go to reproduce.", "gray"))
+		if o.verbosity >= 1 && o.outITF == "" && len(reported) > 0 && reported[0].Seed.Big().Sign() != 0 {
+			fmt.Fprintln(stdout, terminalStyle(ctx, "Use --seed=0x"+reported[0].Seed.Big().Text(16)+" --backend=go to reproduce.", "gray"))
 		}
 		switch outcome.Status {
 		case "violation":

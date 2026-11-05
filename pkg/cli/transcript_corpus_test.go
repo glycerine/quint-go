@@ -179,10 +179,25 @@ func transcriptBinary(t *testing.T) string {
 	return dir
 }
 
+// transcriptCaseTimeout returns the per-case limit. QUINT_CORPUS_CASE_TIMEOUT
+// (a Go duration such as "45m") overrides the 5-minute default for slow cases.
+func transcriptCaseTimeout(t *testing.T) time.Duration {
+	t.Helper()
+	raw := os.Getenv("QUINT_CORPUS_CASE_TIMEOUT")
+	if raw == "" {
+		return 5 * time.Minute
+	}
+	d, err := time.ParseDuration(raw)
+	if err != nil || d <= 0 {
+		t.Fatalf("bad QUINT_CORPUS_CASE_TIMEOUT %q", raw)
+	}
+	return d
+}
+
 // runTranscriptCase executes one command in the upstream quint directory.
 func runTranscriptCase(t *testing.T, root, pathDir string, c transcriptCase) (stdout, stderr string, code int) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), transcriptCaseTimeout(t))
 	defer cancel()
 	cmd := exec.CommandContext(ctx, "bash", "-c", c.command)
 	cmd.Dir = root

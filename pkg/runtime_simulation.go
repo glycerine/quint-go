@@ -37,9 +37,12 @@ type SimulationTraceStatistics struct {
 }
 
 type SimulationOutcome struct {
-	Status             string
-	Errors             []Diagnostic
-	BestTraces         []SimulationTrace
+	Status     string
+	Errors     []Diagnostic
+	BestTraces []SimulationTrace
+	// ErrorTraces holds the failing traces when Errors is non-empty. BestTraces is
+	// left empty on that path to match the TypeScript Evaluator.
+	ErrorTraces        []SimulationTrace
 	WitnessingTraces   []int
 	Samples            int
 	TraceStatistics    SimulationTraceStatistics
@@ -255,6 +258,11 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 		trace := &best[i]
 		if trace.failure != nil {
 			selectedErrors = append(selectedErrors, *trace.failure)
+			// The failing trace is shown up to the failure, as in the reference.
+			// A display-only serialization error must not hide the runtime error.
+			if serialized, err := SerializeRuntimeTraceContext(ctx, trace.trace.States, e.ObjectHashState()); err == nil {
+				trace.trace.SerializedStates = serialized
+			}
 			continue
 		}
 		// The reference maps every ranked trace before merging diagnostics;
@@ -266,7 +274,15 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 		}
 	}
 	if len(selectedErrors) > 0 {
+		// Matches the TypeScript Evaluator: BestTraces stays empty on error. The
+		// failing traces are exposed separately for the run command, which reports
+		// them as the default Rust simulator does.
 		out.Errors = append(out.Errors, selectedErrors...)
+		for _, trace := range best {
+			if trace.failure != nil {
+				out.ErrorTraces = append(out.ErrorTraces, trace.trace)
+			}
+		}
 	} else {
 		for _, trace := range best {
 			out.BestTraces = append(out.BestTraces, trace.trace)
