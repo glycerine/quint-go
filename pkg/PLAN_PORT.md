@@ -183,6 +183,14 @@ reporting that evaluates expressions will also depend on P7.
   the documented `apalache-version` and `server-endpoint` rejections (guarded
   by `TestVerifyAcceptsUpstreamOptionsExceptDocumentedRejections`). Still open:
   JSON envelope and type fields.
+  - Envelope and type-field pass (compile JSON, 26 both-compiling fixtures): the
+    top-level key sets are identical (`effects, errors, main, modules, stage,
+    table, types, warnings`), and `main`, `effects`, `warnings`, and `errors`
+    are value-equal in all 26. `types` is value-equal; only its key order differs
+    (JavaScript sorts integer-like keys). Upstream stage fixtures are pinned by
+    `TestUpstreamCoreCLIStagesAndTargets`.
+  - Still open for P0.7: runtime transcript envelopes (`run`, `test`, `verify`
+    result and ITF fields) and the configuration fields those commands accept.
 - [x] P0.8 Decide the TLC backend path: assess the existing Go `tlago/tlc`
   implementation for reuse, or document a separate optional external TLC
   mode. Do not retain an implicit Scala Apalache/JAR download dependency.
