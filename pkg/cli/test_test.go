@@ -229,6 +229,8 @@ func TestTestCommandITF(t *testing.T) {
 		{"falseTest", "module M { val falseTest=false }", 1, true},
 		{"ignoredTest", "module M { val ignoredTest=7 }", 0, false},
 		{"crashTest", "module M { val crashTest=assert(false) }", 1, false},
+		{"divZeroTest", "module M { val divZeroTest = 1 / 0 == 1 }", 1, false},
+		{"expectTest", "module M { run expectTest = all { true }.expect(1 == 2) }", 1, false},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
