@@ -1533,5 +1533,15 @@
       { "kind": "evaluate", "name": "b", "output": {"id": 0, "kind": "int", "value": 81} },
       { "kind": "evaluate", "name": "c", "output": {"id": 0, "kind": "int", "value": 43} }
     ]
+  },
+  {
+    "name": "override_chained_and_wrapper_calls",
+    "source": "module P {const n:int def f(x)=n+x def g(x)=f(x)*2} module M {def k = 40 import P(n=k+2) as A import P(n=1) as B def wrap(x)=A::g(x)+1 val w=wrap(1) val bg=B::g(1) val ag=A::g(1)}",
+    "module": "M",
+    "steps": [
+      { "kind": "evaluate", "name": "w", "output": {"id": 0, "kind": "int", "value": 87} },
+      { "kind": "evaluate", "name": "bg", "output": {"id": 0, "kind": "int", "value": 4} },
+      { "kind": "evaluate", "name": "ag", "output": {"id": 0, "kind": "int", "value": 86} }
+    ]
   }
 ]

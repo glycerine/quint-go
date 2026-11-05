@@ -739,7 +739,16 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     `result == 42` passes and `result == 41` fails; Go matches.
   - [x] Add `two_instances_override_importer_defs` (two instances of one module,
     overridden from importer definitions, read in the same importer). TypeScript
-    `quint test --match 'Test$'` confirms 42, 81, and 43; Go matches. 40 cases total.
+    `quint test --match 'Test$'` confirms 42, 81, and 43; Go matches.
+  - [x] Add `override_chained_and_wrapper_calls` (`A::g` calls an instance-local `f`
+    that reads the override; a wrapper def calls `A::g`; a second instance `B` with a
+    different override is read in the same importer). TypeScript confirms `w == 87`,
+    `bg == 4`, `ag == 86`; Go matches. 41 cases total.
+  - [x] Record a state-reading override as a negative case: `import P(n = s + 2) as A`
+    with `s` a `var` is rejected by both TypeScript and Go with
+    `QNT201 Instance overrides must be pure, but the value for n reads variables 's'`
+    (exit 1; both also emit a `QNT000` unification error on the `then` line). Analyzer
+    coverage lives in `testdata/parser/analyzer.json`; no runtime fixture added.
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
     and remaining override audits; compiler instance contexts; execution-frame recording).
 
