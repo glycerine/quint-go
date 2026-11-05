@@ -66,7 +66,7 @@ func TestUpstreamRuntimeSimulationCombinators(t *testing.T) {
 			if err != nil || failure != nil || !record.Equal(want) || evaluator.RNG.State().String() != fixture.RNG {
 				t.Fatal("record/RNG", record.String(), want.String(), evaluator.RNG.State(), fixture.RNG, err, failure)
 			}
-			trace := evaluator.Trace.States()
+			trace := mustStates(&evaluator.Trace)
 			if len(trace) != len(fixture.Trace) {
 				t.Fatal("trace length", len(trace), len(fixture.Trace))
 			}

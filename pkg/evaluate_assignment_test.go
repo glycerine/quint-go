@@ -59,7 +59,7 @@ func testStateTransitions(t *testing.T, filename string) {
 			}
 		}
 		if f.Trace != nil {
-			got := trace.States()
+			got := mustStates(trace)
 			if len(got) != len(*f.Trace) {
 				t.Fatal(index, "trace length", len(got), len(*f.Trace))
 			}

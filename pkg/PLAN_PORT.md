@@ -1822,6 +1822,30 @@ any remaining TypeScript client code is distinguished from language-server logic
       (mean about 1.6% higher). Gates for the candidate: gofmt clean, `go vet
       ./...`, `go test -count=1 ./...`, and `go test -race -count=1 .` passed.
       Reverted, not committed.
+    - 2026-11-05 tried and rejected: the `normalizeValue` Map case using an
+      index map plus an ordered `pairs` slice, with duplicate keys overwriting
+      in place. Gates were green (gofmt, `go vet ./...`, full `go test`). Three
+      alternating runs each at N=10000 (`big_10000.qnt --seed=0x1`): peak heap
+      objects 1,193.7 / 1,201.8 / 1,214.2 MB for the committed state (mean about
+      1,203.2 MB) against 1,145.6 / 1,190.1 / 1,206.4 MB for the candidate (mean
+      about 1,180.7 MB). Max RSS 1,235.3 / 1,251.2 / 1,224.1 MB against 1,227.3 /
+      1,245.4 / 1,252.9 MB (mean about 1,236.9 MB against 1,241.9 MB). The heap
+      ranges overlap and RSS is not lower, so no gain was shown. Reverted, not
+      committed.
+    - 2026-11-05 trace memory: `RuntimeTrace.Shift` keeps a non-domain state as
+      its immutable register and pick capture, and builds the record on first
+      read (`States`). Discarded simulation runs therefore build no records.
+      Domain states are still built at once, since building them needs a
+      context. Gates green (gofmt, `go vet ./...`, full `go test ./...`), with
+      new tests `TestRuntimeTraceLazyStateMatchesRecord` and the `mustStates`
+      helper. Three alternating runs at N=10000 (`big_10000.qnt --seed=0x1`):
+      peak heap objects 1,169.2 / 1,196.0 / 1,227.0 MB for HEAD (mean about
+      1,197.4 MB) against 1,195.5 / 1,216.8 / 1,169.9 MB for the change (mean
+      about 1,194.1 MB, a 0.3% difference inside the run-to-run spread). Max RSS
+      1,238.4 / 1,239.9 / 1,255.9 MB against 1,237.6 / 1,231.2 / 1,258.2 MB
+      (mean about 1,244.7 MB against 1,242.4 MB). No peak-memory gain is shown;
+      the change is kept for the deferred build, not for a measured reduction.
+      The peak-RSS bullet stays `[ ]`.
   - [x] 2026-11-04 checker-handoff benchmarks (`backend/apalache/check_handoff_bench_test.go`):
     `CheckConfigHandoff` 274 µs/op, 93 KB, 627 allocs/op; `DecodeCheckResponseSafe`
     1.3 µs/op, 5 allocs/op; `DecodeCheckResponseViolation` 3.8 µs/op, 8 allocs/op.

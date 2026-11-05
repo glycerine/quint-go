@@ -86,6 +86,7 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 	}
 	type rankedTrace struct {
 		trace   SimulationTrace
+		length  int
 		failure *Diagnostic
 	}
 	best := []rankedTrace{}
@@ -164,7 +165,7 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 			}
 			if !invariantHolds {
 				errorsFound++
-				lengths = append(lengths, len(e.Trace.states))
+				lengths = append(lengths, e.Trace.Len())
 			} else {
 				for step := 0; step < options.MaxSteps && errorsFound < options.NumberOfTraces && failure == nil && interrupted == nil; step++ {
 					if listener != nil {
@@ -199,24 +200,32 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 						out.WitnessingTraces[i]++
 					}
 				}
-				lengths = append(lengths, len(e.Trace.states))
+				lengths = append(lengths, e.Trace.Len())
 			}
 		} else if listener != nil {
 			listener.OnUserOperatorReturn(initApp, nil, lastValue, lastError)
 		}
 		if interrupted != nil {
 			if listener != nil {
-				listener.OnRunReturn(RuntimeValue{}, interrupted, e.Trace.States())
+				states, err := e.Trace.States()
+				if err != nil {
+					return out, err
+				}
+				listener.OnRunReturn(RuntimeValue{}, interrupted, states)
 			}
 			break
 		}
-		trace := rankedTrace{trace: SimulationTrace{States: e.Trace.States(), Result: errorsFound == 0, Seed: seed}, failure: failure}
+		trace := rankedTrace{trace: SimulationTrace{Result: errorsFound == 0, Seed: seed}, length: e.Trace.Len(), failure: failure}
 		if listener != nil {
+			states, err := e.Trace.States()
+			if err != nil {
+				return out, err
+			}
 			if failure != nil {
-				listener.OnRunReturn(RuntimeValue{}, *failure, trace.trace.States)
+				listener.OnRunReturn(RuntimeValue{}, *failure, states)
 			} else {
 				result, _ := NewRuntimeValue(Expr{Kind: "bool", Bool: errorsFound == 0})
-				listener.OnRunReturn(result, nil, trace.trace.States)
+				listener.OnRunReturn(result, nil, states)
 			}
 		}
 		// Insertion after existing equal-quality traces preserves encounter order.
@@ -226,15 +235,23 @@ func (e *ModuleEvaluator) simulate(ctx context.Context, options SimulationOption
 				return !bad(best[i])
 			}
 			if bad(trace) {
-				return len(best[i].trace.States) > len(trace.trace.States)
+				return best[i].length > trace.length
 			}
-			return len(best[i].trace.States) < len(trace.trace.States)
+			return best[i].length < trace.length
 		})
-		best = append(best, rankedTrace{})
-		copy(best[index+1:], best[index:])
-		best[index] = trace
-		if len(best) > options.NumberOfTraces {
-			best = best[:options.NumberOfTraces]
+		// Only a trace that will be kept is built; the others are dropped unread.
+		if index < options.NumberOfTraces {
+			states, err := e.Trace.States()
+			if err != nil {
+				return out, err
+			}
+			trace.trace.States = states
+			best = append(best, rankedTrace{})
+			copy(best[index+1:], best[index:])
+			best[index] = trace
+			if len(best) > options.NumberOfTraces {
+				best = best[:options.NumberOfTraces]
+			}
 		}
 		out.Samples++
 	}

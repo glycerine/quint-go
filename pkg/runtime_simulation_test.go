@@ -111,7 +111,7 @@ func TestUpstreamSimulation(t *testing.T) {
 			equalNumber("average", got.TraceStatistics.AverageTraceLength, want.TraceStatistics.AverageTraceLength, math.NaN())
 			equalNumber("min", got.TraceStatistics.MinTraceLength, want.TraceStatistics.MinTraceLength, math.Inf(1))
 			equalNumber("max", got.TraceStatistics.MaxTraceLength, want.TraceStatistics.MaxTraceLength, 0)
-			equalStates("last trace", e.Trace.States(), f.Trace)
+			equalStates("last trace", mustStates(&e.Trace), f.Trace)
 			record, err := e.Storage.Record()
 			wantRecord, err2 := NewRuntimeValue(f.Record)
 			if err != nil || err2 != nil || !record.Equal(wantRecord) || e.RNG.State().String() != f.RNG {
@@ -146,12 +146,12 @@ func TestSimulationValidationResetAndOwnership(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	states := e.Trace.States()
+	states := mustStates(&e.Trace)
 	if len(states) != 3 || len(result.BestTraces) != 2 {
 		t.Fatal("trace counts", len(states), len(result.BestTraces))
 	}
 	result.BestTraces[0].States[0] = RuntimeValue{}
-	if !e.Trace.States()[0].Equal(states[0]) {
+	if !mustStates(&e.Trace)[0].Equal(states[0]) {
 		t.Fatal("result aliases active trace")
 	}
 	ctx, cancel := context.WithCancel(context.Background())
@@ -159,11 +159,11 @@ func TestSimulationValidationResetAndOwnership(t *testing.T) {
 	if _, err = e.Simulate(ctx, valid); !errors.Is(err, context.Canceled) {
 		t.Fatal(err)
 	}
-	if len(e.Trace.States()) != 3 {
+	if len(mustStates(&e.Trace)) != 3 {
 		t.Fatal("pre-canceled simulation mutated trace")
 	}
 	e.Reset()
-	if len(e.Trace.States()) != 0 || e.RNG.State().String() != "37" || e.Storage.ActionTaken != "" {
+	if len(mustStates(&e.Trace)) != 0 || e.RNG.State().String() != "37" || e.Storage.ActionTaken != "" {
 		t.Fatal("reset rewound RNG or retained execution")
 	}
 	for _, reg := range e.Storage.current.All() {

@@ -150,16 +150,50 @@ func (s *VariableStorage) Recover(snapshot VariableSnapshot) {
 
 // Record exports set current variables and optional action/pick metadata.
 func (s *VariableStorage) Record() (RuntimeValue, error) {
+	return s.capture().materialize()
+}
+
+// stateCapture holds one state's variables and metadata by value. Runtime values
+// are immutable, so a capture stays correct after the registers advance. Building
+// the exported record is deferred to materialize.
+type stateCapture struct {
+	fields      []RuntimeValue // alternating name text and set register value
+	picks       []RuntimeValue // alternating name text and raw pick value
+	metadata    bool
+	actionTaken string
+}
+
+// capture copies the current registers and metadata without building records.
+func (s *VariableStorage) capture() stateCapture {
 	text := func(value string) RuntimeValue { v, _ := NewRuntimeValue(Expr{Kind: "str", Str: value}); return v }
-	args := []RuntimeValue{}
+	c := stateCapture{fields: []RuntimeValue{}, metadata: s.metadata}
 	for _, register := range s.current.All() {
 		if register.Value.Valid() {
-			args = append(args, text(register.Name), register.Value)
+			c.fields = append(c.fields, text(register.Name), register.Value)
 		}
 	}
 	if s.metadata {
-		picks := []RuntimeValue{}
+		c.actionTaken = s.ActionTaken
 		for name, value := range s.NondetPicks.All() {
+			c.picks = append(c.picks, text(name), value)
+		}
+	}
+	return c
+}
+
+// hasDomain reports whether building the captured state needs a symbolic context.
+func (c stateCapture) hasDomain() bool {
+	return runtimeHasDomain(c.fields) || runtimeHasDomain(c.picks)
+}
+
+// materialize builds the exported record from the captured values.
+func (c stateCapture) materialize() (RuntimeValue, error) {
+	text := func(value string) RuntimeValue { v, _ := NewRuntimeValue(Expr{Kind: "str", Str: value}); return v }
+	args := append([]RuntimeValue{}, c.fields...)
+	if c.metadata {
+		picks := []RuntimeValue{}
+		for i := 0; i < len(c.picks); i += 2 {
+			name, value := c.picks[i], c.picks[i+1]
 			label := "Some"
 			if !value.Valid() {
 				label = "None"
@@ -173,13 +207,13 @@ func (s *VariableStorage) Record() (RuntimeValue, error) {
 			if err != nil {
 				return RuntimeValue{}, err
 			}
-			picks = append(picks, text(name), variant)
+			picks = append(picks, name, variant)
 		}
 		pickRecord, err := newRuntimeComposite("Rec", picks)
 		if err != nil {
 			return RuntimeValue{}, err
 		}
-		args = append(args, text(ITFNondetPicks), pickRecord, text(ITFActionTaken), text(s.ActionTaken))
+		args = append(args, text(ITFNondetPicks), pickRecord, text(ITFActionTaken), text(c.actionTaken))
 	}
 	return newRuntimeComposite("Rec", args)
 }

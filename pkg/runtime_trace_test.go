@@ -15,14 +15,14 @@ func TestRuntimeTraceOwnershipAndModuleShift(t *testing.T) {
 	var trace RuntimeTrace
 	trace.Reset(input...)
 	input[0] = RuntimeValue{}
-	states := trace.States()
+	states := mustStates(&trace)
 	states[0] = RuntimeValue{}
-	if !trace.States()[0].Equal(value) {
+	if !mustStates(&trace)[0].Equal(value) {
 		t.Fatal("trace slice aliased")
 	}
 	trace.DropLast()
 	trace.DropLast()
-	if len(trace.States()) != 0 {
+	if len(mustStates(&trace)) != 0 {
 		t.Fatal("drop empty")
 	}
 	modules, err := ParseModules("module M { var x:int action init=x'=1 action step=x'=x+1 }")
@@ -41,7 +41,7 @@ func TestRuntimeTraceOwnershipAndModuleShift(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	states = evaluator.Trace.States()
+	states = mustStates(&evaluator.Trace)
 	if len(states) != 2 {
 		t.Fatal(len(states))
 	}
@@ -60,7 +60,7 @@ func TestRuntimeTraceOwnershipAndModuleShift(t *testing.T) {
 		t.Fatal("metadata not cleared")
 	}
 	evaluator.Trace.Reset()
-	if len(evaluator.Trace.States()) != 0 {
+	if len(mustStates(&evaluator.Trace)) != 0 {
 		t.Fatal("reset")
 	}
 }

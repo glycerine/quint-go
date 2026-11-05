@@ -65,7 +65,11 @@ func (e *ModuleEvaluator) Test(ctx context.Context, name string, maxSamples int)
 		value, evaluationError := e.Evaluate(ctx, name, nil)
 		if err := ctx.Err(); err != nil {
 			if listener != nil {
-				listener.OnRunReturn(value, err, e.Trace.States())
+				states, statesErr := e.Trace.States()
+				if statesErr != nil {
+					return out, statesErr
+				}
+				listener.OnRunReturn(value, err, states)
 			}
 			return out, err
 		}
@@ -75,7 +79,10 @@ func (e *ModuleEvaluator) Test(ctx context.Context, name string, maxSamples int)
 			evaluationError = shiftError
 		}
 		failed := evaluationError != nil || (value.expression.Kind == "bool" && !value.expression.Bool)
-		states := e.Trace.States()
+		states, statesErr := e.Trace.States()
+		if statesErr != nil {
+			return out, statesErr
+		}
 		if listener != nil {
 			listener.OnRunReturn(value, evaluationError, states)
 		}

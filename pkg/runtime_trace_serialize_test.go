@@ -136,8 +136,8 @@ func TestTraceSnapshotDriversPreserveCancellation(t *testing.T) {
 			} else {
 				_, err = evaluator.Test(ctx, "example", 1)
 			}
-			if !errors.Is(err, context.Canceled) || listener.calls != 1 || len(evaluator.Trace.States()) != 1 || evaluator.ObjectHashState().Counter() != 0 {
-				t.Fatal("cancellation before selected-state snapshot", err, listener.calls, len(evaluator.Trace.States()), evaluator.ObjectHashState().Counter())
+			if !errors.Is(err, context.Canceled) || listener.calls != 1 || len(mustStates(&evaluator.Trace)) != 1 || evaluator.ObjectHashState().Counter() != 0 {
+				t.Fatal("cancellation before selected-state snapshot", err, listener.calls, len(mustStates(&evaluator.Trace)), evaluator.ObjectHashState().Counter())
 			}
 		})
 	}

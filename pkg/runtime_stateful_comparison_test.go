@@ -146,7 +146,7 @@ func TestThreeRuntimeStatefulComparisonCorpus(t *testing.T) {
 			assertStatefulComparisonValue(t, ctx, record, f.Typescript.Record)
 			assertStatefulComparisonRegisters(t, ctx, evaluator.Storage, f.Typescript.Current, false)
 			assertStatefulComparisonRegisters(t, ctx, evaluator.Storage, f.Typescript.Next, true)
-			states := evaluator.Trace.States()
+			states := mustStates(&evaluator.Trace)
 			if len(states) != len(f.Typescript.Trace) {
 				t.Fatal("Go trace states", len(states), "TypeScript", len(f.Typescript.Trace))
 			}

@@ -46,7 +46,7 @@ func TestUpstreamPayloadState(t *testing.T) {
 				t.Fatal(err)
 			}
 		case "restoreFirst":
-			if err = evaluator.Storage.FromRecord(evaluator.Trace.States()[0]); err != nil {
+			if err = evaluator.Storage.FromRecord(mustStates(&evaluator.Trace)[0]); err != nil {
 				t.Fatal(err)
 			}
 		default:
@@ -68,7 +68,7 @@ func TestUpstreamPayloadState(t *testing.T) {
 			t.Fatal(err)
 		}
 		equal("record", record, step.Record)
-		states := evaluator.Trace.States()
+		states := mustStates(&evaluator.Trace)
 		if len(states) != len(step.Trace) || evaluator.RNG.State().String() != step.RNG {
 			t.Fatal(index, "trace/RNG")
 		}

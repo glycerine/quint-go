@@ -191,8 +191,8 @@ func TestUpstreamSymbolicSourceTraceSerialization(t *testing.T) {
 							}
 						}
 					}
-					if evaluator.ObjectHashState().Counter() != want.FinalUID || evaluator.RNG.State().String() != want.RNG || len(evaluator.Trace.States()) != want.TraceLength {
-						t.Fatal("execution history", evaluator.ObjectHashState().Counter(), want.FinalUID, evaluator.RNG.State(), want.RNG, len(evaluator.Trace.States()), want.TraceLength)
+					if evaluator.ObjectHashState().Counter() != want.FinalUID || evaluator.RNG.State().String() != want.RNG || len(mustStates(&evaluator.Trace)) != want.TraceLength {
+						t.Fatal("execution history", evaluator.ObjectHashState().Counter(), want.FinalUID, evaluator.RNG.State(), want.RNG, len(mustStates(&evaluator.Trace)), want.TraceLength)
 					}
 					best := recorder.BestTraces()
 					if len(best) > 0 && len(best[0].Frame.Args) != want.BestTraceLength {
@@ -252,8 +252,8 @@ func TestUpstreamSymbolicSimulationCombinatorSnapshots(t *testing.T) {
 			if fixture.Thrown == nil && (fixture.Output == nil || symbolicTraceJSON(t, value.Expression()) != symbolicTraceJSON(t, fixture.Output)) {
 				t.Fatal("combinator output", value.String(), fixture.Output, err)
 			}
-			if evaluator.ObjectHashState().Counter() != fixture.FinalUID || evaluator.RNG.State().String() != fixture.RNG || len(evaluator.Trace.States()) != fixture.TraceLength {
-				t.Fatal("combinator history", evaluator.ObjectHashState().Counter(), fixture.FinalUID, evaluator.RNG.State(), fixture.RNG, len(evaluator.Trace.States()), fixture.TraceLength)
+			if evaluator.ObjectHashState().Counter() != fixture.FinalUID || evaluator.RNG.State().String() != fixture.RNG || len(mustStates(&evaluator.Trace)) != fixture.TraceLength {
+				t.Fatal("combinator history", evaluator.ObjectHashState().Counter(), fixture.FinalUID, evaluator.RNG.State(), fixture.RNG, len(mustStates(&evaluator.Trace)), fixture.TraceLength)
 			}
 		})
 	}

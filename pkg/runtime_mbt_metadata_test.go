@@ -184,8 +184,8 @@ func TestUpstreamMBTSourceMetadataGeneration(t *testing.T) {
 						assertMBTMetadataValue(t, got, operation.Output)
 					}
 					assertMBTMetadataState(t, evaluator.Storage, operation.mbtMetadataState)
-					if evaluator.RNG.State().String() != operation.RNG || len(evaluator.Trace.States()) != operation.TraceLength {
-						t.Fatal("RNG/trace", evaluator.RNG.State(), len(evaluator.Trace.States()), "want", operation.RNG, operation.TraceLength)
+					if evaluator.RNG.State().String() != operation.RNG || len(mustStates(&evaluator.Trace)) != operation.TraceLength {
+						t.Fatal("RNG/trace", evaluator.RNG.State(), len(mustStates(&evaluator.Trace)), "want", operation.RNG, operation.TraceLength)
 					}
 				})
 			}

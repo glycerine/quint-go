@@ -331,7 +331,11 @@ func newRuntimeEvaluation(bindings *insdict.Dict[string, RuntimeValue], storage 
 			if e.Name == "q::lastTrace" {
 				args := []RuntimeValue{}
 				if trace != nil {
-					args = trace.States()
+					states, err := trace.States()
+					if err != nil {
+						return RuntimeValue{}, runtimeExpressionError(e, err)
+					}
+					args = states
 				}
 				return newRuntimeComposite("List", args)
 			}

@@ -188,8 +188,8 @@ func TestUpstreamObjectStateEvaluation(t *testing.T) {
 						savedValue = value
 					}
 				}
-				if state.Counter() != step.Counter || evaluator.ObjectHashState() != state || len(evaluator.Trace.States()) != step.TraceLength {
-					t.Fatal(step.Operation, "state/trace", state.Counter(), step.Counter, len(evaluator.Trace.States()), step.TraceLength)
+				if state.Counter() != step.Counter || evaluator.ObjectHashState() != state || len(mustStates(&evaluator.Trace)) != step.TraceLength {
+					t.Fatal(step.Operation, "state/trace", state.Counter(), step.Counter, len(mustStates(&evaluator.Trace)), step.TraceLength)
 				}
 				record, err := evaluator.Storage.Record()
 				want, wantErr := NewRuntimeValue(step.Record)

@@ -78,7 +78,7 @@ func TestUpstreamRuntimeTesting(t *testing.T) {
 				}
 			}
 			equalStates("selected", got.States, f.Selected)
-			equalStates("active", e.Trace.States(), f.Trace)
+			equalStates("active", mustStates(&e.Trace), f.Trace)
 			record, err := e.Storage.Record()
 			expected, err2 := NewRuntimeValue(f.Record)
 			if err != nil || err2 != nil || !record.Equal(expected) || e.RNG.State().String() != f.RNG {
@@ -112,7 +112,7 @@ func TestRuntimeTestingValidationZeroAndOwnership(t *testing.T) {
 		t.Fatal(err)
 	}
 	got.States[0] = RuntimeValue{}
-	if !e.Trace.States()[0].Valid() {
+	if !mustStates(&e.Trace)[0].Valid() {
 		t.Fatal("result aliases active trace")
 	}
 	ctx, cancel := context.WithCancel(context.Background())
@@ -120,11 +120,11 @@ func TestRuntimeTestingValidationZeroAndOwnership(t *testing.T) {
 	if _, err = e.Test(ctx, "example", 1); !errors.Is(err, context.Canceled) {
 		t.Fatal(err)
 	}
-	if len(e.Trace.States()) != 1 {
+	if len(mustStates(&e.Trace)) != 1 {
 		t.Fatal("pre-cancel mutated trace")
 	}
 	zero, err := e.Test(context.Background(), "example", 0)
-	if err != nil || zero.Status != "passed" || zero.Samples != 0 || len(zero.States) != 0 || len(e.Trace.States()) != 0 {
+	if err != nil || zero.Status != "passed" || zero.Samples != 0 || len(zero.States) != 0 || len(mustStates(&e.Trace)) != 0 {
 		t.Fatal(zero, err)
 	}
 	after, err := e.Storage.Record()
