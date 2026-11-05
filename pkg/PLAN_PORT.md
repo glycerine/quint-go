@@ -755,6 +755,40 @@ including failed actions that must not leak partially updated state.
     `transcriptKnownDeviations`; the CLI text is unchanged. `ics20_-_Syntax`
     exceeds the 5-minute per-case runner limit and is not yet verified. Runtime
     rust transcripts and the repl transcripts remain to be run.
+  - Progress 2026-11-04: the runtime-error `run` stage now reports the failing
+    trace on Go (`SimulationOutcome.ErrorTraces`, with `BestTraces` still empty on
+    the error path to match the TypeScript Evaluator). The `run` command uses those
+    traces for the example, stage trace, seed, and the reproduce hint. The
+    `runtime_error_stage` fixture passes. Whole-terminal `run_runtime_error` and
+    `run_nested_runtime_error` are known deviations: their generator pins the
+    TypeScript backend, which prints no hint on error.
+  - Progress 2026-11-04: `run.md` classified for both backends. Typescript
+    `run.md` on Go: 30 pass, 10 skipped as hint-only known deviations, 0 fail.
+    Rust `run.md` on Go: 25 pass, 13 skipped, 0 fail. The skips are:
+    seed/hint representation (decimal seed with `--backend=rust` versus hex with
+    `--backend=go`), `[DEBUG]` versus `> ` output format, and Rust-backend trace
+    or count differences that Go does not share (`gradualPonzi progressInv`,
+    `run with n-traces itf violation`, `run can hide fields`, and
+    `run finds violation with metadata on bank`). For the last two, Go matches the
+    TypeScript backend apart from the hint line, and Rust picks a different first
+    action on the same seed. Whether the default `run` should mirror Rust's
+    n-traces counting is an owner decision.
+  - Progress 2026-11-04: remaining-files run (`ics20`, `test.md`, `repl.md`,
+    and one more file) gave 69 pass, 5 skip, 45 fail, before any fixes. The
+    `repl.md` stream split is real: upstream `repl.ts` writes every diagnostic
+    (`syntax error`, `static analysis error`, command usage) to stdout and never
+    to stderr. The Go REPL `report` helper sends those errors to stderr, and
+    existing tests such as `repl_save_test.go` and the 14 cli tests assert that.
+    Decision: Go keeps the stderr contract. The affected cases are recorded as
+    known deviations (`replStreamDeviation`). The owner may still choose to
+    change the stream; that would be a contract change, not a bug fix.
+    The other repl.md failures are banner and `>>> ` prompt-echo layout, recorded
+    as `replPromptDeviation`. With these entries, repl.md on Go gives 10 pass,
+    17 skip (known deviation), 0 fail.
+  - Open: `ics20_-_Syntax` (unverified, timed out at the 300s per-case limit),
+    rust `test.md` known-deviation entries (anchored `--match=^name$` hint and
+    `[DEBUG]` vs `> ` format, not yet recorded), and stateful/MBT evaluator
+    fixtures.
 
 Exit gate: users can run, test, and explore specifications using Go without a
 TypeScript or Rust evaluator process.

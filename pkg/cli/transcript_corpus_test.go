@@ -217,18 +217,67 @@ func runTranscriptCase(t *testing.T, root, pathDir string, c transcriptCase) (st
 	return strings.TrimRight(outBuffer.String(), "\n"), strings.TrimRight(errBuffer.String(), "\n"), code
 }
 
+// replStreamDeviation: upstream's TypeScript REPL writes "syntax error" and
+// "static analysis error" blocks to stdout. The Go REPL writes them to stderr,
+// which the cli tests depend on, so Go keeps its stream split.
+const replStreamDeviation = "Go REPL writes error blocks to stderr; upstream TypeScript writes them to stdout (Go keeps the stderr contract)"
+
+// replPromptDeviation: the Go REPL banner and ">>> " prompt-echo layout differ
+// from the upstream TypeScript transcript text.
+const replPromptDeviation = "Go REPL banner and prompt-echo format differ from the upstream TypeScript transcript"
+
 // transcriptKnownDeviations lists upstream transcript cases that the Go port
 // documents as deliberate or blocked differences. Keys are "file/case name".
 // Each case still runs, and fails the test if it starts matching upstream.
 var transcriptKnownDeviations = map[string]string{
-	"integration-tests/verification.md/can specify --server-endpoint":               "in-process Go backend has no server endpoint (see PLAN_PORT.md)",
-	"integration-tests/verification.md/TLC violation":                               "P9.12: --max-steps is rejected for --backend tlc; exposing it is a user decision",
-	"integration-tests/verification.md/can convert ApalacheCompliation.qnt to TLA+": "P0.4 / pinned printer: Variants! qualifier and line wrapping differ from upstream",
-	"integration-tests/runtime/typescript/test.md/test runs":                        "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
-	"integration-tests/runtime/typescript/test.md/test empty trace":                 "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
-	"integration-tests/runtime/typescript/test.md/verbose test":                     "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
-	"integration-tests/runtime/typescript/test.md/test compile error":               "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
-	"integration-tests/runtime/typescript/test.md/then error messages":              "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
+	"integration-tests/verification.md/can specify --server-endpoint":                                "in-process Go backend has no server endpoint (see PLAN_PORT.md)",
+	"integration-tests/verification.md/TLC violation":                                                "P9.12: --max-steps is rejected for --backend tlc; exposing it is a user decision",
+	"integration-tests/runtime/typescript/repl.md/repl works after name error":                       replStreamDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl works after unknown type alias error":         replStreamDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl works after type application arity error":     replStreamDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl works after conflict":                         replStreamDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl works after type errors":                      replStreamDeviation,
+	"integration-tests/runtime/typescript/repl.md/regression 428":                                    replStreamDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl malformed expressions":                        replStreamDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl loads a file and a module":                    replPromptDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl loads module that is not the last":            replPromptDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl resolves imports relative to the loaded file": replPromptDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl saves a file with .save and loads it back":    replPromptDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl loads a module directly":                      replPromptDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl evaluates coin":                               replPromptDeviation,
+	"integration-tests/runtime/typescript/repl.md/compile imports":                                   replPromptDeviation,
+	"integration-tests/runtime/typescript/repl.md/compile instances":                                 replPromptDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl with instance vars":                           replPromptDeviation,
+	"integration-tests/runtime/typescript/repl.md/repl diff":                                         replPromptDeviation,
+	"integration-tests/verification.md/can convert ApalacheCompliation.qnt to TLA+":                  "P0.4 / pinned printer: Variants! qualifier and line wrapping differ from upstream",
+	"integration-tests/runtime/typescript/test.md/test runs":                                         "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
+	"integration-tests/runtime/typescript/test.md/test empty trace":                                  "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
+	"integration-tests/runtime/typescript/test.md/verbose test":                                      "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
+	"integration-tests/runtime/typescript/test.md/test compile error":                                "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
+	"integration-tests/runtime/typescript/test.md/then error messages":                               "Go repro hint names --backend=go and anchors --match=^name$; upstream hint is --seed=0x1 --match=name",
+	"integration-tests/runtime/rust/run.md/run finds violation":                                      "Rust reproduce hint is '--seed=<decimal> --backend=rust'; Go prints hex seed with --backend=go. Traces match after normalizing seeds",
+	"integration-tests/runtime/rust/run.md/run finds violation with metadata":                        "seed/hint representation only (Rust decimal seed, --backend=rust); trace content matches after normalizing seeds",
+	"integration-tests/runtime/rust/run.md/run finds example":                                        "seed/hint representation only (Rust decimal seed, --backend=rust); trace content matches after normalizing seeds",
+	"integration-tests/runtime/rust/run.md/run uninitialized":                                        "seed/hint representation only (Rust decimal seed, --backend=rust); trace content matches after normalizing seeds",
+	"integration-tests/runtime/rust/run.md/runtime error prints trace":                               "seed/hint representation only (Rust decimal seed, --backend=rust); trace content matches after normalizing seeds",
+	"integration-tests/runtime/rust/run.md/witnesses":                                                "seed/hint representation only (Rust decimal seed, --backend=rust); trace content matches after normalizing seeds",
+	"integration-tests/runtime/rust/run.md/multiple invariants":                                      "seed/hint representation only (Rust decimal seed, --backend=rust); trace content matches after normalizing seeds",
+	"integration-tests/runtime/rust/run.md/rust backend debug":                                       "Rust prints '[DEBUG] ...' for q::debug; Go prints '> ...' (output format, not evaluation)",
+	"integration-tests/runtime/rust/run.md/pending diagnostics flushed on runtime error":             "Rust prints '[DEBUG] ...' for q::debug; Go prints '> ...' (output format, not evaluation)",
+	"integration-tests/runtime/rust/run.md/run with n-traces itf violation":                          "Rust default backend counts n-traces differently: seed 123 yields 3 violation files upstream; Go and TypeScript (verified with compiled CLI) yield 1. Default-backend gap for user decision",
+	"integration-tests/runtime/rust/run.md/gradualPonzi - Run progressInv":                           "Rust backend reports a violation on seed 0x3154c258ec659ee6; Go and TypeScript backend report ok (verified with compiled CLI). Rust-backend behavior, not Go",
+	"integration-tests/runtime/rust/run.md/run can hide fields":                                      "Rust backend trace differs on seed 0xcc198528dea8b (State 1 deposit vs withdraw, different length); Go matches the TypeScript backend apart from the hint line",
+	"integration-tests/runtime/rust/run.md/run finds violation with metadata on bank":                "Rust backend trace differs on seed 0x1 (State 1 withdraw on charlie vs deposit on alice); Go matches the TypeScript backend apart from the hint line",
+	"integration-tests/runtime/typescript/run.md/run finds violation":                                "Go reproduce hint is 'Use --seed=0x<hex> --backend=go'; upstream TypeScript hint names --backend=typescript (only the hint line differs)",
+	"integration-tests/runtime/typescript/run.md/run finds violation with metadata":                  "Go reproduce hint is 'Use --seed=0x<hex> --backend=go'; upstream TypeScript hint names --backend=typescript (only the hint line differs)",
+	"integration-tests/runtime/typescript/run.md/run finds violation with metadata on bank":          "Go reproduce hint is 'Use --seed=0x<hex> --backend=go'; upstream TypeScript hint names --backend=typescript (only the hint line differs)",
+	"integration-tests/runtime/typescript/run.md/run can hide fields":                                "Go reproduce hint is 'Use --seed=0x<hex> --backend=go'; upstream TypeScript hint names --backend=typescript (only the hint line differs)",
+	"integration-tests/runtime/typescript/run.md/run finds example":                                  "Go reproduce hint is 'Use --seed=0x<hex> --backend=go'; upstream TypeScript hint names --backend=typescript (only the hint line differs)",
+	"integration-tests/runtime/typescript/run.md/run finds overflow":                                 "Go reproduce hint is 'Use --seed=0x<hex> --backend=go'; upstream TypeScript hint names --backend=typescript (only the hint line differs)",
+	"integration-tests/runtime/typescript/run.md/run shows calls":                                    "Go reproduce hint is 'Use --seed=0x<hex> --backend=go'; upstream TypeScript hint names --backend=typescript (only the hint line differs)",
+	"integration-tests/runtime/typescript/run.md/run uninitialized":                                  "Go reproduce hint is 'Use --seed=0x<hex> --backend=go'; upstream TypeScript hint names --backend=typescript (only the hint line differs)",
+	"integration-tests/runtime/typescript/run.md/witnesses":                                          "Go reproduce hint is 'Use --seed=0x<hex> --backend=go'; upstream TypeScript hint names --backend=typescript (only the hint line differs)",
+	"integration-tests/runtime/typescript/run.md/multiple invariants":                                "Go reproduce hint is 'Use --seed=0x<hex> --backend=go'; upstream TypeScript hint names --backend=typescript (only the hint line differs)",
 }
 
 // nonGoBackendFlag matches `--backend=typescript`, `--backend typescript`, and the
