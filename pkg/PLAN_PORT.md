@@ -112,6 +112,11 @@ reporting that evaluates expressions will also depend on P7.
     `quint/src/**/*.ts` and the 51 production codes in Go `pkg/` match exactly.
     The only other codes in Go are `QNT123` (`pkg/lsp/analysis_test.go`) and
     `QNT999` (runtime nondeterminism tests), which are test-only fixtures.
+  - [x] ITF wire-key literal pass (2026-11-05): the upstream `itf.ts` keys `#meta`,
+    `#bigint`, `#tup`, `#set`, `#map`, `vars`, `states`, `loop`, `index`,
+    `pending_diagnostics` and `diagnostics` each appear as a string literal in
+    production Go code. This is a presence check only; key usage is covered by the
+    ITF fixtures under P10.4, not by this pass.
   - [ ] Complete field-level wire/transcript and backend semantic coverage audit.
     - IR property-name pass: 29 upstream `quintIr.ts`/`quintTypes.ts` property
       names diffed against Go string literals in `pkg/`. Only `rowNames` and
