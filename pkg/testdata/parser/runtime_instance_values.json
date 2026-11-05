@@ -1543,5 +1543,18 @@
       { "kind": "evaluate", "name": "bg", "output": {"id": 0, "kind": "int", "value": 4} },
       { "kind": "evaluate", "name": "ag", "output": {"id": 0, "kind": "int", "value": 86} }
     ]
+  },
+  {
+    "name": "interleaved_instance_val_caches",
+    "source": "module P {const n:int pure val v = n*10 def f(x)=v+x} module M {import P(n=1) as A import P(n=2) as B val a1=A::v val b1=B::v val a2=A::v val b2=B::f(0) val a3=A::f(5) val b3=B::v}",
+    "module": "M",
+    "steps": [
+      { "kind": "evaluate", "name": "a1", "output": {"id": 0, "kind": "int", "value": 10} },
+      { "kind": "evaluate", "name": "b1", "output": {"id": 0, "kind": "int", "value": 20} },
+      { "kind": "evaluate", "name": "a2", "output": {"id": 0, "kind": "int", "value": 10} },
+      { "kind": "evaluate", "name": "b2", "output": {"id": 0, "kind": "int", "value": 20} },
+      { "kind": "evaluate", "name": "a3", "output": {"id": 0, "kind": "int", "value": 15} },
+      { "kind": "evaluate", "name": "b3", "output": {"id": 0, "kind": "int", "value": 20} }
+    ]
   }
 ]

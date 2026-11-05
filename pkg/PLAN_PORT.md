@@ -749,6 +749,10 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     `QNT201 Instance overrides must be pure, but the value for n reads variables 's'`
     (exit 1; both also emit a `QNT000` unification error on the `then` line). Analyzer
     coverage lives in `testdata/parser/analyzer.json`; no runtime fixture added.
+  - [x] Add `interleaved_instance_val_caches` (two instances of one module with
+    `pure val v = n*10`, read as `A::v`, `B::v`, `A::v`, `B::f(0)`, `A::f(5)`, `B::v`).
+    TypeScript (`quint test --match 'Test$'`) confirms 10, 20, 10, 20, 15, 20; Go
+    matches with no cross-instance cache leakage. 42 cases total.
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
     and remaining override audits; compiler instance contexts; execution-frame recording).
 
