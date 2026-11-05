@@ -220,7 +220,7 @@ func runTranscriptCase(t *testing.T, root, pathDir string, c transcriptCase) (st
 // replStreamDeviation: upstream's TypeScript REPL writes "syntax error" and
 // "static analysis error" blocks to stdout. The Go REPL writes them to stderr,
 // which the cli tests depend on, so Go keeps its stream split.
-const replStreamDeviation = "Go REPL writes error blocks to stderr; upstream TypeScript writes them to stdout (Go keeps the stderr contract)"
+const replStreamDeviation = "Go REPL writes error blocks to stderr; upstream TypeScript writes them to stdout (Go keeps the stderr contract). Go also omits the upstream \"static analysis error: \" header line before the diagnostic block"
 
 // replPromptDeviation: the Go REPL banner and ">>> " prompt-echo layout differ
 // from the upstream TypeScript transcript text.

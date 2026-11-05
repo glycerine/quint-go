@@ -1322,7 +1322,7 @@ as a bounded result, not an unbounded proof.
 
 Build these items alongside the phases that supply their command behavior.
 
-- [ ] P10.1 Implement `cmd/quint` with parse/typecheck/compile first, then
+- [x] P10.1 Implement `cmd/quint` with parse/typecheck/compile first, then
   run/test/verify/repl/docs; preserve default-command behavior, aliases, help,
   argument validation, version output, and exit status contracts.
   - [x] Go executable and all eight command dispatch paths, default REPL,
@@ -1348,11 +1348,12 @@ Build these items alongside the phases that supply their command behavior.
     encountered an error (Nms).` before the existing `error:` diagnostics.
     Apalache lines keep no leading newline. Pinned by
     `TestVerifyTLCVerbosityOneSummaries` and `TestVerifyTLCResultsAndFailures`.
-  - [ ] Recorded deviation: `test` failure repeat hint
+  - [x] Recorded deviation: `test` failure repeat hint
     `Use --seed=0x.. --match=^name$ --backend=go to repeat.` is intentional.
-  - [ ] Unverified against upstream: whether `verify --out` should suppress the
-    success/failure summaries. Go currently suppresses them; upstream was not
-    checked for this case.
+  - [x] 2026-11-05 `verify --out` suppression: upstream `outputResult`
+    (`cliCommands.ts:766-783`) writes the JSON stage to `--out` and prints no
+    summary or error text when `--out` is set. Go's suppression of the
+    success/failure summaries matches that behavior.
   - [x] 2026-11-05 audit: `cli/test.go` failure details match upstream
     `outputTestErrors` (`cliReporting.ts:394`) in gating and order. Details
     print at verbosity ≥ 2 and frames at ≥ 3 (upstream `hasTestDetails` and
@@ -1406,9 +1407,16 @@ Build these items alongside the phases that supply their command behavior.
     Upstream echoes `>>> frobnicate` and reports the name error on stdout with
     the `static analysis error:` header. Go reports it on stderr without the
     header, which is the same known REPL stream/header difference as above.
-  - [ ] Still open: the REPL `static analysis error:` header decision, the
-    per-command verbosity-range wording, and the unchecked `test` repeat-hint and
-    `verify --out` sub-items above.
+  - [x] 2026-11-05 decisions: the REPL `static analysis error: ` header stays
+    omitted. Go keeps error blocks on stderr, which the cli tests depend on, so
+    the header is recorded as part of `replStreamDeviation`
+    (`cli/transcript_corpus_test.go`). The per-command `--verbosity` range
+    wording (`--verbosity must ...` in `run`/`test`, `verbosity must ...` in
+    `verify`, `repl: ...` in `repl`) is a recorded deviation: upstream crashes
+    in its Rust evaluator for this input, so no upstream prose exists to match.
+  - [x] P10.1 closed for the audited surfaces: test failure details, help prose,
+    `run` timing and report prose, REPL transcript prose, and error prose outside
+    verify/test. Remaining prose gaps are the documented deviations above.
 - [x] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
   - [x] 2026-11-05 audit: common options and verbosity defaults (`2`, `--quiet`)
