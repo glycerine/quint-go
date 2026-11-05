@@ -1373,8 +1373,15 @@ Build these items alongside the phases that supply their command behavior.
     and `compile` help text differ in wording; no flag is missing except the
     two rejected Apalache flags on `compile`, which are documented as explicit
     rejections.
+  - [x] 2026-11-05 `run` timing and report prose: a violating `run` at
+    verbosity 2 and 3 matches upstream `cliCommands.ts` (example-execution
+    header, `[State N]` lines, `[Frame N]` blocks at 3, `[violation]` summary,
+    `Use --verbosity=3 to show executions.`, `error: Invariant violated`). The
+    throughput formula `round(1000*samples/elapsedMs)` matches JS, including
+    `Infinity` and `NaN` when the run finishes in 0ms. Only the backend name in
+    the repeat hint differs, which is the documented `go` backend choice.
   - [ ] Still open: error-prose parity for commands outside the verify/test
-    summaries, and the timing/report prose audit for `run` and `repl`.
+    summaries, and the `repl` report prose audit.
 - [x] P10.2 Port common options, environment/config handling, output paths,
   verbosity levels, color detection, and stdout/stderr separation.
   - [x] 2026-11-05 audit: common options and verbosity defaults (`2`, `--quiet`)
