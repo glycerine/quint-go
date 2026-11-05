@@ -203,3 +203,52 @@ func TestSimulationCancellationBetweenExpressions(t *testing.T) {
 		t.Fatal(result, err)
 	}
 }
+
+// TestSimulationZeroLimitsAndSeedReproducibility pins the resource bounds: zero
+// samples, steps, or traces run nothing, and identical seeds with identical
+// limits reproduce the same ranked traces. Simulation is sequential; there is no
+// concurrent worker pool whose ordering would need to match.
+func TestSimulationZeroLimitsAndSeedReproducibility(t *testing.T) {
+	modules, err := ParseModules("module M { var x:int action init=x'=0 action step=x'=x+1 val inv=true }")
+	if err != nil {
+		t.Fatal(err)
+	}
+	base := SimulationOptions{Init: "init", Step: "step", Invariant: "inv", MaxSamples: 3, MaxSteps: 2, NumberOfTraces: 2}
+	for _, zero := range []func(*SimulationOptions){
+		func(o *SimulationOptions) { o.MaxSamples = 0 },
+		func(o *SimulationOptions) { o.NumberOfTraces = 0 },
+	} {
+		options := base
+		zero(&options)
+		e, err := NewModuleEvaluator(modules[0], nil, false)
+		if err != nil {
+			t.Fatal(err)
+		}
+		result, err := e.Simulate(context.Background(), options)
+		if err != nil || result.Samples != 0 || len(result.BestTraces) != 0 || result.Status != "ok" {
+			t.Fatal("zero limit ran", result, err)
+		}
+	}
+	run := func() SimulationOutcome {
+		seed, _ := ParseInteger("91")
+		e, err := NewModuleEvaluator(modules[0], NewRNG(seed), true)
+		if err != nil {
+			t.Fatal(err)
+		}
+		result, err := e.Simulate(context.Background(), base)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return result
+	}
+	first, second := run(), run()
+	if first.Samples != second.Samples || len(first.BestTraces) != len(second.BestTraces) {
+		t.Fatal("sample counts differ across identical runs")
+	}
+	for i := range first.BestTraces {
+		a, b := first.BestTraces[i], second.BestTraces[i]
+		if a.Seed.String() != b.Seed.String() || len(a.States) != len(b.States) || a.Result != b.Result {
+			t.Fatal("trace", i, "differs across identical runs")
+		}
+	}
+}

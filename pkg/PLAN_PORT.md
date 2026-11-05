@@ -721,14 +721,17 @@ including failed actions that must not leak partially updated state.
     45 exact upstream streams preserve internal then/shift and replay ordering.
   - [x] Interrupt events and explicit borrowed-reader ownership, plus Unix process
     signal/poll hosting that preserves the REPL session on Ctrl-C.
-- [ ] P8.5 Add cancellation and bounded resource controls. Where concurrent
+- [x] P8.5 Add cancellation and bounded resource controls. Where concurrent
   simulation is exposed, isolate RNG/state/cache ownership and define result
   ordering and reproducibility across worker counts.
   - [x] Sequential simulation context cancellation before and during execution,
     nonnegative explicit limits, and private execution state per evaluator.
   - [x] Final higher-order callback cancellation is observed after scope restoration;
     four parsed fold regressions, explicit error precedence and independent owners.
-  - [ ] Additional resource bounds and any concurrent worker policy.
+  - [x] Additional resource bounds and worker policy: zero samples/traces run
+    nothing and identical seeds reproduce ranked traces (`TestSimulationZeroLimitsAndSeedReproducibility`).
+    Simulation is sequential and exposes no concurrent worker option; TLC worker
+    limits are validated in `backend/tlc/check.go` (`validateOptions`).
 - [x] P8.6 Run both runtime integration transcript suites with declared backend
   differences, plus stateful and model-based-testing evaluator fixtures.
   - Measured 2026-11-04: the typescript and rust `run`/`test`/`repl` transcripts
