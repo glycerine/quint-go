@@ -163,7 +163,12 @@ reporting that evaluates expressions will also depend on P7.
         backend order. JSON object key order is not semantic, so this is a
         recorded non-semantic difference. The only semantic text gap is
         `variables-to-expressions` (listed under P9 above).
-      - Remaining gap: runtime transcripts outside the Rust repl.md slice.
+      - Runtime transcript pass (2026-11-05): the full opt-in corpus
+        (`QUINT_CORPUS_TESTS=1 go test -run TestUpstreamIntegrationTranscripts ./cli`)
+        exits 0 with FAIL=0, PASS=88, SKIP=3. The 3 skips are known
+        `verification.md` deviations (`can specify --server-endpoint`,
+        `can convert ApalacheCompliation.qnt to TLA+`, `TLC violation`).
+        This closes the runtime transcript gap outside the Rust repl.md slice.
   - [x] Checker tuning key census (`testdata/scala_tuning_census.tsv`, pinned by
     `TestScalaTuningCensusOutcomesStable`). Of 484 Scala `FineTuningParser` keys,
     267 are accepted, 216 are rejected because g3 has no such parameter or module
