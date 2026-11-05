@@ -1122,6 +1122,9 @@ any remaining TypeScript client code is distinguished from language-server logic
     upstream `ItfJsonToTla` does ("State must be an object."). Regression
     `TestITFTraceKeysAndStateShapeAreExact` and corpus entry `546d61f9f8bc5bff`
     are retained; a 60 s bounded run passes 10,172,355 executions.
+  - [x] Bounded re-run on 2026-11-04 of all nine fuzz targets (30 s each, and
+    60 s for `FuzzITFTraceDecoding`, which passed 10,118,985 executions): no
+    failures and no new corpus entries.
 - [ ] P12.4 Run representative and broad corpus comparisons covering parsing,
   analysis, execution, and verification. Keep a fast deterministic suite and
   a separately scheduled expensive solver/corpus suite.
