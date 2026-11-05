@@ -133,8 +133,15 @@ reporting that evaluates expressions will also depend on P7.
       `apalache/polyStateVar.qnt`, `bug2027instanceAssignRhs.qnt`) were a harness
       error: the replica used the wrong main module. The CLI selects the file
       basename when the file has more than one module.
-      - Remaining gaps: runtime transcripts and backend semantic fields
-        (checker-response/ITF fields). These are still open.
+      - Rust `integration-tests/runtime/rust/repl.md` corpus pass (2026-11-05):
+        the corpus harness now exits 0 with 0 FAIL. The 20 failing cases are
+        recorded as known deviations in `transcriptKnownDeviations`: 10 prompt-class,
+        6 stream-class (Go keeps REPL errors on stderr), 1 malformed-expression
+        wording, 1 `q::debug` format (`[DEBUG]` vs `> `), and 1 `q::debug`
+        verbosity gating. Clean REPL EOF now emits a trailing `\n`, matching
+        upstream `shutdownAndExit` (commit `7a5d9305`).
+      - Remaining gaps: runtime transcripts outside the Rust repl.md slice, and
+        backend semantic fields (checker-response/ITF fields). These are still open.
   - [x] Checker tuning key census (`testdata/scala_tuning_census.tsv`, pinned by
     `TestScalaTuningCensusOutcomesStable`). Of 484 Scala `FineTuningParser` keys,
     267 are accepted, 216 are rejected because g3 has no such parameter or module
