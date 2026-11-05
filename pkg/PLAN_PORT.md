@@ -199,8 +199,20 @@ reporting that evaluates expressions will also depend on P7.
     `test` (`test_command.json`, `test_regex*.json`, `debug_output.json`,
     `variable_headers.json`), and `verify` stage envelopes
     (`TestVerifyUpstreamJSONStages`, 21 cases) all pass.
-  - Still open for P0.7: ITF trace fields emitted by `verify` and configuration
-    fields the commands accept beyond the option-name checks above.
+  - ITF trace fields emitted by `verify` are closed. Upstream `verify` writes
+    the checker's ITF counterexample unchanged (`cliReporting.ts` writes
+    `err.traces[0]` with no Quint header; the header is added only by the
+    `run`/`test` trace path via `addItfHeader`). Go matches: `verify.go` writes
+    `stage.Trace` verbatim to `--out-itf`, and `TestVerifyTLCITFOutputAndFailures`
+    checks byte equality of the file. The `run`/`test` header matches
+    `addItfHeader` (`TestUpstreamITFHeaders`), and `#meta.index`, `loop`, and
+    `params` are covered by `verify_trace_test.go` and `verify_tlc_itf_test.go`.
+  - Still open for P0.7: configuration fields the commands accept beyond the
+    option-name checks above. Upstream `loadApalacheConfig` only parses the file
+    as JSON and passes every key through; Go rejects legacy keys with
+    upstream's diagnostic (`TestVerifyRejectsLegacyApalacheConfigBeforeChecking`)
+    and validates the rest in the external `glycerine/apalache-go` parser. The
+    accepted-key inventory has not been audited yet.
 - [x] P0.8 Decide the TLC backend path: assess the existing Go `tlago/tlc`
   implementation for reuse, or document a separate optional external TLC
   mode. Do not retain an implicit Scala Apalache/JAR download dependency.
