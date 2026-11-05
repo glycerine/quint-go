@@ -1565,7 +1565,7 @@ any remaining TypeScript client code is distinguished from language-server logic
   count skipped fixtures as passes.
   - FIXTURE_MANIFEST.md maintains validated local links and the complete 51-file
     TypeScript test-family inventory; pending and opt-in checks remain explicit.
-- [ ] P12.2 Run `go test ./...` and `go vet ./...` from `pkg/`; run race checks
+- [x] P12.2 Run `go test ./...` and `go vet ./...` from `pkg/`; run race checks
   on concurrent library, simulation, editor, and checker integration paths.
   - [x] Full default tests and all vet analyzers pass; reproducible generator
     postprocessing removes ANTLR unreachable tail jumps. Focused runtime,
@@ -1634,7 +1634,9 @@ any remaining TypeScript client code is distinguished from language-server logic
     `TestJavaScriptRegexNullableReference`
     (`cli`) uses a 25ms match budget that failed once under `go test -race
     ./...` and passed on rerun, so it is timing-sensitive under load. Raising
-    that budget is a test-budget decision and has not been made.
+    that budget is a test-budget decision and has not been made. P12.2 is
+    complete for the port; the 25 ms budget is recorded as an owner decision
+    for the final report, not as an open implementation item.
 - [x] P12.3 Add targeted property/fuzz checks for parsers, JSON/ITF decoders,
   type/effect substitution, flattening, and evaluation rollback. Retain
   minimized regressions for discovered failures.
@@ -1832,6 +1834,16 @@ any remaining TypeScript client code is distinguished from language-server logic
       1,245.4 / 1,252.9 MB (mean about 1,236.9 MB against 1,241.9 MB). The heap
       ranges overlap and RSS is not lower, so no gain was shown. Reverted, not
       committed.
+    - 2026-11-05 tried and rejected: shrink-to-fit of the `normalizeValue` Set
+      `values` slice (an exact-size copy after dedupe, releasing append slack).
+      Three alternating runs each at N=10000 (`big_10000.qnt --seed=0x1
+      --backend=go`): committed-state peak heap objects 1,206.9 / 1,198.0 /
+      1,218.5 MB (mean about 1,207.8 MB). The candidate's heap profile was not
+      captured, so no heap comparison exists. Max RSS 1,250.3 / 1,210.8 /
+      1,244.2 MB for the committed state (mean about 1,235.1 MB) against
+      1,192.3 / 1,260.9 / 1,232.2 MB for the candidate (mean about 1,228.5 MB),
+      about 0.5% lower and inside the run-to-run spread of about 50 MB. No
+      measured gain, so reverted, not committed.
     - 2026-11-05 trace memory: `RuntimeTrace.Shift` keeps a non-domain state as
       its immutable register and pick capture, and builds the record on first
       read (`States`). Discarded simulation runs therefore build no records.
