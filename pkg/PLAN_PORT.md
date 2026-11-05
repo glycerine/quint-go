@@ -866,6 +866,14 @@ TypeScript or Rust evaluator process.
     succeeds.
   - [ ] Native TLC resolver directories have no linked dependency close API and
     may outlive an adapter check; solver/session lifecycle needs a broader audit.
+    Verified: `tlago` v0.1.10 `NewSimpleFilenameToStream` calls
+    `filenameTempDirectory()` (`os.MkdirTemp("", "tlc-")`) and nothing removes
+    it; only the distributed resolver registers delete-on-exit. A probe check
+    with `TMPDIR` isolated left three `tlc-*` directories after one successful
+    run. Fixing this needs a `tlago` change (a close method or a removal hook)
+    or a fork. quint-go cannot remove them from `pkg` without touching the
+    dependency's internals. Blocked on that dependency change or on a user
+    decision to accept it as a documented gap.
 - [x] P9.11 Exercise safe/unsafe/deadlocked specifications, zero/one-step bounds,
   induction, temporal properties, nested modules, large values, malformed IR,
   unsupported opcodes, and backend failures through the actual Go checker.
