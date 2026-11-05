@@ -737,6 +737,9 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     (`import P(n = k + 2) as A`, `A::f(0)` with `k` defined in the importer). The
     TypeScript reference (`quint test --match 'okTest|wrongTest'`) confirms
     `result == 42` passes and `result == 41` fails; Go matches.
+  - [x] Add `two_instances_override_importer_defs` (two instances of one module,
+    overridden from importer definitions, read in the same importer). TypeScript
+    `quint test --match 'Test$'` confirms 42, 81, and 43; Go matches. 40 cases total.
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
     and remaining override audits; compiler instance contexts; execution-frame recording).
 

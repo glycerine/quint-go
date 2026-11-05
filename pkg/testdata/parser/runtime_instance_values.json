@@ -1524,4 +1524,14 @@
       }
     ]
   }
+  ,{
+    "name": "two_instances_override_importer_defs",
+    "source": "module P {const n:int def f(x)=n+x} module M {def k = 40 import P(n=k+2) as A import P(n=k*2) as B val a=A::f(0) val b=B::f(1) val c=A::f(1)}",
+    "module": "M",
+    "steps": [
+      { "kind": "evaluate", "name": "a", "output": {"id": 0, "kind": "int", "value": 42} },
+      { "kind": "evaluate", "name": "b", "output": {"id": 0, "kind": "int", "value": 81} },
+      { "kind": "evaluate", "name": "c", "output": {"id": 0, "kind": "int", "value": 43} }
+    ]
+  }
 ]
