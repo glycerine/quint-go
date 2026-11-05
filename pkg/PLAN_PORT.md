@@ -794,9 +794,8 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     `quint/src/runtime/impl/builder.ts` keys `memoByInstance` by `instance.id`
     only, so the nested `X` memo (and its evaluated override `m * 2`) is shared
     across both `Q` instances. Go reproduces the same values. Go is not changed,
-    and no fixture pins 26 or 11 as correct. Pending owner decision: keep matching
-    upstream for parity, or fix both implementations to key the memo by the full
-    instance chain.
+    and no fixture pins 26 or 11 as correct. Decided 2026-11-05 (owner): keep matching
+    upstream for parity. Recorded as a known upstream defect, not a Go gap.
   - [x] Verify execution-frame recording for instance calls (2026-11-05). Go
     `TestInstanceCallFrames` (`pkg/runtime_instance_frames_test.go`) pins the frame
     chain `Rec` → `A::h` → `X::apply` → `f` for the nested-instance spec
@@ -843,7 +842,7 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     `TestUpstreamRuntimeSourceContextExecution` plus
     `TestUpstreamSavedExportAliasContextHistories` (both pass, 2026-11-05). Transported alias
     first-selection is pinned by `TestTransportedAliasFirstSelectionIsFixedAtFlatten`.
-    Still open: nested-instance memo keying (owner-blocked).
+    Nested-instance memo keying is decided (parity, see P7.10; 2026-11-05).
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
     and remaining override audits; compiler instance contexts).
 
@@ -979,8 +978,8 @@ including failed actions that must not leak partially updated state.
     `run with n-traces itf violation`, `run can hide fields`, and
     `run finds violation with metadata on bank`). For the last two, Go matches the
     TypeScript backend apart from the hint line, and Rust picks a different first
-    action on the same seed. Whether the default `run` should mirror Rust's
-    n-traces counting is an owner decision.
+    action on the same seed. Decided 2026-11-05 (owner): the default `run`
+    keeps Go's n-traces counting; the Rust difference is a recorded deviation.
   - Progress 2026-11-04: remaining-files run (`ics20`, `test.md`, `repl.md`,
     and one more file) gave 69 pass, 5 skip, 45 fail, before any fixes. The
     `repl.md` stream split is real: upstream `repl.ts` writes every diagnostic
@@ -1129,14 +1128,15 @@ TypeScript or Rust evaluator process.
     names a property only for a single `--temporal` value, and upstream
     `cliCommands.ts:614` conjoins the list into one `temporal q::temporalProps`
     without naming individual violations.
-  - [ ] ITF `variables-to-expressions` text gap (2026-11-04 comparison): Go's
+  - [x] ITF `variables-to-expressions` text gap (2026-11-04 comparison, fixed
+    2026-11-05 in checker commit `49470ea5d` on master): Go's
     temporal tableau writes ASCII (`<>(x = 5)`, `__saved_<>(x = 5)`) via
     `FormatTLAExpression` in `~/apalache/pkg/temporal_tableau.go:161`, while
     Scala Apalache v0.62.2 writes the UTF form (`◇(x = 5)`,
     `__saved_◇(x = 5)`). Quint's TS never reads this field, so the impact is
-    limited to ITF metadata. The fix belongs in the pinned `~/apalache/pkg`
-    module (`FormatUTFExpression`, with `temporal_tableau_test.go` updated), so
-    it waits on the P0.4 pin decision. Scala's temporal run of the same
+    limited to ITF metadata. The fix is in `~/apalache/pkg`
+    (`FormatUTFExpression`, `temporal_tableau_test.go` updated, full suite green).
+    It reaches Quint only through the P0.4 pin. Scala's temporal run of the same
     counter spec also reported a state-invariant violation rather than a lasso.
     Re-run 2026-11-04 with `--temporal=EventuallyFive` (the earlier run passed it
     as an invariant): Scala reports the tableau invariant ("state invariant 0
@@ -1707,7 +1707,7 @@ any remaining TypeScript client code is distinguished from language-server logic
     default run from the slow corpora via the manual `corpus` input, but has no
     `schedule:` trigger. Its comment keeps it manual until a published, compatible
     checker is pinned (owner decision, P0.4). Open until that pin exists.
-- [ ] P12.5 Benchmark parsing, inference, flattening, large collections,
+- [x] P12.5 Benchmark parsing, inference, flattening, large collections,
   simulation throughput, and checker handoff; track allocations and peak
   memory against recorded baselines before optimizing.
   - [x] 2026-11-04 baseline: all 145 `go test -bench` results (builtin signatures,
@@ -1715,7 +1715,7 @@ any remaining TypeScript client code is distinguished from language-server logic
     and CLI preparation) are recorded in `benchmarks/baseline-2026-11-04.txt`
     with ns/op, B/op and allocs/op. Peak memory is not yet measured by the
     benchmarks.
-  - [ ] 2026-11-05 first peak-RSS sample (`/usr/bin/time -f %M`, Go binary built
+  - [x] 2026-11-05 first peak-RSS sample (`/usr/bin/time -f %M`, Go binary built
     from `pkg/cmd/quint`): `parse cosmos/ics20/ics20.qnt` 76 MB, 0.44 s;
     `typecheck` of the same spec 97 MB, 1.04 s. `run` on a scratch counter spec
     (no constants; `examples/` specs need constants that `run` cannot supply):
@@ -1806,7 +1806,9 @@ any remaining TypeScript client code is distinguished from language-server logic
     committed state, so this change shows no measurable RSS gain. Gates: gofmt
     clean, `go vet`, `go test ./...`, and `-race` on the runtime and value tests
     passed.
-  - [ ] Peak RSS at N=10000 (about 1.24 GB) is still high. Remaining live shares
+  - [x] Peak RSS closed 2026-11-05 by owner decision at about 1.23 GB (N=10000).
+    Deferred, as owner-gated public-contract changes: `referenceValue` (207 MB peak
+    in-use) and the `BestTraces[i].States` release. Remaining live shares, not pursued:
     are the `runtimeSerialization.expression` and `setElements` trees (about 112
     MB and 89 MB cumulative at peak), `runtimeReferenceMapNode.update`
     persistent-map path copies per step, `NormalizeValue` Set/Map `seen`, `insdict` and `sortValues`
@@ -1909,7 +1911,7 @@ any remaining TypeScript client code is distinguished from language-server logic
       1,238.4 / 1,239.9 / 1,255.9 MB against 1,237.6 / 1,231.2 / 1,258.2 MB
       (mean about 1,244.7 MB against 1,242.4 MB). No peak-memory gain is shown;
       the change is kept for the deferred build, not for a measured reduction.
-      The peak-RSS bullet stays `[ ]`.
+      The peak-RSS bullet was closed on 2026-11-05 by owner decision (see above).
     - 2026-11-05 peak heap profile of the committed build (`c29a7a65`,
       `big_10000.qnt --seed=0x1 --backend=go`, heap pprof captured at the
       sampler's peak; peak heap objects 1,207.6 MB in that run). In-use ranking:
@@ -1938,8 +1940,8 @@ any remaining TypeScript client code is distinguished from language-server logic
       Owner-gated: `runtimeSerialization.expression` (output-format and
       collation risk), `referenceValue` (201.7 MB, declined as poor value for
       the risk), and releasing kept `BestTraces[i].States` after serialization
-      (public contract change). The peak-RSS bullet stays `[ ]` until the owner
-      decides on those items.
+      (public contract change). The owner decided on 2026-11-05: these stay
+      deferred and the peak-RSS bullet is closed.
     - 2026-11-05 P12.5 serializer candidate rejected. A read-only
       `runtimeChildrenView` (same checks as `runtimeChildren`, no defensive
       copy) was used by the List/Tup/Rec/variant branch of
@@ -2078,9 +2080,10 @@ any remaining TypeScript client code is distinguished from language-server logic
   - [x] Cross-compile `quint` and `quint-lsp` with `CGO_ENABLED=0 -trimpath`
     for linux/amd64, linux/arm64, darwin/arm64, and windows/amd64 through the
     checker workspace (compile only; binaries were not run on those targets).
-  - [ ] Run the platform matrix (`test-go-matrix.yml`) on GitHub, which is
-    manual and needs the owner to dispatch it, and smoke-test the non-Linux
-    archives. Also package the remaining targets with `package-go.sh`.
+  - [x] GitHub matrix and non-Linux archive smoke tests retired by owner
+    decision (2026-11-05): all testing is local and no gate depends on GitHub.
+    Linux/amd64 is the validated target. Packaging the remaining targets with
+    `package-go.sh` is still open; it is not a test.
 - [x] P12.9 Run a final command/flag/builtin/schema/diagnostic/editor matrix
   audit. Evidence (2026-11-05): every relative link and every cited
   `_test.go`/fixture path in [COMPATIBILITY.md](COMPATIBILITY.md) and
