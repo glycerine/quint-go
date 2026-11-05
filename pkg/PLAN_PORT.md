@@ -808,6 +808,14 @@ Exit gate: a `.qnt` file compiles to typed, flattened IR that Go Apalache accept
     result. That is a backend-selection difference, not a Go gap. Pinned in
     `TestTestCommandITF` (`divZeroTest`, `expectTest`). Probes:
     `scratchpad/eager/run4`, `run6`, `run7`.
+  - Compiler instance context audit (2026-11-05). Definition: the instance path
+    (`[id, ...namespaces]`, e.g. `2#Outer#M` versus `2#Alias#Outer#M`) that a
+    variable read or definition is first compiled under, which fixes its storage
+    registration and instance memo. Pinned by `testdata/parser/runtime_instance_context.json`
+    through `TestUpstreamRuntimeSourceContexts` (21 passing subtests) and
+    `TestUpstreamRuntimeSourceContextExecution` plus
+    `TestUpstreamSavedExportAliasContextHistories` (both pass, 2026-11-05). Still open:
+    nested-instance memo keying (owner-blocked) and transported alias first-selection.
   - [ ] Finish remaining instance compiler histories under P7.2 (cache, closure
     and remaining override audits; compiler instance contexts).
 
