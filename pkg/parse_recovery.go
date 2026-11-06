@@ -93,6 +93,15 @@ func recoveryLookaheadSyntaxIssue(recognizer antlr.Recognizer, offending interfa
 			return offending, line, column, "mismatched input '" + token.GetText() + "' expecting {':', '::'}"
 		}
 	}
+	if token, ok := offending.(antlr.Token); ok && token.GetText() == "(" && message == "mismatched input '(' expecting <EOF>" {
+		if _, expression := parser.GetParserRuleContext().(*p.DeclarationOrExprContext); expression {
+			// A call-like application after a complete expression, such as Set(1 2).
+			// antlr4ts also lists the expression continuations and '::' here. The
+			// text is identical for every probed application (verified against the
+			// repository's compiled TypeScript parser for six inputs).
+			return offending, line, column, "mismatched input '(' expecting {<EOF>, '[', '.', '->', '^', '::', 'and', 'or', 'iff', 'implies', 'leadsTo', '+', '-', '*', '/', '%', '>', '<', '>=', '<=', '!=', '==', '='}"
+		}
+	}
 	if token, ok := offending.(antlr.Token); ok && token.GetText() == ":" && message == "mismatched input ':' expecting '}'" {
 		if _, braces := parser.GetParserRuleContext().(*p.BracesContext); braces {
 			// antlr4ts reports the expression continuations after a name or

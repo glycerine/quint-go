@@ -11,7 +11,7 @@ differently from upstream, Go matches upstream unless the owner decides otherwis
 | ID | Area | Severity | Status |
 | --- | --- | --- | --- |
 | F-01 | `foldr` and `allListsUpTo` on CHECK, TLA, verify and TLC paths | High (accepts what upstream rejects) | Fixed in `9512e41b`, `cb292136` |
-| F-02 | Parse error: expected-token list | Low (diagnostic text) | Partly fixed (a `:` after an expression in braces); the rest open |
+| F-02 | Parse error: expected-token list | Low (diagnostic text) | Fixed for the observed patterns (colon in braces; call paren at top level); 13 of 14 corpus inputs match upstream |
 | F-03 | Lexer error: newline in token text | Low (diagnostic text) | Fixed (REPL path now escapes like the recovering parser) |
 | F-04 | REPL error block for an empty source line prints a caret | Low (diagnostic text) | Open; the shared renderer must keep the caret (see F-04) |
 | F-05 | REPL error headers on stdout | Known | Already recorded (`replStreamDeviation`) |
@@ -182,10 +182,30 @@ own canonical decimal integer. So the discarded error cannot happen. No change.
 
 ## Open items
 
-- F-02 (declaration context), F-04 and F-07: open; root cause in the Go runtime's
+- F-04: open. F-07: documented deviation. F-02: fixed for observed patterns.
+- Earlier note (superseded): root cause in the Go runtime's
   lookahead analysis (see the investigation above). Fix needs the owner's choice of option 1 or 2. The Go ANTLR runtime reports a narrower expected-token set than upstream at the
   same offending token. Next step: compare the expected set from `GetExpectedTokens()` at
   the record-value decision point against the upstream error, and find which prediction
   mode or error-strategy difference produces the narrower set.
 - Next pass: the eight `panic` sites, the ITF and JSON output paths for `verify` and
   `run`, the TLC generator, and the LSP diagnostic path (shared with F-04).
+
+## F-02 and F-07: current status (2026-11-05)
+
+Rule used: a per-pattern rewrite is added only when at least three upstream examples
+share the same expected-token text. Each rewrite is pinned by a test.
+
+- **Fixed, colon after an expression in braces** (`{1: 2}`, `{"a": 1 "b": 2}`,
+  `{"k": 1 "j": 2}`, `{"weird key": 1, b: 2}`). Test: `parse_braces_expected_test.go`.
+- **Fixed, call paren after a complete top-level expression** (`Set(1 2)`, `foo(1 2)`,
+  `f(a b)`, `List(1 2)`, `Set(1, 2 3)`, `f(1 2 3)`). Test: `parse_call_expected_test.go`.
+- **Deviation, missing `}` before a comma** (`{1, 2 3}`): upstream reports
+  `missing '}' at ','`; Go reports `mismatched input ','`. Only one example, so no
+  rewrite. Root cause: the lookahead difference recorded in the investigation above.
+- **Deviation, general cause.** The Go runtime's lookahead for a context-dependent
+  expected set is narrower than antlr4ts's. Patterns outside the two fixed shapes keep
+  the Go text until they reach three examples. A runtime-level fix (option 1) is not
+  taken.
+- **Check.** The corpus in the investigation (14 malformed inputs, REPL) matches upstream
+  on 13. The remaining input is the deviation above.
