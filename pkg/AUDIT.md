@@ -13,7 +13,7 @@ differently from upstream, Go matches upstream unless the owner decides otherwis
 | F-01 | `foldr` and `allListsUpTo` on CHECK, TLA, verify and TLC paths | High (accepts what upstream rejects) | Fixed in `9512e41b`, `cb292136` |
 | F-02 | Parse error: expected-token list | Low (diagnostic text) | Fixed for the observed patterns (colon in braces; call paren at top level); 13 of 14 corpus inputs match upstream |
 | F-03 | Lexer error: newline in token text | Low (diagnostic text) | Fixed (REPL path now escapes like the recovering parser) |
-| F-04 | REPL error block for an empty source line prints a caret | Low (diagnostic text) | Open; the shared renderer must keep the caret (see F-04) |
+| F-04 | REPL error block for an empty source line prints a caret | Low (diagnostic text) | Fixed in the REPL syntax-error branch; the shared renderer keeps its caret |
 | F-05 | REPL error headers on stdout | Known | Already recorded (`replStreamDeviation`) |
 | F-07 | Missing `}` reported as `mismatched input` instead of `missing '}' at` | Low (diagnostic kind) | Open |
 | F-06 | Discarded `strconv` errors in `backend/tlc/itf_value.go` | None | Reviewed, safe |
@@ -147,7 +147,7 @@ listener in `parse_errors.go`. Tests: `parse_lexical_escape_test.go`.
 - **Test.** Parse `val x = "abc` plus a newline and assert the message contains the
   escape `\n` and no raw newline inside the quotes.
 
-## F-04: REPL error block for an empty source line prints a caret (open)
+## F-04: REPL error block for an empty source line prints a caret (fixed)
 
 - **Divergence.** For `val x = "abc` plus a newline, the second REPL block (`no viable
   alternative`, at `1:1` on an empty line) ends with a caret row `  ^`. Upstream's REPL
@@ -182,7 +182,7 @@ own canonical decimal integer. So the discarded error cannot happen. No change.
 
 ## Open items
 
-- F-04: open. F-07: documented deviation. F-02: fixed for observed patterns.
+- F-04: fixed (REPL path). F-07: documented deviation. F-02: fixed for observed patterns.
 - Earlier note (superseded): root cause in the Go runtime's
   lookahead analysis (see the investigation above). Fix needs the owner's choice of option 1 or 2. The Go ANTLR runtime reports a narrower expected-token set than upstream at the
   same offending token. Next step: compare the expected set from `GetExpectedTokens()` at
@@ -209,3 +209,11 @@ share the same expected-token text. Each rewrite is pinned by a test.
   taken.
 - **Check.** The corpus in the investigation (14 malformed inputs, REPL) matches upstream
   on 13. The remaining input is the deviation above.
+
+## F-04: status (fixed, 2026-11-05)
+
+`omitEmptyLineCaret` in `repl_session.go` removes the caret row of a REPL block when the
+error is at end of input and the excerpt line is empty, as upstream does. The shared
+renderer in `diagnostic_render.go` is unchanged, so the upstream fixtures still pass.
+Tests: `repl_empty_caret_test.go`. The REPL block now matches upstream byte for byte,
+except for the trailing blank line recorded under F-05.

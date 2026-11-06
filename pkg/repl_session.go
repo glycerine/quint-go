@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/glycerine/insdict"
 )
@@ -416,7 +417,11 @@ func (s *REPLSession) renderError(err error, options DiagnosticRenderOptions) st
 				code = "QNT000"
 			}
 			location := Location{Source: syntax.Source, Start: issue.Position, End: &issue.Position}
-			parts = append(parts, RenderErrorMessage(ErrorMessage{Explanation: "[" + code + "] " + issue.Message, Locations: []Location{location}}, s.code, options))
+			rendered := RenderErrorMessage(ErrorMessage{Explanation: "[" + code + "] " + issue.Message, Locations: []Location{location}}, s.code, options)
+			if text, found := s.code.Get2(syntax.Source); found && issue.Position.Index >= utf8.RuneCountInString(text) {
+				rendered = omitEmptyLineCaret(rendered)
+			}
+			parts = append(parts, rendered)
 		}
 		return strings.Join(parts, "\n")
 	}
@@ -444,4 +449,22 @@ func replCopyAnalysis(input AnalysisOutput) AnalysisOutput {
 		}
 	}
 	return out
+}
+
+// omitEmptyLineCaret removes the caret row of a diagnostic block whose excerpt line
+// is empty, as upstream's REPL does at end of input. Only a final caret row that
+// follows a whitespace-only excerpt line is changed.
+func omitEmptyLineCaret(rendered string) string {
+	lines := strings.Split(rendered, "\n")
+	n := len(lines)
+	if n < 3 || lines[n-1] != "" {
+		return rendered
+	}
+	caret := lines[n-2]
+	excerpt := lines[n-3]
+	if strings.TrimSpace(caret) != "^" || strings.TrimSpace(excerpt) != "" {
+		return rendered
+	}
+	lines[n-2] = strings.Repeat(" ", len(caret)-1)
+	return strings.Join(lines, "\n")
 }
